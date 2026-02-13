@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works &mdash; The Call Taker</title>
+  <meta name="description" content="See exactly how The Call Taker AI receptionist handles every HVAC call — from the first ring to a booked appointment. No missed calls, no voicemail, no hold music.">
+  <meta name="keywords" content="AI receptionist, HVAC answering service, AI phone answering, HVAC call handling, automated appointment booking">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="How It Works — The Call Taker">
+  <meta property="og:description" content="A detailed look at how our AI receptionist handles calls for your HVAC company — from ring to booked appointment.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thecalltaker.com/how-it-works.html">
+  <meta property="og:image" content="https://thecalltaker.com/og-how-it-works.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How It Works — The Call Taker">
+  <meta name="twitter:description" content="A detailed look at how our AI receptionist handles calls for your HVAC company — from ring to booked appointment.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Page-specific Timeline Styles -->
+  <style>
+    .timeline {
+      position: relative;
+      padding-left: 60px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 23px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--blue-500), rgba(59,130,246,0.1));
+    }
+    .timeline-step {
+      position: relative;
+      margin-bottom: 48px;
+    }
+    .timeline-step:last-child {
+      margin-bottom: 0;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -60px;
+      top: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(59,130,246,0.1);
+      border: 2px solid var(--blue-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--blue-400);
+      font-size: 0.875rem;
+    }
+    .timeline-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .timeline-text {
+      font-size: 0.9375rem;
+      color: var(--slate-400);
+      line-height: 1.7;
+    }
+
+    /* Emergency cards */
+    .emergency-card-red {
+      background: rgba(239,68,68,0.04);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+    .emergency-card-blue {
+      background: rgba(59,130,246,0.04);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+    .emergency-card-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .emergency-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .emergency-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9375rem;
+      color: var(--slate-300);
+      line-height: 1.5;
+    }
+    .emergency-list-item svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .emergency-card-red .emergency-list-item svg {
+      color: var(--red-400);
+    }
+    .emergency-card-blue .emergency-list-item svg {
+      color: var(--blue-400);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================
+       HEADER
+       ============================================ -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+        </div>
+        The Call <span>Taker</span>
+      </a>
+
+      <nav class="nav">
+        <a href="how-it-works.html" class="active">How It Works</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+      </nav>
+
+      <a href="demo.html" class="header-cta">Book a Demo</a>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav">
+    <a href="how-it-works.html">How It Works</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+    <a href="demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
+  </nav>
+
+
+  <!-- ============================================
+       HERO
+       ============================================ -->
+  <section class="hero">
+    <div class="hero-glow hero-glow-blue"></div>
+    <div class="hero-glow hero-glow-orange"></div>
+
+    <div class="container text-center">
+      <div class="reveal">
+        <span class="section-label">How It Works</span>
+      </div>
+      <h1 class="section-title reveal reveal-delay-1" style="font-size: clamp(2.5rem, 5vw, 3.75rem); margin-bottom: 24px;">How Every Call Gets Answered</h1>
+      <p class="section-subtitle mx-auto reveal reveal-delay-2" style="max-width: 700px;">A detailed look at how our AI receptionist handles calls for your HVAC company &mdash; from ring to booked appointment.</p>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       THE CALL FLOW — 8-Step Timeline
+       ============================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <span class="section-label">The Call Flow</span>
+        <h2 class="section-title">From Ring to Booked Job</h2>
+        <p class="section-subtitle mx-auto">Here is exactly what happens when a homeowner calls your business.</p>
+      </div>
+
+      <div class="max-w-3xl mx-auto">
+        <div class="timeline">
+
+          <!-- Step 1 -->
+          <div class="timeline-step reveal">
+            <div class="timeline-dot">01</div>
+            <h3 class="timeline-title">Phone Rings</h3>
+            <p class="timeline-text">A homeowner needs HVAC help. Could be 2pm or 2am.</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="timeline-step reveal reveal-delay-1">
+            <div class="timeline-dot">02</div>
+            <h3 class="timeline-title">AI Picks Up in Under 2 Seconds</h3>
+            <p class="timeline-text">No hold music, no voicemail, no "press 1 for...". A friendly voice answers immediately.</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="timeline-step reveal reveal-delay-1">
+            <div class="timeline-dot">03</div>
+            <h3 class="timeline-title">Identifies the Caller</h3>
+            <p class="timeline-text">Returning caller? The AI recognizes them: "Hi Mrs. Johnson, is this about your furnace repair from last week?"</p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="timeline-step reveal">
+            <div class="timeline-dot">04</div>
+            <h3 class="timeline-title">Captures the Details</h3>
+            <p class="timeline-text">Name, phone, address, problem description. All logged automatically &mdash; nothing falls through the cracks.</p>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="timeline-step reveal reveal-delay-1">
+            <div class="timeline-dot">05</div>
+            <h3 class="timeline-title">Assesses Urgency</h3>
+            <p class="timeline-text">Gas leak? No heat with kids in the house? The AI flags emergencies and escalates immediately.</p>
+          </div>
+
+          <!-- Step 6 -->
+          <div class="timeline-step reveal reveal-delay-1">
+            <div class="timeline-dot">06</div>
+            <h3 class="timeline-title">Books the Appointment</h3>
+            <p class="timeline-text">Checks your calendar, books the next available slot. No double-booking, no back-and-forth.</p>
+          </div>
+
+          <!-- Step 7 -->
+          <div class="timeline-step reveal">
+            <div class="timeline-dot">07</div>
+            <h3 class="timeline-title">Sends Confirmation</h3>
+            <p class="timeline-text">Customer gets a text. You get a text with all details. Appointment lands on your calendar.</p>
+          </div>
+
+          <!-- Step 8 -->
+          <div class="timeline-step reveal reveal-delay-1">
+            <div class="timeline-dot">08</div>
+            <h3 class="timeline-title">Follows Up Automatically</h3>
+            <p class="timeline-text">Next day: "Hi, confirming your appointment tomorrow at 10am." Reduces no-shows by 40%.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="section-divider"></div>
+
+
+  <!-- ============================================
+       YOUR EXPERIENCE — What the HVAC Owner Sees
+       ============================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <span class="section-label">Your Experience</span>
+        <h2 class="section-title">What You See as the HVAC Owner</h2>
+        <p class="section-subtitle mx-auto">You stay focused on the job. We handle the calls and keep you in the loop.</p>
+      </div>
+
+      <div class="grid-3">
+
+        <!-- Card 1: Instant Text Alert -->
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Instant Text Alert</h3>
+          <p class="card-text">Every call equals a text with the caller's name, phone number, address, issue, and appointment time. You know everything without picking up the phone.</p>
+        </div>
+
+        <!-- Card 2: Calendar Updated -->
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Calendar Updated</h3>
+          <p class="card-text">Open your calendar. The appointment is already there with all the details &mdash; customer name, address, what they need, and when they are coming.</p>
+        </div>
+
+        <!-- Card 3: Full Dashboard -->
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Full Dashboard</h3>
+          <p class="card-text">Call logs, appointment history, customer info, jobs booked this month &mdash; all in one place. See exactly how your phones are performing.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <div class="section-divider"></div>
+
+
+  <!-- ============================================
+       EMERGENCY HANDLING
+       ============================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <span class="section-label">Emergency Calls</span>
+        <h2 class="section-title">When It's Urgent, We Act Fast</h2>
+        <p class="section-subtitle mx-auto">The AI knows the difference between a tune-up request and a gas leak. When seconds matter, it does not hesitate.</p>
+      </div>
+
+      <div class="grid-2">
+
+        <!-- Red Card: Emergencies Detected -->
+        <div class="emergency-card-red reveal reveal-delay-1">
+          <div class="emergency-card-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Emergencies the AI Detects
+          </div>
+          <div class="emergency-list">
+            <div class="emergency-list-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>Gas leaks</span>
+            </div>
+            <div class="emergency-list-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>Carbon monoxide alerts</span>
+            </div>
+            <div class="emergency-list-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>No heat in freezing weather</span>
+            </div>
+            <div class="emergency-list-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>Flooding from AC or furnace</span>
+            </div>
+            <div class="emergency-list-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>Electrical burning smell</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blue Card: Immediate Actions -->
+        <div class="emergency-card-blue reveal reveal-delay-2">
+          <div class="emergency-card-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            Immediate Actions Taken
+          </div>
+          <div class="emergency-list">
+            <div class="emergency-list-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Notifies on-call tech via phone call and text</span>
+            </div>
+            <div class="emergency-list-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Gives customer an ETA</span>
+            </div>
+            <div class="emergency-list-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Logs everything for your records</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <div class="section-divider"></div>
+
+
+  <!-- ============================================
+       INTEGRATIONS
+       ============================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <span class="section-label">Works With Your Setup</span>
+        <h2 class="section-title">Plugs Into What You Already Use</h2>
+        <p class="section-subtitle mx-auto">No new systems to learn. The Call Taker connects to the tools your business already runs on.</p>
+      </div>
+
+      <div class="grid-3">
+
+        <!-- Card 1: Phone Number -->
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Your Existing Phone Number</h3>
+          <p class="card-text">Forward calls to our AI or port your number over. No changes needed for your customers &mdash; they call the same number they always have.</p>
+        </div>
+
+        <!-- Card 2: Calendar -->
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+              <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Google Calendar / iCal / GHL</h3>
+          <p class="card-text">Appointments sync automatically. No manual entry, no copy-paste. Your schedule stays accurate in real time.</p>
+        </div>
+
+        <!-- Card 3: CRM -->
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            </svg>
+          </div>
+          <h3 class="card-title">Your CRM</h3>
+          <p class="card-text">GoHighLevel, Jobber, ServiceTitan, or whatever you use. Customer data flows in automatically so nothing gets lost.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <div class="section-divider"></div>
+
+
+  <!-- ============================================
+       FAQ
+       ============================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">Got Questions? We've Got Answers.</h2>
+      </div>
+
+      <div class="max-w-3xl mx-auto">
+
+        <!-- FAQ 1 -->
+        <div class="faq-item reveal">
+          <button class="faq-question">
+            Does it sound like a robot?
+            <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">No. We use the latest conversational AI. Callers consistently say they thought they were talking to a real person. Natural language, understands slang, responds conversationally &mdash; not like a phone tree.</div>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item reveal">
+          <button class="faq-question">
+            What if it's a real emergency?
+            <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">The AI detects HVAC emergencies &mdash; gas leaks, no heat, flooding, electrical issues. It immediately escalates to your on-call technician via phone call and text, gives the customer an ETA, and logs everything.</div>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item reveal">
+          <button class="faq-question">
+            How fast can I get set up?
+            <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Most HVAC companies are fully live within 48 hours. We handle the setup &mdash; you just tell us your hours, services, and emergency protocol.</div>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item reveal">
+          <button class="faq-question">
+            What if I already have an answering service?
+            <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">We cost less, never call in sick, never put callers on hold, and capture better data. Most owners who switch see more booked jobs in the first week.</div>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item reveal">
+          <button class="faq-question">
+            Can it book appointments?
+            <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes. It checks your calendar in real-time and books the next available slot. No double-booking, no back-and-forth.</div>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-item reveal">
+          <button class="faq-question">
+            What info does it capture?
+            <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Name, phone number, address, issue description, urgency level, and preferred appointment time. All logged and texted to you instantly.</div>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-item reveal">
+          <button class="faq-question">
+            What if a caller has a complex question?
+            <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">The AI handles common questions about your services, pricing, and availability. For complex issues, it captures full context and routes the call to you with a detailed summary.</div>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-item reveal">
+          <button class="faq-question">
+            Do I need to change my phone number?
+            <svg class="faq-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12M6 12h12"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">No. We set up call forwarding from your existing number. Your customers call the same number they always have.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <div class="section-divider"></div>
+
+
+  <!-- ============================================
+       CTA SECTION
+       ============================================ -->
+  <section class="section cta-section">
+    <div class="cta-glow"></div>
+    <div class="container text-center relative">
+      <div class="reveal">
+        <h2 class="section-title" style="font-size: clamp(2rem, 4vw, 3rem);">Ready to Hear It For Yourself?</h2>
+        <p class="section-subtitle mx-auto mb-8">Book a free 15-minute demo. We'll show you the AI answering a live call for your business.</p>
+        <a href="demo.html" class="btn btn-primary btn-lg">Book Your Free Demo</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+            </div>
+            The Call <span>Taker</span>
+          </a>
+          <p>AI-powered receptionist built for HVAC companies. Never miss a call, never lose a job.</p>
+        </div>
+
+        <!-- Pages -->
+        <div>
+          <h4 class="footer-heading">Pages</h4>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="about.html">About</a>
+          </div>
+        </div>
+
+        <!-- Resources -->
+        <div>
+          <h4 class="footer-heading">Resources</h4>
+          <div class="footer-links">
+            <a href="demo.html">Book a Demo</a>
+            <a href="faq.html">FAQ</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+
+        <!-- Legal -->
+        <div>
+          <h4 class="footer-heading">Legal</h4>
+          <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 The Call Taker. All rights reserved.</p>
+        <p>Built for HVAC pros who refuse to miss another call.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================
+       FLOATING MOBILE CTA
+       ============================================ -->
+  <div class="floating-cta">
+    <a href="demo.html">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+      </svg>
+      Book Your Free Demo
+    </a>
+  </div>
+
+
+  <!-- Shared JS -->
+  <script src="script.js"></script>
+
+</body>
+</html>
