@@ -145,9 +145,8 @@
             <h3 class="card-title" style="font-size: 1.25rem; margin-bottom: 8px;">Try it right now</h3>
             <p class="card-text" style="margin-bottom: 4px;">Want to skip the demo and try it now?</p>
             <p class="card-text" style="margin-bottom: 16px;">Call our live demo line:</p>
-            <!-- Replace with real demo phone number -->
-            <a href="tel:+16155555555" style="display: block; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: var(--orange-400); letter-spacing: -0.01em; margin-bottom: 16px; transition: var(--transition);">
-              (615) XXX-XXXX
+            <a href="tel:+16157845747" style="display: block; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: var(--orange-400); letter-spacing: -0.01em; margin-bottom: 16px; transition: var(--transition);">
+              (615) 784-5747
             </a>
             <p class="card-text">It'll answer as a sample HVAC company. See how it sounds.</p>
           </div>
@@ -164,7 +163,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
-                500+ HVAC companies trust The Call Taker <!-- placeholder -->
+                AI-powered &mdash; sounds like a real person
               </li>
               <li style="display: flex; align-items: center; gap: 12px; font-size: 1rem; font-weight: 600; color: var(--white); line-height: 1.5;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
@@ -276,20 +275,9 @@
       <h2 class="section-title text-3xl" style="margin-bottom: 12px;">Prefer to pick a time yourself?</h2>
       <p class="section-subtitle mx-auto" style="margin-bottom: 40px;">Choose a slot that works for you and we'll be there.</p>
 
-      <!-- GHL EMBED SPOT: Paste your GoHighLevel calendar booking widget embed code here.
-           To get it: Log into GHL -> Calendars -> "Schedule an Appointment" -> Booking Widget
-           -> Copy the <iframe> or <script> embed code and paste it here, replacing this placeholder. -->
-      <div class="card mx-auto" style="max-width: 800px; padding: 60px 32px; text-align: center; border: 2px dashed rgba(59,130,246,0.2); background: rgba(59,130,246,0.03);">
-        <div style="margin-bottom: 16px;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--blue-400)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto;">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-            <line x1="16" y1="2" x2="16" y2="6"/>
-            <line x1="8" y1="2" x2="8" y2="6"/>
-            <line x1="3" y1="10" x2="21" y2="10"/>
-          </svg>
-        </div>
-        <p style="font-size: 1.125rem; font-weight: 600; color: var(--slate-300);">Calendar booking widget will appear here</p>
-        <p style="font-size: 0.875rem; color: var(--slate-400); margin-top: 8px;">GoHighLevel calendar embed goes in this spot</p>
+      <div class="mx-auto" style="max-width: 800px;">
+        <iframe src="https://api.leadconnectorhq.com/widget/booking/thecalltaker-demo" style="width: 100%; border: none; overflow: hidden; min-height: 600px; border-radius: 12px;" scrolling="no" id="thecalltaker-demo-calendar"></iframe>
+        <script src="https://link.msgsndr.com/js/form_embed.js"></script>
       </div>
     </div>
   </section>
@@ -379,6 +367,53 @@
 
   <!-- Script -->
   <script src="script.js"></script>
+  <script>
+    // Demo form submission — creates contact in GHL
+    document.querySelector('#demo-form form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button[type="submit"]');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Sending...';
+      btn.disabled = true;
+
+      const data = {
+        firstName: document.getElementById('full-name').value.split(' ')[0],
+        lastName: document.getElementById('full-name').value.split(' ').slice(1).join(' ') || '',
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        companyName: document.getElementById('company-name').value,
+        source: 'website-demo-form',
+        tags: ['prospect', 'demo-booked'],
+        locationId: 'tQb9YmrGDrdVUJYPKrsY',
+        customFields: [
+          { id: 'contact.number_of_trucks', value: document.getElementById('trucks').value },
+          { id: 'contact.biggest_challenge', value: document.getElementById('challenge').value }
+        ]
+      };
+
+      try {
+        const res = await fetch('https://services.leadconnectorhq.com/contacts/', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+            'Version': '2021-07-28',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          this.innerHTML = '<div style="text-align:center;padding:40px 0;"><div style="font-size:2rem;margin-bottom:16px;">&#10003;</div><h3 style="color:var(--white);font-size:1.5rem;margin-bottom:12px;">Demo Request Received!</h3><p style="color:var(--slate-300);">We\'ll reach out within 24 hours to schedule your demo. In the meantime, try calling our AI demo line at <a href=\'tel:+16157845747\' style=\'color:var(--orange-400);font-weight:700;\'>(615) 784-5747</a></p></div>';
+        } else {
+          throw new Error('Failed');
+        }
+      } catch (err) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert('Something went wrong. Please call us at (615) 784-5747 instead.');
+      }
+    });
+  </script>
 
 </body>
 </html>
