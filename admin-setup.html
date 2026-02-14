@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Setup — The Call Taker</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ============================================
+       ADMIN SETUP — Page-Specific Styles
+       ============================================ */
+
+    /* Password Gate */
+    .password-gate {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .password-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-xl);
+      padding: 48px 36px;
+      text-align: center;
+    }
+    .password-card .lock-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .password-card .lock-icon svg {
+      width: 28px;
+      height: 28px;
+      color: var(--blue-400);
+    }
+    .password-card h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .password-card p {
+      font-size: 0.9375rem;
+      color: var(--slate-400);
+      margin-bottom: 28px;
+    }
+    .password-error {
+      display: none;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 0.875rem;
+      color: var(--red-400);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .password-error.visible {
+      display: block;
+    }
+
+    /* Admin Layout */
+    .admin-page {
+      display: none;
+      min-height: 100vh;
+      padding: 32px 0 80px;
+    }
+    .admin-page.visible {
+      display: block;
+    }
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .admin-header h1 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      color: var(--white);
+    }
+    .admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--blue-400);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .admin-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue-400);
+    }
+
+    /* Form Sections */
+    .form-section {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+    .form-section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .form-section-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background: rgba(59,130,246,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .form-section-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--blue-400);
+    }
+    .form-section-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .form-section-subtitle {
+      font-size: 0.8125rem;
+      color: var(--slate-400);
+      margin-top: 2px;
+    }
+
+    /* Form Grid */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    @media (min-width: 640px) {
+      .form-row-2 { grid-template-columns: repeat(2, 1fr); }
+      .form-row-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Required indicator */
+    .form-label .required {
+      color: var(--red-400);
+      margin-left: 2px;
+    }
+
+    /* Checkbox Grid */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 480px) {
+      .checkbox-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 768px) {
+      .checkbox-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+    .checkbox-item:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.12);
+    }
+    .checkbox-item input[type="checkbox"] {
+      display: none;
+    }
+    .checkbox-item .checkmark {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 2px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .checkbox-item .checkmark svg {
+      width: 12px;
+      height: 12px;
+      color: var(--white);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .checkbox-item input[type="checkbox"]:checked + .checkmark {
+      background: var(--blue-500);
+      border-color: var(--blue-500);
+    }
+    .checkbox-item input[type="checkbox"]:checked + .checkmark svg {
+      opacity: 1;
+    }
+    .checkbox-item .checkbox-label {
+      font-size: 0.9375rem;
+      color: var(--slate-300);
+      font-weight: 500;
+    }
+
+    /* Form Help Text */
+    .form-help {
+      font-size: 0.8125rem;
+      color: var(--slate-400);
+      margin-top: 6px;
+    }
+
+    /* Progress Indicator */
+    .progress-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    .progress-overlay.visible {
+      display: flex;
+    }
+    .progress-card {
+      background: var(--navy-800);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-xl);
+      padding: 48px 40px;
+      text-align: center;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: var(--shadow-xl);
+    }
+    .progress-spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(59,130,246,0.2);
+      border-top-color: var(--blue-500);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .progress-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .progress-subtitle {
+      font-size: 0.9375rem;
+      color: var(--slate-400);
+    }
+
+    /* Progress Steps */
+    .progress-steps {
+      margin-top: 28px;
+      text-align: left;
+    }
+    .progress-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.9375rem;
+      color: var(--slate-400);
+    }
+    .progress-step:last-child {
+      border-bottom: none;
+    }
+    .progress-step .step-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .progress-step .step-icon.pending {
+      opacity: 0.3;
+    }
+    .progress-step .step-icon.active .mini-spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(59,130,246,0.2);
+      border-top-color: var(--blue-500);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .progress-step .step-icon.done svg {
+      color: var(--green-400);
+      width: 20px;
+      height: 20px;
+    }
+    .progress-step .step-icon.error svg {
+      color: var(--red-400);
+      width: 20px;
+      height: 20px;
+    }
+    .progress-step.active-step {
+      color: var(--white);
+    }
+    .progress-step.done-step {
+      color: var(--green-400);
+    }
+    .progress-step.error-step {
+      color: var(--red-400);
+    }
+
+    /* Success Screen */
+    .success-screen {
+      display: none;
+    }
+    .success-screen.visible {
+      display: block;
+    }
+    .success-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-xl);
+      padding: 48px 40px;
+      text-align: center;
+      max-width: 640px;
+      margin: 80px auto 0;
+    }
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(34,197,94,0.1);
+      border: 2px solid rgba(34,197,94,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      animation: successPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes successPop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-icon svg {
+      width: 40px;
+      height: 40px;
+      color: var(--green-400);
+    }
+    .success-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .success-subtitle {
+      font-size: 1rem;
+      color: var(--slate-400);
+      margin-bottom: 32px;
+    }
+
+    /* Agent ID Display */
+    .agent-id-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .agent-id-box .agent-id-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--slate-400);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .agent-id-box .agent-id-value {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--blue-400);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      word-break: break-all;
+    }
+    .agent-id-box .copy-btn {
+      margin-left: auto;
+      flex-shrink: 0;
+      padding: 8px 16px;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--blue-400);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .agent-id-box .copy-btn:hover {
+      background: rgba(59,130,246,0.2);
+    }
+
+    /* Completion Checklist */
+    .completion-checklist {
+      text-align: left;
+      margin-bottom: 32px;
+    }
+    .completion-checklist h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.9375rem;
+    }
+    .checklist-item:last-child {
+      border-bottom: none;
+    }
+    .checklist-item .check-done {
+      color: var(--green-400);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .checklist-item .check-pending {
+      color: var(--slate-400);
+      flex-shrink: 0;
+      margin-top: 1px;
+      opacity: 0.5;
+    }
+    .checklist-item .check-text-done {
+      color: var(--slate-300);
+    }
+    .checklist-item .check-text-pending {
+      color: var(--slate-400);
+    }
+
+    /* Manual Steps Box */
+    .manual-steps-box {
+      background: rgba(249,115,22,0.05);
+      border: 1px solid rgba(249,115,22,0.2);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      text-align: left;
+      margin-bottom: 32px;
+    }
+    .manual-steps-box h4 {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--orange-400);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .manual-steps-box p {
+      font-size: 0.9375rem;
+      color: var(--slate-300);
+      line-height: 1.7;
+    }
+    .manual-steps-box code {
+      background: rgba(255,255,255,0.08);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      color: var(--blue-400);
+    }
+
+    /* Error State */
+    .error-banner {
+      display: none;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .error-banner.visible {
+      display: block;
+    }
+    .error-banner h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--red-400);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .error-banner p {
+      font-size: 0.875rem;
+      color: var(--slate-400);
+      line-height: 1.6;
+    }
+    .error-banner .error-detail {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.8125rem;
+      color: var(--red-400);
+      background: rgba(239,68,68,0.08);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      margin-top: 12px;
+      word-break: break-all;
+    }
+    .error-banner .retry-btn {
+      margin-top: 16px;
+      padding: 10px 24px;
+      background: rgba(239,68,68,0.15);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: var(--radius-full);
+      color: var(--red-400);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .error-banner .retry-btn:hover {
+      background: rgba(239,68,68,0.25);
+    }
+
+    /* Form validation */
+    .form-input.invalid,
+    .form-textarea.invalid {
+      border-color: var(--red-400);
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.15);
+    }
+    .form-input.invalid:focus,
+    .form-textarea.invalid:focus {
+      border-color: var(--red-400);
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.15);
+    }
+    .validation-msg {
+      font-size: 0.8125rem;
+      color: var(--red-400);
+      margin-top: 4px;
+      display: none;
+    }
+    .validation-msg.visible {
+      display: block;
+    }
+
+    /* Submit area */
+    .submit-area {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .submit-area .submit-note {
+      font-size: 0.8125rem;
+      color: var(--slate-400);
+    }
+    .btn-submit {
+      padding: 16px 40px;
+      background: var(--blue-500);
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: var(--radius-full);
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-submit:hover {
+      background: var(--blue-600);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59,130,246,0.3);
+    }
+    .btn-submit:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 639px) {
+      .form-section {
+        padding: 24px 20px;
+      }
+      .success-card {
+        padding: 32px 20px;
+      }
+      .agent-id-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .agent-id-box .copy-btn {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== PASSWORD GATE ========== -->
+  <div id="passwordGate" class="password-gate">
+    <div class="password-card">
+      <div class="lock-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+      </div>
+      <h1>Admin Access</h1>
+      <p>Enter the setup password to continue.</p>
+      <div id="passwordError" class="password-error">Incorrect password. Please try again.</div>
+      <form id="passwordForm" onsubmit="return handlePassword(event)">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <input type="password" id="passwordInput" class="form-input" placeholder="Enter password" autocomplete="off" autofocus>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+          Unlock
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== ADMIN PAGE ========== -->
+  <div id="adminPage" class="admin-page">
+    <div class="container" style="max-width: 800px;">
+
+      <!-- Header -->
+      <div class="admin-header">
+        <div>
+          <div class="admin-badge"><span class="dot"></span> Internal Tool</div>
+          <h1 style="margin-top: 12px;">New HVAC Client Setup</h1>
+          <p style="color: var(--slate-400); font-size: 0.9375rem; margin-top: 4px;">Create a Voice AI agent and CRM contact in one step.</p>
+        </div>
+      </div>
+
+      <!-- Error Banner -->
+      <div id="errorBanner" class="error-banner">
+        <h4>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" /></svg>
+          <span id="errorTitle">Setup Failed</span>
+        </h4>
+        <p id="errorMessage"></p>
+        <div id="errorDetail" class="error-detail" style="display: none;"></div>
+        <button class="retry-btn" onclick="retrySubmit()">Retry Setup</button>
+      </div>
+
+      <!-- Setup Form -->
+      <form id="setupForm" onsubmit="return handleSubmit(event)">
+
+        <!-- Section 1: Business Info -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" /></svg>
+            </div>
+            <div>
+              <div class="form-section-title">Business Information</div>
+              <div class="form-section-subtitle">Client company details</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="businessName">Business Name <span class="required">*</span></label>
+            <input type="text" id="businessName" name="businessName" class="form-input" placeholder="Nashville Comfort HVAC" required>
+          </div>
+
+          <div class="form-row form-row-3">
+            <div class="form-group">
+              <label class="form-label" for="street">Street Address</label>
+              <input type="text" id="street" name="street" class="form-input" placeholder="123 Main St">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="city">City</label>
+              <input type="text" id="city" name="city" class="form-input" placeholder="Nashville">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="state">State</label>
+              <input type="text" id="state" name="state" class="form-input" placeholder="TN" maxlength="2" style="text-transform: uppercase;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Owner Info -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            </div>
+            <div>
+              <div class="form-section-title">Owner Contact</div>
+              <div class="form-section-subtitle">Primary point of contact for this client</div>
+            </div>
+          </div>
+
+          <div class="form-row form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="firstName">First Name <span class="required">*</span></label>
+              <input type="text" id="firstName" name="firstName" class="form-input" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="lastName">Last Name <span class="required">*</span></label>
+              <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Smith" required>
+            </div>
+          </div>
+
+          <div class="form-row form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="ownerEmail">Email <span class="required">*</span></label>
+              <input type="email" id="ownerEmail" name="ownerEmail" class="form-input" placeholder="john@nashvillecomfort.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ownerPhone">Phone <span class="required">*</span></label>
+              <input type="tel" id="ownerPhone" name="ownerPhone" class="form-input" placeholder="(615) 555-0123" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Service Details -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.08 3.49a.75.75 0 01-1.15-.66V5.42a.75.75 0 01.37-.65l5.08-3.49a.75.75 0 01.78 0l5.08 3.49a.75.75 0 01.37.65v12.58a.75.75 0 01-1.15.66l-5.08-3.49a.75.75 0 00-.78 0z" /></svg>
+            </div>
+            <div>
+              <div class="form-section-title">Service Configuration</div>
+              <div class="form-section-subtitle">Defines what the AI agent knows about this business</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="serviceArea">Service Area</label>
+            <input type="text" id="serviceArea" name="serviceArea" class="form-input" placeholder="Nashville and surrounding areas within 30 miles">
+            <div class="form-help">Where does this company serve? The AI will reference this when asked.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="hours">Hours of Operation</label>
+            <input type="text" id="hours" name="hours" class="form-input" placeholder="Mon-Fri 7am-6pm, Sat 8am-2pm, 24/7 emergency">
+            <div class="form-help">Regular business hours. Include weekend and emergency availability.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Services Offered</label>
+            <div class="checkbox-grid">
+              <label class="checkbox-item">
+                <input type="checkbox" name="services" value="AC Repair" checked>
+                <span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></span>
+                <span class="checkbox-label">AC Repair</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="services" value="Heating Repair" checked>
+                <span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></span>
+                <span class="checkbox-label">Heating Repair</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="services" value="Installation" checked>
+                <span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></span>
+                <span class="checkbox-label">Installation</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="services" value="Maintenance" checked>
+                <span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></span>
+                <span class="checkbox-label">Maintenance</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="services" value="Duct Work">
+                <span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></span>
+                <span class="checkbox-label">Duct Work</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="services" value="Air Quality">
+                <span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></span>
+                <span class="checkbox-label">Air Quality</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="services" value="Emergency 24/7">
+                <span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg></span>
+                <span class="checkbox-label">Emergency 24/7</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="afterHours">After-Hours Message</label>
+            <textarea id="afterHours" name="afterHours" class="form-textarea" rows="3" placeholder="What the AI says about after-hours availability">We have technicians on call 24/7 for emergencies</textarea>
+            <div class="form-help">The AI agent will relay this information to callers outside business hours.</div>
+          </div>
+        </div>
+
+        <!-- Section 4: Notifications -->
+        <div class="form-section">
+          <div class="form-section-header">
+            <div class="form-section-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+            </div>
+            <div>
+              <div class="form-section-title">Notifications</div>
+              <div class="form-section-subtitle">Where post-call summaries are sent</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="notificationEmail">Notification Email</label>
+            <input type="email" id="notificationEmail" name="notificationEmail" class="form-input" placeholder="Defaults to owner email if left blank">
+            <div class="form-help">Post-call summaries will be emailed here after each AI-handled call.</div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-area">
+          <div class="submit-note">This will create a Voice AI agent and CRM contact in GoHighLevel.</div>
+          <button type="submit" id="submitBtn" class="btn-submit">
+            Create Client
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== SUCCESS SCREEN ========== -->
+  <div id="successScreen" class="success-screen">
+    <div class="container" style="max-width: 800px;">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+        </div>
+        <h2 class="success-title">Client Setup Complete!</h2>
+        <p class="success-subtitle" id="successBusinessName"></p>
+
+        <!-- Agent ID -->
+        <div class="agent-id-box">
+          <div style="flex: 1; min-width: 0;">
+            <div class="agent-id-label">Agent ID</div>
+            <div class="agent-id-value" id="agentIdDisplay"></div>
+          </div>
+          <button class="copy-btn" onclick="copyAgentId()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9.75a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" /></svg>
+            <span id="copyBtnText">Copy</span>
+          </button>
+        </div>
+
+        <!-- Checklist -->
+        <div class="completion-checklist">
+          <h3>Setup Checklist</h3>
+          <div class="checklist-item">
+            <svg class="check-done" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span class="check-text-done">Voice AI agent created</span>
+          </div>
+          <div class="checklist-item">
+            <svg class="check-done" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span class="check-text-done">Client contact created in CRM</span>
+          </div>
+          <div class="checklist-item">
+            <svg class="check-pending" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" fill="none"/></svg>
+            <span class="check-text-pending">Buy phone number (manual step)</span>
+          </div>
+          <div class="checklist-item">
+            <svg class="check-pending" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" fill="none"/></svg>
+            <span class="check-text-pending">Assign phone number to agent (manual step)</span>
+          </div>
+        </div>
+
+        <!-- Manual Steps -->
+        <div class="manual-steps-box">
+          <h4>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+            Next Steps (Manual)
+          </h4>
+          <p id="manualInstructions"></p>
+        </div>
+
+        <!-- Reset -->
+        <button class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;" onclick="resetForm()">
+          Set Up Another Client
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PROGRESS OVERLAY ========== -->
+  <div id="progressOverlay" class="progress-overlay">
+    <div class="progress-card">
+      <div class="progress-spinner"></div>
+      <div class="progress-title" id="progressTitle">Setting up client...</div>
+      <div class="progress-subtitle" id="progressSubtitle">This takes a few seconds</div>
+      <div class="progress-steps">
+        <div class="progress-step" id="step1">
+          <div class="step-icon pending" id="step1Icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><circle cx="12" cy="12" r="9" /></svg>
+          </div>
+          <span>Creating Voice AI agent...</span>
+        </div>
+        <div class="progress-step" id="step2">
+          <div class="step-icon pending" id="step2Icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><circle cx="12" cy="12" r="9" /></svg>
+          </div>
+          <span>Creating CRM contact...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    /* ========================================
+       CONFIG
+       ======================================== */
+    const CONFIG = {
+      baseUrl: 'https://services.leadconnectorhq.com',
+      apiKey: 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+      version: '2021-07-28',
+      locationId: 'tQb9YmrGDrdVUJYPKrsY',
+      password: 'calltaker2026'
+    };
+
+    const TIMEZONE_MAP = {
+      'CT': 'US/Eastern', 'DE': 'US/Eastern', 'FL': 'US/Eastern', 'GA': 'US/Eastern',
+      'IN': 'US/Eastern', 'KY': 'US/Eastern', 'ME': 'US/Eastern', 'MD': 'US/Eastern',
+      'MA': 'US/Eastern', 'MI': 'US/Eastern', 'NH': 'US/Eastern', 'NJ': 'US/Eastern',
+      'NY': 'US/Eastern', 'NC': 'US/Eastern', 'OH': 'US/Eastern', 'PA': 'US/Eastern',
+      'RI': 'US/Eastern', 'SC': 'US/Eastern', 'VT': 'US/Eastern', 'VA': 'US/Eastern',
+      'WV': 'US/Eastern', 'DC': 'US/Eastern',
+      'AL': 'US/Central', 'AR': 'US/Central', 'IL': 'US/Central', 'IA': 'US/Central',
+      'KS': 'US/Central', 'LA': 'US/Central', 'MN': 'US/Central', 'MS': 'US/Central',
+      'MO': 'US/Central', 'NE': 'US/Central', 'ND': 'US/Central', 'OK': 'US/Central',
+      'SD': 'US/Central', 'TN': 'US/Central', 'TX': 'US/Central', 'WI': 'US/Central',
+      'AZ': 'US/Mountain', 'CO': 'US/Mountain', 'ID': 'US/Mountain', 'MT': 'US/Mountain',
+      'NM': 'US/Mountain', 'UT': 'US/Mountain', 'WY': 'US/Mountain',
+      'CA': 'US/Pacific', 'NV': 'US/Pacific', 'OR': 'US/Pacific', 'WA': 'US/Pacific'
+    };
+
+    /* ========================================
+       STATE
+       ======================================== */
+    let lastFormData = null;
+    let createdAgentId = null;
+
+    /* ========================================
+       PASSWORD GATE
+       ======================================== */
+    function handlePassword(e) {
+      e.preventDefault();
+      const input = document.getElementById('passwordInput');
+      const error = document.getElementById('passwordError');
+
+      if (input.value === CONFIG.password) {
+        document.getElementById('passwordGate').style.display = 'none';
+        document.getElementById('adminPage').classList.add('visible');
+        setupNotificationEmailDefault();
+      } else {
+        error.classList.add('visible');
+        input.value = '';
+        input.focus();
+        input.classList.add('invalid');
+        setTimeout(() => input.classList.remove('invalid'), 1500);
+      }
+      return false;
+    }
+
+    /* ========================================
+       NOTIFICATION EMAIL DEFAULT
+       ======================================== */
+    function setupNotificationEmailDefault() {
+      const ownerEmail = document.getElementById('ownerEmail');
+      const notifEmail = document.getElementById('notificationEmail');
+      ownerEmail.addEventListener('change', function() {
+        if (!notifEmail.value.trim()) {
+          notifEmail.placeholder = this.value || 'Defaults to owner email if left blank';
+        }
+      });
+    }
+
+    /* ========================================
+       TIMEZONE DETECTION
+       ======================================== */
+    function getTimezone(stateAbbr) {
+      if (!stateAbbr) return 'US/Central';
+      return TIMEZONE_MAP[stateAbbr.toUpperCase().trim()] || 'US/Central';
+    }
+
+    /* ========================================
+       BUILD AGENT PROMPT
+       ======================================== */
+    function buildAgentPrompt(data) {
+      const services = data.services.join(', ') || 'AC Repair, Heating Repair, Installation, Maintenance';
+      const hours = data.hours || 'Mon-Fri 7am-6pm, Sat 8am-2pm';
+      const serviceArea = data.serviceArea || data.city + ' and surrounding areas';
+      const afterHours = data.afterHours || 'We have technicians on call 24/7 for emergencies';
+
+      return `AGENT ROLE & OBJECTIVE:
+You are a professional AI receptionist for ${data.businessName}. You sound friendly, calm, and competent — like the best front desk person they ever had. You never rush the caller. You never sound robotic.
+
+Your Goal: Capture the caller information, understand their need, assess urgency, and assure them someone will help.
+
+BUSINESS INFORMATION:
+- Company: ${data.businessName}
+- Hours: ${hours}
+- Service Area: ${serviceArea}
+- Services Offered: ${services}
+- After Hours: ${afterHours}
+
+CALL FLOW:
+
+1. GREETING: Welcome them warmly. Ask what is going on with their heating or cooling.
+
+2. LISTEN & ASSESS URGENCY:
+   EMERGENCY indicators (handle with urgency):
+   - Gas leak or gas smell
+   - Carbon monoxide alarm going off
+   - No heat and temperature is below 40 degrees
+   - No AC and someone is elderly, infant, or has medical condition
+   - Water flooding from HVAC unit
+   - Burning smell or sparks from equipment
+   - Electrical issues with HVAC system
+
+   If EMERGENCY: Say That sounds like it could be an emergency. I am going to make sure a technician gets notified right away. Let me get your information quickly.
+
+   STANDARD service requests: AC not cooling, heater not working, strange noises, maintenance or tune-up, thermostat issues, ductwork, air quality, new system quotes.
+
+3. COLLECT INFORMATION:
+   - Full name (confirm by spelling it out letter by letter)
+   - Phone number (read it back to confirm)
+   - Address (street, city)
+   - Brief description of the issue
+   - How long the issue has been happening
+   - Best time for a technician to come out
+
+4. APPOINTMENT LANGUAGE:
+   Say: I will get this information to our team and someone will call you back shortly to confirm your appointment time. We typically can get someone out within 24 hours, and sooner for emergencies.
+   Do NOT promise specific appointment times.
+   Do NOT quote prices or estimates.
+
+5. COMMON QUESTIONS YOU CAN ANSWER:
+   - Do you offer 24/7 service? Yes, we have technicians available around the clock for emergencies.
+   - Do you offer free estimates? Our team can discuss pricing options when they call you back. We want to make sure we give you an accurate quote.
+   - What areas do you serve? We serve ${serviceArea}.
+   - How much does a service call cost? Pricing depends on the specific service needed. Our team will go over all costs with you before any work begins, no surprises.
+   - Do you work on a specific brand? We work on all major brands. Our technicians are experienced with most systems.
+   - What are your hours? Our regular hours are ${hours}. ${afterHours}
+
+6. THINGS YOU MUST NEVER DO:
+   - Never quote prices or give estimates
+   - Never diagnose the problem. You are a receptionist, not a technician
+   - Never tell the caller to look something up online or call someone else
+   - Never make up information that was not provided
+   - Never say you are an AI unless directly asked. If asked, say I am an AI assistant helping answer calls so you never have to wait on hold or leave a voicemail.
+   - Never argue with the caller
+
+7. CALL CONCLUSION:
+   Thank them by name. Reassure them: We have got your information and someone from our team will be reaching out to you shortly. Is there anything else I can help with? Then wish them a good day or evening.
+
+TONE: Warm, professional, helpful. Like talking to a real person who genuinely cares. Use natural language, not corporate speak. Short sentences. Do not over-explain.`;
+    }
+
+    /* ========================================
+       COLLECT FORM DATA
+       ======================================== */
+    function collectFormData() {
+      const checkedServices = [];
+      document.querySelectorAll('input[name="services"]:checked').forEach(cb => {
+        checkedServices.push(cb.value);
+      });
+
+      const ownerEmail = document.getElementById('ownerEmail').value.trim();
+      const notifEmail = document.getElementById('notificationEmail').value.trim() || ownerEmail;
+
+      return {
+        businessName: document.getElementById('businessName').value.trim(),
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        ownerEmail: ownerEmail,
+        ownerPhone: document.getElementById('ownerPhone').value.trim(),
+        street: document.getElementById('street').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        state: document.getElementById('state').value.trim().toUpperCase(),
+        serviceArea: document.getElementById('serviceArea').value.trim(),
+        hours: document.getElementById('hours').value.trim(),
+        services: checkedServices,
+        afterHours: document.getElementById('afterHours').value.trim(),
+        notificationEmail: notifEmail
+      };
+    }
+
+    /* ========================================
+       FORM VALIDATION
+       ======================================== */
+    function validateForm() {
+      let valid = true;
+      const required = [
+        { id: 'businessName', label: 'Business name' },
+        { id: 'firstName', label: 'First name' },
+        { id: 'lastName', label: 'Last name' },
+        { id: 'ownerEmail', label: 'Email' },
+        { id: 'ownerPhone', label: 'Phone' }
+      ];
+
+      // Clear previous states
+      document.querySelectorAll('.form-input.invalid').forEach(el => el.classList.remove('invalid'));
+      document.querySelectorAll('.validation-msg.visible').forEach(el => el.classList.remove('visible'));
+
+      required.forEach(field => {
+        const el = document.getElementById(field.id);
+        if (!el.value.trim()) {
+          el.classList.add('invalid');
+          valid = false;
+        }
+      });
+
+      // Email format
+      const emailEl = document.getElementById('ownerEmail');
+      if (emailEl.value.trim() && !isValidEmail(emailEl.value.trim())) {
+        emailEl.classList.add('invalid');
+        valid = false;
+      }
+
+      // Notification email format (if provided)
+      const notifEl = document.getElementById('notificationEmail');
+      if (notifEl.value.trim() && !isValidEmail(notifEl.value.trim())) {
+        notifEl.classList.add('invalid');
+        valid = false;
+      }
+
+      if (!valid) {
+        // Scroll to first invalid field
+        const firstInvalid = document.querySelector('.form-input.invalid');
+        if (firstInvalid) {
+          firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstInvalid.focus();
+        }
+      }
+
+      return valid;
+    }
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    /* ========================================
+       PROGRESS UI HELPERS
+       ======================================== */
+    function showProgress() {
+      resetProgressSteps();
+      document.getElementById('progressOverlay').classList.add('visible');
+    }
+
+    function hideProgress() {
+      document.getElementById('progressOverlay').classList.remove('visible');
+    }
+
+    function resetProgressSteps() {
+      ['step1', 'step2'].forEach(id => {
+        const step = document.getElementById(id);
+        step.className = 'progress-step';
+        const icon = document.getElementById(id + 'Icon');
+        icon.className = 'step-icon pending';
+        icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><circle cx="12" cy="12" r="9" /></svg>';
+      });
+    }
+
+    function setStepActive(stepNum) {
+      const step = document.getElementById('step' + stepNum);
+      const icon = document.getElementById('step' + stepNum + 'Icon');
+      step.classList.add('active-step');
+      icon.className = 'step-icon active';
+      icon.innerHTML = '<div class="mini-spinner"></div>';
+    }
+
+    function setStepDone(stepNum) {
+      const step = document.getElementById('step' + stepNum);
+      const icon = document.getElementById('step' + stepNum + 'Icon');
+      step.classList.remove('active-step');
+      step.classList.add('done-step');
+      icon.className = 'step-icon done';
+      icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>';
+    }
+
+    function setStepError(stepNum) {
+      const step = document.getElementById('step' + stepNum);
+      const icon = document.getElementById('step' + stepNum + 'Icon');
+      step.classList.remove('active-step');
+      step.classList.add('error-step');
+      icon.className = 'step-icon error';
+      icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>';
+    }
+
+    /* ========================================
+       ERROR UI
+       ======================================== */
+    function showError(title, message, detail) {
+      const banner = document.getElementById('errorBanner');
+      document.getElementById('errorTitle').textContent = title;
+      document.getElementById('errorMessage').textContent = message;
+      const detailEl = document.getElementById('errorDetail');
+      if (detail) {
+        detailEl.textContent = detail;
+        detailEl.style.display = 'block';
+      } else {
+        detailEl.style.display = 'none';
+      }
+      banner.classList.add('visible');
+      banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function hideError() {
+      document.getElementById('errorBanner').classList.remove('visible');
+    }
+
+    /* ========================================
+       API HEADERS
+       ======================================== */
+    function getHeaders() {
+      return {
+        'Authorization': 'Bearer ' + CONFIG.apiKey,
+        'Version': CONFIG.version,
+        'Content-Type': 'application/json'
+      };
+    }
+
+    /* ========================================
+       API CALL: CREATE VOICE AI AGENT
+       ======================================== */
+    async function createVoiceAgent(data) {
+      const timezone = getTimezone(data.state);
+      const agentPrompt = buildAgentPrompt(data);
+      const welcomeMessage = 'Thanks for calling ' + data.businessName + '! Whether you need a repair, maintenance, or have an emergency, I can help. What\'s going on with your heating or cooling today?';
+
+      const body = {
+        locationId: CONFIG.locationId,
+        agentName: data.businessName + ' - AI Receptionist',
+        businessName: data.businessName,
+        welcomeMessage: welcomeMessage,
+        agentPrompt: agentPrompt,
+        patienceLevel: 'medium',
+        maxCallDuration: 900,
+        language: 'en-US',
+        timezone: timezone,
+        sendPostCallNotificationTo: {
+          admins: true,
+          allUsers: false,
+          contactAssignedUser: false,
+          specificUsers: [],
+          customEmails: [data.notificationEmail]
+        }
+      };
+
+      const response = await fetch(CONFIG.baseUrl + '/voice-ai/agents', {
+        method: 'POST',
+        headers: getHeaders(),
+        body: JSON.stringify(body)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorDetail = '';
+        try {
+          const errorJson = JSON.parse(errorText);
+          errorDetail = errorJson.message || errorJson.msg || errorText;
+        } catch {
+          errorDetail = errorText;
+        }
+        throw new Error('Voice AI Agent creation failed (' + response.status + '): ' + errorDetail);
+      }
+
+      return await response.json();
+    }
+
+    /* ========================================
+       API CALL: CREATE GHL CONTACT
+       ======================================== */
+    async function createContact(data) {
+      const body = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.ownerEmail,
+        phone: data.ownerPhone,
+        companyName: data.businessName,
+        source: 'admin-setup-wizard',
+        tags: ['active-client', 'hvac'],
+        locationId: CONFIG.locationId
+      };
+
+      const response = await fetch(CONFIG.baseUrl + '/contacts/', {
+        method: 'POST',
+        headers: getHeaders(),
+        body: JSON.stringify(body)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorDetail = '';
+        try {
+          const errorJson = JSON.parse(errorText);
+          errorDetail = errorJson.message || errorJson.msg || errorText;
+        } catch {
+          errorDetail = errorText;
+        }
+        throw new Error('Contact creation failed (' + response.status + '): ' + errorDetail);
+      }
+
+      return await response.json();
+    }
+
+    /* ========================================
+       FORM SUBMIT
+       ======================================== */
+    async function handleSubmit(e) {
+      e.preventDefault();
+      hideError();
+
+      if (!validateForm()) return false;
+
+      const data = collectFormData();
+      lastFormData = data;
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      showProgress();
+
+      try {
+        // Step 1: Create Voice AI Agent
+        setStepActive(1);
+        const agentResponse = await createVoiceAgent(data);
+        setStepDone(1);
+
+        // Extract agent ID from response
+        createdAgentId = agentResponse.agent?.id || agentResponse.id || agentResponse.agentId || 'Unknown';
+
+        // Step 2: Create Contact
+        setStepActive(2);
+        await createContact(data);
+        setStepDone(2);
+
+        // Small delay so user sees both checkmarks
+        await new Promise(resolve => setTimeout(resolve, 600));
+
+        // Show success
+        hideProgress();
+        showSuccess(data, createdAgentId);
+
+      } catch (error) {
+        hideProgress();
+        submitBtn.disabled = false;
+
+        // Determine which step failed
+        const step1Done = document.getElementById('step1').classList.contains('done-step');
+
+        if (!step1Done) {
+          showError(
+            'Voice AI Agent Creation Failed',
+            'Could not create the AI receptionist agent. The contact was not created.',
+            error.message
+          );
+        } else {
+          showError(
+            'Contact Creation Failed',
+            'The Voice AI agent was created successfully, but the CRM contact could not be created. You may need to add the contact manually.',
+            error.message
+          );
+        }
+      }
+
+      return false;
+    }
+
+    /* ========================================
+       RETRY
+       ======================================== */
+    function retrySubmit() {
+      hideError();
+      if (lastFormData) {
+        document.getElementById('setupForm').dispatchEvent(new Event('submit', { cancelable: true }));
+      }
+    }
+
+    /* ========================================
+       SUCCESS SCREEN
+       ======================================== */
+    function showSuccess(data, agentId) {
+      document.getElementById('setupForm').style.display = 'none';
+      document.getElementById('adminPage').classList.remove('visible');
+      document.getElementById('successScreen').classList.add('visible');
+
+      document.getElementById('successBusinessName').textContent = data.businessName + ' is ready to receive AI-answered calls.';
+      document.getElementById('agentIdDisplay').textContent = agentId;
+
+      const city = data.city || '[city]';
+      const state = data.state || '[state]';
+      const agentName = data.businessName + ' - AI Receptionist';
+
+      document.getElementById('manualInstructions').innerHTML =
+        'Go to <strong>GoHighLevel</strong> &rarr; <strong>Phone Numbers</strong> &rarr; Buy a local number for ' +
+        '<code>' + city + ', ' + state + '</code>' +
+        ' &rarr; Assign it to agent: <code>' + escapeHtml(agentName) + '</code>';
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ========================================
+       COPY AGENT ID
+       ======================================== */
+    function copyAgentId() {
+      const agentId = document.getElementById('agentIdDisplay').textContent;
+      navigator.clipboard.writeText(agentId).then(() => {
+        const btn = document.getElementById('copyBtnText');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      }).catch(() => {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = agentId;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        const btn = document.getElementById('copyBtnText');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      });
+    }
+
+    /* ========================================
+       RESET FORM
+       ======================================== */
+    function resetForm() {
+      document.getElementById('successScreen').classList.remove('visible');
+      document.getElementById('adminPage').classList.add('visible');
+      document.getElementById('setupForm').style.display = '';
+      document.getElementById('setupForm').reset();
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('afterHours').value = 'We have technicians on call 24/7 for emergencies';
+      hideError();
+
+      // Re-check defaults
+      const defaultCheckboxes = ['AC Repair', 'Heating Repair', 'Installation', 'Maintenance'];
+      document.querySelectorAll('input[name="services"]').forEach(cb => {
+        cb.checked = defaultCheckboxes.includes(cb.value);
+      });
+
+      lastFormData = null;
+      createdAgentId = null;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ========================================
+       UTILITY
+       ======================================== */
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    /* ========================================
+       INIT: Focus password field
+       ======================================== */
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('passwordInput').focus();
+    });
+  </script>
+
+</body>
+</html>
