@@ -520,13 +520,24 @@
         <p class="section-subtitle mx-auto" style="text-align: center;">Every plan includes 24/7 AI call answering. Pick the one that fits your shop.</p>
       </div>
 
+      <!-- Billing Toggle -->
+      <div class="billing-toggle reveal">
+        <span class="billing-toggle-label active" data-billing="monthly">Monthly</span>
+        <div class="billing-toggle-switch" id="billingToggle"></div>
+        <span class="billing-toggle-label" data-billing="annual">Annual</span>
+        <span class="billing-annual-badge">Save 2 months</span>
+      </div>
+
       <div class="pricing-grid">
 
         <!-- Starter -->
         <div class="pricing-card reveal">
           <div class="pricing-name">Starter</div>
           <div class="pricing-desc">Best for solo operators and small shops (1-5 trucks)</div>
-          <div class="pricing-price">$297<span>/mo</span></div>
+          <div class="pricing-price" data-monthly="297" data-annual="247">$297<span>/mo</span></div>
+          <div class="pricing-billed billing-annual-text" style="display:none;">Billed at $2,970/year</div>
+          <div class="pricing-save billing-annual-text" style="display:none;">Save $594/year</div>
+          <p class="pricing-setup">+ $197 one-time setup</p>
           <div class="pricing-divider"></div>
           <div class="pricing-features">
             <div class="pricing-feature">
@@ -562,7 +573,10 @@
           <div class="pricing-badge">Most Popular</div>
           <div class="pricing-name">Professional</div>
           <div class="pricing-desc">Best for growing companies (5-20 trucks)</div>
-          <div class="pricing-price">$497<span>/mo</span></div>
+          <div class="pricing-price" data-monthly="497" data-annual="414">$497<span>/mo</span></div>
+          <div class="pricing-billed billing-annual-text" style="display:none;">Billed at $4,970/year</div>
+          <div class="pricing-save billing-annual-text" style="display:none;">Save $994/year</div>
+          <p class="pricing-setup">+ $297 one-time setup</p>
           <div class="pricing-divider"></div>
           <div class="pricing-features">
             <div class="pricing-feature">
@@ -602,6 +616,7 @@
           <div class="pricing-name">Enterprise</div>
           <div class="pricing-desc">Best for large operations (20+ trucks, multiple locations)</div>
           <div class="pricing-price">Custom</div>
+          <p class="pricing-setup">Custom setup included</p>
           <div class="pricing-divider"></div>
           <div class="pricing-features">
             <div class="pricing-feature">
@@ -637,6 +652,36 @@
         </div>
 
       </div>
+
+      <!-- Add-ons -->
+      <div class="text-center reveal" style="margin-top: 64px;">
+        <div class="section-label" style="justify-content: center;">Add-Ons</div>
+        <h3 style="font-size: clamp(1.25rem, 2.5vw, 1.5rem); font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Supercharge your plan</h3>
+        <p style="font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 0;">Stack these on any plan to capture even more revenue.</p>
+      </div>
+      <div class="addons-grid">
+        <div class="addon-card reveal">
+          <div class="addon-name">Missed Call Text-Back</div>
+          <div class="addon-price">$49<span>/mo</span></div>
+          <div class="addon-desc">Automatically text every caller who doesn't connect. "Hey, we saw you called — how can we help?" Recovers leads that would otherwise disappear.</div>
+        </div>
+        <div class="addon-card reveal reveal-delay-1">
+          <div class="addon-name">Review Booster</div>
+          <div class="addon-price">$79<span>/mo</span></div>
+          <div class="addon-desc">After every completed job, automatically send a Google review request via text. More 5-star reviews = more calls from Google.</div>
+        </div>
+        <div class="addon-card reveal reveal-delay-1">
+          <div class="addon-name">Spanish Language</div>
+          <div class="addon-price">$99<span>/mo</span></div>
+          <div class="addon-desc">AI receptionist answers in Spanish when it detects a Spanish-speaking caller. Capture the customers your competitors can't serve.</div>
+        </div>
+        <div class="addon-card reveal reveal-delay-2">
+          <div class="addon-name">Extra Phone Line</div>
+          <div class="addon-price">$97<span>/mo</span></div>
+          <div class="addon-desc">Add a second business number with its own AI receptionist. Perfect for a second location, brand, or dedicated emergency line.</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -795,6 +840,31 @@
       }
       slider.addEventListener('input', update);
       update();
+    })();
+
+    // Billing Toggle (monthly / annual)
+    (function() {
+      var toggle = document.getElementById('billingToggle');
+      if (!toggle) return;
+      var isAnnual = false;
+      var labels = document.querySelectorAll('.billing-toggle-label');
+      var prices = document.querySelectorAll('.pricing-price[data-monthly]');
+      var annualTexts = document.querySelectorAll('.billing-annual-text');
+
+      toggle.addEventListener('click', function() {
+        isAnnual = !isAnnual;
+        toggle.classList.toggle('annual', isAnnual);
+        labels.forEach(function(l) {
+          l.classList.toggle('active', isAnnual ? l.dataset.billing === 'annual' : l.dataset.billing === 'monthly');
+        });
+        prices.forEach(function(p) {
+          var val = isAnnual ? p.dataset.annual : p.dataset.monthly;
+          p.innerHTML = '$' + val + '<span>/mo</span>';
+        });
+        annualTexts.forEach(function(el) {
+          el.style.display = isAnnual ? 'block' : 'none';
+        });
+      });
     })();
 
     // CTA click tracking (ready for Google Analytics / any analytics)
