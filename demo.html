@@ -7,6 +7,9 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="description" content="Book a free 15-minute demo and watch the AI answer a live call for your HVAC business. Or call our demo line right now.">
   <meta name="robots" content="index, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Book a Demo &mdash; The Call Taker">
@@ -24,6 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://thecalltaker.com/demo">
 
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -164,22 +168,22 @@
 
               <div class="form-group">
                 <label class="form-label" for="full-name">Full Name *</label>
-                <input class="form-input" type="text" id="full-name" name="full_name" placeholder="John Smith" required>
+                <input class="form-input" type="text" id="full-name" name="full_name" placeholder="John Smith" required autocomplete="name" maxlength="100" pattern="[A-Za-z\s\-'\.]{2,100}">
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="company-name">Company Name</label>
-                <input class="form-input" type="text" id="company-name" name="company_name" placeholder="Smith HVAC">
+                <input class="form-input" type="text" id="company-name" name="company_name" placeholder="Smith HVAC" autocomplete="organization" maxlength="150">
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="phone">Phone Number *</label>
-                <input class="form-input" type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+                <input class="form-input" type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required autocomplete="tel" maxlength="20" pattern="[\d\s\(\)\-\+\.]{7,20}">
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="email">Email *</label>
-                <input class="form-input" type="email" id="email" name="email" placeholder="john@smithhvac.com" required>
+                <input class="form-input" type="email" id="email" name="email" placeholder="john@smithhvac.com" required autocomplete="email" maxlength="254">
               </div>
 
               <div class="form-group">
@@ -219,6 +223,11 @@
                 No credit card required. No obligation.
               </p>
 
+              <!-- Honeypot field — hidden from humans, catches bots -->
+              <div style="position:absolute;left:-9999px;" aria-hidden="true">
+                <input type="text" name="website_url" tabindex="-1" autocomplete="off">
+              </div>
+
             </form>
           </div>
         </div>
@@ -236,7 +245,7 @@
       <p class="section-subtitle mx-auto" style="margin-bottom: 40px; text-align: center;">Choose a slot that works for you and we'll be there.</p>
 
       <div class="mx-auto" style="max-width: 800px;">
-        <iframe src="https://api.leadconnectorhq.com/widget/booking/h4IlzccZ1m3JprEQqpMJ" style="width: 100%; border: none; overflow: hidden; min-height: 600px; border-radius: 12px;" scrolling="no" id="thecalltaker-demo-calendar" title="Book a demo appointment calendar"></iframe>
+        <iframe src="https://api.leadconnectorhq.com/widget/booking/h4IlzccZ1m3JprEQqpMJ" style="width: 100%; border: none; overflow: hidden; min-height: 600px; border-radius: 12px;" scrolling="no" id="thecalltaker-demo-calendar" title="Book a demo appointment calendar" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
         <script src="https://link.msgsndr.com/js/form_embed.js"></script>
       </div>
     </div>
@@ -274,41 +283,47 @@
 
   <script src="script.js"></script>
   <script>
+    // Sanitize user input — strip HTML/script tags
+    function sanitize(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML.trim();
+    }
+
     // Demo form submission — creates contact in GHL
     document.querySelector('#demo-form form').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const btn = this.querySelector('button[type="submit"]');
-      const originalText = btn.innerHTML;
+
+      // Honeypot check — if filled, it's a bot
+      var honeypot = this.querySelector('input[name="website_url"]');
+      if (honeypot && honeypot.value) return;
+
+      var btn = this.querySelector('button[type="submit"]');
+      var originalText = btn.innerHTML;
       btn.innerHTML = 'Sending...';
       btn.disabled = true;
 
-      const data = {
-        firstName: document.getElementById('full-name').value.split(' ')[0],
-        lastName: document.getElementById('full-name').value.split(' ').slice(1).join(' ') || '',
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        companyName: document.getElementById('company-name').value,
-        source: 'website-demo-form',
-        tags: ['prospect', 'demo-booked'],
-        locationId: 'tQb9YmrGDrdVUJYPKrsY',
-        customFields: [
-          { id: 'contact.number_of_trucks', value: document.getElementById('trucks').value },
-          { id: 'contact.biggest_challenge', value: document.getElementById('challenge').value }
-        ]
+      var fullName = sanitize(document.getElementById('full-name').value);
+      var data = {
+        firstName: fullName.split(' ')[0],
+        lastName: fullName.split(' ').slice(1).join(' ') || '',
+        email: sanitize(document.getElementById('email').value),
+        phone: sanitize(document.getElementById('phone').value),
+        companyName: sanitize(document.getElementById('company-name').value)
       };
 
       try {
         // Submit to GHL via form endpoint (no API key exposed)
-        const formData = new FormData();
+        var formData = new FormData();
         formData.append('first_name', data.firstName);
         formData.append('last_name', data.lastName);
         formData.append('email', data.email);
         formData.append('phone', data.phone);
         formData.append('company_name', data.companyName);
-        formData.append('number_of_trucks', document.getElementById('trucks').value);
-        formData.append('biggest_challenge', document.getElementById('challenge').value);
+        formData.append('number_of_trucks', sanitize(document.getElementById('trucks').value));
+        formData.append('biggest_challenge', sanitize(document.getElementById('challenge').value));
 
-        const res = await fetch('https://services.leadconnectorhq.com/widget/form/tQb9YmrGDrdVUJYPKrsY', {
+        var res = await fetch('https://services.leadconnectorhq.com/widget/form/tQb9YmrGDrdVUJYPKrsY', {
           method: 'POST',
           body: formData
         });

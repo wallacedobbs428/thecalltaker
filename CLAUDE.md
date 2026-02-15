@@ -12,7 +12,7 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 - **Website**: Static HTML/CSS/JS on GitHub Pages (~/Desktop/wallace-hvac/website/)
 - **CRM/Backend**: GoHighLevel (API key in ~/Desktop/thecalltaker/.env)
 - **Billing**: Stripe (NOT YET CONNECTED)
-- **Website URL**: https://thecalltaker.com/ (GitHub Pages, no custom domain)
+- **Website URL**: https://thecalltaker.com/ (GitHub Pages + custom domain via Netlify DNS)
 
 ## GoHighLevel Connection
 - **API Key**: pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35
@@ -40,15 +40,17 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 ├── docs/
 │   ├── audit-report.md — full project audit
 │   ├── claude-did-this.md — everything built in GHL via API
+│   ├── google-business-profile-setup.md — step-by-step GBP setup guide
+│   ├── stripe-setup-guide.md — Stripe + GHL payment setup
 │   └── wallace-checklist.md — manual tasks only Wallace can do
-├── website/ (GitHub Pages deployment — 2-page site)
+├── website/ (GitHub Pages deployment — 2-page site, CNAME: thecalltaker.com)
 │   ├── index.html — home + pricing + how-it-works (single scrolling page)
 │   ├── demo.html — booking form + demo phone + GHL calendar embed
 │   ├── admin-setup.html — internal GHL setup tool (NOT public)
 │   ├── styles.css — shared design system (dark + green theme)
 │   ├── script.js — shared interactions (reveals, FAQ, mobile nav)
 │   ├── 404.html — custom error page
-│   ├── CNAME — (REMOVED, no custom domain)
+│   ├── CNAME — custom domain: thecalltaker.com
 │   ├── favicon.svg — site icon
 │   ├── robots.txt — search engine directives
 │   ├── sitemap.xml — SEO sitemap (index + demo only)
@@ -58,6 +60,9 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 ├── sales/
 │   ├── cold-email-sequence.md — 3-email cold outreach
 │   ├── cold-call-script.md — phone script + objection handling
+│   ├── cold-dm-scripts.md — Instagram/Facebook/LinkedIn DM scripts
+│   ├── facebook-ad-copy.md — Facebook/Instagram paid ad copy + targeting
+│   ├── hvac-lead-list.md — 27 HVAC companies in Middle TN
 │   ├── one-page-proposal.md — proposal template
 │   ├── secret-shopper-template.md — voicemail detection tracking
 │   └── demo-script.md — live demo call walkthrough
