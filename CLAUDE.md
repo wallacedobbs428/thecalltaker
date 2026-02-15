@@ -12,7 +12,7 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 - **Website**: Static HTML/CSS/JS on GitHub Pages (~/Desktop/wallace-hvac/website/)
 - **CRM/Backend**: GoHighLevel (API key in ~/Desktop/thecalltaker/.env)
 - **Billing**: Stripe (NOT YET CONNECTED)
-- **Website URL**: https://msnfjsfsfgskgvfyvsyfv.github.io/thecalltaker/ (GitHub Pages, no custom domain)
+- **Website URL**: https://wallacedobbs428.github.io/thecalltaker/ (GitHub Pages, no custom domain)
 
 ## GoHighLevel Connection
 - **API Key**: pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35
@@ -99,5 +99,5 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 
 ## GHL Embeds on Website
 - demo.html has a working GHL calendar booking iframe (calendar ID: h4IlzccZ1m3JprEQqpMJ)
-- demo.html form submits directly to GHL contacts API (NOTE: API key exposed client-side)
+- demo.html form submits via GHL widget endpoint (API key removed from client-side code)
 - Demo phone number: (615) 784-5747

@@ -12,7 +12,7 @@
   <meta property="og:title" content="Book a Demo &mdash; The Call Taker">
   <meta property="og:description" content="Book a free 15-minute demo and watch the AI answer a live call for your HVAC business. Or call our demo line right now.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://msnfjsfsfgskgvfyvsyfv.github.io/thecalltaker/demo">
+  <meta property="og:url" content="https://wallacedobbs428.github.io/thecalltaker/demo">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -288,14 +288,19 @@
       };
 
       try {
-        const res = await fetch('https://services.leadconnectorhq.com/contacts/', {
+        // Submit to GHL via form endpoint (no API key exposed)
+        const formData = new FormData();
+        formData.append('first_name', data.firstName);
+        formData.append('last_name', data.lastName);
+        formData.append('email', data.email);
+        formData.append('phone', data.phone);
+        formData.append('company_name', data.companyName);
+        formData.append('number_of_trucks', document.getElementById('trucks').value);
+        formData.append('biggest_challenge', document.getElementById('challenge').value);
+
+        const res = await fetch('https://services.leadconnectorhq.com/widget/form/tQb9YmrGDrdVUJYPKrsY', {
           method: 'POST',
-          headers: {
-            'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
-            'Version': '2021-07-28',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
+          body: formData
         });
 
         if (res.ok) {
