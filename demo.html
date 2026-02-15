@@ -345,6 +345,14 @@
           if (typeof fbq === 'function') {
             fbq('track', 'Lead', { content_name: 'Demo Request', content_category: 'HVAC' });
           }
+          // Instant push notification to Wallace + Mills
+          try {
+            fetch('https://ntfy.sh/tct-xK9mW4vR7pLd', {
+              method: 'POST',
+              headers: { 'Title': 'New Demo Request!', 'Priority': 'high', 'Tags': 'fire,phone' },
+              body: data.firstName + ' ' + data.lastName + ' from ' + data.companyName + ' — ' + data.phone + ' — ' + data.email
+            });
+          } catch(e) {}
           this.innerHTML = '<div style="text-align:center;padding:40px 0;"><div style="font-size:2rem;margin-bottom:16px;">&#10003;</div><h3 style="color:var(--text-primary);font-size:1.5rem;margin-bottom:12px;">Demo Request Received!</h3><p style="color:var(--text-secondary);">We\'ll reach out within 24 hours to schedule your demo. In the meantime, try calling our AI demo line at <a href=\'tel:+16157845747\' style=\'color:var(--green-400);font-weight:700;\'>(615) 784-5747</a></p></div>';
         } else {
           throw new Error('Failed');
