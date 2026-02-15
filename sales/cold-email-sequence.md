@@ -61,7 +61,7 @@ And the best part — it works while you're on a job, while you're eating dinner
 
 I'd love to show you a live demo. Takes 15 minutes. You'll actually call the AI yourself and see exactly what your customers would experience.
 
-Here's my calendar: https://wallacedobbs428.github.io/thecalltaker/demo.html
+Here's my calendar: https://thecalltaker.com/demo.html
 
 Talk soon,
 Wallace
@@ -88,7 +88,7 @@ Every day you wait is more money in someone else's pocket. We're talking $350+ p
 
 I've got a few setup slots open this week. We can have you live and answering every call within 48 hours.
 
-Book your demo before your next missed call: https://wallacedobbs428.github.io/thecalltaker/demo.html
+Book your demo before your next missed call: https://thecalltaker.com/demo.html
 
 Or just reply to this email and I'll get you on the calendar.
 
