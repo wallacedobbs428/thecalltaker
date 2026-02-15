@@ -31,19 +31,39 @@
 
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Meta/Facebook Pixel — Replace YOUR_PIXEL_ID with your actual Pixel ID from Meta Business Suite -->
+  <!-- Google Analytics 4 — Replace G-XXXXXXXXXX with your GA4 Measurement ID -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-    document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'YOUR_PIXEL_ID');
-    fbq('track', 'PageView');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script> -->
+
+  <!-- Meta/Facebook Pixel — Replace YOUR_PIXEL_ID with your actual Pixel ID from Meta Business Suite -->
+  <!-- Deferred for page speed — loads after first paint -->
+  <script>
+    window.addEventListener('load', function() {
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', 'YOUR_PIXEL_ID');
+      fbq('track', 'PageView');
+    });
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
 </head>
 <body>
+
+  <!-- Skip to main content — accessibility -->
+  <a href="#demo-form" class="skip-link">Skip to main content</a>
+
+  <!-- Founding Member Banner -->
+  <div class="founding-banner">
+    Founding Member Pricing &mdash; First 10 HVAC companies get 50% off setup. <span class="spots-count">4</span> spots left.
+  </div>
 
   <!-- Urgency Banner -->
   <div class="urgency-bar">
@@ -70,6 +90,8 @@
       <nav class="nav">
         <a href="index.html">Home</a>
         <a href="demo.html" class="active">Demo</a>
+        <a href="audit.html">Free Audit</a>
+        <a href="blog.html">Blog</a>
       </nav>
 
       <a href="demo.html" class="header-cta">Book a Demo</a>
@@ -86,6 +108,8 @@
   <nav class="mobile-nav">
     <a href="index.html">Home</a>
     <a href="demo.html" class="active">Demo</a>
+    <a href="audit.html">Free Audit</a>
+    <a href="blog.html">Blog</a>
     <a href="demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
   </nav>
 
@@ -173,6 +197,7 @@
         <!-- RIGHT COLUMN — Booking Form -->
         <div class="reveal reveal-delay-1">
           <div class="card" id="demo-form" style="background: rgba(16,185,129,0.03); border-color: rgba(16,185,129,0.15); box-shadow: 0 0 60px rgba(16,185,129,0.06);">
+            <p class="demo-form-headline">Book a free demo &mdash; see it work for YOUR business in 15 minutes</p>
             <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">Book Your Free Demo</h2>
             <p class="card-text" style="margin-bottom: 28px;">Fill out the form and we'll reach out within 24 hours.</p>
 
@@ -231,9 +256,25 @@
                 </svg>
               </button>
 
-              <p style="text-align: center; font-size: 0.8125rem; color: var(--text-muted); margin-top: 16px;">
+              <p class="demo-form-reassurance" style="margin-top: 16px;">
                 No credit card required. No obligation.
               </p>
+
+              <!-- Trust badges -->
+              <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-muted);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  Secure
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-muted);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  15-min demo
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-muted);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  No contracts
+                </div>
+              </div>
 
               <!-- Honeypot field — hidden from humans, catches bots -->
               <div style="position:absolute;left:-9999px;" aria-hidden="true">
@@ -263,6 +304,19 @@
     </div>
   </section>
 
+  <!-- Not ready for a demo? -->
+  <section class="section" style="padding-top: 20px; padding-bottom: 40px;">
+    <div class="container">
+      <div class="reveal mx-auto text-center" style="max-width: 600px;">
+        <p style="font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Not ready for a demo yet? No problem.</p>
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <a href="calculator.html" class="btn btn-secondary btn-md">See What Missed Calls Cost You</a>
+          <a href="compare.html" class="btn btn-ghost btn-md">Compare Options</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============================================
        FOOTER
        ============================================ -->
@@ -283,15 +337,27 @@
         <div class="footer-links">
           <a href="index.html">Home</a>
           <a href="demo.html">Demo</a>
+          <a href="audit.html">Free Audit</a>
+          <a href="calculator.html">Calculator</a>
+          <a href="compare.html">Compare</a>
+          <a href="blog.html">Blog</a>
           <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
         </div>
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-        <span>Lebanon, TN</span>
+        <span><a href="privacy.html" style="color: var(--text-muted); transition: var(--transition);">Privacy</a> &middot; <a href="terms.html" style="color: var(--text-muted); transition: var(--transition);">Terms</a> &middot; Lebanon, TN</span>
       </div>
     </div>
   </footer>
+
+  <!-- Sticky Mobile Bottom Bar -->
+  <div class="sticky-mobile-bar">
+    <a href="tel:+16157845747">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call the AI now: (615) 784-5747
+    </a>
+  </div>
 
   <script src="script.js"></script>
   <script>
@@ -334,6 +400,7 @@
         formData.append('company_name', data.companyName);
         formData.append('number_of_trucks', sanitize(document.getElementById('trucks').value));
         formData.append('biggest_challenge', sanitize(document.getElementById('challenge').value));
+        formData.append('lead_source', 'demo-request');
 
         var res = await fetch('https://services.leadconnectorhq.com/widget/form/tQb9YmrGDrdVUJYPKrsY', {
           method: 'POST',
@@ -341,10 +408,7 @@
         });
 
         if (res.ok) {
-          // Fire Meta Pixel Lead event on successful form submission
-          if (typeof fbq === 'function') {
-            fbq('track', 'Lead', { content_name: 'Demo Request', content_category: 'HVAC' });
-          }
+          // Conversion tracking fires on thank-you.html (avoids redirect race condition)
           // Instant push notification to Wallace + Mills
           try {
             fetch('https://ntfy.sh/tct-xK9mW4vR7pLd', {
@@ -353,7 +417,8 @@
               body: data.firstName + ' ' + data.lastName + ' from ' + data.companyName + ' — ' + data.phone + ' — ' + data.email
             });
           } catch(e) {}
-          this.innerHTML = '<div style="text-align:center;padding:40px 0;"><div style="font-size:2rem;margin-bottom:16px;">&#10003;</div><h3 style="color:var(--text-primary);font-size:1.5rem;margin-bottom:12px;">Demo Request Received!</h3><p style="color:var(--text-secondary);">We\'ll reach out within 24 hours to schedule your demo. In the meantime, try calling our AI demo line at <a href=\'tel:+16157845747\' style=\'color:var(--green-400);font-weight:700;\'>(615) 784-5747</a></p></div>';
+          // Redirect to thank-you page for conversion tracking
+          window.location.href = 'thank-you.html';
         } else {
           throw new Error('Failed');
         }

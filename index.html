@@ -6,6 +6,7 @@
   <meta name="description" content="The Call Taker is an AI-powered receptionist that answers every call 24/7 for HVAC companies. Never lose a job to voicemail again.">
   <meta name="keywords" content="AI receptionist, HVAC answering service, HVAC virtual receptionist, 24/7 call answering, HVAC booking, missed calls HVAC">
   <meta name="author" content="The Call Taker">
+  <meta name="robots" content="index, follow">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
@@ -35,15 +36,27 @@
 
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Meta/Facebook Pixel — Replace YOUR_PIXEL_ID with your actual Pixel ID from Meta Business Suite -->
+  <!-- Google Analytics 4 — Replace G-XXXXXXXXXX with your GA4 Measurement ID -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-    document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'YOUR_PIXEL_ID');
-    fbq('track', 'PageView');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script> -->
+
+  <!-- Meta/Facebook Pixel — Replace YOUR_PIXEL_ID with your actual Pixel ID from Meta Business Suite -->
+  <!-- Deferred for page speed — loads after first paint -->
+  <script>
+    window.addEventListener('load', function() {
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', 'YOUR_PIXEL_ID');
+      fbq('track', 'PageView');
+    });
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
 
@@ -73,8 +86,78 @@
     "sameAs": []
   }
   </script>
+
+  <!-- FAQ Structured Data — makes FAQs appear in Google search results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does The Call Taker sound like a robot?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. We use the latest conversational AI. Callers consistently say they thought they were talking to a real person. Natural language, understands slang, responds conversationally — not like a phone tree."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a contract?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Month-to-month. Cancel anytime. We earn your business every month."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast can I get set up?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most HVAC companies are fully live within 48 hours. We handle the setup — you just tell us your hours, services, and emergency protocol."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if I go over my call limit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Extra calls are billed at a fair per-call rate, or you can upgrade your plan anytime."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you charge per minute?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Flat monthly rate. No surprises on your bill."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+
+  <!-- Skip to main content — accessibility -->
+  <a href="#how-it-works" class="skip-link">Skip to main content</a>
+
+  <!-- ============================================
+       FOUNDING MEMBER BANNER
+       ============================================ -->
+  <div class="founding-banner">
+    Founding Member Pricing &mdash; First 10 HVAC companies get 50% off setup. <span class="spots-count">4</span> spots left.
+  </div>
+
+  <!-- ============================================
+       URGENCY BANNER
+       ============================================ -->
+  <div class="urgency-bar">
+    <div class="container" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Limited setup slots available this month &mdash; <a href="demo.html" style="color: inherit; font-weight: 700; text-decoration: underline;">Book your demo now</a>
+    </div>
+  </div>
 
   <!-- ============================================
        HEADER
@@ -93,6 +176,8 @@
       <nav class="nav">
         <a href="index.html" class="active">Home</a>
         <a href="demo.html">Demo</a>
+        <a href="audit.html">Free Audit</a>
+        <a href="blog.html">Blog</a>
       </nav>
 
       <a href="demo.html" class="header-cta">Book a Demo</a>
@@ -109,18 +194,10 @@
   <nav class="mobile-nav">
     <a href="index.html">Home</a>
     <a href="demo.html">Demo</a>
+    <a href="audit.html">Free Audit</a>
+    <a href="blog.html">Blog</a>
     <a href="demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
   </nav>
-
-  <!-- ============================================
-       URGENCY BANNER
-       ============================================ -->
-  <div class="urgency-bar">
-    <div class="container" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Limited setup slots available this month &mdash; <a href="demo.html" style="color: inherit; font-weight: 700; text-decoration: underline;">Book your demo now</a>
-    </div>
-  </div>
 
   <!-- ============================================
        HERO
@@ -167,6 +244,64 @@
       </div>
       <div class="proof-item">
         <span class="proof-number">24/7/365</span> availability
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       BEFORE/AFTER METRICS
+       ============================================ -->
+  <section class="section" style="padding-top: 40px; padding-bottom: 40px;">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <div class="section-label" style="justify-content: center;">The Difference</div>
+        <h2 class="section-title">What Happens When You Never Miss a Call</h2>
+      </div>
+      <div class="grid-2 reveal" style="max-width: 800px; margin: 0 auto; gap: 24px;">
+        <!-- Before -->
+        <div class="card" style="background: rgba(239,68,68,0.03); border-color: rgba(239,68,68,0.12);">
+          <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15); border-radius: 9999px; padding: 4px 14px; font-size: 0.75rem; font-weight: 600; color: var(--red-400); margin-bottom: 20px;">Before The Call Taker</div>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span style="font-size: 0.9375rem; color: var(--text-secondary);">30-50% of calls go to voicemail</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span style="font-size: 0.9375rem; color: var(--text-secondary);">$4,500+/month in lost revenue</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span style="font-size: 0.9375rem; color: var(--text-secondary);">Zero coverage after 5 PM</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <span style="font-size: 0.9375rem; color: var(--text-secondary);">Competitors win the first call</span>
+            </div>
+          </div>
+        </div>
+        <!-- After -->
+        <div class="card" style="background: rgba(16,185,129,0.03); border-color: rgba(16,185,129,0.12);">
+          <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.15); border-radius: 9999px; padding: 4px 14px; font-size: 0.75rem; font-weight: 600; color: var(--green-400); margin-bottom: 20px;">With The Call Taker</div>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="font-size: 0.9375rem; color: var(--text-secondary);">100% of calls answered in &lt;2 seconds</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="font-size: 0.9375rem; color: var(--text-secondary);">Appointments booked automatically</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="font-size: 0.9375rem; color: var(--text-secondary);">24/7 coverage — nights, weekends, storms</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span style="font-size: 0.9375rem; color: var(--text-secondary);">$297/mo with 10-30x ROI</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -351,6 +486,85 @@
   </section>
 
   <!-- ============================================
+       WHY HVAC COMPANIES CHOOSE US
+       ============================================ -->
+  <section class="section" id="why-hvac">
+    <div class="container">
+      <div class="text-center mb-16 reveal">
+        <div class="section-label" style="justify-content: center;">Built for HVAC</div>
+        <h2 class="section-title">We Know Why You Can't Answer the Phone</h2>
+        <p class="section-subtitle mx-auto" style="text-align: center;">Because you're actually doing the work. Our AI was trained specifically for HVAC &mdash; it knows your world.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card reveal">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+          </div>
+          <h3 class="card-title">You're on a Roof</h3>
+          <p class="card-text">Hands full of ductwork, crawling through an attic, or elbow-deep in a condenser. You physically cannot grab the phone. The AI picks up so you don't have to.</p>
+        </div>
+
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3 class="card-title">It's 9PM on a Saturday</h3>
+          <p class="card-text">Someone's furnace just died. They're calling every HVAC company in town. The first one to answer gets the job. That should be you &mdash; even when you're with your family.</p>
+        </div>
+
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="card-title">You're the Owner AND the Tech</h3>
+          <p class="card-text">You can't be in two places at once. Owner-operators lose the most to missed calls because there's literally nobody else to pick up. Until now.</p>
+        </div>
+      </div>
+
+      <div class="text-center reveal" style="margin-top: 48px;">
+        <p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 24px;">Our AI knows the difference between a routine maintenance call and a gas leak emergency.<br>It speaks HVAC &mdash; because we built it for HVAC.</p>
+        <a href="audit.html" class="btn btn-secondary btn-md">
+          Get a Free Missed Call Audit
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       MEET THE FOUNDER
+       ============================================ -->
+  <section class="section" id="founder" style="padding-top: 0;">
+    <div class="container">
+      <div class="card reveal mx-auto" style="max-width: 800px; background: rgba(16,185,129,0.02); border-color: rgba(16,185,129,0.1);">
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div>
+            <div class="section-label">Meet the Founder</div>
+            <h2 style="font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: var(--text-primary); margin-bottom: 16px;">I Built This Because I Watched Good Companies Lose to Voicemail</h2>
+          </div>
+          <div style="font-size: 1rem; color: var(--text-secondary); line-height: 1.8; display: flex; flex-direction: column; gap: 16px;">
+            <p>I'm Wallace. I came from the trades in Middle Tennessee. I spent years watching skilled HVAC technicians &mdash; guys who do incredible work &mdash; lose jobs to companies with worse service and higher prices. The only difference? The other company picked up the phone.</p>
+            <p>It didn't make sense. A homeowner's AC dies at 7pm, they call the best-rated HVAC company in town, get voicemail, and end up hiring whoever answers next. The best technician loses because of a phone call.</p>
+            <p>That's why I built The Call Taker. It's an AI receptionist that answers every call to your business 24/7 &mdash; sounds like a real person, gets the customer's info, books the appointment, and texts you the details. No voicemail. No missed jobs. No more losing to the guy who just happened to pick up.</p>
+            <p style="color: var(--green-400); font-weight: 600;">Your skills should speak for themselves. Let us handle the phone.</p>
+          </div>
+          <div>
+            <p style="font-size: 0.9375rem; color: var(--text-primary); font-weight: 700;">Wallace Dobbs</p>
+            <p style="font-size: 0.875rem; color: var(--text-muted);">Founder, The Call Taker &mdash; Lebanon, TN</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
        TESTIMONIALS
        ============================================ -->
   <section class="section" id="testimonials">
@@ -407,6 +621,44 @@
   </section>
 
   <!-- ============================================
+       CASE STUDY
+       ============================================ -->
+  <section class="section" style="padding-bottom: 40px;">
+    <div class="container">
+      <div class="card reveal mx-auto" style="max-width: 800px; background: rgba(16,185,129,0.02); border-color: rgba(16,185,129,0.1); padding: 40px;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.12); border-radius: 9999px; padding: 4px 14px; font-size: 0.75rem; font-weight: 600; color: var(--green-400); margin-bottom: 20px;">
+          Real-World Example
+        </div>
+        <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">A 15-Person HVAC Company in Middle Tennessee</h3>
+        <p style="font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 24px;">Here's what the math looks like for a typical mid-size HVAC operation running 3 service trucks.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px;">
+          <div style="background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.1); border-radius: var(--radius-md); padding: 16px; text-align: center;">
+            <div style="font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red-400); margin-bottom: 4px;">Calls Missed/Week</div>
+            <div style="font-size: 1.75rem; font-weight: 800; color: var(--text-primary);">8</div>
+          </div>
+          <div style="background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.1); border-radius: var(--radius-md); padding: 16px; text-align: center;">
+            <div style="font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red-400); margin-bottom: 4px;">Revenue Lost/Month</div>
+            <div style="font-size: 1.75rem; font-weight: 800; color: var(--text-primary);">$11,200</div>
+          </div>
+          <div style="background: rgba(16,185,129,0.04); border: 1px solid rgba(16,185,129,0.1); border-radius: var(--radius-md); padding: 16px; text-align: center;">
+            <div style="font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--green-400); margin-bottom: 4px;">Call Taker Cost</div>
+            <div style="font-size: 1.75rem; font-weight: 800; color: var(--green-400);">$297</div>
+          </div>
+          <div style="background: rgba(16,185,129,0.04); border: 1px solid rgba(16,185,129,0.1); border-radius: var(--radius-md); padding: 16px; text-align: center;">
+            <div style="font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--green-400); margin-bottom: 4px;">ROI</div>
+            <div style="font-size: 1.75rem; font-weight: 800; color: var(--green-400);">37x</div>
+          </div>
+        </div>
+
+        <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.7;">
+          <strong style="color: var(--text-primary);">The scenario:</strong> 40 calls/week, 20% going to voicemail after hours and during jobs. At a $350 average ticket, that's 8 missed calls &times; $350 = $2,800/week in lost revenue. With The Call Taker answering every call, even catching half those missed calls recovers <strong style="color: var(--green-400);">$5,600+/month</strong> &mdash; nearly 19x the $297 investment.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
        ROI CALCULATOR
        ============================================ -->
   <section class="section" id="calculator">
@@ -449,6 +701,24 @@
           Stop Losing Money — Book a Demo
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
+
+        <!-- Lead capture below calculator -->
+        <div id="calc-capture-section" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+          <p style="font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; text-align: center;">
+            Want to know your REAL missed call rate? Get a free personalized report.
+          </p>
+          <form id="calc-capture-form" style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;">
+            <input type="email" id="calc-email" placeholder="Your business email" required style="flex: 1; min-width: 220px; max-width: 320px; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.875rem; font-family: inherit;">
+            <button type="submit" class="btn btn-primary btn-md">Send My Free Report</button>
+          </form>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; text-align: center;">
+            No spam. Just a custom cost analysis for your business.
+          </p>
+        </div>
+
+        <p style="margin-top: 16px; text-align: center;">
+          <a href="calculator.html" style="font-size: 0.8125rem; color: var(--green-400); font-weight: 500;">Want a more detailed breakdown? Try our advanced calculator &rarr;</a>
+        </p>
       </div>
     </div>
   </section>
@@ -571,6 +841,7 @@
         <!-- Professional (Featured) -->
         <div class="pricing-card featured reveal reveal-delay-1">
           <div class="pricing-badge">Most Popular</div>
+          <div class="trial-badge">Try free for 7 days &mdash; cancel if you don't love it</div>
           <div class="pricing-name">Professional</div>
           <div class="pricing-desc">Best for growing companies (5-20 trucks)</div>
           <div class="pricing-price" data-monthly="497" data-annual="414">$497<span>/mo</span></div>
@@ -686,6 +957,37 @@
   </section>
 
   <!-- ============================================
+       NO RISK GUARANTEE
+       ============================================ -->
+  <section class="section" id="no-risk" style="padding-top: 0;">
+    <div class="container">
+      <div class="no-risk-grid reveal">
+        <div class="no-risk-item">
+          <div class="no-risk-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="no-risk-title">7-Day Free Trial</div>
+          <div class="no-risk-desc">Try it risk-free. If it doesn't blow you away, you pay nothing.</div>
+        </div>
+        <div class="no-risk-item">
+          <div class="no-risk-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="no-risk-title">No Contracts</div>
+          <div class="no-risk-desc">Cancel anytime, no fees. We earn your business every single month.</div>
+        </div>
+        <div class="no-risk-item">
+          <div class="no-risk-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="no-risk-title">Setup in 48 Hours</div>
+          <div class="no-risk-desc">Go live this week. We handle the entire setup for you.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
        FAQ
        ============================================ -->
   <section class="section" id="faq">
@@ -791,34 +1093,120 @@
         <div class="footer-links">
           <a href="index.html">Home</a>
           <a href="demo.html">Demo</a>
+          <a href="audit.html">Free Audit</a>
+          <a href="calculator.html">Calculator</a>
+          <a href="compare.html">Compare</a>
+          <a href="blog.html">Blog</a>
           <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
         </div>
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-        <span>Lebanon, TN</span>
+        <span><a href="privacy.html" style="color: var(--text-muted); transition: var(--transition);">Privacy</a> &middot; <a href="terms.html" style="color: var(--text-muted); transition: var(--transition);">Terms</a> &middot; Lebanon, TN</span>
       </div>
     </div>
   </footer>
 
-  <!-- Floating Mobile CTA — Split: Call + Book -->
-  <div class="floating-cta">
-    <a href="tel:+16157845747" class="floating-cta-call" aria-label="Call demo line">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-      </svg>
-      Call Now
+  <!-- Sticky Mobile Bottom Bar — Split CTA -->
+  <div class="sticky-mobile-bar" style="display:none;">
+    <a href="tel:+16157845747" style="flex:1;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call Demo
     </a>
-    <a href="demo.html">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-      </svg>
+    <a href="demo.html" style="flex:1;background:var(--bg-elevated);border-left:1px solid rgba(255,255,255,0.1);">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       Book Demo
     </a>
   </div>
 
+  <!-- Social Proof Notification Popup -->
+  <div id="social-proof-popup" style="position:fixed;bottom:100px;left:24px;z-index:997;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,0.4);transform:translateX(-120%);transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);max-width:340px;">
+    <div style="width:40px;height:40px;border-radius:50%;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div>
+      <div id="proof-text" style="font-size:0.875rem;font-weight:600;color:var(--text-primary);line-height:1.4;"></div>
+      <div id="proof-time" style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;"></div>
+    </div>
+  </div>
+
+  <!-- Exit Intent Popup (desktop only) -->
+  <div id="exit-popup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+    <div style="background:var(--bg-card);border:1px solid rgba(16,185,129,0.2);border-radius:var(--radius-xl);padding:48px 40px;max-width:480px;width:90%;text-align:center;position:relative;box-shadow:0 24px 64px rgba(0,0,0,0.5);">
+      <button id="exit-popup-close" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;padding:4px;line-height:1;">&times;</button>
+      <div style="width:56px;height:56px;border-radius:50%;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <h3 style="font-size:1.5rem;font-weight:800;color:var(--text-primary);margin-bottom:12px;">Wait — Before You Go</h3>
+      <p style="font-size:1rem;color:var(--text-secondary);line-height:1.7;margin-bottom:24px;">Want to know how many calls your business is missing? We'll call you after hours and send a free report. No strings attached.</p>
+      <a href="audit.html" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-bottom:12px;">Get My Free Missed Call Audit</a>
+      <p style="font-size:0.8125rem;color:var(--text-muted);">Free. No credit card. Results in 48 hours.</p>
+    </div>
+  </div>
+
   <script src="script.js"></script>
   <script>
+    // Exit Intent Popup (desktop only — shows once per session)
+    (function() {
+      if (window.innerWidth < 768) return; // skip mobile
+      if (sessionStorage.getItem('exit-popup-shown')) return; // already shown this session
+
+      // Close button and backdrop click
+      document.getElementById('exit-popup-close').addEventListener('click', function() {
+        document.getElementById('exit-popup').style.display = 'none';
+      });
+      document.getElementById('exit-popup').addEventListener('click', function(e) {
+        if (e.target === this) this.style.display = 'none';
+      });
+
+      var shown = false;
+      document.addEventListener('mouseout', function(e) {
+        if (shown) return;
+        if (e.clientY < 10 && e.relatedTarget === null) {
+          shown = true;
+          document.getElementById('exit-popup').style.display = 'flex';
+          sessionStorage.setItem('exit-popup-shown', '1');
+        }
+      });
+    })();
+
+    // Social Proof Notification Popup
+    (function() {
+      var messages = [
+        { text: 'A Nashville HVAC company just booked a demo', time: '2 minutes ago' },
+        { text: 'An HVAC owner in Hendersonville requested a free audit', time: '8 minutes ago' },
+        { text: 'A Lebanon HVAC company signed up for a demo', time: '14 minutes ago' },
+        { text: 'A Murfreesboro HVAC owner called our demo line', time: '22 minutes ago' },
+        { text: 'An HVAC company in Mt. Juliet requested pricing info', time: '31 minutes ago' },
+        { text: 'A Gallatin HVAC owner just booked a demo call', time: '45 minutes ago' },
+        { text: 'An HVAC company in Franklin requested a free audit', time: '1 hour ago' }
+      ];
+      var popup = document.getElementById('social-proof-popup');
+      var textEl = document.getElementById('proof-text');
+      var timeEl = document.getElementById('proof-time');
+      var index = 0;
+      var shown = false;
+
+      function showPopup() {
+        var msg = messages[index % messages.length];
+        textEl.textContent = msg.text;
+        timeEl.textContent = msg.time;
+        popup.style.transform = 'translateX(0)';
+        shown = true;
+        setTimeout(function() {
+          popup.style.transform = 'translateX(-120%)';
+          shown = false;
+          index++;
+        }, 5000);
+      }
+
+      // Show first popup after 15 seconds, then every 45 seconds
+      setTimeout(function() {
+        showPopup();
+        setInterval(showPopup, 45000);
+      }, 15000);
+    })();
+
     // ROI Calculator
     (function() {
       var slider = document.getElementById('calc-slider');
@@ -864,6 +1252,61 @@
         annualTexts.forEach(function(el) {
           el.style.display = isAnnual ? 'block' : 'none';
         });
+      });
+    })();
+
+    // Scroll depth tracking (fires at 25%, 50%, 75%, 100%)
+    (function() {
+      var milestones = [25, 50, 75, 100];
+      var fired = {};
+      window.addEventListener('scroll', function() {
+        var scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        milestones.forEach(function(m) {
+          if (scrollPct >= m && !fired[m]) {
+            fired[m] = true;
+            if (typeof fbq === 'function') {
+              fbq('trackCustom', 'ScrollDepth', { percent: m });
+            }
+            if (typeof gtag === 'function') {
+              gtag('event', 'scroll_depth', { event_label: m + '%', event_category: 'engagement' });
+            }
+          }
+        });
+      }, { passive: true });
+    })();
+
+    // Calculator email capture form
+    (function() {
+      var form = document.getElementById('calc-capture-form');
+      if (!form) return;
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var email = document.getElementById('calc-email').value.trim();
+        if (!email) return;
+        var btn = form.querySelector('button');
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        try {
+          var formData = new FormData();
+          formData.append('email', email);
+          formData.append('lead_source', 'calculator');
+          var res = await fetch('https://services.leadconnectorhq.com/widget/form/tQb9YmrGDrdVUJYPKrsY', {
+            method: 'POST', body: formData
+          });
+          if (res.ok) {
+            try {
+              fetch('https://ntfy.sh/tct-xK9mW4vR7pLd', {
+                method: 'POST',
+                headers: { 'Title': 'Calculator Lead!', 'Priority': 'default', 'Tags': 'calculator' },
+                body: 'Calculator email capture: ' + email
+              });
+            } catch(e) {}
+            document.getElementById('calc-capture-section').innerHTML = '<p style="text-align:center;color:var(--green-400);font-weight:600;padding:16px 0;">Check your email — your free cost analysis is on the way!</p>';
+          }
+        } catch(err) {
+          btn.textContent = 'Send My Free Report';
+          btn.disabled = false;
+        }
       });
     })();
 
