@@ -65,6 +65,7 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 │   ├── hvac-lead-list.md — 27 HVAC companies in Middle TN
 │   ├── one-page-proposal.md — proposal template
 │   ├── secret-shopper-template.md — voicemail detection tracking
+│   ├── missed-call-audit-report.md — post-secret-shop report to send prospects
 │   └── demo-script.md — live demo call walkthrough
 └── onboarding/
     ├── new-client-intake-form.md — questions for new HVAC clients
