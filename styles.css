@@ -864,3 +864,82 @@ ul, ol { list-style: none; }
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border), transparent);
 }
+
+/* ============================================
+   URGENCY BANNER
+   ============================================ */
+.urgency-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: linear-gradient(90deg, var(--green-600), var(--green-500));
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 10px 16px;
+  text-align: center;
+}
+.urgency-bar ~ .header { top: 38px; }
+.urgency-bar ~ .hero { padding-top: 198px; }
+@media (min-width: 768px) {
+  .urgency-bar ~ .hero { padding-top: 218px; }
+}
+
+/* ============================================
+   SPLIT FLOATING MOBILE CTA
+   ============================================ */
+.floating-cta { gap: 8px; }
+.floating-cta .floating-cta-call {
+  flex: 0 0 auto;
+  background: var(--bg-elevated);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: var(--green-400);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* ============================================
+   ROI CALCULATOR SLIDER
+   ============================================ */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--green-500);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.4);
+  transition: var(--transition);
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--green-400);
+  transform: scale(1.15);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--green-500);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.4);
+}
+
+/* ============================================
+   COMPARISON TABLE
+   ============================================ */
+@media (max-width: 640px) {
+  #vs-answering table { font-size: 0.8125rem; }
+  #vs-answering th, #vs-answering td { padding: 12px 10px; }
+}
