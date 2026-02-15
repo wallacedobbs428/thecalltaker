@@ -42,6 +42,7 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 │   ├── claude-did-this.md — everything built in GHL via API
 │   ├── google-business-profile-setup.md — step-by-step GBP setup guide
 │   ├── stripe-setup-guide.md — Stripe + GHL payment setup
+│   ├── ghl-email-templates.md — content for 10 GHL email template shells
 │   └── wallace-checklist.md — manual tasks only Wallace can do
 ├── website/ (GitHub Pages deployment — 2-page site, CNAME: thecalltaker.com)
 │   ├── index.html — home + pricing + how-it-works (single scrolling page)
@@ -66,12 +67,25 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 │   ├── one-page-proposal.md — proposal template
 │   ├── secret-shopper-template.md — voicemail detection tracking
 │   ├── missed-call-audit-report.md — post-secret-shop report to send prospects
-│   └── demo-script.md — live demo call walkthrough
+│   ├── demo-script.md — live demo call walkthrough
+│   ├── short-form-video-scripts.md — 5 TikTok/Reels scripts (30-60s each)
+│   ├── facebook-groups-guide.md — 20 HVAC Facebook groups + engagement strategy
+│   ├── referral-partner-outreach-package.md — 10 partner types + commission structure
+│   ├── sms-follow-up-sequences.md — 18 texts across 5 SMS sequences
+│   ├── google-ads-campaign.md — 33 keywords, 5 ad groups, budget plan
+│   ├── social-media-posts.md — 20 Instagram/Facebook posts with schedule
+│   ├── objection-handling-playbook.md — 20 objections with exact responses
+│   ├── classified-ads-local-platforms.md — Craigslist, Nextdoor, LinkedIn, etc.
+│   ├── 2026-hvac-missed-call-report.md — free lead magnet report (downloadable)
+│   ├── podcast-guest-pitch-kit.md — 15 podcasts + 3 pitch templates + media kit
+│   ├── trade-show-battle-plan.md — 10 events + booth setup + follow-up system
+│   └── competitive-intelligence-report.md — 9 competitors + battlecards + objection matrix
 └── onboarding/
     ├── new-client-intake-form.md — questions for new HVAC clients
     ├── onboarding-steps.md — setup process day-by-day
     ├── welcome-email-sequence.md — 5-email client welcome series
-    └── client-agreement-template.md — service agreement/TOS
+    ├── client-agreement-template.md — service agreement/TOS
+    └── customer-success-playbook.md — retention, churn prevention, referrals, upsell
 ```
 
 ## What's Built in GHL (via API)
