@@ -28,9 +28,8 @@ Generate a Payment Link for each product
 ⏱ 5 minutes
 🔑 The Stripe Payment Link URLs from step 2
 
-### ✅ 4. Custom Domain — SKIPPED
-Separated from thecalltaker.com. Website lives at GitHub Pages URL: https://msnfjsfsfgskgvfyvsyfv.github.io/thecalltaker/
-Can buy and connect a new domain later if desired.
+### ✅ 4. Custom Domain — DONE
+Website live at https://thecalltaker.com/ via Wallace's GitHub repo (wallacedobbs428/thecalltaker).
 
 ### ☐ 5. Paste Welcome Email Content into GHL Templates
 📍 GHL → Marketing → Emails → Templates

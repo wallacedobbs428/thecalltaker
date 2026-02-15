@@ -12,7 +12,8 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 - **Website**: Static HTML/CSS/JS on GitHub Pages (~/Desktop/wallace-hvac/website/)
 - **CRM/Backend**: GoHighLevel (API key in ~/Desktop/thecalltaker/.env)
 - **Billing**: Stripe (NOT YET CONNECTED)
-- **Website URL**: https://thecalltaker.com/ (GitHub Pages + custom domain via Netlify DNS)
+- **Website URL**: https://thecalltaker.com/ (GitHub Pages via wallacedobbs428/thecalltaker repo)
+- **GitHub Repo**: github.com/wallacedobbs428/thecalltaker (shared — both Mills + Wallace have push access)
 
 ## GoHighLevel Connection
 - **API Key**: pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35
@@ -100,7 +101,7 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 - Demo form wired to create contacts with prospect + demo-booked tags
 
 ## What's NOT Built Yet (Needs Wallace)
-- Custom domain (optional — can buy and connect one later)
+- ~~Custom domain~~ — DONE (thecalltaker.com connected)
 - Stripe billing (not connected)
 - Email template content (shells exist, need copy pasted in GHL UI)
 - Business email address (optional — currently using wallacemdobbs@icloud.com)

@@ -19,9 +19,8 @@
 ## Detailed Findings
 
 ### 1. Website
-- **GitHub Pages URL:** https://msnfjsfsfgskgvfyvsyfv.github.io/thecalltaker/ — LIVE, 2-page site (index.html + demo.html)
-- **Custom domain:** None — separated from thecalltaker.com. Using GitHub Pages URL directly.
-- **Future option:** Can buy a new domain and connect it later
+- **Website URL:** https://thecalltaker.com/ — LIVE, 2-page site (index.html + demo.html)
+- **Custom domain:** thecalltaker.com — connected via Wallace's GitHub repo (wallacedobbs428/thecalltaker)
 - **CNAME file:** Created in repo, ready for GitHub Pages custom domain setup
 - **2 pages live:** Home (includes pricing + how-it-works + FAQ), Demo (booking form + calendar)
 - **SEO files:** robots.txt and sitemap.xml updated to GitHub Pages URL

@@ -101,8 +101,8 @@ That's the conservative number — just 5 recovered calls a month. Many of our c
 
 Phone: (615) 653-9004
 Email: wallacemdobbs@icloud.com
-Web: https://msnfjsfsfgskgvfyvsyfv.github.io/thecalltaker/
-Book a Demo: https://msnfjsfsfgskgvfyvsyfv.github.io/thecalltaker/demo.html
+Web: https://thecalltaker.com/
+Book a Demo: https://thecalltaker.com/demo
 
 ---
 

@@ -12,8 +12,8 @@
 |---------|--------|---------|
 | GoHighLevel API | CONNECTED | Key: pit-771d...4b35, full read/write access |
 | GHL Phone Number | ACTIVE | +16156539004 (SMS only, no voice AI) |
-| GitHub Pages | CONNECTED | Website deployed at msnfjsfsfgskgvfyvsyfv.github.io/thecalltaker |
-| Custom Domain | REMOVED | No custom domain — using GitHub Pages URL directly |
+| GitHub Pages | CONNECTED | Website deployed at thecalltaker.com (wallacedobbs428/thecalltaker) |
+| Custom Domain | CONNECTED | thecalltaker.com — via Wallace's GitHub repo |
 | Stripe/Payments | NOT CONNECTED | No billing system |
 | Instagram/Social | NOT CONNECTED | No social integrations found |
 
