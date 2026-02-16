@@ -49,7 +49,7 @@ That is exactly why I built The Call Taker.
 
 Here is the reality for most HVAC companies in Middle Tennessee: you are missing 30% or more of your incoming calls. After hours. Weekends. When your techs are on the roof and nobody is near the phone. Every one of those missed calls is real money -- real homeowners who needed help and called somebody else instead.
 
-The Call Taker is an AI-powered receptionist built specifically for HVAC companies. It answers every call, 24/7. It books appointments. It captures caller information. It sounds natural -- not like a robot reading a script. And it costs $297 a month. No contracts. No setup fees.
+The Call Taker is an AI-powered receptionist built specifically for HVAC companies. It answers every call, 24/7. It books appointments. It captures caller information. It sounds natural -- not like a robot reading a script. And it costs $297 a month plus a one-time $197 setup. No contracts. Cancel anytime.
 
 If you run an HVAC company anywhere in Middle Tennessee -- Nashville, Lebanon, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro, Franklin -- I would love to show you exactly how many calls you are missing and what that is costing you.
 
@@ -608,7 +608,7 @@ Adjust your approach based on what the data tells you. Double down on what works
 | **Demo Line** | (615) 784-5747 |
 | **Website** | thecalltaker.com |
 | **Free Audit** | thecalltaker.com/audit |
-| **Price** | $297/month, no contract, no setup fees |
+| **Price** | $297/month + $197 one-time setup, no contract |
 | **Location** | Lebanon, TN |
 | **Target Market** | HVAC companies in Middle Tennessee |
 | **Target Cities** | Nashville, Lebanon, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro, Franklin |

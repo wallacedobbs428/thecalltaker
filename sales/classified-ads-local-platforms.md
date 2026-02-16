@@ -33,7 +33,7 @@ No voicemail. No missed calls. No lost jobs.
 PRICING:
 - Starter: $297/month (up to 100 calls)
 - Professional: $497/month (unlimited calls + SMS follow-ups)
-- No contracts. No setup fees. Cancel anytime.
+- Setup: $197 (Starter) / $297 (Professional). No contracts. Cancel anytime.
 
 Don't take my word for it. Call the demo line RIGHT NOW and talk to the AI yourself:
 
@@ -139,7 +139,7 @@ PRICING:
 Starter — $297/month (100 calls included)
 Professional — $497/month (unlimited calls, SMS follow-ups, priority support)
 
-No contracts. No setup fees. No per-minute charges.
+One-time setup: $197 (Starter) / $297 (Professional). No contracts. No per-minute charges.
 
 HEAR IT FOR YOURSELF:
 Call (615) 784-5747 and talk to the AI live. It answers as a sample HVAC company. Try it out. Then picture it working for YOUR business.
@@ -233,7 +233,7 @@ No more missed calls. No more voicemail. No more lost revenue.
 
 Our service is built for the unique needs of HVAC contractors, plumbing companies, and home service businesses. We understand that most calls come in when you're busy working — and that every unanswered call is a potential job lost to a competitor.
 
-Plans start at $297 per month for up to 100 calls, with a Professional plan at $497 per month for unlimited calls and SMS follow-up features. There are no contracts, no setup fees, and no per-minute charges. We handle the full setup and can have your AI receptionist live within 48 hours.
+Plans start at $297 per month for up to 100 calls (+ $197 one-time setup), with a Professional plan at $497 per month for unlimited calls and SMS follow-up features (+ $297 one-time setup). There are no contracts and no per-minute charges. We handle the full setup and can have your AI receptionist live within 48 hours.
 
 Want to hear the AI in action before you commit? Call our live demo line at (615) 784-5747 and talk to it yourself. Visit thecalltaker.com to learn more or book a demo.
 

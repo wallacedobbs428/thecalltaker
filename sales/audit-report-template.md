@@ -112,7 +112,7 @@ Based on this audit, here's what we'd suggest for **[Company Name]**:
 
 2. **The real fix:** Set up an AI receptionist that answers every single call — days, nights, weekends, holidays. No more voicemail. No more missed jobs. No more revenue walking out the door.
 
-The Call Taker can have your AI receptionist live within 48 hours. Plans start at $297/month with no contracts, no setup fees for founding members, and a 7-day free trial.
+The Call Taker can have your AI receptionist live within 48 hours. Plans start at $297/month + $197 one-time setup. No contracts. Cancel anytime.
 
 ---
 

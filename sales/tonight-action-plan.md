@@ -764,11 +764,11 @@ Pick your top 5 prospects who have gone to voicemail multiple times and not resp
 4. TemperaturePro Nashville -- Lebanon
 5. Adams HVAC & Plumbing -- Mt. Juliet (15 min from Lebanon)
 
-### Tactic 2: The Free Trial Offer (Friday)
+### Tactic 2: The No-Risk Close (Friday)
 
 If you are stuck at the demo stage and nobody will commit to $297/mo, offer this:
 
-> "Tell you what -- let me set it up for your company for free. Use it for 7 days. If it books even ONE job that would have gone to voicemail, you sign up. If it doesn't, you owe me nothing."
+> "Tell you what -- there's no contract. Month to month. If it doesn't pay for itself in the first 30 days, you cancel with one message and you're done. One missed emergency call on a Saturday night is a $500-$1,200 ticket. The math is so obviously in your favor."
 
 This removes ALL risk. One booked job from a missed call pays for 3+ months of service. The math is so obviously in their favor that saying no is irrational.
 
