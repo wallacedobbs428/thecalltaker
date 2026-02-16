@@ -113,7 +113,7 @@ thecalltaker.com
 ### The Rules (keep it simple)
 
 1. **Referral must be a warm introduction.** That means a text intro, a phone call with both parties, handing them a flyer in person, or CC-ing Wallace on an email. Cold leads from a list do not count.
-2. **The HVAC company must sign up and pay for at least one month of service ($297).** If they cancel during a free trial or never pay, no commission.
+2. **The HVAC company must sign up and pay for at least one month of service ($297).** If they cancel before paying, no commission.
 3. **Payment is $200 cash, Venmo, Zelle, or check -- your choice.** Paid within 7 days of the HVAC company's first payment.
 4. **No limit on referrals.** Send 20 HVAC companies and you earn $4,000. There is no cap.
 5. **Referrals are tracked by name.** When you make an introduction, text Wallace the company name and owner name. That locks it in as yours.

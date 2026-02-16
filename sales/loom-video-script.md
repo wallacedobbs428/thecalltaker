@@ -90,7 +90,7 @@ Best for: Cold outreach to owners you have never interacted with. Low commitment
 
 ### VARIATION B: The Standard (2 minutes)
 
-Best for: Owners who are active on social media, have decent-sized companies (3-10 trucks), or where the dollar math of missed calls will hit home. This is your bread-and-butter version.
+Best for: Owners who are active on social media, have decent-sized companies (5-20 trucks), or where the dollar math of missed calls will hit home. This is your bread-and-butter version.
 
 ---
 
@@ -126,7 +126,7 @@ Best for: Owners who are active on social media, have decent-sized companies (3-
 
 > "So right there — it picked up on the first ring, talked to the customer like a real person, got the info, and it sends you a text and email with everything. Name, number, address, what the issue is. Ready to dispatch.
 >
-> It runs twenty-four seven. Weekends, holidays, two in the morning — doesn't matter. And it's $297 a month. That's it. No contracts, no setup fees, cancel whenever.
+> It runs twenty-four seven. Weekends, holidays, two in the morning — doesn't matter. And it's $297 a month plus a one-time $197 setup. No contracts, cancel whenever.
 >
 > If you're catching even one or two extra calls a month that you were missing before, it pays for itself ten times over. One emergency call on a Saturday night — that's a $500, $800, maybe $1,200 ticket right there.
 >
@@ -194,7 +194,7 @@ Best for: Owners you found a specific negative review for about responsiveness, 
 
 **[Switch screen share to thecalltaker.com briefly]**
 
-> "The website is thecalltaker.com if you want to read more about how it works. It's $297 a month. No contract. No setup fee. If you don't like it after a month, you cancel and we shake hands.
+> "The website is thecalltaker.com if you want to read more about how it works. It's $297 a month plus a one-time $197 setup. No contract. If you don't like it after a month, you cancel and we shake hands.
 >
 > I built this because I was tired of seeing good HVAC companies lose jobs to the guy down the street who just happened to pick up the phone. That's it. That's the whole story.
 >
@@ -368,7 +368,7 @@ Keep a simple spreadsheet for each prospect:
 | **Website** | thecalltaker.com |
 | **Price** | $297/mo |
 | **Contracts** | None |
-| **Setup Fee** | None |
+| **Setup Fee** | $197 (Starter) / $297 (Professional) one-time |
 | **Best Recording Window** | Weeknights 6:00-8:30 PM |
 | **Best Sending Window** | Tue-Thu, 6:30-8:00 AM or 7:30-9:00 PM |
 | **Videos Per Batch** | 8-10 |

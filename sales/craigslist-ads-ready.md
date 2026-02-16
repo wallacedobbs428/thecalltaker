@@ -32,7 +32,7 @@ WHAT IT DOES:
 - Speaks naturally - callers think they're talking to a real person
 
 WHAT IT COSTS:
-$297/month. No contracts. No setup fees. Cancel anytime.
+$297/month + $197 one-time setup. No contracts. Cancel anytime.
 
 For reference, one missed AC emergency call in the summer is worth $800-$1,500. This pays for itself the first week.
 

@@ -542,11 +542,11 @@ Demo: (615) 784-5747
 > - Starter Plan ($297/mo): First month free. Save $297.
 > - Professional Plan ($497/mo): First month free. Save $497.
 >
-> Plus: $0 setup fee for all Spring signups (normally $149).
+> Plus: $0 setup fee for all Spring signups (normally $197-$297).
 
 **Total value saved:**
-- Starter: $446 savings (first month + setup fee)
-- Professional: $646 savings (first month + setup fee)
+- Starter: $494 savings (first month + $197 setup fee)
+- Professional: $794 savings (first month + $297 setup fee)
 
 ### Why This Offer Works
 
@@ -576,9 +576,9 @@ SPRING SETUP SPECIAL — Ends April 1
 
 Sign up before April 1 and get:
   * Your first month FREE (save $297-$497)
-  * $0 setup fee (save $149)
+  * $0 setup fee (save $197-$297)
 
-Total savings up to $646. No contract. Cancel anytime.
+Total savings up to $794. No contract. Cancel anytime.
 
 This offer disappears April 1. After that, full price and you're setting up during the rush.
 
@@ -592,12 +592,12 @@ thecalltaker.com | (615) 784-5747
 **In SMS, use:**
 
 ```
-AC Season Head Start: sign up before April 1, get your first month FREE + $0 setup fee. Save up to $646. No contract. thecalltaker.com
+AC Season Head Start: sign up before April 1, get your first month FREE + $0 setup fee. Save up to $794. No contract. thecalltaker.com
 ```
 
 **On phone calls, say:**
 
-> "We are running our Spring Setup Special right now. If you sign up before April 1st, your first month is completely free and we waive the setup fee. That is up to $646 in savings. And honestly, the bigger value is being ready before the first heat wave hits instead of scrambling to set up when you are already drowning in calls."
+> "We are running our Spring Setup Special right now. If you sign up before April 1st, your first month is completely free and we waive the setup fee. That is up to $794 in savings. And honestly, the bigger value is being ready before the first heat wave hits instead of scrambling to set up when you are already drowning in calls."
 
 ### After April 1: What to Do
 
@@ -659,7 +659,7 @@ It is $297 a month, and right now we have a Spring special where your first mont
 
 **If they say "How much again?":**
 
-**You:** $297 a month for the Starter plan, $497 for Professional which gives you advanced scheduling and priority support. And right now, if you sign up before April 1st, first month is free and we waive the $149 setup fee. So you save up to $646 just for getting set up before the rush.
+**You:** $297 a month for the Starter plan, $497 for Professional which gives you advanced scheduling and priority support. And right now, if you sign up before April 1st, first month is free and we waive the setup fee. So you save up to $794 just for getting set up before the rush.
 
 ---
 

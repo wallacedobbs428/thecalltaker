@@ -117,7 +117,7 @@ Now compare it to the cost of doing nothing: **$4,550+ per month in missed reven
 
 The Call Taker does not cost you money. **It makes you money.** The math is not close.
 
-**No contracts. No setup fees. Cancel anytime.** We do not lock you in because we do not have to. Once you see the results, you will not want to leave.
+**No contracts. Cancel anytime.** One-time setup ($197 for Starter, $297 for Professional) and we handle everything. We do not lock you in because we do not have to. Once you see the results, you will not want to leave.
 
 ---
 

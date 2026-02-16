@@ -70,7 +70,7 @@ Your competitors are answering calls at 9 PM on a Tuesday. Are you? Most HVAC co
 **Type:** Offer
 **Title:** AI Receptionist for HVAC - $297/month
 **Text:**
-For less than the cost of one service call, The Call Taker answers every phone call your HVAC company receives. 24 hours a day. 7 days a week. 365 days a year. It books appointments, captures caller details, and texts you a summary after every call. No contracts. No setup fees. One missed AC emergency pays for 3+ months of service. See why HVAC companies across Tennessee are making the switch.
+For less than the cost of one service call, The Call Taker answers every phone call your HVAC company receives. 24 hours a day. 7 days a week. 365 days a year. It books appointments, captures caller details, and texts you a summary after every call. No contracts. Cancel anytime. One missed AC emergency pays for 3+ months of service. See why HVAC companies across Tennessee are making the switch.
 
 **CTA Button:** Learn More -> thecalltaker.com
 **Offer details:** $297/month - No contracts
