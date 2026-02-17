@@ -164,8 +164,20 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 - Staff user created for calendar assignment
 - Demo form wired to create contacts with prospect + demo-booked tags
 
+## A2P 10DLC Registration Status (as of Feb 17, 2026)
+- **Brand status: APPROVED**
+- **Campaign status: REJECTED** — re-submission in progress
+- **Blocker:** GitHub Pages SSL cert not yet issued for thecalltaker.com — GHL compliance bot can't crawl the site over HTTPS, so all compliance checks fail
+- **DNS:** Correct (4 A records pointing to GitHub IPs, www CNAME to wallacedobbs428.github.io)
+- **SSL fix:** Waiting for GitHub to issue cert — check Settings > Pages > "Enforce HTTPS" becoming clickable
+- **SMS consent added to:** demo.html, audit.html, privacy.html (Section 2a), terms.html (Section 4a)
+- **Checkbox must NOT be required** — A2P rules say consent checkbox can't be mandatory
+- **Once SSL is fixed:** Re-submit campaign with `https://thecalltaker.com/demo.html` as opt-in URL
+- **CRITICAL:** All SMS outreach is FAILING until campaign is approved — carriers are dropping messages
+
 ## What's NOT Built Yet (Needs Wallace)
 - ~~Custom domain~~ — DONE (thecalltaker.com connected)
+- A2P 10DLC campaign approval (blocked by SSL cert — see above)
 - Stripe billing (not connected)
 - Email template content (shells exist, need copy pasted in GHL UI)
 - Business email address (optional — currently using wallacemdobbs@icloud.com)
