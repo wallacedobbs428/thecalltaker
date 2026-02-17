@@ -54,19 +54,21 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 ├── blog-missed-call-cost.html — SEO article: cost of missed calls (with newsletter)
 ├── blog-ai-vs-answering.html — SEO article: AI vs answering services (with newsletter)
 ├── calculator.html — standalone missed call revenue calculator (4-step interactive, lead capture)
+├── industries.html — industries page: HVAC, plumbing, electrical, roofing, pest control, garage door/locksmith
 ├── compare.html — comparison page: Call Taker vs voicemail vs answering vs receptionist
 ├── partners.html — partner/reseller program page with application form
 ├── privacy.html — Privacy policy (required for Facebook ads)
 ├── terms.html — Terms of service
 ├── thank-you.html — form submission confirmation (conversion tracking fires here)
 ├── admin-setup.html — internal GHL setup tool (NOT public)
+├── shopper-report.html — INTERNAL: Secret Shopper Report Generator (noindex) — fill out after a test call, generates a print-ready PDF audit report to send the prospect
 ├── styles.css — shared design system (dark + green theme)
 ├── script.js — shared interactions (reveals, FAQ, mobile nav)
 ├── 404.html — custom error page with nav + conversion CTAs
 ├── CNAME — custom domain: thecalltaker.com
 ├── favicon.svg — site icon
-├── robots.txt — search engine directives (blocks admin-setup.html)
-├── sitemap.xml — SEO sitemap (14 pages: index, demo, audit, blog, 2 articles, calculator, compare, partners, privacy, terms)
+├── robots.txt — search engine directives (blocks admin-setup.html + shopper-report.html)
+├── sitemap.xml — SEO sitemap (15 pages: index, demo, audit, blog, 2 articles, calculator, compare, industries, partners, privacy, terms)
 ├── sales/ (70+ files — cold outreach, content, partnerships, ads, campaigns)
 │   ├── cold-email-sequence.md — 3-email cold outreach (Instantly)
 │   ├── cold-email-sequence-extended.md — Emails 4-7 (free audit, social proof, video, breakup)
@@ -166,7 +168,7 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 
 ## A2P 10DLC Registration Status (as of Feb 17, 2026)
 - **Brand status: APPROVED**
-- **Campaign status: REJECTED** — re-submission in progress
+- **Campaign status: IN PROGRESS** — re-submitted Feb 17 12:30am, awaiting carrier approval
 - **Blocker:** GitHub Pages SSL cert not yet issued for thecalltaker.com — GHL compliance bot can't crawl the site over HTTPS, so all compliance checks fail
 - **DNS:** Correct (4 A records pointing to GitHub IPs, www CNAME to wallacedobbs428.github.io)
 - **SSL fix:** Waiting for GitHub to issue cert — check Settings > Pages > "Enforce HTTPS" becoming clickable
@@ -174,6 +176,50 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 - **Checkbox must NOT be required** — A2P rules say consent checkbox can't be mandatory
 - **Once SSL is fixed:** Re-submit campaign with `https://thecalltaker.com/demo.html` as opt-in URL
 - **CRITICAL:** All SMS outreach is FAILING until campaign is approved — carriers are dropping messages
+
+## Max — 24/7 Autonomous Sales Team Member
+- **Location:** `max/` directory
+- **Engine:** `max/max-engine.py` (Python3, zero dependencies)
+- **Installer:** `bash max/install-max.sh` (sets up launchd)
+- **Uninstaller:** `bash max/uninstall-max.sh` (stops all services)
+- **State:** `max/max-state.json` (tracks what Max has done)
+- **Logs:** `max/max-log.txt` (full activity log)
+- **Schedule:**
+  - Reply monitor: every 30 min (checks all 223 contacts for inbound replies)
+  - Follow-ups: daily at 9am (sends to leads who haven't responded in 3+ days)
+  - Cold outreach: daily at 10am (first-touch emails to unemailed leads, 20/day max)
+  - Pipeline: daily at midnight (flags engaged leads, moves stages)
+  - Daily report: daily at 8pm (sends pipeline summary via ntfy)
+- **Alerts:** Sends to ntfy topics (tct-xK9mW4vR7pLd for ops, tct-warroom-Kx7mN9pQ for hot leads)
+- **Limits:** 20 cold emails/day, 30 follow-ups/day, 3 follow-up rounds max per lead
+- **Hours:** Only sends Mon-Fri 9am-5pm CST (respects business hours)
+- **Status:** `python3 max/max-engine.py status`
+
+## Ben — 24/7 Senior Sales Closer
+- **Location:** `ben/` directory
+- **Engine:** `ben/ben-engine.py` (Python3, zero dependencies)
+- **Installer:** `bash ben/install-ben.sh`
+- **Uninstaller:** `bash ben/uninstall-ben.sh`
+- **How Ben differs from Max:**
+  - Different email angles: ROI math, competitor pressure, after-hours emergencies, seasonal urgency
+  - Coordinates with Max — reads Max's state file, never emails the same lead Max just emailed
+  - Re-engages leads Max gave up on (3 follow-ups, no response) with fresh angles
+  - Sends SMS when A2P approves (auto-detects by trying + stopping if it fails)
+  - Scores all leads 1-10 and ntfy-alerts hot leads (8+) for Wallace to call
+  - Sends morning briefing (7am) and evening summary (9pm) to ntfy
+- **Schedule:**
+  - Morning briefing: 7:00 AM (pipeline status + today's plan)
+  - Cold outreach: 11:00 AM (ROI/competition emails, 15/day max)
+  - SMS blasts: 1:00 PM (when A2P approves, 15/day max)
+  - Re-engagement: 2:00 PM (fresh angles for Max's cold leads, 10/day max)
+  - Lead scoring: 3:00 PM (scores all leads, flags hot ones)
+  - Evening summary: 9:00 PM (combined team stats + tomorrow's plan)
+
+## Instantly.ai
+- **Plan:** Free Trial (24/250 contacts uploaded, no API access)
+- **API:** Locked behind Hyper Growth paid plan — cannot automate via API
+- **Workaround:** Wallace uses Instantly UI manually; Max handles outreach via GHL email API instead
+- **4 sending accounts** on skylfinder.com domain (warming up)
 
 ## What's NOT Built Yet (Needs Wallace)
 - ~~Custom domain~~ — DONE (thecalltaker.com connected)

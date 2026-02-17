@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Secret Shopper Report Generator — The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       GLOBAL RESET + BASE
+    ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0a0f1a;
+      color: #94a3b8;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    :root {
+      --green:        #10b981;
+      --green-light:  #34d399;
+      --green-dim:    rgba(16,185,129,0.12);
+      --green-glow:   rgba(16,185,129,0.25);
+      --border:       rgba(255,255,255,0.08);
+      --surface:      rgba(255,255,255,0.03);
+      --surface-2:    #111827;
+      --surface-3:    #1a2332;
+      --text-1:       #ffffff;
+      --text-2:       #94a3b8;
+      --text-3:       #64748b;
+      --red:          #ef4444;
+      --red-dim:      rgba(239,68,68,0.12);
+      --amber:        #f59e0b;
+      --amber-dim:    rgba(245,158,11,0.12);
+    }
+
+    /* =========================================================
+       FORM PAGE LAYOUT
+    ========================================================= */
+    .page-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+    .site-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--green);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-icon svg { width: 17px; height: 17px; }
+    .logo-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -0.02em;
+    }
+    .logo-text span { color: var(--green); }
+    .header-badge {
+      margin-left: auto;
+      background: var(--green-dim);
+      color: var(--green-light);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(16,185,129,0.2);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       PAGE TITLE
+    ========================================================= */
+    .page-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-1);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .page-subtitle {
+      color: var(--text-3);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .page-subtitle strong { color: var(--green-light); }
+
+    /* =========================================================
+       FORM SECTIONS
+    ========================================================= */
+    .form-section {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .form-section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* =========================================================
+       FORM GRID + FIELDS
+    ========================================================= */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-grid .span-2 { grid-column: 1 / -1; }
+    @media (max-width: 540px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid .span-2 { grid-column: 1; }
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+    .field label .req { color: var(--green); margin-left: 2px; }
+
+    .field input,
+    .field select,
+    .field textarea {
+      background: #0a0f1a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-1);
+      width: 100%;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--text-3); }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px var(--green-glow);
+    }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+      cursor: pointer;
+    }
+    .field select option { background: #111827; color: #fff; }
+    .field textarea { resize: vertical; min-height: 90px; }
+
+    /* Grade radio group */
+    .grade-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .grade-option { position: relative; }
+    .grade-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .grade-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      border: 2px solid var(--border);
+      background: #0a0f1a;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-3);
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .grade-option input[type="radio"]:checked + label {
+      border-color: var(--grade-color, var(--green));
+      color: var(--grade-color, var(--green));
+      background: rgba(var(--grade-rgb, 16,185,129), 0.1);
+      box-shadow: 0 0 0 3px rgba(var(--grade-rgb, 16,185,129), 0.2);
+    }
+    .grade-option label:hover { border-color: rgba(255,255,255,0.2); color: var(--text-2); }
+    .grade-a label { --grade-color: #10b981; --grade-rgb: 16,185,129; }
+    .grade-b label { --grade-color: #34d399; --grade-rgb: 52,211,153; }
+    .grade-c label { --grade-color: #f59e0b; --grade-rgb: 245,158,11; }
+    .grade-d label { --grade-color: #f97316; --grade-rgb: 249,115,22; }
+    .grade-f label { --grade-color: #ef4444; --grade-rgb: 239,68,68; }
+    .grade-a input:checked + label { --grade-color: #10b981; --grade-rgb: 16,185,129; }
+    .grade-b input:checked + label { --grade-color: #34d399; --grade-rgb: 52,211,153; }
+    .grade-c input:checked + label { --grade-color: #f59e0b; --grade-rgb: 245,158,11; }
+    .grade-d input:checked + label { --grade-color: #f97316; --grade-rgb: 249,115,22; }
+    .grade-f input:checked + label { --grade-color: #ef4444; --grade-rgb: 239,68,68; }
+
+    /* Field hint text */
+    .field-hint {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: -2px;
+    }
+
+    /* =========================================================
+       SUBMIT BUTTON
+    ========================================================= */
+    .submit-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .btn-reset {
+      padding: 12px 20px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-3);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .btn-reset:hover { border-color: rgba(255,255,255,0.2); color: var(--text-2); }
+
+    .btn-generate {
+      padding: 12px 28px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: #000;
+      background: var(--green);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-generate:hover { background: var(--green-light); transform: translateY(-1px); }
+    .btn-generate svg { width: 16px; height: 16px; }
+
+    /* Error state */
+    .field.error input,
+    .field.error select,
+    .field.error textarea {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px var(--red-dim);
+    }
+    .field-error-msg {
+      font-size: 11px;
+      color: var(--red);
+      display: none;
+    }
+    .field.error .field-error-msg { display: block; }
+
+    /* =========================================================
+       REPORT MODAL OVERLAY
+    ========================================================= */
+    .report-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 24px;
+    }
+    .report-overlay.visible { display: block; }
+
+    .report-container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    }
+
+    /* Print/PDF action bar (not printed) */
+    .report-actions {
+      background: #111827;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .report-actions-label {
+      font-size: 13px;
+      color: #64748b;
+      flex: 1;
+    }
+    .btn-close-report {
+      padding: 8px 16px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: #94a3b8;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .btn-close-report:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+    .btn-print {
+      padding: 8px 18px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      color: #000;
+      background: #10b981;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-print:hover { background: #34d399; }
+    .btn-print svg { width: 14px; height: 14px; }
+
+    /* =========================================================
+       THE REPORT — WHITE CLEAN PRINTABLE
+    ========================================================= */
+    .report {
+      background: #ffffff;
+      color: #1e293b;
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Report header band */
+    .report-header {
+      background: #0a0f1a;
+      padding: 32px 40px 28px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .report-header-left { flex: 1; }
+    .report-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .report-logo-icon {
+      width: 30px;
+      height: 30px;
+      background: #10b981;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .report-logo-icon svg { width: 16px; height: 16px; }
+    .report-logo-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+    .report-logo-text span { color: #10b981; }
+    .report-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 4px;
+    }
+    .report-title-sub {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 400;
+    }
+    .report-grade-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .report-grade-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 900;
+      border: 3px solid;
+    }
+    .report-grade-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Report meta strip */
+    .report-meta {
+      background: #f1f5f9;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 16px 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .report-meta-item {}
+    .report-meta-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 2px;
+    }
+    .report-meta-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    /* Report body */
+    .report-body { padding: 36px 40px; }
+
+    /* Intro callout */
+    .report-intro-callout {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      border-radius: 0 6px 6px 0;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      font-size: 14px;
+      color: #78350f;
+      font-style: italic;
+      font-weight: 500;
+    }
+    .report-intro-callout strong { font-style: normal; }
+
+    /* Section headings */
+    .report-section { margin-bottom: 32px; }
+    .report-section-heading {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    /* Findings table */
+    .findings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .findings-table th {
+      text-align: left;
+      font-weight: 600;
+      color: #475569;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .findings-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      vertical-align: top;
+    }
+    .findings-table tr:last-child td { border-bottom: none; }
+    .findings-table td:first-child {
+      font-weight: 600;
+      color: #475569;
+      width: 45%;
+      white-space: nowrap;
+    }
+
+    /* Status pill */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status-pill::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+    .status-bad { background: #fee2e2; color: #dc2626; }
+    .status-warn { background: #fef3c7; color: #d97706; }
+    .status-ok { background: #d1fae5; color: #059669; }
+    .status-neutral { background: #f1f5f9; color: #475569; }
+
+    /* Revenue impact block */
+    .revenue-impact {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .revenue-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .revenue-card.highlight {
+      background: #fff1f2;
+      border-color: #fecaca;
+    }
+    .revenue-card-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .revenue-card-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1e293b;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .revenue-card.highlight .revenue-card-value { color: #dc2626; }
+    .revenue-card-sub {
+      font-size: 10px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    /* The stat callout */
+    .stat-callout {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .stat-callout-number {
+      font-size: 36px;
+      font-weight: 900;
+      color: #1d4ed8;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .stat-callout-text {
+      font-size: 13px;
+      color: #1e40af;
+    }
+    .stat-callout-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    /* Comparison table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .comparison-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .comparison-table th:first-child { color: #475569; background: #f8fafc; width: 30%; }
+    .comparison-table th.col-now { background: #fee2e2; color: #dc2626; }
+    .comparison-table th.col-tct { background: #d1fae5; color: #059669; }
+    .comparison-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: top;
+      font-size: 12px;
+    }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .comparison-table td:first-child {
+      font-weight: 600;
+      color: #475569;
+      background: #f8fafc;
+    }
+    .comparison-table td.col-now { background: #fff5f5; color: #7f1d1d; }
+    .comparison-table td.col-tct { background: #f0fdf4; color: #064e3b; }
+
+    /* Key stats list */
+    .stats-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .stats-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: #334155;
+    }
+    .stats-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ef4444;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .stats-list li strong { color: #1e293b; }
+
+    /* Notes box */
+    .notes-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #475569;
+      font-style: italic;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* CTA section */
+    .report-cta {
+      background: #0a0f1a;
+      padding: 28px 40px;
+      text-align: center;
+    }
+    .report-cta-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      color: #10b981;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .report-cta-heading {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .report-cta-sub {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 20px;
+    }
+    .report-cta-demo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #10b981;
+      color: #000;
+      font-size: 15px;
+      font-weight: 800;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .report-cta-demo span { color: #000; }
+    .report-cta-tagline {
+      font-size: 11px;
+      color: #475569;
+      margin-top: 12px;
+    }
+
+    /* Footer */
+    .report-footer {
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      padding: 20px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .report-footer-item { font-size: 11px; }
+    .report-footer-label {
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+    .report-footer-value { color: #475569; font-weight: 500; }
+    .report-footer-value a { color: #1d4ed8; text-decoration: none; }
+
+    .report-disclaimer {
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      padding: 12px 40px;
+      font-size: 10px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    /* =========================================================
+       PRINT STYLES
+    ========================================================= */
+    @media print {
+      body { background: #fff; }
+      .report-overlay { display: block !important; position: static; padding: 0; background: none; }
+      .report-container { box-shadow: none; border-radius: 0; max-width: 100%; }
+      .report-actions { display: none !important; }
+      .page-wrap { display: none; }
+      .report { font-size: 12px; }
+      .report-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .report-cta { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .report-meta { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .comparison-table th,
+      .comparison-table td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .status-pill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .stat-callout { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .revenue-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .report-intro-callout { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- =========================================================
+     FORM PAGE
+========================================================= -->
+<div class="page-wrap" id="form-page">
+
+  <div class="site-header">
+    <div class="logo-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </div>
+    <div class="logo-text">The Call <span>Taker</span></div>
+    <div class="header-badge">Internal Tool</div>
+  </div>
+
+  <div class="page-title">Secret Shopper Report Generator</div>
+  <div class="page-subtitle">Fill this out right after a test call. Hit generate and you get a print-ready PDF report to send the prospect. <strong>This is your door-opener.</strong></div>
+
+  <form id="shopper-form" novalidate>
+
+    <!-- SECTION 1: COMPANY INFO -->
+    <div class="form-section">
+      <div class="form-section-title">Company Information</div>
+      <div class="form-grid">
+        <div class="field span-2" id="field-companyName">
+          <label>Company Name <span class="req">*</span></label>
+          <input type="text" name="companyName" placeholder="e.g. Smith Heating & Cooling" autocomplete="off">
+          <div class="field-error-msg">Company name is required.</div>
+        </div>
+        <div class="field" id="field-ownerName">
+          <label>Owner Name <span class="req">*</span></label>
+          <input type="text" name="ownerName" placeholder="e.g. Mike Smith" autocomplete="off">
+          <div class="field-error-msg">Owner name is required.</div>
+        </div>
+        <div class="field" id="field-phoneCalled">
+          <label>Phone Number Called <span class="req">*</span></label>
+          <input type="tel" name="phoneCalled" placeholder="e.g. (615) 555-0123" autocomplete="off">
+          <div class="field-error-msg">Phone number is required.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: CALL DETAILS (BUSINESS HOURS) -->
+    <div class="form-section">
+      <div class="form-section-title">Business Hours Call</div>
+      <div class="form-grid">
+        <div class="field" id="field-callDateTime">
+          <label>Date &amp; Time of Call <span class="req">*</span></label>
+          <input type="datetime-local" name="callDateTime">
+          <div class="field-error-msg">Date and time are required.</div>
+        </div>
+        <div class="field" id="field-ringCount">
+          <label>Rings Before Answer / Voicemail <span class="req">*</span></label>
+          <select name="ringCount">
+            <option value="">-- select --</option>
+            <option value="1">1 ring</option>
+            <option value="2">2 rings</option>
+            <option value="3">3 rings</option>
+            <option value="4">4 rings</option>
+            <option value="5">5 rings</option>
+            <option value="6">6 rings</option>
+            <option value="7+">7+ rings</option>
+            <option value="Immediate">Immediate (answered right away)</option>
+            <option value="No ring">No ring — straight to voicemail</option>
+          </select>
+          <div class="field-error-msg">Please select number of rings.</div>
+        </div>
+        <div class="field" id="field-callResult">
+          <label>What Happened? <span class="req">*</span></label>
+          <select name="callResult">
+            <option value="">-- select --</option>
+            <option value="Person answered">Person answered</option>
+            <option value="Voicemail">Went to voicemail</option>
+            <option value="Answering service">Answered by answering service</option>
+            <option value="No answer">Rang and rang — no answer</option>
+            <option value="Busy signal">Busy signal</option>
+            <option value="Full mailbox">Full mailbox — could not leave message</option>
+            <option value="Disconnected">Line disconnected / not in service</option>
+          </select>
+          <div class="field-error-msg">Please select a result.</div>
+        </div>
+        <div class="field" id="field-vmQuality">
+          <label>Voicemail / Greeting Quality</label>
+          <select name="vmQuality">
+            <option value="N/A">N/A — Person answered</option>
+            <option value="Professional">Professional — company name, hours, clear instructions</option>
+            <option value="Okay">Okay — some info but missing details</option>
+            <option value="Generic">Generic — no company name, carrier default</option>
+            <option value="No VM set up">No voicemail set up at all</option>
+            <option value="Full mailbox">Mailbox full — caller cannot leave message</option>
+          </select>
+        </div>
+        <div class="field" id="field-nameInGreeting">
+          <label>Business Name Mentioned in Greeting?</label>
+          <select name="nameInGreeting">
+            <option value="Yes">Yes — company name said clearly</option>
+            <option value="No">No — nothing about the company</option>
+            <option value="N/A">N/A — person answered, introduced company</option>
+            <option value="Partial">Partial — first name only, no company</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: AFTER-HOURS TEST -->
+    <div class="form-section">
+      <div class="form-section-title">After-Hours Test (optional but powerful)</div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Did you test after hours?</label>
+          <select name="afterHoursTested" id="afterHoursTested">
+            <option value="No">No — only tested during business hours</option>
+            <option value="Yes">Yes — also called after hours</option>
+          </select>
+        </div>
+        <div class="field" id="field-afterHoursTime">
+          <label>After-Hours Call Time</label>
+          <input type="time" name="afterHoursTime" placeholder="e.g. 8:30 PM">
+          <div class="field-hint">Leave blank if not tested</div>
+        </div>
+        <div class="field span-2" id="field-afterHoursResult">
+          <label>After-Hours Result</label>
+          <select name="afterHoursResult">
+            <option value="Not tested">Not tested</option>
+            <option value="Voicemail (same as hours)">Same voicemail as business hours</option>
+            <option value="Voicemail (different)">Different voicemail for after hours</option>
+            <option value="Person answered">Person actually answered</option>
+            <option value="Answering service">Answering service</option>
+            <option value="No answer">Rang with no answer</option>
+            <option value="Full mailbox">Mailbox full</option>
+            <option value="Disconnected">Disconnected / different number</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: ASSESSMENT -->
+    <div class="form-section">
+      <div class="form-section-title">Your Assessment</div>
+      <div class="form-grid">
+        <div class="field" id="field-estimatedMissedCalls">
+          <label>Est. Missed Calls Per Month</label>
+          <select name="estimatedMissedCalls">
+            <option value="20">20 (small operation)</option>
+            <option value="40" selected>40 (typical HVAC company)</option>
+            <option value="60">60 (busy season)</option>
+            <option value="80">80 (large operation)</option>
+            <option value="100">100+ (high-volume)</option>
+          </select>
+          <div class="field-hint">Industry average is 40-60 for an HVAC company your prospect's size.</div>
+        </div>
+        <div class="field" id="field-overallGrade">
+          <label>Overall Grade <span class="req">*</span></label>
+          <div class="grade-group">
+            <div class="grade-option grade-a">
+              <input type="radio" name="overallGrade" id="grade-a" value="A">
+              <label for="grade-a">A</label>
+            </div>
+            <div class="grade-option grade-b">
+              <input type="radio" name="overallGrade" id="grade-b" value="B">
+              <label for="grade-b">B</label>
+            </div>
+            <div class="grade-option grade-c">
+              <input type="radio" name="overallGrade" id="grade-c" value="C">
+              <label for="grade-c">C</label>
+            </div>
+            <div class="grade-option grade-d">
+              <input type="radio" name="overallGrade" id="grade-d" value="D">
+              <label for="grade-d">D</label>
+            </div>
+            <div class="grade-option grade-f">
+              <input type="radio" name="overallGrade" id="grade-f" value="F" checked>
+              <label for="grade-f">F</label>
+            </div>
+          </div>
+          <div class="field-hint">A = excellent, F = no live answer + generic VM + after-hours dead end</div>
+          <div class="field-error-msg">Please select a grade.</div>
+        </div>
+        <div class="field span-2" id="field-notes">
+          <label>Observations &amp; Notes</label>
+          <textarea name="notes" placeholder="What exactly did you hear? Tone of voicemail, professionalism, any details that would resonate with the owner. Be specific — this goes in the report."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-row">
+      <button type="button" class="btn-reset" id="btn-reset">Clear Form</button>
+      <button type="submit" class="btn-generate">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Generate Report
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<!-- =========================================================
+     REPORT OVERLAY
+========================================================= -->
+<div class="report-overlay" id="report-overlay">
+  <div class="report-container">
+
+    <!-- Action Bar (screen only) -->
+    <div class="report-actions">
+      <div class="report-actions-label">Report generated. Print or save as PDF to send to the prospect.</div>
+      <button class="btn-close-report" id="btn-close-report">Back to Form</button>
+      <button class="btn-print" id="btn-print">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print / Save as PDF
+      </button>
+    </div>
+
+    <!-- The Report -->
+    <div class="report" id="the-report">
+
+      <!-- Report Header -->
+      <div class="report-header">
+        <div class="report-header-left">
+          <div class="report-logo">
+            <div class="report-logo-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="report-logo-text">The Call <span>Taker</span></div>
+          </div>
+          <div class="report-title">Missed Call Audit Report</div>
+          <div class="report-title-sub">Complimentary — prepared by Wallace Dobbs, Founder</div>
+        </div>
+        <div class="report-grade-badge">
+          <div class="report-grade-circle" id="r-grade-circle">F</div>
+          <div class="report-grade-label">Phone Grade</div>
+        </div>
+      </div>
+
+      <!-- Report Meta -->
+      <div class="report-meta">
+        <div class="report-meta-item">
+          <div class="report-meta-label">Prepared For</div>
+          <div class="report-meta-value" id="r-meta-company">—</div>
+        </div>
+        <div class="report-meta-item">
+          <div class="report-meta-label">Owner</div>
+          <div class="report-meta-value" id="r-meta-owner">—</div>
+        </div>
+        <div class="report-meta-item">
+          <div class="report-meta-label">Report Date</div>
+          <div class="report-meta-value" id="r-meta-date">—</div>
+        </div>
+      </div>
+
+      <!-- Report Body -->
+      <div class="report-body">
+
+        <!-- Intro callout -->
+        <div class="report-intro-callout" id="r-intro-callout">
+          "I called <strong id="r-ic-company">your business</strong> on <strong id="r-ic-datetime">—</strong>. Your customer experience rated <strong id="r-ic-grade">—</strong> out of A. Here's exactly what happened — and what it's costing you."
+        </div>
+
+        <!-- Section: What We Found -->
+        <div class="report-section">
+          <div class="report-section-heading">What We Found — Call Details</div>
+          <table class="findings-table">
+            <colgroup><col style="width:45%"><col></colgroup>
+            <tbody>
+              <tr>
+                <td>Phone Number Tested</td>
+                <td id="r-phone">—</td>
+              </tr>
+              <tr>
+                <td>Call Date &amp; Time</td>
+                <td id="r-datetime">—</td>
+              </tr>
+              <tr>
+                <td>Rings Before Answer</td>
+                <td id="r-rings">—</td>
+              </tr>
+              <tr>
+                <td>Result</td>
+                <td id="r-result">—</td>
+              </tr>
+              <tr>
+                <td>Voicemail / Greeting Quality</td>
+                <td id="r-vmquality">—</td>
+              </tr>
+              <tr>
+                <td>Business Name in Greeting</td>
+                <td id="r-nameingreeting">—</td>
+              </tr>
+              <tr id="r-row-afterhours">
+                <td>After-Hours Test</td>
+                <td id="r-afterhours">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Section: Observations -->
+        <div class="report-section" id="r-section-notes">
+          <div class="report-section-heading">Our Observations</div>
+          <div class="notes-box" id="r-notes">—</div>
+        </div>
+
+        <!-- Section: The 67% Stat -->
+        <div class="report-section">
+          <div class="report-section-heading">The Number That Should Alarm You</div>
+          <div class="stat-callout">
+            <div class="stat-callout-number">67%</div>
+            <div class="stat-callout-text">
+              <strong>of callers who reach voicemail never call back.</strong>
+              They don't leave a message. They don't wait. They call the next HVAC company on Google and book with them. Every missed call is a lost job — and most owners have no idea how many are slipping away.
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Revenue Impact -->
+        <div class="report-section">
+          <div class="report-section-heading">What This Is Costing You — Conservative Estimate</div>
+          <div class="revenue-impact">
+            <div class="revenue-card">
+              <div class="revenue-card-label">Est. Missed Calls / Month</div>
+              <div class="revenue-card-value" id="r-missed-calls">40</div>
+              <div class="revenue-card-sub">Industry avg for your size</div>
+            </div>
+            <div class="revenue-card">
+              <div class="revenue-card-label">Callers Who Won't Call Back</div>
+              <div class="revenue-card-value" id="r-lost-callers">27</div>
+              <div class="revenue-card-sub">67% never leave a message</div>
+            </div>
+            <div class="revenue-card highlight">
+              <div class="revenue-card-label">Lost Revenue / Month</div>
+              <div class="revenue-card-value" id="r-monthly-loss">$9,450</div>
+              <div class="revenue-card-sub">At $350 avg per service call</div>
+            </div>
+          </div>
+          <table class="findings-table">
+            <tbody>
+              <tr>
+                <td>Revenue lost per missed call</td>
+                <td>$350 (HVAC industry average service call value)</td>
+              </tr>
+              <tr>
+                <td>Estimated monthly revenue loss</td>
+                <td id="r-loss-monthly-2"><strong>—</strong></td>
+              </tr>
+              <tr>
+                <td>Estimated annual revenue loss</td>
+                <td id="r-loss-annual"><strong>—</strong></td>
+              </tr>
+              <tr>
+                <td>Cost of The Call Taker to fix this</td>
+                <td><strong>$497/month</strong> — no contracts, cancel anytime</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Section: Industry Stats -->
+        <div class="report-section">
+          <div class="report-section-heading">What the Data Says About HVAC Phone Answer Rates</div>
+          <ul class="stats-list">
+            <li>The average HVAC company misses <strong>40-60% of after-hours calls</strong> — the highest-urgency calls of the day</li>
+            <li><strong>85% of callers</strong> who get voicemail don't leave a message — they call your competitor</li>
+            <li>A single missed call costs an average of <strong>$350 in lost revenue</strong></li>
+            <li>Companies that answer every call see <strong>15-30% higher booking rates</strong></li>
+            <li>Over <strong>60% of HVAC service calls</strong> come in outside normal business hours — evenings, weekends, holidays</li>
+            <li>You're spending money on Google Ads, truck wraps, and yard signs to make that phone ring. <strong>If nobody answers, all of that spend is wasted.</strong></li>
+          </ul>
+        </div>
+
+        <!-- Section: Comparison -->
+        <div class="report-section">
+          <div class="report-section-heading">Your Current Setup vs. The Call Taker</div>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="col-now" id="r-comp-company-header">Your Current Setup</th>
+                <th class="col-tct">With The Call Taker</th>
+              </tr>
+            </thead>
+            <tbody id="r-comparison-rows">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div><!-- /report-body -->
+
+      <!-- CTA Section -->
+      <div class="report-cta">
+        <div class="report-cta-eyebrow">Hear it for yourself</div>
+        <div class="report-cta-heading">See what your customers could hear instead</div>
+        <div class="report-cta-sub">Call the live demo line right now. Pretend you're a homeowner with a broken AC.</div>
+        <a href="tel:+16157845747" class="report-cta-demo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>(615) 784-5747</span> — live 24/7
+        </a>
+        <div class="report-cta-tagline">Then let's talk about getting <span id="r-cta-company">your company</span> set up. 48-hour setup. No contracts.</div>
+      </div>
+
+      <!-- Contact Footer -->
+      <div class="report-footer">
+        <div class="report-footer-item">
+          <div class="report-footer-label">Wallace Dobbs</div>
+          <div class="report-footer-value">Founder, The Call Taker</div>
+        </div>
+        <div class="report-footer-item">
+          <div class="report-footer-label">Book a Demo</div>
+          <div class="report-footer-value"><a href="https://thecalltaker.com/demo">thecalltaker.com/demo</a></div>
+        </div>
+        <div class="report-footer-item">
+          <div class="report-footer-label">Contact</div>
+          <div class="report-footer-value"><a href="mailto:wallacemdobbs@icloud.com">wallacemdobbs@icloud.com</a></div>
+        </div>
+      </div>
+
+      <div class="report-disclaimer">
+        This audit was conducted as a complimentary service by The Call Taker. No customer data belonging to <span id="r-disclaimer-company">the audited company</span> was collected or stored. The purpose of this report is to demonstrate the real-world impact of missed calls on your business. Revenue estimates are based on HVAC industry averages and are presented for illustrative purposes.
+      </div>
+
+    </div><!-- /the-report -->
+  </div><!-- /report-container -->
+</div><!-- /report-overlay -->
+
+<script>
+  // =========================================================
+  // HELPERS
+  // =========================================================
+
+  function $(id) { return document.getElementById(id); }
+
+  function formatPhone(raw) {
+    const digits = raw.replace(/\D/g, '');
+    if (digits.length === 10) {
+      return '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
+    }
+    return raw;
+  }
+
+  function formatDateTime(isoStr) {
+    if (!isoStr) return '—';
+    const d = new Date(isoStr);
+    if (isNaN(d)) return isoStr;
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let h = d.getHours(), m = d.getMinutes();
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    const mm = m < 10 ? '0' + m : m;
+    return days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear() + ' at ' + h + ':' + mm + ' ' + ampm;
+  }
+
+  function formatTime12(timeStr) {
+    if (!timeStr) return '';
+    const [hStr, mStr] = timeStr.split(':');
+    let h = parseInt(hStr, 10);
+    const m = mStr || '00';
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    return h + ':' + m + ' ' + ampm;
+  }
+
+  function formatCurrency(n) {
+    return '$' + n.toLocaleString('en-US');
+  }
+
+  function today() {
+    const d = new Date();
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+
+  // =========================================================
+  // GRADE STYLING
+  // =========================================================
+
+  const gradeConfig = {
+    'A': { color: '#10b981', bg: 'rgba(16,185,129,0.15)', border: '#10b981', label: 'Excellent' },
+    'B': { color: '#34d399', bg: 'rgba(52,211,153,0.15)', border: '#34d399', label: 'Good' },
+    'C': { color: '#f59e0b', bg: 'rgba(245,158,11,0.15)', border: '#f59e0b', label: 'Fair' },
+    'D': { color: '#f97316', bg: 'rgba(249,115,22,0.15)', border: '#f97316', label: 'Poor' },
+    'F': { color: '#ef4444', bg: 'rgba(239,68,68,0.15)', border: '#ef4444', label: 'Failing' }
+  };
+
+  // =========================================================
+  // STATUS PILL HELPER
+  // =========================================================
+
+  function makePill(text, type) {
+    // type: 'bad' | 'warn' | 'ok' | 'neutral'
+    return '<span class="status-pill status-' + type + '">' + text + '</span>';
+  }
+
+  function resultToPill(result) {
+    const bad = ['Voicemail','No answer','Full mailbox','Busy signal','Disconnected'];
+    const warn = ['Answering service'];
+    const ok = ['Person answered'];
+    if (ok.some(r => result.startsWith(r))) return makePill(result, 'ok');
+    if (warn.some(r => result.startsWith(r))) return makePill(result, 'warn');
+    if (bad.some(r => result.startsWith(r))) return makePill(result, 'bad');
+    return makePill(result, 'neutral');
+  }
+
+  function vmQualityToPill(q) {
+    if (q === 'N/A') return makePill('N/A — person answered', 'neutral');
+    if (q === 'Professional') return makePill(q, 'ok');
+    if (q === 'Okay') return makePill(q, 'warn');
+    return makePill(q, 'bad');
+  }
+
+  function nameToPill(v) {
+    if (v === 'Yes' || v === 'N/A') return makePill(v, 'ok');
+    if (v === 'Partial') return makePill(v, 'warn');
+    return makePill('No', 'bad');
+  }
+
+  // =========================================================
+  // COMPARISON TABLE ROWS
+  // =========================================================
+
+  function buildComparisonRows(data) {
+    const company = data.companyName;
+    const result = data.callResult;
+    const isVoicemail = result.toLowerCase().includes('voicemail');
+    const isNoAnswer = result.toLowerCase().includes('no answer') || result.toLowerCase().includes('rang');
+    const isAnswSvc = result.toLowerCase().includes('answering service');
+    const isPerson = result.toLowerCase().includes('person');
+
+    function nowDesc(scenario) {
+      switch(scenario) {
+        case 'greeting':
+          if (isPerson) return 'Person answered — great';
+          if (isVoicemail) return 'Rang ' + (data.ringCount !== 'Immediate' ? data.ringCount + ' rings' : '') + ', went to voicemail';
+          if (isNoAnswer) return 'Rang and rang — nobody answered';
+          if (isAnswSvc) return 'Answered by third-party answering service';
+          return result;
+        case 'conversation':
+          if (isPerson) return 'Depends on who answered and when';
+          return 'No option — caller hears a beep and hangs up';
+        case 'booking':
+          if (isPerson) return 'Possible if someone is available';
+          return 'Impossible outside business hours';
+        case 'capture':
+          if (isPerson) return 'Only if caller chose to give it and person wrote it down';
+          return 'Only if caller left a voicemail — 67% don\'t';
+        case 'notify':
+          if (isPerson) return 'Only if the person passed the message along';
+          return 'Not until you check voicemail — could be hours';
+        case 'emergency':
+          if (isPerson) return 'Only if that person identifies it as urgent';
+          return 'No way to flag — all calls get the same voicemail';
+        case 'afterhours':
+          if (data.afterHoursTested === 'Yes') {
+            return 'After-hours result: ' + data.afterHoursResult;
+          }
+          return 'Unknown — not tested';
+        case 'nextmove':
+          if (isPerson) return 'Books with you — if they got through';
+          return 'Calls your competitor and books with them';
+      }
+    }
+
+    const rows = [
+      ['Customer calls', nowDesc('greeting'), 'AI answers in under 2 seconds with "' + company + ', how can I help you today?"'],
+      ['Customer describes problem', nowDesc('conversation'), 'AI listens, asks follow-up questions, collects full details'],
+      ['Customer wants to book service', nowDesc('booking'), 'AI books directly on your calendar — anytime, any day'],
+      ['Customer info captured?', nowDesc('capture'), 'Yes — name, phone, address, and issue. Every single call.'],
+      ['You get notified?', nowDesc('notify'), 'Instant text with full details the moment the call ends'],
+      ['Emergency calls', nowDesc('emergency'), 'AI detects urgency and sends you an immediate priority alert'],
+      ['After hours &amp; weekends', data.afterHoursTested === 'Yes' ? nowDesc('afterhours') : 'Untested — likely same voicemail', 'Answered the same way at 2 AM as at 2 PM'],
+      ['That caller\'s next move', nowDesc('nextmove'), 'Books with you — guaranteed']
+    ];
+
+    return rows.map(function(row) {
+      const isLastRow = row[0] === "That caller's next move";
+      return '<tr>' +
+        '<td>' + row[0] + '</td>' +
+        '<td class="col-now">' + row[1] + '</td>' +
+        '<td class="col-tct">' + row[2] + '</td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  // =========================================================
+  // FORM VALIDATION
+  // =========================================================
+
+  const requiredFields = ['companyName','ownerName','phoneCalled','callDateTime','ringCount','callResult'];
+
+  function validateForm(formData) {
+    let valid = true;
+    requiredFields.forEach(function(name) {
+      const fieldEl = document.getElementById('field-' + name);
+      const input = document.querySelector('[name="' + name + '"]');
+      if (!fieldEl || !input) return;
+      if (!input.value || input.value.trim() === '') {
+        fieldEl.classList.add('error');
+        valid = false;
+      } else {
+        fieldEl.classList.remove('error');
+      }
+    });
+
+    // Grade check
+    const gradeField = document.getElementById('field-overallGrade');
+    const gradeChecked = document.querySelector('[name="overallGrade"]:checked');
+    if (!gradeChecked) {
+      gradeField.classList.add('error');
+      valid = false;
+    } else {
+      gradeField.classList.remove('error');
+    }
+
+    return valid;
+  }
+
+  // =========================================================
+  // COLLECT FORM DATA
+  // =========================================================
+
+  function collectData() {
+    const form = document.getElementById('shopper-form');
+    const fd = new FormData(form);
+    const data = {};
+    fd.forEach(function(v, k) { data[k] = v; });
+    // grade from radio
+    const gradeEl = document.querySelector('[name="overallGrade"]:checked');
+    data.overallGrade = gradeEl ? gradeEl.value : 'F';
+    return data;
+  }
+
+  // =========================================================
+  // POPULATE REPORT
+  // =========================================================
+
+  function populateReport(data) {
+    const grade = data.overallGrade || 'F';
+    const gcfg = gradeConfig[grade];
+    const missed = parseInt(data.estimatedMissedCalls, 10) || 40;
+    const lostCallers = Math.round(missed * 0.67);
+    const monthlyLoss = lostCallers * 350;
+    const annualLoss = monthlyLoss * 12;
+
+    // Grade circle
+    const gc = $('r-grade-circle');
+    gc.textContent = grade;
+    gc.style.color = gcfg.color;
+    gc.style.borderColor = gcfg.border;
+    gc.style.background = gcfg.bg;
+
+    // Meta
+    $('r-meta-company').textContent = data.companyName;
+    $('r-meta-owner').textContent = data.ownerName;
+    $('r-meta-date').textContent = today();
+
+    // Intro callout
+    $('r-ic-company').textContent = data.companyName;
+    $('r-ic-datetime').textContent = formatDateTime(data.callDateTime);
+    $('r-ic-grade').textContent = grade + ' (' + gcfg.label + ')';
+
+    // Findings
+    $('r-phone').textContent = formatPhone(data.phoneCalled);
+    $('r-datetime').textContent = formatDateTime(data.callDateTime);
+    $('r-rings').textContent = data.ringCount + ' ring' + (data.ringCount === '1' ? '' : 's');
+    $('r-result').innerHTML = resultToPill(data.callResult);
+    $('r-vmquality').innerHTML = vmQualityToPill(data.vmQuality);
+    $('r-nameingreeting').innerHTML = nameToPill(data.nameInGreeting);
+
+    // After hours
+    const afterRow = $('r-row-afterhours');
+    const afterCell = $('r-afterhours');
+    if (data.afterHoursTested === 'Yes' && data.afterHoursResult !== 'Not tested') {
+      let ahText = data.afterHoursResult;
+      if (data.afterHoursTime) ahText += ' (called at ' + formatTime12(data.afterHoursTime) + ')';
+      afterCell.innerHTML = resultToPill(ahText);
+      afterRow.style.display = '';
+    } else {
+      afterRow.style.display = 'none';
+    }
+
+    // Notes
+    const notesSection = $('r-section-notes');
+    const notesEl = $('r-notes');
+    if (data.notes && data.notes.trim()) {
+      notesEl.textContent = data.notes.trim();
+      notesSection.style.display = '';
+    } else {
+      notesSection.style.display = 'none';
+    }
+
+    // Revenue
+    $('r-missed-calls').textContent = missed;
+    $('r-lost-callers').textContent = lostCallers;
+    $('r-monthly-loss').textContent = formatCurrency(monthlyLoss);
+    $('r-loss-monthly-2').innerHTML = '<strong>' + formatCurrency(monthlyLoss) + '</strong>';
+    $('r-loss-annual').innerHTML = '<strong>' + formatCurrency(annualLoss) + '</strong>';
+
+    // Comparison table
+    $('r-comp-company-header').textContent = data.companyName + ' Today';
+    $('r-comparison-rows').innerHTML = buildComparisonRows(data);
+
+    // CTA
+    $('r-cta-company').textContent = data.companyName;
+
+    // Disclaimer
+    $('r-disclaimer-company').textContent = data.companyName;
+  }
+
+  // =========================================================
+  // FORM SUBMIT
+  // =========================================================
+
+  document.getElementById('shopper-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const data = collectData();
+    if (!validateForm(data)) {
+      // Scroll to first error
+      const firstError = document.querySelector('.field.error');
+      if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    populateReport(data);
+    const overlay = $('report-overlay');
+    overlay.classList.add('visible');
+    overlay.scrollTop = 0;
+  });
+
+  // =========================================================
+  // CLOSE / PRINT BUTTONS
+  // =========================================================
+
+  $('btn-close-report').addEventListener('click', function() {
+    $('report-overlay').classList.remove('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  $('btn-print').addEventListener('click', function() {
+    window.print();
+  });
+
+  $('btn-reset').addEventListener('click', function() {
+    if (confirm('Clear the form? This cannot be undone.')) {
+      document.getElementById('shopper-form').reset();
+      requiredFields.forEach(function(name) {
+        const el = document.getElementById('field-' + name);
+        if (el) el.classList.remove('error');
+      });
+      const gradeField = document.getElementById('field-overallGrade');
+      if (gradeField) gradeField.classList.remove('error');
+      // Re-check F as default
+      const fGrade = document.getElementById('grade-f');
+      if (fGrade) fGrade.checked = true;
+    }
+  });
+
+  // =========================================================
+  // REMOVE ERROR STATE ON INPUT
+  // =========================================================
+
+  requiredFields.forEach(function(name) {
+    const input = document.querySelector('[name="' + name + '"]');
+    if (!input) return;
+    input.addEventListener('input', function() {
+      const fieldEl = document.getElementById('field-' + name);
+      if (fieldEl && input.value.trim()) fieldEl.classList.remove('error');
+    });
+    input.addEventListener('change', function() {
+      const fieldEl = document.getElementById('field-' + name);
+      if (fieldEl && input.value.trim()) fieldEl.classList.remove('error');
+    });
+  });
+
+  document.querySelectorAll('[name="overallGrade"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      const gradeField = document.getElementById('field-overallGrade');
+      if (gradeField) gradeField.classList.remove('error');
+    });
+  });
+
+  // =========================================================
+  // PRE-FILL TODAY'S DATE AS DEFAULT
+  // =========================================================
+
+  (function() {
+    const dtInput = document.querySelector('[name="callDateTime"]');
+    if (dtInput && !dtInput.value) {
+      const now = new Date();
+      const pad = n => n < 10 ? '0' + n : n;
+      const localISO = now.getFullYear() + '-' + pad(now.getMonth()+1) + '-' + pad(now.getDate()) +
+                       'T' + pad(now.getHours()) + ':' + pad(now.getMinutes());
+      dtInput.value = localISO;
+    }
+  })();
+</script>
+</body>
+</html>
