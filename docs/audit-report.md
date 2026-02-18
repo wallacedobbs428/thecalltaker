@@ -116,7 +116,7 @@ See CLAUDE.md for current file structure. Website is a 2-page site (index.html +
 
 ---
 
-## 6. PRIORITY ORDER TO GET FIRST PAYING CLIENT
+## 6. PRIORITY ORDER TO GET 10 PAYING CLIENTS
 
 1. ✅ **Build and deploy the website** — DONE (2-page dark+green GitHub Pages site)
 2. ✅ **Set up GHL automations** — DONE (tags, templates, workflows, pipelines)

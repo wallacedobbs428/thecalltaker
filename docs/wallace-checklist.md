@@ -79,7 +79,7 @@
 
 ---
 
-## PRIORITY 4: GET YOUR FIRST CLIENT
+## PRIORITY 4: GET 10 CLIENTS BY MARCH 14
 
 ### 6. Do Secret Shopper Calls
 ☐ Call 20+ local HVAC companies after 6pm
@@ -98,7 +98,7 @@
 ☐ Email and call HVAC companies that went to voicemail
   📍 Where: Phone + GHL email
   ⏱ Time: Ongoing — aim for 10 outreaches per day
-  💡 Why: This is how you get your first paying client
+  💡 Why: This is how you get to 10 paying clients
   🔑 What you need: Your phone, cold-call-script.md, cold-email-sequence.md
   Steps:
   1. Start with your voicemail-detected leads
@@ -114,7 +114,7 @@
   💡 Why: Demos close deals — they need to hear the AI themselves
   🔑 What you need: demo-script.md, working AI demo line (from step 3)
 
-### 9. Close and Onboard First Client
+### 9. Close and Onboard Clients
 ☐ Sign agreement, collect payment, set them up
   📍 Where: GHL + Phone
   ⏱ Time: 2 hours total
@@ -129,7 +129,7 @@
 
 ---
 
-## LOWER PRIORITY (After First Client)
+## LOWER PRIORITY (After Core Outreach Setup)
 
 ### 10. Add Real Testimonials to Website
 ☐ Replace placeholder testimonials with real ones
@@ -156,4 +156,4 @@
 
 **Total items: 12**
 **Website is already LIVE.**
-**Time to get first client: Steps 1-3 are DONE. Steps 4-8 need Wallace's hands. ~2-3 hours of Wallace's time spread over a few days.**
+**Goal: 10 clients by March 14. Steps 1-3 are DONE. Steps 4-8 need Wallace's hands. Instagram + Facebook are LIVE. DMs going out daily.**

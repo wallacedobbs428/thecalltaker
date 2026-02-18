@@ -3,7 +3,11 @@
 ## What This Is
 AI receptionist service for HVAC companies. Answers every call 24/7 so they never lose a job to voicemail again.
 
-## Current Priority: GET FIRST PAYING HVAC CLIENT
+## Current Priority: 10 PAYING CLIENTS BY MARCH 14, 2026
+
+**Monthly Goal:** 10 clients × $297/mo = $2,970 MRR
+**Daily Activity:** 25+ Instagram DMs + 1 post/day + Facebook group engagement
+**Channels:** Instagram DMs (primary), Facebook groups, Cold email (warming up)
 
 ## Owner
 Wallace Dobbs — wallacemdobbs@icloud.com
