@@ -1,6 +1,6 @@
 # Wallace's To-Do List — Tonight
 **Date:** February 14, 2026
-**Goal:** Get ready to accept first paying HVAC client
+**Goal:** 10 paying clients by March 14, 2026 — $2,970 MRR
 
 ---
 
@@ -87,4 +87,4 @@ Website redesigned (2-page dark+green theme), committed, and pushed to GitHub Pa
 ---
 
 ## Total Estimated Time: ~2 hours
-## Items that block accepting first client: #1-#5
+## Items that block scaling to 10 clients: #1-#5

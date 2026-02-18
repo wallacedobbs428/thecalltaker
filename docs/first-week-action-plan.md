@@ -1,6 +1,6 @@
 # First Week Action Plan — Getting Your First Client
 
-**Goal:** Book your first paying client within 7 days.
+**Goal:** 10 paying clients by March 14, 2026 — $2,970 MRR
 **Strategy:** Multi-channel blitz. Hit every high-impact channel hard this week.
 
 ---
