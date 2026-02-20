@@ -1,22 +1,19 @@
 #!/usr/bin/env python3
 """
-BEN — The Call Taker's 24/7 Senior Sales Closer
-Built Feb 17, 2026 | v1.0
+BEN v2 — The Call Taker's Lead Intelligence + Conversion Engine
+Rebuilt Feb 18, 2026
 
-Ben is Max's sharper, smarter brother. Where Max handles the volume grind,
-Ben focuses on CONVERSION. He uses different angles, smarter timing,
-re-engages cold leads with fresh pitches, sends morning briefings,
-handles SMS (when A2P approves), and scores every lead.
-
-Ben never sends the same angle Max already sent. They work as a team.
+Ben no longer sends cold emails. Instantly handles that on burner domains.
+Ben now does INTELLIGENCE work: weather-aware briefings, enhanced lead scoring
+with Google review signals, warm re-engagement for leads who ghosted after
+replying, SMS when A2P approves, and evening summaries.
 
 Usage:
-  python3 ben-engine.py morning     # 7am briefing to Wallace
-  python3 ben-engine.py outreach    # Different-angle cold emails (11am)
-  python3 ben-engine.py reengage    # Re-engage Max's cold leads with new angles (2pm)
-  python3 ben-engine.py sms         # Send SMS blasts when A2P approves (1pm)
-  python3 ben-engine.py score       # Score all leads and flag hot ones (3pm)
-  python3 ben-engine.py evening     # Evening summary + next-day plan (9pm)
+  python3 ben-engine.py morning     # Weather-aware briefing (7am)
+  python3 ben-engine.py sms         # SMS blasts when A2P approves (1pm)
+  python3 ben-engine.py reengage    # Re-engage warm leads who ghosted (2pm)
+  python3 ben-engine.py score       # Enhanced lead scoring + flag hot leads (3pm)
+  python3 ben-engine.py evening     # Evening summary + tomorrow's plan (9pm)
   python3 ben-engine.py status      # Print Ben's status
   python3 ben-engine.py all         # Run all tasks
 """
@@ -29,16 +26,13 @@ from datetime import datetime, timedelta
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
-# ═══════════════════════════════════════════
+# ===================================================
 # CONFIG
-# ═══════════════════════════════════════════
+# ===================================================
 
 GHL_API_KEY = "pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35"
 GHL_LOCATION_ID = "tQb9YmrGDrdVUJYPKrsY"
 GHL_BASE = "https://services.leadconnectorhq.com"
-
-PIPELINE_ID = "KhFDURSwBi2fn416BnGf"
-CONTACTED_STAGE = "8285b2c9-9ca3-415f-a57b-ae458045aab4"
 
 NTFY_OPS_TOPIC = "tct-xK9mW4vR7pLd"
 NTFY_WAR_TOPIC = "tct-warroom-Kx7mN9pQ"
@@ -51,85 +45,113 @@ BEN_DIR = os.path.dirname(os.path.abspath(__file__))
 STATE_FILE = os.path.join(BEN_DIR, "ben-state.json")
 LOG_FILE = os.path.join(BEN_DIR, "ben-log.txt")
 
-# Max's state file — Ben reads it to avoid duplicating work
+# Max's state file — Ben reads it for coordination
 MAX_STATE_FILE = os.path.join(os.path.dirname(BEN_DIR), "max", "max-state.json")
 
-# ═══════════════════════════════════════════
-# BEN'S EMAIL ANGLES (different from Max's)
-# Max uses: missed calls, company-specific, HVAC switching, never miss
-# Ben uses: ROI/money, competition, after-hours, seasonal urgency
-# ═══════════════════════════════════════════
 
-COLD_EMAILS_ROI = [
-    {
-        "subject": "$497 vs losing $9,000 a month",
-        "body": """<p>Hey {{firstName}},</p>
-<p>Quick math for {{companyName}}:</p>
-<ul>
-<li>Average HVAC service call: $350</li>
-<li>Missed calls per month (industry avg): 40</li>
-<li>67% never call back = 27 lost customers</li>
-<li><strong>That's $9,450/month walking out the door.</strong></li>
-</ul>
-<p>The Call Taker answers every call for $497/mo. That's a 19x return.</p>
-<p>Hear it live: <strong>(615) 784-5747</strong></p>
-<p>— Wallace Dobbs<br>The Call Taker</p>
-<p style="font-size:11px;color:#999;">Reply STOP to opt out</p>"""
-    },
-    {
-        "subject": "your competitor already uses AI",
-        "body": """<p>Hey {{firstName}},</p>
-<p>The HVAC companies winning right now aren't just better at installs — they're better at answering the phone.</p>
-<p>While {{companyName}}'s calls go to voicemail after hours, competitors with AI receptionists are booking those same jobs at 10pm.</p>
-<p>The Call Taker answers every call 24/7, books the job, texts you the details. $497/mo.</p>
-<p>Call the demo line right now: <strong>(615) 784-5747</strong></p>
-<p>— Wallace Dobbs<br>The Call Taker</p>
-<p style="font-size:11px;color:#999;">Reply STOP to opt out</p>"""
-    },
-    {
-        "subject": "who answers at 10pm on saturday",
-        "body": """<p>Hey {{firstName}},</p>
-<p>Saturday night. 10pm. AC goes out in a customer's house with a newborn.</p>
-<p>They Google "HVAC emergency." They call {{companyName}}. What happens?</p>
-<p>If the answer is voicemail — that's a $500+ emergency call going to whoever picks up first.</p>
-<p>The Call Taker answers in under 2 seconds. 24/7. Even Christmas morning.</p>
-<p>Hear it: <strong>(615) 784-5747</strong></p>
-<p>— Wallace Dobbs<br>The Call Taker</p>
-<p style="font-size:11px;color:#999;">Reply STOP to opt out</p>"""
-    },
-    {
-        "subject": "summer is coming for {{companyName}}",
-        "body": """<p>Hey {{firstName}},</p>
-<p>Summer is about to hit and {{companyName}}'s phone will ring off the hook. Every AC breakdown, every thermostat emergency, every "it's too hot" call.</p>
-<p>Your techs will be on jobs. Your office will be slammed. Calls will go to voicemail.</p>
-<p>The Call Taker handles the overflow — answers every call, books the job, texts you. $497/mo, set up in 48 hours.</p>
-<p>Call the demo: <strong>(615) 784-5747</strong></p>
-<p>— Wallace Dobbs<br>The Call Taker</p>
-<p style="font-size:11px;color:#999;">Reply STOP to opt out</p>"""
-    },
-]
+# ===================================================
+# SEASONAL ENGINE
+# ===================================================
 
-RE_ENGAGE_EMAILS = [
-    {
-        "subject": "one more thing about {{companyName}}",
+def get_season():
+    month = datetime.now().month
+    if month in [3, 4, 5]:
+        return "spring"
+    elif month in [6, 7, 8]:
+        return "summer"
+    elif month in [9, 10, 11]:
+        return "fall"
+    else:
+        return "winter"
+
+
+def get_seasonal_context():
+    season = get_season()
+    context = {
+        "spring": "Spring AC season is ramping up — HVAC owners are getting slammed with install calls. Perfect time to pitch.",
+        "summer": "Peak AC season. Phones ringing off the hook. Overflow calls going to voicemail. Our best selling season.",
+        "fall": "Heating season prep. Smart owners are getting ready for furnace emergencies. Urgency is building.",
+        "winter": "Furnace emergency season. After-hours calls are spiking. Every missed call is a $500+ emergency job lost.",
+    }
+    return context.get(season, context["winter"])
+
+
+# ===================================================
+# WEATHER ENGINE
+# ===================================================
+
+def get_weather(city):
+    if not city:
+        return None
+    try:
+        url = f"https://wttr.in/{city.replace(' ', '+')}?format=%t+%C"
+        req = Request(url, headers={"User-Agent": "BenEngine/2.0"})
+        with urlopen(req, timeout=5) as resp:
+            return resp.read().decode().strip()
+    except:
+        return None
+
+
+def get_weather_temp(city):
+    if not city:
+        return None
+    try:
+        url = f"https://wttr.in/{city.replace(' ', '+')}?format=%t"
+        req = Request(url, headers={"User-Agent": "BenEngine/2.0"})
+        with urlopen(req, timeout=5) as resp:
+            temp_str = resp.read().decode().strip()
+            temp_str = temp_str.replace("°F", "").replace("°C", "").replace("+", "")
+            return int(temp_str)
+    except:
+        return None
+
+
+# ===================================================
+# RE-ENGAGEMENT TEMPLATES (for warm leads who ghosted)
+# ===================================================
+
+REENGAGE_EMAILS = {
+    "winter": {
+        "subject": "furnace emergencies don't wait for voicemail",
         "body": """<p>Hey {{firstName}},</p>
-<p>I know I've reached out before, so I'll keep this short.</p>
-<p>I ran the numbers for a company like {{companyName}}. At just 40 missed calls/month, that's roughly <strong>$113,000/year</strong> in lost revenue.</p>
-<p>The fix is $497/mo. No contracts. Cancel anytime.</p>
-<p>If the math doesn't make sense for you, no worries — but if it does, call: <strong>(615) 784-5747</strong></p>
+<p>We connected a little while back about The Call Taker for {{companyName}}. Just wanted to circle back with something timely.</p>
+<p>It's peak heating season. When a furnace dies at midnight, your customer calls once. If voicemail answers, they call whoever picks up first.</p>
+<p>The Call Taker answers in under 2 seconds. 24/7. Even Christmas morning. $497/mo, no contracts.</p>
+<p>Still worth a listen: <strong>(615) 784-5747</strong></p>
 <p>— Wallace</p>
-<p style="font-size:11px;color:#999;">Reply STOP to opt out</p>"""
+<p style="font-size:11px;color:#999;">Reply STOP to opt out</p>""",
     },
-    {
-        "subject": "free missed call audit for {{companyName}}",
+    "spring": {
+        "subject": "AC season is about to hit {{companyName}}",
         "body": """<p>Hey {{firstName}},</p>
-<p>I'd like to offer {{companyName}} a free Missed Call Audit — I'll call your business at different times and put together a report showing exactly what your customers experience.</p>
-<p>No obligation. No pitch. Just data you can use.</p>
-<p>Want me to run it? Just reply "yes" and I'll have it done in 48 hours.</p>
-<p>— Wallace Dobbs<br>The Call Taker<br>thecalltaker.com/audit</p>
-<p style="font-size:11px;color:#999;">Reply STOP to opt out</p>"""
+<p>We talked a while back about The Call Taker. Spring is here and AC season is coming fast.</p>
+<p>When every homeowner calls about their AC at the same time, your team will be on jobs and the phone will go to voicemail. That's $350+ per missed call walking out the door.</p>
+<p>The Call Taker handles the overflow — answers every call, books the job, texts you. $497/mo.</p>
+<p>Hear it: <strong>(615) 784-5747</strong></p>
+<p>— Wallace</p>
+<p style="font-size:11px;color:#999;">Reply STOP to opt out</p>""",
     },
-]
+    "summer": {
+        "subject": "your phone is ringing off the hook right now",
+        "body": """<p>Hey {{firstName}},</p>
+<p>It's peak AC season and I know {{companyName}}'s phone is busy. Quick question — how many calls are going to voicemail this week?</p>
+<p>The Call Taker catches every overflow call, gets the customer's info, and books the job. No voicemail. No lost revenue.</p>
+<p>$497/mo. Set up in 48 hours. Cancel anytime.</p>
+<p>Call the demo: <strong>(615) 784-5747</strong></p>
+<p>— Wallace</p>
+<p style="font-size:11px;color:#999;">Reply STOP to opt out</p>""",
+    },
+    "fall": {
+        "subject": "heating season is 30 days away",
+        "body": """<p>Hey {{firstName}},</p>
+<p>We connected earlier this year about The Call Taker for {{companyName}}. Wanted to circle back before heating season hits.</p>
+<p>When furnaces start failing and customers call at 10pm, voicemail won't cut it. The company that answers first gets the job.</p>
+<p>The Call Taker makes sure that's always {{companyName}}. $497/mo, no contracts, 48-hour setup.</p>
+<p>Hear it live: <strong>(615) 784-5747</strong></p>
+<p>— Wallace</p>
+<p style="font-size:11px;color:#999;">Reply STOP to opt out</p>""",
+    },
+}
 
 SMS_TEMPLATES = [
     "Hey {{firstName}}, quick Q — when customers call {{companyName}} after hours, what happens? The Call Taker answers 24/7 so you never miss a job. Hear it: (615) 784-5747. Reply STOP to opt out",
@@ -138,9 +160,9 @@ SMS_TEMPLATES = [
 ]
 
 
-# ═══════════════════════════════════════════
-# HELPERS (same as Max but independent)
-# ═══════════════════════════════════════════
+# ===================================================
+# HELPERS
+# ===================================================
 
 def log(msg):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -160,7 +182,7 @@ def ghl_request(method, path, body=None, version="2021-07-28"):
         "Version": version,
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "User-Agent": "BenEngine/1.0 TheCallTaker",
+        "User-Agent": "BenEngine/2.0 TheCallTaker",
     }
     data = json.dumps(body).encode() if body else None
     req = Request(url, data=data, headers=headers, method=method)
@@ -197,7 +219,6 @@ def load_state():
         with open(STATE_FILE) as f:
             return json.load(f)
     return {
-        "contacts_emailed": [],
         "contacts_reengaged": [],
         "contacts_smsed": [],
         "lead_scores": {},
@@ -213,10 +234,12 @@ def save_state(state):
 
 
 def load_max_state():
-    """Read Max's state to coordinate — Ben won't email leads Max already emailed today."""
     if os.path.exists(MAX_STATE_FILE):
-        with open(MAX_STATE_FILE) as f:
-            return json.load(f)
+        try:
+            with open(MAX_STATE_FILE) as f:
+                return json.load(f)
+        except:
+            pass
     return {}
 
 
@@ -235,6 +258,15 @@ def get_all_contacts():
         if len(batch) < 100:
             break
     return contacts
+
+
+def get_non_customer_contacts(contacts):
+    leads = []
+    for c in contacts:
+        tags = [t.lower() for t in c.get("tags", [])]
+        if "customer" not in tags and "active-client" not in tags:
+            leads.append(c)
+    return leads
 
 
 def get_conversations(contact_id):
@@ -290,7 +322,6 @@ def personalize(template, contact):
 
 
 def has_inbound_reply(contact_id):
-    """Check if a contact has ever replied."""
     convos = get_conversations(contact_id)
     for convo in convos:
         messages = get_messages(convo.get("id", ""))
@@ -308,14 +339,24 @@ def is_business_hours():
     now = datetime.utcnow() - timedelta(hours=6)  # CST
     if now.hour < 9 or now.hour >= 17:
         return False
-    if now.weekday() >= 5:  # Weekend
+    if now.weekday() >= 5:
         return False
     return True
 
 
-def score_lead(contact):
-    """Score a lead 1-10 based on available data."""
-    score = 5  # Base score
+def days_since(date_str):
+    if not date_str:
+        return 999
+    try:
+        dt = datetime.fromisoformat(str(date_str).replace("Z", "+00:00").split("+")[0].split("T")[0])
+        return (datetime.now() - dt).days
+    except:
+        return 999
+
+
+def score_lead(contact, max_state):
+    """Enhanced lead scoring 1-10 with engagement + review + weather signals."""
+    score = 3  # Base score (lower than before — earn your points)
 
     # Has email = +1
     if contact.get("email"):
@@ -329,65 +370,98 @@ def score_lead(contact):
     if contact.get("companyName"):
         score += 1
 
-    # Has tags suggesting research was done = +1
-    tags = contact.get("tags", [])
-    if any("hvac" in t.lower() for t in tags):
+    # Tags analysis
+    tags = [t.lower() for t in contact.get("tags", [])]
+
+    # HVAC tagged = +1
+    if any("hvac" in t for t in tags):
         score += 1
 
-    # Multiple tags = well-researched = +1
-    if len(tags) >= 3:
+    # Voicemail confirmed (secret shopped) = +2 (proven problem)
+    if "voicemail-confirmed" in tags:
+        score += 2
+
+    # Bad reviews mentioned = +1
+    if "bad-reviews" in tags or "voicemail-in-reviews" in tags:
         score += 1
+
+    # Demo booked or called = +2
+    if "demo-booked" in tags or "demo-called" in tags:
+        score += 2
+
+    # Replied to outreach (check Max's warm followups)
+    warm = max_state.get("warm_followups", {})
+    cid = contact.get("id")
+    if cid in warm:
+        score += 2  # They replied — high intent
+
+    # Demo line caller = +2
+    demo_callers = max_state.get("demo_callers", {})
+    if cid in demo_callers:
+        score += 2
+
+    # Weather urgency (extreme temps in their city = more pain)
+    city = contact.get("city", "")
+    if city:
+        temp = get_weather_temp(city)
+        if temp is not None and (temp >= 90 or temp <= 32):
+            score += 1
 
     return min(score, 10)
 
 
-# ═══════════════════════════════════════════
+# ===================================================
 # CORE TASKS
-# ═══════════════════════════════════════════
+# ===================================================
 
 def morning_briefing():
-    """Send Wallace a morning briefing with pipeline status and today's plan."""
-    log("=== Morning Briefing ===")
+    """7am: Weather-aware briefing with today's priorities."""
+    log("=== BEN v2: Morning Briefing ===")
     contacts = get_all_contacts()
+    leads = get_non_customer_contacts(contacts)
     state = load_state()
     max_state = load_max_state()
 
     total = len(contacts)
-    with_email = sum(1 for c in contacts if c.get("email"))
-    with_phone = sum(1 for c in contacts if c.get("phone"))
+    lead_count = len(leads)
+    customer_count = total - lead_count
 
-    max_emailed = len(max_state.get("contacts_emailed", []))
-    ben_emailed = len(state.get("contacts_emailed", []))
-    ben_reengaged = len(state.get("contacts_reengaged", []))
+    # Get weather for Nashville (HQ area)
+    weather_info = get_weather("Nashville") or "unable to fetch"
 
-    unemailed = with_email - max_emailed - ben_emailed
-    if unemailed < 0:
-        unemailed = 0
+    # Count key metrics from Max
+    warm = max_state.get("warm_followups", {})
+    active_warm = sum(1 for v in warm.values() if v.get("followup_count", 0) < 3)
+    demo_callers = len(max_state.get("demo_callers", {}))
+    secret_shoppers = max_state.get("total_secret_shopper", 0)
 
     now = datetime.utcnow() - timedelta(hours=6)
     day_name = now.strftime("%A")
 
     briefing = f"""GOOD MORNING WALLACE — {now.strftime('%b %d, %Y')} ({day_name})
 
+WEATHER: Nashville — {weather_info}
+SEASON: {get_season().upper()} — {get_seasonal_context()}
+
 PIPELINE:
   Total contacts: {total}
-  With email: {with_email} | With phone: {with_phone}
-  Emailed by Max: {max_emailed} | Emailed by Ben: {ben_emailed}
-  Re-engaged by Ben: {ben_reengaged}
-  Still unemailed: {unemailed}
+  Active leads: {lead_count}
+  Customers: {customer_count}
+  Leads in warm follow-up: {active_warm}
+  Demo line callers: {demo_callers}
+  Secret shopper emails sent: {secret_shoppers}
 
-TODAY'S PLAN:
-  Max: Reply check every 30min, follow-ups at 9am, cold outreach at 10am
-  Ben: Cold outreach at 11am (different angle), re-engagement at 2pm, lead scoring at 3pm
+TODAY'S GAME PLAN:
+  Instantly: Sending 120 cold emails on burner domains (automatic)
+  Max: Catching replies every 30min + warm follow-ups at 9am
+  Ben: SMS at 1pm, re-engagement at 2pm, lead scoring at 3pm
+  Sam: Support monitor every 15min, check-ins at 8am
 
-BLOCKERS:
-  A2P SMS: Check GHL Trust Center — if approved, Ben will start SMS blasts
-  Instantly.ai: Use the UI to add leads to campaigns manually
-
-YOUR MOVE TODAY:
+YOUR MOVES TODAY:
   1. Check ntfy for any reply alerts — respond within 1 hour
-  2. Call the top 3 leads Ben scores highest today
-  3. Post 1 thing on Instagram (@thecalltaker)
+  2. Secret shop 3-5 HVAC companies after 6pm (call, confirm voicemail, tag "voicemail-confirmed" in GHL)
+  3. Check Instantly dashboard — make sure emails are actually sending
+  4. Ben will score all leads at 3pm — check war room for hottest ones
 
 LET'S GET THIS CLIENT."""
 
@@ -401,136 +475,9 @@ LET'S GET THIS CLIENT."""
     return briefing
 
 
-def cold_outreach():
-    """Send cold emails using Ben's angles (ROI, competition, after-hours, seasonal)."""
-    log("=== Ben Cold Outreach ===")
-
-    if not is_business_hours():
-        log("Outside business hours. Skipping.")
-        return 0
-
-    state = load_state()
-    max_state = load_max_state()
-
-    ben_emailed = set(state.get("contacts_emailed", []))
-    max_emailed = set(max_state.get("contacts_emailed", []))
-    max_followed = set(max_state.get("contacts_followed_up", {}).keys())
-
-    contacts = get_all_contacts()
-    sent = 0
-    template_idx = 0
-
-    for contact in contacts:
-        cid = contact.get("id")
-        email = contact.get("email")
-
-        if not email:
-            continue
-
-        # Skip if Ben already emailed
-        if cid in ben_emailed:
-            continue
-
-        # Skip if Max already emailed — Ben waits for Max's cold email to land first
-        # Ben only emails leads Max HASN'T touched
-        if cid in max_emailed or cid in max_followed:
-            continue
-
-        template = COLD_EMAILS_ROI[template_idx % len(COLD_EMAILS_ROI)]
-        template_idx += 1
-
-        subject = personalize(template["subject"], contact)
-        body = personalize(template["body"], contact)
-
-        if send_email(cid, subject, body):
-            sent += 1
-            ben_emailed.add(cid)
-            state["total_emails_sent"] = state.get("total_emails_sent", 0) + 1
-            name = contact.get("firstName", "Unknown")
-            log(f"  Cold email #{sent} to {name} ({email})")
-
-        time.sleep(3)
-        if sent >= 15:
-            log("Hit Ben's daily cold limit (15). Stopping.")
-            break
-
-    if sent > 0:
-        ntfy(NTFY_OPS_TOPIC,
-             f"Ben sent {sent} cold emails",
-             f"Ben's ROI/competition angle emails sent to {sent} fresh leads.",
-             tags="envelope,chart_with_upwards_trend")
-
-    state["contacts_emailed"] = list(ben_emailed)
-    save_state(state)
-    log(f"Ben sent {sent} cold outreach emails.")
-    return sent
-
-
-def reengage_cold_leads():
-    """Re-engage leads that Max followed up 3x with no response — use fresh angle."""
-    log("=== Ben Re-engagement ===")
-
-    if not is_business_hours():
-        log("Outside business hours. Skipping.")
-        return 0
-
-    state = load_state()
-    max_state = load_max_state()
-    reengaged = set(state.get("contacts_reengaged", []))
-
-    max_followed = max_state.get("contacts_followed_up", {})
-    contacts = get_all_contacts()
-    sent = 0
-    template_idx = 0
-
-    for contact in contacts:
-        cid = contact.get("id")
-        email = contact.get("email")
-
-        if not email or cid in reengaged:
-            continue
-
-        # Only re-engage leads Max gave up on (3 follow-ups, no reply)
-        fu = max_followed.get(cid, {})
-        if fu.get("count", 0) < 3:
-            continue
-
-        # Make sure they haven't replied
-        if has_inbound_reply(cid):
-            continue
-
-        template = RE_ENGAGE_EMAILS[template_idx % len(RE_ENGAGE_EMAILS)]
-        template_idx += 1
-
-        subject = personalize(template["subject"], contact)
-        body = personalize(template["body"], contact)
-
-        if send_email(cid, subject, body):
-            sent += 1
-            reengaged.add(cid)
-            state["total_emails_sent"] = state.get("total_emails_sent", 0) + 1
-            log(f"  Re-engaged: {contact.get('firstName', 'Unknown')}")
-
-        time.sleep(3)
-        if sent >= 10:
-            log("Hit Ben's re-engagement limit (10). Stopping.")
-            break
-
-    if sent > 0:
-        ntfy(NTFY_OPS_TOPIC,
-             f"Ben re-engaged {sent} cold leads",
-             f"Fresh angles sent to {sent} leads who didn't respond to Max's 3 follow-ups.",
-             tags="recycle,envelope")
-
-    state["contacts_reengaged"] = list(reengaged)
-    save_state(state)
-    log(f"Ben re-engaged {sent} cold leads.")
-    return sent
-
-
 def sms_outreach():
-    """Send SMS to leads with phone numbers. Only works when A2P is approved."""
-    log("=== Ben SMS Outreach ===")
+    """1pm: SMS to leads with phone numbers. Only when A2P approved."""
+    log("=== BEN v2: SMS Outreach ===")
 
     if not is_business_hours():
         log("Outside business hours. Skipping SMS.")
@@ -539,17 +486,17 @@ def sms_outreach():
     state = load_state()
     smsed = set(state.get("contacts_smsed", []))
     contacts = get_all_contacts()
+    leads = get_non_customer_contacts(contacts)
     sent = 0
     template_idx = 0
 
-    for contact in contacts:
+    for contact in leads:
         cid = contact.get("id")
         phone = contact.get("phone")
 
         if not phone or cid in smsed:
             continue
 
-        # Check DND
         if contact.get("dnd"):
             continue
 
@@ -563,14 +510,13 @@ def sms_outreach():
             state["total_sms_sent"] = state.get("total_sms_sent", 0) + 1
             log(f"  SMS #{sent} to {contact.get('firstName', 'Unknown')}")
         else:
-            # If SMS fails, A2P probably not approved yet
             if sent == 0:
                 log("SMS failed on first attempt — A2P likely not approved. Stopping.")
                 break
 
         time.sleep(2)
         if sent >= 15:
-            log("Hit Ben's daily SMS limit (15). Stopping.")
+            log("Hit daily SMS limit (15). Stopping.")
             break
 
     if sent > 0:
@@ -579,26 +525,94 @@ def sms_outreach():
              f"A2P is working! {sent} texts sent to HVAC leads.",
              priority="high",
              tags="iphone,zap")
-    elif sent == 0:
-        log("No SMS sent — A2P likely still pending.")
 
     state["contacts_smsed"] = list(smsed)
     save_state(state)
     return sent
 
 
-def score_all_leads():
-    """Score every lead and flag hot ones for Wallace to call."""
-    log("=== Ben Lead Scoring ===")
+def reengage_warm_leads():
+    """2pm: Re-engage leads who replied then ghosted. Uses seasonal angles."""
+    log("=== BEN v2: Warm Re-engagement ===")
+
+    if not is_business_hours():
+        log("Outside business hours. Skipping.")
+        return 0
+
     state = load_state()
+    max_state = load_max_state()
+    reengaged = set(state.get("contacts_reengaged", []))
+
+    # Find leads who replied (in Max's warm_followups) but Max finished 3 follow-ups with no conversion
+    warm = max_state.get("warm_followups", {})
     contacts = get_all_contacts()
+    contact_map = {c["id"]: c for c in contacts}
+    sent = 0
+    season = get_season()
+
+    for cid, data in warm.items():
+        if cid in reengaged:
+            continue
+
+        # Only re-engage leads Max already followed up 3x
+        if data.get("followup_count", 0) < 3:
+            continue
+
+        contact = contact_map.get(cid)
+        if not contact:
+            continue
+
+        # Skip customers
+        tags = [t.lower() for t in contact.get("tags", [])]
+        if "customer" in tags or "active-client" in tags:
+            continue
+
+        email = contact.get("email")
+        if not email:
+            continue
+
+        # Use seasonal re-engagement template
+        template = REENGAGE_EMAILS.get(season, REENGAGE_EMAILS["winter"])
+        subject = personalize(template["subject"], contact)
+        body = personalize(template["body"], contact)
+
+        if send_email(cid, subject, body):
+            sent += 1
+            reengaged.add(cid)
+            state["total_emails_sent"] = state.get("total_emails_sent", 0) + 1
+            log(f"  Re-engaged: {contact.get('firstName', 'Unknown')} ({season} angle)")
+
+        time.sleep(3)
+        if sent >= 10:
+            log("Hit re-engagement limit (10). Stopping.")
+            break
+
+    if sent > 0:
+        ntfy(NTFY_OPS_TOPIC,
+             f"Ben re-engaged {sent} warm leads",
+             f"Seasonal {season} angle sent to {sent} leads who replied then ghosted.",
+             tags="recycle,envelope")
+
+    state["contacts_reengaged"] = list(reengaged)
+    save_state(state)
+    log(f"Re-engaged {sent} warm leads.")
+    return sent
+
+
+def score_all_leads():
+    """3pm: Enhanced lead scoring with engagement + review + weather signals."""
+    log("=== BEN v2: Lead Scoring ===")
+    state = load_state()
+    max_state = load_max_state()
+    contacts = get_all_contacts()
+    leads = get_non_customer_contacts(contacts)
 
     scores = {}
     hot_leads = []
 
-    for contact in contacts:
+    for contact in leads:
         cid = contact.get("id")
-        score = score_lead(contact)
+        score = score_lead(contact, max_state)
         scores[cid] = score
 
         if score >= 8:
@@ -607,21 +621,26 @@ def score_all_leads():
                 "company": contact.get("companyName", "Unknown"),
                 "email": contact.get("email", ""),
                 "phone": contact.get("phone", ""),
+                "city": contact.get("city", ""),
                 "score": score,
+                "tags": contact.get("tags", []),
             })
 
-    log(f"Scored {len(contacts)} leads. {len(hot_leads)} scored 8+.")
+    log(f"Scored {len(leads)} leads. {len(hot_leads)} scored 8+.")
 
     if hot_leads:
         hot_list = "\n".join([
             f"  {h['score']}/10 — {h['name']} ({h['company']}) {h['phone'] or h['email']}"
+            + (f" [VOICEMAIL CONFIRMED]" if "voicemail-confirmed" in [t.lower() for t in h.get('tags', [])] else "")
+            + (f" [DEMO CALLER]" if h.get('phone') and contact.get("id") in max_state.get("demo_callers", {}) else "")
             for h in sorted(hot_leads, key=lambda x: x['score'], reverse=True)[:10]
         ])
         ntfy(NTFY_WAR_TOPIC,
-             f"{len(hot_leads)} hot leads scored 8+",
-             f"Top leads to call TODAY:\n\n{hot_list}\n\nCall these first!",
+             f"{len(hot_leads)} HOT leads scored 8+",
+             f"Top leads for Wallace to call TODAY:\n\n{hot_list}\n\nVoicemail-confirmed leads convert 3x better. Call those first!",
              priority="high",
              tags="fire,telephone_receiver")
+        state["total_alerts"] = state.get("total_alerts", 0) + 1
 
     state["lead_scores"] = scores
     save_state(state)
@@ -629,43 +648,63 @@ def score_all_leads():
 
 
 def evening_summary():
-    """Evening summary + next-day plan."""
-    log("=== Ben Evening Summary ===")
+    """9pm: Evening summary with full team stats."""
+    log("=== BEN v2: Evening Summary ===")
     state = load_state()
     max_state = load_max_state()
     contacts = get_all_contacts()
+    leads = get_non_customer_contacts(contacts)
 
     total = len(contacts)
-    max_emails = max_state.get("total_emails_sent", 0)
+    lead_count = len(leads)
+    customer_count = total - lead_count
+
     ben_emails = state.get("total_emails_sent", 0)
     ben_sms = state.get("total_sms_sent", 0)
     ben_reengaged = len(state.get("contacts_reengaged", []))
-
     hot_count = sum(1 for s in state.get("lead_scores", {}).values() if s >= 8)
+
+    max_replies = max_state.get("total_replies_detected", 0)
+    max_followups = max_state.get("total_followups_sent", 0)
+    max_demo_calls = len(max_state.get("demo_callers", {}))
+    max_secret_shopper = max_state.get("total_secret_shopper", 0)
+    max_weather = max_state.get("total_weather_emails", 0)
 
     summary = f"""EVENING REPORT — {datetime.now().strftime('%b %d, %Y')}
 
-TEAM STATS TODAY:
-  Max emails sent (all time): {max_emails}
-  Ben emails sent (all time): {ben_emails}
-  Ben SMS sent (all time): {ben_sms}
-  Ben re-engagements: {ben_reengaged}
-  Combined outreach: {max_emails + ben_emails + ben_sms} touches
-
 PIPELINE:
   Total contacts: {total}
+  Active leads: {lead_count}
+  Customers: {customer_count}
   Hot leads (8+): {hot_count}
 
-TOMORROW'S GAME PLAN:
-  7:00 AM — Ben sends morning briefing
-  9:00 AM — Max sends follow-ups
-  10:00 AM — Max sends cold outreach
-  11:00 AM — Ben sends ROI-angle cold outreach
-  1:00 PM — Ben tries SMS (if A2P approved)
-  2:00 PM — Ben re-engages Max's cold leads
-  3:00 PM — Ben scores all leads
-  8:00 PM — Max daily report
-  9:00 PM — Ben evening summary
+MAX v3 STATS:
+  Replies caught: {max_replies}
+  Warm follow-ups sent: {max_followups}
+  Demo line callers: {max_demo_calls}
+  Secret shopper emails: {max_secret_shopper}
+  Weather-triggered emails: {max_weather}
+
+BEN v2 STATS:
+  Re-engagements sent: {ben_reengaged}
+  SMS sent: {ben_sms}
+  Total emails: {ben_emails}
+
+COLD OUTREACH:
+  Instantly.ai: 120/day on skylfinder.com (check dashboard for actual stats)
+
+SEASON: {get_season().upper()} — all angles tuned for {get_season()} urgency
+
+TOMORROW:
+  7:00 AM — Ben: Morning briefing
+  9:00 AM — Max: Warm follow-ups
+  11:00 AM — Sam: Referral check
+  1:00 PM — Ben: SMS (if A2P)
+  2:00 PM — Ben: Re-engage warm leads
+  3:00 PM — Ben: Lead scoring
+  + Max catches replies every 30 min
+  + Sam monitors customers every 15 min
+  + Instantly sends 120 cold emails automatically
 
 The team never stops. Good night Wallace."""
 
@@ -680,26 +719,30 @@ The team never stops. Good night Wallace."""
 
 def print_status():
     state = load_state()
+    max_state = load_max_state()
     contacts = get_all_contacts()
+    leads = get_non_customer_contacts(contacts)
+    hot = sum(1 for s in state.get("lead_scores", {}).values() if s >= 8)
 
     print("\n" + "=" * 50)
-    print("  BEN — STATUS REPORT")
+    print("  BEN v2 — STATUS REPORT")
     print(f"  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 50)
     print(f"  Total contacts:        {len(contacts)}")
+    print(f"  Active leads:          {len(leads)}")
     print(f"  Ben emails sent:       {state.get('total_emails_sent', 0)}")
     print(f"  Ben SMS sent:          {state.get('total_sms_sent', 0)}")
-    print(f"  Cold emailed:          {len(state.get('contacts_emailed', []))}")
     print(f"  Re-engaged:            {len(state.get('contacts_reengaged', []))}")
-    print(f"  SMS'd:                 {len(state.get('contacts_smsed', []))}")
-    hot = sum(1 for s in state.get("lead_scores", {}).values() if s >= 8)
     print(f"  Hot leads (8+):        {hot}")
+    print(f"  Season:                {get_season()}")
+    print(f"  Max replies caught:    {max_state.get('total_replies_detected', 0)}")
+    print(f"  Max demo callers:      {len(max_state.get('demo_callers', {}))}")
     print("=" * 50 + "\n")
 
 
-# ═══════════════════════════════════════════
+# ===================================================
 # MAIN
-# ═══════════════════════════════════════════
+# ===================================================
 
 def main():
     if len(sys.argv) < 2:
@@ -710,12 +753,10 @@ def main():
 
     if cmd == "morning":
         morning_briefing()
-    elif cmd == "outreach":
-        cold_outreach()
-    elif cmd == "reengage":
-        reengage_cold_leads()
     elif cmd == "sms":
         sms_outreach()
+    elif cmd == "reengage":
+        reengage_warm_leads()
     elif cmd == "score":
         score_all_leads()
     elif cmd == "evening":
@@ -723,14 +764,13 @@ def main():
     elif cmd == "status":
         print_status()
     elif cmd == "all":
-        log("=== BEN: Full cycle ===")
+        log("=== BEN v2: Full cycle ===")
         morning_briefing()
-        cold_outreach()
         sms_outreach()
-        reengage_cold_leads()
+        reengage_warm_leads()
         score_all_leads()
         evening_summary()
-        log("=== BEN: Full cycle complete ===")
+        log("=== BEN v2: Full cycle complete ===")
     else:
         print(f"Unknown command: {cmd}")
         print(__doc__)

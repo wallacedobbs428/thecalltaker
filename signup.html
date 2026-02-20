@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Started | The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="description" content="Sign up for The Call Taker AI receptionist. Never miss another HVAC call.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .signup-wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    .signup-hero { padding: 120px 0 40px; text-align: center; }
+    .signup-hero h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 700; color: #fff; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .signup-hero p { font-size: 16px; color: var(--text-2); max-width: 480px; margin: 0 auto; }
+
+    /* Steps */
+    .step-indicator { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; }
+    .step-dot { width: 40px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.08); transition: background 0.3s; }
+    .step-dot.active { background: var(--green); }
+    .step-dot.done { background: rgba(0,220,130,0.4); }
+
+    .signup-step { display: none; }
+    .signup-step.active { display: block; animation: fadeUp 0.35s ease; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+    /* Form */
+    .signup-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 40px; max-width: 520px; margin: 0 auto 40px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 6px; }
+    .field input, .field select {
+      width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border); border-radius: 8px; color: #fff;
+      font-size: 14px; font-family: inherit; transition: border-color 0.15s;
+    }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--green); }
+    .field input::placeholder { color: var(--text-3); }
+    .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2371717a' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+    .field select option { background: #111; color: #fff; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+
+    /* Plans */
+    .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
+    @media (max-width: 768px) { .plans-grid { grid-template-columns: 1fr; } }
+    .plan-card {
+      background: #000; padding: 32px 24px; cursor: pointer; transition: background 0.15s;
+      display: flex; flex-direction: column; position: relative;
+    }
+    .plan-card:hover { background: rgba(255,255,255,0.02); }
+    .plan-card.selected { background: rgba(0,220,130,0.04); }
+    .plan-card.selected::after {
+      content: ''; position: absolute; inset: 0; border: 2px solid var(--green);
+      border-radius: 0; pointer-events: none;
+    }
+    .plan-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; min-height: 16px; }
+    .plan-name { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .plan-desc { font-size: 13px; color: var(--text-3); margin-bottom: 16px; }
+    .plan-price { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.03em; }
+    .plan-price span { font-size: 14px; font-weight: 400; color: var(--text-3); }
+    .plan-annual { font-size: 12px; color: var(--green); margin-top: 4px; min-height: 16px; }
+    .plan-divider { height: 1px; background: var(--border); margin: 20px 0; }
+    .plan-features { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .plan-feature { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-2); }
+    .plan-feature svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--green); }
+
+    /* Billing toggle */
+    .billing-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 24px; }
+    .billing-label { font-size: 14px; color: var(--text-3); font-weight: 500; }
+    .billing-label.active { color: #fff; }
+    .toggle-track {
+      width: 44px; height: 24px; border-radius: 12px; background: rgba(255,255,255,0.1);
+      position: relative; cursor: pointer; transition: background 0.2s;
+    }
+    .toggle-track.on { background: var(--green); }
+    .toggle-knob {
+      width: 18px; height: 18px; border-radius: 50%; background: #fff;
+      position: absolute; top: 3px; left: 3px; transition: transform 0.2s;
+    }
+    .toggle-track.on .toggle-knob { transform: translateX(20px); }
+    .save-badge { font-size: 11px; font-weight: 700; color: var(--green); background: rgba(0,220,130,0.1); padding: 2px 8px; border-radius: 100px; }
+
+    /* Confirm */
+    .confirm-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; max-width: 520px; margin: 0 auto 40px; }
+    .confirm-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .confirm-row:last-child { border-bottom: none; }
+    .confirm-label { font-size: 14px; color: var(--text-3); }
+    .confirm-value { font-size: 14px; font-weight: 600; color: #fff; }
+    .confirm-total { font-size: 24px; font-weight: 800; color: var(--green); }
+
+    .success-box { text-align: center; padding: 60px 20px; max-width: 520px; margin: 0 auto; }
+    .success-icon {
+      width: 64px; height: 64px; border-radius: 50%; background: rgba(0,220,130,0.1);
+      border: 2px solid rgba(0,220,130,0.3); display: flex; align-items: center;
+      justify-content: center; margin: 0 auto 20px;
+    }
+
+    /* FAQ */
+    .signup-faq { max-width: 600px; margin: 0 auto 60px; }
+    .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px 0; text-align: left; font-size: 14px; font-weight: 600; color: #fff; border-bottom: 1px solid var(--border); }
+    .faq-q:hover { color: var(--green); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s; }
+    .faq-a.open { max-height: 200px; }
+    .faq-a-inner { padding: 0 0 16px; font-size: 14px; color: var(--text-2); line-height: 1.7; }
+
+    .demo-callout {
+      text-align: center; padding: 32px; background: rgba(0,220,130,0.03);
+      border: 1px solid rgba(0,220,130,0.1); border-radius: 12px; margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        The Call <span>Taker</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="demo.html">Demo</a>
+      </nav>
+      <a href="tel:+16157845747" class="header-cta">Call Demo</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="demo.html">Demo</a>
+  </nav>
+
+  <div class="signup-wrap">
+
+    <!-- Hero -->
+    <div class="signup-hero">
+      <h1>Get Started with The Call Taker</h1>
+      <p>Set up in 48 hours. No contracts. Cancel anytime.</p>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="step-indicator">
+      <div class="step-dot active" id="dot1"></div>
+      <div class="step-dot" id="dot2"></div>
+      <div class="step-dot" id="dot3"></div>
+    </div>
+
+    <!-- STEP 1: Business Info -->
+    <div class="signup-step active" id="step1">
+      <div class="signup-card">
+        <h2 style="font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 4px;">Tell us about your business</h2>
+        <p style="font-size: 13px; color: var(--text-3); margin-bottom: 24px;">We'll use this to set up your AI receptionist.</p>
+
+        <div class="field">
+          <label>Company Name *</label>
+          <input type="text" id="s-company" placeholder="ABC Heating & Cooling" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>First Name *</label>
+            <input type="text" id="s-first" placeholder="John" required>
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" id="s-last" placeholder="Smith">
+          </div>
+        </div>
+        <div class="field">
+          <label>Business Phone *</label>
+          <input type="tel" id="s-phone" placeholder="(615) 555-1234" required>
+        </div>
+        <div class="field">
+          <label>Email *</label>
+          <input type="email" id="s-email" placeholder="john@abcheating.com" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>City</label>
+            <input type="text" id="s-city" placeholder="Nashville">
+          </div>
+          <div class="field">
+            <label>State</label>
+            <select id="s-state">
+              <option value="">Select</option>
+              <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+              <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+              <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+              <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+              <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+              <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+              <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+              <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+              <option>SD</option><option selected>TN</option><option>TX</option><option>UT</option><option>VT</option>
+              <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Calls per day</label>
+          <select id="s-calls">
+            <option value="1-5">1-5 calls/day</option>
+            <option value="5-10" selected>5-10 calls/day</option>
+            <option value="10-20">10-20 calls/day</option>
+            <option value="20+">20+ calls/day</option>
+          </select>
+        </div>
+
+        <button class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: 8px;" onclick="goStep(2)">
+          Choose Your Plan
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Choose Plan -->
+    <div class="signup-step" id="step2">
+
+      <!-- Billing toggle -->
+      <div class="billing-row">
+        <span class="billing-label active" id="lbl-monthly">Monthly</span>
+        <div class="toggle-track" id="billing-toggle" onclick="toggleBilling()">
+          <div class="toggle-knob"></div>
+        </div>
+        <span class="billing-label" id="lbl-annual">Annual</span>
+        <span class="save-badge">Save up to $1,994</span>
+      </div>
+
+      <div class="plans-grid">
+        <!-- Starter -->
+        <div class="plan-card" onclick="selectPlan('starter')">
+          <div class="plan-badge">&nbsp;</div>
+          <div class="plan-name">Starter</div>
+          <div class="plan-desc">Perfect for small shops</div>
+          <div class="plan-price" data-monthly="297" data-annual="2970">$297<span>/mo</span></div>
+          <div class="plan-annual" data-text="$2,970/yr (save $594)">&nbsp;</div>
+          <div class="plan-divider"></div>
+          <div class="plan-features">
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> AI answers calls 24/7</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Books appointments</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Texts you new leads</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Basic call analytics</div>
+          </div>
+        </div>
+
+        <!-- Pro -->
+        <div class="plan-card selected" onclick="selectPlan('pro')">
+          <div class="plan-badge">Most Popular</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-desc">For growing businesses</div>
+          <div class="plan-price" data-monthly="497" data-annual="4970">$497<span>/mo</span></div>
+          <div class="plan-annual" data-text="$4,970/yr (save $994)">&nbsp;</div>
+          <div class="plan-divider"></div>
+          <div class="plan-features">
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Starter</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Smart call routing</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Emergency detection</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Priority support</div>
+          </div>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="plan-card" onclick="selectPlan('enterprise')">
+          <div class="plan-badge">&nbsp;</div>
+          <div class="plan-name">Enterprise</div>
+          <div class="plan-desc">Full-service solution</div>
+          <div class="plan-price" data-monthly="997" data-annual="9970">$997<span>/mo</span></div>
+          <div class="plan-annual" data-text="$9,970/yr (save $1,994)">&nbsp;</div>
+          <div class="plan-divider"></div>
+          <div class="plan-features">
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Pro</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Review booster</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Missed call text-back</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Monthly reports + 1hr SLA</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px; max-width: 520px; margin: 0 auto;">
+        <button class="btn btn-secondary btn-lg" style="flex: 1; justify-content: center;" onclick="goStep(1)">Back</button>
+        <button class="btn btn-green btn-lg" style="flex: 2; justify-content: center;" onclick="goStep(3)">
+          Continue
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Confirm -->
+    <div class="signup-step" id="step3">
+      <div class="confirm-card">
+        <h2 style="font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 20px;">Confirm Your Order</h2>
+        <div class="confirm-row">
+          <span class="confirm-label">Company</span>
+          <span class="confirm-value" id="c-company">-</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-label">Contact</span>
+          <span class="confirm-value" id="c-name">-</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-label">Email</span>
+          <span class="confirm-value" id="c-email">-</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-label">Plan</span>
+          <span class="confirm-value" id="c-plan">Pro</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-label">Billing</span>
+          <span class="confirm-value" id="c-billing">Monthly</span>
+        </div>
+        <div class="confirm-row" style="border-bottom: none; padding-top: 16px;">
+          <span class="confirm-label" style="font-size: 16px; font-weight: 600; color: #fff;">Total</span>
+          <span class="confirm-total" id="c-total">$497/mo</span>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button class="btn btn-secondary btn-lg" style="flex: 1; justify-content: center;" onclick="goStep(2)">Back</button>
+          <button class="btn btn-green btn-lg" style="flex: 2; justify-content: center;" id="submit-btn" onclick="submitSignup()">
+            Complete Signup
+          </button>
+        </div>
+
+        <p style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 12px;">
+          We'll reach out within 24 hours to complete setup and process payment.
+        </p>
+      </div>
+    </div>
+
+    <!-- Success -->
+    <div class="signup-step" id="step-success">
+      <div class="success-box">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 style="font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 8px;">You're In!</h2>
+        <p style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">
+          We'll reach out within 24 hours to get <span id="s-company-name">your business</span> set up with The Call Taker.
+        </p>
+        <p style="font-size: 14px; color: var(--text-3); margin-bottom: 24px;">
+          In the meantime, try the AI yourself:
+        </p>
+        <a href="tel:+16157845747" style="display: inline-block; font-size: 24px; font-weight: 800; color: var(--green); margin-bottom: 8px;">(615) 784-5747</a>
+        <p style="font-size: 13px; color: var(--text-3);">It picks up 24/7. This is exactly what your customers will hear.</p>
+      </div>
+    </div>
+
+    <!-- Demo callout -->
+    <div class="demo-callout">
+      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 8px;">Not sure yet? Hear the AI first.</p>
+      <a href="tel:+16157845747" style="font-size: 20px; font-weight: 800; color: var(--green);">(615) 784-5747</a>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 4px;">Our AI picks up 24/7. Try it right now.</p>
+    </div>
+
+    <!-- Mini FAQ -->
+    <div class="signup-faq">
+      <h3 style="font-size: 16px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 16px;">Common Questions</h3>
+      <div>
+        <button class="faq-q" onclick="toggleFaq(this)">How fast can I get set up?<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">48 hours or less. We handle everything -- you just forward your calls to us and we take care of the rest.</div></div>
+      </div>
+      <div>
+        <button class="faq-q" onclick="toggleFaq(this)">Do I need special equipment?<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">No. Just set up call forwarding on your existing phone line. Takes 2 minutes. We'll walk you through it.</div></div>
+      </div>
+      <div>
+        <button class="faq-q" onclick="toggleFaq(this)">What if I want to cancel?<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Cancel anytime. No contracts, no cancellation fees, no hassle. We'll even help you transition back.</div></div>
+      </div>
+      <div>
+        <button class="faq-q" onclick="toggleFaq(this)">Can I try it first?<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Absolutely. Call our demo line at (615) 784-5747 right now. It's live 24/7 and sounds exactly like what your customers will hear.</div></div>
+      </div>
+    </div>
+
+    <!-- ROI reminder -->
+    <div style="text-align: center; padding: 40px 0 60px; border-top: 1px solid var(--border);">
+      <p style="font-size: 13px; color: var(--text-3); margin-bottom: 4px;">The average HVAC company loses</p>
+      <p style="font-size: 28px; font-weight: 800; color: #ef4444; margin-bottom: 4px;">$4,500/month</p>
+      <p style="font-size: 13px; color: var(--text-3);">to missed calls. One missed job pays for a month of service.</p>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="text-align: center;">
+        <span>&copy; 2026 The Call Taker. All rights reserved. Lebanon, TN</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    var selectedPlan = 'pro';
+    var isAnnual = false;
+    var plans = {
+      starter: { name: 'Starter', monthly: 297, annual: 2970 },
+      pro: { name: 'Pro', monthly: 497, annual: 4970 },
+      enterprise: { name: 'Enterprise', monthly: 997, annual: 9970 }
+    };
+
+    function goStep(n) {
+      // Validate step 1
+      if (n === 2) {
+        var company = document.getElementById('s-company').value.trim();
+        var first = document.getElementById('s-first').value.trim();
+        var phone = document.getElementById('s-phone').value.trim();
+        var email = document.getElementById('s-email').value.trim();
+        if (!company || !first || !phone || !email) {
+          alert('Please fill in the required fields.');
+          return;
+        }
+      }
+      // Populate confirm step
+      if (n === 3) {
+        var p = plans[selectedPlan];
+        document.getElementById('c-company').textContent = document.getElementById('s-company').value;
+        document.getElementById('c-name').textContent = document.getElementById('s-first').value + ' ' + (document.getElementById('s-last').value || '');
+        document.getElementById('c-email').textContent = document.getElementById('s-email').value;
+        document.getElementById('c-plan').textContent = p.name;
+        document.getElementById('c-billing').textContent = isAnnual ? 'Annual' : 'Monthly';
+        document.getElementById('c-total').textContent = isAnnual ? '$' + p.annual.toLocaleString() + '/yr' : '$' + p.monthly + '/mo';
+      }
+
+      document.querySelectorAll('.signup-step').forEach(function(s) { s.classList.remove('active'); });
+      document.getElementById('step' + n).classList.add('active');
+      document.querySelectorAll('.step-dot').forEach(function(d, i) {
+        d.className = 'step-dot';
+        if (i + 1 < n) d.classList.add('done');
+        if (i + 1 === n) d.classList.add('active');
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectPlan(plan) {
+      selectedPlan = plan;
+      document.querySelectorAll('.plan-card').forEach(function(c) { c.classList.remove('selected'); });
+      event.currentTarget.classList.add('selected');
+    }
+
+    function toggleBilling() {
+      isAnnual = !isAnnual;
+      var track = document.getElementById('billing-toggle');
+      track.classList.toggle('on', isAnnual);
+      document.getElementById('lbl-monthly').classList.toggle('active', !isAnnual);
+      document.getElementById('lbl-annual').classList.toggle('active', isAnnual);
+
+      document.querySelectorAll('.plan-price').forEach(function(el) {
+        var m = el.getAttribute('data-monthly');
+        var a = el.getAttribute('data-annual');
+        el.innerHTML = isAnnual
+          ? '$' + parseInt(a).toLocaleString() + '<span>/yr</span>'
+          : '$' + m + '<span>/mo</span>';
+      });
+      document.querySelectorAll('.plan-annual').forEach(function(el) {
+        el.textContent = isAnnual ? el.getAttribute('data-text') : '\u00A0';
+      });
+    }
+
+    function toggleFaq(btn) {
+      var answer = btn.nextElementSibling;
+      answer.classList.toggle('open');
+    }
+
+    async function submitSignup() {
+      var btn = document.getElementById('submit-btn');
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+
+      var data = {
+        company: document.getElementById('s-company').value.trim(),
+        firstName: document.getElementById('s-first').value.trim(),
+        lastName: document.getElementById('s-last').value.trim(),
+        phone: document.getElementById('s-phone').value.trim(),
+        email: document.getElementById('s-email').value.trim(),
+        city: document.getElementById('s-city').value.trim(),
+        state: document.getElementById('s-state').value,
+        calls: document.getElementById('s-calls').value,
+        plan: selectedPlan,
+        billing: isAnnual ? 'annual' : 'monthly',
+        amount: isAnnual ? plans[selectedPlan].annual : plans[selectedPlan].monthly
+      };
+
+      // Create contact in GHL
+      try {
+        var ghlBody = {
+          locationId: 'tQb9YmrGDrdVUJYPKrsY',
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          companyName: data.company,
+          tags: ['signup-intent', 'plan-' + data.plan, 'self-service']
+        };
+        if (data.city) ghlBody.city = data.city;
+        if (data.state) ghlBody.state = data.state;
+
+        await fetch('https://services.leadconnectorhq.com/contacts/', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+            'Version': '2021-07-28',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(ghlBody)
+        });
+      } catch(e) {}
+
+      // War room alert
+      try {
+        var p = plans[data.plan];
+        var priceStr = data.billing === 'annual'
+          ? '$' + p.annual.toLocaleString() + '/yr'
+          : '$' + p.monthly + '/mo';
+        await fetch('https://ntfy.sh/tct-warroom-Kx7mN9pQ', {
+          method: 'POST',
+          headers: {
+            'Title': 'NEW SIGNUP INTENT: ' + data.company,
+            'Priority': 'urgent',
+            'Tags': 'rotating_light,money_with_wings,fire'
+          },
+          body: 'Company: ' + data.company +
+                '\nName: ' + data.firstName + ' ' + data.lastName +
+                '\nEmail: ' + data.email +
+                '\nPhone: ' + data.phone +
+                '\nPlan: ' + p.name + ' (' + priceStr + ')' +
+                '\nCity: ' + data.city + ', ' + data.state +
+                '\nCalls/day: ' + data.calls +
+                '\n\nACTION: Call them NOW to close!'
+        });
+      } catch(e) {}
+
+      // Show success
+      document.getElementById('s-company-name').textContent = data.company;
+      document.querySelectorAll('.signup-step').forEach(function(s) { s.classList.remove('active'); });
+      document.getElementById('step-success').classList.add('active');
+      document.querySelectorAll('.step-dot').forEach(function(d) { d.className = 'step-dot done'; });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

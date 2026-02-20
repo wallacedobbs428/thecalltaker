@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════
-# MAX v2 INSTALLER — 24/7 Autonomous Sales Team Member
+# MAX v3 INSTALLER — Reply Catcher + Follow-Up Machine
 # Run once: bash install-max.sh
 # ═══════════════════════════════════════════
 
@@ -8,8 +8,8 @@ MAX_DIR="$(cd "$(dirname "$0")" && pwd)"
 PLIST_DIR="$HOME/Library/LaunchAgents"
 PYTHON="/usr/bin/python3"
 
-echo "Installing Max v2 — The Call Taker's 24/7 Sales Team Member"
-echo "============================================================"
+echo "Installing Max v3 — Reply Catcher + Follow-Up Machine"
+echo "======================================================"
 
 chmod +x "$MAX_DIR/max-engine.py"
 mkdir -p "$PLIST_DIR"
@@ -70,40 +70,6 @@ cat > "$PLIST_DIR/com.thecalltaker.max.followup.plist" << PLIST
     <string>${MAX_DIR}/max-followup.log</string>
     <key>StandardErrorPath</key>
     <string>${MAX_DIR}/max-followup-error.log</string>
-    <key>EnvironmentVariables</key>
-    <dict>
-        <key>PATH</key>
-        <string>/usr/bin:/usr/local/bin:/bin</string>
-    </dict>
-</dict>
-</plist>
-PLIST
-
-# ─── Cold Outreach: Daily at 10:00 AM ───
-cat > "$PLIST_DIR/com.thecalltaker.max.outreach.plist" << PLIST
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.thecalltaker.max.outreach</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>${PYTHON}</string>
-        <string>${MAX_DIR}/max-engine.py</string>
-        <string>outreach</string>
-    </array>
-    <key>StartCalendarInterval</key>
-    <dict>
-        <key>Hour</key>
-        <integer>10</integer>
-        <key>Minute</key>
-        <integer>0</integer>
-    </dict>
-    <key>StandardOutPath</key>
-    <string>${MAX_DIR}/max-outreach.log</string>
-    <key>StandardErrorPath</key>
-    <string>${MAX_DIR}/max-outreach-error.log</string>
     <key>EnvironmentVariables</key>
     <dict>
         <key>PATH</key>
@@ -182,29 +148,32 @@ cat > "$PLIST_DIR/com.thecalltaker.max.report.plist" << PLIST
 PLIST
 
 echo ""
-echo "Loading Max v2 into launchd..."
+echo "Loading Max v3 into launchd..."
 
-# Unload old versions
+# Unload old versions (including removed outreach)
 for svc in monitor followup outreach pipeline report; do
     launchctl unload "$PLIST_DIR/com.thecalltaker.max.$svc.plist" 2>/dev/null
 done
+# Remove old outreach plist if it exists
+rm -f "$PLIST_DIR/com.thecalltaker.max.outreach.plist"
 
-# Load new versions
-for svc in monitor followup outreach pipeline report; do
+# Load new versions (4 services — no outreach)
+for svc in monitor followup pipeline report; do
     launchctl load "$PLIST_DIR/com.thecalltaker.max.$svc.plist"
 done
 
 echo ""
-echo "MAX v2 IS LIVE. Schedule:"
-echo "  - Reply monitor:   Every 30 minutes (starting now)"
-echo "  - Follow-ups:      Daily at 9:00 AM"
-echo "  - Cold outreach:   Daily at 10:00 AM"
-echo "  - Pipeline moves:  Daily at midnight"
-echo "  - Daily report:    Daily at 8:00 PM"
+echo "MAX v3 IS LIVE. Schedule:"
+echo "  - Reply monitor:     Every 30 minutes (replies + demo calls + secret shopper + weather)"
+echo "  - Warm follow-ups:   Daily at 9:00 AM"
+echo "  - Pipeline manager:  Daily at midnight"
+echo "  - Daily report:      Daily at 8:00 PM"
+echo ""
+echo "REMOVED: Cold outreach (handled by Instantly + blast scripts)"
 echo ""
 echo "Commands:"
 echo "  Status:   python3 $MAX_DIR/max-engine.py status"
 echo "  Logs:     cat $MAX_DIR/max-log.txt"
 echo "  Stop:     bash $MAX_DIR/uninstall-max.sh"
 echo ""
-echo "Max is a member of the team. Max never sleeps."
+echo "Max v3 — Reply Catcher. Never misses a response."
