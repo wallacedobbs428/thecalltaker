@@ -70,7 +70,7 @@ Here's what I've found working with HVAC companies:
 - Most HVAC owners don't even know how many calls they're missing. When we show them the data, they're shocked
 - **A single missed call per week = $40,000--$60,000 in lost annual revenue**
 
-I'm Wallace Dobbs. I came from the trades in Lebanon, Tennessee, and I built The Call Taker --- an AI receptionist that answers every call 24/7 and books appointments directly into the schedule. It's $297/month, and it's solving a problem I watched destroy revenue at shop after shop.
+I'm Wallace Dobbs. I came from the trades in Brentwood, Tennessee, and I built The Call Taker --- an AI receptionist that answers every call 24/7 and books appointments directly into the schedule. It's $297/month, and it's solving a problem I watched destroy revenue at shop after shop.
 
 I won't make this a product pitch. I want to give your audience the framework to audit their own missed calls and understand what it's costing them --- whether they use my tool or not.
 
@@ -92,7 +92,7 @@ thecalltaker.com
 **Subject Line Options:**
 - From the trades to tech --- a story your listeners will relate to
 - I was a trades guy who got tired of watching shops lose money
-- The accidental tech founder from Lebanon, Tennessee
+- The accidental tech founder from Brentwood, Tennessee
 
 ---
 
@@ -102,7 +102,7 @@ Quick question: how many of your listeners came from the field, had an idea to f
 
 That's my story, and I think your audience would connect with it.
 
-I'm Wallace Dobbs from Lebanon, Tennessee. I spent years in the trades and watched the same thing happen over and over: **HVAC companies would spend thousands on marketing to make the phone ring, and then nobody would answer the phone.** Evenings. Weekends. Lunch breaks. Busy days when every tech is on a call.
+I'm Wallace Dobbs from Brentwood, Tennessee. I spent years in the trades and watched the same thing happen over and over: **HVAC companies would spend thousands on marketing to make the phone ring, and then nobody would answer the phone.** Evenings. Weekends. Lunch breaks. Busy days when every tech is on a call.
 
 It drove me crazy.
 
@@ -183,7 +183,7 @@ thecalltaker.com
 Wallace should be prepared to naturally hit these points during any podcast conversation. These are not a script --- they are anchor ideas to weave in.
 
 ### 1. The Origin Story
-> "I came from the trades in Lebanon, Tennessee. I wasn't a tech guy. I was the guy watching HVAC companies spend $5,000 a month on Google Ads to make the phone ring, and then at 5:01pm, every call went to voicemail. It was like watching someone fill a bucket with holes in it."
+> "I came from the trades in Brentwood, Tennessee. I wasn't a tech guy. I was the guy watching HVAC companies spend $5,000 a month on Google Ads to make the phone ring, and then at 5:01pm, every call went to voicemail. It was like watching someone fill a bucket with holes in it."
 
 ### 2. The Missed Call Math
 > "The average HVAC service call is worth $800 to $1,200. If you miss just one call a day that would have converted, that's $300,000 or more per year walking to your competitor. And most owners have no idea it's happening because they never see the calls they don't answer."
@@ -223,13 +223,13 @@ Wallace should be prepared to naturally hit these points during any podcast conv
 
 # WALLACE DOBBS
 ### Founder, The Call Taker | AI Receptionist for HVAC Companies
-**Lebanon, Tennessee**
+**Brentwood, Tennessee**
 
 ---
 
 **BIO**
 
-Wallace Dobbs is the founder of The Call Taker, an AI-powered receptionist built specifically for HVAC companies. After years working in and around the trades, Wallace saw the same problem everywhere: HVAC companies spending thousands to generate leads, then losing them to voicemail after hours, on weekends, and during busy periods. He built The Call Taker to fix it. The platform answers every call 24/7 with a natural AI voice, engages the homeowner in conversation, and books the appointment --- for $297/month. Wallace is based in Lebanon, Tennessee and is on a mission to give small and mid-size HVAC shops the same phone coverage that large enterprises take for granted.
+Wallace Dobbs is the founder of The Call Taker, an AI-powered receptionist built specifically for HVAC companies. After years working in and around the trades, Wallace saw the same problem everywhere: HVAC companies spending thousands to generate leads, then losing them to voicemail after hours, on weekends, and during busy periods. He built The Call Taker to fix it. The platform answers every call 24/7 with a natural AI voice, engages the homeowner in conversation, and books the appointment --- for $297/month. Wallace is based in Brentwood, Tennessee and is on a mission to give small and mid-size HVAC shops the same phone coverage that large enterprises take for granted.
 
 ---
 

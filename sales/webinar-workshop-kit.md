@@ -3,7 +3,7 @@
 ## "How HVAC Companies Are Losing $50K+ Per Year to Missed Calls (And How to Fix It in 48 Hours)"
 
 **Presented by: The Call Taker -- AI-Powered Receptionist for HVAC Companies**
-**Host: Wallace Dobbs | Lebanon, TN**
+**Host: Wallace Dobbs | Brentwood, TN**
 **Demo Line: (615) 784-5747**
 **Website: thecalltaker.com**
 

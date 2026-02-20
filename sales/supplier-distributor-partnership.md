@@ -5,7 +5,7 @@
 ---
 
 **Prepared by:** Wallace Dobbs, Founder — The Call Taker
-**Location:** Lebanon, TN
+**Location:** Brentwood, TN
 **Contact:** (615) 784-5747 | thecalltaker.com
 
 ---
@@ -98,7 +98,7 @@ Wallace Dobbs
 Founder, The Call Taker
 (615) 784-5747
 thecalltaker.com
-Lebanon, TN
+Brentwood, TN
 
 ---
 
@@ -110,7 +110,7 @@ Lebanon, TN
 
 Hi [Name],
 
-My name is Wallace Dobbs. I run a company called The Call Taker out of Lebanon, TN. We make an AI receptionist specifically for HVAC companies.
+My name is Wallace Dobbs. I run a company called The Call Taker out of Brentwood, TN. We make an AI receptionist specifically for HVAC companies.
 
 I am reaching out because I work with a lot of HVAC contractors, and the number one problem I see — across the board — is missed phone calls. These guys spend thousands on marketing, and then 30% of the calls go to voicemail because the office is busy, it is after hours, or they are a smaller shop without full-time office staff.
 
@@ -175,7 +175,7 @@ Respectfully,
 Wallace Dobbs
 Founder, The Call Taker
 (615) 784-5747 | thecalltaker.com
-Lebanon, TN
+Brentwood, TN
 
 ---
 
@@ -605,7 +605,7 @@ The Call Taker | Built for HVAC | thecalltaker.com
 | Pilot Program | 90 days, 3-5 branches, no minimum commitment |
 | Demo Line | (615) 784-5747 |
 | Website | thecalltaker.com |
-| Contact | Wallace Dobbs, Lebanon, TN |
+| Contact | Wallace Dobbs, Brentwood, TN |
 | Key Selling Point to Distributors | More contractor jobs = more equipment/parts purchases |
 | Key Selling Point to Contractors | Answer every call, book more jobs, starting at $297/mo |
 | Onboarding Time | Contractor can be live in under 24 hours |

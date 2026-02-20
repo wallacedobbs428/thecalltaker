@@ -27,7 +27,7 @@ Every email below is copy-paste ready. Replace anything in [brackets] with the r
 - Brookside Properties
 - Goldmark Property Management
 - RedPeak Properties
-- Any property management company on Google Maps in Nashville/Lebanon/Mt. Juliet/Murfreesboro
+- Any property management company on Google Maps in Nashville/Brentwood/Mt. Juliet/Murfreesboro
 - Nashville REIA (Real Estate Investors Association) meetings
 - BiggerPockets Nashville forums
 
@@ -144,7 +144,7 @@ Every email below is copy-paste ready. Replace anything in [brackets] with the r
 >
 > Every contractor who signs up, I'll send you **$100 cash**. Plus $25/mo for as long as they stay. Venmo, Zelle, PayPal, check — whatever you want.
 >
-> I'm local — Lebanon, TN. Happy to swing by [Supply House Name] and drop off some cards if you're open to it. Or just reply to this email and I'll send you everything you need.
+> I'm local — Brentwood, TN. Happy to swing by [Supply House Name] and drop off some cards if you're open to it. Or just reply to this email and I'll send you everything you need.
 >
 > You already have the relationships. This is just a way to get paid for a 10-second recommendation.
 >
@@ -160,7 +160,7 @@ Every email below is copy-paste ready. Replace anything in [brackets] with the r
 
 > Hi [Name],
 >
-> I'm Wallace Dobbs — I run The Call Taker out of Lebanon, TN. We're an AI receptionist service built specifically for HVAC companies.
+> I'm Wallace Dobbs — I run The Call Taker out of Brentwood, TN. We're an AI receptionist service built specifically for HVAC companies.
 >
 > I'm reaching out to you at [Johnstone Supply / Ferguson / Winsupply / etc.] because you have something I can't buy: trust. Your contractors trust your recommendations on equipment, and they'd trust your recommendation on a business tool that solves a real problem.
 >
@@ -195,7 +195,7 @@ Every email below is copy-paste ready. Replace anything in [brackets] with the r
 
 **Where to find them in Nashville:**
 - Nashville REIA
-- Keller Williams offices in Nashville/Lebanon/Mt. Juliet
+- Keller Williams offices in Nashville/Brentwood/Mt. Juliet
 - RE/MAX, Coldwell Banker, eXp Realty offices
 - Local Facebook groups: Nashville Real Estate Investors, Middle TN Realtors
 - Instagram — Nashville real estate agents are extremely active on social media
@@ -328,7 +328,7 @@ Every email below is copy-paste ready. Replace anything in [brackets] with the r
 >
 > Think about your territory. How many contractors do you visit in a month? 20? 30? If even 3 of them sign up, that's $300 upfront and $75/mo in passive income — just from mentioning it when the conversation naturally goes there.
 >
-> I'm based in Lebanon, TN. Happy to meet up and walk you through it, or just reply here and I'll send you everything — cards, one-pager, referral link, all of it.
+> I'm based in Brentwood, TN. Happy to meet up and walk you through it, or just reply here and I'll send you everything — cards, one-pager, referral link, all of it.
 >
 > — Wallace Dobbs
 > The Call Taker | thecalltaker.com

@@ -43,7 +43,7 @@ It'll answer as a sample HVAC company. Ask it anything. Try to stump it. Then im
 
 Visit thecalltaker.com for more info or to book a demo.
 
-Local business based in Lebanon, TN. Built by an HVAC industry guy who got tired of watching good companies lose jobs to voicemail.
+Local business based in Brentwood, TN. Built by an HVAC industry guy who got tired of watching good companies lose jobs to voicemail.
 
 Wallace Dobbs
 The Call Taker
@@ -93,7 +93,7 @@ Call (615) 784-5747 right now. Talk to the AI. See how it handles a real call.
 
 Then visit thecalltaker.com to get it set up for your company. We can have you live in 48 hours.
 
-Wallace Dobbs — Lebanon, TN
+Wallace Dobbs — Brentwood, TN
 The Call Taker
 thecalltaker.com
 
@@ -146,7 +146,7 @@ Call (615) 784-5747 and talk to the AI live. It answers as a sample HVAC company
 
 Website: thecalltaker.com
 
-Based right here in Lebanon, TN. I built this because I saw too many good HVAC companies losing real money to their voicemail box.
+Based right here in Brentwood, TN. I built this because I saw too many good HVAC companies losing real money to their voicemail box.
 
 Wallace Dobbs
 The Call Taker
@@ -163,7 +163,7 @@ thecalltaker.com
 
 How many calls go to voicemail when you're out on a job?
 
-I'm Wallace Dobbs, and I run a small business right here in Lebanon called The Call Taker. I built an AI receptionist specifically for HVAC companies in our area because I kept hearing the same story from local contractors: "I lose jobs every week because I can't get to the phone."
+I'm Wallace Dobbs, and I run a small business right here in Brentwood called The Call Taker. I built an AI receptionist specifically for HVAC companies in our area because I kept hearing the same story from local contractors: "I lose jobs every week because I can't get to the phone."
 
 Here's what it does: when a customer calls your business and you can't answer, the AI picks up instantly. It sounds like a real receptionist, gets the customer's info, finds out what's wrong with their system, and books the appointment. Then it texts you all the details.
 
@@ -183,11 +183,11 @@ Happy to answer any questions. Just trying to help local businesses stop leaving
 
 **Local business owner here — built something for HVAC companies and looking for feedback**
 
-Hey everyone. I'm Wallace, based in Lebanon. I started a company called The Call Taker that provides AI receptionists to HVAC businesses.
+Hey everyone. I'm Wallace, based in Brentwood. I started a company called The Call Taker that provides AI receptionists to HVAC businesses.
 
 The short version: if you run an HVAC company and you miss calls because you're busy working, this answers your phone 24/7, books the appointment, and texts you the details. Your customers never hit voicemail again.
 
-I'm looking for a few local HVAC company owners who'd be willing to try it out and give me honest feedback. If you know someone who runs an HVAC business in the Lebanon, Mt. Juliet, Nashville, or Murfreesboro area, I'd appreciate the introduction.
+I'm looking for a few local HVAC company owners who'd be willing to try it out and give me honest feedback. If you know someone who runs an HVAC business in the Brentwood, Mt. Juliet, Nashville, or Murfreesboro area, I'd appreciate the introduction.
 
 You can hear the AI in action right now by calling (615) 784-5747. It'll answer as a sample HVAC company so you can see how it works.
 
@@ -225,7 +225,7 @@ Thanks, neighbors.
 
 **Description:**
 
-The Call Taker provides AI-powered receptionist services designed specifically for HVAC companies. Based in Lebanon, Tennessee, we help heating and cooling businesses answer every customer call — 24 hours a day, 7 days a week, 365 days a year.
+The Call Taker provides AI-powered receptionist services designed specifically for HVAC companies. Based in Brentwood, Tennessee, we help heating and cooling businesses answer every customer call — 24 hours a day, 7 days a week, 365 days a year.
 
 When an HVAC technician is on a job, under a house, or off the clock, our AI receptionist answers the phone instantly and handles the call like a trained front-desk employee. It greets customers by your company name, asks about their heating or cooling issue, collects their name, address, and phone number, and books the service appointment directly on your calendar. You receive a text message with all the details.
 
@@ -237,7 +237,7 @@ Plans start at $297 per month for up to 100 calls (+ $197 one-time setup), with 
 
 Want to hear the AI in action before you commit? Call our live demo line at (615) 784-5747 and talk to it yourself. Visit thecalltaker.com to learn more or book a demo.
 
-Locally owned and operated by Wallace Dobbs in Lebanon, TN. Serving HVAC businesses across Middle Tennessee and nationwide.
+Locally owned and operated by Wallace Dobbs in Brentwood, TN. Serving HVAC businesses across Middle Tennessee and nationwide.
 
 ---
 
@@ -268,7 +268,7 @@ We handle all the setup. You can be live in 48 hours.
 
 Want to try it? Call (615) 784-5747 and talk to the AI yourself. Or visit thecalltaker.com.
 
-Based in Lebanon, TN. Built by someone who understands the home service grind.
+Based in Brentwood, TN. Built by someone who understands the home service grind.
 
 ---
 
@@ -298,7 +298,7 @@ If you own an HVAC company (or know someone who does), I'd love to show you how 
 
 thecalltaker.com
 
-#HVAC #SmallBusiness #AI #HomeServices #Entrepreneurship #HVACBusiness #CustomerService #BusinessGrowth #ArtificialIntelligence #LebanonTN
+#HVAC #SmallBusiness #AI #HomeServices #Entrepreneurship #HVACBusiness #CustomerService #BusinessGrowth #ArtificialIntelligence #BrentwoodTN
 
 ---
 
@@ -322,7 +322,7 @@ It's an AI receptionist designed specifically for HVAC companies. When a custome
 
 It works 24/7. Nights. Weekends. Holidays. For $297/month with no contracts.
 
-I'm based in Lebanon, Tennessee, and I built this for the hardworking HVAC contractors who are great at their trade but lose jobs because they don't have a receptionist.
+I'm based in Brentwood, Tennessee, and I built this for the hardworking HVAC contractors who are great at their trade but lose jobs because they don't have a receptionist.
 
 Now they do.
 

@@ -27,7 +27,7 @@ Send to every HVAC company on the lead list that has a phone number:
 | 11 | M.J. Frick Co. | (615) 338-6265 | Text 1 |
 | 12 | Pioneer Comfort | (615) 933-2288 | Text 2 |
 | 13 | Airstream Services | (615) 216-5979 | Text 3 |
-| 14 | One Hour Air Lebanon | (615) 549-8149 | Text 4 |
+| 14 | One Hour Air Brentwood | (615) 549-8149 | Text 4 |
 | 15 | New leads from saturday-blitz-leads.md | Various | Text 5+ |
 
 **Send from (615) 653-9004. Personal, not GHL.**
@@ -52,7 +52,7 @@ Post in:
 Use the cold call script from `sales/cold-call-script.md`
 
 **Your Saturday opener:**
-> "Hey [Name], this is Wallace from Lebanon. Quick question — who's answering your phones right now on this Saturday? ... Most HVAC guys I talk to are sending Saturday calls straight to voicemail. I built something that fixes that for $297 a month. Got 60 seconds?"
+> "Hey [Name], this is Wallace from Brentwood. Quick question — who's answering your phones right now on this Saturday? ... Most HVAC guys I talk to are sending Saturday calls straight to voicemail. I built something that fixes that for $297 a month. Got 60 seconds?"
 
 **If they don't answer (they probably won't — which PROVES your point):**
 Leave the voicemail from `sales/saturday-blitz-outreach.md`
@@ -108,7 +108,7 @@ Send each company that went to voicemail a personalized email:
 > Or just reply to this email and I'll show you what your customers are hearing vs. what they COULD be hearing.
 >
 > Wallace Dobbs
-> The Call Taker — Lebanon, TN
+> The Call Taker — Brentwood, TN
 > (615) 653-9004
 
 ---

@@ -1,6 +1,6 @@
 # The Call Taker -- Trade Show & Networking Battle Plan
 
-**Wallace Dobbs | Lebanon, TN**
+**Wallace Dobbs | Brentwood, TN**
 **Mission: Sign HVAC companies face-to-face. One handshake at a time.**
 
 ---
@@ -347,7 +347,7 @@ Let them interact with the AI. Do not interrupt.
 
 ### Chamber of Commerce
 
-**4. Lebanon / Wilson County Chamber of Commerce**
+**4. Brentwood / Wilson County Chamber of Commerce**
 - Join immediately if not already a member ($200-$500/year)
 - Attend every monthly mixer, breakfast meeting, and after-hours event
 - Goal: become known as "the AI phone guy for contractors"
@@ -359,7 +359,7 @@ Let them interact with the AI. Do not interrupt.
 - They run a "Small Business Council" -- get involved
 
 **6. Mt. Juliet / Hendersonville / Gallatin Chambers**
-- Hit every chamber within 30 miles of Lebanon
+- Hit every chamber within 30 miles of Brentwood
 - Smaller chambers = easier to stand out and become a known face
 
 ---
@@ -367,7 +367,7 @@ Let them interact with the AI. Do not interrupt.
 ### BNI Groups (Business Network International)
 
 **7. BNI Chapters in Middle Tennessee**
-- Multiple chapters in Nashville, Lebanon, Mt. Juliet, Murfreesboro, Franklin, Hendersonville
+- Multiple chapters in Nashville, Brentwood, Mt. Juliet, Murfreesboro, Franklin, Hendersonville
 - BNI is a structured referral network -- you get a "seat" as the only person in your category
 - Your category: "AI Business Solutions" or "Business Phone Solutions"
 - You will meet electricians, plumbers, realtors, insurance agents -- ALL of whom refer HVAC companies
@@ -386,7 +386,7 @@ Let them interact with the AI. Do not interrupt.
 
 **9. Local Supply House Events**
 - Johnstone Supply, Ferguson, Winsupply, Carrier Enterprise, Lennox dealers
-- These distributors hold open houses, training days, and appreciation events in the Nashville/Lebanon area
+- These distributors hold open houses, training days, and appreciation events in the Nashville/Brentwood area
 - Ask the branch manager: "Can I set up a small table at your next contractor event? I have something HVAC guys will love."
 - This is often FREE or very cheap. The supply house wants to offer value to their contractors.
 - Wallace should visit every supply house within 45 minutes and build relationships with the counter staff. They know every HVAC owner personally.
@@ -500,7 +500,7 @@ Founder
 (615) 784-5747  <-- Demo Line (label it "Call the AI Now")
 wallace@thecalltaker.com
 thecalltaker.com
-Lebanon, TN
+Brentwood, TN
 ```
 
 **Back of Card:**
@@ -535,7 +535,7 @@ Every call. 24/7. From $297/mo.
 - **Do NOT put "AI" in giant letters.** Some older HVAC owners are skeptical of AI. Lead with the benefit ("Never miss a call"), not the technology.
 - **Do NOT list your personal cell phone number.** Use only the demo line and your email. If they call the demo line, you win. If they want to reach you personally, email works.
 - **Do NOT put a long tagline or paragraph.** The card is not a brochure. Keep it minimal.
-- **Do NOT put your home address.** "Lebanon, TN" is enough.
+- **Do NOT put your home address.** "Brentwood, TN" is enough.
 - **Do NOT put every social media handle.** No Twitter, no Instagram, no LinkedIn on the card. One website. One phone number. One email. That is it.
 - **Do NOT use a generic title like "CEO" or "President."** Use "Founder" -- it is more relatable and less corporate for a small-business audience.
 - **Do NOT use clip art, stock photos, or phone icons.** Clean and professional. Let the words do the work.

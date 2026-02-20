@@ -23,7 +23,7 @@ Do these NOW, before you pick up the phone.
 - [ ] **5:25 PM** -- Open `sales/cold-dm-scripts.md` in another tab. You will use DM #1 tonight after calling.
 - [ ] **5:30 PM** -- Open `sales/sms-follow-up-sequences.md` in another tab. You will text voicemail companies tonight.
 - [ ] **5:35 PM** -- Set a timer on your phone. You are starting calls at exactly 6:15 PM. Use the 40 minutes to eat, hydrate, and clear your head.
-- [ ] **5:45 PM** -- Update your personal Facebook profile: Bio should say "HVAC business owner in Lebanon, TN. Built an AI receptionist that answers every call 24/7." Add thecalltaker.com to your Featured section. Set a cover photo related to The Call Taker if you have one. This must be done BEFORE you DM anyone.
+- [ ] **5:45 PM** -- Update your personal Facebook profile: Bio should say "HVAC business owner in Brentwood, TN. Built an AI receptionist that answers every call 24/7." Add thecalltaker.com to your Featured section. Set a cover photo related to The Call Taker if you have one. This must be done BEFORE you DM anyone.
 - [ ] **6:00 PM** -- Sit down at your desk. Phone charged. Laptop open. Water bottle full. Door closed. No distractions for the next 3 hours.
 
 ---
@@ -59,7 +59,7 @@ Do these NOW, before you pick up the phone.
 | 11 | 6:55 PM | M.J. Frick Co. | (615) 338-6265 | Call. Larger, wide area. Log result. |
 | 12 | 6:59 PM | Pioneer Comfort | (615) 933-2288 | Call. 40+ years in business. Log result. |
 | 13 | 7:03 PM | Airstream Services | (615) 216-5979 | Call. Murfreesboro/Franklin. Log result. |
-| 14 | 7:07 PM | One Hour Air Lebanon | (615) 549-8149 | Call. Franchise. Log result. |
+| 14 | 7:07 PM | One Hour Air Brentwood | (615) 549-8149 | Call. Franchise. Log result. |
 
 **TOTAL TIME: ~55 minutes for 14 calls (4 minutes between each call for dialing, waiting, and logging)**
 
@@ -132,7 +132,7 @@ Copy this into `sales/secret-shopper-template.md` or a separate tracking doc:
 | 11 | M.J. Frick Co. | (615) 338-6265 | | | | | | |
 | 12 | Pioneer Comfort | (615) 933-2288 | | | | | | |
 | 13 | Airstream Services | (615) 216-5979 | | | | | | |
-| 14 | One Hour Air Lebanon | (615) 549-8149 | | | | | | |
+| 14 | One Hour Air Brentwood | (615) 549-8149 | | | | | | |
 
 ### Priority Ranking After Calls
 
@@ -215,7 +215,7 @@ Then send **Email #1 from `sales/cold-email-sequence.md`** -- the "Pain" email. 
 | 11 | M.J. Frick Co. | [find on site] | [ ] | [ ] | |
 | 12 | Pioneer Comfort | [find on site] | [ ] | [ ] | |
 | 13 | Airstream Services | [find on site] | [ ] | [ ] | |
-| 14 | One Hour Air Lebanon | [find on site] | [ ] | [ ] | |
+| 14 | One Hour Air Brentwood | [find on site] | [ ] | [ ] | |
 
 **Only email companies that got VM or NA results. Skip any that answered live.**
 
@@ -261,7 +261,7 @@ You have 13 companies on the lead list with NO phone number. These need phone nu
 | 15 | AVU Heating & Air | avuair.com | Check website. Regional. |
 | 17 | Hunter Heating and Air | hunterheatingandairtn.com | Check website. Ductless specialist. |
 | 18 | H. Brown & Son | hbrownhvac.com | Check website. Family company. |
-| 21 | Lebanon Heating & Air | lebanonhvac.net | Check website. Your own backyard -- Lebanon. |
+| 21 | Brentwood Heating & Air | lebanonhvac.net | Check website. Your own backyard -- Brentwood. |
 | 22 | Covenant Heating & Cooling | covenantheatingandcooling.com | Check website. Multi-area. |
 | 27 | Aire Serv Mt. Juliet | aireserv.com/nashville/mt-juliet | Check franchise locator page. |
 
@@ -324,7 +324,7 @@ Then follow the script: Problem > Solution > Social Proof > Ask for Demo.
 | Order | Company | Phone | Why They Are Priority |
 |-------|---------|-------|-----------------------|
 | 1 | Kimbro Air | (615) 824-8098 | Running $250 off promos = spending on marketing. If their marketing drives calls and nobody answers, they are BLEEDING money. Lead with this. |
-| 2 | Nashville HVAC Group | (615) 569-6245 | Small shop in Lebanon. Your backyard. You can offer to meet in person. |
+| 2 | Nashville HVAC Group | (615) 569-6245 | Small shop in Brentwood. Your backyard. You can offer to meet in person. |
 | 3 | Efficient HVAC | (615) 784-4424 | Claims 24hr but went to VM? That is your killer line: "You advertise 24-hour service but your phone goes to voicemail at 7pm?" |
 | 4 | Moonlight HVAC | (615) 662-4822 | Locally owned. Owner probably answers the phone himself. Pitch freedom. |
 | 5 | Haskins Heating & Cooling | (615) 746-6390 | Family biz since 1986. They have been doing this 40 years. The owner is tired. Pitch "stop answering the phone at 8pm." |
@@ -336,7 +336,7 @@ Then follow the script: Problem > Solution > Social Proof > Ask for Demo.
 | 11 | M.J. Frick Co. | (615) 338-6265 | Larger company. Higher contract value if they close. |
 | 12 | Pioneer Comfort | (615) 933-2288 | 40+ years. Established. May have budget. |
 | 13 | Airstream Services | (615) 216-5979 | Multi-area. Growing. |
-| 14 | One Hour Air Lebanon | (615) 549-8149 | Franchise in YOUR city. Walk in if you have to. |
+| 14 | One Hour Air Brentwood | (615) 549-8149 | Franchise in YOUR city. Walk in if you have to. |
 
 **After each call, log the result immediately:**
 
@@ -490,7 +490,7 @@ Use the same cold call script. Different time of day = different chance of catch
 1. Search LinkedIn for "HVAC owner Nashville" or "HVAC company owner Tennessee"
 2. Send 10 connection requests with a personalized note:
 
-> Hey [Name] -- I'm Wallace, based in Lebanon. I work with HVAC companies on their call handling. Would love to connect.
+> Hey [Name] -- I'm Wallace, based in Brentwood. I work with HVAC companies on their call handling. Would love to connect.
 
 3. For any connections that accept, wait 24 hours then send **DM #2 from `sales/cold-dm-scripts.md`**.
 
@@ -504,7 +504,7 @@ Post **Nextdoor Variation B from `sales/classified-ads-local-platforms.md`** -- 
 
 Google these searches and add new companies to your lead list:
 
-- "HVAC company Lebanon TN"
+- "HVAC company Brentwood TN"
 - "AC repair Nashville"
 - "heating and cooling Mt Juliet"
 - "HVAC contractor Hendersonville TN"
@@ -601,20 +601,20 @@ Post **Variation A on Craigslist Murfreesboro** (if available) or in a different
 
 ### 4:00 PM - 5:00 PM: Walk-In Outreach (Optional but POWERFUL)
 
-If any of your hottest leads are in Lebanon or nearby and have not responded to ANY outreach:
+If any of your hottest leads are in Brentwood or nearby and have not responded to ANY outreach:
 
 **Drive to their shop.** Walk in. Introduce yourself.
 
-> "Hey, I'm Wallace. I'm local, right here in Lebanon. I've been trying to reach you -- I called a couple times and sent an email. I'm not trying to sell you anything you don't need. I just built something that answers your phone 24/7 so you never miss a job again. Can I show you a quick demo on my phone right now? Takes 2 minutes."
+> "Hey, I'm Wallace. I'm local, right here in Brentwood. I've been trying to reach you -- I called a couple times and sent an email. I'm not trying to sell you anything you don't need. I just built something that answers your phone 24/7 so you never miss a job again. Can I show you a quick demo on my phone right now? Takes 2 minutes."
 
 Hand them your phone with (615) 784-5747 dialed. Let them call it themselves. The product sells itself.
 
-**Walk-in targets (Lebanon/nearby):**
-1. Nashville HVAC Group -- Lebanon
-2. Efficient HVAC -- Lebanon
-3. TemperaturePro Nashville -- Lebanon
-4. One Hour Air Lebanon -- Lebanon
-5. Lebanon Heating & Air -- Lebanon
+**Walk-in targets (Brentwood/nearby):**
+1. Nashville HVAC Group -- Brentwood
+2. Efficient HVAC -- Brentwood
+3. TemperaturePro Nashville -- Brentwood
+4. One Hour Air Brentwood -- Brentwood
+5. Brentwood Heating & Air -- Brentwood
 
 ### 6:00 PM - 8:00 PM: Secret Shop Round 3
 
@@ -642,7 +642,7 @@ For companies you emailed on Sunday that have not replied to Email #1 or #2, sen
 
 **Subject:** Your competitor just signed up
 
-Personalize the [City/Region] field to their specific area (Nashville, Lebanon, Murfreesboro, etc.).
+Personalize the [City/Region] field to their specific area (Nashville, Brentwood, Murfreesboro, etc.).
 
 ### 10:00 AM - 11:00 AM: Facebook Group Post #3
 
@@ -755,14 +755,14 @@ If by Thursday you still do not have a demo booked or a client signed, escalate:
 
 ### Tactic 1: The Walk-In Blitz (Thursday)
 
-Pick your top 5 prospects who have gone to voicemail multiple times and not responded to ANY outreach. Drive to each one. Walk in with your phone. Demo in person. You are in Lebanon -- most of these companies are within 30 minutes.
+Pick your top 5 prospects who have gone to voicemail multiple times and not responded to ANY outreach. Drive to each one. Walk in with your phone. Demo in person. You are in Brentwood -- most of these companies are within 30 minutes.
 
 **Route:**
-1. Nashville HVAC Group -- Lebanon
-2. Efficient HVAC -- Lebanon
-3. One Hour Air Lebanon -- Lebanon
-4. TemperaturePro Nashville -- Lebanon
-5. Adams HVAC & Plumbing -- Mt. Juliet (15 min from Lebanon)
+1. Nashville HVAC Group -- Brentwood
+2. Efficient HVAC -- Brentwood
+3. One Hour Air Brentwood -- Brentwood
+4. TemperaturePro Nashville -- Brentwood
+5. Adams HVAC & Plumbing -- Mt. Juliet (15 min from Brentwood)
 
 ### Tactic 2: The No-Risk Close (Friday)
 

@@ -1,6 +1,6 @@
 # HVAC Lead List — Middle Tennessee
 
-**Target Area:** Lebanon, Nashville, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro, Franklin, Brentwood, Smyrna, La Vergne
+**Target Area:** Brentwood, Nashville, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro, Franklin, Brentwood, Smyrna, La Vergne
 
 **Secret Shopping Strategy:** Call after 6pm. If they go to voicemail, they're a HOT lead. Note the date/time — use it in your cold email opening.
 
@@ -10,8 +10,8 @@
 
 | # | Company | Phone | City | Website | Notes |
 |---|---------|-------|------|---------|-------|
-| 1 | Nashville HVAC Group | (615) 569-6245 | Lebanon | nashvillehvacgroup.com | Small shop, Yelp listed |
-| 2 | Efficient HVAC | (615) 784-4424 | Lebanon | Yelp listing | Claims 24hr — verify |
+| 1 | Nashville HVAC Group | (615) 569-6245 | Brentwood | nashvillehvacgroup.com | Small shop, Yelp listed |
+| 2 | Efficient HVAC | (615) 784-4424 | Brentwood | Yelp listing | Claims 24hr — verify |
 | 3 | Moonlight HVAC | (615) 662-4822 | Nashville | moonlighttn.com | Locally owned & operated |
 | 4 | Haskins Heating & Cooling | (615) 746-6390 | Nashville | haskinsheating.com | Family biz since 1986 |
 | 5 | Nashville AirComfort | — | Nashville | nashvilleaircomfort.com | 14 trucks, 20 staff — growing, perfect fit |
@@ -28,19 +28,19 @@
 | 16 | Jay's Pro Services | (615) 625-8545 | La Vergne/Smyrna | jaysproservices.com | Open 24hrs — verify |
 | 17 | Hunter Heating and Air | — | Hendersonville | hunterheatingandairtn.com | Ductless specialist |
 | 18 | H. Brown & Son | — | Hendersonville | hbrownhvac.com | Family company |
-| 19 | TemperaturePro Nashville | (615) 434-8503 | Lebanon | temperaturepro.com | Franchise — local operator |
+| 19 | TemperaturePro Nashville | (615) 434-8503 | Brentwood | temperaturepro.com | Franchise — local operator |
 
 ## Larger Companies (Still Worth a Shot — Bigger Contract Value)
 
 | # | Company | Phone | City | Website | Notes |
 |---|---------|-------|------|---------|-------|
 | 20 | Adams HVAC & Plumbing | (615) 492-2030 | Mt. Juliet | adamsheatandair.com | Family since 1969 |
-| 21 | Lebanon Heating & Air | — | Lebanon | lebanonhvac.net | Established local |
+| 21 | Brentwood Heating & Air | — | Brentwood | lebanonhvac.net | Established local |
 | 22 | Covenant Heating & Cooling | — | Hendersonville | covenantheatingandcooling.com | Multi-area |
 | 23 | M.J. Frick Co. | (615) 338-6265 | Nashville | mjfrickco.com | Larger, serves wide area |
 | 24 | Pioneer Comfort | (615) 933-2288 | Nashville | pioneercomfort.com | Founded 1981, 40+ years |
 | 25 | Airstream Services | (615) 216-5979 | Multi-area | airstreamteam.com | Murfreesboro/Franklin |
-| 26 | One Hour Air Lebanon | (615) 549-8149 | Lebanon | onehourairlebanon.com | Franchise |
+| 26 | One Hour Air Brentwood | (615) 549-8149 | Brentwood | onehourairlebanon.com | Franchise |
 | 27 | Aire Serv Mt. Juliet | — | Mt. Juliet | aireserv.com/nashville/mt-juliet | Franchise |
 
 ## Skip These (Too Big — Lee Company, Hiller)

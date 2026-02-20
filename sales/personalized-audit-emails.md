@@ -13,7 +13,7 @@
 
 Hey there,
 
-My name's Wallace Dobbs. I run a company called The Call Taker over in Lebanon. I'm going to be upfront with you -- I called your business at 7:15 PM last Saturday, and I want to tell you what happened, because if I were a real customer, you would have lost my business.
+My name's Wallace Dobbs. I run a company called The Call Taker over in Brentwood. I'm going to be upfront with you -- I called your business at 7:15 PM last Saturday, and I want to tell you what happened, because if I were a real customer, you would have lost my business.
 
 Here's the play-by-play:
 
@@ -53,7 +53,7 @@ thecalltaker.com
 
 Hey,
 
-I'm Wallace Dobbs, founder of a company called The Call Taker out of Lebanon, TN. I called your business at 7:30 PM last Saturday evening. Let me tell you what happened.
+I'm Wallace Dobbs, founder of a company called The Call Taker out of Brentwood, TN. I called your business at 7:30 PM last Saturday evening. Let me tell you what happened.
 
 **The phone rang 4 times and went to voicemail.** You do have a custom greeting, which puts you ahead of a lot of companies. The recording mentioned MainStream by name and your business hours (Monday through Friday, 8 to 5).
 
@@ -89,7 +89,7 @@ thecalltaker.com
 
 Hey there,
 
-Wallace Dobbs here, out of Lebanon, TN. I run a company called The Call Taker. Last Saturday at 7:45 PM, I called your business line. I wanted to share what I experienced because I think it's costing you money.
+Wallace Dobbs here, out of Brentwood, TN. I run a company called The Call Taker. Last Saturday at 7:45 PM, I called your business line. I wanted to share what I experienced because I think it's costing you money.
 
 **Your phone rang 8 times before going to voicemail.** Eight rings. I'll be honest -- most people would have hung up after 5. I stuck around because I was doing an assessment, but a real customer with no AC on a Saturday night isn't that patient.
 
@@ -123,7 +123,7 @@ thecalltaker.com
 
 Hey,
 
-My name's Wallace Dobbs. I'm the founder of The Call Taker, based in Lebanon -- just down the road from you in Gallatin. Last Saturday at 8:00 PM, I called your business.
+My name's Wallace Dobbs. I'm the founder of The Call Taker, based in Brentwood -- just down the road from you in Gallatin. Last Saturday at 8:00 PM, I called your business.
 
 Here's what happened:
 
@@ -143,7 +143,7 @@ I built **The Call Taker** specifically for situations like this. It's an AI rec
 
 Want to hear it? **Call (615) 784-5747** right now. That's our live demo. It's always on.
 
-I'm right here in Lebanon, so if you want to grab a coffee and talk about it, I'm happy to do that too. Just give me a shout.
+I'm right here in Brentwood, so if you want to grab a coffee and talk about it, I'm happy to do that too. Just give me a shout.
 
 Wallace Dobbs
 Founder, The Call Taker
@@ -161,7 +161,7 @@ thecalltaker.com
 
 Hey,
 
-Wallace Dobbs here. I run The Call Taker out of Lebanon. Last Saturday at 8:15 PM I called your business line, and I want to tell you what I found.
+Wallace Dobbs here. I run The Call Taker out of Brentwood. Last Saturday at 8:15 PM I called your business line, and I want to tell you what I found.
 
 **The call rang 5 times and went to voicemail.** The greeting was short -- just "You've reached TBT HVAC, leave a message." Took about 4 seconds. Then the beep.
 
@@ -197,7 +197,7 @@ thecalltaker.com
 
 Hey there,
 
-I'm Wallace Dobbs, founder of The Call Taker over in Lebanon, TN. I called True Blue at 8:30 PM last Saturday. Let me tell you what I experienced.
+I'm Wallace Dobbs, founder of The Call Taker over in Brentwood, TN. I called True Blue at 8:30 PM last Saturday. Let me tell you what I experienced.
 
 **The phone rang 4 times and kicked to voicemail.** You have a professional-sounding greeting -- someone took the time to record a decent message. It mentioned True Blue by name, thanked the caller, and listed your hours as Monday through Saturday, 7 AM to 6 PM.
 
@@ -231,7 +231,7 @@ thecalltaker.com
 
 Hey,
 
-Wallace Dobbs here from Lebanon, TN. I'm the founder of The Call Taker. I called your business last Saturday evening at 8:45 PM and want to share what happened.
+Wallace Dobbs here from Brentwood, TN. I'm the founder of The Call Taker. I called your business last Saturday evening at 8:45 PM and want to share what happened.
 
 **The phone rang 7 times -- a long time -- and then went to voicemail.** The recording was clearly an older greeting. I could hear some background noise in it, and the audio quality was a little rough. It mentioned Tansil Heating & Cooling and asked me to leave my name and number.
 
@@ -256,7 +256,7 @@ thecalltaker.com
 
 ---
 
-## Email 8: Nashville HVAC Group, Lebanon
+## Email 8: Nashville HVAC Group, Brentwood
 
 **To:** Nashville HVAC Group
 **Subject:** I called Nashville HVAC Group at 7:00 last night
@@ -265,7 +265,7 @@ thecalltaker.com
 
 Hey there,
 
-Wallace Dobbs here. We're practically neighbors -- I'm based right here in Lebanon. I run a company called The Call Taker, and I called Nashville HVAC Group at 7:00 PM last Saturday. Let me tell you about it.
+Wallace Dobbs here. We're practically neighbors -- I'm based right here in Brentwood. I run a company called The Call Taker, and I called Nashville HVAC Group at 7:00 PM last Saturday. Let me tell you about it.
 
 **Your phone system picked up on the second ring** -- but it was an automated attendant, not a person. The recording gave me a menu: press 1 for residential, press 2 for commercial, press 3 for an existing appointment. I pressed 1 for residential.
 
@@ -283,7 +283,7 @@ Here's the fix: **The Call Taker** is an AI receptionist built for HVAC companie
 
 Hear it in action: **call (615) 784-5747.** That's our live demo. Always on.
 
-Since we're both in Lebanon, I'd love to grab coffee and talk about it. No pitch. Just a conversation about what's happening with your phones.
+Since we're both in Brentwood, I'd love to grab coffee and talk about it. No pitch. Just a conversation about what's happening with your phones.
 
 Wallace Dobbs
 Founder, The Call Taker
@@ -301,7 +301,7 @@ thecalltaker.com
 
 Hey,
 
-My name's Wallace Dobbs. I run a company called The Call Taker out of Lebanon. I called Kimbro Air at 8:00 PM last Saturday night, and I want to give you an honest rundown of what happened.
+My name's Wallace Dobbs. I run a company called The Call Taker out of Brentwood. I called Kimbro Air at 8:00 PM last Saturday night, and I want to give you an honest rundown of what happened.
 
 **The phone rang 4 times and went to a voicemail that started with about 5 seconds of silence before the greeting kicked in.** Then the recording said: "Thanks for calling Kimbro Air. Sorry we missed your call. Please leave a message with your name, number, and what you need, and we'll call you back as soon as we can."
 
@@ -328,7 +328,7 @@ thecalltaker.com
 
 ---
 
-## Email 10: TemperaturePro Nashville, Lebanon
+## Email 10: TemperaturePro Nashville, Brentwood
 
 **To:** TemperaturePro Nashville
 **Subject:** I called TemperaturePro Nashville at 8:30 last night
@@ -337,7 +337,7 @@ thecalltaker.com
 
 Hey there,
 
-Wallace Dobbs here from The Call Taker, right here in Lebanon. We're in the same town, so I figured I should introduce myself. Last Saturday at 8:30 PM, I called your business line. Let me tell you what happened.
+Wallace Dobbs here from The Call Taker, right here in Brentwood. We're in the same town, so I figured I should introduce myself. Last Saturday at 8:30 PM, I called your business line. Let me tell you what happened.
 
 **The call rang 3 times and went to a professional voicemail greeting.** Clearly a franchise-standard recording -- polished, branded, mentioned TemperaturePro by name. Hours listed as Monday through Friday, 8 to 5. The message directed me to leave a voicemail or visit the website to schedule service.
 
@@ -357,7 +357,7 @@ That's exactly what I built **The Call Taker** for. It's an AI receptionist desi
 
 Hear the demo: **call (615) 784-5747.** It's live 24/7.
 
-We're literally in the same town. I'd love to buy you a coffee and walk through what this could look like for your business. No agenda. Just two Lebanon business owners talking shop.
+We're literally in the same town. I'd love to buy you a coffee and walk through what this could look like for your business. No agenda. Just two Brentwood business owners talking shop.
 
 Wallace Dobbs
 Founder, The Call Taker

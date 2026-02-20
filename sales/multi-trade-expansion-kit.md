@@ -1,6 +1,6 @@
 # Multi-Trade Expansion Kit — The Call Taker
 
-**Wallace Dobbs | Lebanon, TN | thecalltaker.com | Demo Line: (615) 784-5747**
+**Wallace Dobbs | Brentwood, TN | thecalltaker.com | Demo Line: (615) 784-5747**
 
 ---
 
@@ -730,4 +730,4 @@ When you are in a Facebook group or conversation and someone from another trade 
 ---
 
 *The Call Taker — AI Receptionist for Service Businesses*
-*Wallace Dobbs | Lebanon, TN | thecalltaker.com | (615) 784-5747*
+*Wallace Dobbs | Brentwood, TN | thecalltaker.com | (615) 784-5747*

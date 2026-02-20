@@ -61,7 +61,7 @@
 | 29 | Pioneer Comfort | (615) 933-2288 | YES | | |
 | 30 | Airstream Services | (615) 216-5979 | YES | | |
 
-**Note: One Hour Air Lebanon was also sent (contact 31 — (615) 549-8149)**
+**Note: One Hour Air Brentwood was also sent (contact 31 — (615) 549-8149)**
 
 ---
 
@@ -71,7 +71,7 @@
 > "Hey! Thanks for getting back to me. Fastest way to see it — call (615) 784-5747 right now. That's our AI receptionist. It'll pick up on the first ring and talk to you like a real receptionist would. Takes 60 seconds. After you hear it, text me back and I'll walk you through how it works for your shop. -Wallace"
 
 ### If they reply "who is this" or "how did you get my number":
-> "Hey, totally fair question. I'm Wallace Dobbs, I'm in Lebanon TN. I found your business on Google and thought you'd want to hear about this. I help HVAC companies stop losing calls to voicemail. If it's not for you, no worries at all — just let me know and I won't text again. -Wallace"
+> "Hey, totally fair question. I'm Wallace Dobbs, I'm in Brentwood TN. I found your business on Google and thought you'd want to hear about this. I help HVAC companies stop losing calls to voicemail. If it's not for you, no worries at all — just let me know and I won't text again. -Wallace"
 
 ### If they reply "not interested" or "stop":
 > "No problem at all. Wishing you a great weekend. -Wallace"

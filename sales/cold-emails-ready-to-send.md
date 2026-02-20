@@ -19,7 +19,7 @@ I called A-1 Heating about 20 minutes ago. Got your voicemail.
 
 I'm not a customer, so no harm done. But here's the thing — real customers called today too. And they got the same voicemail. The difference is they didn't leave a message. They called the next company on Google.
 
-I'm Wallace. I'm in Lebanon, TN. I built an AI receptionist called The Call Taker that answers calls for HVAC companies 24/7 — weekends, after hours, holidays. It sounds like a real person, answers questions about your services, and books appointments on your calendar.
+I'm Wallace. I'm in Brentwood, TN. I built an AI receptionist called The Call Taker that answers calls for HVAC companies 24/7 — weekends, after hours, holidays. It sounds like a real person, answers questions about your services, and books appointments on your calendar.
 
 Family-owned since 1996 — you've built something real. Don't let voicemail be the thing that loses you jobs after 28 years.
 
@@ -79,7 +79,7 @@ But here's the one thing that hasn't kept up: what happens when a customer calls
 
 They get voicemail. And 85% of callers who hit voicemail call someone else.
 
-I'm Wallace Dobbs from Lebanon, TN. I built an AI receptionist called The Call Taker. It answers every call 24/7 — weekends, nights, holidays. Sounds like a real person, answers questions about your services, books the appointment.
+I'm Wallace Dobbs from Brentwood, TN. I built an AI receptionist called The Call Taker. It answers every call 24/7 — weekends, nights, holidays. Sounds like a real person, answers questions about your services, books the appointment.
 
 $297/mo. No contract. Cancel anytime. If it doesn't pay for itself in 30 days, I refund everything.
 
@@ -108,7 +108,7 @@ I built an AI receptionist for HVAC companies. It answers every call on the firs
 
 $297/mo. One job pays for it.
 
-I'm Wallace, I'm in Lebanon TN. Want to hear what it sounds like? Call (615) 784-5747. It answers right now.
+I'm Wallace, I'm in Brentwood TN. Want to hear what it sounds like? Call (615) 784-5747. It answers right now.
 
 Wallace Dobbs
 The Call Taker
@@ -160,7 +160,7 @@ Family owned for 40+ years. That takes grit. And clearly your customers love you
 
 But I'm willing to bet your after-hours calls go to voicemail. And I'm willing to bet you've lost jobs because of it. Every HVAC company has.
 
-I'm Wallace, local to Lebanon TN. I built an AI receptionist called The Call Taker. It answers every call your team can't — weekends, nights, holidays. Books the appointment, sounds human, knows the difference between a capacitor and a compressor.
+I'm Wallace, local to Brentwood TN. I built an AI receptionist called The Call Taker. It answers every call your team can't — weekends, nights, holidays. Books the appointment, sounds human, knows the difference between a capacitor and a compressor.
 
 $297/mo flat. No contract. First month guaranteed — if it doesn't pay for itself, I refund every penny.
 
@@ -188,7 +188,7 @@ I built an AI receptionist called The Call Taker. Answers every call, sounds lik
 Want to hear the difference? Call (615) 784-5747 right now. It'll answer — on a Saturday afternoon.
 
 Wallace Dobbs
-Lebanon, TN
+Brentwood, TN
 (615) 653-9004
 thecalltaker.com
 
@@ -205,7 +205,7 @@ Adams has been around since 1969. That's longer than most businesses survive —
 
 Quick question: what do your customers hear when they call after 5 PM? Voicemail? A ring that nobody picks up?
 
-I'm Wallace, I'm right down the road in Lebanon. I built an AI receptionist that answers HVAC calls 24/7. Sounds like a real person, books appointments, handles emergency calls. $297/mo.
+I'm Wallace, I'm right down the road in Brentwood. I built an AI receptionist that answers HVAC calls 24/7. Sounds like a real person, books appointments, handles emergency calls. $297/mo.
 
 One saved call at $400 pays for the entire month.
 
@@ -238,7 +238,7 @@ My AI receptionist answers every call your team can't — 24/7, weekends, holida
 Hear it live: (615) 784-5747
 
 Wallace Dobbs
-Lebanon, TN
+Brentwood, TN
 (615) 653-9004
 thecalltaker.com
 
@@ -264,7 +264,7 @@ Hear what it sounds like: (615) 784-5747
 That line is live right now. Saturday afternoon.
 
 Wallace Dobbs
-The Call Taker — Lebanon, TN
+The Call Taker — Brentwood, TN
 (615) 653-9004
 thecalltaker.com
 

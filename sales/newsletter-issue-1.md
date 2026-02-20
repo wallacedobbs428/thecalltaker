@@ -12,7 +12,7 @@
 
 Hey there,
 
-Welcome to the first issue of **The HVAC Growth Report**. I'm Wallace Dobbs, and I run a company called The Call Taker out of Lebanon, Tennessee. Every week, I'm going to send you one idea that can make your HVAC business more money. No fluff. No theory. Just stuff that works.
+Welcome to the first issue of **The HVAC Growth Report**. I'm Wallace Dobbs, and I run a company called The Call Taker out of Brentwood, Tennessee. Every week, I'm going to send you one idea that can make your HVAC business more money. No fluff. No theory. Just stuff that works.
 
 Let's get into it.
 
@@ -141,7 +141,7 @@ Talk soon,
 
 **Wallace Dobbs**
 Founder, The Call Taker
-Lebanon, TN
+Brentwood, TN
 Phone: (615) 653-9004
 Website: [thecalltaker.com](https://thecalltaker.com)
 

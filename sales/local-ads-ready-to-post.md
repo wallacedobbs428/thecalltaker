@@ -1,7 +1,7 @@
 # The Call Taker — Ready-to-Post Local Ads (February 2026)
 
 **Post these TONIGHT. Every ad below is copy-paste ready.**
-**Wallace Dobbs | The Call Taker | Lebanon, TN**
+**Wallace Dobbs | The Call Taker | Brentwood, TN**
 
 ---
 
@@ -72,7 +72,7 @@ You already know the answer. They called somebody else. And that somebody else p
 
 That's not a marketing problem. That's not a leads problem. That's a phone problem. And it's costing Nashville HVAC companies real money every single week.
 
-I'm Wallace. I live in Lebanon. I built something called The Call Taker that fixes this problem for good.
+I'm Wallace. I live in Brentwood. I built something called The Call Taker that fixes this problem for good.
 
 It's an AI phone answerer built just for HVAC companies. Not a call center. Not some robot that says "press 1 for sales." An actual conversational AI that picks up your phone, talks to the customer like a real receptionist, gets their name, address, and what's broken, books the appointment, and texts you everything.
 
@@ -89,7 +89,7 @@ Want to hear it before you decide anything? Call this number right now:
 That's a live demo. The AI will answer like it's working for an HVAC company. Ask it whatever you want. Try to trip it up. Then picture it answering your phone tomorrow.
 
 Wallace Dobbs
-The Call Taker — Lebanon, TN
+The Call Taker — Brentwood, TN
 thecalltaker.com
 
 ---
@@ -114,7 +114,7 @@ It doesn't take lunch breaks. It doesn't quit. It doesn't cost you $40K a year.
 
 $297 a month. Flat. No contracts. Cancel if you don't like it.
 
-I'm Wallace Dobbs. I run this business right here out of Lebanon, TN. I'm not some tech company in San Francisco. I'm a local guy who saw HVAC owners around Nashville losing thousands a month because they couldn't get to the phone. So I built something to fix it.
+I'm Wallace Dobbs. I run this business right here out of Brentwood, TN. I'm not some tech company in San Francisco. I'm a local guy who saw HVAC owners around Nashville losing thousands a month because they couldn't get to the phone. So I built something to fix it.
 
 Call the demo line and hear it yourself: (615) 784-5747
 
@@ -154,7 +154,7 @@ That's the live demo. The AI answers like it's running a real HVAC company's fro
 
 Wallace Dobbs
 The Call Taker
-Lebanon, TN
+Brentwood, TN
 thecalltaker.com
 
 ---
@@ -202,7 +202,7 @@ What it costs:
 
 I handle the entire setup. You can be live within 48 hours.
 
-I'm local — based in Lebanon, TN. I'll walk you through everything over the phone or we can meet up if you're in the Nashville area.
+I'm local — based in Brentwood, TN. I'll walk you through everything over the phone or we can meet up if you're in the Nashville area.
 
 Want to hear the AI before we talk? Call this number:
 
@@ -240,7 +240,7 @@ thecalltaker.com
 
 **Body:**
 
-Hey neighbors. Wallace here, over in Lebanon.
+Hey neighbors. Wallace here, over in Brentwood.
 
 I spent the last few months building an AI receptionist specifically for HVAC companies. I know that sounds weird, so let me explain why.
 
@@ -269,7 +269,7 @@ thecalltaker.com
 
 **Body:**
 
-Quick post — I'm Wallace, live in Lebanon.
+Quick post — I'm Wallace, live in Brentwood.
 
 I started a small business that helps HVAC companies stop losing phone calls to voicemail. It's an AI that answers their phone 24/7, talks to the customer, gets their info, and books the appointment. All the HVAC owner sees is a text message with the details.
 
@@ -292,7 +292,7 @@ thecalltaker.com
 
 **Body:**
 
-Hey everyone. I run a small tech business here in Lebanon and I wanted to share something with any HVAC company owners on Nextdoor (or anyone who's close with one).
+Hey everyone. I run a small tech business here in Brentwood and I wanted to share something with any HVAC company owners on Nextdoor (or anyone who's close with one).
 
 We're about 6-8 weeks from the spring rush. That's when every homeowner in Middle Tennessee starts calling about AC tune-ups, broken units, and weird noises. If you've owned an HVAC company for more than one summer, you know your phone is about to go crazy — and you know you're going to miss calls because you'll be slammed with jobs.
 
@@ -318,7 +318,7 @@ Happy to answer questions in the comments or by DM. Just a local guy trying to h
 1. Open Facebook Marketplace
 2. Click "Create New Listing"
 3. You may need to select "Service" or post as a general listing with a service description
-4. **Location:** Nashville, TN (or Lebanon, TN — both work, Nashville gets more eyeballs)
+4. **Location:** Nashville, TN (or Brentwood, TN — both work, Nashville gets more eyeballs)
 5. **Price:** Enter $297 (this is your monthly rate)
 6. **Add a photo:** Use a clean image — your logo on a dark background, or a simple graphic that says "The Call Taker — AI Receptionist for HVAC Companies"
 7. Paste the body text below into the description
@@ -356,7 +356,7 @@ I charge $297/month flat. No per-call fees. No contracts. No setup charge.
 
 For reference — one average HVAC service call is worth $350+. So if this system books you even ONE extra job per month that would've gone to voicemail, it's already paid for itself.
 
-I'm Wallace Dobbs, based right here in Lebanon, TN. This is a local operation, not some big tech company. I set everything up personally and make sure it's working right.
+I'm Wallace Dobbs, based right here in Brentwood, TN. This is a local operation, not some big tech company. I set everything up personally and make sure it's working right.
 
 Want to hear it before you buy? Call my demo line:
 (615) 784-5747
@@ -390,7 +390,7 @@ COST: $297/month. Flat rate.
 CONTRACT: None. Cancel whenever.
 SETUP: I do it. Takes 48 hours.
 
-I'm in Lebanon, TN. This is my business. I answer my own phone too — unless The Call Taker beats me to it.
+I'm in Brentwood, TN. This is my business. I answer my own phone too — unless The Call Taker beats me to it.
 
 Hear it live: (615) 784-5747
 Learn more: thecalltaker.com
@@ -434,7 +434,7 @@ $297/month. No contracts. Set up in 48 hours.
 
 Hear the AI live — call our demo line at (615) 784-5747 and talk to it yourself. Then visit thecalltaker.com to get started.
 
-Local business, right here in Lebanon, TN.
+Local business, right here in Brentwood, TN.
 
 **CTA Button:** Learn more > thecalltaker.com
 
@@ -462,11 +462,11 @@ Try the live demo: (615) 784-5747
 
 ### GBP POST C: The Local Trust Post
 
-**Title:** Lebanon-Based Service Helping Nashville HVAC Companies Book More Jobs
+**Title:** Brentwood-Based Service Helping Nashville HVAC Companies Book More Jobs
 
 **Body:**
 
-I'm Wallace Dobbs, and I run The Call Taker right here in Lebanon, Tennessee.
+I'm Wallace Dobbs, and I run The Call Taker right here in Brentwood, Tennessee.
 
 I built an AI receptionist that answers phone calls for HVAC companies. When a customer calls and the owner is busy — on a job, driving, off for the night — the AI picks up, handles the call professionally, and books the appointment.
 

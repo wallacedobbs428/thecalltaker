@@ -1,7 +1,7 @@
 # Electrician Referral Partnership Pitch Kit
 
 **The Call Taker** -- AI Receptionist for HVAC Companies
-Wallace Dobbs | Lebanon, TN | thecalltaker.com | (615) 784-5747 Demo Line
+Wallace Dobbs | Brentwood, TN | thecalltaker.com | (615) 784-5747 Demo Line
 
 ---
 
@@ -34,7 +34,7 @@ A connected electrical contractor probably knows 5-20 HVAC company owners. Many 
 
 Hey [First Name],
 
-My name is Wallace Dobbs. I run a company called The Call Taker out of Lebanon, TN. We make an AI-powered receptionist built specifically for HVAC companies -- it answers their phones 24/7, books jobs, captures every lead, and makes sure they never lose a customer to a missed call.
+My name is Wallace Dobbs. I run a company called The Call Taker out of Brentwood, TN. We make an AI-powered receptionist built specifically for HVAC companies -- it answers their phones 24/7, books jobs, captures every lead, and makes sure they never lose a customer to a missed call.
 
 I am reaching out to you because I know electrical contractors and HVAC companies are joined at the hip. You are wiring up their units, pulling disconnects, upgrading panels for new systems -- you are on the same job sites constantly. Chances are you know several HVAC company owners personally.
 
@@ -232,7 +232,7 @@ The Call Taker -- AI Receptionist for HVAC Companies
 thecalltaker.com
 Demo Line: (615) 784-5747
 Text referrals to: [Wallace's cell number]
-Lebanon, TN -- Serving HVAC companies across Middle Tennessee and nationwide
+Brentwood, TN -- Serving HVAC companies across Middle Tennessee and nationwide
 
 ---
 

@@ -62,7 +62,7 @@ Now listen to this.
 
 *(Dial (615) 784-5747 on speakerphone. Let the AI answer, interact for 10-15 seconds.)*
 
-That AI answers with your company name, your voice, your personality. It protects the reputation three generations of Dawsons built. $297 a month, 30-day money-back guarantee, and I can set this up for you by tomorrow. I'm Wallace Dobbs out of Lebanon — call me back."
+That AI answers with your company name, your voice, your personality. It protects the reputation three generations of Dawsons built. $297 a month, 30-day money-back guarantee, and I can set this up for you by tomorrow. I'm Wallace Dobbs out of Brentwood — call me back."
 
 ---
 

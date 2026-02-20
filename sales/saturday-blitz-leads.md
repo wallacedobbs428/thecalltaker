@@ -52,20 +52,20 @@ Don't forget these — text and call them TODAY too:
 
 | # | Company | Phone | City |
 |---|---------|-------|------|
-| 1 | Nashville HVAC Group | (615) 569-6245 | Lebanon |
-| 2 | Efficient HVAC | (615) 784-4424 | Lebanon |
+| 1 | Nashville HVAC Group | (615) 569-6245 | Brentwood |
+| 2 | Efficient HVAC | (615) 784-4424 | Brentwood |
 | 3 | Moonlight HVAC | (615) 662-4822 | Nashville |
 | 4 | Haskins Heating & Cooling | (615) 746-6390 | Nashville |
 | 5 | Kimbro Air | (615) 824-8098 | Hendersonville |
 | 6 | La Vergne HVAC Pros | (615) 234-9098 | La Vergne |
 | 7 | Fann Mechanical Co. | (615) 895-0215 | Murfreesboro |
 | 8 | Jay's Pro Services | (615) 625-8545 | La Vergne |
-| 9 | TemperaturePro Nashville | (615) 434-8503 | Lebanon |
+| 9 | TemperaturePro Nashville | (615) 434-8503 | Brentwood |
 | 10 | Adams HVAC & Plumbing | (615) 492-2030 | Mt. Juliet |
 | 11 | M.J. Frick Co. | (615) 338-6265 | Nashville |
 | 12 | Pioneer Comfort | (615) 933-2288 | Nashville |
 | 13 | Airstream Services | (615) 216-5979 | Murfreesboro |
-| 14 | One Hour Air Lebanon | (615) 549-8149 | Lebanon |
+| 14 | One Hour Air Brentwood | (615) 549-8149 | Brentwood |
 
 ---
 

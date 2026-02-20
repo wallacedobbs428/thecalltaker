@@ -3,7 +3,7 @@
 ---
 
 **From the desk of Wallace Dobbs**
-**Lebanon, Tennessee**
+**Brentwood, Tennessee**
 
 ---
 
@@ -149,7 +149,7 @@ To your growth,
 
 **Wallace Dobbs**
 Founder, The Call Taker
-Lebanon, Tennessee
+Brentwood, Tennessee
 
 ---
 

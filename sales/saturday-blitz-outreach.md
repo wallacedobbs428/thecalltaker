@@ -88,7 +88,7 @@ I called [Company] about 20 minutes ago. Got your voicemail.
 
 I'm not a customer, so no harm done. But here's the thing — real customers called today too. And they got the same voicemail. The difference is they didn't leave a message. They called the next company on Google.
 
-I'm Wallace. I'm in Lebanon, TN. I built an AI receptionist called The Call Taker that answers calls for HVAC companies 24/7 — weekends, after hours, holidays. It sounds like a real person, answers questions about your services, and books appointments on your calendar.
+I'm Wallace. I'm in Brentwood, TN. I built an AI receptionist called The Call Taker that answers calls for HVAC companies 24/7 — weekends, after hours, holidays. It sounds like a real person, answers questions about your services, and books appointments on your calendar.
 
 It costs $297/mo. One booked job pays for it.
 
@@ -149,7 +149,7 @@ Totally free. No pitch required. Just reply "do it" and I'll send the results to
 Why am I doing this? I built an AI receptionist for HVAC companies called The Call Taker. It answers every call, 24/7, for $297/mo. But I'd rather show you the problem first and let you decide if you want to fix it.
 
 Wallace Dobbs
-Lebanon, TN
+Brentwood, TN
 (615) 653-9004
 thecalltaker.com
 
@@ -202,7 +202,7 @@ If you like what you hear, reply to this email or call me at (615) 653-9004.
 
 Wallace Dobbs
 The Call Taker — thecalltaker.com
-Lebanon, TN
+Brentwood, TN
 
 ---
 
@@ -271,7 +271,7 @@ Post in HVAC groups, Middle TN business groups, and contractor groups. Use Walla
 
 **Duration target: 25 seconds. Speak slow, sound like a neighbor, not a salesman.**
 
-> "Hey [Name], it's Wallace Dobbs calling from Lebanon. I know you're probably out enjoying your Saturday — but the fact that I just got your voicemail is actually why I'm calling. I built an AI that answers HVAC calls 24/7 so your customers never hit voicemail again. Two ninety-seven a month. If you're curious, call my demo line at 615-784-5747 and hear it for yourself. Again, that's 615-784-5747. Have a good weekend."
+> "Hey [Name], it's Wallace Dobbs calling from Brentwood. I know you're probably out enjoying your Saturday — but the fact that I just got your voicemail is actually why I'm calling. I built an AI that answers HVAC calls 24/7 so your customers never hit voicemail again. Two ninety-seven a month. If you're curious, call my demo line at 615-784-5747 and hear it for yourself. Again, that's 615-784-5747. Have a good weekend."
 
 **Delivery notes:**
 - Pause after "Hey [Name]" — don't rush into it
@@ -351,7 +351,7 @@ Send this tomorrow morning, Sunday Feb 16, between 8-9 AM while it's fresh:
 >
 > I wasn't a real customer — but someone with a broken heat pump on a Saturday night was. And they got the same voicemail I did.
 >
-> I'm Wallace. I'm in Lebanon. I built an AI receptionist called The Call Taker that answers HVAC calls 24/7. It picks up on the first ring, sounds like a real person, answers questions about your services, and books the appointment.
+> I'm Wallace. I'm in Brentwood. I built an AI receptionist called The Call Taker that answers HVAC calls 24/7. It picks up on the first ring, sounds like a real person, answers questions about your services, and books the appointment.
 >
 > $297/mo. One job covers it.
 >
@@ -376,7 +376,7 @@ Send this tomorrow morning, Sunday Feb 16, between 8-9 AM while it's fresh:
 > Call (615) 784-5747 to hear it. If you've already got your phones handled, no worries — just thought I'd reach out since you clearly value picking up the phone.
 >
 > Wallace Dobbs
-> Lebanon, TN
+> Brentwood, TN
 > (615) 653-9004
 > thecalltaker.com
 
