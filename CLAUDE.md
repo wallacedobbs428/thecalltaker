@@ -9,6 +9,27 @@ AI receptionist service for HVAC companies. Answers every call 24/7 so they neve
 **Daily Activity:** 25+ Instagram DMs + 1 post/day + Facebook group engagement
 **Channels:** Instagram DMs (primary), Facebook groups, Cold email (warming up)
 
+## Wallace Shorthand
+- **ss** = screenshot or screenshots (context-dependent) — check Desktop for most recent `.png` files
+
+## Team Roster
+| Member | Role | What They Do |
+|--------|------|-------------|
+| **Wallace** | Founder / CEO / Builder | Builds the tech, funds ALL subscriptions, primary operator, runs the business |
+| **William** | Demo Closer / Brother | Face on Zoom demo calls, presents to prospects, closes deals live |
+| **Mills** | Co-Founder / Partner | GitHub access, shared ownership, strategy |
+| **Claude** | Chief Builder | Builds everything — website, agents, strategy, content, integrations |
+| **Max** | 24/7 Sales Engine | Cold emails, follow-ups, reply monitor, pipeline mgmt, daily reports |
+| **Ben** | 24/7 Senior Closer | ROI angles, re-engagement, lead scoring, SMS, morning/evening briefings |
+| **Sam** | 24/7 Customer Success | Support monitor, health scoring, milestone check-ins, referral requests |
+
+## Subscriptions (Wallace pays all)
+- GoHighLevel
+- Instantly.ai (Free Trial)
+- GitHub (free)
+- Claude Code
+- Domain (thecalltaker.com)
+
 ## Owner
 Wallace Dobbs — wallacemdobbs@icloud.com
 
@@ -57,7 +78,9 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 ├── blog.html — blog index page with article cards + newsletter signup
 ├── blog-missed-call-cost.html — SEO article: cost of missed calls (with newsletter)
 ├── blog-ai-vs-answering.html — SEO article: AI vs answering services (with newsletter)
-├── calculator.html — standalone missed call revenue calculator (4-step interactive, lead capture)
+├── calculator.html — standalone missed call revenue calculator (4-step interactive, lead capture + war room alert)
+├── signup.html — self-service purchase flow (3-step: business info → plan → confirm, creates GHL contact + war room alert)
+├── your-audit.html — personalized missed call audit report (URL-parameter driven, noindex)
 ├── industries.html — industries page: HVAC, plumbing, electrical, roofing, pest control, garage door/locksmith
 ├── compare.html — comparison page: Call Taker vs voicemail vs answering vs receptionist
 ├── partners.html — partner/reseller program page with application form
@@ -71,7 +94,8 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 ├── 404.html — custom error page with nav + conversion CTAs
 ├── CNAME — custom domain: thecalltaker.com
 ├── favicon.svg — site icon
-├── robots.txt — search engine directives (blocks admin-setup.html + shopper-report.html)
+├── portal.html — customer self-service portal (noindex, blocked by robots.txt)
+├── robots.txt — search engine directives (blocks admin-setup.html, shopper-report.html, portal.html)
 ├── sitemap.xml — SEO sitemap (15 pages: index, demo, audit, blog, 2 articles, calculator, compare, industries, partners, privacy, terms)
 ├── sales/ (70+ files — cold outreach, content, partnerships, ads, campaigns)
 │   ├── cold-email-sequence.md — 3-email cold outreach (Instantly)
@@ -145,6 +169,12 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 │   ├── first-week-action-plan.md — day-by-day plan for week 1 outreach
 │   ├── daily-activity-tracker.md — printable daily outreach tracker
 │   └── weekly-outreach-playbook.md — 90-day week-by-week outreach playbook
+├── sam/ (Sam — customer success engine)
+│   ├── sam-engine.py — Python3 customer success engine (6 commands)
+│   ├── install-sam.sh — launchd installer (5 services)
+│   ├── uninstall-sam.sh — stops all Sam services
+│   ├── sam-state.json — tracks customer health, checkins, referrals
+│   └── sam-log.txt — full activity log
 └── onboarding/ (11 files — client lifecycle management)
     ├── new-client-intake-form.md — questions for new clients
     ├── onboarding-steps.md — setup process day-by-day
@@ -181,22 +211,26 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 - **Once SSL is fixed:** Re-submit campaign with `https://thecalltaker.com/demo.html` as opt-in URL
 - **CRITICAL:** All SMS outreach is FAILING until campaign is approved — carriers are dropping messages
 
-## Max — 24/7 Autonomous Sales Team Member
+## Max v3 — Reply Catcher + Follow-Up Machine
 - **Location:** `max/` directory
 - **Engine:** `max/max-engine.py` (Python3, zero dependencies)
-- **Installer:** `bash max/install-max.sh` (sets up launchd)
-- **Uninstaller:** `bash max/uninstall-max.sh` (stops all services)
-- **State:** `max/max-state.json` (tracks what Max has done)
-- **Logs:** `max/max-log.txt` (full activity log)
-- **Schedule:**
-  - Reply monitor: every 30 min (checks all 223 contacts for inbound replies)
-  - Follow-ups: daily at 9am (sends to leads who haven't responded in 3+ days)
-  - Cold outreach: daily at 10am (first-touch emails to unemailed leads, 20/day max)
-  - Pipeline: daily at midnight (flags engaged leads, moves stages)
-  - Daily report: daily at 8pm (sends pipeline summary via ntfy)
-- **Alerts:** Sends to ntfy topics (tct-xK9mW4vR7pLd for ops, tct-warroom-Kx7mN9pQ for hot leads)
-- **Limits:** 20 cold emails/day, 30 follow-ups/day, 3 follow-up rounds max per lead
-- **Hours:** Only sends Mon-Fri 9am-5pm CST (respects business hours)
+- **Installer:** `bash max/install-max.sh` (4 launchd services)
+- **Uninstaller:** `bash max/uninstall-max.sh`
+- **State:** `max/max-state.json` (tracks replies, demo callers, secret shopper, weather emails)
+- **Logs:** `max/max-log.txt`
+- **What changed in v3:** Cold outreach REMOVED (handled by Instantly + blast scripts). Max now focuses on catching replies and converting warm leads.
+- **Schedule (4 services):**
+  - Reply monitor: every 30 min (replies + demo line calls + secret shopper triggers + weather emails)
+  - Warm follow-ups: daily at 9am (3-round personalized sequence for leads who replied)
+  - Pipeline: daily at midnight (flags engaged leads for stage changes)
+  - Daily report: daily at 8pm (sends engagement summary via ntfy)
+- **Key features:**
+  - Demo line call detection — immediate follow-up email + URGENT war room alert
+  - Secret shopper auto-trigger — sends "I called your business" email when lead tagged `voicemail-confirmed`
+  - Weather-triggered emails — sends urgency emails to leads in cities with extreme weather (max 5/day, 14-day cooldown per contact)
+  - Warm follow-up sequence — Day 2, Day 5, Day 8 personalized emails with seasonal urgency
+  - Seasonal angles — auto-adjusts messaging for winter/spring/summer/fall
+- **Alerts:** War room (tct-warroom-Kx7mN9pQ) for replies + demo calls + engaged leads; ops (tct-xK9mW4vR7pLd) for daily reports
 - **Status:** `python3 max/max-engine.py status`
 
 ## Ben — 24/7 Senior Sales Closer
@@ -219,19 +253,89 @@ Wallace Dobbs — wallacemdobbs@icloud.com
   - Lead scoring: 3:00 PM (scores all leads, flags hot ones)
   - Evening summary: 9:00 PM (combined team stats + tomorrow's plan)
 
+## Sam — 24/7 Customer Success Team Member
+- **Location:** `sam/` directory
+- **Engine:** `sam/sam-engine.py` (Python3, zero dependencies)
+- **Installer:** `bash sam/install-sam.sh`
+- **Uninstaller:** `bash sam/uninstall-sam.sh`
+- **How Sam differs from Max/Ben:**
+  - Sam only operates on contacts tagged "customer" or "active-client"
+  - Max/Ben only operate on non-customer contacts (leads)
+  - Sam reads Max + Ben state files (read-only) for team context
+  - Built-in knowledge base with auto-responses for common issues
+  - Critical keyword detection (cancel, refund, lawyer, BBB) triggers IMMEDIATE war room alerts
+  - Health scoring 1-10 with at-risk flagging
+  - Milestone check-ins at day 3, 7, 14, 30, then monthly
+  - Referral flow: Sam detects trigger → alerts Wallace with call script → fallback email after 48h
+  - Referral triggers: 30-day mark, post-issue-resolution, high health score (min 45 days between asks)
+- **Schedule:**
+  - Support monitor: every 15 min (scans customer conversations, auto-responds)
+  - Health scoring: 6:00 AM (scores all customers, flags at-risk to war room)
+  - Milestone check-ins: 8:00 AM (day 3/7/14/30 + monthly emails)
+  - Referral requests: daily 11:00 AM (alerts Wallace to call, email fallback after 48h)
+  - Daily report: 7:00 PM (customer health summary to ntfy)
+- **Status:** `python3 sam/sam-engine.py status`
+
+## Team Schedule (no conflicts)
+```
+  Every 15m  — SAM: Support monitor + auto-respond
+  Every 30m  — MAX: Reply monitor
+  6:00 AM    — SAM: Health scoring
+  7:00 AM    — BEN: Morning briefing
+  8:00 AM    — SAM: Milestone check-ins
+  9:00 AM    — MAX: Follow-ups
+  11:00 AM   — BEN: Outreach / SAM: Referral check (alert Wallace → 48h email fallback)
+  1:00 PM    — BEN: SMS
+  2:00 PM    — BEN: Re-engagement
+  3:00 PM    — BEN: Lead scoring
+  7:00 PM    — SAM: Daily report
+  8:00 PM    — MAX: Daily report
+  9:00 PM    — BEN: Evening summary
+```
+
 ## Instantly.ai
 - **Plan:** Free Trial (24/250 contacts uploaded, no API access)
 - **API:** Locked behind Hyper Growth paid plan — cannot automate via API
 - **Workaround:** Wallace uses Instantly UI manually; Max handles outreach via GHL email API instead
 - **4 sending accounts** on skylfinder.com domain (warming up)
 
+## $20K War Plan Infrastructure (thecalltaker-ops/)
+- **Blast Engine:** `ops/blast-engine.py` — unified email sender, warmup ramp 20→200/day, A/B testing 3 templates
+- **Partner Outreach:** `ops/partner-outreach.py` — 135 marketing agencies, 20/day at 11am
+- **Revenue Tracker:** `ops/revenue-tracker.py` — MRR tracking toward $20K goal, 7pm daily report
+- **Stripe Webhook:** `ops/stripe-webhook-handler.py` — localhost:8787, auto-tags customers on payment
+- **Secret Shopper List:** `ops/secret-shopper-list.py` — 15 priority businesses to call nightly at 6pm
+- **Google Maps Scraper:** `ops/google-maps-scraper.py` — Bing + DDG scraper, 200+ US cities
+- **Email Domain:** wallace@mail.thecalltaker.com (SPF + DMARC verified, GHL dedicated sending)
+- **Conversion Funnel:** cold email → personalized audit page → signup page → GHL contact + war room alert
+
 ## What's NOT Built Yet (Needs Wallace)
 - ~~Custom domain~~ — DONE (thecalltaker.com connected)
 - A2P 10DLC campaign approval (blocked by SSL cert — see above)
-- Stripe billing (not connected)
+- Stripe billing (not connected — needs parent/guardian for Stripe account, setup guide sent via ntfy)
 - Email template content (shells exist, need copy pasted in GHL UI)
 - Business email address (optional — currently using wallacemdobbs@icloud.com)
 - Social media profiles
+
+## Revenue Split — Wallace & Mills Partnership
+
+**Context:** Wallace funds ALL subscriptions (~$174/mo+), originated the idea, builds the tech, runs sales, and is the face of the brand. Mills is co-founder with GitHub access and strategy input.
+
+**Recommended Structure:**
+1. **Subscription costs come off the top first** — Wallace gets reimbursed for all tool costs before any split
+2. **Profit split: 75/25 (Wallace/Mills)** — reflects who's funding, building, and selling
+3. **Alternative: 70/30** — if Mills takes on more active work (outreach, content, etc.)
+
+**Example at 5 clients ($2,485/mo revenue):**
+- $174 costs off the top = $2,311 profit
+- 75/25: Wallace $1,733 / Mills $578
+- 70/30: Wallace $1,618 / Mills $693
+
+**Important:** Agree on the split BEFORE the first client pays. Easier to negotiate when there's no money on the table.
+
+**3-way split (Wallace / William / Mills):** When Wallace is ready, Claude will scan all project data — funding records, build contributions, sales activity, hours invested, risk taken — to produce a data-backed revenue split recommendation across all 3 members. NOT active yet — Wallace will trigger this when the time is right.
+
+**Age note:** Both Wallace and Mills are 16. Stripe account requires a parent/guardian (18+ requirement).
 
 ## Design System (styles.css)
 - Background: #0a0f1a (near-black navy)
