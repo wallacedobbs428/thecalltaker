@@ -41,7 +41,7 @@ Wallace, follow this step by step. Do not skip anything. Every click is listed.
 3. Select **United States** from the dropdown.
 4. Click **Next.**
 
-> You serve HVAC companies everywhere, not just Lebanon. Set the service area to the entire US.
+> You serve HVAC companies everywhere, not just Brentwood. Set the service area to the entire US.
 
 ### Step 6 -- Add Phone Number and Website
 
@@ -190,7 +190,7 @@ Reviews are the single most important factor for ranking on Google. You need 5+ 
 |-----|-----------|
 | Any HVAC company using The Call Taker | Text: "Hey [name], would you mind leaving us a quick Google review? Here is the link: [paste link]. Means a lot." |
 | Friends or family who have seen the product | Same text as above. |
-| Business contacts in Lebanon, TN | Same text as above. |
+| Business contacts in Brentwood, TN | Same text as above. |
 
 ### Step 3 -- Build Reviews Into Your Process
 

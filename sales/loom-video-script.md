@@ -5,7 +5,7 @@
 **Website:** thecalltaker.com
 **Demo Line:** (615) 784-5747
 **Owner:** Wallace Dobbs
-**Target Market:** HVAC company owners in Middle Tennessee (Nashville, Lebanon, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro)
+**Target Market:** HVAC company owners in Middle Tennessee (Nashville, Brentwood, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro)
 
 ---
 
@@ -265,7 +265,7 @@ LinkedIn is more formal but still keep it conversational. No corporate speak.
 ### DO:
 
 - **Use their first name at least twice** — once at the start, once at the close. It is the difference between a mass blast and a message that was actually made for them.
-- **Mention their city specifically.** "I see you guys are over in Mt. Juliet" or "right there off Lebanon Road" hits completely different than "I work with HVAC companies." These owners are proud of where they serve. Acknowledge it.
+- **Mention their city specifically.** "I see you guys are over in Mt. Juliet" or "right there off Brentwood Road" hits completely different than "I work with HVAC companies." These owners are proud of where they serve. Acknowledge it.
 - **Reference something specific about their business.** Their truck wrap color, their slogan, a recent Google review, a Facebook post about a big install they just finished, the number of years they have been in business. This proves you actually looked them up and you are not blasting 200 people.
 - **Record each video individually.** Do NOT batch record a generic video and swap out names. They can tell. One video, one prospect. Every time.
 - **Be a little imperfect.** If you stumble on a word, leave it in. If your dog barks in the background, laugh it off and keep going. If you lose your train of thought for a second, say "anyway" and get back on track. Perfect videos feel like ads. Real videos feel like a real person who actually gives a damn.
@@ -343,7 +343,7 @@ Keep a simple spreadsheet for each prospect:
 
 | Company | Owner | City | Platform | Video Length | Date Sent | Loom Viewed? | Responded? | Follow-Up 1 | Follow-Up 2 | Result | Notes |
 |---------|-------|------|----------|-------------|-----------|-------------|-----------|-------------|-------------|--------|-------|
-| Example Heating & Air | John | Lebanon | Facebook | 2 min | 2/15 | Yes - full | No | 2/17 sent | 2/20 sent | -- | Had a bad review about missed calls |
+| Example Heating & Air | John | Brentwood | Facebook | 2 min | 2/15 | Yes - full | No | 2/17 sent | 2/20 sent | -- | Had a bad review about missed calls |
 | ABC HVAC | Mike | Gallatin | Instagram | 60 sec | 2/15 | Yes - 30 sec | No | 2/17 sent | -- | Dead | Only watched 30 seconds, dropped off |
 | Nashville Comfort | Sarah | Nashville | LinkedIn | 3 min | 2/15 | Yes - full | Yes | -- | -- | Demo booked 2/18 | She replied within 2 hours |
 

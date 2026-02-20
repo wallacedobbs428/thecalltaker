@@ -6,13 +6,13 @@
 
 ---
 
-## 1. Nashville HVAC Group (Lebanon)
+## 1. Nashville HVAC Group (Brentwood)
 
 **Subject:** Nashville HVAC Group — who's answering your phone at 7pm?
 
 Hey,
 
-I run a small company here in Middle Tennessee, and I came across Nashville HVAC Group while looking at HVAC shops in the Lebanon area. I noticed you're a smaller operation — which means every single call matters more to you than it does to the big corporate guys.
+I run a small company here in Middle Tennessee, and I came across Nashville HVAC Group while looking at HVAC shops in the Brentwood area. I noticed you're a smaller operation — which means every single call matters more to you than it does to the big corporate guys.
 
 Here's the problem: 85% of people who hit voicemail don't leave a message. They just call the next company on Google. For a shop your size, that's not just annoying — that's rent money walking out the door.
 
@@ -24,7 +24,7 @@ Don't take my word for it. Call (615) 784-5747 right now — that's our AI. Talk
 
 ---
 
-## 2. Efficient HVAC (Lebanon)
+## 2. Efficient HVAC (Brentwood)
 
 **Subject:** Efficient HVAC — do you really have 24hr coverage?
 
@@ -330,13 +330,13 @@ Call (615) 784-5747 right now — that's our AI. Talk to it like you're a homeow
 
 ---
 
-## 19. TemperaturePro Nashville (Lebanon)
+## 19. TemperaturePro Nashville (Brentwood)
 
 **Subject:** TemperaturePro franchise — corporate tools don't catch every call
 
 Hey,
 
-I know TemperaturePro is a franchise system, and I respect that — you get the brand, the playbook, the marketing support. But here's what I've seen with franchise operators in Lebanon and the surrounding areas: the corporate tools don't always cover after-hours phone answering. That still falls on you, the local operator.
+I know TemperaturePro is a franchise system, and I respect that — you get the brand, the playbook, the marketing support. But here's what I've seen with franchise operators in Brentwood and the surrounding areas: the corporate tools don't always cover after-hours phone answering. That still falls on you, the local operator.
 
 And after 5pm, when you've been running calls all day and you're finally sitting down to dinner, the phone doesn't stop. 85% of those callers won't leave a voicemail. They'll call the independent shop down the road that happens to pick up.
 
@@ -366,13 +366,13 @@ Call (615) 784-5747 right now — that's our AI. Talk to it like you're a homeow
 
 ---
 
-## 21. Lebanon Heating & Air (Lebanon)
+## 21. Brentwood Heating & Air (Brentwood)
 
-**Subject:** Lebanon Heating & Air — the local shop should answer first
+**Subject:** Brentwood Heating & Air — the local shop should answer first
 
 Hey,
 
-As an established local HVAC company in Lebanon, you've got something the franchises and chains can't buy — you're from here. People want to call a local company. But when they do and nobody answers, they end up calling One Hour or some national franchise with a call center. Not because they're better, but because they picked up.
+As an established local HVAC company in Brentwood, you've got something the franchises and chains can't buy — you're from here. People want to call a local company. But when they do and nobody answers, they end up calling One Hour or some national franchise with a call center. Not because they're better, but because they picked up.
 
 That's the frustrating part. You're losing to companies with worse service and higher prices, just because they have someone answering the phone at 7pm on a Wednesday.
 
@@ -456,13 +456,13 @@ Call (615) 784-5747 right now — that's our AI. Talk to it like you're a homeow
 
 ---
 
-## 26. One Hour Air Lebanon (Lebanon)
+## 26. One Hour Air Brentwood (Brentwood)
 
 **Subject:** You've got the franchise name — but who answers at 9pm?
 
 Hey,
 
-One Hour Air in Lebanon — you've got one of the most recognized franchise brands in HVAC. Customers see that name and expect instant, professional service. But here's the gap I see with a lot of franchise locations: the brand promises world-class responsiveness, but after hours, calls still go to voicemail like every other shop.
+One Hour Air in Brentwood — you've got one of the most recognized franchise brands in HVAC. Customers see that name and expect instant, professional service. But here's the gap I see with a lot of franchise locations: the brand promises world-class responsiveness, but after hours, calls still go to voicemail like every other shop.
 
 That's a disconnect. A customer calls "One Hour Air" expecting someone to pick up fast. When they get voicemail at 9pm, it doesn't just cost you a job — it hurts the brand promise you're paying franchise fees to uphold.
 
@@ -496,8 +496,8 @@ Call (615) 784-5747 right now — that's our AI. Talk to it like you're a homeow
 
 | # | Company | City | Key Angle |
 |---|---------|------|-----------|
-| 1 | Nashville HVAC Group | Lebanon | Small shop, every call counts |
-| 2 | Efficient HVAC | Lebanon | 24hr claim — verify |
+| 1 | Nashville HVAC Group | Brentwood | Small shop, every call counts |
+| 2 | Efficient HVAC | Brentwood | 24hr claim — verify |
 | 3 | Moonlight HVAC | Nashville | Fellow local business |
 | 4 | Haskins Heating & Cooling | Nashville | Family since 1986 |
 | 5 | Nashville AirComfort | Nashville | 14 trucks, scaling pains |
@@ -514,14 +514,14 @@ Call (615) 784-5747 right now — that's our AI. Talk to it like you're a homeow
 | 16 | Jay's Pro Services | La Vergne/Smyrna | 24hr claim — verify |
 | 17 | Hunter Heating and Air | Hendersonville | Ductless specialist, high-ticket |
 | 18 | H. Brown & Son | Hendersonville | Family name/legacy |
-| 19 | TemperaturePro Nashville | Lebanon | Franchise, local gaps |
+| 19 | TemperaturePro Nashville | Brentwood | Franchise, local gaps |
 | 20 | Adams HVAC & Plumbing | Mt. Juliet | Family since 1969 |
-| 21 | Lebanon Heating & Air | Lebanon | Local vs. chains |
+| 21 | Brentwood Heating & Air | Brentwood | Local vs. chains |
 | 22 | Covenant Heating & Cooling | Hendersonville | Multi-area |
 | 23 | M.J. Frick Co. | Nashville | Larger, wide area |
 | 24 | Pioneer Comfort | Nashville | Founded 1981 |
 | 25 | Airstream Services | Multi-area | Murfreesboro + Franklin |
-| 26 | One Hour Air Lebanon | Lebanon | Franchise brand gap |
+| 26 | One Hour Air Brentwood | Brentwood | Franchise brand gap |
 | 27 | Aire Serv Mt. Juliet | Mt. Juliet | Franchise brand gap |
 
 ---

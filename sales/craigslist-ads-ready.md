@@ -44,7 +44,7 @@ FREE CALL-HANDLING AUDIT:
 Not sure if you're actually missing calls? We'll test your phones and show you.
 Go to: thecalltaker.com/audit
 
-Built in Lebanon, TN by someone who knows the HVAC business.
+Built in Brentwood, TN by someone who knows the HVAC business.
 
 Contact: Wallace Dobbs
 Phone/Demo: (615) 784-5747
@@ -92,7 +92,7 @@ Step 2: Go to thecalltaker.com/audit and get a free audit of YOUR phone system. 
 Step 3: Decide for yourself.
 
 The Call Taker
-Wallace Dobbs - Lebanon, TN
+Wallace Dobbs - Brentwood, TN
 (615) 784-5747
 thecalltaker.com
 
@@ -153,7 +153,7 @@ This is actually our AI receptionist. Call it. Talk to it. See what your custome
 
 The Call Taker
 Wallace Dobbs
-Lebanon, TN
+Brentwood, TN
 thecalltaker.com
 
 ---

@@ -27,7 +27,7 @@ Use LinkedIn's search bar with these queries (one at a time):
 
 After searching, click "People" then "All Filters" and set:
 
-- **Locations:** Nashville, Tennessee Metropolitan Area (this captures Lebanon, Murfreesboro, Franklin, Gallatin, Hendersonville, Mt. Juliet, Clarksville, and surrounding cities)
+- **Locations:** Nashville, Tennessee Metropolitan Area (this captures Brentwood, Murfreesboro, Franklin, Gallatin, Hendersonville, Mt. Juliet, Clarksville, and surrounding cities)
 - **Industry:** Construction, Building Materials, Facilities Services
 - **Title keywords:** Owner, President, Founder, CEO, General Manager, Partner
 - **Connections:** 2nd and 3rd+ (skip 1st — you already know them)
@@ -83,7 +83,7 @@ LinkedIn limits connection request notes to 300 characters. These are short, war
 ---
 
 **Variation 3** (173 characters)
-> [First Name], I'm out of Lebanon, TN and work with a handful of HVAC companies in the area. Always good to know other business owners in the trades. Would love to connect.
+> [First Name], I'm out of Brentwood, TN and work with a handful of HVAC companies in the area. Always good to know other business owners in the trades. Would love to connect.
 
 ---
 

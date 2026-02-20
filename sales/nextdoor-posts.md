@@ -12,14 +12,14 @@
 
 ## Post 1: The Local Business Owner Connection (B2B)
 
-**Target:** Local business owners in Lebanon TN and surrounding areas
+**Target:** Local business owners in Brentwood TN and surrounding areas
 **Category:** Local Business Talk / Recommendations
 
 **Post:**
 
-> **Fellow Lebanon business owners -- quick question about phone calls**
+> **Fellow Brentwood business owners -- quick question about phone calls**
 >
-> Hey neighbors. I'm Wallace, I own a local business here in Lebanon. I've been talking to a lot of other small business owners in the area lately and one thing keeps coming up: missed phone calls.
+> Hey neighbors. I'm Wallace, I own a local business here in Brentwood. I've been talking to a lot of other small business owners in the area lately and one thing keeps coming up: missed phone calls.
 >
 > Whether you're a plumber, electrician, HVAC company, landscaper, or any kind of service business -- if you're out on jobs during the day, who's answering your phone?
 >
@@ -27,11 +27,11 @@
 >
 > Not trying to sell anything in this post -- genuinely curious how other local business owners handle this. And if you ARE struggling with it, I'm happy to chat. Just message me.
 >
-> - Wallace Dobbs, Lebanon
+> - Wallace Dobbs, Brentwood
 
 **If someone replies asking for details:**
 
-> Hey [name]! Thanks for reaching out. It's called The Call Taker -- it's an AI receptionist I built specifically for service businesses. It answers every call 24/7, asks the right questions, and books the appointment right into your calendar. $297/month flat. If you want to hear what it sounds like, call our demo line: (615) 784-5747. Happy to chat more anytime -- we're right here in Lebanon!
+> Hey [name]! Thanks for reaching out. It's called The Call Taker -- it's an AI receptionist I built specifically for service businesses. It answers every call 24/7, asks the right questions, and books the appointment right into your calendar. $297/month flat. If you want to hear what it sounds like, call our demo line: (615) 784-5747. Happy to chat more anytime -- we're right here in Brentwood!
 
 ---
 
@@ -44,7 +44,7 @@
 
 > **Am I the only one who can never get an HVAC company to answer the phone?**
 >
-> Our AC started making a weird noise last week. Called three different HVAC companies in the Lebanon area. One went straight to voicemail. One rang and rang. The third had an answering service that said "someone will call you back" -- still waiting.
+> Our AC started making a weird noise last week. Called three different HVAC companies in the Brentwood area. One went straight to voicemail. One rang and rang. The third had an answering service that said "someone will call you back" -- still waiting.
 >
 > I get that these guys are busy, especially during peak season. But as a homeowner, it's incredibly frustrating when you need help and can't even get someone on the phone.
 >
@@ -60,7 +60,7 @@
 
 **If an HVAC owner sees the post and replies:**
 
-> Hey! I totally understand the struggle -- I've been there. If you ever want to chat about how to solve the missed call problem, shoot me a message. I built The Call Taker specifically for HVAC companies. No pressure, happy to just talk shop. We're local here in Lebanon.
+> Hey! I totally understand the struggle -- I've been there. If you ever want to chat about how to solve the missed call problem, shoot me a message. I built The Call Taker specifically for HVAC companies. No pressure, happy to just talk shop. We're local here in Brentwood.
 
 ---
 
@@ -94,13 +94,13 @@
 
 **Post:**
 
-> **Shoutout to Lebanon's small business community**
+> **Shoutout to Brentwood's small business community**
 >
-> I just want to take a second to appreciate how many incredible small businesses we have right here in Lebanon and Wilson County. The trades especially -- HVAC, plumbing, electrical, roofing -- these folks work insanely hard and most of them are running the whole show themselves.
+> I just want to take a second to appreciate how many incredible small businesses we have right here in Brentwood and Wilson County. The trades especially -- HVAC, plumbing, electrical, roofing -- these folks work insanely hard and most of them are running the whole show themselves.
 >
 > I started a small company this year called The Call Taker that helps local service businesses answer their phones when they can't get to them (AI-powered receptionist, basically). The reason I built it is because I saw so many great local companies losing customers simply because they couldn't pick up the phone while they were out doing the actual work.
 >
-> If you're a local service business owner and this sounds like something you deal with, my door is always open. I'm right here in Lebanon and I'd love to help.
+> If you're a local service business owner and this sounds like something you deal with, my door is always open. I'm right here in Brentwood and I'd love to help.
 >
 > And if you're a homeowner who has a great HVAC company or contractor that you love, feel free to pass along my info to them -- thecalltaker.com or (615) 784-5747 for a demo. You'd be helping them out more than you know.
 >
@@ -119,7 +119,7 @@
 
 **Post (customize for current weather/season):**
 
-> **PSA for Lebanon neighbors as [summer heat / winter cold] hits**
+> **PSA for Brentwood neighbors as [summer heat / winter cold] hits**
 >
 > Every time we get a [heat wave / cold snap], the same thing happens: everyone's HVAC system decides to break at the same time, every HVAC company in town gets slammed, and half of you end up frustrated because you can't get anyone on the phone.
 >
@@ -135,7 +135,7 @@
 >
 > And to the HVAC owners in this group: if you're drowning in calls every time the weather gets extreme, DM me. I built an AI receptionist specifically for this problem. It handles your overflow so you never lose a lead, no matter how busy you get.
 >
-> Stay cool (or warm), Lebanon!
+> Stay cool (or warm), Brentwood!
 >
 > - Wallace
 

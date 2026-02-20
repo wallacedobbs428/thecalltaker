@@ -37,7 +37,7 @@ Pick ONE per prospect. Match the angle to what you know about them.
 ---
 
 ### Text D: The Local Guy
-> Hey I'm Wallace out of Lebanon TN. I work with HVAC shops on their phone handling. Built an AI that answers and books when your team can't. Interested?
+> Hey I'm Wallace out of Brentwood TN. I work with HVAC shops on their phone handling. Built an AI that answers and books when your team can't. Interested?
 
 **Characters:** 153
 

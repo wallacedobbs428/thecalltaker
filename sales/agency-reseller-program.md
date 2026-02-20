@@ -505,5 +505,5 @@ The economics work at every tier. Even a single Reseller partner bringing in 3 c
 
 ---
 
-*Document prepared for The Call Taker | Wallace Dobbs | Lebanon, TN*
+*Document prepared for The Call Taker | Wallace Dobbs | Brentwood, TN*
 *Last updated: February 2026*

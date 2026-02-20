@@ -140,7 +140,7 @@
 - **Members:** Varies (2,000-10,000 per regional group)
 - **How to find:** Search "HVAC owners [state name]" -- e.g., "HVAC Owners Tennessee," "Texas HVAC Contractors," "Florida HVAC Pros"
 - **Promo policy:** Regional groups are often more relaxed. Some allow weekly promo posts.
-- **Best approach:** Start with Tennessee, surrounding states, and Sun Belt states (high HVAC demand). Smaller groups = more visibility per post. Wallace being from Lebanon, TN is an advantage in local/regional groups.
+- **Best approach:** Start with Tennessee, surrounding states, and Sun Belt states (high HVAC demand). Smaller groups = more visibility per post. Wallace being from Brentwood, TN is an advantage in local/regional groups.
 
 ---
 
@@ -339,7 +339,7 @@ Before posting in any group, Wallace's personal profile needs to work as a silen
 
 1. **Profile photo:** Professional but approachable. On a job site, in a company shirt. Not a suit.
 2. **Cover photo:** Something related to The Call Taker or his HVAC business. A simple graphic with the phone number or tagline works.
-3. **Bio/Intro:** "HVAC business owner in Lebanon, TN. Built an AI receptionist that answers every call 24/7. Ask me about it."
+3. **Bio/Intro:** "HVAC business owner in Brentwood, TN. Built an AI receptionist that answers every call 24/7. Ask me about it."
 4. **Featured section:** Pin a post about The Call Taker, or a link to thecalltaker.com.
 5. **Public posts:** Have 2-3 public posts on his timeline about HVAC business, The Call Taker, or the journey of building it. When group members click his name, they should see what he's about within 3 seconds.
 

@@ -510,7 +510,7 @@ Hear the AI: (615) 784-5747
 
 **Script:**
 
-> "Hey {FirstName}, this is {SenderName} calling from The Call Taker out of Lebanon, Tennessee. I know storm season is right around the corner and I wanted to give you a heads up on something. Most HVAC companies miss 30 to 50 calls during a single storm event --- that is tens of thousands in emergency work going straight to the competition. We built an AI receptionist that answers every call in under two seconds, no matter how many come in at once, and books the appointments for you. It is $297 a month and we can have you set up in 24 hours. Give our demo line a call at 615-784-5747 and hear it for yourself. That is 615-784-5747. Talk soon."
+> "Hey {FirstName}, this is {SenderName} calling from The Call Taker out of Brentwood, Tennessee. I know storm season is right around the corner and I wanted to give you a heads up on something. Most HVAC companies miss 30 to 50 calls during a single storm event --- that is tens of thousands in emergency work going straight to the competition. We built an AI receptionist that answers every call in under two seconds, no matter how many come in at once, and books the appointments for you. It is $297 a month and we can have you set up in 24 hours. Give our demo line a call at 615-784-5747 and hear it for yourself. That is 615-784-5747. Talk soon."
 
 **Key delivery notes:**
 - Speak conversationally, not like a sales pitch
@@ -636,4 +636,4 @@ Keep these ready to deploy at a moment's notice:
 
 ---
 
-*Campaign created for The Call Taker | thecalltaker.com | (615) 784-5747 | Lebanon, TN*
+*Campaign created for The Call Taker | thecalltaker.com | (615) 784-5747 | Brentwood, TN*

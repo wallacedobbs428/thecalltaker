@@ -245,7 +245,7 @@ $297/mo. Every call answered. 24/7/365. No voicemail. No missed leads. No hold m
 
 *[Conversational. No hype. Just real talk.]*
 
-"I'm Wallace. I'm from Lebanon, Tennessee. And I spent enough time around HVAC companies to see the same problem everywhere."
+"I'm Wallace. I'm from Brentwood, Tennessee. And I spent enough time around HVAC companies to see the same problem everywhere."
 
 "These guys are incredible at what they do. They can diagnose a system in ten minutes. They can fix things most people didn't even know were broken. They work in 130-degree attics in July and frozen crawl spaces in January."
 
@@ -276,10 +276,10 @@ $297/mo. Every call answered. 24/7/365. No voicemail. No missed leads. No hold m
 "I built this because these guys deserve to get paid for every customer that calls them. Not just the ones they happen to pick up."
 
 ### Suggested Caption
-I'm Wallace Dobbs from Lebanon, TN. I built The Call Taker because I watched too many great HVAC companies lose customers for the dumbest reason possible -- nobody answered the phone. Not because they didn't care. Because they were in an attic or under a house actually doing the work. The Call Taker is an AI receptionist that makes sure every call gets answered, every customer gets helped, and every job gets booked. $297/mo. Call the demo: (615) 784-5747. Link in bio. This is just the beginning.
+I'm Wallace Dobbs from Brentwood, TN. I built The Call Taker because I watched too many great HVAC companies lose customers for the dumbest reason possible -- nobody answered the phone. Not because they didn't care. Because they were in an attic or under a house actually doing the work. The Call Taker is an AI receptionist that makes sure every call gets answered, every customer gets helped, and every job gets booked. $297/mo. Call the demo: (615) 784-5747. Link in bio. This is just the beginning.
 
 ### Hashtags
-#HVAC #HVACbusiness #founderstory #startup #TheCallTaker #AIreceptionist #HVACowner #HVACcontractor #LebanonTN #Tennessee #smallbusiness #entrepreneurlife #builtsomething #HVAClife #nevermissthecall #techstartup #servicebusiness
+#HVAC #HVACbusiness #founderstory #startup #TheCallTaker #AIreceptionist #HVACowner #HVACcontractor #BrentwoodTN #Tennessee #smallbusiness #entrepreneurlife #builtsomething #HVAClife #nevermissthecall #techstartup #servicebusiness
 
 ---
 

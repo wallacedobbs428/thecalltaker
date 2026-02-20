@@ -88,7 +88,7 @@
   💡 Why: The ones that go to voicemail are your hottest leads
   🔑 What you need: Phone, the secret-shopper-template.md file
   Steps:
-  1. Google "HVAC companies near Lebanon TN" or "HVAC Nashville"
+  1. Google "HVAC companies near Brentwood TN" or "HVAC Nashville"
   2. Call them between 6pm-9pm or on weekends
   3. Log each result in the secret shopper template
   4. The voicemail ones are your prospects

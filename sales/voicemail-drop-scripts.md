@@ -12,7 +12,7 @@ All scripts designed to come in under 30 seconds. Read at a natural, unhurried p
 
 ## Script 1: The Casual Version
 
-> Hey, this is Wallace. I'm over in Lebanon, Tennessee. I built something for HVAC companies that answers your phones when your guys are out on calls -- it books the appointment, gets the customer info, the whole deal. Works 24/7 for 297 a month.
+> Hey, this is Wallace. I'm over in Brentwood, Tennessee. I built something for HVAC companies that answers your phones when your guys are out on calls -- it books the appointment, gets the customer info, the whole deal. Works 24/7 for 297 a month.
 >
 > Anyway, if you're curious, gimme a call back. It's Wallace, 615-784-5747. Talk soon.
 

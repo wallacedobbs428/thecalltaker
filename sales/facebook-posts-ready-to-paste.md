@@ -18,7 +18,7 @@ HVAC-specific groups (pick 2-3):
 Local business groups (pick 1-2):
 - Middle Tennessee Small Business Owners
 - Nashville Entrepreneurs / Nashville Business Network
-- Lebanon TN Community or Wilson County business groups
+- Brentwood TN Community or Wilson County business groups
 - Any local contractor or trades group
 
 TIMING: Post between 2-4 PM on Saturday. HVAC owners are either
@@ -165,4 +165,4 @@ Wallace's phone: (615) 653-9004
 Demo line: (615) 784-5747
 Website: thecalltaker.com
 Price: $297/mo
-Location: Lebanon, TN
+Location: Brentwood, TN

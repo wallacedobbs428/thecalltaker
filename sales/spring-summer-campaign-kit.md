@@ -4,7 +4,7 @@
 **Pricing:** $297/mo (Starter) | $497/mo (Professional)
 **Demo Line:** (615) 784-5747
 **Website:** thecalltaker.com
-**Owner:** Wallace Dobbs | Lebanon, TN
+**Owner:** Wallace Dobbs | Brentwood, TN
 
 ---
 

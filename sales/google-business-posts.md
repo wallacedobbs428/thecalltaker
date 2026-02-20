@@ -2,7 +2,7 @@
 
 **Posting frequency:** 2-3 posts per week
 **Profile:** The Call Taker - AI Receptionist for HVAC Companies
-**Location:** Lebanon, TN / Serving HVAC companies nationwide
+**Location:** Brentwood, TN / Serving HVAC companies nationwide
 
 ---
 

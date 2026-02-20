@@ -468,7 +468,7 @@ Before/After style graphic. Left side labeled "BEFORE" with a downward or flat r
 
 I need to tell you why I built The Call Taker. Because it's personal.
 
-I'm Wallace Dobbs, and I'm from Lebanon, Tennessee. I've spent years around the trades. I've seen how hard HVAC owners work -- early mornings, late nights, crawl spaces, rooftops in July, attics in August.
+I'm Wallace Dobbs, and I'm from Brentwood, Tennessee. I've spent years around the trades. I've seen how hard HVAC owners work -- early mornings, late nights, crawl spaces, rooftops in July, attics in August.
 
 And I kept seeing the same heartbreaking pattern:
 
@@ -484,10 +484,10 @@ So I built it. Right here in Tennessee. For the hardest-working people I know.
 
 That's The Call Taker. And that's why I wake up every day fired up to make it better.
 
-#FounderStory #WhyIBuiltThis #HVACfamily #SmallBusinessStory #Tennessee #LebanonTN #TradesLife #BuildingSomething #HVACcommunity #MissionDriven
+#FounderStory #WhyIBuiltThis #HVACfamily #SmallBusinessStory #Tennessee #BrentwoodTN #TradesLife #BuildingSomething #HVACcommunity #MissionDriven
 
 **Suggested Image/Graphic:**
-Authentic photo of Wallace -- ideally candid, not overly polished. Could be at a desk working, or outdoors in Lebanon. If a photo isn't available, use a clean graphic with a quote pulled from the caption over a Tennessee landscape or small-town backdrop. Personal and genuine feel.
+Authentic photo of Wallace -- ideally candid, not overly polished. Could be at a desk working, or outdoors in Brentwood. If a photo isn't available, use a clean graphic with a quote pulled from the caption over a Tennessee landscape or small-town backdrop. Personal and genuine feel.
 
 **Best Time to Post:** Sunday, 10:00 AM CST
 

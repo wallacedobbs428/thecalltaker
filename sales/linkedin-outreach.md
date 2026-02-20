@@ -1,6 +1,6 @@
 # LinkedIn Outreach Playbook for Wallace Dobbs
 ## The Call Taker | AI Receptionist for HVAC Companies
-### $297/mo | thecalltaker.com | Lebanon, TN
+### $297/mo | thecalltaker.com | Brentwood, TN
 
 ---
 
@@ -23,13 +23,13 @@ Your headline is the single most visible line on LinkedIn. It shows up in search
 
 **Recommended Headlines (pick one):**
 
-> HVAC companies stop losing after-hours calls | The Call Taker | Lebanon, TN
+> HVAC companies stop losing after-hours calls | The Call Taker | Brentwood, TN
 
 > Helping HVAC owners in Middle TN capture every call -- even at 2 AM | The Call Taker
 
 > Tennessee HVAC companies are missing 30%+ of their calls. I built something to fix that.
 
-> AI receptionist for HVAC companies | Founder @ The Call Taker | Lebanon, TN
+> AI receptionist for HVAC companies | Founder @ The Call Taker | Brentwood, TN
 
 **Why these work:** They speak directly to HVAC owners, they name the pain (missed calls), and they anchor you to Tennessee. An HVAC owner scrolling LinkedIn will immediately understand what you do and why it matters to them specifically.
 
@@ -51,7 +51,7 @@ Here is the reality for most HVAC companies in Middle Tennessee: you are missing
 
 The Call Taker is an AI-powered receptionist built specifically for HVAC companies. It answers every call, 24/7. It books appointments. It captures caller information. It sounds natural -- not like a robot reading a script. And it costs $297 a month plus a one-time $197 setup. No contracts. Cancel anytime.
 
-If you run an HVAC company anywhere in Middle Tennessee -- Nashville, Lebanon, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro, Franklin -- I would love to show you exactly how many calls you are missing and what that is costing you.
+If you run an HVAC company anywhere in Middle Tennessee -- Nashville, Brentwood, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro, Franklin -- I would love to show you exactly how many calls you are missing and what that is costing you.
 
 Call the demo line yourself and hear it in action: (615) 784-5747
 
@@ -106,7 +106,7 @@ LinkedIn connection requests have a 300-character limit. Every word counts. Thes
 
 ### Message 1: The Local Neighbor Angle
 
-> Hey [First Name] -- saw you run [Company Name] out of [City]. I am based in Lebanon and work with HVAC companies across Middle TN. Always great connecting with local business owners. Hope you are staying busy this season.
+> Hey [First Name] -- saw you run [Company Name] out of [City]. I am based in Brentwood and work with HVAC companies across Middle TN. Always great connecting with local business owners. Hope you are staying busy this season.
 
 **Characters:** ~225
 
@@ -247,7 +247,7 @@ InMails are for reaching HVAC owners who are NOT your connections. You get a lim
 >
 > Here is the link if you are curious: thecalltaker.com/audit
 >
-> Either way, I am based in Lebanon and always happy to connect with HVAC owners in the area. Would be great to have you in my network.
+> Either way, I am based in Brentwood and always happy to connect with HVAC owners in the area. Would be great to have you in my network.
 >
 > Best,
 > Wallace Dobbs
@@ -265,7 +265,7 @@ InMails are for reaching HVAC owners who are NOT your connections. You get a lim
 
 > Hey [First Name] --
 >
-> I run a small company out of Lebanon called The Call Taker. We build AI-powered receptionists specifically for HVAC companies -- the kind of tool that picks up every call 24/7, books the appointment, and sends the details to the owner. Even when the whole crew is out on jobs and nobody is near the phone.
+> I run a small company out of Brentwood called The Call Taker. We build AI-powered receptionists specifically for HVAC companies -- the kind of tool that picks up every call 24/7, books the appointment, and sends the details to the owner. Even when the whole crew is out on jobs and nobody is near the phone.
 >
 > I am reaching out because I have been connecting with HVAC owners all across Middle Tennessee -- Nashville, Murfreesboro, Gallatin, Hendersonville, Franklin -- and I keep hearing the same thing: "We know we are missing calls, we just do not have a good solution for it."
 >
@@ -386,7 +386,7 @@ Publishing content on LinkedIn positions you as someone who genuinely understand
 
 > Shoutout to the HVAC owners in Middle Tennessee who are grinding right now.
 >
-> Nashville. Lebanon. Mt. Juliet. Hendersonville. Gallatin. Murfreesboro. Franklin.
+> Nashville. Brentwood. Mt. Juliet. Hendersonville. Gallatin. Murfreesboro. Franklin.
 >
 > I know what this season means for you:
 >
@@ -401,7 +401,7 @@ Publishing content on LinkedIn positions you as someone who genuinely understand
 >
 > If you are an HVAC owner in Middle Tennessee and we are not connected yet -- send me a request. I am building something specifically for this industry and I want to learn from as many of you as possible.
 >
-> And if you are ever in Lebanon and want to grab coffee, the first round is on me.
+> And if you are ever in Brentwood and want to grab coffee, the first round is on me.
 
 **Why it works:** This post is pure community building. No pitch. No product mention. It generates connection requests from your exact target audience because you made them feel seen and respected. The city name-drops also help with LinkedIn search visibility.
 
@@ -609,9 +609,9 @@ Adjust your approach based on what the data tells you. Double down on what works
 | **Website** | thecalltaker.com |
 | **Free Audit** | thecalltaker.com/audit |
 | **Price** | $297/month + $197 one-time setup, no contract |
-| **Location** | Lebanon, TN |
+| **Location** | Brentwood, TN |
 | **Target Market** | HVAC companies in Middle Tennessee |
-| **Target Cities** | Nashville, Lebanon, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro, Franklin |
+| **Target Cities** | Nashville, Brentwood, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro, Franklin |
 | **LinkedIn Daily Time** | 15-20 minutes (morning routine) |
 | **Weekly Connection Requests** | 5-10 targeted HVAC owners |
 | **Weekly Posts** | 2-3 original posts |
@@ -623,7 +623,7 @@ Adjust your approach based on what the data tells you. Double down on what works
 
 Every interaction on LinkedIn should pass one simple test:
 
-**"Would I say this to an HVAC owner if I ran into them at a gas station in Lebanon?"**
+**"Would I say this to an HVAC owner if I ran into them at a gas station in Brentwood?"**
 
 If the answer is no -- if it sounds too polished, too scripted, too much like a marketing email -- rewrite it until it sounds like Wallace talking to another business owner.
 
@@ -631,7 +631,7 @@ The HVAC owners you are trying to reach have been pitched a thousand times by ma
 
 But they will stop for someone who is genuine. Someone who is local. Someone who actually understands what it is like to run an HVAC company in Middle Tennessee. Someone who leads with value and earns the right to eventually ask for their business.
 
-Be that person. Be Wallace from Lebanon who built something useful and wants to help.
+Be that person. Be Wallace from Brentwood who built something useful and wants to help.
 
 That is your competitive advantage. Nobody else in this space is from Tennessee. Nobody else is showing up at the same trade shows, eating at the same restaurants, dealing with the same weather. Nobody else is willing to sit across the table and have a real conversation without an agenda.
 

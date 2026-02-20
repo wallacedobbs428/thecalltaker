@@ -66,12 +66,12 @@ These are ready to send. Each one references something specific about the compan
 
 ---
 
-### Lead 1: Nashville HVAC Group — (615) 569-6245 — Lebanon
-> Hey, this is Wallace. I saw Nashville HVAC Group on Yelp — looks like you guys are doing solid work in Lebanon. Quick question: who's picking up your phones after hours? I built an AI receptionist that handles it 24/7. Call (615) 784-5747 and hear it yourself. Reply STOP to opt out.
+### Lead 1: Nashville HVAC Group — (615) 569-6245 — Brentwood
+> Hey, this is Wallace. I saw Nashville HVAC Group on Yelp — looks like you guys are doing solid work in Brentwood. Quick question: who's picking up your phones after hours? I built an AI receptionist that handles it 24/7. Call (615) 784-5747 and hear it yourself. Reply STOP to opt out.
 
 ---
 
-### Lead 2: Efficient HVAC — (615) 784-4424 — Lebanon
+### Lead 2: Efficient HVAC — (615) 784-4424 — Brentwood
 > Hey, it's Wallace. I noticed Efficient HVAC says 24hr service on your listing. Are you actually answering every call around the clock, or is some of that going to voicemail? I've got something that can make that 24hr claim bulletproof. Hear it: (615) 784-5747. Reply STOP to opt out.
 
 ---
@@ -106,7 +106,7 @@ These are ready to send. Each one references something specific about the compan
 
 ---
 
-### Lead 19: TemperaturePro Nashville — (615) 434-8503 — Lebanon
+### Lead 19: TemperaturePro Nashville — (615) 434-8503 — Brentwood
 > Hey, this is Wallace. I know TemperaturePro is a franchise, but your local operation still needs every call answered, right? I built an AI receptionist that picks up 24/7 and books on your calendar. $297/mo, no contract. Hear it live: (615) 784-5747. Reply STOP to opt out.
 
 ---
@@ -131,7 +131,7 @@ These are ready to send. Each one references something specific about the compan
 
 ---
 
-### Lead 26: One Hour Air Lebanon — (615) 549-8149 — Lebanon
+### Lead 26: One Hour Air Brentwood — (615) 549-8149 — Brentwood
 > Hey, it's Wallace. I know One Hour Air promises fast service — but what if the first call goes to voicemail? Kind of kills the brand, right? I built an AI receptionist that picks up instantly, every time. $297/mo. Hear it: (615) 784-5747. Reply STOP to opt out.
 
 ---
@@ -272,7 +272,7 @@ You should be texting leads within 5 minutes. Here's the order:
 7. La Vergne HVAC Pros — (615) 234-9098
 8. Fann Mechanical Co. — (615) 895-0215
 9. TemperaturePro Nashville — (615) 434-8503
-10. One Hour Air Lebanon — (615) 549-8149
+10. One Hour Air Brentwood — (615) 549-8149
 
 **Then these 4 (larger companies — bigger deal size):**
 

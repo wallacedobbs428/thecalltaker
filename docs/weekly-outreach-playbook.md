@@ -59,13 +59,13 @@
 **Morning (8:00 AM - 12:00 PM): Set Up 5 Core Platforms**
 
 1. **Facebook Profile Optimization**
-   - Update your bio: "HVAC business owner in Lebanon, TN. Built an AI receptionist that answers every call 24/7. Ask me about it."
+   - Update your bio: "HVAC business owner in Brentwood, TN. Built an AI receptionist that answers every call 24/7. Ask me about it."
    - Set a professional cover photo with The Call Taker branding
    - Pin a public post about The Call Taker to your timeline
    - Reference: `sales/facebook-groups-guide.md` — Part 5: Profile Optimization
 
 2. **LinkedIn Profile Setup**
-   - Set headline to: "HVAC companies stop losing after-hours calls | The Call Taker | Lebanon, TN"
+   - Set headline to: "HVAC companies stop losing after-hours calls | The Call Taker | Brentwood, TN"
    - Write About section using the template in `sales/linkedin-outreach.md` — Section 1
    - Create a LinkedIn banner (Canva, 1584x396px) with demo line number and tagline
    - Add thecalltaker.com/audit to Featured section
@@ -125,7 +125,7 @@
 
 **Afternoon (2:00 PM - 4:00 PM): LinkedIn Connection Requests**
 
-- Search LinkedIn for HVAC owners in Nashville, Lebanon, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro, Franklin
+- Search LinkedIn for HVAC owners in Nashville, Brentwood, Mt. Juliet, Hendersonville, Gallatin, Murfreesboro, Franklin
 - Send 20 connection requests using Message 1 ("The Local Neighbor Angle") from `sales/linkedin-outreach.md` — Section 2
 - **Target: 20 LinkedIn connection requests sent**
 
