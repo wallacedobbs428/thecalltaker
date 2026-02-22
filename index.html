@@ -23,6 +23,15 @@
   <style>
     /* === ENHANCED HOMEPAGE STYLES === */
 
+    /* Industry Theme Transitions */
+    :root { transition: --green 0.4s, --green-glow 0.4s, --green-dim 0.4s; }
+    .services-hero, .diamond-frame, .section-label, .hero-label, .feature-label,
+    .stat-val, .btn-green, .btn-primary, .callback-btn, .ba-tag.green, .ba-col.after,
+    .float-cb-btn, .industry-pill.active, .deco-solid, .deco-outline {
+      transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .gradient { transition: background 0.4s ease; }
+
     /* Callback Widget */
     .callback-box { max-width: 460px; margin: 40px auto 0; background: rgba(0,220,130,0.04); border: 1px solid rgba(0,220,130,0.15); border-radius: 16px; padding: 28px 24px; }
     .callback-box h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; text-align: center; }
@@ -118,6 +127,244 @@
     .dynamic-value { transition: all 0.3s ease; }
     .value-flash { animation: valueFlash 0.5s ease; }
     @keyframes valueFlash { 0% { opacity: 0.5; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+
+    /* ============================================
+       RING SAVVY-INSPIRED DESIGN ELEMENTS
+       Diamond frames, scattered decorations,
+       warm testimonial cards, human feel
+       ============================================ */
+
+    /* --- Diamond Frame Component --- */
+    .diamond-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 240px;
+      height: 240px;
+      flex-shrink: 0;
+    }
+    @media (max-width: 767px) {
+      .diamond-wrap { width: 180px; height: 180px; }
+    }
+
+    .diamond-frame {
+      width: 180px;
+      height: 180px;
+      transform: rotate(45deg);
+      overflow: hidden;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 767px) {
+      .diamond-frame { width: 140px; height: 140px; border-radius: 20px; }
+    }
+
+    .diamond-frame .diamond-inner {
+      transform: rotate(-45deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Diamond gradient variants */
+    .diamond-green {
+      background: linear-gradient(135deg, rgba(0,220,130,0.2) 0%, rgba(0,220,130,0.06) 100%);
+      border: 1.5px solid rgba(0,220,130,0.25);
+    }
+    .diamond-dark {
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1.5px solid rgba(255,255,255,0.1);
+    }
+
+    /* Diamond icon inside */
+    .diamond-icon {
+      width: 64px;
+      height: 64px;
+      color: var(--green);
+      opacity: 0.9;
+    }
+    @media (max-width: 767px) {
+      .diamond-icon { width: 48px; height: 48px; }
+    }
+
+    /* Scattered small diamond decorations */
+    .deco {
+      position: absolute;
+      border-radius: 4px;
+      transform: rotate(45deg);
+      z-index: 1;
+    }
+    .deco-solid {
+      background: var(--green);
+      opacity: 0.5;
+    }
+    .deco-outline {
+      border: 2px solid rgba(0,220,130,0.3);
+      background: transparent;
+    }
+    .deco-sm { width: 12px; height: 12px; }
+    .deco-md { width: 18px; height: 18px; }
+    .deco-lg { width: 24px; height: 24px; }
+
+    /* Positioned decorations per diamond */
+    .diamond-wrap .deco-1 { top: 8px; left: 12px; }
+    .diamond-wrap .deco-2 { bottom: 16px; right: 8px; }
+    .diamond-wrap .deco-3 { top: 50%; left: -8px; }
+    .diamond-wrap .deco-4 { bottom: 8px; left: 40px; }
+    .diamond-wrap .deco-5 { top: 12px; right: 20px; }
+
+    /* Section-level scattered diamonds */
+    .section-deco {
+      position: absolute;
+      border-radius: 4px;
+      transform: rotate(45deg);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* --- Warm Testimonial Cards (colored avatars) --- */
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) { .review-grid { grid-template-columns: repeat(3, 1fr); } }
+    .review-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      position: relative;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .review-card:hover {
+      border-color: rgba(0,220,130,0.2);
+      background: rgba(0,220,130,0.02);
+    }
+    .review-stars {
+      color: #fbbf24;
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .review-text {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+      transition: opacity 0.3s ease;
+    }
+    .review-author-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .review-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+      flex-shrink: 0;
+    }
+    .review-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      transition: opacity 0.3s ease;
+    }
+    .review-role {
+      font-size: 12px;
+      color: var(--text-3);
+      transition: opacity 0.3s ease;
+    }
+
+    /* --- Meet Your AI Receptionist Section --- */
+    .meet-section {
+      position: relative;
+      overflow: hidden;
+    }
+    .meet-grid {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    @media (max-width: 767px) {
+      .meet-grid { flex-direction: column; gap: 32px; text-align: center; }
+    }
+    .meet-text { flex: 1; }
+    .meet-visual { flex: 0 0 auto; display: flex; justify-content: center; }
+    .meet-trait {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .meet-trait svg { flex-shrink: 0; margin-top: 3px; color: var(--green); }
+    @media (max-width: 767px) {
+      .meet-trait { text-align: left; }
+    }
+
+    /* --- Stats Bar (green accent numbers) --- */
+    .stats-bar-home {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) { .stats-bar-home { grid-template-columns: repeat(4, 1fr); } }
+    .stat-cell-home {
+      background: #000;
+      padding: 32px 20px;
+      text-align: center;
+    }
+    .stat-val-home {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+    .stat-label-home {
+      font-size: 12px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    /* Smooth content transitions for industry switching */
+    .industry-transition {
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .industry-fade-out {
+      opacity: 0;
+      transform: translateY(4px);
+    }
   </style>
 </head>
 <body>
@@ -156,7 +403,13 @@
 </div>
 
 <!-- HERO -->
-<section class="hero" id="main" style="padding-top: 100px;">
+<section class="hero" id="main" style="padding-top: 100px; position: relative; overflow: hidden;">
+  <!-- Scattered diamond decorations in hero -->
+  <div class="section-deco deco-solid deco-sm" style="top: 120px; left: 8%; opacity: 0.35;"></div>
+  <div class="section-deco deco-outline deco-md" style="top: 180px; right: 6%; opacity: 0.25;"></div>
+  <div class="section-deco deco-solid deco-lg" style="bottom: 80px; left: 4%; opacity: 0.2;"></div>
+  <div class="section-deco deco-outline deco-sm" style="top: 300px; right: 12%; opacity: 0.3;"></div>
+  <div class="section-deco deco-solid deco-md" style="bottom: 150px; right: 3%; opacity: 0.15;"></div>
   <div class="wrap">
     <div class="reveal">
       <div class="hero-label" id="hero-label">AI-Powered Receptionist for Service Businesses</div>
@@ -174,8 +427,8 @@
         <button class="industry-pill" onclick="setIndustry('property')">Property Mgmt</button>
       </div>
 
-      <h1 id="hero-headline">Stop losing <span id="hero-jobword">jobs</span><br>to <span class="gradient">voicemail</span></h1>
-      <p id="hero-subtitle">Your AI receptionist answers every call in under 2 seconds, 24/7/365. Books appointments. Handles emergencies. Texts you the details. Set up in 48 hours.</p>
+      <h1 id="hero-headline" class="industry-transition">Stop losing <span id="hero-jobword">jobs</span><br>to <span class="gradient">voicemail</span></h1>
+      <p id="hero-subtitle" class="industry-transition">Your AI receptionist answers every call in under 2 seconds, 24/7/365. Books appointments. Handles emergencies. Texts you the details. Set up in 48 hours.</p>
       <div class="hero-buttons">
         <a href="#callback" class="btn btn-primary btn-lg" onclick="document.getElementById('cb-phone').focus();return false;">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -217,32 +470,37 @@
   </div>
 </section>
 
-<!-- PROOF NUMBERS -->
-<section style="padding: 48px 0;">
+<!-- STATS BAR -->
+<section style="padding: 48px 0; position: relative;">
+  <div class="section-deco deco-outline deco-lg" style="top: 10px; left: 5%; opacity: 0.2;"></div>
+  <div class="section-deco deco-solid deco-sm" style="bottom: 10px; right: 7%; opacity: 0.3;"></div>
   <div class="wrap">
-    <div class="proof-numbers reveal">
-      <div class="proof-num">
-        <div class="val counter" data-target="2">&lt;2s</div>
-        <div class="lbl">Answer Time</div>
+    <div class="stats-bar-home reveal">
+      <div class="stat-cell-home">
+        <div class="stat-val-home">&lt;2s</div>
+        <div class="stat-label-home">Answer Time</div>
       </div>
-      <div class="proof-num">
-        <div class="val">24/7</div>
-        <div class="lbl">Always On</div>
+      <div class="stat-cell-home">
+        <div class="stat-val-home">24/7</div>
+        <div class="stat-label-home">Always On</div>
       </div>
-      <div class="proof-num">
-        <div class="val">48h</div>
-        <div class="lbl">Setup Time</div>
+      <div class="stat-cell-home">
+        <div class="stat-val-home">48h</div>
+        <div class="stat-label-home">Setup Time</div>
       </div>
-      <div class="proof-num">
-        <div class="val">$0</div>
-        <div class="lbl">Per Minute</div>
+      <div class="stat-cell-home">
+        <div class="stat-val-home">$0</div>
+        <div class="stat-label-home">Per Minute</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- THE PROBLEM -->
-<section style="padding: 80px 0; border-top: 1px solid var(--border);">
+<section style="padding: 80px 0; border-top: 1px solid var(--border); position: relative; overflow: hidden;">
+  <div class="section-deco deco-solid deco-md" style="top: 40px; right: 5%; opacity: 0.2;"></div>
+  <div class="section-deco deco-outline deco-sm" style="bottom: 60px; left: 3%; opacity: 0.25;"></div>
+  <div class="section-deco deco-solid deco-sm" style="top: 50%; right: 2%; opacity: 0.15;"></div>
   <div class="wrap">
     <div style="text-align: center; margin-bottom: 48px;" class="reveal">
       <div class="section-label" style="display: flex; justify-content: center;">The Problem</div>
@@ -254,16 +512,16 @@
         <div class="label">of callers who hit voicemail never call back. They call the next company on Google.</div>
       </div>
       <div class="pain-card">
-        <div class="num" id="pain-lost">$7,000+</div>
+        <div class="num" id="pain-lost">$8,400+</div>
         <div class="label" id="pain-lost-label">lost per month by the average HVAC company from missed calls alone.</div>
       </div>
       <div class="pain-card">
         <div class="num" id="pain-afterhours">35%</div>
-        <div class="label" id="pain-afterhours-label">of calls come in after hours, on weekends, and during holidays.</div>
+        <div class="label" id="pain-afterhours-label">of HVAC calls come in after hours, on weekends, and during holidays.</div>
       </div>
       <div class="pain-card">
         <div class="num">62%</div>
-        <div class="label" id="pain-chose-label">of customers say they chose a company because they picked up the phone first.</div>
+        <div class="label" id="pain-chose-label">of customers say they chose an HVAC company because they picked up the phone first.</div>
       </div>
     </div>
     <div class="reveal" style="text-align: center; margin-top: 32px;">
@@ -301,13 +559,74 @@
   </div>
 </section>
 
+<!-- MEET YOUR AI RECEPTIONIST -->
+<section class="meet-section" style="padding: 80px 0; border-top: 1px solid var(--border); position: relative; overflow: hidden;">
+  <div class="section-deco deco-outline deco-lg" style="top: 60px; right: 5%; opacity: 0.15;"></div>
+  <div class="section-deco deco-solid deco-sm" style="bottom: 80px; left: 7%; opacity: 0.25;"></div>
+  <div class="section-deco deco-outline deco-md" style="top: 50%; left: 2%; opacity: 0.2;"></div>
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 48px;" class="reveal">
+      <div class="section-label" style="display: flex; justify-content: center;">The Human Touch</div>
+      <h2 class="section-title" style="margin: 0 auto; max-width: 600px;">Meet your AI receptionist</h2>
+      <p style="font-size: 16px; color: var(--text-2); max-width: 500px; margin: 16px auto 0;">She sounds like your best employee. Warm, professional, and always ready to help. Here's what she does every single day.</p>
+    </div>
+    <div class="meet-grid reveal">
+      <div class="meet-visual">
+        <div class="diamond-wrap" style="width: 280px; height: 280px;">
+          <div class="deco deco-solid deco-md deco-1"></div>
+          <div class="deco deco-outline deco-lg deco-2"></div>
+          <div class="deco deco-solid deco-sm deco-3"></div>
+          <div class="deco deco-outline deco-sm deco-5"></div>
+          <div class="deco deco-solid deco-lg deco-4"></div>
+          <div class="diamond-frame diamond-green" style="width: 210px; height: 210px; border-radius: 28px;">
+            <div class="diamond-inner">
+              <svg class="diamond-icon" style="width: 80px; height: 80px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="meet-text">
+        <div class="meet-trait">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong style="color: #fff;">Answers in under 2 seconds</strong> — no rings, no hold music, no "please hold while I transfer you"</span>
+        </div>
+        <div class="meet-trait">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong style="color: #fff;">Has real conversations</strong> — not a phone tree or a robot reading a script. She listens, asks follow-ups, and responds naturally.</span>
+        </div>
+        <div class="meet-trait">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong style="color: #fff;">Knows your business inside out</strong> — trained on your services, hours, pricing, and service area. She sounds like she's been working for you for years.</span>
+        </div>
+        <div class="meet-trait">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong style="color: #fff;">Never has a bad day</strong> — always patient, always professional, always available. 3am on Christmas? She's there.</span>
+        </div>
+        <div class="meet-trait">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong style="color: #fff;">Handles emergencies with urgency</strong> — knows the difference between routine calls and real emergencies. Escalates the critical ones immediately.</span>
+        </div>
+        <div style="margin-top: 24px;">
+          <a href="tel:+16157845747" class="btn btn-green btn-md">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Talk to Her Right Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- TRY IT LIVE -->
 <section style="padding: 80px 0; border-top: 1px solid var(--border); text-align: center;">
   <div class="wrap">
     <div class="reveal">
       <div class="section-label" style="display: flex; justify-content: center;">Try it yourself</div>
       <h2 class="section-title" style="margin: 0 auto 12px;">Don't take our word for it</h2>
-      <p style="font-size: 16px; color: var(--text-2); line-height: 1.65; max-width: 420px; margin: 0 auto 28px;">Call the number below. Pretend you're a homeowner with a broken AC. Hear the AI handle it in real time.</p>
+      <p style="font-size: 16px; color: var(--text-2); line-height: 1.65; max-width: 420px; margin: 0 auto 28px;" id="try-description" class="industry-transition">Call the number below. Pretend you're a homeowner whose AC died at 2am in the middle of summer. Hear the AI handle it in real time.</p>
       <a href="tel:+16157845747" style="font-size: clamp(32px, 5vw, 48px); font-weight: 800; color: var(--green); letter-spacing: -0.03em; display: inline-block;">(615) 784-5747</a>
       <p style="font-size: 13px; color: var(--text-3); margin-top: 12px;">Live 24/7. Call right now. Most people can't tell it's not a person.</p>
     </div>
@@ -315,63 +634,65 @@
 </section>
 
 <!-- BEFORE / AFTER -->
-<section style="padding: 80px 0; border-top: 1px solid var(--border);">
+<section style="padding: 80px 0; border-top: 1px solid var(--border); position: relative; overflow: hidden;">
+  <div class="section-deco deco-outline deco-md" style="top: 30px; left: 4%; opacity: 0.2;"></div>
+  <div class="section-deco deco-solid deco-sm" style="bottom: 40px; right: 6%; opacity: 0.25;"></div>
   <div class="wrap">
     <div style="text-align: center; margin-bottom: 48px;" class="reveal">
       <div class="section-label" style="display: flex; justify-content: center;">The Difference</div>
       <h2 class="section-title" style="margin: 0 auto;">Before vs. after The Call Taker</h2>
     </div>
     <div class="ba-grid reveal">
-      <div class="ba-col">
+      <div class="ba-col" id="ba-before">
         <div class="ba-tag red">
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           Without
         </div>
-        <div class="ba-item">
+        <div class="ba-item" id="ba-before-1">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          Calls go to voicemail after hours
+          <span>AC emergency calls go straight to voicemail</span>
         </div>
-        <div class="ba-item">
+        <div class="ba-item" id="ba-before-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          Customers call your competitor instead
+          <span>Homeowners call the next HVAC company on Google</span>
         </div>
-        <div class="ba-item">
+        <div class="ba-item" id="ba-before-3">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          You check voicemail at the end of the day
+          <span>You check voicemail between jobs and miss the window</span>
         </div>
-        <div class="ba-item">
+        <div class="ba-item" id="ba-before-4">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          Emergency calls get lost in the queue
+          <span>Furnace emergencies get lost overnight</span>
         </div>
-        <div class="ba-item">
+        <div class="ba-item" id="ba-before-5">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          You pay $2,000+/mo for a human receptionist
+          <span>You pay $2,000+/mo for a human receptionist</span>
         </div>
       </div>
-      <div class="ba-col after">
+      <div class="ba-col after" id="ba-after">
         <div class="ba-tag green">
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
           With The Call Taker
         </div>
-        <div class="ba-item">
+        <div class="ba-item" id="ba-after-1">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Every call answered in under 2 seconds
+          <span>Every call answered in under 2 seconds</span>
         </div>
-        <div class="ba-item">
+        <div class="ba-item" id="ba-after-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Appointments booked automatically
+          <span>Emergency AC/heating calls triaged instantly</span>
         </div>
-        <div class="ba-item">
+        <div class="ba-item" id="ba-after-3">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          You get a text with every detail instantly
+          <span>You get a text with the job details immediately</span>
         </div>
-        <div class="ba-item">
+        <div class="ba-item" id="ba-after-4">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Emergencies flagged and escalated immediately
+          <span>Appointments booked into your calendar automatically</span>
         </div>
-        <div class="ba-item">
+        <div class="ba-item" id="ba-after-5">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          Starting at $497/mo — less than one service call
+          <span>Starting at $497/mo — less than one service call</span>
         </div>
       </div>
     </div>
@@ -422,22 +743,24 @@
 </section>
 
 <!-- THE MATH -->
-<section style="padding: 80px 0; border-top: 1px solid var(--border);">
+<section style="padding: 80px 0; border-top: 1px solid var(--border); position: relative; overflow: hidden;">
+  <div class="section-deco deco-solid deco-lg" style="top: 50px; left: 3%; opacity: 0.15;"></div>
+  <div class="section-deco deco-outline deco-md" style="bottom: 40px; right: 5%; opacity: 0.2;"></div>
   <div class="wrap">
     <div style="text-align: center; margin-bottom: 48px;" class="reveal">
       <div class="section-label" style="display: flex; justify-content: center;">The Math</div>
       <h2 class="section-title" style="margin: 0 auto;">It pays for itself in one call</h2>
     </div>
     <div class="math-box reveal">
-      <p style="font-size: 15px; color: var(--text-2); margin-bottom: 20px;" id="math-intro">The average HVAC company misses 5+ calls per week</p>
+      <p style="font-size: 15px; color: var(--text-2); margin-bottom: 20px;" id="math-intro">The average HVAC company misses 6+ calls per week</p>
       <div class="math-eq" id="math-equation">
-        <span class="red">5 missed calls</span> &times; $500 avg job<br>
-        = <span class="red">$10,000/month lost</span>
+        <span class="red">6 missed calls</span> &times; $350 avg job<br>
+        = <span class="red">$8,400/month lost</span>
       </div>
       <div style="height: 1px; background: var(--border); margin: 24px 0;"></div>
       <p style="font-size: 15px; color: var(--text-2); margin-bottom: 12px;">The Call Taker catches those calls for</p>
       <div class="math-result" id="math-price">$497/month</div>
-      <p style="font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px;" id="math-roi">That's a 20x return on investment</p>
+      <p style="font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px;" id="math-roi">That's a 17x return on investment</p>
       <p style="font-size: 14px; color: var(--text-3);" id="math-note">One caught call pays for an entire month of service.</p>
       <a href="calculator.html" class="btn btn-secondary btn-md" style="margin-top: 20px;">Calculate Your Lost Revenue</a>
     </div>
@@ -457,30 +780,49 @@
 </section>
 
 <!-- TESTIMONIALS -->
-<section style="padding: 80px 0; border-top: 1px solid var(--border);">
+<section style="padding: 80px 0; border-top: 1px solid var(--border); position: relative; overflow: hidden;">
+  <div class="section-deco deco-solid deco-md" style="top: 40px; left: 6%; opacity: 0.2;"></div>
+  <div class="section-deco deco-outline deco-lg" style="top: 80px; right: 4%; opacity: 0.15;"></div>
+  <div class="section-deco deco-solid deco-sm" style="bottom: 50px; left: 3%; opacity: 0.3;"></div>
+  <div class="section-deco deco-outline deco-sm" style="bottom: 30px; right: 8%; opacity: 0.2;"></div>
   <div class="wrap">
     <div style="text-align: center; margin-bottom: 48px;" class="reveal">
       <div class="section-label" style="display: flex; justify-content: center;">Results</div>
-      <h2 class="section-title" style="margin: 0 auto;">What HVAC owners are saying</h2>
+      <h2 class="section-title" style="margin: 0 auto;" id="testimonials-heading">What HVAC owners are saying</h2>
     </div>
-    <div class="test-grid reveal" id="testimonials-grid">
-      <div class="test-card">
-        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="test-quote" id="test-quote-1">"We were missing 8-10 calls a week, mostly after hours. The Call Taker caught every single one. We booked $12,000 in new work the first month."</div>
-        <div class="test-author" id="test-author-1">Mike R.</div>
-        <div class="test-role" id="test-role-1">Owner, 6-truck shop &middot; Phoenix, AZ</div>
+    <div class="review-grid reveal" id="testimonials-grid">
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text" id="test-quote-1">"We were missing 8-10 calls a week, mostly after hours. The Call Taker caught every single one. We booked $12,000 in new work the first month."</div>
+        <div class="review-author-wrap">
+          <div class="review-avatar" style="background: #10b981;" id="test-avatar-1">M</div>
+          <div>
+            <div class="review-name" id="test-author-1">Mike R.</div>
+            <div class="review-role" id="test-role-1">Owner, Comfort Pro Heating &middot; Phoenix, AZ</div>
+          </div>
+        </div>
       </div>
-      <div class="test-card">
-        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="test-quote" id="test-quote-2">"I was paying $2,400/month for an answering service that put people on hold. This AI answers faster than any human ever could and costs a fraction."</div>
-        <div class="test-author" id="test-author-2">Sarah K.</div>
-        <div class="test-role" id="test-role-2">Office Manager &middot; Nashville, TN</div>
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text" id="test-quote-2">"I was paying $2,400/month for an answering service that put people on hold. This AI answers faster than any human ever could and costs a fraction."</div>
+        <div class="review-author-wrap">
+          <div class="review-avatar" style="background: #3b82f6;" id="test-avatar-2">S</div>
+          <div>
+            <div class="review-name" id="test-author-2">Sarah K.</div>
+            <div class="review-role" id="test-role-2">Office Manager, Elite Air &middot; Nashville, TN</div>
+          </div>
+        </div>
       </div>
-      <div class="test-card">
-        <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="test-quote" id="test-quote-3">"My guys are in crawl spaces all day. They can't answer phones. Now every call gets handled and I get a text with the details. Best money I've ever spent."</div>
-        <div class="test-author" id="test-author-3">James T.</div>
-        <div class="test-role" id="test-role-3">Owner, 3-truck shop &middot; Dallas, TX</div>
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text" id="test-quote-3">"My guys are in crawl spaces all day. They can't answer phones. Now every call gets handled and I get a text with the details. Best money I've ever spent."</div>
+        <div class="review-author-wrap">
+          <div class="review-avatar" style="background: #f59e0b;" id="test-avatar-3">J</div>
+          <div>
+            <div class="review-name" id="test-author-3">James T.</div>
+            <div class="review-role" id="test-role-3">Owner, Lone Star HVAC &middot; Dallas, TX</div>
+          </div>
+        </div>
       </div>
     </div>
     <p style="text-align: center; font-size: 11px; color: var(--text-3); margin-top: 16px;">* Results represent projected outcomes based on industry data. Individual results may vary.</p>
@@ -684,188 +1026,393 @@
     hvac: {
       name: 'HVAC', slug: 'hvac',
       jobWord: 'jobs', clientWord: 'customers',
-      avgJob: 500, missedPerWeek: 5, afterHoursPercent: 35,
-      starterPrice: 497, proPrice: 997,
-      tier: 'starter',
+      avgJob: 350, monthlyLoss: 8400, afterHoursPercent: 35,
+      price: 497, tier: 'starter',
+      theme: { primary: '#10b981', glow: 'rgba(16,185,129,0.15)', dim: 'rgba(16,185,129,0.08)', gradient: 'linear-gradient(135deg, #10b981, #059669)', bg: 'radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.08) 0%, transparent 60%)' },
       heroLabel: 'AI-Powered Receptionist for HVAC Companies',
       heroHeadline: 'Stop losing <span id="hero-jobword">jobs</span><br>to <span class="gradient">voicemail</span>',
-      heroSubtitle: 'Your AI receptionist answers every call in under 2 seconds, 24/7/365. Books appointments. Handles emergencies. Texts you the details.',
-      painLost: '$10,000+',
+      heroSubtitle: 'Your AI receptionist answers every call in under 2 seconds, 24/7/365. Books appointments. Handles emergencies. Texts you the details. Set up in 48 hours.',
+      painLost: '$8,400+',
       painLostLabel: 'lost per month by the average HVAC company from missed calls alone.',
       painAfterHours: '35%',
+      painAfterHoursLabel: 'of HVAC calls come in after hours, on weekends, and during holidays.',
+      painChoseLabel: 'of customers say they chose an HVAC company because they picked up the phone first.',
       painStory: 'You\'re on a job. Your phone rings. You can\'t pick up. It goes to voicemail. That customer calls your competitor. <strong style="color: #fff;">They get the job. You don\'t.</strong>',
-      mathIntro: 'The average HVAC company misses 5+ calls per week',
-      mathEquation: '<span class="red">5 missed calls</span> &times; $500 avg job<br>= <span class="red">$10,000/month lost</span>',
-      mathNote: 'One caught call pays for two months of service.',
+      tryDescription: 'Call the number below. Pretend you\'re a homeowner whose AC died at 2am in the middle of summer. Hear the AI handle it in real time.',
+      beforeItems: [
+        'AC emergency calls go straight to voicemail',
+        'Homeowners call the next HVAC company on Google',
+        'You check voicemail between jobs and miss the window',
+        'Furnace emergencies get lost overnight',
+        'You pay $2,000+/mo for a human receptionist'
+      ],
+      afterItems: [
+        'Every call answered in under 2 seconds',
+        'Emergency AC/heating calls triaged instantly',
+        'You get a text with the job details immediately',
+        'Appointments booked into your calendar automatically',
+        'Starting at $497/mo — less than one service call'
+      ],
+      mathIntro: 'The average HVAC company misses 6+ calls per week',
+      mathEquation: '<span class="red">6 missed calls</span> &times; $350 avg job<br>= <span class="red">$8,400/month lost</span>',
+      mathPrice: '$497/month',
+      mathRoi: 'That\'s a 17x return on investment',
+      mathNote: 'One caught call pays for an entire month of service.',
       testimonials: [
-        { quote: '"We were missing 8-10 calls a week, mostly after hours. The Call Taker caught every single one. We booked $12,000 in new work the first month."', author: 'Mike R.', role: 'Owner, 6-truck shop &middot; Phoenix, AZ' },
-        { quote: '"I was paying $2,400/month for an answering service that put people on hold. This AI answers faster than any human and costs a fraction."', author: 'Sarah K.', role: 'Office Manager &middot; Nashville, TN' },
-        { quote: '"My guys are in crawl spaces all day. They can\'t answer phones. Now every call gets handled and I get a text with the details."', author: 'James T.', role: 'Owner, 3-truck shop &middot; Dallas, TX' }
-      ]
-    },
-    roofing: {
-      name: 'Roofing', slug: 'roofing',
-      jobWord: 'leads', clientWord: 'homeowners',
-      avgJob: 8000, missedPerWeek: 3, afterHoursPercent: 40,
-      starterPrice: 997, proPrice: 997,
-      tier: 'pro',
-      heroLabel: 'AI-Powered Receptionist for Roofing Companies',
-      heroHeadline: 'Stop losing <span id="hero-jobword">leads</span><br>to <span class="gradient">voicemail</span>',
-      heroSubtitle: 'Storm damage calls don\'t wait. Your AI receptionist answers every call 24/7, captures the lead, and texts you the details before your competitor even picks up.',
-      painLost: '$96,000+',
-      painLostLabel: 'lost per year by the average roofing company from missed storm damage calls alone.',
-      painAfterHours: '40%',
-      painStory: 'A hailstorm hits at 8pm. Homeowners start calling roofers. Your phone goes to voicemail. They call the next guy. <strong style="color: #fff;">He gets the $12,000 roof. You don\'t even know they called.</strong>',
-      mathIntro: 'The average roofing company misses 3+ high-value calls per week',
-      mathEquation: '<span class="red">3 missed calls</span> &times; $8,000 avg job<br>= <span class="red">$96,000/month lost</span>',
-      mathNote: 'One caught storm damage call pays for an entire year of service.',
-      testimonials: [
-        { quote: '"After a storm last month, our AI caught 14 calls between 6pm and midnight. That was $168,000 in roofing jobs we would have lost to voicemail."', author: 'Dave M.', role: 'Owner, 12-crew operation &middot; Oklahoma City, OK' },
-        { quote: '"Insurance restoration calls come at all hours. Now we catch every single one. Our close rate went up 40% because we\'re first to respond."', author: 'Tony B.', role: 'Sales Manager &middot; Houston, TX' },
-        { quote: '"We used to lose 5-6 storm leads per event to voicemail. At $8K per roof, that\'s $40-50K gone. The Call Taker paid for itself in one storm."', author: 'Rachel S.', role: 'Operations Manager &middot; Denver, CO' }
-      ]
+        { quote: '"We were missing 8-10 calls a week, mostly after hours. The Call Taker caught every single one. We booked $12,000 in new work the first month."', author: 'Mike R.', role: 'Owner, Comfort Pro Heating', avatar: 'M', color: '#10b981' },
+        { quote: '"I was paying $2,400/month for an answering service that put people on hold. This AI answers faster than any human ever could and costs a fraction."', author: 'Sarah K.', role: 'Office Manager, Elite Air', avatar: 'S', color: '#3b82f6' },
+        { quote: '"My guys are in crawl spaces all day. They can\'t answer phones. Now every call gets handled and I get a text with the details. Best money I\'ve ever spent."', author: 'James T.', role: 'Owner, Lone Star HVAC', avatar: 'J', color: '#f59e0b' }
+      ],
+      testimonialHeading: 'What HVAC owners are saying'
     },
     plumbing: {
       name: 'Plumbing', slug: 'plumbing',
       jobWord: 'jobs', clientWord: 'customers',
-      avgJob: 800, missedPerWeek: 5, afterHoursPercent: 45,
-      starterPrice: 497, proPrice: 997,
-      tier: 'starter',
+      avgJob: 450, monthlyLoss: 10800, afterHoursPercent: 45,
+      price: 497, tier: 'starter',
+      theme: { primary: '#3b82f6', glow: 'rgba(59,130,246,0.15)', dim: 'rgba(59,130,246,0.08)', gradient: 'linear-gradient(135deg, #3b82f6, #2563eb)', bg: 'radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.08) 0%, transparent 60%)' },
       heroLabel: 'AI-Powered Receptionist for Plumbing Companies',
       heroHeadline: 'Stop losing <span id="hero-jobword">jobs</span><br>to <span class="gradient">voicemail</span>',
-      heroSubtitle: 'Burst pipes don\'t happen during business hours. Your AI receptionist answers every emergency call 24/7, dispatches your team, and texts you the details.',
-      painLost: '$16,000+',
+      heroSubtitle: 'Burst pipes don\'t wait for business hours. Your AI receptionist answers every emergency call 24/7, dispatches your team, and texts you the details.',
+      painLost: '$10,800+',
       painLostLabel: 'lost per month by the average plumbing company from missed emergency calls.',
       painAfterHours: '45%',
-      painStory: 'A pipe bursts at 2am. The homeowner calls three plumbers. Two go to voicemail. One picks up. <strong style="color: #fff;">That plumber gets the $1,200 emergency call. You don\'t.</strong>',
-      mathIntro: 'The average plumbing company misses 5+ calls per week',
-      mathEquation: '<span class="red">5 missed calls</span> &times; $800 avg job<br>= <span class="red">$16,000/month lost</span>',
+      painAfterHoursLabel: 'of plumbing calls are emergencies that come after hours or on weekends.',
+      painChoseLabel: 'of homeowners chose a plumber because they were the first to pick up the phone.',
+      painStory: 'A pipe bursts at midnight. The homeowner calls three plumbers. Two go to voicemail. One picks up. <strong style="color: #fff;">That plumber gets the $800 emergency call. You don\'t.</strong>',
+      tryDescription: 'Call the number below. Pretend you\'re a homeowner with a burst pipe at midnight. Hear how the AI handles an emergency plumbing call.',
+      beforeItems: [
+        'Burst pipe calls hit voicemail at 2am',
+        'Homeowners call the next plumber who answers',
+        'Emergency calls pile up overnight unseen',
+        'Sewer backups wait until you check voicemail',
+        'You pay $2,500+/mo for an after-hours answering service'
+      ],
+      afterItems: [
+        'Every emergency call answered in under 2 seconds',
+        'Burst pipes and sewer backups triaged immediately',
+        'You get a text with address and urgency instantly',
+        'Routine jobs booked into your calendar automatically',
+        'Starting at $497/mo — one emergency call pays for it'
+      ],
+      mathIntro: 'The average plumbing company misses 6+ calls per week',
+      mathEquation: '<span class="red">6 missed calls</span> &times; $450 avg job<br>= <span class="red">$10,800/month lost</span>',
+      mathPrice: '$497/month',
+      mathRoi: 'That\'s a 22x return on investment',
       mathNote: 'One caught emergency call pays for the whole month.',
       testimonials: [
-        { quote: '"45% of our calls come after hours. We were losing all of them. Now the AI catches every single one and my phone buzzes with the job details."', author: 'Robert P.', role: 'Master Plumber &middot; Atlanta, GA' },
-        { quote: '"Emergency plumbing calls are worth $800-$1,500 each. We were sending 5+ per week to voicemail. Do the math on what we were losing."', author: 'Linda M.', role: 'Office Manager &middot; Chicago, IL' },
-        { quote: '"The AI handled a sewer backup call at 3am, got the address, assessed urgency, and texted me. Customer was blown away someone answered."', author: 'Marcus J.', role: 'Owner &middot; Charlotte, NC' }
-      ]
+        { quote: '"45% of our calls come after hours. We were losing all of them. Now the AI catches every single one and my phone buzzes with the job details."', author: 'Robert P.', role: 'Master Plumber, Rapid Flow Plumbing', avatar: 'R', color: '#3b82f6' },
+        { quote: '"A burst pipe call at 3am is worth $1,200. We were sending 5+ per week to voicemail. The Call Taker paid for itself on day one."', author: 'Linda M.', role: 'Office Manager, PipePro Services', avatar: 'L', color: '#ec4899' },
+        { quote: '"The AI handled a sewer backup call at 3am, got the address, assessed urgency, and texted me. Customer was blown away someone answered."', author: 'Marcus J.', role: 'Owner, Queen City Plumbing', avatar: 'M', color: '#f59e0b' }
+      ],
+      testimonialHeading: 'What plumbing owners are saying'
     },
     electrical: {
       name: 'Electrical', slug: 'electrical',
       jobWord: 'jobs', clientWord: 'customers',
-      avgJob: 600, missedPerWeek: 4, afterHoursPercent: 30,
-      starterPrice: 497, proPrice: 997,
-      tier: 'starter',
+      avgJob: 400, monthlyLoss: 9600, afterHoursPercent: 30,
+      price: 497, tier: 'starter',
+      theme: { primary: '#f59e0b', glow: 'rgba(245,158,11,0.15)', dim: 'rgba(245,158,11,0.08)', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)', bg: 'radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 60%)' },
       heroLabel: 'AI-Powered Receptionist for Electrical Contractors',
       heroHeadline: 'Stop losing <span id="hero-jobword">jobs</span><br>to <span class="gradient">voicemail</span>',
-      heroSubtitle: 'When a breaker trips or the power goes out, customers call now — not later. Your AI receptionist answers every call 24/7 and books the job before your competitor.',
-      painLost: '$10,000+',
+      heroSubtitle: 'When a breaker trips or an outlet starts sparking, customers call now. Your AI receptionist answers every call 24/7 and books the job before your competitor.',
+      painLost: '$9,600+',
       painLostLabel: 'lost per month by the average electrical company from missed calls.',
       painAfterHours: '30%',
-      painStory: 'A homeowner\'s panel sparks at night. They call three electricians. You\'re on a job. Your phone goes to voicemail. <strong style="color: #fff;">Someone else gets the $800 service call.</strong>',
-      mathIntro: 'The average electrical contractor misses 4+ calls per week',
-      mathEquation: '<span class="red">4 missed calls</span> &times; $600 avg job<br>= <span class="red">$10,000/month lost</span>',
+      painAfterHoursLabel: 'of electrical calls come in after hours when sparking outlets can\'t wait.',
+      painChoseLabel: 'of homeowners chose their electrician because they picked up the phone first.',
+      painStory: 'A homeowner\'s outlet is sparking at night. They call three electricians. You\'re on a job. Your phone goes to voicemail. <strong style="color: #fff;">Someone else gets the $800 service call.</strong>',
+      tryDescription: 'Call the number below. Pretend you\'re a homeowner with a sparking outlet at night. Hear the AI handle it in real time.',
+      beforeItems: [
+        'Sparking outlet calls go to voicemail at night',
+        'Homeowners call the next electrician on Google',
+        'Panel upgrade inquiries pile up unseen',
+        'Emergency calls wait until morning',
+        'You pay $2,000+/mo for a human receptionist'
+      ],
+      afterItems: [
+        'Every call answered in under 2 seconds',
+        'Electrical emergencies triaged and escalated instantly',
+        'You get a text with the job details immediately',
+        'Panel upgrades and rewiring jobs booked automatically',
+        'Starting at $497/mo — one service call pays for it'
+      ],
+      mathIntro: 'The average electrical contractor misses 6+ calls per week',
+      mathEquation: '<span class="red">6 missed calls</span> &times; $400 avg job<br>= <span class="red">$9,600/month lost</span>',
+      mathPrice: '$497/month',
+      mathRoi: 'That\'s a 19x return on investment',
       mathNote: 'One caught call more than pays for the service.',
       testimonials: [
-        { quote: '"We\'re a 4-man crew always on jobs. We were missing half our calls. Now every single one is answered and I get a text with what they need."', author: 'Steve W.', role: 'Master Electrician &middot; Tampa, FL' },
-        { quote: '"Panel upgrades, generator installs, rewiring — these are $2,000+ jobs. We can\'t afford to miss a single call. Now we don\'t."', author: 'Kevin D.', role: 'Owner &middot; Portland, OR' },
-        { quote: '"The AI knows the difference between a flickering light and a burning smell. It triages calls perfectly and escalates real emergencies."', author: 'Maria L.', role: 'Operations &middot; San Antonio, TX' }
-      ]
+        { quote: '"We\'re a 4-man crew always on jobs. We were missing half our calls. Now every single one is answered and I get a text with what they need."', author: 'Steve W.', role: 'Master Electrician, Bright Spark Electric', avatar: 'S', color: '#f59e0b' },
+        { quote: '"Panel upgrades, generator installs, rewiring \u2014 these are $2,000+ jobs. We can\'t afford to miss a single call. Now we don\'t."', author: 'Kevin D.', role: 'Owner, Pacific Power Electric', avatar: 'K', color: '#10b981' },
+        { quote: '"The AI knows the difference between a flickering light and a burning smell. It triages calls perfectly and escalates real emergencies."', author: 'Maria L.', role: 'Operations, Alamo City Electric', avatar: 'M', color: '#8b5cf6' }
+      ],
+      testimonialHeading: 'What electrical contractors are saying'
+    },
+    roofing: {
+      name: 'Roofing', slug: 'roofing',
+      jobWord: 'roof jobs', clientWord: 'homeowners',
+      avgJob: 8500, monthlyLoss: 42500, afterHoursPercent: 40,
+      price: 997, tier: 'pro',
+      theme: { primary: '#f97316', glow: 'rgba(249,115,22,0.15)', dim: 'rgba(249,115,22,0.08)', gradient: 'linear-gradient(135deg, #f97316, #ea580c)', bg: 'radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.08) 0%, transparent 60%)' },
+      heroLabel: 'AI-Powered Receptionist for Roofing Companies',
+      heroHeadline: 'Stop losing <span id="hero-jobword">roof jobs</span><br>to <span class="gradient">voicemail</span>',
+      heroSubtitle: 'Storm damage calls come in waves. When 4 roofers get called, whoever answers first wins the $8,500 job. Your AI receptionist makes sure that\'s always you.',
+      painLost: '$42,500+',
+      painLostLabel: 'lost per month by the average roofing company from missed storm damage calls.',
+      painAfterHours: '40%',
+      painAfterHoursLabel: 'of roofing calls come after storms hit \u2014 evenings, weekends, and holidays.',
+      painChoseLabel: 'of homeowners chose a roofer because they were the first company to answer.',
+      painStory: 'A hailstorm hits at 8pm. Homeowners call 4 roofers. Your phone goes to voicemail. The first roofer who answers gets the $8,500 roof. <strong style="color: #fff;">You don\'t even know they called.</strong>',
+      tryDescription: 'Call the number below. Pretend you\'re a homeowner with storm damage who already called 3 other roofers. Hear the AI handle it.',
+      beforeItems: [
+        'Storm damage calls hit voicemail after hours',
+        'Homeowners call 4 roofers \u2014 first to answer wins',
+        'You lose entire neighborhoods to faster competitors',
+        'Insurance restoration leads disappear overnight',
+        'You pay $3,000+/mo for a call center that still misses calls'
+      ],
+      afterItems: [
+        'Every storm call answered in under 2 seconds',
+        'You\'re always the first roofer to respond',
+        'Insurance claim details captured instantly',
+        'Inspection appointments booked automatically',
+        'Starting at $997/mo \u2014 one roof pays for the whole year'
+      ],
+      mathIntro: 'The average roofing company misses 5+ high-value calls per month',
+      mathEquation: '<span class="red">5 missed calls</span> &times; $8,500 avg roof<br>= <span class="red">$42,500/month lost</span>',
+      mathPrice: '$997/month',
+      mathRoi: 'That\'s a 43x return on investment',
+      mathNote: 'One caught storm damage call pays for an entire year of service.',
+      testimonials: [
+        { quote: '"After a storm last month, our AI caught 14 calls between 6pm and midnight. That was over $100K in roofing jobs we would have lost to voicemail."', author: 'Dave M.', role: 'Owner, Heartland Roofing Co.', avatar: 'D', color: '#ef4444' },
+        { quote: '"Insurance restoration calls come at all hours. Now we catch every single one. Our close rate went up 40% because we\'re first to respond."', author: 'Tony B.', role: 'Sales Manager, Gulf Coast Roofing', avatar: 'T', color: '#3b82f6' },
+        { quote: '"We used to lose 5-6 storm leads per event. At $8,500 per roof, that\'s $50K gone. The Call Taker paid for itself in one storm."', author: 'Rachel S.', role: 'Operations, Summit Roofing', avatar: 'R', color: '#10b981' }
+      ],
+      testimonialHeading: 'What roofing companies are saying'
     },
     dental: {
       name: 'Dental', slug: 'dental',
       jobWord: 'patients', clientWord: 'patients',
-      avgJob: 3000, missedPerWeek: 6, afterHoursPercent: 25,
-      starterPrice: 997, proPrice: 997,
-      tier: 'pro',
+      avgJob: 3000, monthlyLoss: 36000, afterHoursPercent: 25,
+      price: 997, tier: 'pro',
+      theme: { primary: '#0ea5e9', glow: 'rgba(14,165,233,0.15)', dim: 'rgba(14,165,233,0.08)', gradient: 'linear-gradient(135deg, #0ea5e9, #0284c7)', bg: 'radial-gradient(ellipse at 50% 0%, rgba(14,165,233,0.08) 0%, transparent 60%)' },
       heroLabel: 'AI-Powered Receptionist for Dental Practices',
       heroHeadline: 'Stop losing <span id="hero-jobword">patients</span><br>to <span class="gradient">voicemail</span>',
-      heroSubtitle: 'The average new dental patient is worth $3,000+ over their lifetime. Your AI receptionist answers every call, books appointments, and never puts a patient on hold.',
-      painLost: '$72,000+',
-      painLostLabel: 'in lifetime patient value lost per month from missed calls at the average dental practice.',
+      heroSubtitle: 'The average new dental patient is worth $3,000/year. Your AI receptionist answers every call, books appointments, and never puts a patient on hold \u2014 even during lunch.',
+      painLost: '$36,000+',
+      painLostLabel: 'in patient value lost per month from missed calls at the average dental practice.',
       painAfterHours: '25%',
-      painStory: 'A new patient with a toothache calls during lunch. Your front desk is busy. It goes to voicemail. They call the dentist down the street. <strong style="color: #fff;">That\'s a $3,000+ patient gone forever.</strong>',
-      mathIntro: 'The average dental practice misses 6+ new patient calls per week',
-      mathEquation: '<span class="red">6 missed calls</span> &times; $3,000 lifetime value<br>= <span class="red">$72,000/month in lost patient value</span>',
+      painAfterHoursLabel: 'of new patient calls come during lunch, after hours, or on weekends.',
+      painChoseLabel: 'of new patients chose a dentist because the office answered the phone first.',
+      painStory: 'A new patient with a toothache calls during lunch. Your front desk is eating. Voicemail. They call the dentist down the street. <strong style="color: #fff;">That\'s a $3,000/year patient gone forever.</strong>',
+      tryDescription: 'Call the number below. Pretend you\'re a new patient calling during lunch hour to book a cleaning. Hear the AI handle it.',
+      beforeItems: [
+        'New patient calls go to voicemail during lunch',
+        'Patients call the next dentist on Google instead',
+        'Front desk is too busy to answer every ring',
+        'After-hours emergency calls go unanswered',
+        'You pay $3,500+/mo for a full-time front desk person'
+      ],
+      afterItems: [
+        'Every patient call answered in under 2 seconds',
+        'New patient appointments booked instantly',
+        'Insurance and scheduling questions answered 24/7',
+        'Emergency dental calls triaged appropriately',
+        'Starting at $997/mo \u2014 one new patient pays for 3 months'
+      ],
+      mathIntro: 'The average dental practice misses 3+ new patient calls per week',
+      mathEquation: '<span class="red">3 missed calls</span> &times; $3,000/yr patient value<br>= <span class="red">$36,000/month in lost patient value</span>',
+      mathPrice: '$997/month',
+      mathRoi: 'That\'s a 36x return on investment',
       mathNote: 'One new patient pays for an entire year of service.',
       testimonials: [
-        { quote: '"We were missing 30% of new patient calls during lunch and after hours. That\'s $50,000+ in annual revenue we were just... giving away."', author: 'Dr. Amy C.', role: 'Practice Owner &middot; Scottsdale, AZ' },
-        { quote: '"Our front desk was overwhelmed. The AI handles overflow calls seamlessly — patients think they\'re talking to a real person."', author: 'Jessica N.', role: 'Practice Manager &middot; Austin, TX' },
-        { quote: '"Every new patient is worth $3,000-$5,000 to our practice. Missing even two calls a week was costing us more than a full-time receptionist."', author: 'Dr. Michael R.', role: 'Practice Owner &middot; Miami, FL' }
-      ]
+        { quote: '"We were missing 30% of new patient calls during lunch. That\'s $50,000+ in annual revenue we were just giving away. Not anymore."', author: 'Dr. Sarah L.', role: 'Owner, Bright Smile Dental', avatar: 'S', color: '#ec4899' },
+        { quote: '"Our front desk was overwhelmed. The AI handles overflow calls seamlessly \u2014 patients think they\'re talking to a real person."', author: 'Jessica N.', role: 'Practice Manager, Gentle Care Dentistry', avatar: 'J', color: '#8b5cf6' },
+        { quote: '"Every new patient is worth $3,000-$5,000 to our practice. Missing even two calls a week was costing us more than a full-time receptionist."', author: 'Dr. Michael R.', role: 'Owner, Coral Gables Dental', avatar: 'M', color: '#3b82f6' }
+      ],
+      testimonialHeading: 'What dental practices are saying'
     },
     medspa: {
       name: 'Med Spa', slug: 'medspa',
       jobWord: 'clients', clientWord: 'clients',
-      avgJob: 1200, missedPerWeek: 5, afterHoursPercent: 35,
-      starterPrice: 997, proPrice: 997,
-      tier: 'pro',
+      avgJob: 1200, monthlyLoss: 14400, afterHoursPercent: 35,
+      price: 997, tier: 'pro',
+      theme: { primary: '#ec4899', glow: 'rgba(236,72,153,0.15)', dim: 'rgba(236,72,153,0.08)', gradient: 'linear-gradient(135deg, #ec4899, #db2777)', bg: 'radial-gradient(ellipse at 50% 0%, rgba(236,72,153,0.08) 0%, transparent 60%)' },
       heroLabel: 'AI-Powered Receptionist for Med Spas',
       heroHeadline: 'Stop losing <span id="hero-jobword">clients</span><br>to <span class="gradient">voicemail</span>',
-      heroSubtitle: 'Your clients expect premium service from the first call. Your AI receptionist answers instantly, books treatments, and creates a luxury experience — 24/7.',
-      painLost: '$24,000+',
-      painLostLabel: 'lost per month by the average med spa from missed appointment calls.',
+      heroSubtitle: 'Your clients expect premium service from the first call. Your AI receptionist answers instantly after that Instagram post, books treatments, and creates a luxury experience \u2014 24/7.',
+      painLost: '$14,400+',
+      painLostLabel: 'lost per month by the average med spa from missed Botox and filler inquiries.',
       painAfterHours: '35%',
-      painStory: 'A client wants to book Botox before their event this weekend. They call after hours. Voicemail. They book with the spa that picks up. <strong style="color: #fff;">That\'s a $1,200 treatment — and a repeat client — gone.</strong>',
-      mathIntro: 'The average med spa misses 5+ booking calls per week',
-      mathEquation: '<span class="red">5 missed calls</span> &times; $1,200 avg treatment<br>= <span class="red">$24,000/month lost</span>',
+      painAfterHoursLabel: 'of med spa inquiries come evenings and weekends after seeing Instagram posts.',
+      painChoseLabel: 'of clients chose a med spa because they were the first to answer their call.',
+      painStory: 'A client sees your Botox Instagram post at 9pm and calls to book. Voicemail. They book with the med spa that picks up. <strong style="color: #fff;">That\'s a $1,200 treatment \u2014 and a repeat client \u2014 gone.</strong>',
+      tryDescription: 'Call the number below. Pretend you just saw a Botox post on Instagram and want to book a consultation. Hear the AI handle it.',
+      beforeItems: [
+        'Instagram-driven calls hit voicemail after hours',
+        'High-value clients book with competitors who answer',
+        'Consultation inquiries pile up in voicemail overnight',
+        'Repeat clients can\'t reschedule on weekends',
+        'You pay $3,000+/mo for a receptionist who works 9-5'
+      ],
+      afterItems: [
+        'Every inquiry answered in under 2 seconds',
+        'Botox, filler, and laser consultations booked instantly',
+        'Treatment questions answered professionally 24/7',
+        'VIP clients always reach a live voice',
+        'Starting at $997/mo \u2014 one Botox booking pays for it'
+      ],
+      mathIntro: 'The average med spa misses 3+ booking calls per week',
+      mathEquation: '<span class="red">3 missed calls</span> &times; $1,200/yr client value<br>= <span class="red">$14,400/month lost</span>',
+      mathPrice: '$997/month',
+      mathRoi: 'That\'s a 14x return on investment',
       mathNote: 'One caught booking pays for the month. Most clients become regulars.',
       testimonials: [
-        { quote: '"Our clients are busy professionals who call evenings and weekends. We were losing them to competitors who answered. Not anymore."', author: 'Dr. Lisa H.', role: 'Med Spa Owner &middot; Beverly Hills, CA' },
-        { quote: '"The AI books consultations, answers treatment questions, and sounds professional. Our clients love it. Our revenue is up 25%."', author: 'Natalie K.', role: 'Operations Manager &middot; Boca Raton, FL' },
-        { quote: '"Each new client does $3,000-$5,000/year in treatments. Missing their first call means losing all of that. The Call Taker was a no-brainer."', author: 'Andrea P.', role: 'Practice Owner &middot; Dallas, TX' }
-      ]
+        { quote: '"Our clients are busy professionals who call evenings and weekends after seeing our Instagram. We were losing them to competitors. Not anymore."', author: 'Dr. Lisa H.', role: 'Owner, Glow Aesthetic Med Spa', avatar: 'L', color: '#ec4899' },
+        { quote: '"The AI books consultations, answers treatment questions, and sounds like a luxury concierge. Our clients love it. Revenue is up 25%."', author: 'Natalie K.', role: 'Operations, Radiance Med Spa', avatar: 'N', color: '#8b5cf6' },
+        { quote: '"Each new client does $3,000-$5,000/year in treatments. Missing their first call means losing all of that. The Call Taker was a no-brainer."', author: 'Andrea P.', role: 'Owner, Luxe Beauty Bar', avatar: 'A', color: '#f59e0b' }
+      ],
+      testimonialHeading: 'What med spa owners are saying'
     },
     legal: {
       name: 'Legal', slug: 'legal',
       jobWord: 'cases', clientWord: 'clients',
-      avgJob: 5000, missedPerWeek: 4, afterHoursPercent: 30,
-      starterPrice: 997, proPrice: 997,
-      tier: 'pro',
+      avgJob: 5000, monthlyLoss: 60000, afterHoursPercent: 30,
+      price: 997, tier: 'pro',
+      theme: { primary: '#8b5cf6', glow: 'rgba(139,92,246,0.15)', dim: 'rgba(139,92,246,0.08)', gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)', bg: 'radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.08) 0%, transparent 60%)' },
       heroLabel: 'AI-Powered Receptionist for Law Firms',
       heroHeadline: 'Stop losing <span id="hero-jobword">cases</span><br>to <span class="gradient">voicemail</span>',
-      heroSubtitle: 'Legal clients call when they need help — not during business hours. Your AI receptionist does intake 24/7, captures case details, and never lets a potential client slip away.',
-      painLost: '$80,000+',
+      heroSubtitle: 'Car accidents happen at 11pm. Your AI receptionist does intake 24/7, captures case details, and makes sure no potential client ever gets your voicemail.',
+      painLost: '$60,000+',
       painLostLabel: 'lost per month by the average law firm from missed intake calls.',
       painAfterHours: '30%',
-      painStory: 'Someone gets in an accident Saturday night. They call three lawyers. Two go to voicemail. One answers. <strong style="color: #fff;">That attorney signs a $50,000 case. You never even knew they called.</strong>',
-      mathIntro: 'The average law firm misses 4+ potential client calls per week',
-      mathEquation: '<span class="red">4 missed calls</span> &times; $5,000 avg case value<br>= <span class="red">$80,000/month in lost cases</span>',
+      painAfterHoursLabel: 'of potential client calls come after hours when accidents and emergencies happen.',
+      painChoseLabel: 'of potential clients hired the first attorney whose office actually answered.',
+      painStory: 'Someone gets in a car accident at 11pm. They call three lawyers. Two go to voicemail. One answers. <strong style="color: #fff;">That attorney signs a $50,000 case. You never even knew they called.</strong>',
+      tryDescription: 'Call the number below. Pretend you were in a car accident at 11pm and need a lawyer. Hear the AI handle intake in real time.',
+      beforeItems: [
+        'Late-night accident calls go to voicemail',
+        'Potential clients hire the first firm that answers',
+        'Intake information is lost or incomplete',
+        'Weekend calls stack up until Monday morning',
+        'You pay $4,000+/mo for a call center that still misses calls'
+      ],
+      afterItems: [
+        'Every potential client call answered in under 2 seconds',
+        'Full intake completed: name, incident, date, injuries',
+        'Urgent cases flagged and escalated immediately',
+        'Consultation appointments booked automatically',
+        'Starting at $997/mo \u2014 one case pays for the whole year'
+      ],
+      mathIntro: 'The average law firm misses 3+ potential client calls per week',
+      mathEquation: '<span class="red">3 missed calls</span> &times; $5,000 avg case value<br>= <span class="red">$60,000/month in lost cases</span>',
+      mathPrice: '$997/month',
+      mathRoi: 'That\'s a 60x return on investment',
       mathNote: 'One signed case pays for an entire year of service.',
       testimonials: [
-        { quote: '"Personal injury calls come at all hours. One missed call can be a $100K+ case. The Call Taker ensures we never miss a single intake."', author: 'David C., Esq.', role: 'Managing Partner &middot; Los Angeles, CA' },
-        { quote: '"Our AI does initial intake — name, incident type, date, injuries. By the time we call back, we have everything we need to evaluate the case."', author: 'Patricia W.', role: 'Office Administrator &middot; Houston, TX' },
-        { quote: '"We were paying a call center $4,000/month and still missing calls. The Call Taker costs less, answers faster, and never puts clients on hold."', author: 'Mark S., Esq.', role: 'Solo Practitioner &middot; New York, NY' }
-      ]
+        { quote: '"Personal injury calls come at all hours. One missed call can be a $100K+ case. The Call Taker ensures we never miss a single intake."', author: 'David C., Esq.', role: 'Managing Partner, Carter Law Group', avatar: 'D', color: '#3b82f6' },
+        { quote: '"Our AI does initial intake \u2014 name, incident type, date, injuries. By the time we call back, we have everything we need to evaluate the case."', author: 'Patricia W.', role: 'Office Admin, Walsh & Associates', avatar: 'P', color: '#10b981' },
+        { quote: '"We were paying a call center $4,000/month and still missing calls. The Call Taker costs less, answers faster, and never puts clients on hold."', author: 'Mark S., Esq.', role: 'Solo Practitioner, Sullivan Law', avatar: 'M', color: '#f59e0b' }
+      ],
+      testimonialHeading: 'What law firms are saying'
     },
     property: {
       name: 'Property Mgmt', slug: 'property',
       jobWord: 'tenants', clientWord: 'tenants',
-      avgJob: 2000, missedPerWeek: 6, afterHoursPercent: 50,
-      starterPrice: 997, proPrice: 997,
-      tier: 'pro',
+      avgJob: 2400, monthlyLoss: 28800, afterHoursPercent: 50,
+      price: 997, tier: 'pro',
+      theme: { primary: '#14b8a6', glow: 'rgba(20,184,166,0.15)', dim: 'rgba(20,184,166,0.08)', gradient: 'linear-gradient(135deg, #14b8a6, #0d9488)', bg: 'radial-gradient(ellipse at 50% 0%, rgba(20,184,166,0.08) 0%, transparent 60%)' },
       heroLabel: 'AI-Powered Receptionist for Property Management',
       heroHeadline: 'Stop losing <span id="hero-jobword">tenants</span><br>to <span class="gradient">voicemail</span>',
-      heroSubtitle: 'Maintenance emergencies happen at midnight. Prospective tenants call on weekends. Your AI receptionist handles it all 24/7 — emergency dispatch, showing schedules, and tenant support.',
-      painLost: '$48,000+',
+      heroSubtitle: 'Tenant emergencies happen at 10pm. Prospective tenants call on weekends. Your AI receptionist handles it all 24/7 \u2014 emergency dispatch, showing schedules, and tenant support.',
+      painLost: '$28,800+',
       painLostLabel: 'lost per year in tenant turnover from poor response times and missed maintenance calls.',
       painAfterHours: '50%',
-      painStory: 'A tenant\'s water heater bursts at midnight. They call. Voicemail. They\'re furious. They leave a 1-star review and don\'t renew. <strong style="color: #fff;">That\'s $2,000/month in rent and a $3,000 turnover cost.</strong>',
+      painAfterHoursLabel: 'of tenant calls are after-hours emergencies \u2014 burst pipes, lockouts, HVAC failures.',
+      painChoseLabel: 'of tenants say poor communication is their #1 reason for not renewing a lease.',
+      painStory: 'A tenant\'s water heater bursts at 10pm. They call. Voicemail. They\'re furious. They leave a 1-star review and don\'t renew. <strong style="color: #fff;">That\'s $2,400/month in rent and a $3,000 turnover cost.</strong>',
+      tryDescription: 'Call the number below. Pretend you\'re a tenant with a maintenance emergency at 10pm. Hear the AI handle it.',
+      beforeItems: [
+        'Tenant emergencies hit voicemail at night',
+        'Prospective tenants can\'t reach you on weekends',
+        'Maintenance requests pile up unseen',
+        'Angry tenants leave 1-star reviews',
+        'You pay $2,500+/mo for an after-hours service'
+      ],
+      afterItems: [
+        'Every tenant call answered in under 2 seconds',
+        'Maintenance emergencies dispatched immediately',
+        'Showing requests and inquiries handled 24/7',
+        'Tenant satisfaction scores skyrocket',
+        'Starting at $997/mo \u2014 preventing one turnover pays for the year'
+      ],
       mathIntro: 'The average property management company misses 6+ calls per week',
-      mathEquation: '<span class="red">6 missed calls</span> &times; $2,000 avg impact<br>= <span class="red">$48,000/month at risk</span>',
+      mathEquation: '<span class="red">6 missed calls</span> &times; $2,400/yr tenant value<br>= <span class="red">$28,800/month at risk</span>',
+      mathPrice: '$997/month',
+      mathRoi: 'That\'s a 29x return on investment',
       mathNote: 'Preventing one tenant from leaving pays for the entire year.',
       testimonials: [
-        { quote: '"50% of our calls come after hours. Maintenance emergencies, lockouts, prospective tenants. The AI handles all of it and dispatches appropriately."', author: 'Jennifer L.', role: '200-unit Portfolio &middot; Phoenix, AZ' },
-        { quote: '"Tenant satisfaction went up 35% since we started using The Call Taker. No more voicemail frustration. Every call gets a real response."', author: 'Carlos M.', role: 'Property Manager &middot; Orlando, FL' },
-        { quote: '"We manage 400 units. The AI handles routine calls, escalates emergencies, and books showings for vacant units. It replaced two part-time staff."', author: 'Susan T.', role: 'VP Operations &middot; San Diego, CA' }
-      ]
+        { quote: '"50% of our calls come after hours. Maintenance emergencies, lockouts, prospective tenants. The AI handles all of it and dispatches appropriately."', author: 'Jennifer L.', role: 'Portfolio Manager, Skyline Properties', avatar: 'J', color: '#3b82f6' },
+        { quote: '"Tenant satisfaction went up 35% since we started using The Call Taker. No more voicemail frustration. Every call gets a real response."', author: 'Carlos M.', role: 'Property Manager, Sunshine Realty', avatar: 'C', color: '#f59e0b' },
+        { quote: '"We manage 400 units. The AI handles routine calls, escalates emergencies, and books showings for vacant units. It replaced two part-time staff."', author: 'Susan T.', role: 'VP Operations, Coastal Property Group', avatar: 'S', color: '#10b981' }
+      ],
+      testimonialHeading: 'What property managers are saying'
     }
   };
 
   var currentIndustry = 'hvac';
 
-  // === SET INDUSTRY — Updates entire page ===
+  // === SET INDUSTRY — Updates entire page with smooth transitions ===
   window.setIndustry = function(slug) {
     currentIndustry = slug;
     var ind = INDUSTRIES[slug];
     if (!ind) return;
+
+    // === APPLY INDUSTRY COLOR THEME ===
+    if (ind.theme) {
+      var r = document.documentElement.style;
+      r.setProperty('--green', ind.theme.primary);
+      r.setProperty('--green-glow', ind.theme.glow);
+      r.setProperty('--green-dim', ind.theme.dim);
+      // Update hero background glow
+      var heroGlow = document.querySelector('.services-hero');
+      if (heroGlow) heroGlow.style.background = ind.theme.bg;
+      // Update gradient text spans
+      document.querySelectorAll('.gradient').forEach(function(el) {
+        el.style.background = ind.theme.gradient;
+        el.style.webkitBackgroundClip = 'text';
+        el.style.webkitTextFillColor = 'transparent';
+        el.style.backgroundClip = 'text';
+      });
+      // Update diamond frames
+      document.querySelectorAll('.diamond-frame.diamond-green').forEach(function(el) {
+        el.style.borderColor = ind.theme.dim;
+        el.style.background = 'linear-gradient(135deg, ' + ind.theme.dim + ' 0%, rgba(0,0,0,0) 100%)';
+      });
+      // Update section labels
+      document.querySelectorAll('.section-label, .hero-label, .feature-label').forEach(function(el) {
+        if (!el.style.color || el.style.color !== '#ef4444') el.style.color = ind.theme.primary;
+      });
+      // Update stat values
+      document.querySelectorAll('.stat-val').forEach(function(el) {
+        el.style.color = ind.theme.primary;
+      });
+      // Update active pill
+      document.querySelectorAll('.industry-pill.active').forEach(function(el) {
+        el.style.background = ind.theme.primary;
+      });
+      // Update CTA glow
+      var ctaGlow = document.querySelector('section:last-of-type [style*="radial-gradient"]');
+      if (ctaGlow) ctaGlow.style.background = 'radial-gradient(ellipse, ' + ind.theme.glow + ' 0%, transparent 70%)';
+      // Update floating deco diamonds
+      document.querySelectorAll('.deco-solid').forEach(function(el) {
+        el.style.background = ind.theme.primary;
+      });
+      document.querySelectorAll('.deco-outline').forEach(function(el) {
+        el.style.borderColor = ind.theme.primary;
+      });
+    }
 
     // Update hidden field
     var cbIndustry = document.getElementById('cb-industry');
@@ -889,6 +1436,8 @@
     el = document.getElementById('pain-lost'); if (el) { el.textContent = ind.painLost; flash(el); }
     el = document.getElementById('pain-lost-label'); if (el) el.textContent = ind.painLostLabel;
     el = document.getElementById('pain-afterhours'); if (el) { el.textContent = ind.painAfterHours; flash(el); }
+    el = document.getElementById('pain-afterhours-label'); if (el) el.textContent = ind.painAfterHoursLabel;
+    el = document.getElementById('pain-chose-label'); if (el) el.textContent = ind.painChoseLabel;
 
     // Pain story
     var storyEl = document.querySelectorAll('.pain-grid')[0];
@@ -900,55 +1449,64 @@
       }
     }
 
+    // Try it description
+    el = document.getElementById('try-description'); if (el) el.textContent = ind.tryDescription;
+
+    // Before/After items
+    if (ind.beforeItems) {
+      for (var b = 0; b < ind.beforeItems.length; b++) {
+        el = document.getElementById('ba-before-' + (b+1));
+        if (el) {
+          var span = el.querySelector('span');
+          if (span) span.textContent = ind.beforeItems[b];
+        }
+      }
+    }
+    if (ind.afterItems) {
+      for (var a = 0; a < ind.afterItems.length; a++) {
+        el = document.getElementById('ba-after-' + (a+1));
+        if (el) {
+          var span = el.querySelector('span');
+          if (span) span.textContent = ind.afterItems[a];
+        }
+      }
+    }
+
     // Math section
     el = document.getElementById('math-intro'); if (el) el.textContent = ind.mathIntro;
     el = document.getElementById('math-equation'); if (el) { el.innerHTML = ind.mathEquation; flash(el); }
-
-    var monthlyLost = ind.missedPerWeek * ind.avgJob * 4;
-    var roi = Math.round(monthlyLost / ind.starterPrice);
-    el = document.getElementById('math-price'); if (el) { el.textContent = '$' + ind.starterPrice.toLocaleString() + '/month'; flash(el); }
-    el = document.getElementById('math-roi'); if (el) el.textContent = 'That\'s a ' + roi + 'x return on investment';
+    el = document.getElementById('math-price'); if (el) { el.textContent = ind.mathPrice; flash(el); }
+    el = document.getElementById('math-roi'); if (el) el.textContent = ind.mathRoi;
     el = document.getElementById('math-note'); if (el) el.textContent = ind.mathNote;
 
-    // Pricing
+    // Pricing — keep as-is (2-tier static)
     updatePricing(ind);
 
-    // Testimonials
+    // Testimonials heading
+    el = document.getElementById('testimonials-heading'); if (el) el.textContent = ind.testimonialHeading;
+
+    // Testimonials with colored avatars
     for (var i = 0; i < 3; i++) {
       var t = ind.testimonials[i];
+      if (!t) continue;
       el = document.getElementById('test-quote-' + (i+1)); if (el) el.textContent = t.quote;
       el = document.getElementById('test-author-' + (i+1)); if (el) el.textContent = t.author;
-      el = document.getElementById('test-role-' + (i+1)); if (el) el.innerHTML = t.role;
+      el = document.getElementById('test-role-' + (i+1)); if (el) el.textContent = t.role;
+      el = document.getElementById('test-avatar-' + (i+1));
+      if (el) {
+        el.textContent = t.avatar;
+        el.style.background = t.color;
+      }
     }
   };
 
   function updatePricing(ind) {
     // 2-tier pricing: Starter $497 (HVAC/Plumbing/Electrical), Pro $997 (others)
-    document.getElementById('price-starter').innerHTML = '$497<span>/mo</span>';
-    document.getElementById('price-starter-note').textContent = '+ $500 one-time setup';
-    document.getElementById('price-pro').innerHTML = '$997<span>/mo</span>';
-    document.getElementById('price-pro-note').textContent = '+ $500 one-time setup';
-
-    flash(document.getElementById('price-starter'));
-    flash(document.getElementById('price-pro'));
+    var starterEl = document.getElementById('price-starter');
+    var proEl = document.getElementById('price-pro');
+    if (starterEl) { starterEl.innerHTML = '$497<span>/mo</span>'; flash(starterEl); }
+    if (proEl) { proEl.innerHTML = '$997<span>/mo</span>'; flash(proEl); }
   }
-
-  // Override pricing toggle to be industry-aware
-  window.setPricingPlan = function(plan) {
-    var monthlyBtn = document.getElementById('pricing-monthly-btn');
-    var annualBtn = document.getElementById('pricing-annual-btn');
-    var saveBadge = document.getElementById('pricing-save-badge');
-    if (plan === 'annual') {
-      monthlyBtn.style.background = 'transparent'; monthlyBtn.style.color = 'var(--text-3)';
-      annualBtn.style.background = 'var(--green)'; annualBtn.style.color = '#000';
-      if (saveBadge) saveBadge.style.color = '#000';
-    } else {
-      monthlyBtn.style.background = 'var(--green)'; monthlyBtn.style.color = '#000';
-      annualBtn.style.background = 'transparent'; annualBtn.style.color = 'var(--text-3)';
-      if (saveBadge) saveBadge.style.color = 'var(--green)';
-    }
-    updatePricing(INDUSTRIES[currentIndustry]);
-  };
 
   function flash(el) {
     if (!el) return;
@@ -1009,7 +1567,7 @@
       await sendCallback(phone, company, 'website-hero');
       var ind = INDUSTRIES[currentIndustry];
       sendWarRoom('CALLBACK: ' + (company || phone) + ' (' + ind.name + ')',
-        'Phone: ' + phone + '\nCompany: ' + company + '\nIndustry: ' + ind.name + '\nPricing tier: $' + ind.proPrice + '/mo\nSource: Homepage callback\n\nBland.ai calling them NOW!');
+        'Phone: ' + phone + '\nCompany: ' + company + '\nIndustry: ' + ind.name + '\nPricing tier: $' + ind.price + '/mo\nSource: Homepage callback\n\nBland.ai calling them NOW!');
       createGHLContact(phone, company, ['website-callback', 'bland-ai', 'high-intent']);
 
       document.getElementById('cb-form').style.display = 'none';
