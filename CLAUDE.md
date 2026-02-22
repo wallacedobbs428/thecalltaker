@@ -1,13 +1,21 @@
 # The Call Taker — Project Context
 
 ## What This Is
-AI receptionist service for HVAC companies. Answers every call 24/7 so they never lose a job to voicemail again.
+AI receptionist for service businesses across 8 industries: HVAC, Plumbing, Electrical, Roofing, Dental, Med Spa, Legal, Property Management. Answers every call 24/7 so they never lose a customer to voicemail again.
 
-## Current Priority: 10 PAYING CLIENTS BY MARCH 14, 2026
+## Current Priority: $100K BY MAY 2026
 
-**Monthly Goal:** 10 clients × $297/mo = $2,970 MRR
-**Daily Activity:** 25+ Instagram DMs + 1 post/day + Facebook group engagement
-**Channels:** Instagram DMs (primary), Facebook groups, Cold email (warming up)
+**Pricing (2 tiers):**
+| | Starter | Pro |
+|---|---|---|
+| Price | $497/mo | $997/mo |
+| Setup | $500 one-time | $500 one-time |
+| Trial | 7 days free | 7 days free |
+| For | HVAC, Plumbing, Electrical | Dental, Legal, Roofing, MedSpa, Property Mgmt |
+
+**"Founding 20":** First 20 customers locked in at launch pricing for life.
+**Target:** 45 clients × ~$700 avg MRR = ~$33K MRR by May 2026
+**Channels:** Bland.ai cold calls (20/day), Ben SMS (30/day), cold email (blast + Lemlist), secret shopper (15/evening), daily human call sheet (15/morning), Instagram DMs
 
 ## Wallace Shorthand
 - **ss** = screenshot or screenshots (context-dependent) — check Desktop for most recent `.png` files
@@ -16,8 +24,8 @@ AI receptionist service for HVAC companies. Answers every call 24/7 so they neve
 | Member | Role | What They Do |
 |--------|------|-------------|
 | **Wallace** | Founder / CEO / Builder | Builds the tech, funds ALL subscriptions, primary operator, runs the business |
-| **William** | Demo Closer / Brother | Face on Zoom demo calls, presents to prospects, closes deals live |
-| **Mills** | Co-Founder / Partner | GitHub access, shared ownership, strategy |
+| **William** | Demo Closer / Brother | Zoom demo calls, cold calls from daily call sheet, presents to prospects |
+| **Mills** | Co-Founder / Partner / Caller | GitHub access, strategy, makes cold calls from daily call sheet |
 | **Claude** | Chief Builder | Builds everything — website, agents, strategy, content, integrations |
 | **Max** | 24/7 Sales Engine | Cold emails, follow-ups, reply monitor, pipeline mgmt, daily reports |
 | **Ben** | 24/7 Senior Closer | ROI angles, re-engagement, lead scoring, SMS, morning/evening briefings |
@@ -299,10 +307,12 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 - **Workaround:** Wallace uses Instantly UI manually; Max handles outreach via GHL email API instead
 - **4 sending accounts** on skylfinder.com domain (warming up)
 
-## $20K War Plan Infrastructure (thecalltaker-ops/)
+## $100K Sprint Infrastructure (thecalltaker-ops/)
+- **Cold Caller:** `ops/cold-caller.py` — Bland.ai outbound, 20 cold calls/day + 15 secret shopper/evening
+- **Daily Call Sheet:** `ops/daily-call-sheet.py` — 15 scored leads + scripts to ntfy at 8am daily
 - **Blast Engine:** `ops/blast-engine.py` — unified email sender, warmup ramp 20→200/day, A/B testing 3 templates
-- **Partner Outreach:** `ops/partner-outreach.py` — 135 marketing agencies, 20/day at 11am
-- **Revenue Tracker:** `ops/revenue-tracker.py` — MRR tracking toward $20K goal, 7pm daily report
+- **Partner Outreach:** `ops/partner-outreach.py` — 240 agencies across 8 industries, 20/day at 11am
+- **Revenue Tracker:** `ops/revenue-tracker.py` — MRR tracking toward $33K goal, 7pm daily report
 - **Stripe Webhook:** `ops/stripe-webhook-handler.py` — localhost:8787, auto-tags customers on payment
 - **Secret Shopper List:** `ops/secret-shopper-list.py` — 15 priority businesses to call nightly at 6pm
 - **Google Maps Scraper:** `ops/google-maps-scraper.py` — Bing + DDG scraper, 200+ US cities

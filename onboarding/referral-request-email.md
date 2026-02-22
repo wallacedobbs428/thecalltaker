@@ -21,7 +21,7 @@ Before sending any of these, decide on your referral reward. Here are two option
 - Credits stack (2 referrals = $200 credit).
 - Best for: clients on annual plans or higher-tier pricing where "1 free month" feels less impactful.
 
-**Recommendation:** Start with Option A (1 free month). It is easier to explain in a text or quick conversation, and HVAC owners immediately understand the value. Switch to Option B if you move upmarket or raise prices.
+**Recommendation:** Start with Option A (1 free month). It is easier to explain in a text or quick conversation, and business owners immediately understand the value. Switch to Option B if you move upmarket or raise prices.
 
 ---
 
@@ -49,7 +49,7 @@ That is [X] chances to win a job that your team did not have to lift a finger fo
 
 Anything you would change? Anything the AI is saying that does not sound right? I want to make sure it is dialed in perfectly for your shop.
 
-Also -- if you know any other HVAC owners who are losing calls to voicemail, I would love an intro. No pitch, I will just run a free audit for them like I did for you. And if they end up signing up, **your next month is on me**.
+Also -- if you know any other business owners who are losing calls to voicemail, I would love an intro. No pitch, I will just run a free audit for them like I did for you. And if they end up signing up, **your next month is on me**.
 
 Either way, glad it is working for you.
 
@@ -81,7 +81,7 @@ thecalltaker.com
 
 Hey [First Name],
 
-Quick question -- do you know 1 or 2 other HVAC companies that are probably missing calls right now?
+Quick question -- do you know 1 or 2 other companies in your industry that are probably missing calls right now?
 
 I am looking to bring on a few more shops this month, and honestly, my best clients have come from referrals from guys like you.
 
@@ -132,7 +132,7 @@ Hey [First Name],
 
 Really glad to hear that. Seriously, that kind of feedback makes my day.
 
-Since things are clicking, I have a quick ask. Do you know any other HVAC owners -- maybe guys you see at supply houses, people in your Facebook groups, or even competitors in a different zip code -- who are probably missing calls?
+Since things are clicking, I have a quick ask. Do you know any other business owners -- maybe people you see at industry events, folks in your Facebook groups, or even competitors in a different zip code -- who are probably missing calls?
 
 I would love to do the same thing for them that I did for you. I will run a free audit, show them the data, and if it makes sense, get them set up.
 
@@ -173,7 +173,7 @@ thecalltaker.com
 If they do not reply to any referral request:
 
 - **Do not follow up on the referral ask specifically.** It feels pushy.
-- **Wait 30 days** and try a different angle. For example, text them: "Hey [First Name], random question -- you know anyone else in HVAC who complains about missing calls? Trying to help a few more shops like yours."
+- **Wait 30 days** and try a different angle. For example, text them: "Hey [First Name], random question -- you know anyone else in your industry who complains about missing calls? Trying to help a few more businesses like yours."
 - **The best referral generator is great service.** Keep delivering results and the referrals will come naturally over time.
 
 ---

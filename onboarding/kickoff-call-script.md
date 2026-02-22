@@ -12,7 +12,7 @@
 
 > "Hey [Client Name], this is Wallace with The Call Taker. First off, congratulations on making a great decision for your business. I'm excited to get your AI receptionist up and running so you never miss another call again.
 >
-> Before we dive in, I just want to say thank you for trusting us. We work exclusively with HVAC companies, so everything we do is built specifically for how your business operates. You're going to love this."
+> Before we dive in, I just want to say thank you for trusting us. We work with service businesses across 8 industries, so everything we do is built specifically for how your business operates. You're going to love this."
 
 **If they seem nervous or unsure:**
 
@@ -61,16 +61,14 @@
 
 > "Walk me through the services you offer. I want to make sure when someone calls asking about [service], the AI knows exactly what to say."
 
-- [ ] AC Repair
-- [ ] AC Installation / Replacement
-- [ ] Heating Repair
-- [ ] Heating Installation / Replacement
-- [ ] Maintenance / Tune-Ups
-- [ ] Duct Cleaning / Repair
-- [ ] Indoor Air Quality
-- [ ] Commercial HVAC
-- [ ] Mini-Splits / Ductless
-- [ ] Thermostat Installation
+**List all services your business provides:**
+- [ ] _______________
+- [ ] _______________
+- [ ] _______________
+- [ ] _______________
+- [ ] _______________
+- [ ] _______________
+- [ ] _______________
 - [ ] Other: _______________
 
 **For each service, ask:**
@@ -80,13 +78,13 @@
 
 ### Emergency Protocol
 
-> "Now let's talk about emergencies. When someone calls at 2 AM with no heat in January, what do you want to happen?"
+> "Now let's talk about emergencies or urgent situations. When someone calls at 2 AM with an urgent issue, what do you want to happen?"
 
-- **What counts as an emergency?**
-  - No heat in winter
-  - No AC in summer
-  - Gas smell / carbon monoxide
-  - Water leak from unit
+- **What counts as an emergency/urgent situation?**
+  - _______________
+  - _______________
+  - _______________
+  - _______________
   - Other: _______________
 - **Emergency escalation process:**
   - Immediately transfer to: _____________ (phone number)
@@ -192,7 +190,7 @@
 > "Some might, some won't. What they WILL know is that their call was answered immediately, they were treated professionally, and their appointment got booked. That's what matters."
 
 **"What if I don't get many calls?"**
-> "Then you're paying for peace of mind that when calls DO come in -- especially that $8,000 AC install call on a Saturday morning -- it gets answered. One missed call can cost more than a full year of our service."
+> "Then you're paying for peace of mind that when calls DO come in -- especially that high-value lead on a Saturday morning -- it gets answered. One missed call can cost more than a full year of our service."
 
 ---
 
