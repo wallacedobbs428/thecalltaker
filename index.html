@@ -1461,9 +1461,11 @@
     var cbIndustry = document.getElementById('cb-industry');
     if (cbIndustry) cbIndustry.value = slug;
 
-    // Update industry pills
+    // Update industry pills — clear inline bg from previous theme first
     document.querySelectorAll('.industry-pill').forEach(function(pill) {
       pill.classList.remove('active');
+      pill.style.background = '';
+      pill.style.borderColor = '';
       if (pill.textContent.trim().toLowerCase().replace(/\s+/g, '') === ind.name.toLowerCase().replace(/\s+/g, '')) {
         pill.classList.add('active');
       }
