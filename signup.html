@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Get Started | The Call Taker</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="description" content="Sign up for The Call Taker AI receptionist. Never miss another HVAC call.">
+  <meta name="description" content="Sign up for The Call Taker AI receptionist. Never miss another call. Plans from $497/mo for service businesses.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -43,8 +43,11 @@
     @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
 
     /* Plans */
-    .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
+    .plans-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 24px; max-width: 700px; margin-left: auto; margin-right: auto; }
     @media (max-width: 768px) { .plans-grid { grid-template-columns: 1fr; } }
+    .founding-badge { display: inline-block; background: linear-gradient(135deg, rgba(0,220,130,0.15), rgba(0,168,255,0.1)); border: 1px solid rgba(0,220,130,0.3); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 700; color: var(--green); margin-bottom: 16px; text-align: center; }
+    .setup-fee { font-size: 13px; color: var(--text-3); margin-top: 6px; }
+    .trial-badge { font-size: 12px; font-weight: 600; color: var(--green); margin-top: 4px; }
     .plan-card {
       background: #000; padding: 32px 24px; cursor: pointer; transition: background 0.15s;
       display: flex; flex-direction: column; position: relative;
@@ -141,7 +144,7 @@
     <!-- Hero -->
     <div class="signup-hero">
       <h1>Get Started with The Call Taker</h1>
-      <p>Set up in 48 hours. No contracts. Cancel anytime.</p>
+      <p>7-day free trial. Set up in 48 hours. No contracts. Cancel anytime.</p>
     </div>
 
     <!-- Step indicator -->
@@ -159,7 +162,7 @@
 
         <div class="field">
           <label>Company Name *</label>
-          <input type="text" id="s-company" placeholder="ABC Heating & Cooling" required>
+          <input type="text" id="s-company" placeholder="Your Company Name" required>
         </div>
         <div class="field-row">
           <div class="field">
@@ -221,62 +224,43 @@
     <!-- STEP 2: Choose Plan -->
     <div class="signup-step" id="step2">
 
-      <!-- Billing toggle -->
-      <div class="billing-row">
-        <span class="billing-label active" id="lbl-monthly">Monthly</span>
-        <div class="toggle-track" id="billing-toggle" onclick="toggleBilling()">
-          <div class="toggle-knob"></div>
-        </div>
-        <span class="billing-label" id="lbl-annual">Annual</span>
-        <span class="save-badge">Save up to $1,994</span>
-      </div>
+      <!-- Founding 20 Badge -->
+      <div class="founding-badge">Founding 20 — First 20 customers locked at this pricing for life</div>
 
       <div class="plans-grid">
         <!-- Starter -->
-        <div class="plan-card" onclick="selectPlan('starter')">
+        <div class="plan-card selected" onclick="selectPlan('starter')">
           <div class="plan-badge">&nbsp;</div>
           <div class="plan-name">Starter</div>
-          <div class="plan-desc">Perfect for small shops</div>
-          <div class="plan-price" data-monthly="297" data-annual="2970">$297<span>/mo</span></div>
-          <div class="plan-annual" data-text="$2,970/yr (save $594)">&nbsp;</div>
+          <div class="plan-desc">HVAC, Plumbing, Electrical</div>
+          <div class="plan-price">$497<span>/mo</span></div>
+          <div class="setup-fee">+ $500 one-time setup</div>
+          <div class="trial-badge">7-day free trial</div>
           <div class="plan-divider"></div>
           <div class="plan-features">
             <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> AI answers calls 24/7</div>
             <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Books appointments</div>
             <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Texts you new leads</div>
-            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Basic call analytics</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Emergency detection</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 48-hour setup</div>
           </div>
         </div>
 
         <!-- Pro -->
-        <div class="plan-card selected" onclick="selectPlan('pro')">
-          <div class="plan-badge">Most Popular</div>
+        <div class="plan-card" onclick="selectPlan('pro')">
+          <div class="plan-badge">Best for Premium Industries</div>
           <div class="plan-name">Pro</div>
-          <div class="plan-desc">For growing businesses</div>
-          <div class="plan-price" data-monthly="497" data-annual="4970">$497<span>/mo</span></div>
-          <div class="plan-annual" data-text="$4,970/yr (save $994)">&nbsp;</div>
+          <div class="plan-desc">Dental, Legal, Roofing, MedSpa, Property Mgmt</div>
+          <div class="plan-price">$997<span>/mo</span></div>
+          <div class="setup-fee">+ $500 one-time setup</div>
+          <div class="trial-badge">7-day free trial</div>
           <div class="plan-divider"></div>
           <div class="plan-features">
             <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Starter</div>
             <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Smart call routing</div>
-            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Emergency detection</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Custom intake workflow</div>
             <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Priority support</div>
-          </div>
-        </div>
-
-        <!-- Enterprise -->
-        <div class="plan-card" onclick="selectPlan('enterprise')">
-          <div class="plan-badge">&nbsp;</div>
-          <div class="plan-name">Enterprise</div>
-          <div class="plan-desc">Full-service solution</div>
-          <div class="plan-price" data-monthly="997" data-annual="9970">$997<span>/mo</span></div>
-          <div class="plan-annual" data-text="$9,970/yr (save $1,994)">&nbsp;</div>
-          <div class="plan-divider"></div>
-          <div class="plan-features">
-            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Pro</div>
-            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Review booster</div>
-            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Missed call text-back</div>
-            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Monthly reports + 1hr SLA</div>
+            <div class="plan-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Monthly performance reports</div>
           </div>
         </div>
       </div>
@@ -308,7 +292,7 @@
         </div>
         <div class="confirm-row">
           <span class="confirm-label">Plan</span>
-          <span class="confirm-value" id="c-plan">Pro</span>
+          <span class="confirm-value" id="c-plan">Starter</span>
         </div>
         <div class="confirm-row">
           <span class="confirm-label">Billing</span>
@@ -317,6 +301,14 @@
         <div class="confirm-row" style="border-bottom: none; padding-top: 16px;">
           <span class="confirm-label" style="font-size: 16px; font-weight: 600; color: #fff;">Total</span>
           <span class="confirm-total" id="c-total">$497/mo</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-label">Setup Fee</span>
+          <span class="confirm-value">$500 (one-time)</span>
+        </div>
+        <div class="confirm-row">
+          <span class="confirm-label">Free Trial</span>
+          <span class="confirm-value" style="color: var(--green);">7 days free</span>
         </div>
 
         <div style="display: flex; gap: 12px; margin-top: 24px;">
@@ -380,9 +372,9 @@
 
     <!-- ROI reminder -->
     <div style="text-align: center; padding: 40px 0 60px; border-top: 1px solid var(--border);">
-      <p style="font-size: 13px; color: var(--text-3); margin-bottom: 4px;">The average HVAC company loses</p>
-      <p style="font-size: 28px; font-weight: 800; color: #ef4444; margin-bottom: 4px;">$4,500/month</p>
-      <p style="font-size: 13px; color: var(--text-3);">to missed calls. One missed job pays for a month of service.</p>
+      <p style="font-size: 13px; color: var(--text-3); margin-bottom: 4px;">The average service business loses</p>
+      <p style="font-size: 28px; font-weight: 800; color: #ef4444; margin-bottom: 4px;">$7,000+/month</p>
+      <p style="font-size: 13px; color: var(--text-3);">to missed calls. One caught call pays for a month of service.</p>
     </div>
 
   </div>
@@ -398,12 +390,10 @@
 
   <script src="script.js"></script>
   <script>
-    var selectedPlan = 'pro';
-    var isAnnual = false;
+    var selectedPlan = 'starter';
     var plans = {
-      starter: { name: 'Starter', monthly: 297, annual: 2970 },
-      pro: { name: 'Pro', monthly: 497, annual: 4970 },
-      enterprise: { name: 'Enterprise', monthly: 997, annual: 9970 }
+      starter: { name: 'Starter', monthly: 497, desc: 'HVAC, Plumbing, Electrical' },
+      pro: { name: 'Pro', monthly: 997, desc: 'Dental, Legal, Roofing, MedSpa, Property Mgmt' }
     };
 
     function goStep(n) {
@@ -424,9 +414,9 @@
         document.getElementById('c-company').textContent = document.getElementById('s-company').value;
         document.getElementById('c-name').textContent = document.getElementById('s-first').value + ' ' + (document.getElementById('s-last').value || '');
         document.getElementById('c-email').textContent = document.getElementById('s-email').value;
-        document.getElementById('c-plan').textContent = p.name;
-        document.getElementById('c-billing').textContent = isAnnual ? 'Annual' : 'Monthly';
-        document.getElementById('c-total').textContent = isAnnual ? '$' + p.annual.toLocaleString() + '/yr' : '$' + p.monthly + '/mo';
+        document.getElementById('c-plan').textContent = p.name + ' (' + p.desc + ')';
+        document.getElementById('c-billing').textContent = 'Monthly';
+        document.getElementById('c-total').textContent = '$' + p.monthly + '/mo';
       }
 
       document.querySelectorAll('.signup-step').forEach(function(s) { s.classList.remove('active'); });
@@ -443,25 +433,6 @@
       selectedPlan = plan;
       document.querySelectorAll('.plan-card').forEach(function(c) { c.classList.remove('selected'); });
       event.currentTarget.classList.add('selected');
-    }
-
-    function toggleBilling() {
-      isAnnual = !isAnnual;
-      var track = document.getElementById('billing-toggle');
-      track.classList.toggle('on', isAnnual);
-      document.getElementById('lbl-monthly').classList.toggle('active', !isAnnual);
-      document.getElementById('lbl-annual').classList.toggle('active', isAnnual);
-
-      document.querySelectorAll('.plan-price').forEach(function(el) {
-        var m = el.getAttribute('data-monthly');
-        var a = el.getAttribute('data-annual');
-        el.innerHTML = isAnnual
-          ? '$' + parseInt(a).toLocaleString() + '<span>/yr</span>'
-          : '$' + m + '<span>/mo</span>';
-      });
-      document.querySelectorAll('.plan-annual').forEach(function(el) {
-        el.textContent = isAnnual ? el.getAttribute('data-text') : '\u00A0';
-      });
     }
 
     function toggleFaq(btn) {
@@ -484,8 +455,8 @@
         state: document.getElementById('s-state').value,
         calls: document.getElementById('s-calls').value,
         plan: selectedPlan,
-        billing: isAnnual ? 'annual' : 'monthly',
-        amount: isAnnual ? plans[selectedPlan].annual : plans[selectedPlan].monthly
+        billing: 'monthly',
+        amount: plans[selectedPlan].monthly
       };
 
       // Create contact in GHL
@@ -516,9 +487,7 @@
       // War room alert
       try {
         var p = plans[data.plan];
-        var priceStr = data.billing === 'annual'
-          ? '$' + p.annual.toLocaleString() + '/yr'
-          : '$' + p.monthly + '/mo';
+        var priceStr = '$' + p.monthly + '/mo';
         await fetch('https://ntfy.sh/tct-warroom-Kx7mN9pQ', {
           method: 'POST',
           headers: {

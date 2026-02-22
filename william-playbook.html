@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE CALL TAKER — William's Playbook</title>
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #0f0f1a;
+  color: #e8e8f0;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ========== SLIDE LAYOUT ========== */
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide-inner {
+  max-width: 900px;
+  width: 100%;
+  z-index: 2;
+}
+
+/* Alternating subtle backgrounds */
+.slide:nth-child(odd) {
+  background: #0f0f1a;
+}
+
+.slide:nth-child(even) {
+  background: #141428;
+}
+
+/* Slide divider line */
+.slide::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e94560 50%, transparent);
+  opacity: 0.3;
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1 {
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #e94560;
+}
+
+p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  margin-bottom: 16px;
+  color: #c8c8d8;
+}
+
+.accent {
+  color: #e94560;
+}
+
+.highlight {
+  color: #ffd460;
+}
+
+.white {
+  color: #ffffff;
+}
+
+/* ========== TITLE SLIDE ========== */
+.title-slide {
+  background: radial-gradient(ellipse at 30% 50%, #1a1a3e 0%, #0f0f1a 70%);
+  text-align: center;
+}
+
+.title-slide .badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #e94560, #c7254e);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 20px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 32px;
+}
+
+.title-slide h1 {
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  background: linear-gradient(135deg, #ffffff 0%, #c8c8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+}
+
+.title-slide .subtitle {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: #e94560;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.title-slide .tagline {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: #8888a8;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #5555778;
+  font-size: 0.8rem;
+  animation: bounce 2s infinite;
+}
+
+.scroll-hint .arrow {
+  width: 24px;
+  height: 24px;
+  border-right: 2px solid #e94560;
+  border-bottom: 2px solid #e94560;
+  transform: rotate(45deg);
+  opacity: 0.6;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ========== SLIDE LABEL ========== */
+.slide-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #e94560;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e94560;
+}
+
+/* ========== STAT BLOCKS ========== */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.stat-card {
+  background: rgba(233, 69, 96, 0.08);
+  border: 1px solid rgba(233, 69, 96, 0.2);
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 900;
+  color: #e94560;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  color: #a0a0b8;
+  line-height: 1.3;
+}
+
+/* ========== CALLOUT BOX ========== */
+.callout {
+  background: linear-gradient(135deg, rgba(233, 69, 96, 0.12) 0%, rgba(233, 69, 96, 0.04) 100%);
+  border-left: 4px solid #e94560;
+  border-radius: 0 12px 12px 0;
+  padding: 24px 28px;
+  margin: 20px 0;
+}
+
+.callout p {
+  color: #d8d8e8;
+  margin-bottom: 8px;
+}
+
+.callout p:last-child {
+  margin-bottom: 0;
+}
+
+/* ========== SCRIPT BOX ========== */
+.script-box {
+  background: #1a1a30;
+  border: 1px solid #2a2a4a;
+  border-radius: 16px;
+  padding: 28px;
+  margin: 16px 0;
+  position: relative;
+}
+
+.script-box::before {
+  content: 'SCRIPT';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: #e94560;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 2px 12px;
+  border-radius: 4px;
+  letter-spacing: 0.15em;
+}
+
+.script-box .line {
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  color: #d0d0e0;
+  margin-bottom: 14px;
+  padding-left: 16px;
+  border-left: 2px solid #333355;
+  line-height: 1.5;
+}
+
+.script-box .line:last-child {
+  margin-bottom: 0;
+}
+
+.script-box .line.emphasis {
+  border-left-color: #e94560;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.script-box .branch {
+  background: rgba(255, 212, 96, 0.08);
+  border: 1px solid rgba(255, 212, 96, 0.15);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 0.95rem;
+}
+
+.script-box .branch-label {
+  color: #ffd460;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+/* ========== FEATURE LIST ========== */
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  padding: 10px 0 10px 32px;
+  position: relative;
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: #c8c8d8;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.feature-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  background: rgba(233, 69, 96, 0.15);
+  border-radius: 50%;
+  border: 2px solid #e94560;
+}
+
+.feature-list li::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 5px;
+  height: 9px;
+  border-right: 2px solid #e94560;
+  border-bottom: 2px solid #e94560;
+}
+
+/* ========== PRICING TABLE ========== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.price-card {
+  background: #1a1a30;
+  border: 1px solid #2a2a4a;
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.price-card.featured {
+  border-color: #e94560;
+  background: linear-gradient(180deg, rgba(233, 69, 96, 0.1) 0%, #1a1a30 50%);
+  position: relative;
+}
+
+.price-card.featured::before {
+  content: 'MOST POPULAR';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #e94560;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: 100px;
+  letter-spacing: 0.15em;
+}
+
+.price-card .plan-name {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8888a8;
+  margin-bottom: 8px;
+}
+
+.price-card .plan-price {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.price-card .plan-price span {
+  font-size: 0.5em;
+  color: #6666888;
+  font-weight: 400;
+}
+
+.price-card .plan-desc {
+  font-size: 0.9rem;
+  color: #a0a0b8;
+  line-height: 1.4;
+  margin-top: 12px;
+}
+
+/* ========== DEMO LINE BANNER ========== */
+.demo-banner {
+  background: linear-gradient(135deg, #e94560 0%, #c7254e 100%);
+  border-radius: 16px;
+  padding: 32px 28px;
+  text-align: center;
+  margin: 24px 0;
+}
+
+.demo-banner .demo-number {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.demo-banner .demo-label {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+}
+
+/* ========== STEPS ========== */
+.steps {
+  counter-reset: step-counter;
+  list-style: none;
+  padding: 0;
+}
+
+.steps li {
+  counter-increment: step-counter;
+  padding: 16px 0 16px 56px;
+  position: relative;
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  color: #c8c8d8;
+  border-left: 2px solid #2a2a4a;
+  margin-left: 20px;
+}
+
+.steps li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: -16px;
+  top: 14px;
+  width: 32px;
+  height: 32px;
+  background: #e94560;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.steps li:last-child {
+  border-left-color: transparent;
+}
+
+/* ========== OBJECTION CARDS ========== */
+.objection {
+  background: #1a1a30;
+  border: 1px solid #2a2a4a;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+
+.objection-q {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 700;
+  color: #ffd460;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.objection-q::before {
+  content: 'Q';
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 212, 96, 0.15);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #ffd460;
+}
+
+.objection-a {
+  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+  color: #b8b8d0;
+  padding-left: 38px;
+  line-height: 1.6;
+}
+
+/* ========== COMPARISON TABLE ========== */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+}
+
+.comparison-table th {
+  background: rgba(233, 69, 96, 0.15);
+  color: #e94560;
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.comparison-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: #c0c0d0;
+}
+
+.comparison-table tr:nth-child(even) td {
+  background: rgba(255,255,255,0.02);
+}
+
+.comparison-table .us td {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ========== REFERENCE TABLE ========== */
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ref-table tr {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.ref-table td {
+  padding: 14px 16px;
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+}
+
+.ref-table td:first-child {
+  color: #8888a8;
+  font-weight: 600;
+  width: 40%;
+  white-space: nowrap;
+}
+
+.ref-table td:last-child {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* ========== RULES LIST ========== */
+.rules-list {
+  list-style: none;
+  padding: 0;
+}
+
+.rules-list li {
+  padding: 12px 0 12px 20px;
+  position: relative;
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  color: #c8c8d8;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.rules-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: #e94560;
+  border-radius: 2px;
+}
+
+.rules-list li strong {
+  color: #ffffff;
+}
+
+/* ========== DAILY ROUTINE ========== */
+.routine-block {
+  background: #1a1a30;
+  border: 1px solid #2a2a4a;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+
+.routine-block .time {
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  font-weight: 800;
+  color: #e94560;
+  margin-bottom: 12px;
+}
+
+.routine-block ul {
+  list-style: none;
+  padding: 0;
+}
+
+.routine-block ul li {
+  padding: 8px 0 8px 24px;
+  position: relative;
+  color: #c0c0d0;
+  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+}
+
+.routine-block ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 2px;
+  background: #e94560;
+}
+
+/* ========== NAV ARROWS ========== */
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(15, 15, 26, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(233, 69, 96, 0.2);
+  z-index: 100;
+}
+
+.nav-btn {
+  background: rgba(233, 69, 96, 0.15);
+  border: 1px solid rgba(233, 69, 96, 0.3);
+  color: #e94560;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+}
+
+.nav-btn:hover {
+  background: rgba(233, 69, 96, 0.25);
+}
+
+.nav-btn:active {
+  background: rgba(233, 69, 96, 0.35);
+}
+
+.slide-counter {
+  font-size: 0.8rem;
+  color: #6666788;
+  font-weight: 600;
+}
+
+/* ========== TOC (Table of Contents) ========== */
+.toc {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.toc a {
+  display: block;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #a0a0b8;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.toc a:hover {
+  background: rgba(233, 69, 96, 0.1);
+  border-color: rgba(233, 69, 96, 0.3);
+  color: #e94560;
+}
+
+.toc a span {
+  color: #e94560;
+  font-weight: 800;
+  margin-right: 6px;
+}
+
+/* ========== TWO-COL LAYOUT ========== */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========== ZOOM STEP ========== */
+.zoom-step {
+  background: #1a1a30;
+  border: 1px solid #2a2a4a;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+}
+
+.zoom-step .step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.zoom-step .step-num {
+  background: #e94560;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.zoom-step .step-title {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.zoom-step .step-time {
+  font-size: 0.8rem;
+  color: #e94560;
+  font-weight: 600;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.zoom-step .step-script {
+  font-size: clamp(0.88rem, 1.5vw, 1rem);
+  color: #b0b0c8;
+  padding-left: 44px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.zoom-step .step-note {
+  font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+  color: #8888a8;
+  padding-left: 44px;
+  margin-top: 8px;
+}
+
+/* ========== CLOSING BANNER ========== */
+.closing-banner {
+  background: linear-gradient(135deg, #1a1a3e 0%, #0f0f1a 100%);
+  border: 1px solid rgba(233, 69, 96, 0.3);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  margin-top: 24px;
+}
+
+.closing-banner p {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ========== PRINT STYLES ========== */
+@media print {
+  html {
+    scroll-snap-type: none;
+  }
+
+  .slide {
+    min-height: auto;
+    page-break-after: always;
+    page-break-inside: avoid;
+    padding: 40px 20px;
+    scroll-snap-align: none;
+  }
+
+  .nav-bar {
+    display: none !important;
+  }
+
+  .scroll-hint {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #1a1a1a;
+  }
+
+  .slide:nth-child(odd),
+  .slide:nth-child(even) {
+    background: #fff;
+  }
+
+  h1, h2, h3, .accent, .stat-number, .demo-banner .demo-number {
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+  }
+
+  p, li, td, .objection-a, .step-script, .callout p {
+    color: #333 !important;
+  }
+
+  .stat-card, .price-card, .objection, .zoom-step, .routine-block, .script-box {
+    border-color: #ddd !important;
+    background: #f8f8f8 !important;
+  }
+
+  .demo-banner {
+    background: #f0f0f0 !important;
+    border: 2px solid #1a1a1a;
+  }
+
+  .demo-banner .demo-number {
+    color: #1a1a1a !important;
+  }
+
+  .demo-banner .demo-label {
+    color: #555 !important;
+  }
+
+  .slide::after {
+    display: none;
+  }
+}
+
+/* ========== MOBILE ========== */
+@media (max-width: 600px) {
+  .slide {
+    padding: 50px 18px 80px;
+  }
+
+  .stat-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 18px 12px;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .script-box {
+    padding: 22px 16px;
+  }
+
+  .toc {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-bar {
+    padding: 8px 12px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================= SLIDE 1: TITLE ============================= -->
+<section class="slide title-slide" id="slide-1">
+  <div class="slide-inner" style="text-align:center;">
+    <div class="badge">Confidential Playbook</div>
+    <h1>THE CALL TAKER</h1>
+    <p class="subtitle">William's Playbook</p>
+    <p class="tagline">Everything you need to close deals. Read this before your first call.</p>
+
+    <div class="toc" style="margin-top:40px; text-align:left;">
+      <a href="#slide-2"><span>01</span> The Problem</a>
+      <a href="#slide-3"><span>02</span> Your Role</a>
+      <a href="#slide-4"><span>03</span> Product + Pricing</a>
+      <a href="#slide-5"><span>04</span> The Demo Line</a>
+      <a href="#slide-6"><span>05</span> How Leads Come In</a>
+      <a href="#slide-7"><span>06</span> Secret Shopper Script</a>
+      <a href="#slide-8"><span>07</span> Zoom Demo Structure</a>
+      <a href="#slide-9"><span>08</span> Objection Handling</a>
+      <a href="#slide-10"><span>09</span> After They Say Yes</a>
+      <a href="#slide-11"><span>10</span> Key Stats</a>
+      <a href="#slide-12"><span>11</span> Quick Reference</a>
+      <a href="#slide-13"><span>12</span> Daily Routine</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll to begin</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 2: THE PROBLEM ============================= -->
+<section class="slide" id="slide-2">
+  <div class="slide-inner">
+    <span class="slide-label">01 &mdash; The Problem We Solve</span>
+    <h2>What Is The Call Taker?</h2>
+
+    <p>The Call Taker is an <strong class="white">AI receptionist built for service businesses</strong> across 8 industries: HVAC, Plumbing, Electrical, Roofing, Dental, Med Spa, Legal, and Property Management.</p>
+
+    <div class="callout">
+      <p><strong class="white">The scenario:</strong> A customer has an urgent need at 9pm on a Saturday. They call your business. Nobody answers. They get voicemail.</p>
+      <p style="margin-top:8px;"><strong class="accent">80% of people who hit voicemail will never call back</strong> &mdash; they just call the next company on the list. That one missed call is a <strong class="highlight">$350 - $10,000+ job gone forever</strong>.</p>
+    </div>
+
+    <p>The Call Taker <strong class="white">answers every call in under 2 seconds</strong>, 24/7/365. It sounds like a real person. It gets the caller's name, address, and what they need. It books the appointment. Then it texts the business owner all the details.</p>
+
+    <div class="callout" style="border-left-color: #ffd460;">
+      <p><strong class="highlight">The owner wakes up to a text with a booked job instead of a missed call they never knew about.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 3: YOUR ROLE ============================= -->
+<section class="slide" id="slide-3">
+  <div class="slide-inner">
+    <span class="slide-label">02 &mdash; Your Mission</span>
+    <h2>Your Role</h2>
+
+    <p style="font-size:clamp(1.1rem,2.5vw,1.4rem); color:#fff; margin-bottom:28px;">You are the <strong class="accent">face of The Call Taker</strong>. You are the closer.</p>
+
+    <ul class="feature-list">
+      <li>Get on Zoom calls with business owners across our 8 industries</li>
+      <li>Follow up with prospects by phone</li>
+      <li>Present the product, handle objections, and close the deal</li>
+      <li>Be professional, confident, and helpful &mdash; <strong class="white">never pushy</strong></li>
+    </ul>
+
+    <div class="callout" style="margin-top:28px;">
+      <p><strong class="white">Wallace</strong> builds the tech and runs the outreach machine.</p>
+      <p><strong class="white">Mills</strong> handles strategy and makes cold calls.</p>
+      <p><strong class="accent">All three of us</strong> make cold calls from the daily call sheet. You also run Zoom demos and close deals.</p>
+    </div>
+
+    <div style="margin-top:24px;">
+      <h3>Important Rules</h3>
+      <ul class="rules-list">
+        <li><strong>Never badmouth competitors.</strong> Say "they're great, we're just built specifically for service businesses and we're flat rate."</li>
+        <li><strong>Always push the demo line.</strong> Let the AI sell itself.</li>
+        <li><strong>Never pressure.</strong> Offer the 7-day free pilot. Remove all risk.</li>
+        <li><strong>Be honest.</strong> If you don't know, say "Let me find out and get back to you today."</li>
+        <li><strong>Follow up in 48 hours.</strong> Not 72. Not next week. 48 hours.</li>
+        <li><strong>Text after every call.</strong> Include the demo line number.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 4: PRODUCT + PRICING ============================= -->
+<section class="slide" id="slide-4">
+  <div class="slide-inner">
+    <span class="slide-label">03 &mdash; What We Sell</span>
+    <h2>The Product + Pricing</h2>
+
+    <h3>What It Does</h3>
+    <ul class="feature-list">
+      <li>Answers every phone call 24/7/365</li>
+      <li>Picks up in under 2 seconds &mdash; no ringing, no hold music</li>
+      <li>Sounds like a real, friendly receptionist</li>
+      <li>Gets caller's name, phone, address, and what they need</li>
+      <li>Handles emergency calls &mdash; routes to on-call tech</li>
+      <li>Books appointments directly</li>
+      <li>Texts the business owner a summary of every call</li>
+      <li>Never calls in sick, never takes a break, never has a bad day</li>
+    </ul>
+
+    <h3 style="margin-top:28px;">Pricing Plans</h3>
+    <div class="pricing-grid">
+      <div class="price-card featured">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">$497<span>/mo</span></div>
+        <div class="plan-desc">AI receptionist, 24/7 call answering, appointment booking, call summaries via text. For HVAC, Plumbing, Electrical.</div>
+      </div>
+      <div class="price-card">
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">$997<span>/mo</span></div>
+        <div class="plan-desc">Everything in Starter + industry-specific AI training, custom workflows, priority support. For Dental, Legal, Roofing, MedSpa, Property Mgmt.</div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px; justify-content:center;">
+      <span style="background:rgba(233,69,96,0.1); border:1px solid rgba(233,69,96,0.2); border-radius:100px; padding:6px 16px; font-size:0.85rem; color:#e94560; font-weight:600;">$500 One-Time Setup</span>
+      <span style="background:rgba(233,69,96,0.1); border:1px solid rgba(233,69,96,0.2); border-radius:100px; padding:6px 16px; font-size:0.85rem; color:#e94560; font-weight:600;">No Contracts</span>
+      <span style="background:rgba(233,69,96,0.1); border:1px solid rgba(233,69,96,0.2); border-radius:100px; padding:6px 16px; font-size:0.85rem; color:#e94560; font-weight:600;">Unlimited Calls</span>
+      <span style="background:rgba(233,69,96,0.1); border:1px solid rgba(233,69,96,0.2); border-radius:100px; padding:6px 16px; font-size:0.85rem; color:#e94560; font-weight:600;">24hr Setup</span>
+      <span style="background:rgba(233,69,96,0.1); border:1px solid rgba(233,69,96,0.2); border-radius:100px; padding:6px 16px; font-size:0.85rem; color:#e94560; font-weight:600;">7-Day Free Trial</span>
+    </div>
+
+    <h3 style="margin-top:32px;">How We Compare</h3>
+    <div style="overflow-x:auto;">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>The Call Taker</th>
+            <th>Ruby</th>
+            <th>Smith.ai</th>
+            <th>Receptionist</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="us">
+            <td>Monthly Cost</td>
+            <td style="color:#e94560;">$497 - $997</td>
+            <td>$705+</td>
+            <td>$292+</td>
+            <td>$2,500 - $3,500</td>
+          </tr>
+          <tr>
+            <td>Available 24/7</td>
+            <td style="color:#4ecdc4; font-weight:700;">Yes</td>
+            <td>No (Mon-Fri)</td>
+            <td>Limited</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Unlimited Calls</td>
+            <td style="color:#4ecdc4; font-weight:700;">Yes</td>
+            <td>No (per min)</td>
+            <td>No (per call)</td>
+            <td>Technically</td>
+          </tr>
+          <tr>
+            <td>Industry-Specific</td>
+            <td style="color:#4ecdc4; font-weight:700;">Yes (8 industries)</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Maybe</td>
+          </tr>
+          <tr>
+            <td>Setup Time</td>
+            <td style="color:#4ecdc4; font-weight:700;">24 Hours</td>
+            <td>1-2 Weeks</td>
+            <td>1 Week</td>
+            <td>2-4 Weeks</td>
+          </tr>
+          <tr>
+            <td>Consistency</td>
+            <td style="color:#4ecdc4; font-weight:700;">Perfect</td>
+            <td>Varies</td>
+            <td>Varies</td>
+            <td>Varies</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 5: DEMO LINE ============================= -->
+<section class="slide" id="slide-5">
+  <div class="slide-inner">
+    <span class="slide-label">04 &mdash; Your Most Powerful Tool</span>
+    <h2>The Demo Line</h2>
+
+    <p style="font-size:clamp(1.1rem,2.5vw,1.4rem); color:#fff; margin-bottom:24px;">This is your <strong class="accent">single most powerful sales tool</strong>. Let the AI sell itself.</p>
+
+    <div class="demo-banner">
+      <div class="demo-label">CALL THIS NUMBER ON EVERY SALES CALL</div>
+      <div class="demo-number">(615) 784-5747</div>
+      <div class="demo-label" style="margin-top:8px;">Demo line &mdash; hear how it sounds for any industry</div>
+    </div>
+
+    <h3 style="margin-top:28px;">How to Use It On Calls</h3>
+    <ol class="steps">
+      <li><strong class="white">"Don't take my word for it."</strong> Tell the prospect: "Pull out your phone and call this number right now &mdash; (615) 784-5747."</li>
+      <li><strong class="white">Let them listen.</strong> Stay quiet while they experience it. Do not talk over the demo.</li>
+      <li><strong class="white">After they hang up, ask:</strong> "What did you think? That's what your customers would hear at 2am when their furnace goes out."</li>
+    </ol>
+
+    <div class="callout" style="margin-top:24px;">
+      <p><strong class="white">Let the prospect experience the demo.</strong></p>
+      <p>They hear exactly what their customers would hear &mdash; a professional AI receptionist answering on the first ring.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 6: HOW LEADS COME IN ============================= -->
+<section class="slide" id="slide-6">
+  <div class="slide-inner">
+    <span class="slide-label">05 &mdash; Your Pipeline</span>
+    <h2>How Leads Come In</h2>
+
+    <p>Wallace has automated systems that find service businesses across 8 industries and reach out. Here's what happens before a lead gets to you:</p>
+
+    <ol class="steps">
+      <li><strong class="white">System finds real service businesses</strong> across the US (name, phone, email, website)</li>
+      <li><strong class="white">Researches them</strong> &mdash; looks for bad reviews about missed calls, checks hours, finds pain points</li>
+      <li><strong class="white">Sends a personalized email</strong> referencing something specific about their business</li>
+      <li><strong class="accent">When they reply or show interest &mdash; YOU come in</strong></li>
+    </ol>
+
+    <h3 style="margin-top:28px;">Other Lead Sources</h3>
+    <ul class="feature-list">
+      <li>People who call the demo line and want to learn more</li>
+      <li>People who visit thecalltaker.com and fill out a form</li>
+      <li>Secret shopper calls &mdash; we call businesses after hours, document what happens, send them proof, then follow up</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 7: SECRET SHOPPER SCRIPT ============================= -->
+<section class="slide" id="slide-7">
+  <div class="slide-inner">
+    <span class="slide-label">06 &mdash; Highest Converting Strategy</span>
+    <h2>The Secret Shopper Follow-Up</h2>
+
+    <p style="color:#ffd460; font-weight:700; font-size:clamp(1rem,2vw,1.2rem); margin-bottom:20px;">This is your #1 job right now. This strategy has the highest conversion rate.</p>
+
+    <div class="two-col">
+      <div>
+        <h3>What Wallace Does (Before You)</h3>
+        <ol class="steps" style="font-size:0.95rem;">
+          <li>Gets a list of 15-20 service businesses</li>
+          <li>Calls each one between 6-9pm</li>
+          <li>Documents what happens (rang 6 times, voicemail, no emergency option, etc.)</li>
+          <li>System sends personalized email next morning at 8am</li>
+        </ol>
+      </div>
+      <div>
+        <h3>What You Do (24hrs After Email)</h3>
+        <ol class="steps" style="font-size:0.95rem;">
+          <li>Wallace gives you the company list with notes</li>
+          <li>Call each during business hours (9am-5pm)</li>
+          <li>Use the phone script below</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="script-box" style="margin-top:24px;">
+      <div class="line emphasis">"Hey, is this [Owner Name / the owner]?"</div>
+      <div class="line">"Hi [Name], my name's William. I'm calling from The Call Taker. We sent you an email yesterday about an after-hours call test we ran on [Company Name] &mdash; did you get a chance to see it?"</div>
+
+      <div class="branch">
+        <div class="branch-label">IF YES:</div>
+        "Great &mdash; so you saw that when we called at [time], it went to [voicemail/no answer]. Have you ever thought about how many customers might be doing the same thing and just calling someone else?"
+      </div>
+
+      <div class="branch">
+        <div class="branch-label">IF NO:</div>
+        "No worries. Basically, we called [Company Name] at [time] last night to see what happens after hours. It [rang 6 times and went to voicemail / nobody answered]. We do this for service businesses to show them what their customers are experiencing."
+      </div>
+
+      <div class="line">"The reason I'm calling &mdash; we built an AI receptionist that would have answered that call in 2 seconds, gotten the customer's info, and texted you the details. It works 24/7 and sounds like a real person."</div>
+
+      <div class="line emphasis">"Have you got 30 seconds? Call this number on speaker right now &mdash; (615) 784-5747 &mdash; and hear what your customers would hear at 2am when they need you."</div>
+
+      <div class="line" style="color:#8888a8; font-style:italic;">[Let them call the demo line. Stay quiet. Let the AI do the selling.]</div>
+
+      <div class="line">"That's what every caller would hear. No voicemail, no hold music, no missed jobs. And it costs less than one service call per month."</div>
+
+      <div class="line emphasis">"Want me to set it up for [Company Name] for free for 7 days? You don't do anything &mdash; we handle the entire setup. If you don't love it, you pay nothing."</div>
+    </div>
+
+    <div class="demo-banner" style="margin-top:20px;">
+      <div class="demo-label">ALWAYS HAVE THEM CALL</div>
+      <div class="demo-number">(615) 784-5747</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 8: ZOOM DEMO ============================= -->
+<section class="slide" id="slide-8">
+  <div class="slide-inner">
+    <span class="slide-label">07 &mdash; The Full Demo</span>
+    <h2>Zoom Demo Call Structure</h2>
+    <p>15-20 minutes total. Follow this structure every time.</p>
+
+    <h3 style="margin-top:16px;">Before the Call (5 min prep)</h3>
+    <ul class="feature-list" style="margin-bottom:24px;">
+      <li>Know their company name, city, and what they do</li>
+      <li>Check if Wallace has notes about them</li>
+      <li>Have the demo line ready: <strong class="accent">(615) 784-5747</strong></li>
+      <li>Have thecalltaker.com open in your browser</li>
+    </ul>
+
+    <div class="zoom-step">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Build Rapport</div>
+        <div class="step-time">2 min</div>
+      </div>
+      <div class="step-script">"Hey [Name], thanks for jumping on. Tell me about [Company Name] &mdash; how long have you been in business? How many techs out in the field?"</div>
+    </div>
+
+    <div class="zoom-step">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Find the Pain</div>
+        <div class="step-time">3 min</div>
+      </div>
+      <div class="step-script">"When someone calls after hours or on a weekend, what happens right now?" &mdash; "How many calls do you think you miss in a week?" &mdash; "What about during busy season when your guys are all on jobs?"</div>
+      <div class="step-note">Listen carefully. They'll say: "voicemail," "my wife answers sometimes," "answering service but they're terrible," "I answer my cell but can't always get to it."</div>
+    </div>
+
+    <div class="zoom-step">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Amplify the Pain</div>
+        <div class="step-time">2 min</div>
+      </div>
+      <div class="step-script">"80% of callers who hit voicemail never leave a message &mdash; they just call the next company. For the average service business, that's $3,000 to $10,000 a month in lost jobs. And during your busy season? Way more."</div>
+    </div>
+
+    <div class="zoom-step">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">Demo the Solution</div>
+        <div class="step-time">5 min</div>
+      </div>
+      <div class="step-script">"Let me show you exactly what your customers would hear. Call this number right now &mdash; (615) 784-5747."</div>
+      <div class="step-note">Let them call. Stay quiet. After: "Every single call answered in 2 seconds. The AI gets their name, what's wrong, their address &mdash; and texts you everything."</div>
+    </div>
+
+    <div class="zoom-step">
+      <div class="step-header">
+        <div class="step-num">5</div>
+        <div class="step-title">Present Pricing</div>
+        <div class="step-time">2 min</div>
+      </div>
+      <div class="step-script">"$497/mo for Starter &mdash; that covers HVAC, plumbing, and electrical. $997 for Pro if you're in dental, legal, roofing, med spa, or property management. $500 one-time setup. No contract. 7-day free trial. Ruby charges $705 for 200 minutes. Smith.ai charges $292 for only 30 calls. We're flat rate, unlimited. Your busiest month should be your best month, not your most expensive."</div>
+    </div>
+
+    <div class="zoom-step">
+      <div class="step-header">
+        <div class="step-num">6</div>
+        <div class="step-title">Close</div>
+        <div class="step-time">2 min</div>
+      </div>
+      <div class="step-script">"Let me set up a free 7-day pilot for [Company Name]. You do nothing &mdash; we handle everything. Live in 24 hours with your company name, services, hours. After 7 days, I'll show you every call it handled. If you don't love it, you pay nothing. Fair enough?"</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 9: OBJECTION HANDLING ============================= -->
+<section class="slide" id="slide-9">
+  <div class="slide-inner">
+    <span class="slide-label">08 &mdash; Handle Every Objection</span>
+    <h2>Objection Handling</h2>
+    <p style="margin-bottom:20px;">Memorize these responses. Deliver them naturally, not scripted.</p>
+
+    <div class="objection">
+      <div class="objection-q">"It's too expensive"</div>
+      <div class="objection-a">"How much is one job or client worth to you? $350? $1,000? $5,000? The Starter plan is $497/mo. If it saves ONE missed call per month, it's already paid for itself. Everything after that is pure profit. Ruby charges $705 for less."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"I already have an answering service"</div>
+      <div class="objection-a">"That's great. When's the last time you called your own business after hours? A lot of owners are surprised. Our AI is specifically trained for your industry &mdash; it knows the terminology, knows what's urgent, and it's the same quality every single time."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"I need to think about it"</div>
+      <div class="objection-a">"Absolutely. That's exactly why we do the 7-day pilot &mdash; there's nothing to think about because there's no risk. Let me set it up for free. Use it for a week. See the calls. Then decide with real data. Sound fair?"</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"I'm not sure AI can handle calls for my business"</div>
+      <div class="objection-a">"You already heard it on the demo line. Did it sound like a robot? It handles calls for your industry all day &mdash; whatever your customers call about. Anything it can't handle routes to your emergency line. Call (615) 784-5747 anytime."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"Can I talk to other customers using it?"</div>
+      <div class="objection-a">"We're in early launch &mdash; which is great for you. We're offering the 7-day free trial and the lowest pricing we'll ever have. After launch, prices go up. Lock in $497/mo now with no contract."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"My wife/partner handles the phones"</div>
+      <div class="objection-a">"What about when she's busy, or it's 10pm, or you're both at your kid's game? This doesn't replace her &mdash; it backs her up. Every call she can't get to, the AI handles. She gets her time back, you get every job."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"I don't get that many after-hours calls"</div>
+      <div class="objection-a">"You only know about the calls where someone left a voicemail. The ones who hung up and called your competitor? You never knew about those. That's the invisible revenue leak. The 7-day pilot will show you exactly how many calls you're missing."</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">"Let me check with my business partner"</div>
+      <div class="objection-a">"Of course. Would it help if I set up the free pilot so you both can see it in action? That way you're showing real results, not describing it. No commitment. I just need 10 minutes to set it up."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 10: AFTER YES ============================= -->
+<section class="slide" id="slide-10">
+  <div class="slide-inner">
+    <span class="slide-label">09 &mdash; Post-Close Process</span>
+    <h2>What Happens After They Say Yes</h2>
+
+    <ol class="steps">
+      <li><strong class="white">Tell Wallace:</strong> "[Company Name] is in. Here's their info."</li>
+      <li><strong class="white">Wallace sets up</strong> their AI receptionist within 24 hours</li>
+      <li><strong class="white">We configure it</strong> with their company name, services, hours, and emergency routing</li>
+      <li><strong class="white">We send confirmation:</strong> "Your AI receptionist is live. Here's your forwarding number."</li>
+      <li><strong class="white">They forward</strong> their after-hours calls to the number we give them</li>
+      <li><strong class="accent">After 7 days, you call them:</strong> "Here's every call the AI handled this week. Ready to go live full-time?"</li>
+      <li><strong class="white">They pay</strong> through our website or payment link</li>
+    </ol>
+
+    <div class="callout" style="margin-top:28px;">
+      <p><strong class="highlight">Remember:</strong> After every call &mdash; whether they say yes or not &mdash; send a follow-up text:</p>
+      <p style="font-style:italic; color:#fff; margin-top:8px;">"Hey [Name], great talking with you. Here's the demo line again if you want to hear it: (615) 784-5747. I'll get your pilot set up whenever you're ready."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 11: KEY STATS ============================= -->
+<section class="slide" id="slide-11">
+  <div class="slide-inner">
+    <span class="slide-label">10 &mdash; Know Your Numbers</span>
+    <h2>Key Stats to Memorize</h2>
+    <p>Drop these in every conversation. They make the pain real.</p>
+
+    <div class="stat-grid" style="margin-top:28px;">
+      <div class="stat-card">
+        <div class="stat-number">80%</div>
+        <div class="stat-label">of callers who hit voicemail never call back</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">62%</div>
+        <div class="stat-label">of service business calls go unanswered after hours</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">$350-$10K+</div>
+        <div class="stat-label">average value of a missed call</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">$45-120K</div>
+        <div class="stat-label">per year lost to missed calls</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">40%</div>
+        <div class="stat-label">of all service business calls come after hours</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2 sec</div>
+        <div class="stat-label">how fast The Call Taker answers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">no holidays, no sick days, no breaks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">$497</div>
+        <div class="stat-label">less than one missed service call</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 12: QUICK REFERENCE ============================= -->
+<section class="slide" id="slide-12">
+  <div class="slide-inner">
+    <span class="slide-label">11 &mdash; At a Glance</span>
+    <h2>Quick Reference Card</h2>
+
+    <div class="demo-banner" style="margin-bottom:28px;">
+      <div class="demo-label">DEMO LINE</div>
+      <div class="demo-number">(615) 784-5747</div>
+      <div class="demo-label" style="margin-top:4px;">Have every prospect call this number</div>
+    </div>
+
+    <table class="ref-table">
+      <tr>
+        <td>Website</td>
+        <td>thecalltaker.com</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>wallace@mail.thecalltaker.com</td>
+      </tr>
+      <tr>
+        <td>Starter Plan</td>
+        <td style="color:#e94560;">$497/mo (HVAC, Plumbing, Electrical)</td>
+      </tr>
+      <tr>
+        <td>Pro Plan</td>
+        <td style="color:#e94560;">$997/mo (Dental, Legal, Roofing, MedSpa, Prop Mgmt)</td>
+      </tr>
+      <tr>
+        <td>Setup Fee</td>
+        <td style="color:#e94560;">$500 one-time</td>
+      </tr>
+      <tr>
+        <td>Contracts</td>
+        <td>None. Cancel anytime.</td>
+      </tr>
+      <tr>
+        <td>Setup Time</td>
+        <td>24 hours</td>
+      </tr>
+      <tr>
+        <td>Free Trial</td>
+        <td>7-day risk-free pilot</td>
+      </tr>
+      <tr>
+        <td>Follow-Up Rule</td>
+        <td>48 hours. Always.</td>
+      </tr>
+      <tr>
+        <td>Competitor: Ruby</td>
+        <td>$705/mo for 200 minutes</td>
+      </tr>
+      <tr>
+        <td>Competitor: Smith.ai</td>
+        <td>$292/mo for 30 calls</td>
+      </tr>
+      <tr>
+        <td>Hiring Cost</td>
+        <td>$2,500-$3,500/mo + benefits</td>
+      </tr>
+    </table>
+
+    <div class="callout" style="margin-top:24px; border-left-color:#4ecdc4;">
+      <p style="color:#4ecdc4; font-weight:700;">One-Liner to Remember</p>
+      <p style="color:#fff; font-size:clamp(1rem,2vw,1.2rem);">"It costs less than one missed call per month, answers every call in 2 seconds, and works 24/7. No contract. 7-day free trial."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= SLIDE 13: DAILY ROUTINE ============================= -->
+<section class="slide" id="slide-13">
+  <div class="slide-inner">
+    <span class="slide-label">12 &mdash; Your Daily Flow</span>
+    <h2>Your Daily Routine</h2>
+
+    <div class="routine-block">
+      <div class="time">Morning &mdash; 9:00 AM to 11:00 AM</div>
+      <ul>
+        <li>Check the daily call sheet from ntfy (15 scored leads with scripts)</li>
+        <li>Call each one &mdash; Wallace and Mills are also making calls from the same list</li>
+        <li>Anyone interested &rarr; book a Zoom demo for that afternoon or next day</li>
+      </ul>
+    </div>
+
+    <div class="routine-block">
+      <div class="time">Afternoon &mdash; 1:00 PM to 4:00 PM</div>
+      <ul>
+        <li>Run any Zoom demos you booked</li>
+        <li>Follow up on demos from previous days (48-hour rule)</li>
+        <li>Send follow-up texts to anyone who showed interest</li>
+      </ul>
+    </div>
+
+    <div class="closing-banner">
+      <p style="font-size:clamp(1.1rem,2.5vw,1.5rem); margin-bottom:8px;"><strong>That's it.</strong></p>
+      <p style="color:#a0a0b8;">Wallace handles the tech, the outreach, the setup, and the billing. Mills handles strategy and cold calls.<br>Your job is to <strong class="accent">make calls, run demos, and close deals</strong>.</p>
+    </div>
+
+    <div class="demo-banner" style="margin-top:24px;">
+      <div class="demo-label">ALWAYS REMEMBER THE DEMO LINE</div>
+      <div class="demo-number">(615) 784-5747</div>
+    </div>
+
+    <p style="text-align:center; margin-top:28px; color:#555577; font-size:0.85rem;">Last updated: February 20, 2026 &bull; Confidential &mdash; The Call Taker</p>
+  </div>
+</section>
+
+<!-- ============================= NAVIGATION BAR ============================= -->
+<nav class="nav-bar" id="navbar">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">&#9664; Prev</button>
+  <span class="slide-counter" id="slideCounter">1 / 13</span>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next &#9654;</button>
+</nav>
+
+<script>
+(function() {
+  var slides = document.querySelectorAll('.slide');
+  var counter = document.getElementById('slideCounter');
+  var currentSlide = 0;
+  var total = slides.length;
+
+  function updateCounter() {
+    // Determine which slide is most visible
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var windowH = window.innerHeight;
+    var best = 0;
+    var bestOverlap = 0;
+    for (var i = 0; i < slides.length; i++) {
+      var rect = slides[i].getBoundingClientRect();
+      var top = rect.top + scrollTop;
+      var bottom = top + rect.height;
+      var overlapTop = Math.max(scrollTop, top);
+      var overlapBottom = Math.min(scrollTop + windowH, bottom);
+      var overlap = Math.max(0, overlapBottom - overlapTop);
+      if (overlap > bestOverlap) {
+        bestOverlap = overlap;
+        best = i;
+      }
+    }
+    currentSlide = best;
+    counter.textContent = (currentSlide + 1) + ' / ' + total;
+  }
+
+  function navigate(dir) {
+    var target = currentSlide + dir;
+    if (target < 0) target = 0;
+    if (target >= total) target = total - 1;
+    slides[target].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  window.navigate = navigate;
+  window.addEventListener('scroll', updateCounter, { passive: true });
+  updateCounter();
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+      e.preventDefault();
+      navigate(1);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      navigate(-1);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

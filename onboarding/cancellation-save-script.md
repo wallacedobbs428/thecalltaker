@@ -38,20 +38,24 @@
 > "I totally understand. Every dollar matters when you're running a business, and I respect that you're watching your expenses."
 
 **Reframe with ROI:**
-> "Let me pull up your numbers real quick. Last month, your AI receptionist answered [X] calls and booked [X] appointments. Based on average HVAC job values in your area, that's roughly $[X] in revenue that came through calls we answered.
+> "Let me pull up your numbers real quick. Last month, your AI receptionist answered [X] calls and booked [X] appointments. Based on average job values in your industry, that's roughly $[X] in revenue that came through calls we answered.
 >
-> So you spent $297 (or $497) and captured an estimated $[X]. That's a [X]:1 return on your investment. Would it help if I walked you through those numbers?"
+> So you spent $497 (or $997) and captured an estimated $[X]. That's a [X]:1 return on your investment. Would it help if I walked you through those numbers?"
 
 **If they still push back:**
 > "What if we could find a plan that fits your budget better? I have a couple of options I can offer."
 
 *(Go to Step 4 -- Alternatives)*
 
-**Math to have ready:**
-- Average repair call = $350-$600
-- Average install lead = $5,000-$10,000
-- Just ONE missed install call per month = cost of 1-2+ years of service
-- After-hours emergency = $500-$1,000+
+**Math to have ready (by industry):**
+- **HVAC/Plumbing/Electrical:** Avg repair call = $350-$600 | Install lead = $5,000-$10,000
+- **Roofing:** Avg repair = $500-$1,500 | Full roof = $8,000-$25,000
+- **Dental:** New patient lifetime value = $3,000-$10,000
+- **Med Spa:** Avg treatment package = $1,200-$5,000
+- **Legal:** Avg case value = $3,000-$50,000+
+- **Property Management:** Avg new tenant = $1,200-$2,400/yr in management fees
+- Just ONE missed lead per month = cost of 1-2+ years of service
+- After-hours/emergency call = $500-$1,000+
 
 ---
 
@@ -68,13 +72,13 @@
 - [ ] Is the AI answering on the right number?
 - [ ] Has the client been advertising the right phone number?
 - [ ] Is it a seasonal lull? (Shoulder seasons are slower)
-- [ ] How does their call volume compare to similar HVAC companies in their area?
+- [ ] How does their call volume compare to similar businesses in their industry and area?
 
 **After checking:**
 > "[Client Name], I found [the issue / here's what I see]. Let me fix that and give it another 30 days. If you still don't see value after that, I'll process the cancellation and refund you for that month. Fair?"
 
-**If it's genuinely low volume (seasonal):**
-> "Here's the thing -- HVAC is seasonal. Right now is [slow season]. But when [summer/winter] hits and that phone starts ringing at 6 AM on a Saturday, you're going to want this in place. What if we paused your account for [X] weeks and reactivated before the busy season?"
+**If it's genuinely low volume (seasonal or cyclical):**
+> "Here's the thing -- most service businesses have busy and slow seasons. Right now is [slow season]. But when [busy season] hits and that phone starts ringing at 6 AM on a Saturday, you're going to want this in place. What if we paused your account for [X] weeks and reactivated before the busy season?"
 
 *(Go to Step 4 -- Alternatives)*
 
@@ -111,17 +115,17 @@
 
 | What They Might Say | Our Advantage |
 |---|---|
-| "They're cheaper" | Do they specialize in HVAC? Generic AI doesn't know the difference between a compressor and a condenser. |
+| "They're cheaper" | Do they specialize in your industry? Generic AI doesn't know the terminology, procedures, or urgency signals your callers use. |
 | "They have more features" | Features don't matter if the AI can't book an appointment correctly. What specific features? |
 | "My buddy recommended them" | Totally fair. But you've already got a system built, trained, and customized for YOUR business. Starting over means another ramp-up period. |
-| "They include texting" | We offer Missed Call Text-Back for $49/mo -- and it's built specifically for HVAC workflows. |
+| "They include texting" | We offer Missed Call Text-Back for $49/mo -- and it's built specifically for your industry's workflows. |
 
 **Response:**
 > "I respect that you're shopping around -- that's smart business. Here's what I'd ask you to consider:
 >
 > 1. Your AI receptionist is already trained on YOUR business. Your services, your hours, your emergency protocol, your scheduling. That took time to build. A new provider means starting from scratch.
 >
-> 2. We ONLY work with HVAC companies. That means every improvement we make benefits you directly. Generic AI answering services are built for everyone, which means they're optimized for no one.
+> 2. We specialize in service businesses -- HVAC, plumbing, electrical, roofing, dental, med spa, legal, and property management. Every improvement we make is built for businesses like yours. Generic AI answering services are built for everyone, which means they're optimized for no one.
 >
 > 3. You have my direct number. When something needs to change, you text me and it's done. Will you get that from [Competitor]?
 >
@@ -143,7 +147,7 @@
 ### Objection 6: "I just don't need it. I answer my own phone."
 
 **Response:**
-> "I respect the hustle. Seriously. But let me ask you this -- when you're on a roof at 2 PM replacing a condenser and the phone rings, what happens to that call?
+> "I respect the hustle. Seriously. But let me ask you this -- when you're in the middle of a job at 2 PM and the phone rings, what happens to that call?
 >
 > Last month, [X] of your calls came in during business hours when you were likely on a job. [X] of those turned into booked appointments. That's an estimated $[X] you would have missed.
 >
@@ -157,9 +161,9 @@
 
 ### Alternative 1: Downgrade Plan
 
-> "What if we dropped you down to our Starter plan at $297/month? You'd keep the core answering and booking, and if you want to upgrade again later, it's seamless."
+> "What if we dropped you down to our Starter plan at $497/month? You'd keep the core answering and booking, and if you want to upgrade again later, it's seamless."
 
-*(Only if they're on Professional)*
+*(Only if they're on Pro)*
 
 ### Alternative 2: Pause Account
 

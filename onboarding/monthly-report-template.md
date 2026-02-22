@@ -1,6 +1,6 @@
 # Monthly Performance Report
 
-**The Call Taker -- AI Receptionist for HVAC Companies**
+**The Call Taker -- AI Receptionist for [Company Name]**
 
 ---
 
@@ -8,7 +8,7 @@
 **Report Period:** [Month Year]
 **Prepared By:** Wallace Dobbs
 **Date Sent:** [Date]
-**Plan:** [ ] Starter ($297/mo) | [ ] Professional ($497/mo)
+**Plan:** [ ] Starter ($497/mo) | [ ] Pro ($997/mo)
 
 ---
 
@@ -51,11 +51,11 @@
 
 | Service | Appointments | % of Total |
 |---|---|---|
-| AC Repair | | |
-| Heating Repair | | |
-| Maintenance / Tune-Up | | |
-| Installation / Replacement | | |
-| Duct Cleaning | | |
+| [Service 1] | | |
+| [Service 2] | | |
+| [Service 3] | | |
+| [Service 4] | | |
+| [Service 5] | | |
 | Other | | |
 
 ---
@@ -73,14 +73,13 @@
 
 | Type | Count |
 |---|---|
-| No Heat | |
-| No AC | |
-| Gas Smell / CO Concern | |
-| Water Leak | |
-| Electrical Issue | |
+| [Emergency Type 1] | |
+| [Emergency Type 2] | |
+| [Emergency Type 3] | |
+| [Emergency Type 4] | |
 | Other | |
 
-**Note:** _[Any patterns -- e.g., "3 of the 5 no-heat emergencies came on the same night when temps dropped below 15 degrees."]_
+**Note:** _[Any patterns -- e.g., "3 of the 5 emergency calls came during the same 24-hour period."]_
 
 ---
 
@@ -134,7 +133,7 @@
 **Trending Up:** _[Service seeing increased demand]_
 **Trending Down:** _[Service seeing decreased demand]_
 
-**Seasonal Note:** _[e.g., "AC repair requests are climbing as we head into summer. Consider running a tune-up promotion in the next 2 weeks to capture early demand."]_
+**Seasonal Note:** _[e.g., "Demand for your top service is climbing. Consider running a promotion in the next 2 weeks to capture early demand."]_
 
 ---
 
@@ -152,25 +151,23 @@
 
 | Item | Amount |
 |---|---|
-| Monthly Plan Cost | $297 / $497 |
+| Monthly Plan Cost | $497 / $997 |
 | Estimated Revenue Captured | $ |
 | **Return on Investment** | **X:1** |
 | Revenue Per Dollar Spent | $ |
 
 > "For every $1 you spent on The Call Taker this month, you captured an estimated $[X] in revenue."
 
-**Note:** _Revenue estimates are based on average HVAC job values in your market. Actual revenue depends on job completion and final invoicing._
+**Note:** _Revenue estimates are based on average job values in your industry and market. Actual revenue depends on job completion and final invoicing._
 
-**Average Job Value Assumptions:**
+**Average Job Value Assumptions (varies by industry):**
 
-| Service | Estimated Value |
+| Service Category | Estimated Value |
 |---|---|
-| Diagnostic / Service Call | $89 - $150 |
-| Repair (AC or Heating) | $250 - $800 |
-| Maintenance / Tune-Up | $89 - $149 |
-| Installation / Replacement | $4,500 - $12,000 |
-| Duct Cleaning | $300 - $600 |
-| Emergency (after-hours) | $350 - $1,000+ |
+| Standard Service / Appointment | $150 - $500 |
+| Mid-Range Job / Treatment / Case | $500 - $3,000 |
+| Major Project / High-Value Lead | $3,000 - $25,000+ |
+| Emergency / After-Hours | $350 - $1,500+ |
 
 ---
 
