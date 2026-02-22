@@ -1184,8 +1184,8 @@
       <div class="cc-section" style="border-top: 2px solid rgba(59,130,246,0.3); padding-top: 32px; margin-top: 40px;">
         <div class="cc-section-label" style="color: #3b82f6;">Water Damage Bot System</div>
         <div class="mission-card" style="border-color: rgba(59,130,246,0.15);">
-          <div style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px;">WD-Max + WD-Ben + WD-Sam + WD-Lead-Finder + 3 Blasts</div>
-          <div style="font-size: 13px; color: var(--text-3); margin-bottom: 20px;">Full water damage team: 15 launchd services. Same GHL location, same ntfy, tagged water-damage.</div>
+          <div style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px;">WD-Max + WD-Ben + WD-Sam + WD-Lead-Finder + WD-Cold-Caller + 3 Blasts</div>
+          <div style="font-size: 13px; color: var(--text-3); margin-bottom: 20px;">Full water damage team: 21 launchd services (15 bots + 6 ops). Same GHL location, same ntfy, tagged water-damage.</div>
 
           <div class="mission-stats" style="grid-template-columns: 1fr 1fr 1fr;">
             <div class="mission-stat">
@@ -1231,24 +1231,44 @@
               </div>
               <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage only</div>
             </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
+              <div>
+                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Blast</div>
+                <div style="font-size: 11px; color: var(--text-3);">Cold email blast engine — warmup ramp, A/B 3 templates, domain verify</div>
+              </div>
+              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage only</div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
+              <div>
+                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Cold-Caller</div>
+                <div style="font-size: 11px; color: var(--text-3);">Bland.ai AI cold calls — 20/day, auto-detect interest, war room alerts</div>
+              </div>
+              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage only</div>
+            </div>
           </div>
 
           <div style="margin-top: 16px; padding: 14px; background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.15); border-radius: 10px;">
-            <div style="font-size: 11px; font-weight: 700; color: #3b82f6; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;">WD Bot Schedule (offset 15min from HVAC)</div>
+            <div style="font-size: 11px; font-weight: 700; color: #3b82f6; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;">WD Bot Schedule (15 bots + 6 ops = 21 services)</div>
             <div style="font-size: 12px; color: var(--text-2); line-height: 1.8; font-family: monospace;">
               Every 15m — WD-Sam: Support monitor<br>
               Every 30m — WD-Max: Reply monitor<br>
               6:15 AM — WD-Sam: Health scoring<br>
               6:30 AM — WD-Lead-Finder: Daily lead search<br>
+              7:00 AM — WD-Rescue: Mine bad reviews (Bing scraper)<br>
               7:15 AM — WD-Ben: Morning briefing<br>
+              8:00 AM — WD-Call-Sheet: 15 scored leads to ntfy<br>
               8:15 AM — WD-Sam: Milestone check-ins<br>
               9:00 AM — WD-Max: Warm follow-ups<br>
+              10:00 AM — WD-Cold-Caller: 20 Bland.ai calls<br>
+              10:30 AM — WD-Blast: Cold email (ramp 20→200/day)<br>
               11:15 AM — WD-Sam: Referral requests<br>
-              12:15 AM — WD-Max: Pipeline update<br>
+              11:30 AM — WD-Rescue: Email mined leads<br>
+              12:15 PM — WD-Max: Pipeline update<br>
               1:15 PM — WD-Ben: SMS outreach<br>
               2:15 PM — WD-Ben: Re-engagement<br>
               3:15 PM — WD-Ben: Lead scoring<br>
               7:15 PM — WD-Sam: Daily report<br>
+              7:30 PM — WD-Revenue: MRR report to ntfy<br>
               8:30 PM — WD-Max: Daily report<br>
               9:15 PM — WD-Ben: Evening summary
             </div>
@@ -1261,7 +1281,19 @@
               python3 ~/.thecalltaker/water-damage/wd-ben-engine.py status<br>
               python3 ~/.thecalltaker/water-damage/wd-sam-engine.py status<br>
               python3 ~/.thecalltaker/water-damage/wd-lead-finder.py status<br>
+              python3 ~/.thecalltaker/water-damage/wd-blast-engine.py status<br>
+              python3 ~/.thecalltaker/water-damage/wd-blast-engine.py blast<br>
+              python3 ~/.thecalltaker/water-damage/wd-blast-engine.py report<br>
+              python3 ~/.thecalltaker/water-damage/wd-cold-caller.py call<br>
+              python3 ~/.thecalltaker/water-damage/wd-cold-caller.py results<br>
+              python3 ~/.thecalltaker/water-damage/wd-cold-caller.py status<br>
+              python3 ~/.thecalltaker/water-damage/wd-cold-caller.py report<br>
+              python3 ~/.thecalltaker/water-damage/wd-call-sheet.py generate<br>
+              python3 ~/.thecalltaker/water-damage/wd-rescue-engine.py mine<br>
+              python3 ~/.thecalltaker/water-damage/wd-rescue-engine.py email<br>
+              python3 ~/.thecalltaker/water-damage/wd-revenue-tracker.py report<br>
               bash ~/.thecalltaker/water-damage/install-wd-bots.sh<br>
+              bash ~/.thecalltaker/water-damage/install-wd-ops.sh<br>
               bash ~/.thecalltaker/water-damage/uninstall-wd-bots.sh
             </div>
           </div>
@@ -1288,7 +1320,7 @@
               <div class="mission-stat-label">MRR</div>
             </div>
             <div class="mission-stat">
-              <div class="mission-stat-value">16</div>
+              <div class="mission-stat-value">23</div>
               <div class="mission-stat-label">Mills Services</div>
             </div>
             <div class="mission-stat">
@@ -1317,7 +1349,7 @@
 
       <!-- MILLS' MACHINE -->
       <div class="cc-section">
-        <div class="cc-section-label">Mills' Machine (16 services)</div>
+        <div class="cc-section-label">Mills' Machine (23 services)</div>
         <div class="mission-card">
           <div style="display: flex; flex-direction: column; gap: 8px;">
 
@@ -1357,11 +1389,65 @@
               <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage</div>
             </div>
 
+            <!-- WD-Cold-Caller -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(59,130,246,0.04); border: 1px solid rgba(59,130,246,0.12); border-radius: 8px;">
+              <div>
+                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Cold-Caller <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
+                <div style="font-size: 11px; color: var(--text-3);">Bland.ai AI cold calls -- 20/day at 10am, scores leads, detects interest</div>
+              </div>
+              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage</div>
+            </div>
+
+            <!-- WD Ops: Call Sheet -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
+              <div>
+                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Call-Sheet <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
+                <div style="font-size: 11px; color: var(--text-3);">15 scored WD leads to ntfy daily at 8am</div>
+              </div>
+              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">ops</div>
+            </div>
+
+            <!-- WD Ops: Blast -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
+              <div>
+                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Blast <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
+                <div style="font-size: 11px; color: var(--text-3);">Cold email blast, warmup ramp 20→200/day, 3 A/B templates</div>
+              </div>
+              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">ops</div>
+            </div>
+
+            <!-- WD Ops: Rescue -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
+              <div>
+                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Rescue <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(2 services)</span></div>
+                <div style="font-size: 11px; color: var(--text-3);">Mine bad reviews at 7am + email rescued leads at 11:30am</div>
+              </div>
+              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">ops</div>
+            </div>
+
+            <!-- WD Ops: Revenue -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
+              <div>
+                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Revenue <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
+                <div style="font-size: 11px; color: var(--text-3);">MRR tracker toward $10K goal, 7:30pm daily report</div>
+              </div>
+              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">ops</div>
+            </div>
+
             <!-- n8n -->
             <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
               <div>
                 <div style="font-size: 13px; font-weight: 700; color: #fff;">n8n <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
                 <div style="font-size: 11px; color: var(--text-3);">Workflow automation at localhost:5678</div>
+              </div>
+              <div style="font-size: 11px; font-weight: 600; color: var(--green); background: var(--green-dim); padding: 4px 8px; border-radius: 4px;">infra</div>
+            </div>
+
+            <!-- Caffeinate -->
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
+              <div>
+                <div style="font-size: 13px; font-weight: 700; color: #fff;">Caffeinate <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
+                <div style="font-size: 11px; color: var(--text-3);">Keeps Mac awake 24/7 so all services run even with lid closed</div>
               </div>
               <div style="font-size: 11px; font-weight: 600; color: var(--green); background: var(--green-dim); padding: 4px 8px; border-radius: 4px;">infra</div>
             </div>
