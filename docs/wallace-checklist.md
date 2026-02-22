@@ -98,7 +98,7 @@
 ☐ Email and call HVAC companies that went to voicemail
   📍 Where: Phone + GHL email
   ⏱ Time: Ongoing — aim for 10 outreaches per day
-  💡 Why: This is how you get to 10 paying clients
+  💡 Why: This is how you get to 45 paying clients
   🔑 What you need: Your phone, cold-call-script.md, cold-email-sequence.md
   Steps:
   1. Start with your voicemail-detected leads
@@ -156,4 +156,4 @@
 
 **Total items: 12**
 **Website is already LIVE.**
-**Goal: 10 clients by March 14. Steps 1-3 are DONE. Steps 4-8 need Wallace's hands. Instagram + Facebook are LIVE. DMs going out daily.**
+**Goal: 45 clients by May 2026 — $33K MRR. Steps 1-3 are DONE. Steps 4-8 need Wallace's hands. Instagram + Facebook are LIVE. DMs going out daily.**

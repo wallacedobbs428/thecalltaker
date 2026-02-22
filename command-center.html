@@ -605,11 +605,11 @@
         <div class="cc-section-label">Today's Mission</div>
         <div class="mission-card">
           <div class="mission-day">Day <span id="day-number">1</span> of 28</div>
-          <div class="mission-subtitle">10 Clients by March 14 &mdash; <span id="days-remaining">28</span> days remaining</div>
+          <div class="mission-subtitle">45 Clients by May 31 &mdash; <span id="days-remaining">98</span> days remaining</div>
 
           <div class="mission-stats">
             <div class="mission-stat">
-              <div class="mission-stat-value"><span id="clients-count">0</span><span class="goal">/10</span></div>
+              <div class="mission-stat-value"><span id="clients-count">0</span><span class="goal">/45</span></div>
               <div class="mission-stat-label">Clients</div>
               <div class="mission-stat-btns">
                 <button class="mission-stat-btn minus" onclick="adjustCounter('clients', -1)" aria-label="Remove client">&minus;</button>
@@ -618,7 +618,7 @@
             </div>
             <div class="mission-stat">
               <div class="mission-stat-value">$<span id="mrr-count">0</span></div>
-              <div class="mission-stat-label">MRR / $2,970</div>
+              <div class="mission-stat-label">MRR / $33,000</div>
               <div class="mission-stat-btns">
                 <button class="mission-stat-btn minus" onclick="adjustCounter('clients', -1)" aria-label="Remove client">&minus;</button>
                 <button class="mission-stat-btn" onclick="adjustCounter('clients', 1)" aria-label="Add client">+</button>
@@ -1337,7 +1337,7 @@ Link in bio.
         file: '08-comparison.png',
         caption: `Answering service: $1,200+/mo, hold times, generic scripts, per-minute billing.
 
-The Call Taker: $297/mo, instant answer, HVAC-trained AI, flat rate.
+The Call Taker: Starting at $497/mo, instant answer, industry-trained AI, flat rate.
 
 Same result — every call gets answered.
 One costs 4x more and makes mistakes.
@@ -1422,9 +1422,9 @@ DM "DEMO" to hear what your customers will hear instead.
     const FB_TEMPLATE = `Honest question for the group -- how many calls go to voicemail when you're running jobs? Trying to figure out if this is a widespread thing or if most of you have it handled. No pitch, just curious.`;
 
     // --- Date calculations ---
-    // Campaign: Feb 15 = Day 1, March 14 = Day 28
-    const CAMPAIGN_START = new Date(2026, 1, 15); // Feb 15, 2026 (Day 1 posted Feb 14, Day 2 = Feb 16)
-    const CAMPAIGN_END = new Date(2026, 2, 14);   // March 14, 2026
+    // Campaign: Feb 15 = Day 1, May 31 = Day 105
+    const CAMPAIGN_START = new Date(2026, 1, 15); // Feb 15, 2026
+    const CAMPAIGN_END = new Date(2026, 4, 31);   // May 31, 2026
 
     function getTodayKey() {
       const now = new Date();
@@ -1519,10 +1519,10 @@ DM "DEMO" to hear what your customers will hear instead.
 
       const clients = getCumulative('clients');
       document.getElementById('clients-count').textContent = clients;
-      document.getElementById('mrr-count').textContent = (clients * 297).toLocaleString();
+      document.getElementById('mrr-count').textContent = (clients * 700).toLocaleString();
       document.getElementById('demos-total-count').textContent = getTotalDemos();
       document.getElementById('todays-post-label').textContent = 'Post ' + (postIdx + 1);
-      document.getElementById('client-progress').style.width = Math.min(100, (clients / 10) * 100) + '%';
+      document.getElementById('client-progress').style.width = Math.min(100, (clients / 45) * 100) + '%';
 
       // DMs
       document.getElementById('dms-count').textContent = getDailyVal('dms');
