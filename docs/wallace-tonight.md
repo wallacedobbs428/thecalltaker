@@ -1,6 +1,6 @@
 # Wallace's To-Do List — Tonight
 **Date:** February 14, 2026
-**Goal:** 10 paying clients by March 14, 2026 — $2,970 MRR
+**Goal:** 45 paying clients by May 31, 2026 — $33,000 MRR ($100K by May 2026)
 
 ---
 
