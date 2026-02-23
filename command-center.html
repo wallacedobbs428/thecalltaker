@@ -10,9 +10,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <!-- Google Ads Tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17970510102');</script>
   <style>
     /* ============================================
-       COMMAND CENTER — Daily Outreach Dashboard
+       COMMAND CENTER — Cold Call First Edition
+       Feb 22, 2026 — Day 1 of the Machine
        ============================================ */
 
     body { background: #000; }
@@ -74,55 +78,62 @@
       margin-bottom: 12px;
     }
 
-    /* --- Mission Header --- */
-    .mission-card {
+    /* --- Cards --- */
+    .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 28px 24px;
+      padding: 24px;
     }
-    .mission-day {
-      font-size: clamp(24px, 5vw, 36px);
+    .card + .card { margin-top: 12px; }
+
+    .card-title {
+      font-size: 18px;
       font-weight: 800;
       color: #fff;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
       margin-bottom: 4px;
     }
-    .mission-day span { color: var(--green); }
-    .mission-subtitle {
-      font-size: 14px;
+    .card-subtitle {
+      font-size: 13px;
       color: var(--text-3);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
-    .mission-stats {
+
+    /* --- Stats Grid --- */
+    .stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
     @media (min-width: 500px) {
-      .mission-stats { grid-template-columns: 1fr 1fr 1fr 1fr; }
+      .stats-grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
     }
-    .mission-stat {
+    .stat-box {
       background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 14px 12px;
       text-align: center;
     }
-    .mission-stat-value {
+    .stat-value {
       font-size: 22px;
       font-weight: 800;
       color: #fff;
       letter-spacing: -0.02em;
     }
-    .mission-stat-value .goal { color: var(--text-3); font-weight: 500; font-size: 14px; }
-    .mission-stat-label {
+    .stat-value .goal { color: var(--text-3); font-weight: 500; font-size: 14px; }
+    .stat-label {
       font-size: 11px;
       color: var(--text-3);
       margin-top: 2px;
     }
-    .mission-stat-btn {
+    .stat-btns {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+    .btn-inc {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -135,22 +146,133 @@
       font-weight: 700;
       cursor: pointer;
       border: none;
-      margin-top: 6px;
       transition: 0.15s;
     }
-    .mission-stat-btn:hover { background: var(--green); color: #000; }
-    .mission-stat-btn.minus {
+    .btn-inc:hover { background: var(--green); color: #000; }
+    .btn-dec {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
       background: rgba(255,60,60,0.1);
       color: #ff6b6b;
       font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: 0.15s;
     }
-    .mission-stat-btn.minus:hover { background: #ff6b6b; color: #000; }
-    .mission-stat-btns {
+    .btn-dec:hover { background: #ff6b6b; color: #000; }
+
+    /* --- Progress bar --- */
+    .progress-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 3px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--green);
+      border-radius: 3px;
+      transition: width 0.4s ease;
+    }
+
+    /* --- Checklist --- */
+    .checklist {
       display: flex;
-      gap: 6px;
-      justify-content: center;
-      margin-top: 6px;
+      flex-direction: column;
+      gap: 8px;
     }
+    .check-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .check-item-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+    .check-item-time {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-left: 8px;
+    }
+    .check-box {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.15s;
+      flex-shrink: 0;
+      color: transparent;
+      font-size: 14px;
+    }
+    .check-box.checked {
+      background: var(--green);
+      border-color: var(--green);
+      color: #000;
+    }
+
+    /* --- Script Cards --- */
+    .script-card {
+      position: relative;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      padding-right: 80px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .script-card:hover {
+      border-color: rgba(0,220,130,0.25);
+    }
+    .script-card + .script-card { margin-top: 10px; }
+    .script-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .script-text {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    .copy-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 6px 12px;
+      background: var(--green-dim);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .copy-btn:hover { background: var(--green); color: #000; }
 
     /* --- Quick Actions --- */
     .quick-actions {
@@ -182,10 +304,7 @@
       border-color: rgba(0,220,130,0.3);
       background: var(--surface-hover);
     }
-    .quick-btn-icon {
-      font-size: 22px;
-      line-height: 1;
-    }
+    .quick-btn-icon { font-size: 22px; line-height: 1; }
     .quick-btn-label {
       font-size: 12px;
       font-weight: 600;
@@ -193,283 +312,14 @@
       line-height: 1.3;
     }
 
-    /* --- DM Tracker --- */
-    .dm-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-    }
-    .dm-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .dm-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-    }
-    .dm-counter {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .dm-counter-value {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--green);
-    }
-    .dm-counter-target {
-      font-size: 14px;
-      color: var(--text-3);
-      font-weight: 500;
-    }
-
-    .dm-scripts {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    .dm-script {
-      position: relative;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      padding-right: 80px;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-    .dm-script:hover {
-      border-color: rgba(0,220,130,0.25);
-    }
-    .dm-script-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--green);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .dm-script-text {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.5;
-    }
-    .dm-script-copy {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 6px 12px;
-      background: var(--green-dim);
-      color: var(--green);
-      font-size: 11px;
-      font-weight: 700;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      transition: 0.15s;
-      letter-spacing: 0.02em;
-    }
-    .dm-script-copy:hover { background: var(--green); color: #000; }
-
-    .dm-mini-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .dm-mini-stat {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      text-align: center;
-    }
-    .dm-mini-stat-label {
-      font-size: 11px;
-      color: var(--text-3);
-      margin-bottom: 4px;
-    }
-    .dm-mini-stat-value {
-      font-size: 20px;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    /* --- Today's Post --- */
-    .post-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-    }
-    .post-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .post-filename {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      background: var(--green-dim);
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--green);
-    }
-    .post-time {
-      font-size: 12px;
-      color: var(--text-3);
-    }
-    .post-caption {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 12px;
-      position: relative;
-    }
-    .post-caption-text {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-      white-space: pre-wrap;
-      padding-right: 60px;
-    }
-    .post-caption-copy {
-      position: absolute;
-      right: 12px;
-      top: 12px;
-      padding: 6px 12px;
-      background: var(--green-dim);
-      color: var(--green);
-      font-size: 11px;
-      font-weight: 700;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-    .post-caption-copy:hover { background: var(--green); color: #000; }
-    .post-done-btn {
-      width: 100%;
-      padding: 12px;
-      background: var(--green-dim);
-      border: 1px solid rgba(0,220,130,0.15);
-      border-radius: 10px;
-      color: var(--green);
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-    .post-done-btn:hover { background: var(--green); color: #000; }
-    .post-done-btn.done {
-      background: var(--green);
-      color: #000;
-      border-color: var(--green);
-    }
-
-    /* --- Facebook Groups --- */
-    .fb-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-    }
-    .fb-groups-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .fb-group-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .fb-group-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-2);
-    }
-    .fb-group-check {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.15s;
-      flex-shrink: 0;
-      color: transparent;
-      font-size: 14px;
-    }
-    .fb-group-check.checked {
-      background: var(--green);
-      border-color: var(--green);
-      color: #000;
-    }
-    .fb-template {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      position: relative;
-    }
-    .fb-template-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--green);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .fb-template-text {
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.6;
-      padding-right: 60px;
-    }
-    .fb-template-copy {
-      position: absolute;
-      right: 12px;
-      top: 12px;
-      padding: 6px 12px;
-      background: var(--green-dim);
-      color: var(--green);
-      font-size: 11px;
-      font-weight: 700;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-    .fb-template-copy:hover { background: var(--green); color: #000; }
-
-    /* --- Sales Toolkit Grid --- */
+    /* --- Toolkit Grid --- */
     .toolkit-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
+    }
+    @media (max-width: 500px) {
+      .toolkit-grid { grid-template-columns: repeat(2, 1fr); }
     }
     .toolkit-card {
       background: var(--surface);
@@ -485,26 +335,83 @@
       background: rgba(255,255,255,0.06);
       border-color: rgba(16,185,129,0.3);
     }
-    .toolkit-icon {
-      font-size: 24px;
-      margin-bottom: 6px;
+    .toolkit-icon { font-size: 24px; margin-bottom: 6px; }
+    .toolkit-name { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .toolkit-desc { font-size: 10px; color: var(--text-3); line-height: 1.3; }
+
+    /* --- Revenue Table --- */
+    .rev-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
     }
-    .toolkit-name {
-      font-size: 12px;
+    .rev-table th {
+      text-align: left;
+      padding: 8px 10px;
+      font-weight: 700;
+      color: var(--green);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    .rev-table td {
+      padding: 8px 10px;
+      color: var(--text-2);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .rev-table tr:last-child td { border-bottom: none; }
+    .rev-table .highlight td { color: #fff; font-weight: 600; }
+
+    /* --- Report Button --- */
+    .report-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--green-dim);
+      border: 1px solid rgba(0,220,130,0.15);
+      border-radius: 12px;
+      color: var(--green);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .report-btn:hover { background: var(--green); color: #000; }
+
+    /* --- Bot List Items --- */
+    .bot-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .bot-item + .bot-item { margin-top: 6px; }
+    .bot-name {
+      font-size: 13px;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 2px;
     }
-    .toolkit-desc {
-      font-size: 10px;
+    .bot-name span {
+      font-size: 11px;
       color: var(--text-3);
-      line-height: 1.3;
+      font-weight: 500;
     }
-    @media (max-width: 500px) {
-      .toolkit-grid { grid-template-columns: repeat(2, 1fr); }
+    .bot-desc {
+      font-size: 11px;
+      color: var(--text-3);
+    }
+    .bot-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
     }
 
-    /* --- Fixed Bottom Scoreboard --- */
+    /* --- Scoreboard --- */
     .scoreboard {
       position: fixed;
       bottom: 0;
@@ -568,20 +475,59 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* --- Progress bar --- */
-    .progress-bar-wrap {
-      width: 100%;
-      height: 6px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 3px;
-      margin-top: 16px;
-      overflow: hidden;
+    /* --- Info Box --- */
+    .info-box {
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text-2);
     }
-    .progress-bar-fill {
-      height: 100%;
-      background: var(--green);
-      border-radius: 3px;
-      transition: width 0.4s ease;
+    .info-box.green {
+      background: rgba(0,220,130,0.05);
+      border: 1px solid rgba(0,220,130,0.15);
+    }
+    .info-box.red {
+      background: rgba(255,60,60,0.05);
+      border: 1px solid rgba(255,60,60,0.15);
+      color: #ff9999;
+    }
+    .info-box.blue {
+      background: rgba(59,130,246,0.05);
+      border: 1px solid rgba(59,130,246,0.15);
+    }
+    .info-box strong { color: #fff; }
+    .info-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    /* --- Mini stats row --- */
+    .mini-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .mini-stat {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .mini-stat-label {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-bottom: 4px;
+    }
+    .mini-stat-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
     }
   </style>
 </head>
@@ -599,38 +545,34 @@
     <div class="cc-content">
 
       <!-- =========================================
-           SECTION 1: TODAY'S MISSION
+           SECTION 1: MISSION — HONEST STATUS
            ========================================= -->
       <div class="cc-section">
-        <div class="cc-section-label">Today's Mission</div>
-        <div class="mission-card">
-          <div class="mission-day">Day <span id="day-number">1</span> of 28</div>
-          <div class="mission-subtitle">45 Clients by May 31 &mdash; <span id="days-remaining">98</span> days remaining</div>
+        <div class="cc-section-label">Mission Status</div>
+        <div class="card">
+          <div class="card-title">Day <span style="color:var(--green)" id="day-number">1</span> &mdash; First 3-5 Clients</div>
+          <div class="card-subtitle"><span id="days-remaining">0</span> days left in the sprint &middot; $997/mo per client</div>
 
-          <div class="mission-stats">
-            <div class="mission-stat">
-              <div class="mission-stat-value"><span id="clients-count">0</span><span class="goal">/45</span></div>
-              <div class="mission-stat-label">Clients</div>
-              <div class="mission-stat-btns">
-                <button class="mission-stat-btn minus" onclick="adjustCounter('clients', -1)" aria-label="Remove client">&minus;</button>
-                <button class="mission-stat-btn" onclick="adjustCounter('clients', 1)" aria-label="Add client">+</button>
+          <div class="stats-grid stats-grid-4">
+            <div class="stat-box">
+              <div class="stat-value"><span id="clients-count">0</span><span class="goal">/5</span></div>
+              <div class="stat-label">Clients</div>
+              <div class="stat-btns">
+                <button class="btn-dec" onclick="adjustCounter('clients', -1)">&minus;</button>
+                <button class="btn-inc" onclick="adjustCounter('clients', 1)">+</button>
               </div>
             </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value">$<span id="mrr-count">0</span></div>
-              <div class="mission-stat-label">MRR / $33,000</div>
-              <div class="mission-stat-btns">
-                <button class="mission-stat-btn minus" onclick="adjustCounter('clients', -1)" aria-label="Remove client">&minus;</button>
-                <button class="mission-stat-btn" onclick="adjustCounter('clients', 1)" aria-label="Add client">+</button>
-              </div>
+            <div class="stat-box">
+              <div class="stat-value">$<span id="mrr-count">0</span></div>
+              <div class="stat-label">MRR</div>
             </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value" id="demos-total-count">0</div>
-              <div class="mission-stat-label">Total Demos</div>
+            <div class="stat-box">
+              <div class="stat-value" id="total-demos">0</div>
+              <div class="stat-label">Total Demos</div>
             </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value" id="todays-post-label">Post 1</div>
-              <div class="mission-stat-label">Today's Post</div>
+            <div class="stat-box">
+              <div class="stat-value" id="total-calls-all">0</div>
+              <div class="stat-label">Total Calls Made</div>
             </div>
           </div>
 
@@ -641,11 +583,186 @@
       </div>
 
       <!-- =========================================
-           SECTION 2: QUICK ACTIONS
+           SECTION 2: TODAY'S COLD CALLS
+           ========================================= -->
+      <div class="cc-section">
+        <div class="cc-section-label">Cold Calls &mdash; The #1 Priority</div>
+        <div class="card">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+            <div class="card-title" style="margin-bottom:0">Today's Calls</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button class="btn-dec" onclick="adjustDaily('calls', -1)">&minus;</button>
+              <div><span style="font-size:24px; font-weight:800; color:var(--green)" id="calls-count">0</span><span style="font-size:14px; color:var(--text-3); font-weight:500">/10 target</span></div>
+              <button class="btn-inc" onclick="adjustDaily('calls', 1)">+</button>
+            </div>
+          </div>
+
+          <div class="mini-stats">
+            <div class="mini-stat">
+              <div class="mini-stat-label">Pickups</div>
+              <div class="mini-stat-value" id="pickups-count">0</div>
+              <div class="stat-btns">
+                <button class="btn-dec" onclick="adjustDaily('pickups', -1)">&minus;</button>
+                <button class="btn-inc" onclick="adjustDaily('pickups', 1)">+</button>
+              </div>
+            </div>
+            <div class="mini-stat">
+              <div class="mini-stat-label">Demos Booked</div>
+              <div class="mini-stat-value" id="demos-count">0</div>
+              <div class="stat-btns">
+                <button class="btn-dec" onclick="adjustDaily('demos', -1)">&minus;</button>
+                <button class="btn-inc" onclick="adjustDaily('demos', 1)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-stats">
+            <div class="mini-stat">
+              <div class="mini-stat-label">"Send Info"</div>
+              <div class="mini-stat-value" id="send-info-count">0</div>
+              <div class="stat-btns">
+                <button class="btn-dec" onclick="adjustDaily('sendinfo', -1)">&minus;</button>
+                <button class="btn-inc" onclick="adjustDaily('sendinfo', 1)">+</button>
+              </div>
+            </div>
+            <div class="mini-stat">
+              <div class="mini-stat-label">Voicemails</div>
+              <div class="mini-stat-value" id="voicemails-count">0</div>
+              <div class="stat-btns">
+                <button class="btn-dec" onclick="adjustDaily('voicemails', -1)">&minus;</button>
+                <button class="btn-inc" onclick="adjustDaily('voicemails', 1)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-box red" style="margin-top:16px;">
+            <strong>The one thing that matters:</strong> Make 10 cold calls today. Not emails. Not posts. Not bot tweaks. Phone calls. The call sheet hits your phone at 8am. The script is below. Just dial.
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================
+           SECTION 3: 90-SECOND COLD CALL SCRIPT
+           ========================================= -->
+      <div class="cc-section">
+        <div class="cc-section-label">Cold Call Script (90 Seconds)</div>
+        <div class="card">
+          <div class="script-card" onclick="copyText('opener', this)">
+            <div class="script-label">Opening (15 sec) &mdash; Then SHUT UP and listen</div>
+            <div class="script-text">Hey [Name], this is Mills with The Call Taker. Quick question &mdash; when someone calls your shop after hours, what happens?</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyText('opener', this)">COPY</button>
+          </div>
+
+          <div class="script-card" onclick="copyText('voicemail_response', this)">
+            <div class="script-label">If they say "voicemail"</div>
+            <div class="script-text">Yeah, that's what I figured. That's actually why I'm calling. 85% of people won't leave a voicemail. They just hang up and call the next company. At $350-$1,500 a job, even a few missed calls a week adds up fast.</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyText('voicemail_response', this)">COPY</button>
+          </div>
+
+          <div class="script-card" onclick="copyText('cell_response', this)">
+            <div class="script-label">If they say "it goes to my cell"</div>
+            <div class="script-text">So you're answering calls at 9pm while you're trying to have dinner? That's exhausting. What about when you're on a job or in a crawl space?</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyText('cell_response', this)">COPY</button>
+          </div>
+
+          <div class="script-card" onclick="copyText('solution', this)">
+            <div class="script-label">The Solution (30 sec)</div>
+            <div class="script-text">I built an AI receptionist that answers every call to your business &mdash; 24/7. Picks up in 2 seconds, talks to the customer, gets their name, address, and what's going on. Books the appointment on your calendar. Texts you the details immediately. No voicemail. No missed calls.</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyText('solution', this)">COPY</button>
+          </div>
+
+          <div class="script-card" onclick="copyText('ask', this)">
+            <div class="script-label">The Ask (15 sec)</div>
+            <div class="script-text">I'd love to show you a quick demo. Takes 15 minutes. You'll actually call the AI yourself, talk to it like a customer, and see what happens. If you like it, great. If not, no hard feelings. Do you have 15 minutes this week?</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyText('ask', this)">COPY</button>
+          </div>
+
+          <div style="margin-top: 16px;">
+            <div class="script-label" style="margin-bottom: 8px; padding-left: 4px;">Quick Objection Handlers</div>
+            <div class="script-card" onclick="copyText('obj_afford', this)">
+              <div class="script-label">&#34;I can't afford it&#34;</div>
+              <div class="script-text">If even 2 of those missed calls were real jobs at $350 each, that's $700/mo you're not getting. The Call Taker costs less than that. It pays for itself with the first couple of recovered calls.</div>
+              <button class="copy-btn" onclick="event.stopPropagation(); copyText('obj_afford', this)">COPY</button>
+            </div>
+            <div class="script-card" onclick="copyText('obj_robotic', this)">
+              <div class="script-label">&#34;AI sounds robotic&#34;</div>
+              <div class="script-text">That's the #1 thing people say before they hear it. Call (615) 784-5747 right now and judge for yourself. If it sounds robotic, I'll leave you alone.</div>
+              <button class="copy-btn" onclick="event.stopPropagation(); copyText('obj_robotic', this)">COPY</button>
+            </div>
+            <div class="script-card" onclick="copyText('obj_think', this)">
+              <div class="script-label">&#34;Let me think about it&#34;</div>
+              <div class="script-text">Totally fair. But while you're thinking about it, how many calls are going to hit voicemail tonight? Let me set up a 15-min demo so you can decide based on what it actually does. No commitment &mdash; just a look.</div>
+              <button class="copy-btn" onclick="event.stopPropagation(); copyText('obj_think', this)">COPY</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================
+           SECTION 4: MILLS' DAILY SCHEDULE
+           ========================================= -->
+      <div class="cc-section">
+        <div class="cc-section-label">Mills' Daily Schedule</div>
+        <div class="card">
+          <div class="checklist">
+            <div class="check-item">
+              <div><span class="check-item-text">Open MacBook &mdash; bots fire on schedule</span><span class="check-item-time">7:00 AM</span></div>
+              <div class="check-box" data-check="sched-0" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div><span class="check-item-text">Read call sheet from ntfy &mdash; 15 scored leads</span><span class="check-item-time">8:00 AM</span></div>
+              <div class="check-box" data-check="sched-1" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item" style="border-color: rgba(0,220,130,0.3); background: rgba(0,220,130,0.04);">
+              <div><span class="check-item-text" style="color:#fff; font-weight:700;">COLD CALLS &mdash; 10+ calls from call sheet</span><span class="check-item-time">8:30-10:30 AM</span></div>
+              <div class="check-box" data-check="sched-2" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div><span class="check-item-text">Bland.ai fires 20 automated calls (monitor)</span><span class="check-item-time">10:00 AM</span></div>
+              <div class="check-box" data-check="sched-3" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div><span class="check-item-text">WD-Blast sends cold emails (auto)</span><span class="check-item-time">10:30 AM</span></div>
+              <div class="check-box" data-check="sched-4" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div><span class="check-item-text">Follow up with yesterday's warm leads</span><span class="check-item-time">11:00 AM</span></div>
+              <div class="check-box" data-check="sched-5" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div><span class="check-item-text">Respond to email replies (WD-Max alerts)</span><span class="check-item-time">1:00 PM</span></div>
+              <div class="check-box" data-check="sched-6" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div><span class="check-item-text">"Send info" follow-ups &mdash; email within 5 min</span><span class="check-item-time">Whenever</span></div>
+              <div class="check-box" data-check="sched-7" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div><span class="check-item-text">Report results to war room</span><span class="check-item-time">End of Day</span></div>
+              <div class="check-box" data-check="sched-8" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================
+           SECTION 5: QUICK ACTIONS
            ========================================= -->
       <div class="cc-section">
         <div class="cc-section-label">Quick Actions</div>
         <div class="quick-actions">
+          <a href="tel:+16157845747" class="quick-btn">
+            <div class="quick-btn-icon">&#x1F4DE;</div>
+            <div class="quick-btn-label">Demo Line<br>(615) 784-5747</div>
+          </a>
+          <a href="https://app.gohighlevel.com" target="_blank" rel="noopener" class="quick-btn">
+            <div class="quick-btn-icon">&#x2699;&#xFE0F;</div>
+            <div class="quick-btn-label">GHL<br>Dashboard</div>
+          </a>
+          <a href="index.html" class="quick-btn">
+            <div class="quick-btn-icon">&#x1F310;</div>
+            <div class="quick-btn-label">Website<br>thecalltaker.com</div>
+          </a>
           <a href="https://instagram.com/thecalltaker" target="_blank" rel="noopener" class="quick-btn">
             <div class="quick-btn-icon">&#x1F4F7;</div>
             <div class="quick-btn-label">Instagram<br>@thecalltaker</div>
@@ -654,79 +771,44 @@
             <div class="quick-btn-icon">&#x1F4D8;</div>
             <div class="quick-btn-label">Facebook<br>Page</div>
           </a>
-          <a href="https://app.gohighlevel.com" target="_blank" rel="noopener" class="quick-btn">
-            <div class="quick-btn-icon">&#x2699;&#xFE0F;</div>
-            <div class="quick-btn-label">GHL<br>Dashboard</div>
-          </a>
-          <a href="tel:+16157845747" class="quick-btn">
-            <div class="quick-btn-icon">&#x1F4DE;</div>
-            <div class="quick-btn-label">Call Demo<br>(615) 784-5747</div>
-          </a>
-          <a href="index.html" class="quick-btn">
-            <div class="quick-btn-icon">&#x1F310;</div>
-            <div class="quick-btn-label">Website<br>thecalltaker.com</div>
-          </a>
         </div>
       </div>
 
       <!-- =========================================
-           SECTION 3: DM OUTREACH TRACKER
+           SECTION 6: WHAT ACTUALLY GETS CLIENTS
            ========================================= -->
       <div class="cc-section">
-        <div class="cc-section-label">DM Outreach</div>
-        <div class="dm-section">
-          <div class="dm-header">
-            <div class="dm-title">Instagram DMs</div>
-            <div class="dm-counter">
-              <button class="mission-stat-btn minus" onclick="adjustDaily('dms', -1)" aria-label="Remove DM">&minus;</button>
-              <div><span class="dm-counter-value" id="dms-count">0</span><span class="dm-counter-target">/25 today</span></div>
-              <button class="mission-stat-btn" onclick="adjustDaily('dms', 1)" aria-label="Add DM">+</button>
-            </div>
-          </div>
-
-          <div class="dm-scripts">
-            <div class="dm-script" onclick="copyScript(1)">
-              <div class="dm-script-label">Opener 1 &mdash; Casual</div>
-              <div class="dm-script-text">Hey! How long you been in the HVAC game?</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyScript(1)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyScript(2)">
-              <div class="dm-script-label">Opener 2 &mdash; Compliment</div>
-              <div class="dm-script-text">Your work looks clean. You guys stay busy year round or is it seasonal for you?</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyScript(2)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyScript(3)">
-              <div class="dm-script-label">Opener 3 &mdash; Curious</div>
-              <div class="dm-script-text">Hey, do you run your own shop or work for a company? Always curious when I see HVAC pages on here.</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyScript(3)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyScript(4)">
-              <div class="dm-script-label">Opener 4 &mdash; Scale</div>
-              <div class="dm-script-text">That's a solid setup. How many trucks you running right now?</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyScript(4)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyScript(5)">
-              <div class="dm-script-label">Opener 5 &mdash; Niche</div>
-              <div class="dm-script-text">Hey, real quick -- do you handle mostly residential or commercial? Just curious.</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyScript(5)">COPY</button>
-            </div>
-          </div>
-
-          <div class="dm-mini-stats">
-            <div class="dm-mini-stat">
-              <div class="dm-mini-stat-label">Responses Today</div>
-              <div class="dm-mini-stat-value" id="responses-count">0</div>
-              <div class="mission-stat-btns">
-                <button class="mission-stat-btn minus" onclick="adjustDaily('responses', -1)" aria-label="Remove response">&minus;</button>
-                <button class="mission-stat-btn" onclick="adjustDaily('responses', 1)" aria-label="Add response">+</button>
+        <div class="cc-section-label">What Gets Clients (Ranked)</div>
+        <div class="card">
+          <div class="checklist">
+            <div class="check-item" style="border-color: rgba(0,220,130,0.3); background: rgba(0,220,130,0.04);">
+              <div>
+                <span class="check-item-text" style="color:var(--green); font-weight:700;">#1 &mdash; Mills making manual cold calls</span>
+                <div style="font-size:11px; color:var(--text-3); margin-top:2px;">No bot, no email, no ad will close like a human. Call 10/day.</div>
               </div>
             </div>
-            <div class="dm-mini-stat">
-              <div class="dm-mini-stat-label">Demos Booked Today</div>
-              <div class="dm-mini-stat-value" id="demos-count">0</div>
-              <div class="mission-stat-btns">
-                <button class="mission-stat-btn minus" onclick="adjustDaily('demos', -1)" aria-label="Remove demo">&minus;</button>
-                <button class="mission-stat-btn" onclick="adjustDaily('demos', 1)" aria-label="Add demo">+</button>
+            <div class="check-item">
+              <div>
+                <span class="check-item-text">#2 &mdash; Demo line conversions</span>
+                <div style="font-size:11px; color:var(--text-3); margin-top:2px;">Get them to call (615) 784-5747. The demo IS the sale.</div>
+              </div>
+            </div>
+            <div class="check-item">
+              <div>
+                <span class="check-item-text">#3 &mdash; Cold email replies + personal follow-up</span>
+                <div style="font-size:11px; color:var(--text-3); margin-top:2px;">WD-Blast sends volume. When someone replies, call within 5 min.</div>
+              </div>
+            </div>
+            <div class="check-item">
+              <div>
+                <span class="check-item-text">#4 &mdash; Facebook/Google ads (Wallace)</span>
+                <div style="font-size:11px; color:var(--text-3); margin-top:2px;">Even $10-20/day targeting restoration companies.</div>
+              </div>
+            </div>
+            <div class="check-item">
+              <div>
+                <span class="check-item-text">#5 &mdash; Facebook group engagement</span>
+                <div style="font-size:11px; color:var(--text-3); margin-top:2px;">Long game. Join groups, provide value, mention casually.</div>
               </div>
             </div>
           </div>
@@ -734,73 +816,51 @@
       </div>
 
       <!-- =========================================
-           SECTION 4: TODAY'S PLAN
+           SECTION 7: SECONDARY OUTREACH (DMs, Posts, Email)
            ========================================= -->
       <div class="cc-section">
-        <div class="cc-section-label">Today's Plan</div>
-        <div class="fb-card">
-          <div class="fb-groups-list">
-            <div class="fb-group-item">
-              <div class="fb-group-name">Set up Google Business Profile (20 min)</div>
-              <div class="fb-group-check" data-group="10" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">Film 1 Reel from car — post to IG + FB</div>
-              <div class="fb-group-check" data-group="11" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">Secret shopper: call 20 HVAC companies</div>
-              <div class="fb-group-check" data-group="12" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">DM/call voicemail companies with proof</div>
-              <div class="fb-group-check" data-group="13" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">Comment on 10 posts in FB groups</div>
-              <div class="fb-group-check" data-group="14" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">Follow up with Wallace on Stripe + Instantly</div>
-              <div class="fb-group-check" data-group="15" onclick="toggleGroup(this)">&#10003;</div>
+        <div class="cc-section-label">Secondary Outreach</div>
+        <div class="card">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+            <div class="card-title" style="margin-bottom:0">Instagram DMs</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button class="btn-dec" onclick="adjustDaily('dms', -1)">&minus;</button>
+              <div><span style="font-size:20px; font-weight:800; color:var(--green)" id="dms-count">0</span><span style="font-size:14px; color:var(--text-3)">/10</span></div>
+              <button class="btn-inc" onclick="adjustDaily('dms', 1)">+</button>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- =========================================
-           SECTION 5: COLD CALL SCRIPT
-           ========================================= -->
-      <div class="cc-section">
-        <div class="cc-section-label">Cold Call Script (after secret shopper)</div>
-        <div class="dm-section">
-          <div class="dm-scripts">
-            <div class="dm-script" onclick="copyCallScript()">
-              <div class="dm-script-label">After they went to voicemail</div>
-              <div class="dm-script-text">Hey, this is Mills. I actually just called your shop about 20 minutes ago and got voicemail -- I'm not a customer, but I wanted to point something out. If I got voicemail, your real customers are too. I help HVAC companies make sure every call gets answered, even when you're on a job. Would it be worth 5 minutes to show you how it works?</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyCallScript()">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyFollowDM()">
-              <div class="dm-script-label">DM after voicemail (Instagram/Facebook)</div>
-              <div class="dm-script-text">Hey, I called your shop about 30 min ago and got voicemail -- not complaining, I know you're busy on jobs. But I've been helping HVAC companies make sure every call gets answered even when they're on a roof. Want me to show you what I mean?</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyFollowDM()">COPY</button>
-            </div>
+          <div class="script-card" onclick="copyText('dm1', this)">
+            <div class="script-label">Restoration Opener &mdash; After Hours</div>
+            <div class="script-text">Real quick &mdash; who answers your emergency line at 2am when a pipe bursts? Curious how restoration companies handle that.</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyText('dm1', this)">COPY</button>
           </div>
-          <div class="dm-mini-stats">
-            <div class="dm-mini-stat">
-              <div class="dm-mini-stat-label">Shops Called</div>
-              <div class="dm-mini-stat-value" id="calls-count">0</div>
-              <div class="mission-stat-btns">
-                <button class="mission-stat-btn minus" onclick="adjustDaily('calls', -1)">&minus;</button>
-                <button class="mission-stat-btn" onclick="adjustDaily('calls', 1)">+</button>
+          <div class="script-card" onclick="copyText('dm2', this)">
+            <div class="script-label">HVAC Opener &mdash; Casual</div>
+            <div class="script-text">Hey! How long you been in the HVAC game? You guys stay busy year round or seasonal?</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyText('dm2', this)">COPY</button>
+          </div>
+          <div class="script-card" onclick="copyText('dm_followup', this)">
+            <div class="script-label">Follow-Up After Interest</div>
+            <div class="script-text">We built an AI that answers your line 24/7. Captures the address, what happened, and dispatches to your crew immediately. Want to hear it? Call (615) 784-5747 right now. Takes 30 seconds.</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyText('dm_followup', this)">COPY</button>
+          </div>
+
+          <div class="mini-stats">
+            <div class="mini-stat">
+              <div class="mini-stat-label">Responses Today</div>
+              <div class="mini-stat-value" id="responses-count">0</div>
+              <div class="stat-btns">
+                <button class="btn-dec" onclick="adjustDaily('responses', -1)">&minus;</button>
+                <button class="btn-inc" onclick="adjustDaily('responses', 1)">+</button>
               </div>
             </div>
-            <div class="dm-mini-stat">
-              <div class="dm-mini-stat-label">Went to Voicemail</div>
-              <div class="dm-mini-stat-value" id="voicemails-count">0</div>
-              <div class="mission-stat-btns">
-                <button class="mission-stat-btn minus" onclick="adjustDaily('voicemails', -1)">&minus;</button>
-                <button class="mission-stat-btn" onclick="adjustDaily('voicemails', 1)">+</button>
+            <div class="mini-stat">
+              <div class="mini-stat-label">Emails Sent (bots)</div>
+              <div class="mini-stat-value" id="emails-count">0</div>
+              <div class="stat-btns">
+                <button class="btn-dec" onclick="adjustDaily('emails', -1)">&minus;</button>
+                <button class="btn-inc" onclick="adjustDaily('emails', 1)">+</button>
               </div>
             </div>
           </div>
@@ -808,804 +868,382 @@
       </div>
 
       <!-- =========================================
-           SECTION 5.5: EMAIL CAMPAIGN
+           SECTION 8: TODAY'S POST
            ========================================= -->
       <div class="cc-section">
-        <div class="cc-section-label">Email Campaign</div>
-        <div class="dm-section">
-          <div class="dm-header">
-            <div class="dm-title">Emails Sent Today</div>
-            <div class="dm-counter">
-              <button class="mission-stat-btn minus" onclick="adjustDaily('emails', -1)" aria-label="Remove email">&minus;</button>
-              <div><span class="dm-counter-value" id="emails-count">0</span></div>
-              <button class="mission-stat-btn" onclick="adjustDaily('emails', 1)" aria-label="Add email">+</button>
-            </div>
+        <div class="cc-section-label">Today's Post</div>
+        <div class="card">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+            <div style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; background:var(--green-dim); border-radius:6px; font-size:12px; font-weight:600; color:var(--green);" id="post-filename">01-78-percent-stat.png</div>
+            <div style="font-size:12px; color:var(--text-3);">Post between 7-9am or 5-7pm</div>
           </div>
-
-          <div class="dm-scripts">
-            <div class="dm-script" onclick="copyEmailSubject(1)">
-              <div class="dm-script-label">Email 1 &mdash; The Problem</div>
-              <div class="dm-script-text">Subject: Quick question about your phones</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyEmailSubject(1)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyEmailSubject(2)">
-              <div class="dm-script-label">Email 2 &mdash; Stats</div>
-              <div class="dm-script-text">Subject: 78% of your callers won't leave a voicemail</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyEmailSubject(2)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyEmailSubject(3)">
-              <div class="dm-script-label">Email 3 &mdash; Secret Shopper</div>
-              <div class="dm-script-text">Subject: I called your shop yesterday</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyEmailSubject(3)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyEmailSubject(4)">
-              <div class="dm-script-label">Email 4 &mdash; ROI Math</div>
-              <div class="dm-script-text">Subject: $7,500/week</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyEmailSubject(4)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyEmailSubject(5)">
-              <div class="dm-script-label">Email 5 &mdash; Breakup</div>
-              <div class="dm-script-text">Subject: Should I close your file?</div>
-              <button class="dm-script-copy" onclick="event.stopPropagation(); copyEmailSubject(5)">COPY</button>
-            </div>
+          <div class="script-card" onclick="copyCaption()" style="padding-right:80px;">
+            <div class="script-label">Caption</div>
+            <div class="script-text" id="post-caption-text"></div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyCaption()">COPY</button>
           </div>
-
-          <a href="#" style="display:block; text-align:center; color:var(--green); font-size:13px; font-weight:600; text-decoration:none; margin-top:12px;">View Full Emails &rarr;</a>
+          <button class="report-btn" id="post-done-btn" onclick="markPostDone()" style="margin-top:12px; font-size:14px; padding:12px;">Mark as Posted</button>
         </div>
       </div>
 
       <!-- =========================================
-           SECTION 6: TODAY'S POST
-           ========================================= -->
-      <div class="cc-section">
-        <div class="cc-section-label">Today's Instagram Post</div>
-        <div class="post-card">
-          <div class="post-header">
-            <div class="post-filename" id="post-filename">01-78-percent-stat.png</div>
-            <div class="post-time">Post between 7-9am or 5-7pm</div>
-          </div>
-          <div class="post-caption">
-            <div class="post-caption-text" id="post-caption-text"></div>
-            <button class="post-caption-copy" onclick="copyCaption()">COPY</button>
-          </div>
-          <button class="post-done-btn" id="post-done-btn" onclick="markPostDone()">Mark as Posted</button>
-        </div>
-      </div>
-
-      <!-- =========================================
-           SECTION 7: FACEBOOK GROUPS
+           SECTION 9: FACEBOOK GROUPS
            ========================================= -->
       <div class="cc-section">
         <div class="cc-section-label">Facebook Groups</div>
-        <div class="fb-card">
-          <div class="dm-header">
-            <div class="dm-title">Your Groups</div>
-            <div class="dm-counter">
-              <span class="dm-counter-value" id="groups-count">0</span><span class="dm-counter-target">/5</span>
+        <div class="card">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+            <div class="card-title" style="margin-bottom:0">Engage Daily</div>
+            <div style="font-size:20px; font-weight:800; color:var(--green)"><span id="groups-count">0</span><span style="font-size:14px; color:var(--text-3)">/5</span></div>
+          </div>
+
+          <div class="checklist">
+            <div class="check-item">
+              <div class="check-item-text">Water Damage Restoration Pros</div>
+              <div class="check-box" data-check="grp-0" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div class="check-item-text">HVAC Business Owners & Contractors (77K)</div>
+              <div class="check-box" data-check="grp-1" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div class="check-item-text">Restoration Contractors Network</div>
+              <div class="check-box" data-check="grp-2" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div class="check-item-text">HVAC Techs Group (69K)</div>
+              <div class="check-box" data-check="grp-3" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item">
+              <div class="check-item-text">Water Damage & Mold Business Owners</div>
+              <div class="check-box" data-check="grp-4" onclick="toggleCheck(this)">&#10003;</div>
             </div>
           </div>
 
-          <div class="fb-groups-list">
-            <div class="fb-group-item">
-              <div class="fb-group-name">HVAC Business Owners & Contractors (77K)</div>
-              <div class="fb-group-check" data-group="0" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">HVAC IS LIFE (25K)</div>
-              <div class="fb-group-check" data-group="1" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">HVAC Techs Group (69K)</div>
-              <div class="fb-group-check" data-group="2" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">Sloppy HVAC Mechanics (311K)</div>
-              <div class="fb-group-check" data-group="3" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">HVAC Business GROWTH (42)</div>
-              <div class="fb-group-check" data-group="4" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-          </div>
-
-          <div class="fb-template">
-            <div class="fb-template-label">Group Post (don't mention AI)</div>
-            <div class="fb-template-text">Real talk -- I used to miss 8-10 calls a week when I was on jobs. Finally set up a system where every call gets answered live and the caller can book right there. Went from losing probably $5-8K a month to not missing a single call. Anyone else dealt with this or am I the only one who was bleeding money from the phone?</div>
-            <button class="fb-template-copy" onclick="copyFBTemplate()">COPY</button>
+          <div class="script-card" style="margin-top:16px;" onclick="copyText('fb_post', this)">
+            <div class="script-label">Group Post Template (don't mention AI)</div>
+            <div class="script-text">Question for the group &mdash; when you get a 2am pipe burst call or emergency HVAC failure, what's your setup? Answer personally, answering service, or voicemail? Trying to figure out how other independent shops handle after-hours emergencies without burning out.</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyText('fb_post', this)">COPY</button>
           </div>
         </div>
       </div>
 
       <!-- =========================================
-           SECTION 7: SALES TOOLKIT
+           SECTION 10: REVENUE PROJECTIONS
+           ========================================= -->
+      <div class="cc-section">
+        <div class="cc-section-label">Honest Revenue Projections</div>
+        <div class="card">
+          <table class="rev-table">
+            <thead>
+              <tr>
+                <th>Timeline</th>
+                <th>Clients</th>
+                <th>MRR</th>
+                <th>Total Rev</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>End of Feb</td>
+                <td>0</td>
+                <td>$0</td>
+                <td>$0</td>
+              </tr>
+              <tr>
+                <td>End of March</td>
+                <td>1-3</td>
+                <td>$997-$2,991</td>
+                <td>$997-$2,991</td>
+              </tr>
+              <tr class="highlight">
+                <td>End of April</td>
+                <td>4-8</td>
+                <td>$3,988-$7,976</td>
+                <td>$5K-$11K</td>
+              </tr>
+              <tr>
+                <td>End of May</td>
+                <td>8-15</td>
+                <td>$7,976-$14,955</td>
+                <td>$13K-$26K</td>
+              </tr>
+              <tr>
+                <td>End of June</td>
+                <td>12-20</td>
+                <td>$11,964-$19,940</td>
+                <td>$25K-$46K</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="info-box red" style="margin-top:12px;">
+            <strong>Assumes 10+ calls/day and Wallace running ads.</strong> If you slack on calls, cut these in half.
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================
+           SECTION 11: CONVERSION MATH
+           ========================================= -->
+      <div class="cc-section">
+        <div class="cc-section-label">Know Your Numbers</div>
+        <div class="card">
+          <div class="card-subtitle" style="margin-bottom:12px;">Track these to know exactly how much activity you need.</div>
+          <div class="stats-grid stats-grid-4">
+            <div class="stat-box">
+              <div class="stat-value" id="call-to-pickup">--</div>
+              <div class="stat-label">Call &rarr; Pickup %</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="pickup-to-demo">--</div>
+              <div class="stat-label">Pickup &rarr; Demo %</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="demo-to-client">--</div>
+              <div class="stat-label">Demo &rarr; Client %</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="calls-per-client">--</div>
+              <div class="stat-label">Calls per Client</div>
+            </div>
+          </div>
+          <div class="info-box green" style="margin-top:12px;">
+            <div class="info-label" style="color:var(--green);">How to Read This</div>
+            If 1 in 30 calls books a demo, you need 150 calls/month for 5 demos. If 1 in 3 demos closes, you need 15 demos/month for 5 clients. These numbers tell you EXACTLY how much activity is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================
+           SECTION 12: END-OF-DAY REPORT
+           ========================================= -->
+      <div class="cc-section">
+        <div class="cc-section-label">End of Day</div>
+        <div class="card">
+          <button class="report-btn" onclick="sendWarRoomReport()">
+            Send Daily Report to War Room
+          </button>
+          <div class="card-subtitle" style="margin-top:12px; margin-bottom:0; text-align:center;">
+            Sends today's stats to ntfy so Wallace sees your numbers.
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================
+           SECTION 13: WALLACE'S TASKS
+           ========================================= -->
+      <div class="cc-section" style="border-top: 2px solid rgba(59,130,246,0.3); padding-top: 32px; margin-top: 40px;">
+        <div class="cc-section-label" style="color: #3b82f6;">Wallace's Priorities</div>
+        <div class="card" style="border-color: rgba(59,130,246,0.15);">
+          <div class="checklist">
+            <div class="check-item" style="border-color: rgba(59,130,246,0.2);">
+              <div><span class="check-item-text">Connect Stripe to GHL (can't charge without it)</span></div>
+              <div class="check-box" data-check="wallace-0" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item" style="border-color: rgba(59,130,246,0.2);">
+              <div><span class="check-item-text">Facebook ad account &mdash; first ad $10-20/day</span></div>
+              <div class="check-box" data-check="wallace-1" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item" style="border-color: rgba(59,130,246,0.2);">
+              <div><span class="check-item-text">Fill in 10 email template shells in GHL</span></div>
+              <div class="check-box" data-check="wallace-2" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item" style="border-color: rgba(59,130,246,0.2);">
+              <div><span class="check-item-text">Post 1x/day on Instagram + Facebook</span></div>
+              <div class="check-box" data-check="wallace-3" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+            <div class="check-item" style="border-color: rgba(59,130,246,0.2);">
+              <div><span class="check-item-text">Google ads for "AI receptionist for restoration"</span></div>
+              <div class="check-box" data-check="wallace-4" onclick="toggleCheck(this)">&#10003;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================
+           SECTION 14: SALES TOOLKIT
            ========================================= -->
       <div class="cc-section">
         <div class="cc-section-label">Sales Toolkit</div>
         <div class="toolkit-grid">
-          <a class="toolkit-card" href="../sales/dm-followup-templates.md" target="_blank">
-            <div class="toolkit-icon">💬</div>
-            <div class="toolkit-name">DM Follow-Ups</div>
-            <div class="toolkit-desc">10 reply scenarios, 3 variants each</div>
+          <a class="toolkit-card" href="sales/cold-call-script.md" target="_blank">
+            <div class="toolkit-icon">&#x1F4DE;</div>
+            <div class="toolkit-name">Full Call Script</div>
+            <div class="toolkit-desc">Script + all objections</div>
           </a>
-          <a class="toolkit-card" href="../sales/objection-handling.md" target="_blank">
-            <div class="toolkit-icon">🛡</div>
-            <div class="toolkit-name">Objection Handling</div>
-            <div class="toolkit-desc">15 objections with responses</div>
-          </a>
-          <a class="toolkit-card" href="../sales/reel-scripts-v3.md" target="_blank">
-            <div class="toolkit-icon">🎬</div>
-            <div class="toolkit-name">Reel Scripts</div>
-            <div class="toolkit-desc">5 ready-to-film scripts</div>
-          </a>
-          <a class="toolkit-card" href="../sales/facebook-group-posts.md" target="_blank">
-            <div class="toolkit-icon">📢</div>
-            <div class="toolkit-name">FB Group Posts</div>
-            <div class="toolkit-desc">10 post templates</div>
-          </a>
-          <a class="toolkit-card" href="../sales/email-campaign-cold-5.md" target="_blank">
-            <div class="toolkit-icon">📧</div>
-            <div class="toolkit-name">Email Campaign</div>
-            <div class="toolkit-desc">5-email cold sequence</div>
-          </a>
-          <a class="toolkit-card" href="../sales/cold-emails-ready-to-send.md" target="_blank">
-            <div class="toolkit-icon">🎯</div>
-            <div class="toolkit-name">Personalized Emails</div>
-            <div class="toolkit-desc">14 companies, ready to send</div>
-          </a>
-          <a class="toolkit-card" href="../sales/craigslist-ads-v2.md" target="_blank">
-            <div class="toolkit-icon">📋</div>
-            <div class="toolkit-name">Craigslist Ads</div>
-            <div class="toolkit-desc">3 ad variations</div>
-          </a>
-          <a class="toolkit-card" href="../sales/nextdoor-marketplace-posts.md" target="_blank">
-            <div class="toolkit-icon">🏘</div>
-            <div class="toolkit-name">Nextdoor + Marketplace</div>
-            <div class="toolkit-desc">Posts + listings ready</div>
-          </a>
-          <a class="toolkit-card" href="../sales/instagram-captions-30days.md" target="_blank">
-            <div class="toolkit-icon">📸</div>
-            <div class="toolkit-name">30-Day Captions</div>
-            <div class="toolkit-desc">Daily IG captions + hashtags</div>
-          </a>
-          <a class="toolkit-card" href="../sales/secret-shopper-tracker.html" target="_blank">
-            <div class="toolkit-icon">🕵</div>
-            <div class="toolkit-name">Secret Shopper</div>
-            <div class="toolkit-desc">Mobile call tracker app</div>
-          </a>
-          <a class="toolkit-card" href="../sales/cold-call-script.md" target="_blank">
-            <div class="toolkit-icon">📞</div>
-            <div class="toolkit-name">Cold Call Script</div>
-            <div class="toolkit-desc">Full script + objections</div>
-          </a>
-          <a class="toolkit-card" href="../sales/demo-script.md" target="_blank">
-            <div class="toolkit-icon">🎤</div>
+          <a class="toolkit-card" href="sales/demo-script.md" target="_blank">
+            <div class="toolkit-icon">&#x1F3A4;</div>
             <div class="toolkit-name">Demo Script</div>
-            <div class="toolkit-desc">15-min demo walkthrough</div>
+            <div class="toolkit-desc">15-min walkthrough</div>
+          </a>
+          <a class="toolkit-card" href="sales/objection-handling-playbook.md" target="_blank">
+            <div class="toolkit-icon">&#x1F6E1;</div>
+            <div class="toolkit-name">Objection Playbook</div>
+            <div class="toolkit-desc">20 objections handled</div>
+          </a>
+          <a class="toolkit-card" href="shopper-report.html" target="_blank">
+            <div class="toolkit-icon">&#x1F575;</div>
+            <div class="toolkit-name">Secret Shopper</div>
+            <div class="toolkit-desc">Report generator</div>
+          </a>
+          <a class="toolkit-card" href="calculator.html" target="_blank">
+            <div class="toolkit-icon">&#x1F4B0;</div>
+            <div class="toolkit-name">ROI Calculator</div>
+            <div class="toolkit-desc">Show them the math</div>
+          </a>
+          <a class="toolkit-card" href="demo.html" target="_blank">
+            <div class="toolkit-icon">&#x1F4CB;</div>
+            <div class="toolkit-name">Demo Booking</div>
+            <div class="toolkit-desc">Send to prospects</div>
+          </a>
+          <a class="toolkit-card" href="sales/cold-dm-scripts.md" target="_blank">
+            <div class="toolkit-icon">&#x1F4AC;</div>
+            <div class="toolkit-name">DM Scripts</div>
+            <div class="toolkit-desc">IG/FB/LinkedIn</div>
+          </a>
+          <a class="toolkit-card" href="sales/sales-cheat-sheet.md" target="_blank">
+            <div class="toolkit-icon">&#x1F4DD;</div>
+            <div class="toolkit-name">Sales Cheat Sheet</div>
+            <div class="toolkit-desc">One-page reference</div>
+          </a>
+          <a class="toolkit-card" href="signup.html" target="_blank">
+            <div class="toolkit-icon">&#x2705;</div>
+            <div class="toolkit-name">Signup Page</div>
+            <div class="toolkit-desc">Self-service purchase</div>
           </a>
         </div>
       </div>
 
       <!-- =========================================
-           SECTION 8: FLOODLINE (Water Damage Vertical)
+           SECTION 15: BOT SYSTEM STATUS
            ========================================= -->
-      <div class="cc-section" style="border-top: 2px solid rgba(59,130,246,0.3); padding-top: 32px; margin-top: 40px;">
-        <div class="cc-section-label" style="color: #3b82f6;">FloodLine — Water Damage</div>
-        <div class="mission-card" style="border-color: rgba(59,130,246,0.15);">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
-            <div style="font-size: 18px; font-weight: 800; color: #fff;">FloodLine Outreach</div>
-            <a href="https://msnfjsfsfgskgvfyvsyfv.github.io/floodline-ai/" target="_blank" style="font-size: 12px; font-weight: 600; color: #3b82f6; text-decoration: none;">View Site &rarr;</a>
-          </div>
+      <div class="cc-section" style="border-top: 2px solid rgba(0,220,130,0.3); padding-top: 32px; margin-top: 40px;">
+        <div class="cc-section-label">Bot Army (21 Services on Mills' Machine)</div>
+        <div class="card">
+          <div class="card-subtitle">Bots find targets and warm them up. YOU close them. Updated Feb 22, 2026.</div>
 
-          <div class="mission-stats">
-            <div class="mission-stat">
-              <div class="mission-stat-value"><span id="wd-dms-count">0</span></div>
-              <div class="mission-stat-label">WD DMs Today</div>
-              <div class="mission-stat-btns">
-                <button class="mission-stat-btn minus" onclick="adjustDaily('wd_dms', -1)">&minus;</button>
-                <button class="mission-stat-btn" onclick="adjustDaily('wd_dms', 1)">+</button>
-              </div>
+          <div class="stats-grid stats-grid-4" style="margin-bottom:16px;">
+            <div class="stat-box">
+              <div class="stat-value">2,474</div>
+              <div class="stat-label">GHL Contacts</div>
             </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value"><span id="wd-responses-count">0</span></div>
-              <div class="mission-stat-label">WD Responses</div>
-              <div class="mission-stat-btns">
-                <button class="mission-stat-btn minus" onclick="adjustDaily('wd_responses', -1)">&minus;</button>
-                <button class="mission-stat-btn" onclick="adjustDaily('wd_responses', 1)">+</button>
-              </div>
+            <div class="stat-box">
+              <div class="stat-value">969</div>
+              <div class="stat-label">Good Emails</div>
             </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value"><span id="wd-demos-count">0</span></div>
-              <div class="mission-stat-label">WD Demos</div>
-              <div class="mission-stat-btns">
-                <button class="mission-stat-btn minus" onclick="adjustDaily('wd_demos', -1)">&minus;</button>
-                <button class="mission-stat-btn" onclick="adjustDaily('wd_demos', 1)">+</button>
-              </div>
+            <div class="stat-box">
+              <div class="stat-value">21</div>
+              <div class="stat-label">WD Services</div>
             </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value"><span id="wd-clients-count">0</span><span class="goal">/10</span></div>
-              <div class="mission-stat-label">WD Clients</div>
-              <div class="mission-stat-btns">
-                <button class="mission-stat-btn minus" onclick="adjustCounter('wd_clients', -1)">&minus;</button>
-                <button class="mission-stat-btn" onclick="adjustCounter('wd_clients', 1)">+</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- FloodLine Quick Actions -->
-      <div class="cc-section">
-        <div class="cc-section-label" style="color: #3b82f6;">FloodLine Quick Actions</div>
-        <div class="quick-actions">
-          <a href="https://msnfjsfsfgskgvfyvsyfv.github.io/floodline-ai/" target="_blank" class="quick-btn" style="border-color: rgba(59,130,246,0.15);">
-            <div class="quick-btn-icon">🌊</div>
-            <div class="quick-btn-label">FloodLine<br>Website</div>
-          </a>
-          <a href="https://msnfjsfsfgskgvfyvsyfv.github.io/floodline-ai/demo.html" target="_blank" class="quick-btn" style="border-color: rgba(59,130,246,0.15);">
-            <div class="quick-btn-icon">📋</div>
-            <div class="quick-btn-label">FloodLine<br>Demo Page</div>
-          </a>
-          <a href="tel:+16157845747" class="quick-btn" style="border-color: rgba(59,130,246,0.15);">
-            <div class="quick-btn-icon">📞</div>
-            <div class="quick-btn-label">Demo Line<br>(615) 784-5747</div>
-          </a>
-          <a href="https://app.gohighlevel.com" target="_blank" class="quick-btn" style="border-color: rgba(59,130,246,0.15);">
-            <div class="quick-btn-icon">⚙️</div>
-            <div class="quick-btn-label">FloodLine<br>GHL</div>
-          </a>
-          <a href="../expansion/water-damage-prospects.md" target="_blank" class="quick-btn" style="border-color: rgba(59,130,246,0.15);">
-            <div class="quick-btn-icon">🎯</div>
-            <div class="quick-btn-label">Prospect<br>List</div>
-          </a>
-        </div>
-      </div>
-
-      <!-- FloodLine DM Scripts -->
-      <div class="cc-section">
-        <div class="cc-section-label" style="color: #3b82f6;">FloodLine DM Scripts</div>
-        <div class="dm-section" style="border-color: rgba(59,130,246,0.15);">
-          <div class="dm-scripts">
-            <div class="dm-script" onclick="copyWDScript(1)">
-              <div class="dm-script-label" style="color: #3b82f6;">Opener 1 — Casual</div>
-              <div class="dm-script-text">Hey! How long you been in the restoration game? You guys stay pretty busy with water damage calls?</div>
-              <button class="dm-script-copy" style="background: rgba(59,130,246,0.1); color: #3b82f6;" onclick="event.stopPropagation(); copyWDScript(1)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyWDScript(2)">
-              <div class="dm-script-label" style="color: #3b82f6;">Opener 2 — Compliment</div>
-              <div class="dm-script-text">Your work looks solid. Do you handle mostly insurance jobs or cash work? Always curious with restoration companies.</div>
-              <button class="dm-script-copy" style="background: rgba(59,130,246,0.1); color: #3b82f6;" onclick="event.stopPropagation(); copyWDScript(2)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyWDScript(3)">
-              <div class="dm-script-label" style="color: #3b82f6;">Opener 3 — After Hours</div>
-              <div class="dm-script-text">Real quick — who answers your emergency line at 2am when a pipe bursts? Curious how restoration companies handle that.</div>
-              <button class="dm-script-copy" style="background: rgba(59,130,246,0.1); color: #3b82f6;" onclick="event.stopPropagation(); copyWDScript(3)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyWDScript(4)">
-              <div class="dm-script-label" style="color: #3b82f6;">Opener 4 — Adjuster Angle</div>
-              <div class="dm-script-text">Hey, do you get referral calls from adjusters? I've been talking to restoration owners about how many of those calls they miss after hours.</div>
-              <button class="dm-script-copy" style="background: rgba(59,130,246,0.1); color: #3b82f6;" onclick="event.stopPropagation(); copyWDScript(4)">COPY</button>
-            </div>
-            <div class="dm-script" onclick="copyWDScript(5)">
-              <div class="dm-script-label" style="color: #3b82f6;">Opener 5 — Storm Season</div>
-              <div class="dm-script-text">Storm season's coming up. You guys have a system for when the phones blow up with 50 calls in a day?</div>
-              <button class="dm-script-copy" style="background: rgba(59,130,246,0.1); color: #3b82f6;" onclick="event.stopPropagation(); copyWDScript(5)">COPY</button>
+            <div class="stat-box">
+              <div class="stat-value">2</div>
+              <div class="stat-label">Infra Services</div>
             </div>
           </div>
 
-          <div class="dm-script" onclick="copyWDFollowUp()" style="margin-top: 10px;">
-            <div class="dm-script-label" style="color: #3b82f6;">Follow-Up After Interest</div>
-            <div class="dm-script-text">Nice — so we built an AI that answers your emergency line 24/7. Captures the address, what happened, whether water's still flowing — and dispatches to your crew immediately. Want to hear it? Call (615) 784-5747 right now and pick "water damage" when it asks. Takes 30 seconds.</div>
-            <button class="dm-script-copy" style="background: rgba(59,130,246,0.1); color: #3b82f6;" onclick="event.stopPropagation(); copyWDFollowUp()">COPY</button>
+          <div class="bot-item" style="background:rgba(59,130,246,0.04); border-color:rgba(59,130,246,0.12);">
+            <div>
+              <div class="bot-name">WD-Lead-Finder <span>(1 svc)</span></div>
+              <div class="bot-desc">Scrapes 15 new cities/day &mdash; ~100 new leads/week</div>
+            </div>
+            <div class="bot-tag" style="color:#3b82f6; background:rgba(59,130,246,0.1);">6:30am</div>
           </div>
-        </div>
-      </div>
-
-      <!-- FloodLine Facebook Groups -->
-      <div class="cc-section">
-        <div class="cc-section-label" style="color: #3b82f6;">FloodLine Facebook Groups</div>
-        <div class="fb-card" style="border-color: rgba(59,130,246,0.15);">
-          <div class="dm-header">
-            <div class="dm-title">Restoration Groups</div>
-            <div class="dm-counter">
-              <span class="dm-counter-value" style="color: #3b82f6;" id="wd-groups-count">0</span><span class="dm-counter-target">/5</span>
+          <div class="bot-item" style="background:rgba(59,130,246,0.04); border-color:rgba(59,130,246,0.12);">
+            <div>
+              <div class="bot-name">WD-Call-Sheet <span>(1 svc)</span></div>
+              <div class="bot-desc">15 scored leads to ntfy every morning</div>
             </div>
+            <div class="bot-tag" style="color:#3b82f6; background:rgba(59,130,246,0.1);">8:00am</div>
           </div>
-          <div class="fb-groups-list">
-            <div class="fb-group-item">
-              <div class="fb-group-name">Water Damage Restoration Pros</div>
-              <div class="fb-group-check" data-group="20" onclick="toggleGroup(this)">&#10003;</div>
+          <div class="bot-item" style="background:rgba(59,130,246,0.04); border-color:rgba(59,130,246,0.12);">
+            <div>
+              <div class="bot-name">WD-Blast <span>(1 svc)</span></div>
+              <div class="bot-desc">Cold email ramp 20&rarr;200/day, A/B 3 templates</div>
             </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">Restoration Industry Association</div>
-              <div class="fb-group-check" data-group="21" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">Restoration Contractors Network</div>
-              <div class="fb-group-check" data-group="22" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">Water Damage &amp; Mold Business Owners</div>
-              <div class="fb-group-check" data-group="23" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
-            <div class="fb-group-item">
-              <div class="fb-group-name">IICRC Certified Restorers</div>
-              <div class="fb-group-check" data-group="24" onclick="toggleGroup(this)">&#10003;</div>
-            </div>
+            <div class="bot-tag" style="color:#3b82f6; background:rgba(59,130,246,0.1);">10:30am</div>
           </div>
-
-          <div class="fb-template">
-            <div class="fb-template-label" style="color: #3b82f6;">Group Post (don't mention AI)</div>
-            <div class="fb-template-text">Question for the group -- when you get a 2am pipe burst call, what's your setup? Do you answer personally, have an answering service, or does it go to voicemail? Trying to figure out how other independent shops handle after-hours emergencies without burning out.</div>
-            <button class="fb-template-copy" style="background: rgba(59,130,246,0.1); color: #3b82f6;" onclick="copyWDFBTemplate()">COPY</button>
+          <div class="bot-item" style="background:rgba(59,130,246,0.04); border-color:rgba(59,130,246,0.12);">
+            <div>
+              <div class="bot-name">WD-Cold-Caller <span>(1 svc)</span></div>
+              <div class="bot-desc">Bland.ai 20 AI calls/day (supplementary, not primary)</div>
+            </div>
+            <div class="bot-tag" style="color:#3b82f6; background:rgba(59,130,246,0.1);">10:00am</div>
           </div>
-        </div>
-      </div>
-
-      <!-- FloodLine Toolkit -->
-      <div class="cc-section">
-        <div class="cc-section-label" style="color: #3b82f6;">FloodLine Toolkit</div>
-        <div class="toolkit-grid">
-          <a class="toolkit-card" style="border-color: rgba(59,130,246,0.1);" href="../expansion/sales/water-damage-cold-dms.md" target="_blank">
-            <div class="toolkit-icon">💬</div>
-            <div class="toolkit-name">WD DM Scripts</div>
-            <div class="toolkit-desc">Full DM playbook</div>
-          </a>
-          <a class="toolkit-card" style="border-color: rgba(59,130,246,0.1);" href="../expansion/sales/water-damage-cold-emails.md" target="_blank">
-            <div class="toolkit-icon">📧</div>
-            <div class="toolkit-name">WD Cold Emails</div>
-            <div class="toolkit-desc">Email sequences</div>
-          </a>
-          <a class="toolkit-card" style="border-color: rgba(59,130,246,0.1);" href="../expansion/sales/water-damage-cold-call-script.md" target="_blank">
-            <div class="toolkit-icon">📞</div>
-            <div class="toolkit-name">WD Call Script</div>
-            <div class="toolkit-desc">Phone + objections</div>
-          </a>
-          <a class="toolkit-card" style="border-color: rgba(59,130,246,0.1);" href="../expansion/sales/water-damage-proposal.md" target="_blank">
-            <div class="toolkit-icon">📄</div>
-            <div class="toolkit-name">WD Proposal</div>
-            <div class="toolkit-desc">One-page pitch</div>
-          </a>
-          <a class="toolkit-card" style="border-color: rgba(59,130,246,0.1);" href="../expansion/content/water-damage-30-day-content-calendar.md" target="_blank">
-            <div class="toolkit-icon">📸</div>
-            <div class="toolkit-name">WD Content</div>
-            <div class="toolkit-desc">30-day calendar</div>
-          </a>
-          <a class="toolkit-card" style="border-color: rgba(59,130,246,0.1);" href="../expansion/voice-agents/multi-vertical-demo-prompt.md" target="_blank">
-            <div class="toolkit-icon">🤖</div>
-            <div class="toolkit-name">Demo Prompt</div>
-            <div class="toolkit-desc">Multi-vertical voice AI</div>
-          </a>
+          <div class="bot-item" style="background:rgba(59,130,246,0.04); border-color:rgba(59,130,246,0.12);">
+            <div>
+              <div class="bot-name">WD-Max <span>(4 svcs)</span></div>
+              <div class="bot-desc">Reply catcher + warm follow-ups + pipeline + daily report</div>
+            </div>
+            <div class="bot-tag" style="color:#3b82f6; background:rgba(59,130,246,0.1);">every 30m</div>
+          </div>
+          <div class="bot-item" style="background:rgba(59,130,246,0.04); border-color:rgba(59,130,246,0.12);">
+            <div>
+              <div class="bot-name">WD-Ben <span>(5 svcs)</span></div>
+              <div class="bot-desc">Lead scoring + re-engagement + SMS + briefings</div>
+            </div>
+            <div class="bot-tag" style="color:#3b82f6; background:rgba(59,130,246,0.1);">7:15am+</div>
+          </div>
+          <div class="bot-item" style="background:rgba(59,130,246,0.04); border-color:rgba(59,130,246,0.12);">
+            <div>
+              <div class="bot-name">WD-Sam <span>(5 svcs)</span></div>
+              <div class="bot-desc">Customer success (activates when you have paying clients)</div>
+            </div>
+            <div class="bot-tag" style="color:#3b82f6; background:rgba(59,130,246,0.1);">every 15m</div>
+          </div>
+          <div class="bot-item" style="background:rgba(255,200,50,0.04); border-color:rgba(255,200,50,0.12);">
+            <div>
+              <div class="bot-name">WD-Rescue <span>(2 svcs)</span></div>
+              <div class="bot-desc">Mine bad reviews 7am + email rescued leads 11:30am</div>
+            </div>
+            <div class="bot-tag" style="color:#ffc832; background:rgba(255,200,50,0.1);">7am/11:30am</div>
+          </div>
+          <div class="bot-item" style="background:rgba(255,200,50,0.04); border-color:rgba(255,200,50,0.12);">
+            <div>
+              <div class="bot-name">WD-Revenue <span>(1 svc)</span></div>
+              <div class="bot-desc">MRR tracker, 7:30pm daily report to ntfy</div>
+            </div>
+            <div class="bot-tag" style="color:#ffc832; background:rgba(255,200,50,0.1);">7:30pm</div>
+          </div>
+          <div class="bot-item">
+            <div>
+              <div class="bot-name">n8n + Caffeinate <span>(2 svcs)</span></div>
+              <div class="bot-desc">Workflow automation + keeps Mac awake 24/7</div>
+            </div>
+            <div class="bot-tag" style="color:var(--green); background:var(--green-dim);">infra</div>
+          </div>
         </div>
       </div>
 
       <!-- =========================================
-           SECTION: WATER DAMAGE BOT SYSTEM
+           SECTION 16: TERMINAL COMMANDS
            ========================================= -->
-      <div class="cc-section" style="border-top: 2px solid rgba(59,130,246,0.3); padding-top: 32px; margin-top: 40px;">
-        <div class="cc-section-label" style="color: #3b82f6;">Water Damage Bot System</div>
-        <div class="mission-card" style="border-color: rgba(59,130,246,0.15);">
-          <div style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px;">WD-Max + WD-Ben + WD-Sam + WD-Lead-Finder + WD-Cold-Caller + 3 Blasts</div>
-          <div style="font-size: 13px; color: var(--text-3); margin-bottom: 20px;">Full water damage team: 21 launchd services (15 bots + 6 ops). Same GHL location, same ntfy, tagged water-damage.</div>
-
-          <div class="mission-stats" style="grid-template-columns: 1fr 1fr 1fr;">
-            <div class="mission-stat">
-              <div class="mission-stat-value" style="font-size: 16px;">Nashville</div>
-              <div class="mission-stat-label">35 leads</div>
-            </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value" style="font-size: 16px;">Southeast</div>
-              <div class="mission-stat-label">55 leads</div>
-            </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value" style="font-size: 16px;">National</div>
-              <div class="mission-stat-label">75 leads</div>
-            </div>
-          </div>
-
-          <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Max</div>
-                <div style="font-size: 11px; color: var(--text-3);">Reply catcher + follow-ups (every 30 min)</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage only</div>
-            </div>
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Ben</div>
-                <div style="font-size: 11px; color: var(--text-3);">Lead scoring + re-engagement + briefings</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage only</div>
-            </div>
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Sam</div>
-                <div style="font-size: 11px; color: var(--text-3);">Customer success + health scoring + referrals (every 15 min)</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage only</div>
-            </div>
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Lead-Finder</div>
-                <div style="font-size: 11px; color: var(--text-3);">Auto-scrapes restoration leads daily at 6:30am (60+ cities)</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage only</div>
-            </div>
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Blast</div>
-                <div style="font-size: 11px; color: var(--text-3);">Cold email blast engine — warmup ramp, A/B 3 templates, domain verify</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage only</div>
-            </div>
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Cold-Caller</div>
-                <div style="font-size: 11px; color: var(--text-3);">Bland.ai AI cold calls — 20/day, auto-detect interest, war room alerts</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage only</div>
-            </div>
-          </div>
-
-          <div style="margin-top: 16px; padding: 14px; background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.15); border-radius: 10px;">
-            <div style="font-size: 11px; font-weight: 700; color: #3b82f6; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;">WD Bot Schedule (15 bots + 6 ops = 21 services)</div>
-            <div style="font-size: 12px; color: var(--text-2); line-height: 1.8; font-family: monospace;">
-              Every 15m — WD-Sam: Support monitor<br>
-              Every 30m — WD-Max: Reply monitor<br>
-              6:15 AM — WD-Sam: Health scoring<br>
-              6:30 AM — WD-Lead-Finder: Daily lead search<br>
-              7:00 AM — WD-Rescue: Mine bad reviews (Bing scraper)<br>
-              7:15 AM — WD-Ben: Morning briefing<br>
-              8:00 AM — WD-Call-Sheet: 15 scored leads to ntfy<br>
-              8:15 AM — WD-Sam: Milestone check-ins<br>
-              9:00 AM — WD-Max: Warm follow-ups<br>
-              10:00 AM — WD-Cold-Caller: 20 Bland.ai calls<br>
-              10:30 AM — WD-Blast: Cold email (ramp 20→200/day)<br>
-              11:15 AM — WD-Sam: Referral requests<br>
-              11:30 AM — WD-Rescue: Email mined leads<br>
-              12:15 PM — WD-Max: Pipeline update<br>
-              1:15 PM — WD-Ben: SMS outreach<br>
-              2:15 PM — WD-Ben: Re-engagement<br>
-              3:15 PM — WD-Ben: Lead scoring<br>
-              7:15 PM — WD-Sam: Daily report<br>
-              7:30 PM — WD-Revenue: MRR report to ntfy<br>
-              8:30 PM — WD-Max: Daily report<br>
-              9:15 PM — WD-Ben: Evening summary
-            </div>
-          </div>
-
-          <div style="margin-top: 16px; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px;">
-            <div style="font-size: 11px; font-weight: 700; color: var(--green); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;">Terminal Commands</div>
-            <div style="font-size: 12px; color: var(--text-2); line-height: 1.8; font-family: monospace;">
+      <div class="cc-section">
+        <div class="cc-section-label">Terminal Commands</div>
+        <div class="card">
+          <div class="info-box green">
+            <div class="info-label" style="color:var(--green);">Quick Reference</div>
+            <div style="font-family:monospace; font-size:12px; line-height:1.8;">
+              python3 ~/.thecalltaker/water-damage/wd-call-sheet.py generate<br>
+              python3 ~/.thecalltaker/water-damage/wd-blast-engine.py status<br>
+              python3 ~/.thecalltaker/water-damage/wd-blast-engine.py report<br>
+              python3 ~/.thecalltaker/water-damage/wd-cold-caller.py status<br>
+              python3 ~/.thecalltaker/water-damage/wd-cold-caller.py report<br>
               python3 ~/.thecalltaker/water-damage/wd-max-engine.py status<br>
               python3 ~/.thecalltaker/water-damage/wd-ben-engine.py status<br>
               python3 ~/.thecalltaker/water-damage/wd-sam-engine.py status<br>
               python3 ~/.thecalltaker/water-damage/wd-lead-finder.py status<br>
-              python3 ~/.thecalltaker/water-damage/wd-blast-engine.py status<br>
-              python3 ~/.thecalltaker/water-damage/wd-blast-engine.py blast<br>
-              python3 ~/.thecalltaker/water-damage/wd-blast-engine.py report<br>
-              python3 ~/.thecalltaker/water-damage/wd-cold-caller.py call<br>
-              python3 ~/.thecalltaker/water-damage/wd-cold-caller.py results<br>
-              python3 ~/.thecalltaker/water-damage/wd-cold-caller.py status<br>
-              python3 ~/.thecalltaker/water-damage/wd-cold-caller.py report<br>
-              python3 ~/.thecalltaker/water-damage/wd-call-sheet.py generate<br>
               python3 ~/.thecalltaker/water-damage/wd-rescue-engine.py mine<br>
-              python3 ~/.thecalltaker/water-damage/wd-rescue-engine.py email<br>
               python3 ~/.thecalltaker/water-damage/wd-revenue-tracker.py report<br>
               bash ~/.thecalltaker/water-damage/install-wd-bots.sh<br>
               bash ~/.thecalltaker/water-damage/install-wd-ops.sh<br>
               bash ~/.thecalltaker/water-damage/uninstall-wd-bots.sh
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- =========================================
-           SECTION: FULL OPERATIONS INFRASTRUCTURE
-           ========================================= -->
-      <div class="cc-section" style="border-top: 2px solid rgba(0,220,130,0.3); padding-top: 32px; margin-top: 40px;">
-        <div class="cc-section-label">Operations Infrastructure</div>
-        <div class="mission-card">
-          <div style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 4px;">Full System Status</div>
-          <div style="font-size: 13px; color: var(--text-3); margin-bottom: 20px;">Everything running across both machines. Updated Feb 22, 2026.</div>
-
-          <!-- Top-level stats -->
-          <div class="mission-stats" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
-            <div class="mission-stat">
-              <div class="mission-stat-value">2,474</div>
-              <div class="mission-stat-label">GHL Contacts</div>
-            </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value">$0<span class="goal">/$33K</span></div>
-              <div class="mission-stat-label">MRR</div>
-            </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value">23</div>
-              <div class="mission-stat-label">Mills Services</div>
-            </div>
-            <div class="mission-stat">
-              <div class="mission-stat-value">969<span class="goal">/2474</span></div>
-              <div class="mission-stat-label">Good Emails</div>
-            </div>
-          </div>
-
-          <!-- Email quality breakdown -->
-          <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
-            <div style="flex: 1; min-width: 120px; padding: 10px; background: rgba(0,220,130,0.05); border: 1px solid rgba(0,220,130,0.15); border-radius: 8px; text-align: center;">
-              <div style="font-size: 18px; font-weight: 800; color: var(--green);">969</div>
-              <div style="font-size: 10px; color: var(--text-3);">Good Emails</div>
-            </div>
-            <div style="flex: 1; min-width: 120px; padding: 10px; background: rgba(255,60,60,0.05); border: 1px solid rgba(255,60,60,0.15); border-radius: 8px; text-align: center;">
-              <div style="font-size: 18px; font-weight: 800; color: #ff6b6b;">443</div>
-              <div style="font-size: 10px; color: var(--text-3);">Bad Emails</div>
-            </div>
-            <div style="flex: 1; min-width: 120px; padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; text-align: center;">
-              <div style="font-size: 18px; font-weight: 800; color: var(--text-3);">776</div>
-              <div style="font-size: 10px; color: var(--text-3);">No Email</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- MILLS' MACHINE -->
-      <div class="cc-section">
-        <div class="cc-section-label">Mills' Machine (23 services)</div>
-        <div class="mission-card">
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-
-            <!-- WD-Max -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(59,130,246,0.04); border: 1px solid rgba(59,130,246,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Max <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(4 services)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Reply catcher + follow-ups for water damage</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage</div>
-            </div>
-
-            <!-- WD-Ben -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(59,130,246,0.04); border: 1px solid rgba(59,130,246,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Ben <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(5 services)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Water damage closer + lead scoring + re-engagement</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage</div>
-            </div>
-
-            <!-- WD-Sam -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(59,130,246,0.04); border: 1px solid rgba(59,130,246,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Sam <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(5 services)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Water damage customer success + health scoring</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage</div>
-            </div>
-
-            <!-- WD-Lead-Finder -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(59,130,246,0.04); border: 1px solid rgba(59,130,246,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Lead-Finder <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Auto-scrapes restoration leads daily (60+ cities)</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage</div>
-            </div>
-
-            <!-- WD-Cold-Caller -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(59,130,246,0.04); border: 1px solid rgba(59,130,246,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Cold-Caller <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Bland.ai AI cold calls -- 20/day at 10am, scores leads, detects interest</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #3b82f6; background: rgba(59,130,246,0.1); padding: 4px 8px; border-radius: 4px;">water-damage</div>
-            </div>
-
-            <!-- WD Ops: Call Sheet -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Call-Sheet <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">15 scored WD leads to ntfy daily at 8am</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">ops</div>
-            </div>
-
-            <!-- WD Ops: Blast -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Blast <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Cold email blast, warmup ramp 20→200/day, 3 A/B templates</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">ops</div>
-            </div>
-
-            <!-- WD Ops: Rescue -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Rescue <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(2 services)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Mine bad reviews at 7am + email rescued leads at 11:30am</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">ops</div>
-            </div>
-
-            <!-- WD Ops: Revenue -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">WD-Revenue <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">MRR tracker toward $10K goal, 7:30pm daily report</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">ops</div>
-            </div>
-
-            <!-- n8n -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">n8n <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Workflow automation at localhost:5678</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: var(--green); background: var(--green-dim); padding: 4px 8px; border-radius: 4px;">infra</div>
-            </div>
-
-            <!-- Caffeinate -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Caffeinate <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(1 service)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Keeps Mac awake 24/7 so all services run even with lid closed</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: var(--green); background: var(--green-dim); padding: 4px 8px; border-radius: 4px;">infra</div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- WALLACE'S MACHINE -->
-      <div class="cc-section">
-        <div class="cc-section-label">Wallace's Machine (HVAC Ops)</div>
-        <div class="mission-card">
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-
-            <!-- HVAC Max v3 -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(0,220,130,0.04); border: 1px solid rgba(0,220,130,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">HVAC Max v3 <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(4 services)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Reply catcher + warm follow-ups + pipeline + daily report</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: var(--green); background: var(--green-dim); padding: 4px 8px; border-radius: 4px;">HVAC</div>
-            </div>
-
-            <!-- HVAC Ben -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(0,220,130,0.04); border: 1px solid rgba(0,220,130,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">HVAC Ben <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(6 services)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Senior closer + ROI angles + lead scoring + SMS + briefings</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: var(--green); background: var(--green-dim); padding: 4px 8px; border-radius: 4px;">HVAC</div>
-            </div>
-
-            <!-- HVAC Sam -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(0,220,130,0.04); border: 1px solid rgba(0,220,130,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">HVAC Sam <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(5 services)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Customer success + health scoring + referrals</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: var(--green); background: var(--green-dim); padding: 4px 8px; border-radius: 4px;">HVAC</div>
-            </div>
-
-            <!-- Donny -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(0,220,130,0.04); border: 1px solid rgba(0,220,130,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Donny</div>
-                <div style="font-size: 11px; color: var(--text-3);">Funnel tracker + lead scoring</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: var(--green); background: var(--green-dim); padding: 4px 8px; border-radius: 4px;">HVAC</div>
-            </div>
-
-            <!-- Bland.ai Cold Caller -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Bland.ai Cold Caller</div>
-                <div style="font-size: 11px; color: var(--text-3);">20 outbound calls/day automated</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">outbound</div>
-            </div>
-
-            <!-- Rescue Engine -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Rescue Engine</div>
-                <div style="font-size: 11px; color: var(--text-3);">Email miner — 49+ emails/day discovered</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">outbound</div>
-            </div>
-
-            <!-- Google Maps Scraper -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Google Maps Scraper</div>
-                <div style="font-size: 11px; color: var(--text-3);">1,513 HVAC leads scraped from 200+ cities</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">outbound</div>
-            </div>
-
-            <!-- Email Cleaner -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Email Cleaner</div>
-                <div style="font-size: 11px; color: var(--text-3);">Scanned 2,188 contacts — 969 good / 443 bad / 776 no email</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">data</div>
-            </div>
-
-            <!-- Daily Call Sheet Generator -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Daily Call Sheet</div>
-                <div style="font-size: 11px; color: var(--text-3);">15 scored leads/day split 3 ways (Wallace/William/Mills)</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">outbound</div>
-            </div>
-
-            <!-- Revenue Tracker -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Revenue Tracker</div>
-                <div style="font-size: 11px; color: var(--text-3);">MRR tracking toward $33K goal, daily report at 7pm</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: var(--text-3); background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">infra</div>
-            </div>
-
-            <!-- Health Monitor -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Health Monitor</div>
-                <div style="font-size: 11px; color: var(--text-3);">Watches all services, alerts on failures</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: var(--text-3); background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">infra</div>
-            </div>
-
-            <!-- Lemlist -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Lemlist <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(3 campaigns)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Multi-step cold email campaigns</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">outbound</div>
-            </div>
-
-            <!-- Gmail Sender -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,200,50,0.04); border: 1px solid rgba(255,200,50,0.12); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Gmail Sender <span style="font-size: 11px; color: var(--text-3); font-weight: 500;">(4 accounts)</span></div>
-                <div style="font-size: 11px; color: var(--text-3);">Multi-account email sending for warmup + outreach</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: #ffc832; background: rgba(255,200,50,0.1); padding: 4px 8px; border-radius: 4px;">outbound</div>
-            </div>
-
-            <!-- Brain Scanner -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">Brain Scanner</div>
-                <div style="font-size: 11px; color: var(--text-3);">Scans all systems, surfaces insights + anomalies</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: var(--text-3); background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">infra</div>
-            </div>
-
-            <!-- n8n (Wallace) -->
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px;">
-              <div>
-                <div style="font-size: 13px; font-weight: 700; color: #fff;">n8n</div>
-                <div style="font-size: 11px; color: var(--text-3);">Workflow automation (Wallace's instance)</div>
-              </div>
-              <div style="font-size: 11px; font-weight: 600; color: var(--text-3); background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;">infra</div>
-            </div>
-
-          </div>
-
-          <!-- ntfy topics -->
-          <div style="margin-top: 16px; padding: 14px; background: rgba(0,220,130,0.05); border: 1px solid rgba(0,220,130,0.15); border-radius: 10px;">
-            <div style="font-size: 11px; font-weight: 700; color: var(--green); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;">ntfy Topics</div>
-            <div style="font-size: 12px; color: var(--text-2); line-height: 1.8; font-family: monospace;">
-              tct-xK9mW4vR7pLd — Main ops + demo form alerts<br>
-              tct-warroom-Kx7mN9pQ — War room (hot leads + urgents)<br>
-              tct-calls-Wk4mP8nJ — Daily call sheets (Wallace)
+          <div class="info-box blue" style="margin-top:12px;">
+            <div class="info-label" style="color:#3b82f6;">ntfy Topics</div>
+            <div style="font-family:monospace; font-size:12px; line-height:1.8;">
+              tct-xK9mW4vR7pLd &mdash; Main ops + demo form alerts<br>
+              tct-warroom-Kx7mN9pQ &mdash; War room (hot leads + urgents)
             </div>
           </div>
         </div>
@@ -1619,27 +1257,23 @@
     <div class="scoreboard">
       <div class="scoreboard-inner">
         <div class="scoreboard-item">
-          <div class="scoreboard-value"><span class="green" id="sb-dms">0</span>/25</div>
-          <div class="scoreboard-label">DMs</div>
+          <div class="scoreboard-value"><span class="green" id="sb-calls">0</span>/10</div>
+          <div class="scoreboard-label">Calls</div>
         </div>
         <div class="scoreboard-item">
-          <div class="scoreboard-value"><span class="green" id="sb-posts">0</span>/1</div>
-          <div class="scoreboard-label">Posts</div>
-        </div>
-        <div class="scoreboard-item">
-          <div class="scoreboard-value"><span class="green" id="sb-groups">0</span>/5</div>
-          <div class="scoreboard-label">Groups</div>
-        </div>
-        <div class="scoreboard-item">
-          <div class="scoreboard-value"><span class="green" id="sb-emails">0</span></div>
-          <div class="scoreboard-label">Emails</div>
+          <div class="scoreboard-value"><span class="green" id="sb-pickups">0</span></div>
+          <div class="scoreboard-label">Pickups</div>
         </div>
         <div class="scoreboard-item">
           <div class="scoreboard-value"><span class="green" id="sb-demos">0</span></div>
           <div class="scoreboard-label">Demos</div>
         </div>
         <div class="scoreboard-item">
-          <div class="scoreboard-value"><span class="green" id="sb-clients">0</span>/10</div>
+          <div class="scoreboard-value"><span class="green" id="sb-dms">0</span></div>
+          <div class="scoreboard-label">DMs</div>
+        </div>
+        <div class="scoreboard-item">
+          <div class="scoreboard-value"><span class="green" id="sb-clients">0</span>/5</div>
           <div class="scoreboard-label">Clients</div>
         </div>
       </div>
@@ -1652,239 +1286,68 @@
 
   <script>
     // ============================================
-    // COMMAND CENTER — JavaScript
+    // COMMAND CENTER — Cold Call First Edition
     // ============================================
 
-    // --- Posting schedule (12-day cycle) ---
+    // --- Instagram Post Schedule (12-day cycle) ---
     const POSTS = [
-      {
-        day: 1,
-        file: '01-78-percent-stat.png',
-        caption: `78% of callers won't leave a voicemail. They just call the next company on Google.
-
-That's not a marketing problem. That's a phone problem.
-
-If you're an HVAC owner running jobs all day, you can't answer every call. But your customers don't care — they need help NOW.
-
-That's why we built The Call Taker. AI that answers every call, 24/7. No voicemail. No missed jobs.
-
-Link in bio to try it free.
-
-#hvac #hvacbusiness #hvacowner #hvaclife #hvaccontractor #smallbusiness #missedcalls #aitools #businessgrowth`
-      },
-      {
-        day: 2,
-        file: '02-before-after.png',
-        caption: `Left side: what happens when you rely on voicemail.
-Right side: what happens when AI picks up the phone.
-
-The difference? About $12,400/month in jobs you're currently losing.
-
-We set everything up for you. Takes 30 minutes. Works the same day.
-
-DM us "DEMO" to hear it in action.
-
-#hvac #hvacowner #hvacbusiness #beforeandafter #businesstips #aireceptionist #hvaccontractor #contractor #smallbusinessowner`
-      },
-      {
-        day: 3,
-        file: '03-honest-question.png',
-        caption: `Serious question for HVAC owners:
-
-How many calls went to voicemail this week?
-
-2? 5? 10?
-
-Each one was a homeowner with a broken AC or a leaking furnace. They needed help right now. And when nobody answered, they called somebody else.
-
-You didn't lose those jobs because of your work quality. You lost them because nobody picked up the phone.
-
-We fix that. Link in bio.
-
-#hvac #hvaclife #hvacowner #contractorlife #missedcalls #businessowner #aireceptionist #hvactech`
-      },
-      {
-        day: 4,
-        file: '04-missed-call-cost.png',
-        caption: `The average HVAC service call is worth $1,500.
-
-Miss 5 calls a week? That's $7,500. Gone. Every week.
-
-Not because you're bad at your job. Because you were ON a job when the phone rang.
-
-The Call Taker answers every call instantly. Books the appointment. Texts you the details. You never even know you almost lost that job.
-
-DM "INFO" and we'll show you how it works.
-
-#hvac #hvacbusiness #hvacowner #revenue #businessgrowth #missedrevenue #aireceptionist #contractor #smallbusiness`
-      },
-      {
-        day: 5,
-        file: '05-how-it-works.png',
-        caption: `It's this simple:
-
-1. Your phone rings → AI answers instantly
-2. AI handles the call → books the job, gets all the details
-3. You get a text → customer is booked before they call your competitor
-
-No app to learn. No scripts to write. No staff to hire.
-
-Set it up in 30 minutes and never miss a call again.
-
-Link in bio to try it free for 14 days.
-
-#hvac #hvacowner #hvacbusiness #aireceptionist #automation #businesstips #hvaccontractor #worksmarter`
-      },
-      {
-        day: 6,
-        file: '06-testimonial.png',
-        caption: `"We were losing 8-10 calls a week to voicemail. Now every call gets answered instantly. We booked $23K in new jobs the first month."
-
-This is what happens when you stop letting voicemail answer your phone.
-
-Your customers don't want to leave a message. They want someone to pick up.
-
-The Call Taker picks up every time. 24/7. Even at 2am on a Saturday.
-
-DM us "DEMO" to hear it live.
-
-#hvac #hvacowner #hvacbusiness #testimonial #results #aireceptionist #businessgrowth #contractor`
-      },
-      {
-        day: 7,
-        file: '07-weekend-stat.png',
-        caption: `40% of HVAC calls come in after hours and on weekends.
-
-Saturday morning AC breakdown. Sunday night furnace emergency. The 5:01pm "are you still open?" call.
-
-If nobody answers, that's 40% of your leads going straight to your competition.
-
-The Call Taker doesn't sleep. Doesn't take weekends off. Answers every call the same way at 2am as it does at 2pm.
-
-Link in bio.
-
-#hvac #hvacowner #hvacbusiness #afterhours #weekendwork #contractorlife #aireceptionist #247service`
-      },
-      {
-        day: 8,
-        file: '08-comparison.png',
-        caption: `Answering service: $1,200+/mo, hold times, generic scripts, per-minute billing.
-
-The Call Taker: Starting at $497/mo, instant answer, industry-trained AI, flat rate.
-
-Same result — every call gets answered.
-One costs 4x more and makes mistakes.
-
-If you're paying for an answering service right now, DM us. We'll save you $10K+ this year.
-
-#hvac #hvacowner #hvacbusiness #answeringservice #costsavings #aireceptionist #smallbusiness #businesstips`
-      },
-      {
-        day: 9,
-        file: '09-by-the-numbers.png',
-        caption: `2,847 calls answered.
-$847K in revenue saved.
-24/7/365 coverage.
-
-Zero voicemails. Zero missed jobs. Zero hold times.
-
-This is what happens when AI answers your phone instead of a machine.
-
-Try it free for 14 days. Link in bio.
-
-#hvac #hvacowner #hvacbusiness #results #data #aireceptionist #businessgrowth #contractor`
-      },
-      {
-        day: 10,
-        file: '10-try-it-free.png',
-        caption: `14 days free. No credit card. No contract.
-
-If it doesn't book you more jobs in 2 weeks, walk away.
-
-But here's what usually happens: HVAC owners try it for a week and realize how many calls they were actually missing. Then they never go back.
-
-Stop losing jobs to voicemail. Link in bio to start.
-
-#hvac #hvacowner #hvacbusiness #freetrial #aireceptionist #smallbusiness #businessowner #tryfree`
-      },
-      {
-        day: 11,
-        file: '11-five-calls-tip.png',
-        caption: `5 calls you're missing right now:
-
-1. The after-hours emergency
-2. The Saturday AC breakdown
-3. The lunch-hour furnace quote
-4. The Sunday water heater call
-5. The 5:01pm "are you open?" call
-
-Every one of these went to your competitor because nobody picked up your phone.
-
-It's not your fault — you were working. But your customers don't wait.
-
-The Call Taker answers all of them. Link in bio.
-
-#hvac #hvacowner #hvacbusiness #missedcalls #tips #contractorlife #aireceptionist #hvaclife`
-      },
-      {
-        day: 12,
-        file: '12-bold-statement.png',
-        caption: `Your voicemail is your most expensive employee.
-
-It doesn't book jobs. It doesn't capture leads. It doesn't follow up. It just tells people to leave a message that 78% of them will never leave.
-
-And it costs you thousands every month in lost work.
-
-Fire it. We'll take over.
-
-DM "DEMO" to hear what your customers will hear instead.
-
-#hvac #hvacowner #hvacbusiness #voicemail #missedcalls #aireceptionist #boldmoves #contractor #smallbusiness`
-      }
+      { day:1, file:'01-78-percent-stat.png', caption:`78% of callers won't leave a voicemail. They just call the next company on Google.\n\nThat's not a marketing problem. That's a phone problem.\n\nIf you're running jobs all day, you can't answer every call. But your customers don't care — they need help NOW.\n\nThat's why we built The Call Taker. AI that answers every call, 24/7. No voicemail. No missed jobs.\n\nLink in bio to try it free.\n\n#hvac #restoration #waterdamage #hvacbusiness #missedcalls #aitools #businessgrowth` },
+      { day:2, file:'02-before-after.png', caption:`Left side: what happens when you rely on voicemail.\nRight side: what happens when AI picks up the phone.\n\nThe difference? About $12,400/month in jobs you're currently losing.\n\nWe set everything up for you. Takes 30 minutes. Works the same day.\n\nDM us "DEMO" to hear it in action.\n\n#hvac #restoration #waterdamage #beforeandafter #businesstips #aireceptionist` },
+      { day:3, file:'03-honest-question.png', caption:`Serious question for restoration & HVAC owners:\n\nHow many calls went to voicemail this week?\n\nEach one was someone with a broken AC, a burst pipe, or water in their basement. They needed help right now. And when nobody answered, they called somebody else.\n\nYou didn't lose those jobs because of your work quality. You lost them because nobody picked up the phone.\n\nWe fix that. Link in bio.\n\n#hvac #restoration #waterdamage #contractorlife #missedcalls #aireceptionist` },
+      { day:4, file:'04-missed-call-cost.png', caption:`The average service call is worth $350-$1,500.\n\nMiss 5 calls a week? That's $1,750-$7,500. Gone. Every week.\n\nNot because you're bad at your job. Because you were ON a job when the phone rang.\n\nThe Call Taker answers every call instantly. Books the appointment. Texts you the details. You never even know you almost lost that job.\n\nDM "INFO" and we'll show you how it works.\n\n#hvac #restoration #waterdamage #revenue #missedrevenue #aireceptionist` },
+      { day:5, file:'05-how-it-works.png', caption:`It's this simple:\n\n1. Your phone rings → AI answers instantly\n2. AI handles the call → books the job, gets all the details\n3. You get a text → customer is booked before they call your competitor\n\nNo app to learn. No scripts to write. No staff to hire.\n\nSet it up in 30 minutes and never miss a call again.\n\nLink in bio to try it free.\n\n#hvac #restoration #waterdamage #aireceptionist #automation #businesstips` },
+      { day:6, file:'06-2am-emergency.png', caption:`It's 2am. A pipe just burst in someone's basement.\n\nThey call your company. What happens?\n\nA) Voicemail. They hang up and call the next company.\nB) AI answers instantly. Gets the address, dispatches your crew, books the job.\n\nIf you're still on option A, you're leaving thousands on the table.\n\nThe Call Taker handles emergencies 24/7 so you can sleep.\n\nDM us "DEMO" to hear it live.\n\n#restoration #waterdamage #hvac #emergencyservice #aireceptionist #247service` },
+      { day:7, file:'07-weekend-stat.png', caption:`40% of service calls come in after hours and on weekends.\n\nSaturday morning AC breakdown. Sunday night pipe burst. The 5:01pm "are you still open?" call.\n\nIf nobody answers, that's 40% of your leads going straight to your competition.\n\nThe Call Taker doesn't sleep. Answers every call the same way at 2am as it does at 2pm.\n\nLink in bio.\n\n#hvac #restoration #waterdamage #afterhours #weekendwork #aireceptionist` },
+      { day:8, file:'08-comparison.png', caption:`Answering service: $1,200+/mo, hold times, generic scripts, per-minute billing.\n\nThe Call Taker: $997/mo, instant answer, industry-trained AI, flat rate.\n\nSame result — every call gets answered.\nOne costs more and makes mistakes.\n\nIf you're paying for an answering service, DM us. We'll save you money.\n\n#hvac #restoration #waterdamage #answeringservice #costsavings #aireceptionist` },
+      { day:9, file:'09-your-competitor.png', caption:`Your competitor answers every call. Every time.\n\nNot because they have more staff. Not because they work harder. Because they set up a system that picks up the phone when they can't.\n\nEvery call you miss is a job they book.\n\nStop giving them free business. Link in bio.\n\n#hvac #restoration #waterdamage #competition #businessgrowth #aireceptionist` },
+      { day:10, file:'10-try-it-free.png', caption:`14 days free. No credit card. No contract.\n\nIf it doesn't book you more jobs in 2 weeks, walk away.\n\nBut here's what usually happens: owners try it for a week and realize how many calls they were actually missing. Then they never go back.\n\nStop losing jobs to voicemail. Link in bio to start.\n\n#hvac #restoration #waterdamage #freetrial #aireceptionist #smallbusiness` },
+      { day:11, file:'11-five-calls-tip.png', caption:`5 calls you're missing right now:\n\n1. The after-hours emergency\n2. The Saturday water damage call\n3. The lunch-hour quote request\n4. The Sunday pipe burst\n5. The 5:01pm "are you open?" call\n\nEvery one of these went to your competitor because nobody picked up.\n\nThe Call Taker answers all of them. Link in bio.\n\n#hvac #restoration #waterdamage #missedcalls #contractorlife #aireceptionist` },
+      { day:12, file:'12-bold-statement.png', caption:`Your voicemail is your most expensive employee.\n\nIt doesn't book jobs. It doesn't capture leads. It just tells people to leave a message that 78% of them will never leave.\n\nAnd it costs you thousands every month in lost work.\n\nFire it. We'll take over.\n\nDM "DEMO" to hear what your customers will hear instead.\n\n#hvac #restoration #waterdamage #voicemail #missedcalls #aireceptionist` }
     ];
 
-    // --- DM scripts for copy ---
-    const DM_SCRIPTS = [
-      `Hey! How long you been in the HVAC game?`,
-      `Your work looks clean. You guys stay busy year round or is it seasonal for you?`,
-      `Hey, do you run your own shop or work for a company? Always curious when I see HVAC pages on here.`,
-      `That's a solid setup. How many trucks you running right now?`,
-      `Hey, real quick -- do you handle mostly residential or commercial? Just curious.`
-    ];
-
-    const FB_TEMPLATE = `Honest question for the group -- how many calls go to voicemail when you're running jobs? Trying to figure out if this is a widespread thing or if most of you have it handled. No pitch, just curious.`;
+    // --- Script text for copy ---
+    const SCRIPTS = {
+      opener: `Hey [Name], this is Mills with The Call Taker. Quick question — when someone calls your shop after hours, what happens?`,
+      voicemail_response: `Yeah, that's what I figured. That's actually why I'm calling. 85% of people won't leave a voicemail. They just hang up and call the next company. At $350-$1,500 a job, even a few missed calls a week adds up fast.`,
+      cell_response: `So you're answering calls at 9pm while you're trying to have dinner? That's exhausting. What about when you're on a job or in a crawl space?`,
+      solution: `I built an AI receptionist that answers every call to your business — 24/7. Picks up in 2 seconds, talks to the customer, gets their name, address, and what's going on. Books the appointment on your calendar. Texts you the details immediately. No voicemail. No missed calls.`,
+      ask: `I'd love to show you a quick demo. Takes 15 minutes. You'll actually call the AI yourself, talk to it like a customer, and see what happens. If you like it, great. If not, no hard feelings. Do you have 15 minutes this week?`,
+      obj_afford: `If even 2 of those missed calls were real jobs at $350 each, that's $700/mo you're not getting. The Call Taker costs less than that. It pays for itself with the first couple of recovered calls.`,
+      obj_robotic: `That's the #1 thing people say before they hear it. Call (615) 784-5747 right now and judge for yourself. If it sounds robotic, I'll leave you alone.`,
+      obj_think: `Totally fair. But while you're thinking about it, how many calls are going to hit voicemail tonight? Let me set up a 15-min demo so you can decide based on what it actually does. No commitment — just a look.`,
+      dm1: `Real quick — who answers your emergency line at 2am when a pipe bursts? Curious how restoration companies handle that.`,
+      dm2: `Hey! How long you been in the HVAC game? You guys stay busy year round or seasonal?`,
+      dm_followup: `We built an AI that answers your line 24/7. Captures the address, what happened, and dispatches to your crew immediately. Want to hear it? Call (615) 784-5747 right now. Takes 30 seconds.`,
+      fb_post: `Question for the group — when you get a 2am pipe burst call or emergency HVAC failure, what's your setup? Answer personally, answering service, or voicemail? Trying to figure out how other independent shops handle after-hours emergencies without burning out.`
+    };
 
     // --- Date calculations ---
-    // Campaign: Feb 15 = Day 1, May 31 = Day 105
-    const CAMPAIGN_START = new Date(2026, 1, 15); // Feb 15, 2026
-    const CAMPAIGN_END = new Date(2026, 4, 31);   // May 31, 2026
+    const CAMPAIGN_START = new Date(2026, 1, 23); // Feb 23, 2026 — Day 1
+    const SPRINT_END = new Date(2026, 3, 5);      // Apr 5, 2026 — 6-week sprint
 
     function getTodayKey() {
-      const now = new Date();
-      return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     }
 
     function getDayNumber() {
       const now = new Date();
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      const start = new Date(CAMPAIGN_START);
-      const diff = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
-      return Math.max(1, Math.min(diff, 28));
+      const diff = Math.floor((today - CAMPAIGN_START) / 86400000) + 1;
+      return Math.max(1, diff);
     }
 
     function getDaysRemaining() {
       const now = new Date();
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      const diff = Math.floor((CAMPAIGN_END - today) / (1000 * 60 * 60 * 24));
-      return Math.max(0, diff);
+      return Math.max(0, Math.floor((SPRINT_END - today) / 86400000));
     }
 
     function getPostIndex() {
-      const dayNum = getDayNumber();
-      return ((dayNum - 1) % 12); // 0-indexed, cycles every 12
+      return ((getDayNumber() - 1) % 12);
     }
 
-    // --- localStorage helpers ---
+    // --- localStorage ---
     function getDailyVal(key) {
       const data = JSON.parse(localStorage.getItem('cc_daily_' + key) || '{}');
       return data[getTodayKey()] || 0;
@@ -1901,18 +1364,17 @@ DM "DEMO" to hear what your customers will hear instead.
       localStorage.setItem('cc_' + key, String(val));
     }
 
-    // --- Group checkboxes (daily) ---
-    function getGroupsChecked() {
-      const data = JSON.parse(localStorage.getItem('cc_daily_groups') || '{}');
+    // --- Checklist (daily) ---
+    function getChecked() {
+      const data = JSON.parse(localStorage.getItem('cc_daily_checks') || '{}');
       return data[getTodayKey()] || [];
     }
-    function setGroupsChecked(arr) {
-      const data = JSON.parse(localStorage.getItem('cc_daily_groups') || '{}');
+    function setChecked(arr) {
+      const data = JSON.parse(localStorage.getItem('cc_daily_checks') || '{}');
       data[getTodayKey()] = arr;
-      localStorage.setItem('cc_daily_groups', JSON.stringify(data));
+      localStorage.setItem('cc_daily_checks', JSON.stringify(data));
     }
 
-    // --- Post done (daily) ---
     function isPostDone() {
       const data = JSON.parse(localStorage.getItem('cc_daily_postdone') || '{}');
       return data[getTodayKey()] || false;
@@ -1923,15 +1385,18 @@ DM "DEMO" to hear what your customers will hear instead.
       localStorage.setItem('cc_daily_postdone', JSON.stringify(data));
     }
 
-    // --- Cumulative demos total ---
-    function getTotalDemos() {
-      // Sum all demos across all days
+    // --- Totals across all days ---
+    function getAllTimeDemos() {
       const data = JSON.parse(localStorage.getItem('cc_daily_demos') || '{}');
-      let total = 0;
-      for (const key in data) {
-        total += (data[key] || 0);
-      }
-      return total;
+      let t = 0; for (const k in data) t += (data[k] || 0); return t;
+    }
+    function getAllTimeCalls() {
+      const data = JSON.parse(localStorage.getItem('cc_daily_calls') || '{}');
+      let t = 0; for (const k in data) t += (data[k] || 0); return t;
+    }
+    function getAllTimePickups() {
+      const data = JSON.parse(localStorage.getItem('cc_daily_pickups') || '{}');
+      let t = 0; for (const k in data) t += (data[k] || 0); return t;
     }
 
     // --- Update UI ---
@@ -1941,10 +1406,9 @@ DM "DEMO" to hear what your customers will hear instead.
       const postIdx = getPostIndex();
       const post = POSTS[postIdx];
 
-      // Top bar date
+      // Date
       const now = new Date();
-      const opts = { weekday: 'long', month: 'short', day: 'numeric' };
-      document.getElementById('topbar-date').textContent = now.toLocaleDateString('en-US', opts);
+      document.getElementById('topbar-date').textContent = now.toLocaleDateString('en-US', { weekday:'long', month:'short', day:'numeric' });
 
       // Mission
       document.getElementById('day-number').textContent = dayNum;
@@ -1952,67 +1416,57 @@ DM "DEMO" to hear what your customers will hear instead.
 
       const clients = getCumulative('clients');
       document.getElementById('clients-count').textContent = clients;
-      document.getElementById('mrr-count').textContent = (clients * 700).toLocaleString();
-      document.getElementById('demos-total-count').textContent = getTotalDemos();
-      document.getElementById('todays-post-label').textContent = 'Post ' + (postIdx + 1);
-      document.getElementById('client-progress').style.width = Math.min(100, (clients / 45) * 100) + '%';
-
-      // DMs
-      document.getElementById('dms-count').textContent = getDailyVal('dms');
-      document.getElementById('responses-count').textContent = getDailyVal('responses');
-      document.getElementById('demos-count').textContent = getDailyVal('demos');
+      document.getElementById('mrr-count').textContent = (clients * 997).toLocaleString();
+      document.getElementById('total-demos').textContent = getAllTimeDemos();
+      document.getElementById('total-calls-all').textContent = getAllTimeCalls();
+      document.getElementById('client-progress').style.width = Math.min(100, (clients / 5) * 100) + '%';
 
       // Cold calls
       document.getElementById('calls-count').textContent = getDailyVal('calls');
+      document.getElementById('pickups-count').textContent = getDailyVal('pickups');
+      document.getElementById('demos-count').textContent = getDailyVal('demos');
+      document.getElementById('send-info-count').textContent = getDailyVal('sendinfo');
       document.getElementById('voicemails-count').textContent = getDailyVal('voicemails');
 
-      // Emails
+      // Secondary
+      document.getElementById('dms-count').textContent = getDailyVal('dms');
+      document.getElementById('responses-count').textContent = getDailyVal('responses');
       document.getElementById('emails-count').textContent = getDailyVal('emails');
 
-      // Today's post
+      // Post
       document.getElementById('post-filename').textContent = post.file;
       document.getElementById('post-caption-text').textContent = post.caption;
+      const pdb = document.getElementById('post-done-btn');
+      if (isPostDone()) { pdb.textContent = 'Posted'; pdb.style.background = 'var(--green)'; pdb.style.color = '#000'; }
+      else { pdb.textContent = 'Mark as Posted'; pdb.style.background = ''; pdb.style.color = ''; }
 
-      const postDoneBtn = document.getElementById('post-done-btn');
-      if (isPostDone()) {
-        postDoneBtn.textContent = 'Posted';
-        postDoneBtn.classList.add('done');
-      } else {
-        postDoneBtn.textContent = 'Mark as Posted';
-        postDoneBtn.classList.remove('done');
-      }
-
-      // Groups + Plan checkboxes
-      const checked = getGroupsChecked();
-      document.querySelectorAll('.fb-group-check').forEach(el => {
-        const idx = parseInt(el.dataset.group);
-        if (checked.includes(idx)) {
-          el.classList.add('checked');
-        } else {
-          el.classList.remove('checked');
-        }
+      // Checklist
+      const checked = getChecked();
+      document.querySelectorAll('.check-box').forEach(el => {
+        const id = el.dataset.check;
+        if (checked.includes(id)) el.classList.add('checked');
+        else el.classList.remove('checked');
       });
-      // Only count FB groups (0-4), not Today's Plan items (10-15)
-      const fbGroupCount = checked.filter(i => i <= 4).length;
-      document.getElementById('groups-count').textContent = fbGroupCount;
 
-      // FloodLine counters
-      document.getElementById('wd-dms-count').textContent = getDailyVal('wd_dms');
-      document.getElementById('wd-responses-count').textContent = getDailyVal('wd_responses');
-      document.getElementById('wd-demos-count').textContent = getDailyVal('wd_demos');
-      document.getElementById('wd-clients-count').textContent = getCumulative('wd_clients');
+      // Groups count
+      const grpCount = checked.filter(c => c.startsWith('grp-')).length;
+      document.getElementById('groups-count').textContent = grpCount;
 
-      // FloodLine groups (20-24)
-      const wdGroupCount = checked.filter(i => i >= 20 && i <= 24).length;
-      document.getElementById('wd-groups-count').textContent = wdGroupCount;
+      // Scoreboard
+      document.getElementById('sb-calls').textContent = getDailyVal('calls');
+      document.getElementById('sb-pickups').textContent = getDailyVal('pickups');
+      document.getElementById('sb-demos').textContent = getDailyVal('demos');
+      document.getElementById('sb-dms').textContent = getDailyVal('dms');
+      document.getElementById('sb-clients').textContent = clients;
 
-      // Scoreboard (combined totals)
-      document.getElementById('sb-dms').textContent = getDailyVal('dms') + getDailyVal('wd_dms');
-      document.getElementById('sb-posts').textContent = isPostDone() ? '1' : '0';
-      document.getElementById('sb-groups').textContent = fbGroupCount + wdGroupCount;
-      document.getElementById('sb-emails').textContent = getDailyVal('emails');
-      document.getElementById('sb-demos').textContent = getDailyVal('demos') + getDailyVal('wd_demos');
-      document.getElementById('sb-clients').textContent = clients + getCumulative('wd_clients');
+      // Conversion math
+      const totalCalls = getAllTimeCalls();
+      const totalPickups = getAllTimePickups();
+      const totalDemos = getAllTimeDemos();
+      document.getElementById('call-to-pickup').textContent = totalCalls > 0 ? Math.round((totalPickups/totalCalls)*100) + '%' : '--';
+      document.getElementById('pickup-to-demo').textContent = totalPickups > 0 ? Math.round((totalDemos/totalPickups)*100) + '%' : '--';
+      document.getElementById('demo-to-client').textContent = totalDemos > 0 ? Math.round((clients/totalDemos)*100) + '%' : '--';
+      document.getElementById('calls-per-client').textContent = clients > 0 ? Math.round(totalCalls/clients) : '--';
     }
 
     // --- Counter adjustments ---
@@ -2022,7 +1476,6 @@ DM "DEMO" to hear what your customers will hear instead.
       setDailyVal(key, val);
       updateAll();
     }
-
     function adjustCounter(key, delta) {
       let val = getCumulative(key) + delta;
       if (val < 0) val = 0;
@@ -2038,144 +1491,69 @@ DM "DEMO" to hear what your customers will hear instead.
       setTimeout(() => toast.classList.remove('show'), 1800);
     }
 
-    function copyScript(num) {
-      const text = DM_SCRIPTS[num - 1];
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('DM opener ' + num + ' copied');
-      }).catch(() => {
-        // Fallback
-        fallbackCopy(text);
-        showToast('DM opener ' + num + ' copied');
-      });
+    function copyText(key) {
+      const text = SCRIPTS[key];
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => showToast('Copied')).catch(() => { fallbackCopy(text); showToast('Copied'); });
     }
 
     function copyCaption() {
-      const postIdx = getPostIndex();
-      const text = POSTS[postIdx].caption;
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('Caption copied');
-      }).catch(() => {
-        fallbackCopy(text);
-        showToast('Caption copied');
-      });
-    }
-
-    function copyFBTemplate() {
-      navigator.clipboard.writeText(FB_TEMPLATE).then(() => {
-        showToast('Group post copied');
-      }).catch(() => {
-        fallbackCopy(FB_TEMPLATE);
-        showToast('Group post copied');
-      });
-    }
-
-    function copyCallScript() {
-      const text = `Hey, this is Mills. I actually just called your shop about 20 minutes ago and got voicemail -- I'm not a customer, but I wanted to point something out. If I got voicemail, your real customers are too. I help HVAC companies make sure every call gets answered, even when you're on a job. Would it be worth 5 minutes to show you how it works?`;
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('Cold call script copied');
-      }).catch(() => {
-        fallbackCopy(text);
-        showToast('Cold call script copied');
-      });
-    }
-
-    function copyFollowDM() {
-      const text = `Hey, I called your shop about 30 min ago and got voicemail -- not complaining, I know you're busy on jobs. But I've been helping HVAC companies make sure every call gets answered even when they're on a roof. Want me to show you what I mean?`;
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('Follow-up DM copied');
-      }).catch(() => {
-        fallbackCopy(text);
-        showToast('Follow-up DM copied');
-      });
-    }
-
-    // --- FloodLine DM Scripts ---
-    const WD_DM_SCRIPTS = [
-      `Hey! How long you been in the restoration game? You guys stay pretty busy with water damage calls?`,
-      `Your work looks solid. Do you handle mostly insurance jobs or cash work? Always curious with restoration companies.`,
-      `Real quick — who answers your emergency line at 2am when a pipe bursts? Curious how restoration companies handle that.`,
-      `Hey, do you get referral calls from adjusters? I've been talking to restoration owners about how many of those calls they miss after hours.`,
-      `Storm season's coming up. You guys have a system for when the phones blow up with 50 calls in a day?`
-    ];
-
-    const WD_FOLLOW_UP = `Nice — so we built an AI that answers your emergency line 24/7. Captures the address, what happened, whether water's still flowing — and dispatches to your crew immediately. Want to hear it? Call (615) 784-5747 right now and pick "water damage" when it asks. Takes 30 seconds.`;
-
-    const WD_FB_TEMPLATE = `Question for the group -- when you get a 2am pipe burst call, what's your setup? Do you answer personally, have an answering service, or does it go to voicemail? Trying to figure out how other independent shops handle after-hours emergencies without burning out.`;
-
-    function copyWDScript(num) {
-      const text = WD_DM_SCRIPTS[num - 1];
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('WD opener ' + num + ' copied');
-      }).catch(() => {
-        fallbackCopy(text);
-        showToast('WD opener ' + num + ' copied');
-      });
-    }
-
-    function copyWDFollowUp() {
-      navigator.clipboard.writeText(WD_FOLLOW_UP).then(() => {
-        showToast('WD follow-up copied');
-      }).catch(() => {
-        fallbackCopy(WD_FOLLOW_UP);
-        showToast('WD follow-up copied');
-      });
-    }
-
-    function copyWDFBTemplate() {
-      navigator.clipboard.writeText(WD_FB_TEMPLATE).then(() => {
-        showToast('WD group post copied');
-      }).catch(() => {
-        fallbackCopy(WD_FB_TEMPLATE);
-        showToast('WD group post copied');
-      });
-    }
-
-    const EMAIL_SUBJECTS = [
-      'Quick question about your phones',
-      "78% of your callers won't leave a voicemail",
-      'I called your shop yesterday',
-      '$7,500/week',
-      'Should I close your file?'
-    ];
-
-    function copyEmailSubject(num) {
-      const text = EMAIL_SUBJECTS[num - 1];
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('Email ' + num + ' subject copied');
-      }).catch(() => {
-        fallbackCopy(text);
-        showToast('Email ' + num + ' subject copied');
-      });
+      const text = POSTS[getPostIndex()].caption;
+      navigator.clipboard.writeText(text).then(() => showToast('Caption copied')).catch(() => { fallbackCopy(text); showToast('Caption copied'); });
     }
 
     function fallbackCopy(text) {
       const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
     }
 
-    // --- Post done ---
     function markPostDone() {
       setPostDone(!isPostDone());
       updateAll();
     }
 
-    // --- Group toggle ---
-    function toggleGroup(el) {
-      const idx = parseInt(el.dataset.group);
-      let checked = getGroupsChecked();
-      if (checked.includes(idx)) {
-        checked = checked.filter(i => i !== idx);
-      } else {
-        checked.push(idx);
-      }
-      setGroupsChecked(checked);
+    function toggleCheck(el) {
+      const id = el.dataset.check;
+      let checked = getChecked();
+      if (checked.includes(id)) checked = checked.filter(c => c !== id);
+      else checked.push(id);
+      setChecked(checked);
       updateAll();
+    }
+
+    // --- War Room Report ---
+    function sendWarRoomReport() {
+      const calls = getDailyVal('calls');
+      const pickups = getDailyVal('pickups');
+      const demos = getDailyVal('demos');
+      const sendinfo = getDailyVal('sendinfo');
+      const voicemails = getDailyVal('voicemails');
+      const dms = getDailyVal('dms');
+      const responses = getDailyVal('responses');
+      const clients = getCumulative('clients');
+
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+
+      const msg = `MILLS' DAILY REPORT — ${dateStr}\n` +
+        `━━━━━━━━━━━━━━━━━━━━\n` +
+        `Cold Calls: ${calls} (${pickups} pickups)\n` +
+        `Demos Booked: ${demos}\n` +
+        `"Send Info": ${sendinfo}\n` +
+        `Voicemails Left: ${voicemails}\n` +
+        `DMs Sent: ${dms} (${responses} responses)\n` +
+        `━━━━━━━━━━━━━━━━━━━━\n` +
+        `Total Clients: ${clients} | MRR: $${(clients * 997).toLocaleString()}\n` +
+        `Total Calls All-Time: ${getAllTimeCalls()} | Demos All-Time: ${getAllTimeDemos()}`;
+
+      // Copy to clipboard as fallback
+      navigator.clipboard.writeText(msg).catch(() => fallbackCopy(msg));
+
+      showToast('Report copied — paste to ntfy or send from terminal');
+
+      // Note: Can't POST to ntfy from browser due to CORS.
+      // The report text is copied to clipboard for pasting.
     }
 
     // --- Init ---
