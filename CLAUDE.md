@@ -18,7 +18,7 @@ AI receptionist for service businesses across 8 industries: HVAC, Plumbing, Elec
 **Channels:** Bland.ai cold calls (20/day), Ben SMS (30/day), cold email (blast + Lemlist), secret shopper (15/evening), daily human call sheet (15/morning), Instagram DMs
 
 ## Wallace Shorthand
-- **ss** = screenshot or screenshots (context-dependent) — check Desktop for most recent `.png` files
+- **ss** = screenshot or screenshots (context-dependent) — check `/Users/moneymaker99/Screenshots/` for most recent `.png` files (NOT Desktop)
 
 ## Team Roster
 | Member | Role | What They Do |
@@ -37,6 +37,9 @@ AI receptionist for service businesses across 8 industries: HVAC, Plumbing, Elec
 - GitHub (free)
 - Claude Code
 - Domain (thecalltaker.com)
+- Google Ads ($6/day)
+- ColdDMs Scale plan ($174/mo)
+- Lemlist
 
 ## Owner
 Wallace Dobbs — wallacemdobbs@icloud.com
@@ -208,16 +211,11 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 - Staff user created for calendar assignment
 - Demo form wired to create contacts with prospect + demo-booked tags
 
-## A2P 10DLC Registration Status (as of Feb 17, 2026)
+## A2P 10DLC Registration Status (as of Feb 22, 2026)
 - **Brand status: APPROVED**
-- **Campaign status: IN PROGRESS** — re-submitted Feb 17 12:30am, awaiting carrier approval
-- **Blocker:** GitHub Pages SSL cert not yet issued for thecalltaker.com — GHL compliance bot can't crawl the site over HTTPS, so all compliance checks fail
-- **DNS:** Correct (4 A records pointing to GitHub IPs, www CNAME to wallacedobbs428.github.io)
-- **SSL fix:** Waiting for GitHub to issue cert — check Settings > Pages > "Enforce HTTPS" becoming clickable
-- **SMS consent added to:** demo.html, audit.html, privacy.html (Section 2a), terms.html (Section 4a)
-- **Checkbox must NOT be required** — A2P rules say consent checkbox can't be mandatory
-- **Once SSL is fixed:** Re-submit campaign with `https://thecalltaker.com/demo.html` as opt-in URL
-- **CRITICAL:** All SMS outreach is FAILING until campaign is approved — carriers are dropping messages
+- **Campaign status: APPROVED** — SMS sending fully operational
+- **SSL:** LIVE (Let's Encrypt, expires May 18 2026)
+- **SMS consent on:** demo.html, audit.html, privacy.html (Section 2a), terms.html (Section 4a)
 
 ## Max v3 — Reply Catcher + Follow-Up Machine
 - **Location:** `max/` directory
@@ -286,19 +284,29 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 
 ## Team Schedule (no conflicts)
 ```
+  Every 10m  — DONNY: Speed-to-lead + objection handling
   Every 15m  — SAM: Support monitor + auto-respond
   Every 30m  — MAX: Reply monitor
+  Every 2hr  — DONNY: Lead scoring (0-100)
   6:00 AM    — SAM: Health scoring
   7:00 AM    — BEN: Morning briefing
+  7:30 AM    — MAX: Digest / DONNY: Funnel + hotlist
   8:00 AM    — SAM: Milestone check-ins
   9:00 AM    — MAX: Follow-ups
-  11:00 AM   — BEN: Outreach / SAM: Referral check (alert Wallace → 48h email fallback)
+  10:30 AM   — DONNY: Close + trial sequences
+  11:00 AM   — BEN: Outreach / SAM: Referral check / MAX: Seasonal
+  12:30 PM   — DONNY: Urgency messages
   1:00 PM    — BEN: SMS
-  2:00 PM    — BEN: Re-engagement
+  2:00 PM    — BEN: Re-engagement / MAX: Reactivate
+  2:30 PM    — DONNY: Recover lost leads
   3:00 PM    — BEN: Lead scoring
   7:00 PM    — SAM: Daily report
   8:00 PM    — MAX: Daily report
+  8:30 PM    — DONNY: Revenue report
   9:00 PM    — BEN: Evening summary
+  9:30 PM    — DONNY: Win report
+  Midnight   — MAX: Pipeline cleanup
+  Mon 10AM   — MAX: Win-back campaign
 ```
 
 ## Instantly.ai
@@ -319,12 +327,42 @@ Wallace Dobbs — wallacemdobbs@icloud.com
 - **Email Domain:** wallace@mail.thecalltaker.com (SPF + DMARC verified, GHL dedicated sending)
 - **Conversion Funnel:** cold email → personalized audit page → signup page → GHL contact + war room alert
 
+## Ads & Tracking
+- **Google Ads:** Campaign #1 live, $6/day budget, Performance Max, pending policy review
+- **Google Ads Tag:** AW-17970510102 (installed on all 26 public HTML pages)
+- **Google Ads Account:** Customer ID visible in ads.google.com dashboard
+- **Meta/Facebook Ads:** Ad Account ID: 25895456013410801 (Business: "The Call Taker")
+- **Meta Business Suite:** business.facebook.com (logged in as Colin Clorp / Mills)
+- **Meta API:** Need access token from developers.facebook.com (not yet created)
+- **Conversion tracking:** thank-you.html is the conversion URL for both Google + Meta
+
+## Donny — 24/7 Conversion Closer
+- **Location:** `donny/` directory
+- **Engine:** `donny/donny-engine.py` (Python3, zero dependencies)
+- **Installer:** `bash donny/install-donny.sh`
+- **8 launchd services:** speed+objection (10min), score (2hr), funnel+hotlist (7:30am), close+trial (10:30am), urgency (12:30pm), recover (2:30pm), revenue (8:30pm), report+win (9:30pm)
+- **Commands:** score, speed, objection, hotlist, close, trial, urgency, recover, funnel, win, revenue, report, status, all
+- **0-100 closing score** combining ALL engine signals (behavioral + intelligence + recency)
+- **Speed-to-lead:** detects hot signals every 10 min and responds immediately
+- Tags contacts `donny-closing` when in active close sequence
+- Reads ALL engine state files (max, ben, sam, blast, rescue, partner, drip, onboarding)
+
+## Platforms & API Keys
+- **Apollo.io:** API key dALEloy-0-6gg7abTMfIZw (free plan — search/enrichment API blocked, use UI only)
+- **Clay:** API key 92b80eb729dc2be9cbf2 (no public REST API — works through UI/webhooks only)
+- **Bardeen:** Chrome extension installed (browser automation)
+- **n8n:** Self-hosted at localhost:5678, launchd service running
+- **Lemlist:** Active account (email sequences)
+- **ColdDMs:** Scale plan ($174/mo), NO API — manual only
+
 ## What's NOT Built Yet (Needs Wallace)
 - ~~Custom domain~~ — DONE (thecalltaker.com connected)
-- A2P 10DLC campaign approval (blocked by SSL cert — see above)
+- ~~A2P 10DLC~~ — APPROVED (SMS sending works)
+- ~~SSL~~ — LIVE (Let's Encrypt, expires May 18 2026)
+- ~~Google Ads~~ — LIVE ($6/day, Performance Max campaign)
+- Meta/Facebook Ads API token (need to create app at developers.facebook.com)
 - Stripe billing (not connected — needs parent/guardian for Stripe account, setup guide sent via ntfy)
 - Email template content (shells exist, need copy pasted in GHL UI)
-- Business email address (optional — currently using wallacemdobbs@icloud.com)
 - Social media profiles
 
 ## Revenue Split — Wallace & Mills Partnership
