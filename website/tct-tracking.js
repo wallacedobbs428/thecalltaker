@@ -10,10 +10,15 @@
   // =========================================================================
   // A. Google Analytics 4 (gtag.js)
   // =========================================================================
+  var gtagScript = document.createElement('script');
+  gtagScript.async = true;
+  gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV';
+  document.head.appendChild(gtagScript);
+
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX'); // TODO: Replace with actual GA4 Measurement ID
+  gtag('config', 'G-29LL5GPBQV');
 
   // =========================================================================
   // B. Meta Pixel
