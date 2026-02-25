@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Sales Toolkit — The Call Taker</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d1117; color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
+    font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── AUTH GATE ── */
+  #auth-gate {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 20px; text-align: center;
+  }
+  #auth-gate.hidden { display: none; }
+  .auth-logo { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .auth-logo span { color: #f85149; }
+  .auth-sub { color: #6b7280; font-size: 14px; margin-bottom: 32px; }
+  .auth-input {
+    background: #161b22; border: 2px solid #21262d; color: #fff;
+    padding: 16px 20px; border-radius: 12px; font-size: 18px;
+    width: 100%; max-width: 300px; text-align: center;
+    -webkit-appearance: none; outline: none;
+  }
+  .auth-input:focus { border-color: #3b82f6; }
+  .auth-input::placeholder { color: #484f58; }
+  .auth-btn {
+    background: #3b82f6; color: #fff; border: none;
+    padding: 14px 40px; border-radius: 12px; font-size: 17px; font-weight: 700;
+    margin-top: 14px; cursor: pointer; width: 100%; max-width: 300px;
+    -webkit-appearance: none;
+  }
+  .auth-btn:active { opacity: 0.85; }
+  .auth-error { color: #f85149; font-size: 14px; margin-top: 10px; min-height: 20px; }
+
+  /* ── TOOLKIT HUB ── */
+  #toolkit { display: none; }
+  #toolkit.visible { display: block; }
+
+  .tk-header {
+    background: linear-gradient(180deg, #161b22, #0d1117);
+    padding: 28px 18px 20px; text-align: center;
+    border-bottom: 2px solid #f85149;
+  }
+  .tk-header h1 { color: #fff; font-size: 22px; font-weight: 800; }
+  .tk-header .sub { color: #f85149; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+
+  .tk-grid {
+    max-width: 440px; margin: 0 auto; padding: 20px 16px;
+  }
+
+  .tk-card {
+    display: block; text-decoration: none;
+    background: #161b22; border: 1px solid #21262d;
+    border-radius: 14px; padding: 20px 18px;
+    margin-bottom: 12px; transition: all 0.15s;
+    position: relative; overflow: hidden;
+  }
+  .tk-card:active { transform: scale(0.98); border-color: #3b82f6; }
+  .tk-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .tk-card.c1::before { background: #f85149; }
+  .tk-card.c2::before { background: #3b82f6; }
+  .tk-card.c3::before { background: #3fb950; }
+  .tk-card.c4::before { background: #d29922; }
+  .tk-card.c5::before { background: #bc8cff; }
+
+  .tk-card-title { color: #fff; font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .tk-card-desc { color: #8b949e; font-size: 13px; line-height: 1.4; }
+  .tk-card-arrow { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #484f58; font-size: 20px; }
+
+  .tk-footer {
+    padding: 20px 16px; text-align: center;
+    font-size: 12px; color: #484f58;
+  }
+  .tk-footer a { color: #f85149; text-decoration: none; font-weight: 600; cursor: pointer; }
+
+  @media (min-width: 500px) { .tk-grid { max-width: 460px; } }
+</style>
+</head>
+<body>
+
+<!-- AUTH GATE -->
+<div id="auth-gate">
+  <div class="auth-logo">The <span>Call</span> Taker</div>
+  <div class="auth-sub">Sales Toolkit — Internal Access Only</div>
+  <input type="password" id="pw-input" class="auth-input" placeholder="Enter password" autocomplete="off" autofocus>
+  <button class="auth-btn" onclick="tryAuth()">Unlock</button>
+  <div class="auth-error" id="auth-error"></div>
+</div>
+
+<!-- TOOLKIT HUB -->
+<div id="toolkit">
+  <div class="tk-header">
+    <h1>Sales Toolkit</h1>
+    <div class="sub">Wallace's Deal-Closing Arsenal</div>
+  </div>
+
+  <div class="tk-grid">
+    <a href="call-cheatsheet.html" class="tk-card c1">
+      <div class="tk-card-title">Live Call Cheatsheet</div>
+      <div class="tk-card-desc">Pitch flow, discovery questions, pricing, closing scripts, 12 objection responses</div>
+      <span class="tk-card-arrow">&rsaquo;</span>
+    </a>
+
+    <a href="/demo-showcase.html" class="tk-card c2">
+      <div class="tk-card-title">Demo Showcase (Public)</div>
+      <div class="tk-card-desc">Send to prospects — tap-to-call demo line, 3 scenarios, before/after</div>
+      <span class="tk-card-arrow">&rsaquo;</span>
+    </a>
+
+    <a href="/checkout.html" class="tk-card c3">
+      <div class="tk-card-title">Checkout Page (Public)</div>
+      <div class="tk-card-desc">$297 and $497 plans — text this link when they say yes</div>
+      <span class="tk-card-arrow">&rsaquo;</span>
+    </a>
+
+    <a href="objection-handler.html" class="tk-card c4">
+      <div class="tk-card-title">Objection Handler</div>
+      <div class="tk-card-desc">Full playbook for every objection with word-for-word responses</div>
+      <span class="tk-card-arrow">&rsaquo;</span>
+    </a>
+
+    <a href="case-studies.html" class="tk-card c5">
+      <div class="tk-card-title">Case Study Templates</div>
+      <div class="tk-card-desc">3 fill-in-the-blank templates — deep dive, numbers, story format</div>
+      <span class="tk-card-arrow">&rsaquo;</span>
+    </a>
+  </div>
+
+  <div class="tk-footer">
+    <a onclick="logout()">Lock Toolkit</a> &bull; Internal use only
+  </div>
+</div>
+
+<script>
+const HASH = '4a394737514b47e778f7d10f22c788fb26ec9a9e6d6660a615601cf7b72d1c53';
+const AUTH_KEY = 'tct_toolkit_auth';
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function tryAuth() {
+  const pw = document.getElementById('pw-input').value;
+  if (!pw) return;
+  const hash = await sha256(pw);
+  if (hash === HASH) {
+    sessionStorage.setItem(AUTH_KEY, hash);
+    showToolkit();
+  } else {
+    document.getElementById('auth-error').textContent = 'Wrong password';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function showToolkit() {
+  document.getElementById('auth-gate').classList.add('hidden');
+  document.getElementById('toolkit').classList.add('visible');
+}
+
+function logout() {
+  sessionStorage.removeItem(AUTH_KEY);
+  location.reload();
+}
+
+// Enter key support
+document.getElementById('pw-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryAuth();
+});
+
+// Auto-unlock if already authenticated this session
+if (sessionStorage.getItem(AUTH_KEY) === HASH) showToolkit();
+</script>
+</body>
+</html>

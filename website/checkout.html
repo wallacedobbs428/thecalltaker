@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="robots" content="noindex, nofollow">
+<title>Get Started — The Call Taker</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 440px; margin: 0 auto; padding: 0 16px; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 36px 20px 24px;
+    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+  }
+  .logo { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .logo span { color: #f85149; }
+  .tagline { color: #8b949e; font-size: 14px; margin-top: 4px; }
+
+  /* Trust badges */
+  .trust {
+    display: flex; justify-content: center; gap: 16px;
+    padding: 12px; font-size: 12px; color: #8b949e;
+    border-bottom: 1px solid #21262d;
+  }
+  .trust span { display: flex; align-items: center; gap: 4px; }
+  .trust .dot { width: 6px; height: 6px; background: #3fb950; border-radius: 50%; }
+
+  /* Plan selector */
+  .plans { padding: 24px 0; }
+  .plan-label {
+    text-align: center; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; color: #8b949e;
+    margin-bottom: 14px;
+  }
+
+  .plan-card {
+    background: #161b22;
+    border: 2px solid #21262d;
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin: 12px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .plan-card:active, .plan-card.selected {
+    border-color: #3fb950;
+    box-shadow: 0 0 0 1px #3fb950, 0 0 20px rgba(63,185,80,0.1);
+  }
+  .plan-card .badge {
+    position: absolute; top: -10px; right: 16px;
+    background: #3fb950; color: #0d1117;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
+    padding: 3px 10px; border-radius: 10px;
+  }
+
+  .plan-top { display: flex; justify-content: space-between; align-items: center; }
+  .plan-name { font-weight: 700; color: #fff; font-size: 17px; }
+  .plan-price { font-size: 28px; font-weight: 800; color: #fff; }
+  .plan-price span { font-size: 14px; color: #8b949e; font-weight: 400; }
+  .plan-desc { color: #8b949e; font-size: 13px; margin-top: 8px; line-height: 1.5; }
+
+  .plan-features {
+    list-style: none; margin-top: 14px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  }
+  .plan-features li {
+    font-size: 13px; color: #c9d1d9;
+    padding-left: 18px; position: relative;
+  }
+  .plan-features li::before {
+    content: "\2713"; position: absolute; left: 0;
+    color: #3fb950; font-weight: 700; font-size: 12px;
+  }
+
+  /* Radio indicator */
+  .radio-dot {
+    width: 22px; height: 22px; border: 2px solid #30363d;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .plan-card.selected .radio-dot {
+    border-color: #3fb950;
+  }
+  .plan-card.selected .radio-dot::after {
+    content: ''; width: 10px; height: 10px;
+    background: #3fb950; border-radius: 50%;
+  }
+
+  /* CTA Button */
+  .cta-area { padding: 0 0 20px; }
+  .cta-btn {
+    display: block; width: 100%;
+    background: linear-gradient(135deg, #3fb950, #2ea043);
+    color: #fff; border: none; border-radius: 14px;
+    padding: 18px; font-size: 18px; font-weight: 800;
+    text-align: center; cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+    -webkit-appearance: none;
+  }
+  .cta-btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+  .cta-sub {
+    text-align: center; font-size: 12px; color: #8b949e;
+    margin-top: 8px;
+  }
+
+  /* ROI callout */
+  .roi-callout {
+    background: rgba(248,81,73,0.08);
+    border: 1px solid rgba(248,81,73,0.2);
+    border-radius: 12px;
+    padding: 16px; margin: 20px 0;
+    text-align: center;
+  }
+  .roi-callout .big {
+    font-size: 32px; font-weight: 800; color: #f85149;
+  }
+  .roi-callout .sub { font-size: 13px; color: #8b949e; margin-top: 2px; }
+
+  /* What you get */
+  .features-section { padding: 20px 0; }
+  .features-title {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: #8b949e; margin-bottom: 14px;
+  }
+  .feature-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 0; border-bottom: 1px solid #21262d;
+  }
+  .feature-item:last-child { border-bottom: none; }
+  .feature-icon {
+    width: 36px; height: 36px; background: #161b22;
+    border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-size: 18px; flex-shrink: 0;
+  }
+  .feature-name { font-weight: 700; color: #fff; font-size: 15px; }
+  .feature-desc { font-size: 13px; color: #8b949e; margin-top: 2px; }
+
+  /* Guarantee */
+  .guarantee {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 12px;
+    padding: 20px; margin: 20px 0;
+    text-align: center;
+  }
+  .guarantee .icon { font-size: 28px; margin-bottom: 8px; }
+  .guarantee .title { font-weight: 700; color: #fff; font-size: 16px; }
+  .guarantee .desc { font-size: 13px; color: #8b949e; margin-top: 6px; line-height: 1.5; }
+
+  /* Demo CTA */
+  .demo-strip {
+    background: linear-gradient(135deg, #f85149, #da3633);
+    border-radius: 12px; padding: 16px;
+    text-align: center; margin: 16px 0;
+  }
+  .demo-strip .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.7); }
+  .demo-strip a {
+    display: block; font-size: 24px; font-weight: 800;
+    color: #fff; text-decoration: none; margin: 4px 0;
+  }
+  .demo-strip .sub { font-size: 12px; color: rgba(255,255,255,0.75); }
+
+  /* Footer */
+  .footer {
+    padding: 30px 16px;
+    text-align: center; font-size: 12px; color: #484f58;
+    border-top: 1px solid #21262d;
+  }
+  .footer a { color: #58a6ff; text-decoration: none; }
+
+  /* Stripe placeholder notice */
+  .stripe-notice {
+    background: rgba(210,153,34,0.1);
+    border: 1px solid rgba(210,153,34,0.3);
+    border-radius: 10px;
+    padding: 14px; margin: 16px 0;
+    font-size: 13px; color: #d29922;
+    text-align: center; line-height: 1.5;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">The <span>Call</span> Taker</div>
+  <div class="tagline">Never miss another customer call</div>
+</div>
+
+<div class="trust">
+  <span><span class="dot"></span> No contracts</span>
+  <span><span class="dot"></span> Cancel anytime</span>
+  <span><span class="dot"></span> No setup fees</span>
+</div>
+
+<div class="container">
+
+  <!-- PLAN SELECTOR -->
+  <div class="plans">
+    <div class="plan-label">Choose Your Plan</div>
+
+    <div class="plan-card selected" id="plan-starter" onclick="selectPlan('starter')">
+      <div class="badge">MOST POPULAR</div>
+      <div class="plan-top" style="margin-bottom: 4px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="radio-dot"></div>
+          <div class="plan-name">After-Hours Starter</div>
+        </div>
+        <div class="plan-price">$297<span>/mo</span></div>
+      </div>
+      <div class="plan-desc">Covers nights, weekends, holidays, and lunch breaks</div>
+      <ul class="plan-features">
+        <li>After-hours coverage</li>
+        <li>Weekends &amp; holidays</li>
+        <li>Custom to your biz</li>
+        <li>Appointment booking</li>
+        <li>Unlimited calls</li>
+        <li>Cancel anytime</li>
+      </ul>
+    </div>
+
+    <div class="plan-card" id="plan-full" onclick="selectPlan('full')">
+      <div class="plan-top" style="margin-bottom: 4px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="radio-dot"></div>
+          <div class="plan-name">Full 24/7 Coverage</div>
+        </div>
+        <div class="plan-price">$497<span>/mo</span></div>
+      </div>
+      <div class="plan-desc">Everything in Starter + business hours overflow</div>
+      <ul class="plan-features">
+        <li>24/7/365 coverage</li>
+        <li>Business hours overflow</li>
+        <li>FAQ handling</li>
+        <li>Dispatch support</li>
+        <li>Appointment booking</li>
+        <li>Cancel anytime</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ROI CALLOUT -->
+  <div class="roi-callout">
+    <div class="big" id="roi-text">$297 &lt; 1 service call</div>
+    <div class="sub">Most businesses make it back with the first call we catch</div>
+  </div>
+
+  <!-- CTA BUTTON -->
+  <div class="cta-area">
+    <a class="cta-btn" id="checkout-btn" href="#" onclick="startCheckout(event)">
+      Get Started Now
+    </a>
+    <div class="cta-sub">Secure checkout &bull; Cancel anytime &bull; No setup fees</div>
+  </div>
+
+  <!-- STRIPE NOTICE (shown when links aren't live yet) -->
+  <div class="stripe-notice" id="stripe-notice">
+    Payment processing is being set up. Text Wallace at the number below to get started today.
+  </div>
+
+  <!-- WHAT YOU GET -->
+  <div class="features-section">
+    <div class="features-title">What You Get</div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#128222;</div>
+      <div>
+        <div class="feature-name">Professional Receptionist</div>
+        <div class="feature-desc">Sounds like a real person. Knows your business inside and out.</div>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#128197;</div>
+      <div>
+        <div class="feature-name">Appointment Booking</div>
+        <div class="feature-desc">Books appointments on the spot. No more "leave a message."</div>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#9889;</div>
+      <div>
+        <div class="feature-name">Instant Notifications</div>
+        <div class="feature-desc">Get a text/email for every call. Never miss a lead.</div>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#128736;</div>
+      <div>
+        <div class="feature-name">Custom to Your Business</div>
+        <div class="feature-desc">Trained on your services, pricing, and booking process.</div>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#127775;</div>
+      <div>
+        <div class="feature-name">Setup in 10 Minutes</div>
+        <div class="feature-desc">We handle everything. You just forward your calls.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUARANTEE -->
+  <div class="guarantee">
+    <div class="icon">&#128170;</div>
+    <div class="title">Zero Risk Guarantee</div>
+    <div class="desc">No contracts. No setup fees. Cancel anytime with one message. If we don't catch a single call that would've gone to voicemail in your first 30 days, we'll refund you. Period.</div>
+  </div>
+
+  <!-- DEMO LINE -->
+  <div class="demo-strip">
+    <div class="lbl">Hear It Before You Buy</div>
+    <a href="tel:+16157845747">(615) 784-5747</a>
+    <div class="sub">Call our demo line — hear exactly what your customers will hear</div>
+  </div>
+
+  <!-- SECOND CTA -->
+  <div class="cta-area" style="padding: 20px 0;">
+    <a class="cta-btn" href="#" onclick="startCheckout(event)">
+      Get Started — <span id="cta-price-2">$297/mo</span>
+    </a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  The Call Taker &bull; Virtual Receptionist for Service Businesses<br>
+  <a href="https://thecalltaker.com">thecalltaker.com</a> &bull; <a href="tel:+16157845747">(615) 784-5747</a><br><br>
+  Questions? Text us or call the demo line.
+</div>
+
+<script>
+  // ── PLAN SELECTION ──
+  let selectedPlan = 'starter';
+
+  // Stripe payment links — REPLACE THESE when Stripe is connected
+  const STRIPE_LINKS = {
+    starter: '',  // e.g., 'https://buy.stripe.com/XXXXX'
+    full: ''      // e.g., 'https://buy.stripe.com/YYYYY'
+  };
+
+  function selectPlan(plan) {
+    selectedPlan = plan;
+    document.getElementById('plan-starter').classList.toggle('selected', plan === 'starter');
+    document.getElementById('plan-full').classList.toggle('selected', plan === 'full');
+
+    const price = plan === 'starter' ? '$297/mo' : '$497/mo';
+    const roi = plan === 'starter' ? '$297 < 1 service call' : '$497 < 2 service calls';
+
+    document.getElementById('roi-text').textContent = roi;
+    document.getElementById('cta-price-2').textContent = price;
+  }
+
+  function startCheckout(e) {
+    e.preventDefault();
+    const link = STRIPE_LINKS[selectedPlan];
+
+    if (link) {
+      // Stripe is connected — redirect to payment
+      window.location.href = link;
+    } else {
+      // Stripe not connected yet — show signup flow
+      document.getElementById('stripe-notice').style.display = 'block';
+
+      // Send alert to war room that someone is trying to pay
+      const plan = selectedPlan === 'starter' ? 'After-Hours $297' : 'Full 24/7 $497';
+      fetch('https://ntfy.sh/tct-warroom-Kx7mN9pQ', {
+        method: 'POST',
+        headers: { 'Title': 'CHECKOUT ATTEMPT', 'Priority': 'urgent', 'Tags': 'money_with_wings' },
+        body: 'Someone clicked checkout for ' + plan + ' plan! Stripe not connected yet. Follow up ASAP.'
+      }).catch(() => {});
+
+      // Redirect to signup page as fallback
+      window.location.href = 'https://thecalltaker.com/signup.html?plan=' + selectedPlan;
+    }
+  }
+
+  // Auto-select plan from URL param
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('plan') === 'full') selectPlan('full');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<script>(function(){var H="4a394737514b47e778f7d10f22c788fb26ec9a9e6d6660a615601cf7b72d1c53";if(sessionStorage.getItem("tct_toolkit_auth")!==H){window.location.href="/toolkit/"}})()</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Call Cheatsheet — The Call Taker</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    padding-bottom: 120px;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* ── STICKY NAV ── */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #21262d;
+    padding: 10px 14px;
+    display: flex; gap: 7px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a {
+    flex-shrink: 0;
+    background: #161b22; color: #58a6ff;
+    text-decoration: none; padding: 7px 13px;
+    border-radius: 20px; font-size: 13px; font-weight: 600;
+    white-space: nowrap; border: 1px solid #21262d;
+    transition: all 0.15s;
+  }
+  .nav a:active, .nav a.active {
+    background: #58a6ff; color: #0d1117; border-color: #58a6ff;
+  }
+
+  /* ── HEADER ── */
+  .hdr {
+    background: linear-gradient(135deg, #161b22, #0d1117);
+    padding: 32px 18px 24px; text-align: center;
+    border-bottom: 2px solid #f85149;
+  }
+  .hdr h1 { color: #fff; font-size: 22px; font-weight: 800; letter-spacing: -0.3px; }
+  .hdr .sub { color: #f85149; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+
+  /* ── SECTIONS ── */
+  .sec { padding: 22px 16px; border-bottom: 1px solid #21262d; }
+  .tag {
+    display: inline-block; padding: 3px 10px; border-radius: 4px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .tag-red { background: #f85149; color: #fff; }
+  .tag-blue { background: #58a6ff; color: #0d1117; }
+  .tag-green { background: #3fb950; color: #0d1117; }
+  .tag-orange { background: #d29922; color: #0d1117; }
+  .tag-purple { background: #bc8cff; color: #0d1117; }
+
+  h2 { color: #fff; font-size: 20px; margin-bottom: 10px; line-height: 1.3; }
+  h3 { color: #8b949e; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 16px 0 8px; }
+
+  /* ── SCRIPT BOX ── */
+  .script {
+    background: #161b22;
+    border-left: 4px solid #f85149;
+    padding: 16px; border-radius: 0 10px 10px 0;
+    margin: 10px 0; font-size: 18px; line-height: 1.65; color: #fff;
+  }
+  .script em { color: #f85149; font-style: normal; font-weight: 700; }
+  .script .green { color: #3fb950; font-weight: 700; }
+  .script strong { color: #fff; }
+
+  /* ── STEP FLOW ── */
+  .flow { counter-reset: step; margin: 14px 0; }
+  .flow-step {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 14px 0; border-bottom: 1px solid #21262d;
+  }
+  .flow-step:last-child { border-bottom: none; }
+  .flow-num {
+    flex-shrink: 0; width: 32px; height: 32px;
+    background: #f85149; color: #fff; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 15px;
+  }
+  .flow-content { flex: 1; }
+  .flow-label { font-weight: 700; color: #fff; font-size: 16px; }
+  .flow-detail { color: #8b949e; font-size: 14px; margin-top: 3px; }
+  .flow-script { color: #58a6ff; font-size: 15px; margin-top: 6px; font-style: italic; }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: #161b22; border-radius: 12px;
+    padding: 16px; margin: 10px 0;
+    display: flex; gap: 12px; align-items: flex-start;
+    border: 1px solid #21262d;
+  }
+  .q-num {
+    flex-shrink: 0; width: 34px; height: 34px;
+    background: #58a6ff; color: #0d1117; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px;
+  }
+  .q-text { color: #fff; font-size: 17px; line-height: 1.5; font-weight: 600; }
+  .q-why { color: #8b949e; font-size: 13px; margin-top: 5px; }
+
+  /* ── PRICING ── */
+  .price-card {
+    background: #161b22; border: 2px solid #21262d;
+    border-radius: 14px; padding: 20px; margin: 12px 0;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .price-card.rec { border-color: #3fb950; }
+  .price-card.rec::before {
+    content: 'RECOMMEND FIRST';
+    position: absolute; top: 0; right: 0;
+    background: #3fb950; color: #0d1117;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
+    padding: 3px 10px; border-radius: 0 0 0 8px;
+  }
+  .price-tier { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8b949e; }
+  .price-card.rec .price-tier { color: #3fb950; }
+  .price-amt { font-size: 44px; font-weight: 800; color: #fff; margin: 4px 0; }
+  .price-amt span { font-size: 18px; color: #8b949e; font-weight: 400; }
+  .price-feat { list-style: none; text-align: left; margin-top: 14px; }
+  .price-feat li {
+    padding: 5px 0 5px 24px; font-size: 15px; color: #c9d1d9;
+    position: relative;
+  }
+  .price-feat li::before { content: "\2713"; position: absolute; left: 0; color: #3fb950; font-weight: 700; }
+
+  /* ── OBJECTION CARDS ── */
+  .obj {
+    background: #161b22; border-radius: 12px;
+    margin: 10px 0; overflow: hidden;
+    border: 1px solid #21262d;
+  }
+  .obj-q {
+    padding: 14px 16px; color: #f85149;
+    font-weight: 700; font-size: 16px;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    user-select: none; -webkit-user-select: none;
+  }
+  .obj-q .arrow { transition: transform 0.2s; font-size: 12px; }
+  .obj-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 16px; color: #3fb950; font-size: 16px; line-height: 1.6;
+  }
+  .obj.open .obj-a {
+    max-height: 400px; padding: 0 16px 16px;
+  }
+  .obj.open .obj-q .arrow { transform: rotate(90deg); }
+
+  /* ── ROI CALCULATOR ── */
+  .roi-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid #21262d; font-size: 16px;
+  }
+  .roi-row:last-child { border-bottom: none; }
+  .roi-val {
+    background: rgba(248,81,73,0.15); border: 1px dashed #f85149;
+    border-radius: 6px; padding: 4px 14px; color: #f85149;
+    font-weight: 700; min-width: 70px; text-align: center;
+  }
+  .roi-result {
+    background: #3fb950; color: #0d1117;
+    font-weight: 800; font-size: 20px; text-align: center;
+    padding: 14px; border-radius: 10px; margin-top: 14px;
+  }
+
+  /* ── DEMO CTA ── */
+  .demo-box {
+    background: linear-gradient(135deg, #f85149, #da3633);
+    border-radius: 14px; padding: 24px 18px;
+    text-align: center; margin: 14px 0;
+  }
+  .demo-box .lbl { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.8); }
+  .demo-box .num { font-size: 30px; font-weight: 800; color: #fff; text-decoration: none; display: block; margin: 6px 0; }
+  .demo-box .tip { font-size: 14px; color: rgba(255,255,255,0.85); font-style: italic; margin-top: 6px; line-height: 1.4; }
+
+  /* ── TIPS ── */
+  .tips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+  .tip {
+    display: inline-block; background: rgba(63,185,80,0.1);
+    border: 1px solid rgba(63,185,80,0.25); color: #3fb950;
+    font-size: 12px; padding: 4px 10px; border-radius: 20px; font-weight: 600;
+  }
+
+  /* ── ONBOARDING CHECKLIST ── */
+  .checklist { margin: 12px 0; }
+  .check-item {
+    padding: 10px 0; border-bottom: 1px solid #21262d;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box { width: 22px; height: 22px; border: 2px solid #3fb950; border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+  .check-text { color: #c9d1d9; font-size: 15px; }
+
+  /* ── INDUSTRY GRID ── */
+  .ind-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    margin: 10px 0; font-size: 14px;
+  }
+  .ind-grid span { padding: 4px 0; }
+  .ind-grid strong { color: #fff; }
+
+  .divider { height: 1px; background: #21262d; margin: 18px 0; }
+
+  @media (min-width: 500px) { body { max-width: 480px; margin: 0 auto; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <h1>Sales Call Cheatsheet</h1>
+  <div class="sub">Pull up on phone during live calls</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#flow">Flow</a>
+  <a href="#discover">Discovery</a>
+  <a href="#pitch">Pitch</a>
+  <a href="#price">Price</a>
+  <a href="#roi">ROI</a>
+  <a href="#close">Close</a>
+  <a href="#obj">Objections</a>
+  <a href="#demo">Demo</a>
+  <a href="#onboard">If Yes</a>
+</nav>
+
+<!-- ═══════════════════════════════ -->
+<!-- PITCH FLOW OVERVIEW -->
+<!-- ═══════════════════════════════ -->
+<div class="sec" id="flow">
+  <span class="tag tag-red">Pitch Flow</span>
+  <h2>The 7-Step Call</h2>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-content">
+        <div class="flow-label">Warm Open (15 sec)</div>
+        <div class="flow-detail">Thank them, ask what happens after 5pm</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-content">
+        <div class="flow-label">3 Discovery Questions (2 min)</div>
+        <div class="flow-detail">Missed calls, avg job value, what happens to those callers</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-content">
+        <div class="flow-label">The Pitch (30 sec)</div>
+        <div class="flow-detail">Virtual receptionist, 40% stat, 85% stat</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-content">
+        <div class="flow-label">Demo Line Drop</div>
+        <div class="flow-detail">Have them call (615) 784-5747 live</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">5</div>
+      <div class="flow-content">
+        <div class="flow-label">ROI Math (1 min)</div>
+        <div class="flow-detail">Use THEIR numbers: missed calls x job value</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">6</div>
+      <div class="flow-content">
+        <div class="flow-label">Price + Close</div>
+        <div class="flow-detail">$297 starter, no contract, one job pays for it</div>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">7</div>
+      <div class="flow-content">
+        <div class="flow-label">Handle Objections or Onboard</div>
+        <div class="flow-detail">If yes = onboard. If hesitant = objection handler below.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- OPENING -->
+<!-- ═══════════════════════════════ -->
+<div class="sec" id="open">
+  <span class="tag tag-blue">Opening Script</span>
+
+  <div class="script">
+    &ldquo;Hey <em>[name]</em>, appreciate you hopping on. Before I tell you anything &mdash; quick question: <strong>what happens right now when someone calls your shop after 5pm?</strong>&rdquo;
+  </div>
+
+  <div class="tips">
+    <span class="tip">Pause after asking</span>
+    <span class="tip">Let them talk</span>
+    <span class="tip">Take notes</span>
+  </div>
+
+  <p style="margin-top: 10px; font-size: 14px; color: #8b949e;">90% will say "voicemail" or "it rings out." That's your opening.</p>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- 3 DISCOVERY QUESTIONS -->
+<!-- ═══════════════════════════════ -->
+<div class="sec" id="discover">
+  <span class="tag tag-blue">3 Discovery Questions</span>
+  <h2>Ask every single prospect</h2>
+
+  <div class="q-card">
+    <div class="q-num">1</div>
+    <div>
+      <div class="q-text">&ldquo;How many calls do you think you miss after hours in a typical week?&rdquo;</div>
+      <div class="q-why">Gets them to admit the problem. Write down their number &mdash; you'll use it in ROI math.</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">2</div>
+    <div>
+      <div class="q-text">&ldquo;What's your average job worth when someone calls?&rdquo;</div>
+      <div class="q-why">If they don't know, use the industry averages below.</div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-num">3</div>
+    <div>
+      <div class="q-text">&ldquo;When those after-hours callers hit voicemail &mdash; do they leave a message, or do they just call the next company?&rdquo;</div>
+      <div class="q-why">KILL SHOT. They already know the answer. Drop the stat: "85% never call back."</div>
+    </div>
+  </div>
+
+  <h3>Industry Average Job Values</h3>
+  <div class="ind-grid">
+    <span>HVAC: <strong>$350</strong></span>
+    <span>Plumbing: <strong>$300</strong></span>
+    <span>Roofing: <strong>$800</strong></span>
+    <span>Electrical: <strong>$350</strong></span>
+    <span>Dental: <strong>$500</strong></span>
+    <span>Med Spa: <strong>$600</strong></span>
+    <span>Legal: <strong>$1,500</strong></span>
+    <span>Property Mgmt: <strong>$400</strong></span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- THE PITCH -->
+<!-- ═══════════════════════════════ -->
+<div class="sec" id="pitch">
+  <span class="tag tag-red">The Pitch &mdash; 30 Seconds</span>
+
+  <div class="script">
+    &ldquo;So here's what we built. The Call Taker is a virtual receptionist made specifically for <em>[their industry]</em> businesses.
+
+    <br><br>When someone calls you after hours &mdash; nights, weekends, holidays, lunch breaks &mdash; instead of voicemail, they get a live, professional receptionist who knows your services, your pricing, and books appointments on the spot.
+
+    <br><br><strong>40% of calls to businesses like yours come after hours.</strong> And here's the kicker &mdash; <span class="green">85% of people who hit voicemail never call back.</span> They just call the next company on Google. We make sure that doesn't happen.&rdquo;
+  </div>
+
+  <div class="tips">
+    <span class="tip">Speak slowly</span>
+    <span class="tip">Emphasize 85%</span>
+    <span class="tip">Pause after "next company"</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- PRICING -->
+<!-- ═══════════════════════════════ -->
+<div class="sec" id="price">
+  <span class="tag tag-green">Pricing</span>
+
+  <div class="price-card rec">
+    <div class="price-tier">After-Hours Starter</div>
+    <div class="price-amt">$297<span>/mo</span></div>
+    <ul class="price-feat">
+      <li>Nights &amp; evenings covered</li>
+      <li>Weekends &amp; holidays covered</li>
+      <li>Lunch breaks covered</li>
+      <li>Customized to their business</li>
+      <li>No contracts &mdash; cancel anytime</li>
+      <li>No setup fees</li>
+    </ul>
+  </div>
+
+  <div class="price-card">
+    <div class="price-tier">Full 24/7 Coverage</div>
+    <div class="price-amt">$497<span>/mo</span></div>
+    <ul class="price-feat">
+      <li>Everything in After-Hours</li>
+      <li>Business hours overflow</li>
+      <li>Full appointment booking</li>
+      <li>FAQ handling</li>
+      <li>Technician dispatch support</li>
+      <li>Complete phone coverage</li>
+    </ul>
+  </div>
+
+  <div class="script" style="margin-top: 14px;">
+    <strong>How to present it:</strong><br><br>
+    &ldquo;Start with after-hours at $297. <span class="green">Zero risk.</span> No contract. If you love it &mdash; and you will &mdash; you can upgrade to full 24/7 later.&rdquo;
+  </div>
+
+  <div style="margin-top: 12px; padding: 12px; background: rgba(248,81,73,0.08); border-radius: 8px; border: 1px solid rgba(248,81,73,0.2); font-size: 14px; color: #f85149; font-weight: 600;">
+    RULE: Always recommend $297 first. Upsell to $497 after they see results (week 2-3).
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- ROI MATH -->
+<!-- ═══════════════════════════════ -->
+<div class="sec" id="roi">
+  <span class="tag tag-orange">ROI Math &mdash; Use Their Numbers</span>
+  <h2>Walk them through this live</h2>
+
+  <div style="background: #161b22; border-radius: 12px; padding: 16px; margin: 12px 0;">
+    <div class="roi-row">
+      <span>Missed calls/week:</span>
+      <span class="roi-val">[X]</span>
+    </div>
+    <div class="roi-row">
+      <span>Avg job value:</span>
+      <span class="roi-val">$[Y]</span>
+    </div>
+    <div class="roi-row">
+      <span>Lost per week:</span>
+      <span class="roi-val">$[X&times;Y]</span>
+    </div>
+    <div class="roi-row" style="font-weight: 700; color: #fff;">
+      <span>Lost per MONTH:</span>
+      <span class="roi-val" style="font-size: 18px; background: rgba(248,81,73,0.25);">$[X&times;Y&times;4]</span>
+    </div>
+  </div>
+
+  <div class="script">
+    &ldquo;So you said you miss about <em>[X]</em> calls a week after hours. At <em>$[Y]</em> per job, that's <em>$[X&times;Y]</em> a week walking out the door. That's <em>$[X&times;Y&times;4]</em> a month.
+
+    <br><br>We're <strong>$297/mo</strong>. You make that back with <span class="green">ONE single job</span> we catch for you. Everything after that is pure profit.&rdquo;
+  </div>
+
+  <h3>Quick ROI Cheat Sheet</h3>
+  <div style="background: #161b22; border-radius: 10px; padding: 14px; font-size: 14px; line-height: 2;">
+    <strong>HVAC:</strong> 5 calls &times; $350 = $1,750/wk = <span style="color:#3fb950;">$7,000/mo lost</span><br>
+    <strong>Plumber:</strong> 4 calls &times; $300 = $1,200/wk = <span style="color:#3fb950;">$4,800/mo lost</span><br>
+    <strong>Roofer:</strong> 3 calls &times; $800 = $2,400/wk = <span style="color:#3fb950;">$9,600/mo lost</span><br>
+    <strong>Dentist:</strong> 6 calls &times; $500 = $3,000/wk = <span style="color:#3fb950;">$12,000/mo lost</span><br>
+    <strong>Lawyer:</strong> 3 calls &times; $1,500 = $4,500/wk = <span style="color:#3fb950;">$18,000/mo lost</span><br>
+    <strong>Med Spa:</strong> 4 calls &times; $600 = $2,400/wk = <span style="color:#3fb950;">$9,600/mo lost</span><br>
+    <strong>Property Mgmt:</strong> 5 calls &times; $400 = $2,000/wk = <span style="color:#3fb950;">$8,000/mo lost</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- THE CLOSE — WORD FOR WORD -->
+<!-- ═══════════════════════════════ -->
+<div class="sec" id="close">
+  <span class="tag tag-green">The Close &mdash; Word for Word</span>
+
+  <div class="script" style="border-left-color: #3fb950; font-size: 19px;">
+    &ldquo;Here's what I'd suggest. Start with the after-hours plan at $297. You'll see exactly how many calls we catch this week.
+
+    <br><br>No contract. Cancel anytime. If you don't love it, you're out.
+
+    <br><br>But I'm betting after you see the first call we answer at 9pm on a Tuesday, you'll wonder why you didn't do this sooner.
+
+    <br><br><span class="green"><strong>Want to get started?</strong></span>&rdquo;
+  </div>
+
+  <div class="tips">
+    <span class="tip">Then STOP talking</span>
+    <span class="tip">Wait for their answer</span>
+    <span class="tip">Silence closes deals</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3>If they say "How does setup work?"</h3>
+  <div class="script" style="font-size: 16px; border-left-color: #58a6ff;">
+    &ldquo;Takes about 10 minutes. We customize the receptionist to your business &mdash; your services, your pricing, your booking process. We handle everything. You just forward your after-hours calls to your new number and you're live.&rdquo;
+  </div>
+
+  <h3>Alternate Close — Urgency</h3>
+  <div class="script" style="font-size: 16px; border-left-color: #d29922;">
+    &ldquo;Every night you don't have this, calls are going to voicemail and those customers are calling your competitors. You said you're missing <em>[X]</em> calls a week &mdash; that's <em>[X]</em> potential jobs this week alone. Want to stop the bleeding?&rdquo;
+  </div>
+
+  <h3>Alternate Close — Risk Reversal</h3>
+  <div class="script" style="font-size: 16px; border-left-color: #bc8cff;">
+    &ldquo;Tell you what &mdash; try it for 30 days. If we don't catch at least one call that would've gone to voicemail, I'll refund you personally. No questions. Fair enough?&rdquo;
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- OBJECTIONS -->
+<!-- ═══════════════════════════════ -->
+<div class="sec" id="obj">
+  <span class="tag tag-red">Every Objection + Exact Response</span>
+
+  <!-- Objection 1 -->
+  <div class="obj open">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "That's too expensive"
+    </div>
+    <div class="obj-a">
+      "$297 is less than one missed job. You told me your average call is worth $[Y]. We pay for ourselves with a single call. What costs more &mdash; $297, or losing $[X&times;Y&times;4] a month to voicemail?"
+    </div>
+  </div>
+
+  <!-- Objection 2 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "I need to think about it"
+    </div>
+    <div class="obj-a">
+      "Totally get it. But while you're thinking, your competitors are answering their phones tonight. How about this &mdash; start with after-hours at $297. No contract, cancel anytime. If you don't love it after a week, you're out. But I bet you will."
+    </div>
+  </div>
+
+  <!-- Objection 3 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "How do I know it works?"
+    </div>
+    <div class="obj-a">
+      "Call our demo line right now &mdash; (615) 784-5747. That's exactly what your callers will hear. Try to stump it. I'll wait."
+    </div>
+  </div>
+
+  <!-- Objection 4 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "I already use voicemail"
+    </div>
+    <div class="obj-a">
+      "85% of people who hit voicemail never call back. They just call the next company on Google. Your voicemail isn't losing messages &mdash; it's losing customers."
+    </div>
+  </div>
+
+  <!-- Objection 5 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "I don't get that many after-hours calls"
+    </div>
+    <div class="obj-a">
+      "Most owners are surprised when they see the real numbers. 40% of all calls to service businesses come after hours. Try us for a month &mdash; we'll show you exactly how many calls are coming in. If it's truly zero, cancel for free."
+    </div>
+  </div>
+
+  <!-- Objection 6 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "I have a receptionist already"
+    </div>
+    <div class="obj-a">
+      "That's great for business hours. But does your receptionist work at 9pm? On Saturdays? On Christmas? 40% of your calls come when she's not there. We cover every hour she doesn't."
+    </div>
+  </div>
+
+  <!-- Objection 7 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "I'll just hire someone / my wife answers"
+    </div>
+    <div class="obj-a">
+      "A full-time receptionist costs $3,000-$4,000 a month. Plus benefits. Plus they call in sick. Plus they can only answer one call at a time. We're $297, available 24/7, and can handle unlimited calls simultaneously. And no PTO."
+    </div>
+  </div>
+
+  <!-- Objection 8 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "What if customers don't like talking to AI?"
+    </div>
+    <div class="obj-a">
+      "Most callers can't even tell it's AI &mdash; it sounds like a real person. But here's the thing: the alternative isn't a human. The alternative is voicemail. And 85% of people hang up on voicemail. Would you rather they talk to our receptionist or talk to nobody?"
+    </div>
+  </div>
+
+  <!-- Objection 9 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "Can I do a trial first?"
+    </div>
+    <div class="obj-a">
+      "That's basically what this is. No contract, cancel anytime. You're never locked in. Start this week, and if you're not impressed by the number of calls we catch, cancel with one message. Fair?"
+    </div>
+  </div>
+
+  <!-- Objection 10 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "I need to talk to my partner/wife"
+    </div>
+    <div class="obj-a">
+      "100%. When do you think you'll talk to them? I can follow up tomorrow. In the meantime, have them call our demo line &mdash; (615) 784-5747. Once they hear it, the decision usually makes itself."
+    </div>
+  </div>
+
+  <!-- Objection 11 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "How is this different from an answering service?"
+    </div>
+    <div class="obj-a">
+      "Traditional answering services take a message and email it to you. By the time you see it, the customer already called your competitor. Our receptionist actually books the appointment on the spot, answers questions about your services, and gives pricing &mdash; like having your best employee on the phone 24/7."
+    </div>
+  </div>
+
+  <!-- Objection 12 -->
+  <div class="obj">
+    <div class="obj-q" onclick="this.parentElement.classList.toggle('open')">
+      <span class="arrow">&#9654;</span> "What if something goes wrong?"
+    </div>
+    <div class="obj-a">
+      "You get notifications for every call. You see every booking. Nothing happens without you knowing. And if a caller has something unusual &mdash; like an emergency or a complex question &mdash; the AI takes their info and texts you immediately so you can call them back. You're always in control."
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- DEMO LINE -->
+<!-- ═══════════════════════════════ -->
+<div class="sec" id="demo">
+  <span class="tag tag-purple">Demo Line Drop</span>
+
+  <div class="script" style="margin-bottom: 14px;">
+    &ldquo;Actually &mdash; let me show you right now instead of telling you. Call this number: <strong>(615) 784-5747</strong>. That's our demo line. You'll hear exactly what your customers would hear at 9pm on a Saturday.&rdquo;
+  </div>
+
+  <div class="demo-box">
+    <div class="lbl">Demo Line</div>
+    <a class="num" href="tel:+16157845747">(615) 784-5747</a>
+    <div class="tip">"Go ahead and call it right now. I'll stay on the line."</div>
+  </div>
+
+  <h3>After they call:</h3>
+  <div class="script" style="font-size: 16px; border-left-color: #58a6ff;">
+    &ldquo;So what did you think? That's exactly what your callers would hear instead of voicemail. Pretty different from 'leave a message after the beep,' right?&rdquo;
+  </div>
+
+  <div class="tips">
+    <span class="tip">Let THEM call</span>
+    <span class="tip">Stay quiet while they listen</span>
+    <span class="tip">Ask "what'd you think?" after</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- IF THEY SAY YES — ONBOARDING -->
+<!-- ═══════════════════════════════ -->
+<div class="sec" id="onboard">
+  <span class="tag tag-green">They Said Yes &mdash; Onboard Now</span>
+  <h2>Don't let them off the call without starting</h2>
+
+  <div class="script" style="border-left-color: #3fb950; font-size: 16px;">
+    &ldquo;Awesome! Let's get you set up right now &mdash; takes about 10 minutes. I just need a few things from you.&rdquo;
+  </div>
+
+  <div class="checklist">
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Business name</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Services offered (list their main services)</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Business hours</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Service area / zip codes</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Pricing (if they want the AI to quote)</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Their current phone number</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Best email for notifications</div>
+    </div>
+    <div class="check-item">
+      <div class="check-box"></div>
+      <div class="check-text">Payment info (send checkout link)</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 14px; padding: 14px; background: rgba(63,185,80,0.08); border: 1px solid rgba(63,185,80,0.2); border-radius: 10px; font-size: 14px; color: #3fb950;">
+    <strong>After call:</strong> Set them up in GHL, configure their virtual receptionist, send welcome text, schedule day-3 check-in. Tag as "customer" + "active-client."
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ -->
+<!-- QUICK RULES -->
+<!-- ═══════════════════════════════ -->
+<div class="sec">
+  <span class="tag tag-orange">Quick Rules</span>
+
+  <div style="font-size: 15px; line-height: 2; color: #c9d1d9;">
+    <strong style="color:#f85149;">NEVER</strong> lead with price &mdash; ask about their pain first<br>
+    <strong style="color:#f85149;">NEVER</strong> skip the demo line &mdash; let the product sell itself<br>
+    <strong style="color:#3fb950;">ALWAYS</strong> use their numbers for ROI math<br>
+    <strong style="color:#3fb950;">ALWAYS</strong> recommend $297 first, upsell later<br>
+    <strong style="color:#3fb950;">ALWAYS</strong> stop talking after the close question<br>
+    <strong style="color:#3fb950;">ALWAYS</strong> collect onboarding info on the same call<br>
+    <strong style="color:#58a6ff;">IF</strong> they ask price early: tell them but frame it<br>
+    <strong style="color:#58a6ff;">IF</strong> they say "let me think": push for the demo call
+  </div>
+
+  <div class="script" style="margin-top: 14px; font-size: 15px; border-left-color: #d29922;">
+    <strong>If they ask price before you're ready:</strong><br><br>
+    &ldquo;$297/month, no contracts. But honestly &mdash; call our demo line first: (615) 784-5747. If the AI doesn't sound good enough to handle your customers, the price doesn't matter. If it does, $297 is less than one service call.&rdquo;
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="padding: 30px 16px; text-align: center; color: #484f58; font-size: 12px;">
+  The Call Taker &mdash; Internal Sales Tool<br>
+  Do not share with prospects
+</div>
+
+</body>
+</html>

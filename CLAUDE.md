@@ -5,7 +5,7 @@
 
 ## Architecture Overview
 
-Two repos, 60+ Python scripts, 80+ launchd services running 24/7 on a single Mac.
+Two repos, 60+ Python scripts, 86 launchd services running 24/7 on a single Mac.
 
 ```
 ~/Desktop/thecalltaker/          # Website, lead tools, dashboard
@@ -84,6 +84,7 @@ Two repos, 60+ Python scripts, 80+ launchd services running 24/7 on a single Mac
 | `daily-report-engine.py` | Nightly performance summary: emails, SMS, calls, replies, demos, errors | 9pm |
 | `weekly-report-engine.py` | Sunday weekly totals, trends, best performers, WoW comparison | Sun 9:30pm |
 | `ab-tracker.py` | A/B conversion attribution: groups contacts by variant, cross-references Max/Donny | 8:30pm |
+| `speed-alert.py` | Speed-to-lead SMS alerts to Wallace every 2 min | Every 2min |
 
 ## Infrastructure
 
@@ -131,8 +132,14 @@ All in `ops/config.py` with environment variable fallbacks:
 
 ### Voice AI
 - Agent ID: `695947c64b9ed67d8f1077ad`
-- Voice: Jessica (`lxYfHSkYm1EzQzGhdbfc`)
+- Agent Name: "The Call Taker - Demo Line"
+- Business Name: "Comfort Pro Services (Demo)" — generic home services, covers all industries
+- Welcome: "Hey thanks for calling Comfort Pro Services, this is Jessica -- how can I help you today?"
+- Character: Jessica, receptionist — handles HVAC, plumbing, electrical, roofing, general repairs
+- Voice ID: `w9rPM8AIZle60Nbpw7nl` (current), Jessica backup: `lxYfHSkYm1EzQzGhdbfc`
 - PATCH endpoint needs `locationId` in query string, not body
+- Demo breaks character after ~1 min to pitch The Call Taker and collect prospect info
+- If asked about pricing: "$297/mo after-hours, no contracts"
 
 ### Monitoring & Alerting
 - **Crash Monitor:** `ops/crash-monitor.py` — every 5 min, checks all launchd services, auto-restarts crashed ones, sends ntfy alert
@@ -143,6 +150,13 @@ All in `ops/config.py` with environment variable fallbacks:
 - **Dashboard Data:** `ops/dashboard-api.py` generates `dashboard-data.json` every 5 min
 - **Error Log:** `~/thecalltaker-ops/logs/errors.log` — all ERROR/CRITICAL from all engines
 - **Combined Log:** `~/thecalltaker-ops/logs/all-engines.log` — everything from all engines
+
+### Speed-to-Lead Alert System
+- **Script:** `ops/speed-alert.py` — monitors GHL conversations every 2 minutes
+- **launchd:** `com.thecalltaker.ops.speed-alert.plist` (every 120 seconds)
+- **What it does:** Detects inbound replies, demo calls, hot signals; sends SMS to Wallace (+16156539004, GHL contact DtKLG28VzgUb6q3brILD) + ntfy war room backup
+- **Hot keywords:** interested, pricing, demo, sign me up, ready, how much, schedule, etc.
+- **Commands:** `watch` (continuous), `check` (single pass), `status`, `test`
 
 ### Logs
 All centralized in `~/thecalltaker-ops/logs/`:
@@ -228,6 +242,12 @@ Located in `~/Desktop/thecalltaker/`:
 - `industries.html` — industry hub
 - `dashboard/index.html` — master command center dashboard (NEW)
 - `dashboard/pipeline.html` — pipeline-specific dashboard
+- `toolkit/index.html` — password-protected sales toolkit hub (password: tctoolkit)
+- `toolkit/call-cheatsheet.html` — live call cheat sheet (auth-protected)
+- `toolkit/objection-handler.html` — objection responses (auth-protected)
+- `toolkit/case-studies.html` — case study templates (auth-protected)
+- `demo-showcase.html` — prospect-facing demo showcase (public)
+- `checkout.html` — $297/$497 plan checkout (public, Stripe links pending)
 
 ## Known Issues / TODOs
 1. **Stripe not connected** — needs parent/guardian (Wallace is 16). Setup guide sent via ntfy.
@@ -235,7 +255,7 @@ Located in `~/Desktop/thecalltaker/`:
 3. **reply-monitor** service has exit code 1 — check `launchctl list | grep reply-monitor` and restart if needed.
 4. **Gmail SMTP passwords** are in plaintext in `gmail-sender.py`. Move to environment variables when possible.
 5. **Meta Ads** — Ad Account ID 25895456013410801, needs API token from developers.facebook.com.
-6. **ColdDMs** — Scale plan ($174/mo), no API available for automation.
+6. **ColdDMs** — CANCELED ($174/mo, no API). Instagram DM targeting handled by dm-tracker script.
 
 ## Team
 - **Wallace Dobbs** — founder/CEO, builds everything, funds everything
