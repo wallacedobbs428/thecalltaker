@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<script>(function(){var H="4a394737514b47e778f7d10f22c788fb26ec9a9e6d6660a615601cf7b72d1c53";if(sessionStorage.getItem("tct_toolkit_auth")!==H){window.location.href="/toolkit/"}})()</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>The Call Taker — Objection Handler</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 80px;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+    padding: 28px 18px 22px;
+    text-align: center;
+    border-bottom: 3px solid #e94560;
+    position: relative;
+  }
+
+  .header h1 {
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .header p {
+    color: #e94560;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .header .count {
+    color: #888;
+    font-size: 13px;
+    margin-top: 6px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* Search */
+  .search-container {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #1a1a2e;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(233,69,96,0.15);
+  }
+
+  .search-box {
+    width: 100%;
+    background: #16213e;
+    border: 2px solid #0f3460;
+    border-radius: 12px;
+    padding: 14px 16px 14px 44px;
+    color: #fff;
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .search-box:focus {
+    border-color: #e94560;
+  }
+
+  .search-box::placeholder {
+    color: #666;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #666;
+    pointer-events: none;
+  }
+
+  .search-wrapper {
+    position: relative;
+  }
+
+  /* Filter pills */
+  .filter-bar {
+    display: flex;
+    gap: 6px;
+    padding: 10px 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    background: #1a1a2e;
+    position: sticky;
+    top: 58px;
+    z-index: 99;
+  }
+  .filter-bar::-webkit-scrollbar { display: none; }
+
+  .filter-pill {
+    flex-shrink: 0;
+    background: #16213e;
+    color: #888;
+    border: 1px solid #0f3460;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+
+  .filter-pill:active, .filter-pill.active {
+    background: #e94560;
+    color: #fff;
+    border-color: #e94560;
+  }
+
+  .filter-pill .pill-count {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-size: 11px;
+    margin-left: 4px;
+  }
+
+  /* Category headers */
+  .category {
+    padding: 0 16px;
+    margin-top: 8px;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 0 8px;
+  }
+
+  .category-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .category-dot.price { background: #e94560; }
+  .category-dot.trust { background: #4a9eff; }
+  .category-dot.timing { background: #ffa726; }
+  .category-dot.competition { background: #ab47bc; }
+  .category-dot.business { background: #53d769; }
+
+  .category-name {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+  }
+
+  /* Objection cards */
+  .objection {
+    background: #16213e;
+    border-radius: 12px;
+    margin: 8px 0;
+    overflow: hidden;
+    border: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .objection.expanded {
+    border-color: rgba(233, 69, 96, 0.3);
+  }
+
+  .objection-trigger {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    gap: 12px;
+    user-select: none;
+  }
+
+  .objection-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .objection-indicator.price { background: #e94560; }
+  .objection-indicator.trust { background: #4a9eff; }
+  .objection-indicator.timing { background: #ffa726; }
+  .objection-indicator.competition { background: #ab47bc; }
+  .objection-indicator.business { background: #53d769; }
+
+  .objection-text {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.4;
+  }
+
+  .objection-chevron {
+    flex-shrink: 0;
+    color: #555;
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+
+  .objection.expanded .objection-chevron {
+    transform: rotate(180deg);
+    color: #e94560;
+  }
+
+  /* Response */
+  .objection-response {
+    display: none;
+    padding: 0 16px 18px 34px;
+  }
+
+  .objection.expanded .objection-response {
+    display: block;
+  }
+
+  .response-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #53d769;
+    margin-bottom: 8px;
+  }
+
+  .response-text {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #53d769;
+    font-weight: 500;
+  }
+
+  .response-text strong {
+    color: #fff;
+  }
+
+  .response-tip {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: rgba(83, 215, 105, 0.06);
+    border-radius: 8px;
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  .response-tip strong {
+    color: #53d769;
+  }
+
+  /* No results */
+  .no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: #555;
+    font-size: 16px;
+    display: none;
+  }
+
+  /* Quick stats bar */
+  .quick-stats {
+    display: flex;
+    gap: 1px;
+    background: #0f3460;
+    margin: 0;
+  }
+
+  .quick-stat {
+    flex: 1;
+    background: #16213e;
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .quick-stat .qs-num {
+    font-size: 20px;
+    font-weight: 800;
+    color: #e94560;
+  }
+
+  .quick-stat .qs-label {
+    font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
+  /* Footer CTA */
+  .footer-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #e94560, #c23152);
+    padding: 14px 20px;
+    text-align: center;
+    z-index: 200;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+  }
+
+  .footer-cta a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .footer-cta .sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 2px;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  @media (min-width: 600px) {
+    body { max-width: 540px; margin: 0 auto; }
+    .footer-cta { max-width: 540px; left: 50%; transform: translateX(-50%); border-radius: 12px 12px 0 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>Objection Handler</h1>
+  <p>The Call Taker</p>
+  <div class="count">24 objections with word-for-word responses</div>
+</div>
+
+<!-- QUICK STATS -->
+<div class="quick-stats">
+  <div class="quick-stat">
+    <div class="qs-num">5</div>
+    <div class="qs-label">Price</div>
+  </div>
+  <div class="quick-stat">
+    <div class="qs-num">5</div>
+    <div class="qs-label">Trust</div>
+  </div>
+  <div class="quick-stat">
+    <div class="qs-num">5</div>
+    <div class="qs-label">Timing</div>
+  </div>
+  <div class="quick-stat">
+    <div class="qs-num">4</div>
+    <div class="qs-label">Competition</div>
+  </div>
+  <div class="quick-stat">
+    <div class="qs-num">5</div>
+    <div class="qs-label">Business</div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-container">
+  <div class="search-wrapper">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" class="search-box" id="searchInput" placeholder="Search objections..." autocomplete="off" autocorrect="off" spellcheck="false">
+  </div>
+</div>
+
+<!-- FILTER PILLS -->
+<div class="filter-bar">
+  <button class="filter-pill active" data-filter="all">All <span class="pill-count">24</span></button>
+  <button class="filter-pill" data-filter="price" style="border-color: rgba(233,69,96,0.3);">Price <span class="pill-count">5</span></button>
+  <button class="filter-pill" data-filter="trust" style="border-color: rgba(74,158,255,0.3);">Trust <span class="pill-count">5</span></button>
+  <button class="filter-pill" data-filter="timing" style="border-color: rgba(255,167,38,0.3);">Timing <span class="pill-count">5</span></button>
+  <button class="filter-pill" data-filter="competition" style="border-color: rgba(171,71,188,0.3);">Alternatives <span class="pill-count">4</span></button>
+  <button class="filter-pill" data-filter="business" style="border-color: rgba(83,215,105,0.3);">Business <span class="pill-count">5</span></button>
+</div>
+
+<!-- NO RESULTS -->
+<div class="no-results" id="noResults">
+  No objections match your search.<br>
+  <span style="font-size: 13px; color: #444;">Try different keywords</span>
+</div>
+
+<!-- OBJECTIONS LIST -->
+<div id="objectionsList">
+
+<!-- ===== PRICE OBJECTIONS ===== -->
+<div class="category" data-category="price">
+  <div class="category-header">
+    <div class="category-dot price"></div>
+    <div class="category-name">Price Objections</div>
+  </div>
+
+  <div class="objection" data-category="price" data-keywords="expensive cost money price afford budget">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator price"></div>
+      <div class="objection-text">"That's too expensive"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"I hear you. But let me ask — what's your average job worth? <strong>[wait for answer]</strong> So $297 is less than one missed job. If we catch you even ONE call this month that would've gone to voicemail, you've already made your money back. And we're catching way more than one."</div>
+      <div class="response-tip"><strong>Tip:</strong> Always redirect to ROI. Never defend the price — reframe it against the cost of missed calls.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="price" data-keywords="afford money tight cash flow budget">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator price"></div>
+      <div class="objection-text">"I can't afford it right now"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"I totally get that cash flow matters. But here's the thing — you can't afford to keep missing calls either. How many did you miss last week? <strong>[wait]</strong> At $[Y] per job, that's $[amount] that walked out the door. The $297 isn't a cost — it's the thing that stops the bleeding."</div>
+      <div class="response-tip"><strong>Tip:</strong> Empathize first, then flip the frame. The expense isn't The Call Taker — it's the missed calls.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="price" data-keywords="think about it consider decide later">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator price"></div>
+      <div class="objection-text">"I'll think about it"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"Totally get it. While you think about it, your competitors are answering their phones tonight. Here's what I'd suggest — just try the after-hours plan. <strong>No contract, cancel anytime.</strong> If you don't love it after a week, you're out nothing. But I bet when you see the first call we catch at 9pm, you'll have your answer."</div>
+      <div class="response-tip"><strong>Tip:</strong> "I'll think about it" usually means "I'm not convinced yet." Reduce the risk. Cancel anytime is your best friend.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="price" data-keywords="discount cheaper deal lower price negotiate">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator price"></div>
+      <div class="objection-text">"Can I get a discount?"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"The $297 is already our starter tier — it's the most affordable plan we offer. And honestly, most owners make that back in the first 3 days. We keep the price fair so we can keep the service excellent. <strong>No corners cut.</strong>"</div>
+      <div class="response-tip"><strong>Tip:</strong> Never discount. Hold the price confidently. If they push hard, redirect to value: "Would you rather save $50 or catch $3,000 in missed calls?"</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="price" data-keywords="free trial test try before">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator price"></div>
+      <div class="objection-text">"Do you have a free trial?"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"We don't do free trials because every setup is custom — we build the virtual receptionist specifically for your business. But here's what's even better: <strong>there's no contract.</strong> Start this week, see exactly how many calls we catch, and if you don't love it, cancel. You're risking $297 against potentially thousands in revenue you're currently losing."</div>
+      <div class="response-tip"><strong>Tip:</strong> Frame "no contract" as better than a free trial — they get full service from day one with zero lock-in.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TRUST OBJECTIONS ===== -->
+<div class="category" data-category="trust">
+  <div class="category-header">
+    <div class="category-dot trust"></div>
+    <div class="category-name">Trust Objections</div>
+  </div>
+
+  <div class="objection" data-category="trust" data-keywords="work does it really proof evidence">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator trust"></div>
+      <div class="objection-text">"How do I know it works?"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"Great question. Call our demo line right now — <strong>(615) 784-5747</strong>. That's exactly what your callers will hear. Go ahead, I'll wait. <strong>[pause while they call]</strong> So, what'd you think?"</div>
+      <div class="response-tip"><strong>Tip:</strong> The demo line is your strongest weapon. Let the product sell itself. Stay silent while they listen.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="trust" data-keywords="robot automated bot real person">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator trust"></div>
+      <div class="objection-text">"Is this a robot?"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"It's a virtual receptionist trained specifically for your industry. It knows <strong>[their industry]</strong> inside and out — services, pricing, scheduling. Tell you what — call our demo line at <strong>(615) 784-5747</strong> and you tell me what you think."</div>
+      <div class="response-tip"><strong>Tip:</strong> NEVER say the word "AI." Always say "virtual receptionist." Let them experience it and draw their own conclusions.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="trust" data-keywords="tried before answering service bad experience didn't work">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator trust"></div>
+      <div class="objection-text">"I tried an answering service before and it didn't work"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"I hear that a lot, actually. Those are call centers with people reading generic scripts who don't know your business. Our virtual receptionist is completely different — it's <strong>trained specifically for your industry</strong>, knows your services, your pricing, and can actually <strong>book appointments</strong> and answer real questions. It's not even close to the same thing."</div>
+      <div class="response-tip"><strong>Tip:</strong> Acknowledge their bad experience. Then draw a clear line between old-school answering services and what you offer. The customization is the differentiator.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="trust" data-keywords="wrong thing say mistake error mess up script">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator trust"></div>
+      <div class="objection-text">"What if it says the wrong thing?"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"We customize everything for your business before it goes live. You <strong>approve the script</strong> — your services, your pricing, your booking process, your FAQs. And you can <strong>update it anytime</strong>. We don't go live until you're 100% comfortable with how it handles calls."</div>
+      <div class="response-tip"><strong>Tip:</strong> This is about control. Reassure them they have full control over what gets said.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="trust" data-keywords="young age kid teenager experience legit legitimate scam">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator trust"></div>
+      <div class="objection-text">"You sound young — how long have you been doing this?"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"Fair question. We built The Call Taker because we saw how many service businesses were losing money to missed calls. The results speak for themselves — <strong>call our demo line at (615) 784-5747</strong> and hear exactly what your customers would hear. The technology works regardless of who built it. And there's no contract — if you don't love it, cancel anytime."</div>
+      <div class="response-tip"><strong>Tip:</strong> Don't get defensive about age. Redirect to results and the demo. Let the product do the talking. No contract removes the risk.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TIMING OBJECTIONS ===== -->
+<div class="category" data-category="timing">
+  <div class="category-header">
+    <div class="category-dot timing"></div>
+    <div class="category-name">Timing Objections</div>
+  </div>
+
+  <div class="objection" data-category="timing" data-keywords="slow season quiet not busy winter summer">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator timing"></div>
+      <div class="objection-text">"It's our slow season"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"That's actually the <strong>perfect time to start</strong>. Get everything dialed in now — your script, your services, your booking process — so when busy season hits and you're drowning in calls, it's already running perfectly. You don't want to be setting this up when you're slammed. <strong>Get ahead of it.</strong>"</div>
+      <div class="response-tip"><strong>Tip:</strong> Slow season = preparation season. Flip the timing objection into an advantage.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="timing" data-keywords="partner wife husband spouse talk discuss">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator timing"></div>
+      <div class="objection-text">"I need to talk to my partner/wife"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"Totally understand — important decisions should be made together. Can I send you the ROI breakdown so you can show them the numbers? <strong>[get their email or text]</strong> Here's what I'd share with them: you're losing roughly $[X&times;Y&times;4] a month to missed calls. This is $297 to fix it, no contract, cancel anytime. It kinda sells itself."</div>
+      <div class="response-tip"><strong>Tip:</strong> Arm them with the numbers. Make it easy for them to sell it to their partner. Offer to hop on a quick call with both of them if needed.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="timing" data-keywords="call back later next month week future">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator timing"></div>
+      <div class="objection-text">"Call me back next month"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"I hear you. But real talk — every week you wait is another <strong>[X] calls</strong> going to voicemail. That's another $[amount] walking to your competitors. What if we just set up after-hours? You literally lose nothing. <strong>No contract.</strong> If it doesn't work, cancel. But waiting another month means another month of missed revenue."</div>
+      <div class="response-tip"><strong>Tip:</strong> Quantify the cost of delay. "Next month" means they'll lose $[X] more before they even start.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="timing" data-keywords="busy too swamped overwhelmed no time">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator timing"></div>
+      <div class="objection-text">"We're too busy right now to set this up"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"That's actually the problem we solve. You're too busy to answer the phone — so calls are going to voicemail. <strong>We handle everything on our end.</strong> Setup takes 15 minutes of your time. We ask you a few questions about your services, and we build it. You don't have to do anything after that."</div>
+      <div class="response-tip"><strong>Tip:</strong> Their "too busy" IS the problem. Mirror it back to them. And emphasize: 15 minutes, that's it.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="timing" data-keywords="not ready yet soon eventually someday">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator timing"></div>
+      <div class="objection-text">"I'm not ready yet"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"What would make you ready? <strong>[listen carefully]</strong> Because here's what I know — your phone is ringing after hours right now, tonight. And those calls are either getting answered or going to voicemail. There's no 'getting ready' for that. The only question is: do you want to start catching those calls this week, or keep losing them?"</div>
+      <div class="response-tip"><strong>Tip:</strong> Ask what "ready" means to them. Usually there's a specific concern hiding behind "not ready." Address that concern directly.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== COMPETITION / ALTERNATIVE OBJECTIONS ===== -->
+<div class="category" data-category="competition">
+  <div class="category-header">
+    <div class="category-dot competition"></div>
+    <div class="category-name">Competition / Alternative Objections</div>
+  </div>
+
+  <div class="objection" data-category="competition" data-keywords="receptionist secretary front desk already have someone">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator competition"></div>
+      <div class="objection-text">"I already have a receptionist"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"That's great — we're <strong>not replacing them</strong>. We cover the hours they don't. Nights, weekends, holidays, lunch breaks. When your receptionist goes home at 5, the phone doesn't stop ringing. We pick up where they leave off. Think of us as their night shift."</div>
+      <div class="response-tip"><strong>Tip:</strong> Position as a complement, never a replacement. "Night shift" is a powerful frame.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="competition" data-keywords="wife kid family member answers phone spouse">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator competition"></div>
+      <div class="objection-text">"My wife/kid answers the phones"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"That works great during the day. But what about 7pm? 10pm? Saturday morning at 6am when someone's pipe bursts? <strong>Your family deserves their evenings and weekends too.</strong> We cover those hours so they don't have to. $297 a month for your family to get their time back — and you still catch every call."</div>
+      <div class="response-tip"><strong>Tip:</strong> Don't criticize their current setup. Empathize with the family angle. "They deserve their evenings" hits different.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="competition" data-keywords="voicemail just let it go message">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator competition"></div>
+      <div class="objection-text">"I just let it go to voicemail"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"Here's the stat that changed my mind about voicemail: <strong>85% of people who hit voicemail never call back.</strong> They don't leave a message. They don't try again tomorrow. They call the next company on Google. Your voicemail isn't catching messages — it's sending customers to your competitors."</div>
+      <div class="response-tip"><strong>Tip:</strong> The 85% stat is devastating here. Let it sink in. Pause after you say it.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="competition" data-keywords="google call screening spam filter screen">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator competition"></div>
+      <div class="objection-text">"I use Google's call screening"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"Google's call screening is great for filtering out spam. But that's all it does — it screens. It doesn't <strong>answer</strong> the call. It doesn't have a conversation. It doesn't <strong>book an appointment</strong>. Our virtual receptionist actually talks to the customer, understands what they need, and gets them on your schedule. Totally different thing."</div>
+      <div class="response-tip"><strong>Tip:</strong> Acknowledge what it does, then show what it doesn't do. The gap between screening and actually booking is huge.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BUSINESS OBJECTIONS ===== -->
+<div class="category" data-category="business">
+  <div class="category-header">
+    <div class="category-dot business"></div>
+    <div class="category-name">Business Objections</div>
+  </div>
+
+  <div class="objection" data-category="business" data-keywords="one man shop solo small solo-preneur solopreneur independent">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator business"></div>
+      <div class="objection-text">"I'm a one-man shop, I don't need this"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"One-man shops need this <strong>the most</strong>. You can't answer the phone when you're on a roof. Or under a sink. Or with a patient. Or driving to a job. Right? Every time you can't pick up, that's a potential customer calling your competitor instead. We're your <strong>second employee</strong> — except we only cost $297 and we never call in sick."</div>
+      <div class="response-tip"><strong>Tip:</strong> Use their specific trade. "When you're under a sink" for plumbers, "on a roof" for roofers, "with a patient" for dentists. Make it personal.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="business" data-keywords="not many calls few low volume don't get enough">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator business"></div>
+      <div class="objection-text">"I don't get that many after-hours calls"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"Most owners are surprised. Here's why — you're not seeing the calls you're missing because they're not leaving voicemails. They're just hanging up and calling someone else. <strong>40% of all calls to service businesses come after hours.</strong> Start with us for one month. We'll show you the exact numbers. If it's truly zero, cancel for free. No risk."</div>
+      <div class="response-tip"><strong>Tip:</strong> They literally can't know how many calls they miss — because missed callers don't leave evidence. This is a powerful reframe.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="business" data-keywords="phone system existing number keep change setup technical integration">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator business"></div>
+      <div class="objection-text">"What about my existing phone system?"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"We work <strong>alongside</strong> your existing system. Your number stays the same. Nothing changes on your end. We just catch the overflow — the calls that come in when you can't pick up. No new hardware, no switching providers, no headaches. It plugs right in."</div>
+      <div class="response-tip"><strong>Tip:</strong> Keep it simple. They're worried about complexity. Reassure them nothing changes on their end.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="business" data-keywords="tech technology computer not tech savvy setup complicated">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator business"></div>
+      <div class="objection-text">"I'm not tech-savvy"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"There's <strong>nothing to set up on your end</strong>. Seriously. We handle everything. I'll ask you a few questions about your business — your services, your hours, how you want appointments booked — and we build it all. <strong>Takes 15 minutes.</strong> After that, it just works. You don't have to touch anything."</div>
+      <div class="response-tip"><strong>Tip:</strong> Emphasize: 15 minutes. We handle everything. They don't touch anything. Remove all friction.</div>
+    </div>
+  </div>
+
+  <div class="objection" data-category="business" data-keywords="data private information security customer info personal">
+    <div class="objection-trigger" onclick="toggleObjection(this)">
+      <div class="objection-indicator business"></div>
+      <div class="objection-text">"What about customer data / privacy?"</div>
+      <div class="objection-chevron">&#9660;</div>
+    </div>
+    <div class="objection-response">
+      <div class="response-label">Say This</div>
+      <div class="response-text">"Great question — we take that seriously. All customer information is handled securely and only used to serve your business. Call details go directly to you. We don't share data with anyone, and we don't use your customer information for anything other than <strong>answering their call and booking their appointment</strong>. Your customers, your data."</div>
+      <div class="response-tip"><strong>Tip:</strong> Be straightforward and reassuring. Privacy concerns are legitimate — respect them and give a clear, honest answer.</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end objectionsList -->
+
+<!-- FOOTER CTA -->
+<div class="footer-cta">
+  <a href="tel:+16157845747">Demo Line: (615) 784-5747</a>
+  <div class="sub">Tap to call &bull; Have prospect call this to hear it live</div>
+</div>
+
+<script>
+  // Toggle accordion
+  function toggleObjection(trigger) {
+    const card = trigger.parentElement;
+    const wasExpanded = card.classList.contains('expanded');
+
+    // Close all
+    document.querySelectorAll('.objection.expanded').forEach(el => {
+      el.classList.remove('expanded');
+    });
+
+    // Open clicked (if it was closed)
+    if (!wasExpanded) {
+      card.classList.add('expanded');
+      // Scroll into view
+      setTimeout(() => {
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    }
+  }
+
+  // Search
+  const searchInput = document.getElementById('searchInput');
+  const noResults = document.getElementById('noResults');
+
+  searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase().trim();
+    const objections = document.querySelectorAll('.objection');
+    const categories = document.querySelectorAll('.category');
+    let visibleCount = 0;
+
+    // Reset filters
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    document.querySelector('[data-filter="all"]').classList.add('active');
+
+    objections.forEach(obj => {
+      const text = obj.querySelector('.objection-text').textContent.toLowerCase();
+      const keywords = (obj.getAttribute('data-keywords') || '').toLowerCase();
+      const response = obj.querySelector('.response-text').textContent.toLowerCase();
+
+      if (!query || text.includes(query) || keywords.includes(query) || response.includes(query)) {
+        obj.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        obj.classList.add('hidden');
+        obj.classList.remove('expanded');
+      }
+    });
+
+    // Show/hide category headers
+    categories.forEach(cat => {
+      const visibleInCat = cat.querySelectorAll('.objection:not(.hidden)').length;
+      cat.classList.toggle('hidden', visibleInCat === 0);
+    });
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  });
+
+  // Filter pills
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', function() {
+      const filter = this.getAttribute('data-filter');
+
+      // Update active pill
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+
+      // Clear search
+      searchInput.value = '';
+
+      const objections = document.querySelectorAll('.objection');
+      const categories = document.querySelectorAll('.category');
+      let visibleCount = 0;
+
+      objections.forEach(obj => {
+        if (filter === 'all' || obj.getAttribute('data-category') === filter) {
+          obj.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          obj.classList.add('hidden');
+          obj.classList.remove('expanded');
+        }
+      });
+
+      // Show/hide category headers
+      categories.forEach(cat => {
+        const catFilter = cat.getAttribute('data-category');
+        if (filter === 'all' || catFilter === filter) {
+          const visibleInCat = cat.querySelectorAll('.objection:not(.hidden)').length;
+          cat.classList.toggle('hidden', visibleInCat === 0);
+        } else {
+          cat.classList.add('hidden');
+        }
+      });
+
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<script>(function(){var H="4a394737514b47e778f7d10f22c788fb26ec9a9e6d6660a615601cf7b72d1c53";if(sessionStorage.getItem("tct_toolkit_auth")!==H){window.location.href="/toolkit/"}})()</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Call Taker — Case Study Templates</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-dark: #1a1a2e;
+    --bg-card: #16213e;
+    --bg-section: #0f3460;
+    --accent: #e94560;
+    --green: #53d769;
+    --text: #e0e0e0;
+    --text-muted: #888;
+    --white: #ffffff;
+  }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Print styles */
+  @media print {
+    body { background: #fff; color: #222; font-size: 12pt; }
+    .template { break-inside: avoid; page-break-inside: avoid; border: 2px solid #ccc; box-shadow: none; }
+    .page-header, .template-nav { display: none; }
+    .no-print { display: none; }
+    .before-section { background: #f5f5f5 !important; }
+    .after-section { background: #f0fff0 !important; }
+    .placeholder-img { border: 2px dashed #999; }
+    * { color: #222 !important; }
+    .accent-text { color: #c0392b !important; }
+    .green-text { color: #27ae60 !important; }
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-section) 100%);
+    padding: 40px 20px;
+    text-align: center;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .page-header h1 {
+    color: var(--white);
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .page-header .subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 10px;
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: 400;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .template-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg-dark);
+    border-bottom: 1px solid rgba(233,69,96,0.2);
+    padding: 12px 16px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .template-nav::-webkit-scrollbar { display: none; }
+  .template-nav a {
+    flex-shrink: 0;
+    background: var(--bg-section);
+    color: var(--accent);
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .template-nav a:hover, .template-nav a:active {
+    background: var(--accent);
+    color: var(--white);
+  }
+
+  /* Template Containers */
+  .template {
+    max-width: 700px;
+    margin: 30px auto;
+    background: var(--bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .template-header {
+    background: linear-gradient(135deg, var(--accent) 0%, #c23152 100%);
+    padding: 30px 24px;
+    text-align: center;
+  }
+
+  .template-header .template-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 8px;
+  }
+
+  .template-header h2 {
+    color: var(--white);
+    font-size: 24px;
+    line-height: 1.3;
+  }
+
+  .template-header p {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .template-body {
+    padding: 24px;
+  }
+
+  /* Editable fields */
+  .field {
+    background: rgba(15, 52, 96, 0.5);
+    border: 1px dashed rgba(233, 69, 96, 0.4);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 8px 0;
+    color: var(--accent);
+    font-style: italic;
+    font-size: 15px;
+    min-height: 44px;
+    cursor: text;
+  }
+
+  .field[contenteditable="true"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(233, 69, 96, 0.08);
+    color: var(--white);
+    font-style: normal;
+  }
+
+  .field-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+
+  /* Before/After sections */
+  .before-section {
+    background: rgba(233, 69, 96, 0.08);
+    border: 1px solid rgba(233, 69, 96, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+
+  .before-section .section-tag {
+    background: var(--accent);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  .after-section {
+    background: rgba(83, 215, 105, 0.08);
+    border: 1px solid rgba(83, 215, 105, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+
+  .after-section .section-tag {
+    background: var(--green);
+    color: #1a1a2e;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  /* Placeholder images */
+  .placeholder-img {
+    background: rgba(15, 52, 96, 0.6);
+    border: 2px dashed rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin: 16px 0;
+  }
+
+  .placeholder-img .icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+    display: block;
+    opacity: 0.5;
+  }
+
+  /* Stat cards */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .stat-card {
+    background: rgba(15, 52, 96, 0.4);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .stat-card .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .stat-card .stat-value.red { color: var(--accent); }
+  .stat-card .stat-value.green { color: var(--green); }
+
+  .stat-card .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Comparison row */
+  .compare-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .compare-row:last-child { border-bottom: none; }
+
+  .compare-label {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .compare-before {
+    flex: 1;
+    text-align: center;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .compare-arrow {
+    width: 30px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 18px;
+  }
+
+  .compare-after {
+    flex: 1;
+    text-align: center;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  /* Quote block */
+  .quote-block {
+    background: rgba(15, 52, 96, 0.5);
+    border-left: 4px solid var(--green);
+    border-radius: 0 10px 10px 0;
+    padding: 20px;
+    margin: 20px 0;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  .quote-attribution {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-style: normal;
+    margin-top: 10px;
+    font-weight: 600;
+  }
+
+  /* ROI badge */
+  .roi-badge {
+    background: linear-gradient(135deg, var(--green), #3cb371);
+    color: #1a1a2e;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+  }
+
+  .roi-badge .roi-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .roi-badge .roi-number {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .roi-badge .roi-sub {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  /* The Call Taker badge */
+  .tct-badge {
+    background: var(--bg-section);
+    border: 1px solid rgba(233, 69, 96, 0.3);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .tct-badge .brand {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .tct-badge .plan {
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  .tct-badge .cta {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 8px;
+  }
+
+  /* Story format specific */
+  .chapter {
+    margin: 24px 0;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .chapter:last-child { border-bottom: none; }
+
+  .chapter-number {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--white);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-right: 10px;
+  }
+
+  .chapter-title {
+    display: inline;
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .chapter p {
+    margin-top: 10px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 30px;
+    margin: 20px 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--green));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg-card);
+  }
+
+  .timeline-item.success::before {
+    background: var(--green);
+  }
+
+  .timeline-item .time-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+  }
+
+  .timeline-item .time-content {
+    color: var(--white);
+    font-size: 15px;
+    margin-top: 4px;
+  }
+
+  .instructions {
+    background: rgba(233, 69, 96, 0.06);
+    border: 1px solid rgba(233, 69, 96, 0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 16px 24px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .instructions strong {
+    color: var(--accent);
+  }
+
+  .separator {
+    height: 40px;
+  }
+
+  @media (max-width: 600px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .compare-row { font-size: 13px; }
+    .template-body { padding: 18px; }
+  }
+
+  @media (min-width: 768px) {
+    .template { margin: 40px auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1>The Call Taker</h1>
+  <p>Case Study Templates</p>
+  <p class="subtitle">Fill these in after closing your first clients. Click any dashed field to edit. These are designed to be shared with prospects as proof of results.</p>
+</div>
+
+<!-- TEMPLATE NAV -->
+<nav class="template-nav">
+  <a href="#template-1">Deep Dive</a>
+  <a href="#template-2">Numbers Comparison</a>
+  <a href="#template-3">Story Format</a>
+</nav>
+
+<div class="instructions no-print">
+  <strong>How to use:</strong> Click any <span style="color:var(--accent);">dashed field</span> to type in your client's real data. When finished, print to PDF (Cmd+P or Ctrl+P) or screenshot to share with prospects. All fields are editable directly in the browser.
+</div>
+
+<!-- ==================== -->
+<!-- TEMPLATE 1: DEEP DIVE -->
+<!-- ==================== -->
+<div class="template" id="template-1">
+  <div class="template-header">
+    <div class="template-label">Template 1</div>
+    <h2>Single Business Deep Dive</h2>
+    <p>Full before/after analysis of one client's transformation</p>
+  </div>
+
+  <div class="template-body">
+
+    <!-- Business Info -->
+    <div class="placeholder-img">
+      <span class="icon">&#128247;</span>
+      Business photo / logo goes here<br>
+      <small>(Storefront, van, team photo, or logo)</small>
+    </div>
+
+    <div class="field-label">Business Name</div>
+    <div class="field" contenteditable="true">[Enter business name]</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+      <div>
+        <div class="field-label">Industry</div>
+        <div class="field" contenteditable="true">[e.g., HVAC]</div>
+      </div>
+      <div>
+        <div class="field-label">Location</div>
+        <div class="field" contenteditable="true">[City, State]</div>
+      </div>
+    </div>
+
+    <div class="field-label">Owner Name</div>
+    <div class="field" contenteditable="true">[Owner's first and last name]</div>
+
+    <!-- BEFORE -->
+    <div class="before-section">
+      <span class="section-tag">Before The Call Taker</span>
+
+      <div class="field-label">Missed Calls Per Week</div>
+      <div class="field" contenteditable="true">[e.g., 8-10 calls per week]</div>
+
+      <div class="field-label">Estimated Revenue Lost Per Month</div>
+      <div class="field" contenteditable="true">[e.g., $3,500/month]</div>
+
+      <div class="field-label">How They Handled After-Hours Calls</div>
+      <div class="field" contenteditable="true">[e.g., Voicemail / Nothing / Wife answering / Missed entirely]</div>
+
+      <div class="field-label">Biggest Frustration</div>
+      <div class="field" contenteditable="true">[e.g., "I'd see missed calls every morning and know those were jobs I lost"]</div>
+    </div>
+
+    <!-- AFTER -->
+    <div class="after-section">
+      <span class="section-tag">After The Call Taker</span>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-value green" contenteditable="true">[##]</div>
+          <div class="stat-label">Calls Caught in 30 Days</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value green" contenteditable="true">$[##]</div>
+          <div class="stat-label">Revenue Saved</div>
+        </div>
+      </div>
+
+      <div class="field-label">Calls Caught in First 30 Days</div>
+      <div class="field" contenteditable="true">[e.g., 34 calls answered after hours]</div>
+
+      <div class="field-label">Revenue Attributed to Caught Calls</div>
+      <div class="field" contenteditable="true">[e.g., $11,900 in booked jobs]</div>
+
+      <div class="field-label">ROI Multiplier</div>
+      <div class="field" contenteditable="true">[e.g., 40x return — $297 investment, $11,900 in revenue]</div>
+    </div>
+
+    <!-- ROI Badge -->
+    <div class="roi-badge">
+      <div class="roi-label">Return on Investment</div>
+      <div class="roi-number" contenteditable="true">[##]x</div>
+      <div class="roi-sub">ROI in the first 30 days</div>
+    </div>
+
+    <!-- Owner Quote -->
+    <div class="quote-block">
+      <div contenteditable="true">"[Owner's testimonial quote goes here. Example: 'I didn't believe it would work until I got a text at 10pm saying someone just booked a $400 repair. That single call paid for the whole month.']"</div>
+      <div class="quote-attribution">
+        &mdash; <span contenteditable="true">[Owner Name]</span>, <span contenteditable="true">[Business Name]</span>
+      </div>
+    </div>
+
+    <!-- Plan info -->
+    <div class="tct-badge">
+      <div class="brand">The Call Taker</div>
+      <div class="plan">Started with After-Hours Starter at $297/mo</div>
+      <div class="cta">Virtual receptionist for service businesses &bull; thecalltaker.com</div>
+    </div>
+  </div>
+</div>
+
+<div class="separator"></div>
+
+<!-- ========================== -->
+<!-- TEMPLATE 2: NUMBERS COMPARISON -->
+<!-- ========================== -->
+<div class="template" id="template-2">
+  <div class="template-header" style="background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);">
+    <div class="template-label">Template 2</div>
+    <h2>The Numbers Comparison</h2>
+    <p>Side-by-side before/after metrics that speak for themselves</p>
+  </div>
+
+  <div class="template-body">
+
+    <div class="placeholder-img">
+      <span class="icon">&#128200;</span>
+      Client logo or business photo<br>
+      <small>(Clean, professional image)</small>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+      <div>
+        <div class="field-label">Business Name</div>
+        <div class="field" contenteditable="true">[Business Name]</div>
+      </div>
+      <div>
+        <div class="field-label">Industry</div>
+        <div class="field" contenteditable="true">[Industry]</div>
+      </div>
+    </div>
+
+    <div class="field-label">Time Period</div>
+    <div class="field" contenteditable="true">[e.g., First 30 days with The Call Taker]</div>
+
+    <!-- Comparison Table -->
+    <div style="margin: 20px 0;">
+      <!-- Header -->
+      <div class="compare-row" style="border-bottom: 2px solid rgba(255,255,255,0.1);">
+        <div class="compare-label" style="color: var(--white); font-weight:700;">Metric</div>
+        <div class="compare-before" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Before</div>
+        <div class="compare-arrow"></div>
+        <div class="compare-after" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">After</div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-label">After-Hours Calls Answered</div>
+        <div class="compare-before" contenteditable="true">[0]</div>
+        <div class="compare-arrow">&rarr;</div>
+        <div class="compare-after" contenteditable="true">[##]</div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-label">Calls Going to Voicemail</div>
+        <div class="compare-before" contenteditable="true">[##/week]</div>
+        <div class="compare-arrow">&rarr;</div>
+        <div class="compare-after" contenteditable="true">[0]</div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-label">Monthly Revenue Lost</div>
+        <div class="compare-before" contenteditable="true">$[####]</div>
+        <div class="compare-arrow">&rarr;</div>
+        <div class="compare-after" contenteditable="true">$0</div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-label">Monthly Revenue Captured</div>
+        <div class="compare-before" contenteditable="true">$0</div>
+        <div class="compare-arrow">&rarr;</div>
+        <div class="compare-after" contenteditable="true">$[####]</div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-label">After-Hours Response Time</div>
+        <div class="compare-before" contenteditable="true">[Next morning]</div>
+        <div class="compare-arrow">&rarr;</div>
+        <div class="compare-after" contenteditable="true">[Instant]</div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-label">Customer Complaints</div>
+        <div class="compare-before" contenteditable="true">[e.g., 3/mo]</div>
+        <div class="compare-arrow">&rarr;</div>
+        <div class="compare-after" contenteditable="true">[e.g., 0]</div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-label">Monthly Cost</div>
+        <div class="compare-before" contenteditable="true">[Cost of problem]</div>
+        <div class="compare-arrow">&rarr;</div>
+        <div class="compare-after" contenteditable="true">$297/mo</div>
+      </div>
+    </div>
+
+    <!-- Stat Highlights -->
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-value red" contenteditable="true">$[##]</div>
+        <div class="stat-label">Was Losing / Month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value green" contenteditable="true">$[##]</div>
+        <div class="stat-label">Now Capturing / Month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value green" contenteditable="true">[##]x</div>
+        <div class="stat-label">ROI</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: var(--white);" contenteditable="true">[##]</div>
+        <div class="stat-label">Calls Caught / Month</div>
+      </div>
+    </div>
+
+    <!-- Owner Quote -->
+    <div class="quote-block">
+      <div contenteditable="true">"[Short, powerful quote from the owner about the results they've seen.]"</div>
+      <div class="quote-attribution">
+        &mdash; <span contenteditable="true">[Owner Name]</span>, <span contenteditable="true">[Title]</span> at <span contenteditable="true">[Business Name]</span>
+      </div>
+    </div>
+
+    <!-- The Call Taker Badge -->
+    <div class="tct-badge">
+      <div class="brand">The Call Taker</div>
+      <div class="plan">After-Hours Starter: $297/mo &bull; Full 24/7: $497/mo</div>
+      <div class="cta">Virtual receptionist for service businesses &bull; Demo: (615) 784-5747</div>
+    </div>
+  </div>
+</div>
+
+<div class="separator"></div>
+
+<!-- ========================= -->
+<!-- TEMPLATE 3: STORY FORMAT -->
+<!-- ========================= -->
+<div class="template" id="template-3">
+  <div class="template-header" style="background: linear-gradient(135deg, #1a1a2e 0%, var(--bg-section) 100%);">
+    <div class="template-label">Template 3</div>
+    <h2>The Story Format</h2>
+    <p>Narrative case study that reads like a mini-article</p>
+  </div>
+
+  <div class="template-body">
+
+    <div class="placeholder-img" style="padding: 50px 20px;">
+      <span class="icon">&#128100;</span>
+      Photo of owner or business<br>
+      <small>(Portrait style works best for story format)</small>
+    </div>
+
+    <!-- Chapter 1: Meet the owner -->
+    <div class="chapter">
+      <span class="chapter-number">1</span>
+      <div class="chapter-title">Meet <span contenteditable="true" style="color: var(--accent);">[Owner Name]</span></div>
+      <p>
+        <span contenteditable="true">[Owner Name]</span> runs <span contenteditable="true">[Business Name]</span>, a <span contenteditable="true">[industry]</span> company in <span contenteditable="true">[City, State]</span>. <span contenteditable="true">[He/She/They]</span> started the business <span contenteditable="true">[X years ago]</span> and built it into a <span contenteditable="true">[describe: thriving operation / one-person shop / growing team]</span>.
+      </p>
+      <p style="margin-top: 10px;">
+        Business was good. The work was coming in. But there was one problem <span contenteditable="true">[Owner Name]</span> couldn't solve on <span contenteditable="true">[his/her/their]</span> own.
+      </p>
+    </div>
+
+    <!-- Chapter 2: The problem -->
+    <div class="chapter">
+      <span class="chapter-number">2</span>
+      <div class="chapter-title">The Problem Nobody Talks About</div>
+      <p contenteditable="true">
+        [Describe the problem in narrative form. Example: "Every night after 5pm, the phone kept ringing. And every night, those calls went straight to voicemail. Mike would check his phone in the morning and see 3, sometimes 5 missed calls. He'd call them back, but most of the time it was too late — they'd already called another HVAC company."]
+      </p>
+      <p contenteditable="true" style="margin-top: 10px;">
+        ["I knew I was losing jobs," Mike says. "But I didn't know how many until I actually counted. It was gut-wrenching."]
+      </p>
+
+      <div class="before-section" style="margin-top: 16px;">
+        <span class="section-tag">The Reality</span>
+        <div style="font-size: 15px; line-height: 1.8;">
+          <div><strong>Missed calls per week:</strong> <span contenteditable="true" style="color: var(--accent);">[##]</span></div>
+          <div><strong>Estimated revenue lost monthly:</strong> <span contenteditable="true" style="color: var(--accent);">$[####]</span></div>
+          <div><strong>How after-hours was handled:</strong> <span contenteditable="true" style="color: var(--accent);">[voicemail / nothing / wife answering]</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 3: The Moment -->
+    <div class="chapter">
+      <span class="chapter-number">3</span>
+      <div class="chapter-title">The Moment Everything Changed</div>
+      <p contenteditable="true">
+        [Describe how they found The Call Taker and decided to try it. Example: "Mike saw a post about The Call Taker and almost scrolled past. But something stopped him — the stat that 85% of voicemail callers never call back. He decided to try the After-Hours Starter at $297/month. 'Worst case, I cancel,' he told himself."]
+      </p>
+    </div>
+
+    <!-- Chapter 4: Week 1 -->
+    <div class="chapter">
+      <span class="chapter-number">4</span>
+      <div class="chapter-title">Week 1 Results</div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time-label">Day 1</div>
+          <div class="time-content" contenteditable="true">[e.g., Setup completed in 15 minutes. Virtual receptionist trained on their services, pricing, and booking process.]</div>
+        </div>
+        <div class="timeline-item success">
+          <div class="time-label">Day 2</div>
+          <div class="time-content" contenteditable="true">[e.g., First after-hours call caught at 8:47pm. Customer needed emergency repair. Appointment booked for next morning. $450 job.]</div>
+        </div>
+        <div class="timeline-item success">
+          <div class="time-label">Day 4</div>
+          <div class="time-content" contenteditable="true">[e.g., Weekend calls answered — 3 calls on Saturday alone that would have gone to voicemail.]</div>
+        </div>
+        <div class="timeline-item success">
+          <div class="time-label">End of Week 1</div>
+          <div class="time-content" contenteditable="true">[e.g., 8 calls caught. $2,800 in potential revenue. Already paid for 9 months of service.]</div>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-value green" contenteditable="true">[##]</div>
+          <div class="stat-label">Calls Caught, Week 1</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value green" contenteditable="true">$[##]</div>
+          <div class="stat-label">Revenue, Week 1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 5: Month 1 -->
+    <div class="chapter">
+      <span class="chapter-number">5</span>
+      <div class="chapter-title">Month 1 Results</div>
+      <p contenteditable="true">
+        [Describe the full first month. Example: "By the end of the first month, The Call Taker had answered 34 after-hours calls for Mike's HVAC business. Of those, 22 turned into booked jobs worth a combined $11,900. His $297 investment returned over $11,000 in revenue — a 40x ROI."]
+      </p>
+
+      <div class="stat-grid" style="margin-top: 16px;">
+        <div class="stat-card">
+          <div class="stat-value green" contenteditable="true">[##]</div>
+          <div class="stat-label">Total Calls Answered</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value green" contenteditable="true">[##]</div>
+          <div class="stat-label">Jobs Booked</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value green" contenteditable="true">$[##]</div>
+          <div class="stat-label">Revenue Generated</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value green" contenteditable="true">[##]x</div>
+          <div class="stat-label">ROI</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 6: The Upgrade -->
+    <div class="chapter">
+      <span class="chapter-number">6</span>
+      <div class="chapter-title">The Upgrade to Full 24/7</div>
+      <p contenteditable="true">
+        [Describe the upgrade decision. Example: "Two weeks in, Mike upgraded to the Full 24/7 plan at $497/month. 'If it's catching this many calls after hours, I need it during the day too,' he said. 'When I'm on a roof, I can't answer the phone. Now I don't have to.' The virtual receptionist now handles overflow during business hours, books appointments, answers FAQs, and coordinates technician dispatch."]
+      </p>
+    </div>
+
+    <!-- Chapter 7: Quote -->
+    <div class="chapter" style="border-bottom: none;">
+      <span class="chapter-number">7</span>
+      <div class="chapter-title">In Their Words</div>
+
+      <div class="quote-block">
+        <div contenteditable="true">"[Insert a longer, detailed testimonial from the owner. 2-4 sentences that capture how The Call Taker changed their business. Example: 'I was skeptical at first — $297 a month felt like another expense. But the first night, we caught a call at 9:30pm that turned into a $600 job. That one call paid for two months. Now I sleep better knowing every call gets answered. My only regret is not starting sooner.']"</div>
+        <div class="quote-attribution">
+          &mdash; <span contenteditable="true">[Owner Name]</span>, Owner of <span contenteditable="true">[Business Name]</span>
+        </div>
+      </div>
+
+      <div class="placeholder-img">
+        <span class="icon">&#128247;</span>
+        Photo of owner (ideally at work or with their team)<br>
+        <small>(Builds trust and makes the story feel real)</small>
+      </div>
+    </div>
+
+    <!-- The Call Taker Badge -->
+    <div class="tct-badge">
+      <div class="brand">The Call Taker</div>
+      <div class="plan">Started with After-Hours Starter at $297/mo</div>
+      <div class="cta">Virtual receptionist for service businesses<br>Demo: (615) 784-5747</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="padding: 40px 20px; text-align: center; color: #555; font-size: 13px;">
+  The Call Taker &mdash; Case Study Templates<br>
+  Click any dashed field to edit &bull; Print to PDF to share<br>
+  <span style="color: var(--text-muted);">Internal sales tool</span>
+</div>
+
+</body>
+</html>

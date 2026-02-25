@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta property="og:title" content="The Call Taker — Hear Your AI Receptionist">
+<meta property="og:description" content="Call our demo line and hear exactly what your customers will hear instead of voicemail. 24/7 virtual receptionist for service businesses.">
+<meta property="og:type" content="website">
+<title>Hear Your AI Receptionist — The Call Taker</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: #0a0a0f;
+    color: #d1d5db;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(170deg, #111827 0%, #0a0a0f 50%, #0a0a0f 100%);
+    padding: 48px 20px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(59,130,246,0.12);
+    border: 1px solid rgba(59,130,246,0.25);
+    color: #60a5fa;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.8px; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    color: #fff;
+    font-size: 30px; font-weight: 800;
+    line-height: 1.2; letter-spacing: -0.5px;
+    margin-bottom: 14px;
+    max-width: 340px; margin-left: auto; margin-right: auto;
+  }
+  .hero h1 span { color: #3b82f6; }
+
+  .hero .sub {
+    color: #9ca3af;
+    font-size: 16px; line-height: 1.5;
+    max-width: 320px; margin: 0 auto 28px;
+  }
+
+  /* ── CTA BUTTON ── */
+  .cta-wrapper { text-align: center; }
+
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff; text-decoration: none;
+    padding: 18px 36px; border-radius: 16px;
+    font-size: 20px; font-weight: 800;
+    box-shadow: 0 4px 24px rgba(59,130,246,0.3), 0 0 0 1px rgba(59,130,246,0.4);
+    transition: all 0.15s;
+    -webkit-appearance: none;
+    position: relative;
+  }
+  .cta-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 12px rgba(59,130,246,0.3);
+  }
+  .cta-btn .phone-icon {
+    width: 24px; height: 24px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  /* Pulse ring */
+  .cta-btn::before {
+    content: '';
+    position: absolute; inset: -4px;
+    border-radius: 20px;
+    border: 2px solid rgba(59,130,246,0.4);
+    animation: pulse-ring 2s ease-out infinite;
+  }
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.08); opacity: 0; }
+  }
+
+  .cta-hint {
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+
+  .container { max-width: 440px; margin: 0 auto; padding: 0 18px; }
+
+  /* ── WHAT YOU'LL HEAR ── */
+  .explainer {
+    padding: 36px 0 20px;
+  }
+  .explainer-title {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: #6b7280; margin-bottom: 18px;
+  }
+
+  .step-list { counter-reset: step; }
+  .step {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0; width: 32px; height: 32px;
+    background: rgba(59,130,246,0.12);
+    border: 1px solid rgba(59,130,246,0.25);
+    color: #60a5fa; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px;
+  }
+  .step-text { color: #e5e7eb; font-size: 15px; line-height: 1.5; }
+  .step-text strong { color: #fff; }
+
+  /* ── SCENARIO CARDS ── */
+  .scenarios { padding: 10px 0 30px; }
+  .scenarios-title {
+    font-size: 22px; font-weight: 800; color: #fff;
+    margin-bottom: 6px; letter-spacing: -0.3px;
+  }
+  .scenarios-sub {
+    color: #6b7280; font-size: 14px; margin-bottom: 20px;
+  }
+
+  .scenario {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 16px;
+    padding: 22px 18px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .scenario::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .scenario.s1::before { background: linear-gradient(90deg, #f59e0b, #d97706); }
+  .scenario.s2::before { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+  .scenario.s3::before { background: linear-gradient(90deg, #10b981, #059669); }
+
+  .scenario-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 800;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .s1 .scenario-tag { background: rgba(245,158,11,0.15); color: #fbbf24; }
+  .s2 .scenario-tag { background: rgba(59,130,246,0.15); color: #60a5fa; }
+  .s3 .scenario-tag { background: rgba(16,185,129,0.15); color: #34d399; }
+
+  .scenario h3 {
+    color: #fff; font-size: 17px; font-weight: 700;
+    margin-bottom: 10px; line-height: 1.3;
+  }
+
+  .scenario-convo {
+    margin: 12px 0; padding: 0;
+  }
+  .convo-line {
+    display: flex; gap: 10px; align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .convo-who {
+    flex-shrink: 0;
+    font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 2px 6px; border-radius: 4px;
+    margin-top: 3px;
+  }
+  .convo-who.caller { background: #374151; color: #9ca3af; }
+  .convo-who.ai { background: rgba(59,130,246,0.15); color: #60a5fa; }
+  .convo-text {
+    font-size: 14px; color: #d1d5db; line-height: 1.5;
+    font-style: italic;
+  }
+
+  .scenario-result {
+    background: rgba(16,185,129,0.08);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 13px; color: #34d399; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .scenario-result .icon { font-size: 16px; }
+
+  /* ── COMPARISON ── */
+  .compare {
+    padding: 24px 0 30px;
+  }
+  .compare-title {
+    font-size: 22px; font-weight: 800; color: #fff;
+    margin-bottom: 18px; letter-spacing: -0.3px;
+  }
+
+  .compare-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .compare-card {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 14px;
+    padding: 18px 14px;
+    text-align: center;
+  }
+  .compare-card.bad {
+    border-color: rgba(239,68,68,0.25);
+  }
+  .compare-card.good {
+    border-color: rgba(16,185,129,0.25);
+    background: linear-gradient(180deg, rgba(16,185,129,0.05) 0%, #111827 100%);
+  }
+  .compare-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; margin-bottom: 10px;
+  }
+  .compare-card.bad .compare-label { color: #f87171; }
+  .compare-card.good .compare-label { color: #34d399; }
+
+  .compare-item {
+    font-size: 13px; color: #9ca3af; padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .compare-item:last-child { border-bottom: none; }
+  .compare-card.bad .compare-item { color: #f87171; }
+  .compare-card.good .compare-item { color: #34d399; }
+
+  /* ── STATS ── */
+  .stats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+    padding: 10px 0 30px;
+  }
+  .stat {
+    background: #111827; border: 1px solid #1f2937;
+    border-radius: 12px; padding: 16px 10px; text-align: center;
+  }
+  .stat-val { font-size: 26px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .stat-val.red { color: #f87171; }
+  .stat-label { font-size: 11px; color: #6b7280; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+
+  /* ── BOTTOM CTA ── */
+  .bottom-cta {
+    background: linear-gradient(180deg, rgba(59,130,246,0.06) 0%, transparent 100%);
+    border-top: 1px solid #1f2937;
+    padding: 36px 18px 48px;
+    text-align: center;
+  }
+  .bottom-cta h2 {
+    color: #fff; font-size: 24px; font-weight: 800;
+    margin-bottom: 8px; letter-spacing: -0.3px;
+  }
+  .bottom-cta .sub {
+    color: #6b7280; font-size: 15px; margin-bottom: 24px;
+    max-width: 300px; margin-left: auto; margin-right: auto;
+  }
+
+  .pricing-strip {
+    display: flex; justify-content: center; gap: 16px;
+    margin-top: 20px; font-size: 14px;
+  }
+  .pricing-strip .plan {
+    background: #111827; border: 1px solid #1f2937;
+    border-radius: 10px; padding: 10px 16px; text-align: center;
+  }
+  .pricing-strip .plan-name { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+  .pricing-strip .plan-price { font-size: 22px; font-weight: 800; color: #fff; }
+  .pricing-strip .plan-price span { font-size: 13px; color: #6b7280; font-weight: 400; }
+  .pricing-strip .plan-note { font-size: 11px; color: #4b5563; }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 24px 18px;
+    text-align: center; font-size: 12px; color: #374151;
+  }
+  .footer a { color: #3b82f6; text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (min-width: 500px) {
+    .hero h1 { font-size: 36px; max-width: 400px; }
+    .container { max-width: 460px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<div class="hero">
+  <div class="badge">Live Demo</div>
+  <h1>Hear your <span>AI receptionist</span> in action</h1>
+  <p class="sub">Call our demo line right now. It takes 30 seconds. Hear exactly what your customers will hear instead of voicemail.</p>
+
+  <div class="cta-wrapper">
+    <a class="cta-btn" href="tel:+16157845747">
+      <span class="phone-icon">&#9742;</span>
+      (615) 784-5747
+    </a>
+    <div class="cta-hint">Tap to call &bull; Takes 30 seconds &bull; Available 24/7</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════ WHAT YOU'LL HEAR ══════════════ -->
+  <div class="explainer">
+    <div class="explainer-title">What you'll hear</div>
+
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>A professional receptionist picks up</strong> — warm, friendly, sounds like a real person who knows the business inside and out.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Tell her your problem</strong> — AC broke, pipe leaking, need an appointment, whatever. She'll handle it naturally.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>She books the appointment, dispatches a tech, or answers your question</strong> — no voicemail, no "we'll call you back."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ 3 SCENARIOS ══════════════ -->
+  <div class="scenarios">
+    <div class="scenarios-title">3 things it handles</div>
+    <div class="scenarios-sub">Try any of these when you call the demo line.</div>
+
+    <!-- SCENARIO 1: After-Hours Emergency -->
+    <div class="scenario s1">
+      <div class="scenario-tag">Scenario 1</div>
+      <h3>Missed call after hours</h3>
+      <p style="font-size: 14px; color: #9ca3af; margin-bottom: 12px;">It's 9pm on a Saturday. Your AC goes out. You call the first company on Google.</p>
+
+      <div class="scenario-convo">
+        <div class="convo-line">
+          <span class="convo-who caller">You</span>
+          <span class="convo-text">"Hi, my air conditioning just stopped working and it's really hot in here."</span>
+        </div>
+        <div class="convo-line">
+          <span class="convo-who ai">AI</span>
+          <span class="convo-text">"Oh no, gotcha. Let me get an on-call tech headed your way. What's your address?"</span>
+        </div>
+        <div class="convo-line">
+          <span class="convo-who ai">AI</span>
+          <span class="convo-text">"Alright, I've got a tech dispatched. You'll get a callback within 15 minutes."</span>
+        </div>
+      </div>
+
+      <div class="scenario-result">
+        <span class="icon">&#10003;</span>
+        Without The Call Taker, this goes to voicemail. Customer calls your competitor. $350+ job gone.
+      </div>
+    </div>
+
+    <!-- SCENARIO 2: Booking an Appointment -->
+    <div class="scenario s2">
+      <div class="scenario-tag">Scenario 2</div>
+      <h3>Booking an appointment</h3>
+      <p style="font-size: 14px; color: #9ca3af; margin-bottom: 12px;">A homeowner calls during your lunch break to schedule a routine service.</p>
+
+      <div class="scenario-convo">
+        <div class="convo-line">
+          <span class="convo-who caller">You</span>
+          <span class="convo-text">"I need to get my furnace serviced before winter."</span>
+        </div>
+        <div class="convo-line">
+          <span class="convo-who ai">AI</span>
+          <span class="convo-text">"We can definitely get that done. Would a morning or afternoon appointment work better?"</span>
+        </div>
+        <div class="convo-line">
+          <span class="convo-who caller">You</span>
+          <span class="convo-text">"Morning works. Do you have anything this week?"</span>
+        </div>
+        <div class="convo-line">
+          <span class="convo-who ai">AI</span>
+          <span class="convo-text">"Let me get you set up for Thursday morning. Can I grab your name and address?"</span>
+        </div>
+      </div>
+
+      <div class="scenario-result">
+        <span class="icon">&#10003;</span>
+        Appointment booked on the spot. No phone tag. No missed lead.
+      </div>
+    </div>
+
+    <!-- SCENARIO 3: Pricing Question -->
+    <div class="scenario s3">
+      <div class="scenario-tag">Scenario 3</div>
+      <h3>Answering a pricing question</h3>
+      <p style="font-size: 14px; color: #9ca3af; margin-bottom: 12px;">Someone calls asking how much a service call costs before committing.</p>
+
+      <div class="scenario-convo">
+        <div class="convo-line">
+          <span class="convo-who caller">You</span>
+          <span class="convo-text">"How much does it cost for someone to come out and look at my AC?"</span>
+        </div>
+        <div class="convo-line">
+          <span class="convo-who ai">AI</span>
+          <span class="convo-text">"Our diagnostic is $89, and that gets applied to the repair if you go ahead with it. Want me to get you scheduled?"</span>
+        </div>
+        <div class="convo-line">
+          <span class="convo-who caller">You</span>
+          <span class="convo-text">"What about a new system? What does that run?"</span>
+        </div>
+        <div class="convo-line">
+          <span class="convo-who ai">AI</span>
+          <span class="convo-text">"For new installs we do free estimates. I can have one of our guys come out in a day or two. Want me to set that up?"</span>
+        </div>
+      </div>
+
+      <div class="scenario-result">
+        <span class="icon">&#10003;</span>
+        Answers questions, doesn't overpromise, and converts the call into a booked visit.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ STATS ══════════════ -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-val red">40%</div>
+      <div class="stat-label">Calls come<br>after hours</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val red">85%</div>
+      <div class="stat-label">Never call<br>back</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color: #34d399;">24/7</div>
+      <div class="stat-label">We answer<br>every call</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ BEFORE / AFTER ══════════════ -->
+  <div class="compare">
+    <div class="compare-title">Without vs. with</div>
+    <div class="compare-grid">
+      <div class="compare-card bad">
+        <div class="compare-label">Without</div>
+        <div class="compare-item">Voicemail</div>
+        <div class="compare-item">Customer hangs up</div>
+        <div class="compare-item">Calls your competitor</div>
+        <div class="compare-item">Revenue lost</div>
+      </div>
+      <div class="compare-card good">
+        <div class="compare-label">With The Call Taker</div>
+        <div class="compare-item">Live receptionist</div>
+        <div class="compare-item">Books the appointment</div>
+        <div class="compare-item">Dispatches your tech</div>
+        <div class="compare-item">Revenue captured</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════ BOTTOM CTA ══════════════ -->
+<div class="bottom-cta">
+  <h2>Hear it for yourself</h2>
+  <p class="sub">One phone call. 30 seconds. Then you'll know exactly what your customers could be hearing instead of voicemail.</p>
+
+  <div class="cta-wrapper">
+    <a class="cta-btn" href="tel:+16157845747">
+      <span class="phone-icon">&#9742;</span>
+      (615) 784-5747
+    </a>
+    <div class="cta-hint">Tap to call &bull; 24/7 &bull; Try to stump it</div>
+  </div>
+
+  <div class="pricing-strip">
+    <div class="plan">
+      <div class="plan-name">After Hours</div>
+      <div class="plan-price">$297<span>/mo</span></div>
+      <div class="plan-note">No contracts</div>
+    </div>
+    <div class="plan">
+      <div class="plan-name">Full 24/7</div>
+      <div class="plan-price">$497<span>/mo</span></div>
+      <div class="plan-note">No contracts</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<div class="footer">
+  The Call Taker &bull; Virtual receptionist for service businesses<br>
+  <a href="https://thecalltaker.com">thecalltaker.com</a><br><br>
+  Works for HVAC, plumbing, electrical, roofing, dental, med spa, legal, property management, and more.
+</div>
+
+</body>
+</html>
