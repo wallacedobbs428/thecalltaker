@@ -64,7 +64,8 @@ Two repos, 60+ Python scripts, 86 launchd services running 24/7 on a single Mac.
 |--------|---------|----------|
 | `blast-engine.py` | Cold email with A/B testing, warmup ramp, 13 industries | Every run |
 | `cold-caller.py` | Bland.ai outbound: 20 calls/day + 15 secret shopper | 10am + 6pm |
-| `drip-engine.py` | 3 nurture sequences (13 templates), 18+ industry placeholders | Daily |
+| `funnel-engine.py` | 7-touch multi-channel inbound funnel (email+SMS+Bland.ai call), 13 industries | 6x daily (8am-6pm) |
+| `drip-engine.py` | 1 nurture sequence (calculator-lead + demo-listener DISABLED — replaced by funnel-engine) | Daily |
 | `gmail-sender.py` | 4 Gmail SMTP accounts, 160/day, score-based targeting | 3x daily |
 | `rescue-email-engine.py` | Review-mining personalized emails, industry-specific | Daily |
 | `partner-outreach.py` | 240 agencies across 8 industries, 20/day | 11am |
@@ -85,6 +86,12 @@ Two repos, 60+ Python scripts, 86 launchd services running 24/7 on a single Mac.
 | `weekly-report-engine.py` | Sunday weekly totals, trends, best performers, WoW comparison | Sun 9:30pm |
 | `ab-tracker.py` | A/B conversion attribution: groups contacts by variant, cross-references Max/Donny | 8:30pm |
 | `speed-alert.py` | Speed-to-lead SMS alerts to Wallace every 2 min | Every 2min |
+| `pilot-onboarding-engine.py` | 14-day free pilot: scan, onboard, expire (3 slots max) | 6x daily (8am-6pm) |
+| `pilot-conversion-engine.py` | Day 7 + Day 12 conversion emails with real call stats | 2x daily (9:30am, 3:30pm) |
+| `try-funnel-engine.py` | $97/mo After-Hours Starter: cold sequence + nurture + upgrade | 2x daily (10am, 2pm) |
+| `agency-outreach.py` | Agency white-label cold email + scraper + import | Daily 11:30am |
+| `lead-recycler.py` | Weekly lead recycling: premium→$97→pilot→breakup rotation | Sun 8am |
+| `warm-lead-rescue.py` | Cross-engine warm lead finder + personal follow-up sender | On demand |
 
 ## Infrastructure
 
@@ -111,14 +118,14 @@ All in `ops/config.py` with environment variable fallbacks:
 - **GHL:** `pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35` (env: `TCT_GHL_API_KEY`)
 - **Bland.ai:** `org_e0d7505641638621fc1c02564ed065b7048d83678de74f1d2725fedf18bea03fa821105788d98c879fe969` (env: `TCT_BLAND_API_KEY`)
 - **Lemlist:** `1884b87d8e73813f479b4764dc0e1294` (env: `TCT_LEMLIST_API_KEY`)
-- **Clay:** `92b80eb729dc2be9cbf2` (env: `TCT_CLAY_API_KEY`)
 - **GHL Location ID:** `tQb9YmrGDrdVUJYPKrsY`
 
-### ntfy Topics
-- **Ops:** `tct-xK9mW4vR7pLd` — daily reports, system status
-- **War Room:** `tct-warroom-Kx7mN9pQ` — hot leads, customer crises, demos booked
-- **William:** `tct-william-Qm8nR3vK` — call sheets, hot leads only
-- **Calls:** `tct-calls-Wk4mP8nJ` — Bland.ai call results
+### ntfy Topics (4-Tier System, Feb 25 2026)
+- **URGENT:** `tct-urgent-Hk9UOEZR` — real human replies, demo callers, booked demos, checkout clicks, cold escalations. Checked every 5 min.
+- **SALES:** `tct-sales-63uYsIT9` — daily/weekly reports, pipeline updates, A/B results, tool cost alerts, morning briefings. Checked 1-2x/day.
+- **SYSTEM:** `tct-system-vRsfXQRQ` — engine crashes, service restarts, API errors, health checks. Only checked when something seems broken.
+- **ACTIVITY:** `tct-activity-cn1Aqa85` — every email/SMS/call sent, leads enriched, contacts tagged, auto-responders, scrapers. High volume, rarely checked.
+- **William:** `tct-william-Qm8nR3vK` — William's call sheets, hot leads only (unchanged)
 
 ### GHL API Notes
 - Email body field = `"html"` (NOT `"message"`)
@@ -129,6 +136,20 @@ All in `ops/config.py` with environment variable fallbacks:
 - Pagination: use `page=` param (NOT `offset=`)
 - User-Agent header MUST be set to avoid Cloudflare 403
 - Message objects can be strings — always check `isinstance(msg, dict)`
+
+### GHL Calendar
+- Demo Booking Calendar ID: `h4IlzccZ1m3JprEQqpMJ`
+- Widget slug: `thecalltaker-demo`
+- Schedule: Mon-Fri 9am-5pm, Sat 10am-2pm, 30min slots
+- Embed URL: `https://api.leadconnectorhq.com/widget/booking/h4IlzccZ1m3JprEQqpMJ`
+- All 13 industry pages use this calendar ID
+
+### Attribution Tracking
+- `tct-tracking.js` captures UTM params, gclid, fbclid, referrer, landing page on first touch
+- Stored in `sessionStorage` as `tct_attribution` (first-touch, don't overwrite)
+- `getTctAttributionTags()` — returns GHL tag array like `['source-google', 'medium-cpc']`
+- `getTctAttributionNotes()` — returns full attribution string for GHL contact notes
+- Integrated into popup form, calculator.html, signup.html, and book.html
 
 ### Voice AI
 - Agent ID: `695947c64b9ed67d8f1077ad`
@@ -212,6 +233,9 @@ python3 ~/thecalltaker-ops/max/max-engine.py monitor
 python3 ~/thecalltaker-ops/ben/ben-engine.py score
 python3 ~/thecalltaker-ops/sam/sam-engine.py support
 python3 ~/thecalltaker-ops/donny/donny-engine.py speed
+python3 ~/thecalltaker-ops/ops/funnel-engine.py status
+python3 ~/Desktop/thecalltaker/pilot-program/pilot-onboarding-engine.py status
+python3 ~/Desktop/thecalltaker/pilot-program/pilot-conversion-engine.py status
 ```
 
 ## State Files
@@ -222,6 +246,11 @@ Each engine saves state to JSON. State files are atomic-written (tempfile + os.r
 - `sam/sam-state.json` — customer health scores, issues, checkins, referrals, NPS
 - `donny/donny-state.json` — closing scores, close sequences, speed responses, objections
 - `ops/blast-state.json` — email sent/bounced/skipped counts, daily limits
+- `ops/funnel-state.json` — 7-touch funnel enrollments, steps completed, daily send counts
+- `pilot-program/pilot-state.json` — pilot enrollments, slots, waitlist, conversion tracking
+- `ops/try-funnel-state.json` — $97 cold sequence, nurture, upgrade enrollments
+- `ops/agency-outreach-state.json` — agency cold email tracking, template A/B stats
+- `ops/lead-recycler-state.json` — recycled contacts, rotation tracking, breakup counts
 - `ops/contact-registry.json` — cross-engine contact coordination (who sent what, when)
 
 ## Contact Registry
@@ -233,21 +262,66 @@ Shared file at `ops/contact-registry.json`. All engines read/write through `tct_
 - Touches older than 30 days auto-pruned
 
 ## Website Pages
-Located in `~/Desktop/thecalltaker/`:
-- `index.html` — main site with industry selector, `/?industry=` URL param
-- `signup.html` — 3-step purchase flow
-- `calculator.html` — ROI calculator
+**Deployment:** GitHub Pages via GitHub Actions. ONLY files inside `website/` get deployed.
+**Deploy workflow:** `.github/workflows/deploy.yml` — triggers on push to `main` when `website/**` changes.
+**Total: 82 pages live on thecalltaker.com** (as of Feb 25, 2026)
+
+### Core Pages (in `website/`)
+- `index.html` — homepage with industry selector
+- `signup.html` — 3-step purchase flow ($497/mo)
+- `calculator.html` — ROI calculator (lead capture + war room alert)
+- `book.html` — demo booking (GHL calendar embed, ID: h4IlzccZ1m3JprEQqpMJ)
+- `checkout.html` — $297/$497 plan checkout (Stripe links pending)
+- `demo-showcase.html` — live demo line showcase
+- `your-results.html` — 30-day results simulator (shareable URL)
 - `your-audit.html` — personalized audit reports (noindex)
-- 8 industry pages: `hvac.html`, `roofing.html`, `plumbing.html`, `electrical.html`, `dental.html`, `medspa.html`, `legal.html`, `property-management.html`
-- `industries.html` — industry hub
-- `dashboard/index.html` — master command center dashboard (NEW)
-- `dashboard/pipeline.html` — pipeline-specific dashboard
-- `toolkit/index.html` — password-protected sales toolkit hub (password: tctoolkit)
-- `toolkit/call-cheatsheet.html` — live call cheat sheet (auth-protected)
-- `toolkit/objection-handler.html` — objection responses (auth-protected)
-- `toolkit/case-studies.html` — case study templates (auth-protected)
-- `demo-showcase.html` — prospect-facing demo showcase (public)
-- `checkout.html` — $297/$497 plan checkout (public, Stripe links pending)
+- `compare.html` — AI vs alternatives comparison
+- `services.html` — feature overview
+- `partners.html` — partner info
+- `thank-you.html` — conversion confirmation (Google Ads tracking)
+- `privacy.html` — privacy policy
+- `terms.html` — terms of service
+- `404.html` — custom error page
+- `portal.html` — customer self-service (noindex)
+- `blog.html` — blog index
+- `industries.html` — industries hub
+
+### Industry Pages (13) — `website/industries/`
+HVAC, Roofing, Plumbing, Electrical, Dental, MedSpa, Legal, Property Mgmt, Veterinary, Locksmith, Garage Door, Towing, Funeral
+
+### Blog Articles (39) — `website/blog/`
+3 per industry: missed-call-cost, best-answering-service, + industry-specific topic
+
+### $97 Try Funnel — `website/try-funnel/`
+- `index.html` — landing page
+- `checkout.html` — $97 Stripe checkout
+- `upgrade.html` — upsell to $297/$497
+- `try.html` (root) — redirect to try-funnel/
+
+### Agency Program — `website/agency-program/`
+- `agency.html` (root) — partner page with revenue calculator
+- `pitch-deck.html` — slide presentation
+- `pricing-sheet.html` — $47/client wholesale pricing
+- `setup-guide.html` — agency onboarding
+
+### Sales Toolkit (password: tctoolkit) — `website/toolkit/`
+- `index.html`, `call-cheatsheet.html`, `objection-handler.html`, `case-studies.html`
+
+### Internal (NOT deployed — local only)
+- `dashboard/` — tool-costs, warroom, pipeline, morning-briefing, sitemap-visual
+- `sales-toolkit/` — duplicate of /toolkit/
+- `reports/` — web-audit.html, replies report
+- Root-level old industry pages — replaced by /industries/
+
+## Pilot Program (14-Day Free Trial)
+- **Directory:** `~/Desktop/thecalltaker/pilot-program/`
+- **Max Slots:** 3 concurrent pilots (scarcity by design)
+- **Onboarding Engine:** `pilot-onboarding-engine.py` — scans for `pilot-requested` tag, auto-onboards (welcome email/SMS, GHL tags, war room + William alerts)
+- **Conversion Engine:** `pilot-conversion-engine.py` — Day 7 soft check-in with real call stats, Day 12 urgency push with monthly projection
+- **Results Simulator:** `your-results.html` — 3-question form → personalized 30-day projection dashboard, shareable via URL hash
+- **CTA Strategy:** All outreach engines updated from "buy at $X/mo" → "free 14-day pilot, no card, no risk"
+- **launchd:** `com.thecalltaker.pilot.onboarding` (6x daily), `com.thecalltaker.pilot.conversion` (2x daily)
+- **GHL Tags:** `pilot-requested` (trigger), `pilot-active` (during), `pilot-expired` / `pilot-converted` (after)
 
 ## Known Issues / TODOs
 1. **Stripe not connected** — needs parent/guardian (Wallace is 16). Setup guide sent via ntfy.
