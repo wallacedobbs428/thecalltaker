@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Agency Wholesale Pricing | The Call Taker Agency Program</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17970510102');
+    </script>
+    <style>
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .pricing-table th,
+        .pricing-table td {
+            padding: 16px 24px;
+            text-align: left;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        .pricing-table th {
+            background: var(--surface);
+            color: var(--text-3);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .pricing-table th.highlight {
+            color: var(--green);
+            background: rgba(0,220,130,0.05);
+        }
+        .pricing-table td {
+            color: var(--text-2);
+        }
+        .pricing-table td.highlight {
+            color: #fff;
+            font-weight: 600;
+            background: rgba(0,220,130,0.03);
+        }
+        .pricing-table td.label {
+            color: #fff;
+            font-weight: 600;
+        }
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+        .pricing-table .struck {
+            text-decoration: line-through;
+            color: var(--text-3);
+        }
+        .volume-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .volume-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        .volume-item {
+            background: #000;
+            padding: 28px 24px;
+            text-align: center;
+        }
+        .volume-item:hover {
+            background: rgba(255,255,255,0.02);
+        }
+        .volume-clients {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+        .volume-price {
+            font-size: 32px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.03em;
+        }
+        .volume-price span {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-3);
+        }
+        .volume-save {
+            font-size: 12px;
+            color: var(--text-3);
+            margin-top: 4px;
+        }
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .revenue-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        .revenue-item {
+            background: #000;
+            padding: 28px 24px;
+            text-align: center;
+        }
+        .revenue-item:hover {
+            background: rgba(255,255,255,0.02);
+        }
+        .revenue-clients {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-2);
+            margin-bottom: 4px;
+        }
+        .revenue-amount {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--green);
+            letter-spacing: -0.03em;
+        }
+        .revenue-label {
+            font-size: 12px;
+            color: var(--text-3);
+            margin-top: 2px;
+        }
+        .included-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        @media (min-width: 640px) {
+            .included-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .included-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--text-2);
+        }
+        .included-item svg {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            color: var(--green);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-3);
+            transition: color 0.15s;
+            margin-bottom: 32px;
+        }
+        .back-link:hover {
+            color: var(--green);
+        }
+        .page-header {
+            padding-top: 120px;
+            padding-bottom: 0;
+        }
+        .tag-best {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--green-dim);
+            border: 1px solid rgba(0,220,130,0.15);
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--green);
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="section page-header">
+        <div class="wrap">
+            <a href="setup-guide.html" class="back-link">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                Agency Program
+            </a>
+            <p class="section-label">Agency Wholesale Pricing</p>
+            <h1 class="section-title">Your Cost vs. Retail</h1>
+            <p class="section-desc">You buy at wholesale. You sell at retail. You keep the difference. No setup fees, no minimums, no contracts.</p>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="section" style="padding-top: 40px;">
+        <div class="wrap">
+            <div style="overflow-x: auto;">
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Retail (Direct)</th>
+                            <th class="highlight">Agency Wholesale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="label">24/7 AI Receptionist</td>
+                            <td>$497/mo</td>
+                            <td class="highlight">$197/mo</td>
+                        </tr>
+                        <tr>
+                            <td class="label">After-Hours Starter (NEW)</td>
+                            <td>$97/mo</td>
+                            <td class="highlight">$47/mo</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Setup fee</td>
+                            <td>$197</td>
+                            <td class="highlight">$0</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Minimum commitment</td>
+                            <td>Month-to-month</td>
+                            <td class="highlight">Month-to-month</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Support</td>
+                            <td>Standard</td>
+                            <td class="highlight">Priority</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volume Discounts -->
+    <section class="section" style="padding-top: 0;">
+        <div class="wrap">
+            <p class="section-label">Volume Discounts</p>
+            <h2 class="section-title" style="font-size: 28px;">More Clients, Lower Cost</h2>
+            <p class="section-desc" style="margin-bottom: 32px;">Your per-client cost drops automatically as you grow.</p>
+
+            <p style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 16px;">24/7 AI Receptionist (Full)</p>
+            <div class="volume-grid" style="margin-bottom: 32px;">
+                <div class="volume-item">
+                    <div class="volume-clients">1-9 Clients</div>
+                    <div class="volume-price">$197 <span>/client</span></div>
+                    <div class="volume-save">Standard wholesale</div>
+                </div>
+                <div class="volume-item">
+                    <div class="volume-clients">10+ Clients</div>
+                    <div class="volume-price">$177 <span>/client</span></div>
+                    <div class="volume-save">Save $20/client</div>
+                </div>
+                <div class="volume-item">
+                    <div class="volume-clients">25+ Clients</div>
+                    <div class="volume-price">$157 <span>/client</span></div>
+                    <div class="volume-save">Save $40/client</div>
+                </div>
+                <div class="volume-item">
+                    <div class="volume-clients">50+ Clients <span class="tag-best">Best</span></div>
+                    <div class="volume-price">$137 <span>/client</span></div>
+                    <div class="volume-save">Save $60/client</div>
+                </div>
+            </div>
+
+            <p style="font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px;">After-Hours Starter <span style="font-size: 11px; font-weight: 700; color: #000; background: var(--green); padding: 2px 8px; border-radius: 100px; margin-left: 8px;">NEW</span></p>
+            <p style="font-size: 13px; color: var(--text-3); margin-bottom: 16px;">AI answers after-hours calls only (evenings, weekends, holidays). Great entry point — upsell to 24/7 later.</p>
+            <div class="volume-grid">
+                <div class="volume-item">
+                    <div class="volume-clients">1-9 Clients</div>
+                    <div class="volume-price">$47 <span>/client</span></div>
+                    <div class="volume-save">Sell at $97-197</div>
+                </div>
+                <div class="volume-item">
+                    <div class="volume-clients">10+ Clients</div>
+                    <div class="volume-price">$42 <span>/client</span></div>
+                    <div class="volume-save">Save $5/client</div>
+                </div>
+                <div class="volume-item">
+                    <div class="volume-clients">25+ Clients</div>
+                    <div class="volume-price">$37 <span>/client</span></div>
+                    <div class="volume-save">Save $10/client</div>
+                </div>
+                <div class="volume-item">
+                    <div class="volume-clients">50+ Clients <span class="tag-best">Best</span></div>
+                    <div class="volume-price">$32 <span>/client</span></div>
+                    <div class="volume-save">Save $15/client</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Revenue Examples -->
+    <section class="section" style="padding-top: 0;">
+        <div class="wrap">
+            <p class="section-label">Revenue Examples</p>
+            <h2 class="section-title" style="font-size: 28px;">What You Keep Every Month</h2>
+            <p class="section-desc" style="margin-bottom: 32px;">Assuming you sell at $497/mo retail (the standard direct price). Your profit = retail minus your wholesale cost.</p>
+
+            <div class="revenue-grid">
+                <div class="revenue-item">
+                    <div class="revenue-clients">5 Clients</div>
+                    <div class="revenue-amount">$1,500</div>
+                    <div class="revenue-label">profit/month</div>
+                </div>
+                <div class="revenue-item">
+                    <div class="revenue-clients">10 Clients</div>
+                    <div class="revenue-amount">$3,000</div>
+                    <div class="revenue-label">profit/month</div>
+                </div>
+                <div class="revenue-item">
+                    <div class="revenue-clients">25 Clients</div>
+                    <div class="revenue-amount">$8,500</div>
+                    <div class="revenue-label">profit/month</div>
+                </div>
+                <div class="revenue-item">
+                    <div class="revenue-clients">50 Clients</div>
+                    <div class="revenue-amount">$18,000</div>
+                    <div class="revenue-label">profit/month</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Included -->
+    <section class="section" style="padding-top: 0;">
+        <div class="wrap">
+            <p class="section-label">Everything Included</p>
+            <h2 class="section-title" style="font-size: 28px;">What Your Clients Get</h2>
+            <p class="section-desc" style="margin-bottom: 32px;">Every client you onboard gets the full platform. Nothing held back, nothing extra to pay for.</p>
+
+            <div class="included-grid">
+                <div class="included-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    24/7 AI answering -- nights, weekends, holidays
+                </div>
+                <div class="included-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    Appointment booking built in
+                </div>
+                <div class="included-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    Instant call notifications
+                </div>
+                <div class="included-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    Custom greeting and call script
+                </div>
+                <div class="included-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    Dedicated phone number per client
+                </div>
+                <div class="included-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    Monthly call reports and analytics
+                </div>
+                <div class="included-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    White-label -- no Call Taker branding
+                </div>
+                <div class="included-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    Priority support for agency partners
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="padding-top: 0; padding-bottom: 120px;">
+        <div class="wrap" style="text-align: center;">
+            <p style="font-size: 14px; color: var(--text-3); margin-bottom: 20px;">Ready to get started?</p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <a href="setup-guide.html" class="btn btn-green btn-lg">Onboard Your First Client</a>
+                <a href="mailto:wallace@mail.thecalltaker.com?subject=Agency%20Program%20Question" class="btn btn-secondary btn-lg">Talk to Us</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

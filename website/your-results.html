@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Your 30-Day Results Preview | The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/tct-tracking.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sim-wrap { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+
+    /* === FORM STATE === */
+    .sim-form-section { text-align: center; padding-top: 60px; }
+    .sim-form-section h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800;
+      color: #fff; margin-bottom: 12px; line-height: 1.2;
+    }
+    .sim-form-section .sub { color: #94a3b8; font-size: 1.05rem; max-width: 540px; margin: 0 auto 40px; line-height: 1.6; }
+    .sim-form {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 36px; max-width: 480px; margin: 0 auto; text-align: left;
+    }
+    .sim-form label { display: block; font-size: 0.875rem; font-weight: 600; color: #cbd5e1; margin-bottom: 8px; }
+    .sim-form select {
+      width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; color: #fff;
+      font-size: 0.95rem; font-family: inherit; margin-bottom: 20px; cursor: pointer;
+      -webkit-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+    }
+    .sim-form select:focus { border-color: #10b981; outline: none; }
+    .sim-form select option { background: #1e293b; color: #fff; }
+    .sim-btn {
+      width: 100%; padding: 14px; background: #10b981; color: #fff; border: none;
+      border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer;
+      font-family: inherit; transition: background 0.2s, transform 0.1s; margin-top: 4px;
+    }
+    .sim-btn:hover { background: #059669; }
+    .sim-btn:active { transform: scale(0.98); }
+
+    /* === DASHBOARD STATE === */
+    .sim-dashboard { display: none; animation: fadeUp 0.6s ease; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .dash-header { text-align: center; padding: 40px 0 32px; }
+    .dash-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 100px; padding: 8px 20px; font-size: 0.8125rem;
+      font-weight: 600; color: #10b981; margin-bottom: 20px;
+    }
+    .dash-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+    .dash-title { font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .dash-sub { color: #94a3b8; font-size: 0.95rem; }
+
+    /* Big numbers row */
+    .big-nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+    .big-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 28px 20px; text-align: center;
+    }
+    .big-card .num { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; color: #10b981; margin-bottom: 4px; }
+    .big-card .lbl { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; }
+
+    /* Chart */
+    .chart-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 28px; margin-bottom: 24px;
+    }
+    .chart-card h3 { font-size: 0.95rem; font-weight: 700; color: #fff; margin: 0 0 20px; }
+    .chart-card svg { width: 100%; height: 160px; }
+
+    /* Before/After */
+    .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .cmp-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 28px;
+    }
+    .cmp-card h3 { font-size: 0.95rem; font-weight: 700; margin: 0 0 16px; }
+    .cmp-card.before h3 { color: #ef4444; }
+    .cmp-card.after h3 { color: #10b981; }
+    .cmp-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .cmp-row:last-child { border-bottom: none; }
+    .cmp-label { font-size: 0.85rem; color: #94a3b8; }
+    .cmp-val { font-size: 0.9rem; font-weight: 700; }
+    .cmp-val.red { color: #ef4444; }
+    .cmp-val.grn { color: #10b981; }
+
+    /* ROI box */
+    .roi-box {
+      background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 14px; padding: 36px; text-align: center; margin-bottom: 32px;
+    }
+    .roi-box .roi-num { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; color: #10b981; }
+    .roi-box .roi-sub { color: #94a3b8; font-size: 0.95rem; margin-top: 8px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+    /* CTA */
+    .cta-section {
+      text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 16px;
+    }
+    .cta-section h2 { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 12px; }
+    .cta-section p { color: #94a3b8; font-size: 0.95rem; max-width: 500px; margin: 0 auto 28px; line-height: 1.6; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .cta-primary {
+      display: inline-block; padding: 14px 32px; background: #10b981; color: #fff;
+      border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-primary:hover { background: #059669; }
+    .cta-outline {
+      display: inline-block; padding: 14px 32px; background: transparent;
+      border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 10px;
+      font-weight: 600; font-size: 1rem; text-decoration: none; transition: border-color 0.2s;
+    }
+    .cta-outline:hover { border-color: rgba(255,255,255,0.3); }
+
+    /* Share bar */
+    .share-bar { display: flex; gap: 12px; justify-content: center; margin-top: 24px; }
+    .share-btn {
+      padding: 10px 20px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; color: #cbd5e1; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+      font-family: inherit; border: none; transition: background 0.2s;
+    }
+    .share-btn:hover { background: rgba(255,255,255,0.1); }
+    .toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+      background: #10b981; color: #fff; padding: 12px 24px; border-radius: 8px;
+      font-weight: 600; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s;
+      pointer-events: none; z-index: 999;
+    }
+    .toast.show { opacity: 1; }
+
+    /* Email capture */
+    .email-capture {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 32px; text-align: center; margin-top: 32px;
+    }
+    .email-capture h3 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .email-capture p { color: #94a3b8; font-size: 0.875rem; margin-bottom: 20px; }
+    .email-row { display: flex; gap: 10px; max-width: 500px; margin: 0 auto; }
+    .email-row input {
+      flex: 1; padding: 12px 16px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #fff;
+      font-size: 0.9rem; font-family: inherit;
+    }
+    .email-row input:focus { border-color: #10b981; outline: none; }
+    .email-row input::placeholder { color: #64748b; }
+    .email-row button {
+      padding: 12px 24px; background: #10b981; color: #fff; border: none;
+      border-radius: 8px; font-weight: 700; cursor: pointer; font-family: inherit;
+      white-space: nowrap; transition: background 0.2s;
+    }
+    .email-row button:hover { background: #059669; }
+    .email-success { display: none; color: #10b981; font-weight: 600; margin-top: 12px; }
+
+    .disclaimer { text-align: center; font-size: 0.75rem; color: #475569; margin-top: 32px; }
+
+    @media (max-width: 640px) {
+      .big-nums { grid-template-columns: 1fr; }
+      .compare-row { grid-template-columns: 1fr; }
+      .email-row { flex-direction: column; }
+      .cta-btns { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sim-wrap">
+    <!-- === FORM === -->
+    <div class="sim-form-section" id="formSection">
+      <h1>See Your First 30 Days With The Call Taker</h1>
+      <p class="sub">Answer 3 quick questions and we'll generate a personalized performance preview for your business.</p>
+      <div class="sim-form">
+        <label for="sim-industry">What industry are you in?</label>
+        <select id="sim-industry">
+          <option value="">Select your industry</option>
+          <option value="hvac">HVAC</option>
+          <option value="roofing">Roofing</option>
+          <option value="plumbing">Plumbing</option>
+          <option value="electrical">Electrical</option>
+          <option value="dental">Dental</option>
+          <option value="medspa">Med Spa</option>
+          <option value="legal">Legal</option>
+          <option value="property-management">Property Management</option>
+          <option value="veterinary">Veterinary</option>
+          <option value="locksmith">Locksmith</option>
+          <option value="garage-door">Garage Door</option>
+          <option value="towing">Towing</option>
+          <option value="funeral">Funeral Homes</option>
+        </select>
+
+        <label for="sim-calls">How many calls does your business get per day?</label>
+        <select id="sim-calls">
+          <option value="">Select range</option>
+          <option value="5-10">5 - 10 calls/day</option>
+          <option value="10-20">10 - 20 calls/day</option>
+          <option value="20-40">20 - 40 calls/day</option>
+          <option value="40+">40+ calls/day</option>
+        </select>
+
+        <label for="sim-miss">What percentage of calls do you think you miss?</label>
+        <select id="sim-miss">
+          <option value="">Select range</option>
+          <option value="10-20%">10 - 20%</option>
+          <option value="20-40%">20 - 40%</option>
+          <option value="40-60%">40 - 60%</option>
+          <option value="60%+">60%+</option>
+        </select>
+
+        <button class="sim-btn" onclick="generateResults()">Generate My Results</button>
+      </div>
+    </div>
+
+    <!-- === DASHBOARD === -->
+    <div class="sim-dashboard" id="dashboard">
+      <div class="dash-header">
+        <div class="dash-badge"><span class="dot"></span> 30-Day Performance Preview</div>
+        <div class="dash-title" id="dashTitle"></div>
+        <div class="dash-sub" id="dashSub"></div>
+      </div>
+
+      <div class="big-nums">
+        <div class="big-card"><div class="num" id="numCaught">0</div><div class="lbl">Calls Caught</div></div>
+        <div class="big-card"><div class="num" id="numJobs">0</div><div class="lbl">Jobs Booked</div></div>
+        <div class="big-card"><div class="num" id="numRevenue">$0</div><div class="lbl">Revenue Recovered</div></div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Calls Caught Per Day — 30-Day Projection</h3>
+        <svg id="chartSvg" viewBox="0 0 840 160" preserveAspectRatio="none"></svg>
+      </div>
+
+      <div class="compare-row">
+        <div class="cmp-card before">
+          <h3>Before The Call Taker</h3>
+          <div class="cmp-row"><span class="cmp-label">Total calls</span><span class="cmp-val" id="bfTotal">0</span></div>
+          <div class="cmp-row"><span class="cmp-label">Missed calls</span><span class="cmp-val red" id="bfMissed">0</span></div>
+          <div class="cmp-row"><span class="cmp-label">Lost revenue</span><span class="cmp-val red" id="bfLost">$0</span></div>
+          <div class="cmp-row"><span class="cmp-label">Answer rate</span><span class="cmp-val red" id="bfRate">0%</span></div>
+        </div>
+        <div class="cmp-card after">
+          <h3>With The Call Taker</h3>
+          <div class="cmp-row"><span class="cmp-label">Total calls</span><span class="cmp-val" id="afTotal">0</span></div>
+          <div class="cmp-row"><span class="cmp-label">Missed calls</span><span class="cmp-val grn" id="afMissed">0</span></div>
+          <div class="cmp-row"><span class="cmp-label">Recovered revenue</span><span class="cmp-val grn" id="afRev">$0</span></div>
+          <div class="cmp-row"><span class="cmp-label">Answer rate</span><span class="cmp-val grn" id="afRate">97%</span></div>
+        </div>
+      </div>
+
+      <div class="roi-box">
+        <div class="roi-num" id="roiNum">0x</div>
+        <div class="roi-sub" id="roiSub"></div>
+      </div>
+
+      <div class="cta-section">
+        <h2>Ready to See These Numbers for Real?</h2>
+        <p>Start a free 14-day pilot — no credit card, no commitment. We'll set up your AI receptionist and prove it with your actual calls.</p>
+        <div class="cta-btns">
+          <a href="/book" class="cta-primary">Start Free 14-Day Pilot</a>
+          <a href="tel:+16157845747" class="cta-outline">Call Demo: (615) 784-5747</a>
+        </div>
+        <div class="share-bar">
+          <button class="share-btn" onclick="copyShareLink()">Share These Results</button>
+          <button class="share-btn" onclick="document.getElementById('formSection').style.display='';document.getElementById('dashboard').style.display='none';window.location.hash='';">Run Again</button>
+        </div>
+      </div>
+
+      <div class="email-capture" id="emailCapture">
+        <h3>Get This Report Emailed to You</h3>
+        <p>Enter your info and we'll send a copy plus a custom action plan for your business.</p>
+        <div class="email-row">
+          <input type="text" id="capName" placeholder="First name">
+          <input type="email" id="capEmail" placeholder="Email address">
+          <button onclick="captureEmail()">Send</button>
+        </div>
+        <div class="email-success" id="emailSuccess">Sent! Check your inbox.</div>
+      </div>
+
+      <p class="disclaimer">Projection based on industry averages. Individual results may vary. The Call Taker achieves a 97% answer rate across all clients.</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Link copied to clipboard!</div>
+
+  <script>
+    var INDUSTRY_DATA = {
+      'hvac':     { avgJob: 350, name: 'HVAC' },
+      'roofing':  { avgJob: 8500, name: 'Roofing' },
+      'plumbing': { avgJob: 450, name: 'Plumbing' },
+      'electrical': { avgJob: 400, name: 'Electrical' },
+      'dental':   { avgJob: 2800, name: 'Dental' },
+      'medspa':   { avgJob: 1200, name: 'Med Spa' },
+      'legal':    { avgJob: 5000, name: 'Legal' },
+      'property-management': { avgJob: 150, name: 'Property Management' },
+      'veterinary': { avgJob: 350, name: 'Veterinary' },
+      'locksmith': { avgJob: 225, name: 'Locksmith' },
+      'garage-door': { avgJob: 264, name: 'Garage Door' },
+      'towing':   { avgJob: 200, name: 'Towing' },
+      'funeral':  { avgJob: 7500, name: 'Funeral Homes' }
+    };
+
+    var CALLS_MAP = { '5-10': 7.5, '10-20': 15, '20-40': 30, '40+': 50 };
+    var MISS_MAP = { '10-20%': 0.15, '20-40%': 0.30, '40-60%': 0.50, '60%+': 0.70 };
+
+    var currentData = null;
+
+    function fmt(n) { return n.toLocaleString('en-US'); }
+    function fmtD(n) { return '$' + n.toLocaleString('en-US'); }
+
+    function generateResults() {
+      var ind = document.getElementById('sim-industry').value;
+      var calls = document.getElementById('sim-calls').value;
+      var miss = document.getElementById('sim-miss').value;
+      if (!ind || !calls || !miss) { alert('Please answer all 3 questions.'); return; }
+
+      var info = INDUSTRY_DATA[ind];
+      var callsPerDay = CALLS_MAP[calls];
+      var missPercent = MISS_MAP[miss];
+
+      var totalCalls30d = Math.round(callsPerDay * 30);
+      var missedCalls30d = Math.round(totalCalls30d * missPercent);
+      var caughtByTCT = Math.round(missedCalls30d * 0.97);
+      var bookingRate = 0.35;
+      var jobsBooked = Math.round(caughtByTCT * bookingRate);
+      var revenueSaved = jobsBooked * info.avgJob;
+      var roi = Math.round(revenueSaved / 297);
+      var stillMissed = Math.round(totalCalls30d * 0.03);
+      var beforeLost = Math.round(missedCalls30d * bookingRate * info.avgJob);
+
+      currentData = { ind: ind, calls: calls, miss: miss };
+
+      // Update URL hash for sharing
+      try { window.location.hash = btoa(JSON.stringify({ i: ind, c: calls, m: miss })); } catch(e) {}
+
+      // Fill dashboard
+      document.getElementById('dashTitle').textContent = info.name + ' Business — 30-Day Performance Preview';
+      document.getElementById('dashSub').textContent = 'Generated for ' + info.name + ' businesses receiving ' + calls + ' calls/day';
+
+      document.getElementById('numCaught').textContent = fmt(caughtByTCT);
+      document.getElementById('numJobs').textContent = fmt(jobsBooked);
+      document.getElementById('numRevenue').textContent = fmtD(revenueSaved);
+
+      document.getElementById('bfTotal').textContent = fmt(totalCalls30d);
+      document.getElementById('bfMissed').textContent = fmt(missedCalls30d);
+      document.getElementById('bfLost').textContent = fmtD(beforeLost);
+      document.getElementById('bfRate').textContent = Math.round((1 - missPercent) * 100) + '%';
+
+      document.getElementById('afTotal').textContent = fmt(totalCalls30d);
+      document.getElementById('afMissed').textContent = fmt(stillMissed);
+      document.getElementById('afRev').textContent = fmtD(revenueSaved);
+
+      document.getElementById('roiNum').textContent = roi + 'x return';
+      document.getElementById('roiSub').textContent = 'The Call Taker would recover an estimated ' + fmtD(revenueSaved) + ' in revenue during your first 30 days. That\'s ' + roi + 'x what you\'d pay at $297/mo.';
+
+      // Draw chart
+      drawChart(caughtByTCT, callsPerDay, missPercent);
+
+      // Show dashboard
+      document.getElementById('formSection').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Analytics
+      if (typeof gtag === 'function') gtag('event', 'results_generated', { event_category: 'engagement', industry: ind });
+      if (typeof fbq !== 'undefined') fbq('track', 'ViewContent', { content_name: 'Results Simulator', industry: ind });
+    }
+
+    function drawChart(totalCaught, callsPerDay, missPercent) {
+      var svg = document.getElementById('chartSvg');
+      var dailyAvg = totalCaught / 30;
+      var points = [];
+      for (var d = 0; d < 30; d++) {
+        var variance = 0.6 + Math.random() * 0.8;
+        var ramp = d < 5 ? 0.5 + (d / 5) * 0.5 : 1;
+        var val = dailyAvg * variance * ramp;
+        points.push(val);
+      }
+      var maxVal = Math.max.apply(null, points) * 1.15;
+
+      var svgW = 840, svgH = 160, padX = 10, padY = 10;
+      var usableW = svgW - padX * 2, usableH = svgH - padY * 2;
+      var coords = points.map(function(v, i) {
+        var x = padX + (i / 29) * usableW;
+        var y = padY + usableH - (v / maxVal) * usableH;
+        return x + ',' + y;
+      });
+
+      var fillCoords = padX + ',' + (padY + usableH) + ' ' + coords.join(' ') + ' ' + (padX + usableW) + ',' + (padY + usableH);
+
+      svg.innerHTML = '<defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10b981" stop-opacity="0.3"/><stop offset="100%" stop-color="#10b981" stop-opacity="0"/></linearGradient></defs>' +
+        '<polygon points="' + fillCoords + '" fill="url(#cg)"/>' +
+        '<polyline points="' + coords.join(' ') + '" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+
+      // Add dots for first, middle, last
+      [0, 14, 29].forEach(function(idx) {
+        var pt = coords[idx].split(',');
+        svg.innerHTML += '<circle cx="' + pt[0] + '" cy="' + pt[1] + '" r="4" fill="#10b981"/>';
+        svg.innerHTML += '<text x="' + pt[0] + '" y="' + (parseFloat(pt[1]) - 10) + '" fill="#94a3b8" font-size="11" font-weight="600" text-anchor="middle">Day ' + (idx + 1) + '</text>';
+      });
+    }
+
+    function copyShareLink() {
+      var url = window.location.href;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = url; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+      }
+      var t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(function() { t.classList.remove('show'); }, 2000);
+    }
+
+    function captureEmail() {
+      var name = document.getElementById('capName').value.trim();
+      var email = document.getElementById('capEmail').value.trim();
+      if (!name || !email || email.indexOf('@') === -1) { alert('Please enter your name and email.'); return; }
+
+      var tags = ['results-simulator', 'high-intent'];
+      if (currentData && currentData.ind) tags.push('industry-' + currentData.ind);
+      if (typeof getTctAttributionTags === 'function') tags = tags.concat(getTctAttributionTags());
+
+      fetch('https://services.leadconnectorhq.com/contacts/', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+          'Version': '2021-07-28',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName: name, email: email,
+          locationId: 'tQb9YmrGDrdVUJYPKrsY',
+          tags: tags, source: 'Results Simulator'
+        })
+      }).then(function(r) { return r.json(); }).then(function(data) {
+        var cid = data.contact ? data.contact.id : null;
+        if (cid && typeof getTctAttributionNotes === 'function') {
+          var notes = getTctAttributionNotes();
+          if (notes) {
+            notes += '\n\nResults Simulator: ' + (currentData ? currentData.ind + ', ' + currentData.calls + ' calls/day, ' + currentData.miss + ' missed' : 'N/A');
+            fetch('https://services.leadconnectorhq.com/contacts/' + cid + '/notes', {
+              method: 'POST',
+              headers: { 'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35', 'Version': '2021-07-28', 'Content-Type': 'application/json' },
+              body: JSON.stringify({ body: notes })
+            }).catch(function(){});
+          }
+        }
+        // War room alert
+        fetch('https://ntfy.sh/tct-activity-cn1Aqa85', {
+          method: 'POST',
+          headers: { 'Title': 'Results Simulator Lead: ' + name, 'Priority': 'high', 'Tags': 'rotating_light,chart_with_upwards_trend' },
+          body: 'Name: ' + name + '\nEmail: ' + email + '\nIndustry: ' + (currentData ? currentData.ind : '?') + '\nCalls/day: ' + (currentData ? currentData.calls : '?') + '\nMissed: ' + (currentData ? currentData.miss : '?')
+        }).catch(function(){});
+
+        document.getElementById('emailCapture').innerHTML = '<h3 style="color:#10b981;">Sent! Check your inbox.</h3><p style="color:#94a3b8;">We\'ll send your personalized report shortly.</p>';
+      }).catch(function() {
+        document.getElementById('emailSuccess').style.display = 'block';
+        document.getElementById('emailSuccess').textContent = 'Something went wrong. Email us at wallace@thecalltaker.com';
+        document.getElementById('emailSuccess').style.color = '#ef4444';
+      });
+
+      if (typeof gtag === 'function') gtag('event', 'results_email_capture', { event_category: 'conversion', industry: currentData ? currentData.ind : '' });
+      if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Results Simulator Email' });
+    }
+
+    // Auto-generate from hash on page load
+    (function() {
+      if (window.location.hash && window.location.hash.length > 1) {
+        try {
+          var d = JSON.parse(atob(window.location.hash.substring(1)));
+          if (d.i && d.c && d.m) {
+            document.getElementById('sim-industry').value = d.i;
+            document.getElementById('sim-calls').value = d.c;
+            document.getElementById('sim-miss').value = d.m;
+            setTimeout(generateResults, 100);
+          }
+        } catch(e) {}
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -32,6 +32,74 @@
   fbq('track', 'PageView');
 
   // =========================================================================
+  // B2. Attribution Tracking (UTM, gclid, fbclid, referrer, landing page)
+  // =========================================================================
+  (function initAttribution() {
+    // First-touch only — don't overwrite if already captured this session
+    if (sessionStorage.getItem('tct_attribution')) return;
+
+    var params = new URLSearchParams(window.location.search);
+    var attribution = {
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      utm_content: params.get('utm_content') || '',
+      utm_term: params.get('utm_term') || '',
+      gclid: params.get('gclid') || '',
+      fbclid: params.get('fbclid') || '',
+      referrer: document.referrer || '',
+      landing_page: window.location.pathname || '/'
+    };
+
+    sessionStorage.setItem('tct_attribution', JSON.stringify(attribution));
+  })();
+
+  /**
+   * Returns GHL-compatible tag array from attribution data.
+   * e.g. ['source-google', 'medium-cpc', 'campaign-spring25', 'gclid']
+   */
+  window.getTctAttributionTags = function() {
+    var tags = [];
+    try {
+      var attr = JSON.parse(sessionStorage.getItem('tct_attribution') || '{}');
+      if (attr.utm_source) tags.push('source-' + attr.utm_source.toLowerCase());
+      if (attr.utm_medium) tags.push('medium-' + attr.utm_medium.toLowerCase());
+      if (attr.utm_campaign) tags.push('campaign-' + attr.utm_campaign.toLowerCase());
+      if (attr.utm_content) tags.push('content-' + attr.utm_content.toLowerCase());
+      if (attr.utm_term) tags.push('term-' + attr.utm_term.toLowerCase());
+      if (attr.gclid) tags.push('gclid', 'google-ads');
+      if (attr.fbclid) tags.push('fbclid', 'meta-ads');
+      if (attr.landing_page && attr.landing_page !== '/') {
+        var slug = attr.landing_page.replace(/^\//, '').replace(/\.html$/, '').replace(/\//g, '-');
+        if (slug) tags.push('landing-page-' + slug);
+      }
+    } catch (e) {}
+    return tags;
+  };
+
+  /**
+   * Returns a full attribution string for GHL contact notes.
+   */
+  window.getTctAttributionNotes = function() {
+    try {
+      var attr = JSON.parse(sessionStorage.getItem('tct_attribution') || '{}');
+      var parts = [];
+      parts.push('--- Attribution ---');
+      if (attr.utm_source) parts.push('Source: ' + attr.utm_source);
+      if (attr.utm_medium) parts.push('Medium: ' + attr.utm_medium);
+      if (attr.utm_campaign) parts.push('Campaign: ' + attr.utm_campaign);
+      if (attr.utm_content) parts.push('Content: ' + attr.utm_content);
+      if (attr.utm_term) parts.push('Term: ' + attr.utm_term);
+      if (attr.gclid) parts.push('Google Click ID: ' + attr.gclid);
+      if (attr.fbclid) parts.push('Meta Click ID: ' + attr.fbclid);
+      if (attr.referrer) parts.push('Referrer: ' + attr.referrer);
+      if (attr.landing_page) parts.push('Landing Page: ' + attr.landing_page);
+      parts.push('Captured: ' + new Date().toISOString());
+      return parts.length > 1 ? parts.join('\n') : '';
+    } catch (e) { return ''; }
+  };
+
+  // =========================================================================
   // C. Lead Capture Popup
   // =========================================================================
   var POPUP_DELAY = 15000; // 15 seconds
@@ -337,13 +405,15 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Submitting...';
 
+      var baseTags = ['website-popup', 'missed-call-report', 'industry-' + industry];
+      var attrTags = typeof getTctAttributionTags === 'function' ? getTctAttributionTags() : [];
       var payload = {
         firstName: firstName,
         email: email,
         phone: phone,
         companyName: companyName,
         locationId: GHL_LOCATION_ID,
-        tags: ['website-popup', 'missed-call-report', 'industry-' + industry],
+        tags: baseTags.concat(attrTags),
         source: 'Website Popup - Missed Call Report'
       };
 
@@ -360,7 +430,23 @@
         if (!response.ok) throw new Error('Request failed');
         return response.json();
       })
-      .then(function() {
+      .then(function(data) {
+        // Post attribution notes to contact
+        var contactId = data.contact ? data.contact.id : null;
+        if (contactId && typeof getTctAttributionNotes === 'function') {
+          var notes = getTctAttributionNotes();
+          if (notes) {
+            fetch(GHL_API_BASE + '/contacts/' + contactId + '/notes', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + GHL_API_KEY,
+                'Version': '2021-07-28'
+              },
+              body: JSON.stringify({ body: notes })
+            }).catch(function(){});
+          }
+        }
         // Track conversion
         if (typeof gtag === 'function') {
           gtag('event', 'lead_form_submit', {

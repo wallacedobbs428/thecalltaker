@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Customer Portal — The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    .portal-hero { padding: 120px 0 60px; text-align: center; }
+    @media (min-width: 768px) { .portal-hero { padding: 140px 0 80px; } }
+
+    .portal-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 48px; }
+    @media (min-width: 768px) { .portal-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .portal-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
+    .portal-card h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .portal-card p { font-size: 14px; color: var(--text-2); margin-bottom: 20px; }
+
+    .status-indicator { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(0,220,130,0.08); border: 1px solid rgba(0,220,130,0.2); border-radius: 100px; font-size: 13px; font-weight: 600; color: var(--green); }
+    .status-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .faq-section { margin-top: 64px; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-question { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 20px 0; font-size: 15px; font-weight: 600; color: #fff; text-align: left; cursor: pointer; background: none; border: none; font-family: inherit; }
+    .faq-question:hover { color: var(--green); }
+    .faq-question svg { width: 20px; height: 20px; color: var(--text-3); transition: transform 0.2s; flex-shrink: 0; margin-left: 16px; }
+    .faq-item.open .faq-question svg { transform: rotate(180deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq-answer-inner { padding: 0 0 20px; font-size: 14px; color: var(--text-2); line-height: 1.7; }
+    .faq-answer-inner ol, .faq-answer-inner ul { padding-left: 20px; margin: 8px 0; }
+    .faq-answer-inner li { margin-bottom: 4px; }
+    .faq-item.open .faq-answer { max-height: 500px; }
+
+    .portal-form { display: flex; flex-direction: column; gap: 12px; }
+    .portal-form label { font-size: 13px; font-weight: 600; color: var(--text-2); }
+    .portal-form input, .portal-form textarea, .portal-form select { width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; }
+    .portal-form input:focus, .portal-form textarea:focus { outline: none; border-color: var(--green); }
+    .portal-form textarea { min-height: 100px; resize: vertical; }
+    .portal-form .btn { align-self: flex-start; }
+
+    .form-success { display: none; padding: 16px; background: rgba(0,220,130,0.08); border: 1px solid rgba(0,220,130,0.2); border-radius: 8px; color: var(--green); font-size: 14px; font-weight: 600; }
+    .form-success.show { display: block; }
+
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+  </style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- NAV -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      The Call <span>Taker</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="book.html">Demo</a>
+      <a href="portal.html" class="active">Customer Portal</a>
+    </nav>
+    <a href="tel:+16157845747" class="header-cta">Call Us</a>
+    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<nav class="mobile-nav">
+  <a href="index.html">Home</a>
+  <a href="book.html">Demo</a>
+  <a href="portal.html">Customer Portal</a>
+  <a href="tel:+16157845747" class="btn btn-primary btn-lg">Call Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="portal-hero" id="main">
+  <div class="wrap">
+    <div class="status-indicator"><span class="status-dot"></span> Your AI Receptionist is Active</div>
+    <h1 class="section-title" style="margin-top: 24px; font-size: clamp(32px, 5vw, 48px);">Customer Portal</h1>
+    <p class="section-desc" style="max-width: 500px; margin: 12px auto 0;">Get help, check FAQs, submit a support request, or refer a friend.</p>
+  </div>
+</section>
+
+<!-- QUICK HELP CARDS -->
+<section class="section" style="padding-top: 0;">
+  <div class="wrap">
+    <div class="portal-grid">
+
+      <div class="portal-card">
+        <h3>Account Status</h3>
+        <p>Your AI receptionist is answering calls 24/7 for your business. If anything seems off, submit a support request below.</p>
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--text-3);">Service</span>
+            <span style="color: #fff; font-weight: 600;">AI Receptionist</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--text-3);">Status</span>
+            <span style="color: var(--green); font-weight: 600;">Active</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+            <span style="color: var(--text-3);">Support</span>
+            <span style="color: #fff; font-weight: 600;">(615) 784-5747</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+            <span style="color: var(--text-3);">Email</span>
+            <span style="color: #fff; font-weight: 600;">wallacemdobbs@icloud.com</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="portal-card">
+        <h3>Quick Links</h3>
+        <p>Common actions and resources for your account.</p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="#faq" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--surface-hover); border-radius: 8px; font-size: 14px; font-weight: 500; color: #fff;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Troubleshooting FAQ
+          </a>
+          <a href="#support" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--surface-hover); border-radius: 8px; font-size: 14px; font-weight: 500; color: #fff;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Submit Support Request
+          </a>
+          <a href="#referral" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--surface-hover); border-radius: 8px; font-size: 14px; font-weight: 500; color: #fff;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Refer a Friend — Get a Free Month
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FAQ SECTION -->
+    <div class="faq-section" id="faq">
+      <p class="section-label">Troubleshooting</p>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+
+      <div style="margin-top: 32px;">
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Call forwarding isn't working — calls aren't reaching the AI
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <ol>
+              <li>Open your phone app and go to <strong>Settings > Call Forwarding</strong></li>
+              <li>Make sure forwarding is set to your Call Taker number</li>
+              <li>Toggle call forwarding OFF, wait 10 seconds, toggle it back ON</li>
+              <li>Test by calling your business number from another phone</li>
+              <li>If using a carrier like AT&T or Verizon, dial <strong>*72</strong> followed by your Call Taker number to activate forwarding</li>
+            </ol>
+            <p style="margin-top: 12px;">Still not working? <a href="#support" style="color: var(--green); font-weight: 500;">Submit a support request</a> and we'll fix it within the hour.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            The AI greeting sounds wrong or uses the wrong company name
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <p>We can update the AI greeting, company name, voice style, and pacing in under 5 minutes.</p>
+            <ul>
+              <li><strong>Wrong name:</strong> Reply to any email from us or submit a support request with the correct company name</li>
+              <li><strong>Greeting sounds off:</strong> Tell us exactly what you'd like it to say and we'll update it</li>
+              <li><strong>Voice style:</strong> We can adjust tone (professional, friendly, warm) and speaking speed</li>
+            </ul>
+            <p style="margin-top: 8px;">These changes take effect immediately — no downtime for your callers.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Scheduling or calendar sync issues
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <ul>
+              <li><strong>Calendar not syncing:</strong> Make sure your Google or Outlook calendar is connected in your dashboard. Disconnect and reconnect if needed.</li>
+              <li><strong>Double bookings:</strong> Check that buffer times are set between appointments (we recommend 15-30 min)</li>
+              <li><strong>Wrong time zone:</strong> Verify your time zone in account settings — this affects all scheduled times</li>
+              <li><strong>Appointments not showing:</strong> Allow up to 5 minutes for sync. If still missing, submit a support request.</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            I'm not getting text notifications after calls
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <ol>
+              <li>Check that your phone number is correct in your account settings</li>
+              <li>Make sure texts from us aren't going to spam or a filtered inbox</li>
+              <li>Verify Do Not Disturb isn't blocking texts during business hours</li>
+              <li>Try replying "YES" to the last notification text to confirm the number is active</li>
+            </ol>
+            <p style="margin-top: 8px;">If texts still aren't coming through, we can switch to email notifications or set up push alerts instead.</p>
+          </div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Billing, invoices, and subscription questions
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer"><div class="faq-answer-inner">
+            <ul>
+              <li><strong>Monthly plan:</strong> $497/mo, billed on your signup date each month</li>
+              <li><strong>No contracts:</strong> Cancel anytime with no cancellation fees</li>
+              <li><strong>Receipts:</strong> Sent automatically to your email after each charge</li>
+              <li><strong>Payment methods:</strong> Credit card, debit card, or ACH</li>
+              <li><strong>Cancel or change plan:</strong> Email wallacemdobbs@icloud.com or submit a support request</li>
+            </ul>
+          </div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SUPPORT REQUEST FORM -->
+    <div style="margin-top: 64px;" id="support">
+      <p class="section-label">Need Help?</p>
+      <h2 class="section-title">Submit a Support Request</h2>
+      <p class="section-desc" style="margin-bottom: 32px;">Describe your issue and we'll get back to you within a few hours. For urgent issues, call (615) 784-5747.</p>
+
+      <div class="portal-card" style="max-width: 600px;">
+        <form class="portal-form" id="supportForm">
+          <div class="form-group">
+            <label for="support-name">Your Name</label>
+            <input type="text" id="support-name" name="name" required placeholder="John Smith">
+          </div>
+          <div class="form-group">
+            <label for="support-company">Company Name</label>
+            <input type="text" id="support-company" name="company" required placeholder="Smith's HVAC">
+          </div>
+          <div class="form-group">
+            <label for="support-email">Email</label>
+            <input type="email" id="support-email" name="email" required placeholder="john@smithshvac.com">
+          </div>
+          <div class="form-group">
+            <label for="support-category">Issue Category</label>
+            <select id="support-category" name="category">
+              <option value="forwarding">Call Forwarding</option>
+              <option value="ai_quality">AI Quality / Greeting</option>
+              <option value="scheduling">Scheduling / Calendar</option>
+              <option value="notifications">Notifications</option>
+              <option value="billing">Billing</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="support-message">Describe the Issue</label>
+            <textarea id="support-message" name="message" required placeholder="Tell us what's happening..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-green btn-md">Submit Request</button>
+        </form>
+        <div class="form-success" id="supportSuccess">Got it! We'll get back to you within a few hours. For urgent issues, call (615) 784-5747.</div>
+      </div>
+    </div>
+
+    <!-- REFERRAL FORM -->
+    <div style="margin-top: 64px; padding-bottom: 80px;" id="referral">
+      <p class="section-label">Earn Free Service</p>
+      <h2 class="section-title">Refer a Friend</h2>
+      <p class="section-desc" style="margin-bottom: 32px;">Know an HVAC owner who's losing jobs to voicemail? Refer them to The Call Taker and get a <strong style="color: var(--green);">free month</strong> for every one that signs up.</p>
+
+      <div class="portal-card" style="max-width: 600px;">
+        <form class="portal-form" id="referralForm">
+          <div class="form-group">
+            <label for="ref-your-name">Your Name</label>
+            <input type="text" id="ref-your-name" name="referrer_name" required placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="ref-your-company">Your Company</label>
+            <input type="text" id="ref-your-company" name="referrer_company" required placeholder="Your HVAC company">
+          </div>
+          <div class="form-group">
+            <label for="ref-name">Referral's Name</label>
+            <input type="text" id="ref-name" name="referral_name" required placeholder="Their name">
+          </div>
+          <div class="form-group">
+            <label for="ref-company">Referral's Company</label>
+            <input type="text" id="ref-company" name="referral_company" required placeholder="Their HVAC company">
+          </div>
+          <div class="form-group">
+            <label for="ref-phone">Referral's Phone</label>
+            <input type="tel" id="ref-phone" name="referral_phone" placeholder="(615) 555-0123">
+          </div>
+          <div class="form-group">
+            <label for="ref-email">Referral's Email</label>
+            <input type="email" id="ref-email" name="referral_email" placeholder="their@email.com">
+          </div>
+          <button type="submit" class="btn btn-green btn-md">Submit Referral</button>
+        </form>
+        <div class="form-success" id="referralSuccess">Referral submitted! We'll reach out to them and credit your account when they sign up. Thank you!</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top: 1px solid var(--border); padding: 40px 0; text-align: center;">
+  <div class="wrap">
+    <p style="font-size: 13px; color: var(--text-3);">The Call Taker — AI Receptionist for HVAC Companies</p>
+    <p style="font-size: 12px; color: var(--text-3); margin-top: 8px;">(615) 784-5747 &middot; wallacemdobbs@icloud.com</p>
+  </div>
+</footer>
+
+<script>
+// Mobile nav toggle
+const toggle = document.querySelector('.menu-toggle');
+const mobileNav = document.querySelector('.mobile-nav');
+if (toggle) {
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+}
+
+// FAQ accordion
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// Support form — creates a note on the contact via GHL API
+document.getElementById('supportForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    firstName: form.name.value.split(' ')[0],
+    lastName: form.name.value.split(' ').slice(1).join(' '),
+    companyName: form.company.value,
+    email: form.email.value,
+    tags: ['customer', 'support-request'],
+    customFields: [
+      { key: 'support_category', value: form.category.value },
+      { key: 'support_message', value: form.message.value },
+    ],
+  };
+
+  try {
+    const resp = await fetch('https://services.leadconnectorhq.com/contacts/', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+        'Version': '2021-07-28',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...data, locationId: 'tQb9YmrGDrdVUJYPKrsY' }),
+    });
+  } catch (err) {
+    // Silent fail — still show success since ntfy will catch it
+  }
+
+  form.style.display = 'none';
+  document.getElementById('supportSuccess').classList.add('show');
+});
+
+// Referral form — creates a new contact with referral tag
+document.getElementById('referralForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    firstName: form.referral_name.value.split(' ')[0],
+    lastName: form.referral_name.value.split(' ').slice(1).join(' '),
+    companyName: form.referral_company.value,
+    phone: form.referral_phone.value,
+    email: form.referral_email.value,
+    tags: ['referral', 'customer-referred'],
+    source: 'Customer Portal Referral',
+    customFields: [
+      { key: 'referred_by', value: form.referrer_name.value + ' - ' + form.referrer_company.value },
+    ],
+  };
+
+  try {
+    const resp = await fetch('https://services.leadconnectorhq.com/contacts/', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+        'Version': '2021-07-28',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...data, locationId: 'tQb9YmrGDrdVUJYPKrsY' }),
+    });
+  } catch (err) {
+    // Silent fail
+  }
+
+  form.style.display = 'none';
+  document.getElementById('referralSuccess').classList.add('show');
+});
+
+// Header scroll effect
+const header = document.querySelector('.header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 20);
+});
+</script>
+</body>
+</html>

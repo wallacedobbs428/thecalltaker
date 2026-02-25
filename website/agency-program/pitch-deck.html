@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Agency Partner Pitch Deck | The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <style>
+    :root {
+      --green: #00dc82;
+      --green-dim: rgba(0,220,130,0.06);
+      --bg: #000;
+      --surface: #0a0a0a;
+      --border: rgba(255,255,255,0.06);
+      --text-1: #ffffff;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    .slide { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 24px; border-bottom: 1px solid var(--border); position: relative; }
+    .slide-inner { max-width: 900px; width: 100%; }
+    .slide-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--green); background: var(--green-dim); border: 1px solid rgba(0,220,130,0.12); padding: 6px 14px; border-radius: 100px; margin-bottom: 24px; }
+    .slide h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 20px; }
+    .slide h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 16px; }
+    .slide p { font-size: 18px; color: var(--text-2); line-height: 1.7; max-width: 700px; }
+    .gradient { background: linear-gradient(135deg, #00dc82, #00b4d8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* Stats Grid */
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 48px; }
+    @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
+    .stat-card { background: var(--bg); padding: 40px 28px; text-align: center; }
+    .stat-num { font-size: 48px; font-weight: 900; color: var(--green); letter-spacing: -0.03em; }
+    .stat-label { font-size: 14px; color: var(--text-2); margin-top: 4px; }
+
+    /* Revenue Tiers */
+    .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 48px; }
+    @media (max-width: 640px) { .tier-grid { grid-template-columns: 1fr; } }
+    .tier { background: var(--bg); padding: 48px 28px; text-align: center; }
+    .tier-badge { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); background: var(--green-dim); border: 1px solid rgba(0,220,130,0.12); padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .tier-clients { font-size: 14px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
+    .tier-revenue { font-size: 42px; font-weight: 900; color: #fff; letter-spacing: -0.03em; }
+    .tier-sub { font-size: 13px; color: var(--text-3); margin-top: 4px; }
+
+    /* Feature List */
+    .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 40px; }
+    @media (max-width: 640px) { .features { grid-template-columns: 1fr; } }
+    .feature { display: flex; align-items: flex-start; gap: 14px; padding: 20px 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+    .feature-icon { flex-shrink: 0; width: 20px; height: 20px; color: var(--green); margin-top: 2px; }
+    .feature-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .feature-text { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+
+    /* Flow */
+    .flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    @media (max-width: 640px) { .flow { grid-template-columns: 1fr; } }
+    .flow-step { text-align: center; padding: 32px 20px; }
+    .flow-num { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: var(--green-dim); border: 2px solid rgba(0,220,130,0.15); font-size: 24px; font-weight: 800; color: var(--green); margin-bottom: 16px; }
+    .flow-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .flow-text { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+
+    /* CTA */
+    .cta-box { text-align: center; margin-top: 48px; padding: 48px 32px; background: rgba(0,220,130,0.03); border: 1px solid rgba(0,220,130,0.12); border-radius: 16px; }
+    .cta-phone { font-size: 36px; font-weight: 900; color: var(--green); letter-spacing: -0.02em; margin: 16px 0; }
+    .cta-phone a { color: var(--green); text-decoration: none; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; font-family: inherit; }
+    .btn-green { background: var(--green); color: #000; }
+    .btn-green:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-outline { background: transparent; color: #fff; border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+    /* Problem cards */
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 48px; }
+    @media (max-width: 640px) { .problem-grid { grid-template-columns: 1fr; } }
+    .problem-card { background: var(--bg); padding: 36px 28px; }
+    .problem-stat { font-size: 36px; font-weight: 900; margin-bottom: 8px; }
+    .problem-stat.red { color: #ef4444; }
+    .problem-stat.green { color: var(--green); }
+    .problem-text { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+
+    /* Sign-off */
+    .signoff { margin-top: 48px; padding: 32px; border: 1px solid var(--border); border-radius: 16px; display: flex; align-items: center; gap: 20px; }
+    @media (max-width: 640px) { .signoff { flex-direction: column; text-align: center; } }
+    .signoff-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--green-dim); border: 2px solid rgba(0,220,130,0.15); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; color: var(--green); flex-shrink: 0; }
+    .signoff-name { font-size: 16px; font-weight: 700; color: #fff; }
+    .signoff-title { font-size: 13px; color: var(--text-2); }
+
+    /* Slide counter */
+    .slide-num { position: absolute; top: 24px; right: 24px; font-size: 12px; font-weight: 600; color: var(--text-3); }
+  </style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<section class="slide">
+  <div class="slide-inner" style="text-align: center;">
+    <span class="slide-num">1/7</span>
+    <div class="slide-label">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      The Call Taker &mdash; Agency Partner Program
+    </div>
+    <h1>Add <span class="gradient">$3,000-$8,000/mo</span> in Recurring Revenue to Your Agency</h1>
+    <p style="margin: 0 auto;">White-label AI receptionist. We build it, you brand it, you keep the markup. Zero tech work on your end.</p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">$197</div>
+        <div class="stat-label">Your wholesale cost per client</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$497+</div>
+        <div class="stat-label">What you charge your clients</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$300+</div>
+        <div class="stat-label">Pure profit per client per month</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2: THE PROBLEM -->
+<section class="slide">
+  <div class="slide-inner">
+    <span class="slide-num">2/7</span>
+    <div class="slide-label">The Problem</div>
+    <h2>Your Clients Are Losing Money Every Day to <span class="gradient">Missed Calls</span></h2>
+    <p>Every home service business you work with has the same problem — calls go unanswered when they're on a job, after hours, or during lunch. Those callers don't leave voicemails. They call the next company.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-stat red">85%</div>
+        <div class="problem-text">of callers who reach voicemail <strong>never call back</strong>. They just call the next business on Google.</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-stat red">$3K-$15K</div>
+        <div class="problem-text">lost per month per client to missed calls. An HVAC job averages $350. A roof replacement: $8,500.</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-stat red">62%</div>
+        <div class="problem-text">of calls to service businesses go unanswered — after hours, weekends, during jobs, lunch breaks.</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-stat green">$0</div>
+        <div class="problem-text">is what your agency earns from solving this. <strong>Until now.</strong> You solve it, you get paid monthly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: THE SOLUTION -->
+<section class="slide">
+  <div class="slide-inner">
+    <span class="slide-num">3/7</span>
+    <div class="slide-label">The Solution</div>
+    <h2>AI Receptionist That Answers Every Call — <span class="gradient">Under Your Brand</span></h2>
+    <p>We built a 24/7 AI receptionist that answers calls in under 2 seconds. Books appointments. Handles emergencies. Sends confirmations. Sounds like a real person. Your clients' customers will never know.</p>
+
+    <div class="features">
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <div>
+          <div class="feature-title">Answers Every Call 24/7</div>
+          <div class="feature-text">Nights, weekends, holidays, during jobs. Under 2 seconds. No missed calls ever.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div>
+          <div class="feature-title">Books Appointments</div>
+          <div class="feature-text">Checks availability, schedules the job, sends SMS confirmations. Integrated with their calendar.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+        <div>
+          <div class="feature-title">Custom Voice Per Client</div>
+          <div class="feature-text">Unique greeting, script, and call flow for every client. No cookie-cutter setup.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        <div>
+          <div class="feature-title">White-Label Dashboard</div>
+          <div class="feature-text">Your brand on the dashboard. Your clients never see The Call Taker. You built this.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: REVENUE MATH -->
+<section class="slide">
+  <div class="slide-inner" style="text-align: center;">
+    <span class="slide-num">4/7</span>
+    <div class="slide-label">The Math</div>
+    <h2>Your Revenue at <span class="gradient">$300-$800 Markup</span> Per Client</h2>
+    <p style="margin: 0 auto;">You pay $197/client. You charge $497-$997. Here's what that looks like as you scale.</p>
+
+    <div class="tier-grid">
+      <div class="tier">
+        <div class="tier-badge">Starter</div>
+        <div class="tier-clients">10 Clients</div>
+        <div class="tier-revenue">$3,000</div>
+        <div class="tier-sub">to $8,000/mo profit</div>
+      </div>
+      <div class="tier">
+        <div class="tier-badge">Growth</div>
+        <div class="tier-clients">25 Clients</div>
+        <div class="tier-revenue">$7,500</div>
+        <div class="tier-sub">to $20,000/mo profit</div>
+      </div>
+      <div class="tier">
+        <div class="tier-badge">Scale</div>
+        <div class="tier-clients">50 Clients</div>
+        <div class="tier-revenue">$15,000</div>
+        <div class="tier-sub">to $40,000/mo profit</div>
+      </div>
+    </div>
+
+    <p style="margin: 40px auto 0; font-size: 15px; color: var(--text-2);">100 clients at $497 = <strong style="color: var(--green);">$30,000/mo profit</strong>. At $997 = <strong style="color: var(--green);">$80,000/mo</strong>. You set your price.</p>
+  </div>
+</section>
+
+<!-- SLIDE 5: HOW IT WORKS -->
+<section class="slide">
+  <div class="slide-inner" style="text-align: center;">
+    <span class="slide-num">5/7</span>
+    <div class="slide-label">How It Works</div>
+    <h2>Three Steps. <span class="gradient">Zero Engineering.</span></h2>
+    <p style="margin: 0 auto;">You don't build anything. You don't support anything. You sell, we deliver.</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-title">You Sell It</div>
+        <div class="flow-text">Pitch AI receptionist to your existing clients. "We'll make sure you never miss another call." Easy add-on to your current services.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-title">We Build It</div>
+        <div class="flow-text">Send us client details. We set up their AI receptionist — custom voice, scripts, call routing, booking — in 24-48 hours. White-labeled.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-title">You Bill Them</div>
+        <div class="flow-text">Invoice your client $497-$997/mo. You pay us $197. Keep the rest. We handle support through you. We stay invisible.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: WHAT YOU GET -->
+<section class="slide">
+  <div class="slide-inner">
+    <span class="slide-num">6/7</span>
+    <div class="slide-label">What's Included</div>
+    <h2>Everything You Need. <span class="gradient">Nothing to Build.</span></h2>
+
+    <div class="features" style="margin-top: 32px;">
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <div>
+          <div class="feature-title">White-Label Dashboard</div>
+          <div class="feature-text">Your brand, your logo. Clients see your name on everything.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <div>
+          <div class="feature-title">Custom Greeting &amp; Scripts</div>
+          <div class="feature-text">Every client gets personalized AI — unique voice, script, and call flow.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <div>
+          <div class="feature-title">24-48 Hour Setup</div>
+          <div class="feature-text">Send us client info, we build it. Your client is live in 2 days or less.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <div>
+          <div class="feature-title">Priority Support Channel</div>
+          <div class="feature-text">Direct line to our team. We respond within hours. Your clients never talk to us.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <div>
+          <div class="feature-title">No Minimums or Contracts</div>
+          <div class="feature-text">Start with 1 client. Scale to 100. Cancel anytime. Month-to-month.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        <div>
+          <div class="feature-title">8 Industries Pre-Built</div>
+          <div class="feature-text">HVAC, roofing, plumbing, electrical, dental, med spa, legal, property management.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7: CTA -->
+<section class="slide">
+  <div class="slide-inner" style="text-align: center;">
+    <span class="slide-num">7/7</span>
+    <div class="slide-label">Next Step</div>
+    <h2>Hear the AI Receptionist <span class="gradient">Right Now</span></h2>
+    <p style="margin: 0 auto;">Call the demo line. You'll hear exactly what your clients' customers would hear. Takes 30 seconds.</p>
+
+    <div class="cta-box">
+      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 4px;">Call the demo line right now:</p>
+      <div class="cta-phone"><a href="tel:+16157845747">(615) 784-5747</a></div>
+      <p style="font-size: 14px; color: var(--text-3); margin-bottom: 32px;">Then let's talk about getting your first client set up.</p>
+
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="https://thecalltaker.com/agency#apply" class="btn btn-green">Apply as Agency Partner</a>
+        <a href="tel:+16157845747" class="btn btn-outline">Call Demo Line</a>
+      </div>
+    </div>
+
+    <div class="signoff">
+      <div class="signoff-avatar">WD</div>
+      <div>
+        <div class="signoff-name">Wallace Dobbs</div>
+        <div class="signoff-title">Founder, The Call Taker &middot; Brentwood, TN</div>
+        <div class="signoff-title" style="margin-top: 4px;">wallacemdobbs@icloud.com</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
