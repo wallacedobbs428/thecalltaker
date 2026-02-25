@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-17970510102');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Your Missed Call Audit Report | The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    .audit-hero { padding: 80px 0 40px; text-align: center; }
+    .audit-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 100px; padding: 8px 20px; font-size: 0.8125rem;
+      font-weight: 600; color: #ef4444; margin-bottom: 24px;
+    }
+    .audit-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .audit-company {
+      font-size: clamp(2rem, 5vw, 3rem); font-weight: 800;
+      color: var(--text-primary); margin-bottom: 8px; line-height: 1.2;
+    }
+    .audit-subtitle { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+
+    .audit-card {
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px; padding: 32px; margin-bottom: 24px;
+    }
+    .audit-card h2 {
+      font-size: 1.25rem; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+    }
+    .audit-card h2 .icon {
+      width: 40px; height: 40px; border-radius: 10px; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    .finding-row {
+      display: flex; align-items: flex-start; gap: 16px; padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .finding-row:last-child { border-bottom: none; }
+    .finding-label { font-size: 0.875rem; color: var(--text-muted); min-width: 140px; }
+    .finding-value { font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); }
+    .finding-bad { color: #ef4444; }
+    .finding-good { color: #10b981; }
+    .finding-warn { color: #f59e0b; }
+
+    .cost-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+    .cost-item {
+      background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.1);
+      border-radius: 12px; padding: 24px; text-align: center;
+    }
+    .cost-item.green { background: rgba(16,185,129,0.04); border-color: rgba(16,185,129,0.1); }
+    .cost-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 8px; }
+    .cost-value { font-size: 1.75rem; font-weight: 800; }
+    .cost-red { color: #ef4444; }
+    .cost-green { color: #10b981; }
+
+    .solution-card {
+      background: rgba(16,185,129,0.04); border: 1px solid rgba(16,185,129,0.15);
+      border-radius: 16px; padding: 40px; text-align: center; margin: 40px 0;
+    }
+    .solution-card h2 { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 16px; }
+    .solution-card p { font-size: 1rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto 24px; }
+
+    .demo-box {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: rgba(16,185,129,0.08); border: 2px solid rgba(16,185,129,0.3);
+      border-radius: 12px; padding: 16px 32px; margin-bottom: 24px;
+    }
+    .demo-box .phone-number { font-size: 1.5rem; font-weight: 800; color: #10b981; }
+    .demo-box .phone-label { font-size: 0.8125rem; color: var(--text-muted); }
+
+    .timeline { position: relative; padding-left: 32px; margin: 24px 0; }
+    .timeline::before { content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: rgba(255,255,255,0.06); }
+    .timeline-item { position: relative; padding-bottom: 24px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -25px; top: 6px;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: rgba(239,68,68,0.3); border: 2px solid #ef4444;
+    }
+    .timeline-item.good::before { background: rgba(16,185,129,0.3); border-color: #10b981; }
+    .timeline-time { font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
+    .timeline-desc { font-size: 0.9375rem; color: var(--text-primary); }
+
+    @media (max-width: 640px) {
+      .cost-grid { grid-template-columns: 1fr; }
+      .finding-row { flex-direction: column; gap: 4px; }
+      .finding-label { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        The Call <span>Taker</span>
+      </a>
+      <a href="tel:+16157845747" class="header-cta">Call Demo Line</a>
+    </div>
+  </header>
+
+  <main style="max-width: 720px; margin: 0 auto; padding: 0 20px;">
+
+    <!-- Hero -->
+    <div class="audit-hero">
+      <div class="audit-badge"><span class="dot"></span> Missed Call Audit Report</div>
+      <h1 class="audit-company" id="company-name">Your Business</h1>
+      <p class="audit-subtitle">We called <span id="company-inline">your business</span> to see what happens when a customer calls. Here's what we found.</p>
+    </div>
+
+    <!-- What We Found -->
+    <div class="audit-card">
+      <h2>
+        <span class="icon" style="background: rgba(239,68,68,0.1);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.82.28 1.67.45 2.53.5A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.07 8.82 2 2 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11z"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        </span>
+        Call Test Results
+      </h2>
+
+      <div id="call-timeline" class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time" id="call-time">Wednesday, 7:45 PM</div>
+          <div class="timeline-desc">We called <span id="company-timeline">your business</span></div>
+        </div>
+        <div class="timeline-item" id="timeline-result">
+          <div class="timeline-time">After <span id="ring-count">6</span> rings</div>
+          <div class="timeline-desc finding-bad" id="result-desc">Call went to voicemail. No option to speak with anyone or book a service call.</div>
+        </div>
+        <div class="timeline-item" id="timeline-followup" style="display:none;">
+          <div class="timeline-time">24 hours later</div>
+          <div class="timeline-desc finding-bad">No callback received. The lead was lost.</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <div class="finding-row">
+          <div class="finding-label">After-hours answer</div>
+          <div class="finding-value finding-bad" id="finding-answer">Voicemail</div>
+        </div>
+        <div class="finding-row">
+          <div class="finding-label">Response time</div>
+          <div class="finding-value finding-bad" id="finding-response">No response within 24 hours</div>
+        </div>
+        <div class="finding-row">
+          <div class="finding-label">Booking option</div>
+          <div class="finding-value finding-bad" id="finding-booking">None available</div>
+        </div>
+        <div class="finding-row">
+          <div class="finding-label">Emergency handling</div>
+          <div class="finding-value finding-bad" id="finding-emergency">No emergency routing</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What This Costs You -->
+    <div class="audit-card">
+      <h2>
+        <span class="icon" style="background: rgba(239,68,68,0.1);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </span>
+        What This Is Costing <span id="company-cost">You</span>
+      </h2>
+      <p style="color: var(--text-secondary); margin-bottom: 20px;">Based on industry data for HVAC companies in <span id="city-cost">your area</span>:</p>
+
+      <div class="cost-grid">
+        <div class="cost-item">
+          <div class="cost-label">Missed Calls / Week</div>
+          <div class="cost-value cost-red" id="missed-weekly">8</div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-label">Lost Revenue / Month</div>
+          <div class="cost-value cost-red" id="lost-monthly">$4,200</div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-label">Lost Revenue / Year</div>
+          <div class="cost-value cost-red" id="lost-yearly">$50,400</div>
+        </div>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.02); border-radius: 8px; padding: 16px; margin-top: 16px;">
+        <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+          <strong style="color: var(--text-primary);">The math:</strong>
+          62% of callers who hit voicemail never call back.
+          At an average job value of <span id="avg-job">$350</span>, missing just
+          <span id="missed-weekly-inline">8</span> calls per week costs
+          <strong style="color: #ef4444;" id="lost-monthly-inline">$4,200/month</strong>.
+        </p>
+      </div>
+    </div>
+
+    <!-- The Fix -->
+    <div class="solution-card">
+      <h2>The Fix Takes 48 Hours</h2>
+      <p>The Call Taker answers every call for <span id="company-fix">your business</span> 24/7. No voicemail. No missed jobs. Every caller talks to our AI in under 2 seconds.</p>
+
+      <div class="demo-box">
+        <div>
+          <div class="phone-label">Hear it yourself right now</div>
+          <a href="tel:+16157845747" class="phone-number" style="text-decoration: none;">(615) 784-5747</a>
+        </div>
+      </div>
+
+      <div class="cost-grid" style="max-width: 480px; margin: 0 auto 24px; grid-template-columns: 1fr 1fr;">
+        <div class="cost-item green">
+          <div class="cost-label">The Call Taker</div>
+          <div class="cost-value cost-green">$497/mo</div>
+        </div>
+        <div class="cost-item green">
+          <div class="cost-label">You're Losing</div>
+          <div class="cost-value cost-red" id="lost-monthly-cta">$4,200/mo</div>
+        </div>
+      </div>
+
+      <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 24px;">
+        One missed $350 job pays for an entire month of service.
+        No contracts. Cancel anytime. Set up in 48 hours.
+      </p>
+
+      <a href="signup.html" class="btn btn-primary btn-lg" style="display: inline-flex; justify-content: center; min-width: 240px;">
+        Get Started Now
+      </a>
+      <br>
+      <a href="book.html" style="display: inline-block; margin-top: 12px; font-size: 0.875rem; color: var(--text-muted);">
+        Or book a free demo call first
+      </a>
+    </div>
+
+    <!-- Before/After -->
+    <div class="audit-card">
+      <h2>
+        <span class="icon" style="background: rgba(16,185,129,0.1);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        Before vs. After The Call Taker
+      </h2>
+      <div class="finding-row">
+        <div class="finding-label">After-hours calls</div>
+        <div class="finding-value"><span class="finding-bad">Voicemail</span> &rarr; <span class="finding-good">AI answers in 2 seconds</span></div>
+      </div>
+      <div class="finding-row">
+        <div class="finding-label">Weekend calls</div>
+        <div class="finding-value"><span class="finding-bad">Missed</span> &rarr; <span class="finding-good">Every call answered</span></div>
+      </div>
+      <div class="finding-row">
+        <div class="finding-label">Booking</div>
+        <div class="finding-value"><span class="finding-bad">None</span> &rarr; <span class="finding-good">Instant appointment booking</span></div>
+      </div>
+      <div class="finding-row">
+        <div class="finding-label">Emergencies</div>
+        <div class="finding-value"><span class="finding-bad">No routing</span> &rarr; <span class="finding-good">Priority escalation to tech</span></div>
+      </div>
+      <div class="finding-row">
+        <div class="finding-label">Lead capture</div>
+        <div class="finding-value"><span class="finding-bad">Lost forever</span> &rarr; <span class="finding-good">Name, number, job details texted to you</span></div>
+      </div>
+      <div class="finding-row">
+        <div class="finding-label">Monthly cost</div>
+        <div class="finding-value"><span class="finding-bad" id="lost-compare">$4,200 lost</span> &rarr; <span class="finding-good">$497/mo invested</span></div>
+      </div>
+    </div>
+
+    <!-- Social Proof -->
+    <div style="text-align: center; padding: 40px 0;">
+      <p style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 24px;">Trusted by HVAC companies across America</p>
+      <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+        <div style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 800; color: #10b981;">24/7</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);">Always answering</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 800; color: #10b981;">&lt;2s</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);">Pickup time</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 800; color: #10b981;">$0</div>
+          <div style="font-size: 0.8125rem; color: var(--text-muted);">Setup fee</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="text-align: center;">
+        <span>&copy; 2026 The Call Taker. All rights reserved. Brentwood, TN</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Parse URL parameters to personalize the report
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+
+      var company = params.get('company') || 'Your Business';
+      var city = params.get('city') || '';
+      var state = params.get('state') || '';
+      var voicemail = params.get('voicemail') || 'yes';
+      var rings = params.get('rings') || '6';
+      var callTime = params.get('time') || 'Wednesday, 7:45 PM';
+      var jobValue = parseInt(params.get('job') || '350');
+      var callbackReceived = params.get('callback') || 'no';
+      var missedPerWeek = parseInt(params.get('missed') || '8');
+
+      // Personalize company name
+      var companyEls = ['company-name', 'company-inline', 'company-timeline', 'company-cost', 'company-fix'];
+      companyEls.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = company;
+      });
+
+      // City
+      var location = city + (state ? ', ' + state : '');
+      if (location) {
+        var cityEl = document.getElementById('city-cost');
+        if (cityEl) cityEl.textContent = location;
+      }
+
+      // Call details
+      document.getElementById('ring-count').textContent = rings;
+      document.getElementById('call-time').textContent = callTime;
+
+      // Voicemail result
+      if (voicemail === 'no') {
+        document.getElementById('result-desc').textContent = 'Call was answered by a person. However, response was slow and no after-hours service was offered.';
+        document.getElementById('result-desc').className = 'timeline-desc finding-warn';
+        document.getElementById('finding-answer').textContent = 'Answered (slow)';
+        document.getElementById('finding-answer').className = 'finding-value finding-warn';
+      } else if (voicemail === 'answering') {
+        document.getElementById('result-desc').textContent = 'Call went to a generic answering service. No HVAC knowledge, could not book an appointment or handle emergencies.';
+        document.getElementById('finding-answer').textContent = 'Generic answering service';
+        document.getElementById('finding-answer').className = 'finding-value finding-warn';
+      }
+
+      // Callback
+      if (callbackReceived === 'yes') {
+        document.getElementById('finding-response').textContent = 'Callback received (next day)';
+        document.getElementById('finding-response').className = 'finding-value finding-warn';
+      }
+
+      // Follow-up timeline
+      if (callbackReceived === 'no') {
+        document.getElementById('timeline-followup').style.display = 'block';
+      }
+
+      // Calculate costs
+      var lostPerCall = jobValue * 0.62; // 62% never call back
+      var lostMonthly = Math.round(missedPerWeek * lostPerCall * 4.33);
+      var lostYearly = lostMonthly * 12;
+
+      document.getElementById('avg-job').textContent = '$' + jobValue;
+      document.getElementById('missed-weekly').textContent = missedPerWeek;
+      document.getElementById('missed-weekly-inline').textContent = missedPerWeek;
+      document.getElementById('lost-monthly').textContent = '$' + lostMonthly.toLocaleString();
+      document.getElementById('lost-monthly-inline').textContent = '$' + lostMonthly.toLocaleString() + '/month';
+      document.getElementById('lost-yearly').textContent = '$' + lostYearly.toLocaleString();
+      document.getElementById('lost-monthly-cta').textContent = '$' + lostMonthly.toLocaleString() + '/mo';
+      document.getElementById('lost-compare').textContent = '$' + lostMonthly.toLocaleString() + ' lost';
+
+      // Page title
+      document.title = 'Missed Call Audit: ' + company + ' | The Call Taker';
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-17970510102');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Missed Call Calculator for Service Businesses | The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="description" content="Find out how much revenue your service business is losing to missed calls. Free calculator — answer 4 questions, see your number in 30 seconds.">
+  <meta name="robots" content="index, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="How Much Are Missed Calls Costing Your Business?">
+  <meta property="og:description" content="Free calculator for service business owners. Answer 4 questions, see how much revenue you're losing to missed calls in 30 seconds.">
+  <meta property="og:url" content="https://thecalltaker.com/calculator">
+  <meta property="og:site_name" content="The Call Taker">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Missed Call Revenue Calculator for Service Businesses">
+  <meta name="twitter:description" content="Answer 4 questions. See how much you're losing. Most business owners are shocked.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://thecalltaker.com/calculator">
+  
+
+  <!-- Google Analytics 4 — Replace G-XXXXXXXXXX with your GA4 Measurement ID -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script> -->
+
+  <!-- Meta/Facebook Pixel -->
+  <script>
+    window.addEventListener('load', function() {
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+      document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', 'YOUR_PIXEL_ID');
+      fbq('track', 'PageView');
+    });
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+
+  <style>
+    .calc-step { display: none; animation: fadeSlide 0.4s ease; }
+    .calc-step.active { display: block; }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .calc-progress { display: flex; gap: 8px; margin-bottom: 32px; }
+    .calc-progress-dot {
+      flex: 1; height: 4px; border-radius: 2px;
+      background: rgba(255,255,255,0.08); transition: background 0.3s ease;
+    }
+    .calc-progress-dot.done { background: var(--green-500); }
+    .calc-progress-dot.current { background: var(--green-400); }
+    .calc-option {
+      display: block; width: 100%; padding: 16px 20px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-md); color: var(--text-primary);
+      font-size: 1rem; font-weight: 500; text-align: left;
+      cursor: pointer; transition: var(--transition); margin-bottom: 8px;
+    }
+    .calc-option:hover { background: rgba(16,185,129,0.06); border-color: rgba(16,185,129,0.2); }
+    .calc-option.selected { background: rgba(16,185,129,0.08); border-color: var(--green-500); color: var(--green-400); }
+    .calc-option span { display: block; font-size: 0.8125rem; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
+    .calc-label {
+      display: block; font-size: 1.125rem; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 20px; line-height: 1.4;
+    }
+    .calc-sublabel { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 20px; display: block; }
+    .calc-slider-wrap { margin-bottom: 32px; }
+    .calc-slider-value {
+      display: inline-block; font-size: 2rem; font-weight: 800; color: var(--green-400);
+      margin-bottom: 12px;
+    }
+    .result-card {
+      background: rgba(16,185,129,0.04); border: 1px solid rgba(16,185,129,0.15);
+      border-radius: var(--radius-lg); padding: 32px; text-align: center; margin-bottom: 24px;
+    }
+    .result-big {
+      font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 800;
+      background: linear-gradient(135deg, var(--red-400), #fbbf24);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px;
+    }
+    .result-green {
+      font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800;
+      color: var(--green-400); margin-bottom: 4px;
+    }
+    .result-roi {
+      display: inline-block; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);
+      border-radius: var(--radius-full); padding: 8px 24px;
+      font-size: 1rem; font-weight: 700; color: var(--green-400); margin-top: 16px;
+    }
+    .result-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .result-stat {
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-md); padding: 20px; text-align: center;
+    }
+    .result-stat-label {
+      font-size: 0.6875rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 6px;
+    }
+    .result-stat-value { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); }
+    @media (max-width: 480px) {
+      .result-breakdown { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#calculator-start" class="skip-link">Skip to calculator</a>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        The Call <span>Taker</span>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="book.html">Demo</a>
+        <a href="your-audit.html">Free Audit</a>
+        <a href="blog.html">Blog</a>
+      </nav>
+
+      <a href="book.html" class="header-cta">Book a Demo</a>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="book.html">Demo</a>
+    <a href="your-audit.html">Free Audit</a>
+    <a href="blog.html">Blog</a>
+    <a href="book.html" class="btn btn-primary btn-lg">Book a Demo</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" style="padding-bottom: 40px; min-height: auto;">
+    <div class="hero-glow hero-glow-green"></div>
+    <div class="container text-center">
+      <div class="reveal">
+        <div class="section-label" style="justify-content: center;">Free Calculator</div>
+        <h1 class="hero-title" style="font-size: clamp(2rem, 5vw, 3.25rem); max-width: 750px; margin-left: auto; margin-right: auto;">
+          How Much Revenue Are You Losing to Missed Calls?
+        </h1>
+        <p class="hero-subtitle mx-auto" style="max-width: 560px; text-align: center;">
+          Answer 4 questions. See the real number in 30 seconds. Most business owners are shocked.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calculator -->
+  <section class="section" id="calculator-start" style="padding-top: 0;">
+    <div class="container">
+      <div class="card reveal mx-auto" style="max-width: 640px; background: rgba(16,185,129,0.03); border-color: rgba(16,185,129,0.15); padding: 40px;">
+
+        <!-- Progress Bar -->
+        <div class="calc-progress">
+          <div class="calc-progress-dot current" id="dot-1"></div>
+          <div class="calc-progress-dot" id="dot-2"></div>
+          <div class="calc-progress-dot" id="dot-3"></div>
+          <div class="calc-progress-dot" id="dot-4"></div>
+        </div>
+
+        <!-- Step 1: Calls per week -->
+        <div class="calc-step active" id="step-1">
+          <label class="calc-label">How many calls does your business get per week?</label>
+          <span class="calc-sublabel">Include all incoming calls — during and after business hours.</span>
+          <div class="calc-slider-wrap">
+            <div class="calc-slider-value" id="calls-display">30</div>
+            <span style="font-size: 0.875rem; color: var(--text-muted);"> calls/week</span>
+            <input type="range" id="calls-slider" min="10" max="100" value="30" step="5" style="width: 100%; accent-color: var(--green-500); height: 8px; cursor: pointer; margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+              <span>10</span>
+              <span>100+</span>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;" onclick="nextStep(2)">
+            Next
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <!-- Step 2: Miss rate -->
+        <div class="calc-step" id="step-2">
+          <label class="calc-label">What percentage of calls do you think you miss?</label>
+          <span class="calc-sublabel">Include after-hours, weekends, and when your team is on a job.</span>
+          <div class="calc-slider-wrap">
+            <div class="calc-slider-value" id="miss-display">20</div>
+            <span style="font-size: 0.875rem; color: var(--text-muted);">% missed</span>
+            <input type="range" id="miss-slider" min="5" max="50" value="20" step="5" style="width: 100%; accent-color: var(--green-500); height: 8px; cursor: pointer; margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+              <span>5%</span>
+              <span>50%</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-ghost btn-lg" style="flex: 1; justify-content: center;" onclick="prevStep(1)">Back</button>
+            <button class="btn btn-primary btn-lg" style="flex: 2; justify-content: center;" onclick="nextStep(3)">
+              Next
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Average job value -->
+        <div class="calc-step" id="step-3">
+          <label class="calc-label">What's your average job value?</label>
+          <span class="calc-sublabel">Think about a typical service call, including parts and labor.</span>
+          <div id="job-options">
+            <button class="calc-option" onclick="selectJob(200, this)">$200 <span>Small repairs, tune-ups</span></button>
+            <button class="calc-option selected" onclick="selectJob(350, this)">$350 <span>Average service calls</span></button>
+            <button class="calc-option" onclick="selectJob(500, this)">$500 <span>Larger repairs, replacements</span></button>
+            <button class="calc-option" onclick="selectJob(750, this)">$750 <span>Major repairs, installations</span></button>
+            <button class="calc-option" onclick="selectJob(1000, this)">$1,000+ <span>Full system installs, commercial</span></button>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 16px;">
+            <button class="btn btn-ghost btn-lg" style="flex: 1; justify-content: center;" onclick="prevStep(2)">Back</button>
+            <button class="btn btn-primary btn-lg" style="flex: 2; justify-content: center;" onclick="nextStep(4)">
+              Next
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: After hours -->
+        <div class="calc-step" id="step-4">
+          <label class="calc-label">Do you answer calls after 6 PM and on weekends?</label>
+          <span class="calc-sublabel">35%+ of service calls come in after regular business hours.</span>
+          <button class="calc-option" onclick="selectAfterHours(true, this)">
+            Yes, we answer after hours
+            <span>Someone picks up evenings and weekends</span>
+          </button>
+          <button class="calc-option selected" onclick="selectAfterHours(false, this)">
+            No, those go to voicemail
+            <span>We only answer during business hours</span>
+          </button>
+          <div style="display: flex; gap: 8px; margin-top: 16px;">
+            <button class="btn btn-ghost btn-lg" style="flex: 1; justify-content: center;" onclick="prevStep(3)">Back</button>
+            <button class="btn btn-primary btn-lg" style="flex: 2; justify-content: center;" onclick="showResults()">
+              See My Results
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div class="calc-step" id="step-results">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <div style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 8px;">Your Results</div>
+            <div style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: 4px;">You're potentially missing</div>
+            <div class="result-green" id="result-calls-month">24 calls per month</div>
+          </div>
+
+          <div class="result-card">
+            <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 4px;">At your average job value, that's</div>
+            <div class="result-big" id="result-yearly">$100,800/year</div>
+            <div style="font-size: 1rem; color: var(--text-secondary);">walking out the door</div>
+          </div>
+
+          <div class="result-breakdown">
+            <div class="result-stat">
+              <div class="result-stat-label" style="color: var(--red-400);">Lost Per Month</div>
+              <div class="result-stat-value" id="result-monthly">$8,400</div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-label" style="color: var(--green-400);">The Call Taker Cost</div>
+              <div class="result-stat-value" style="color: var(--green-400);" id="result-tct-cost">$497/mo</div>
+            </div>
+          </div>
+
+          <div style="text-align: center;">
+            <div class="result-roi" id="result-roi">28x return on investment</div>
+          </div>
+
+          <div style="background: rgba(16,185,129,0.04); border: 1px solid rgba(16,185,129,0.1); border-radius: var(--radius-md); padding: 16px; margin-top: 24px; text-align: center;">
+            <p style="font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 0;">
+              Every month you wait costs you <strong style="color: var(--text-primary);" id="result-wait">$8,400</strong>. The math doesn't lie.
+            </p>
+          </div>
+
+          <!-- Lead Capture -->
+          <div id="calc-lead-section" style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; text-align: center;">
+              Get Your Free Missed Call Audit
+            </h3>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 20px; text-align: center; line-height: 1.5;">
+              We'll show you exactly how many calls your business is missing &mdash; and what it's costing you.
+            </p>
+            <form id="calc-lead-form" style="display: flex; flex-direction: column; gap: 10px;">
+              <input type="text" id="calc-name" placeholder="First Name" required style="width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.9375rem; font-family: inherit;">
+              <input type="email" id="calc-lead-email" placeholder="Email" required style="width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.9375rem; font-family: inherit;">
+              <input type="tel" id="calc-phone" placeholder="Phone" required style="width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.9375rem; font-family: inherit;">
+              <input type="text" id="calc-company" placeholder="Company Name" required style="width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.9375rem; font-family: inherit;">
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center; margin-top: 4px;">
+                Get My Free Audit
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+            </form>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; text-align: center;">No charge. No strings. Just the truth about your phones.</p>
+          </div>
+
+          <!-- Alternative CTA -->
+          <div style="text-align: center; margin-top: 24px;">
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 12px;">Or skip the report and hear our AI right now:</p>
+            <a href="tel:+16157845747" style="display: inline-block; font-size: 1.25rem; font-weight: 800; color: var(--green-400);">(615) 784-5747</a>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">It picks up 24/7. Try it.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Social Proof Below Calculator -->
+      <div class="reveal mx-auto" style="max-width: 640px; margin-top: 40px; text-align: center;">
+        <p style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 16px;">Why service businesses trust The Call Taker</p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+          <div style="padding: 16px;">
+            <div style="font-size: 1.75rem; font-weight: 800; color: var(--green-400); margin-bottom: 4px;">24/7</div>
+            <div style="font-size: 0.8125rem; color: var(--text-muted);">Always answering</div>
+          </div>
+          <div style="padding: 16px;">
+            <div style="font-size: 1.75rem; font-weight: 800; color: var(--green-400); margin-bottom: 4px;">&lt;2s</div>
+            <div style="font-size: 0.8125rem; color: var(--text-muted);">Answer time</div>
+          </div>
+          <div style="padding: 16px;">
+            <div style="font-size: 1.75rem; font-weight: 800; color: var(--green-400); margin-bottom: 4px;">$497</div>
+            <div style="font-size: 0.8125rem; color: var(--text-muted);">/mo starting</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Mini Section -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="mx-auto" style="max-width: 640px;">
+        <h2 style="font-size: 1.375rem; font-weight: 700; color: var(--text-primary); margin-bottom: 24px; text-align: center;">Common Questions</h2>
+
+        <div class="faq-item reveal" style="border-bottom: 1px solid var(--border); padding: 20px 0;">
+          <h3 style="font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Is this calculator accurate?</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary);">It's based on industry averages. Your real numbers could be higher or lower. That's why we offer a free phone audit — we'll call your business after hours and tell you exactly what's happening.</p>
+        </div>
+
+        <div class="faq-item reveal" style="border-bottom: 1px solid var(--border); padding: 20px 0;">
+          <h3 style="font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">How does The Call Taker fix this?</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary);">Our AI receptionist answers every call in under 2 seconds, 24/7. It knows your industry, books appointments, and handles emergencies — so you never lose another call to voicemail.</p>
+        </div>
+
+        <div class="faq-item reveal" style="border-bottom: 1px solid var(--border); padding: 20px 0;">
+          <h3 style="font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">What does the free report include?</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary);">We call your business at different times (evenings, weekends, during peak hours) and document exactly what happens. You get a full report with your answer rate, what callers hear, and specific recommendations.</p>
+        </div>
+
+        <div class="faq-item reveal" style="padding: 20px 0;">
+          <h3 style="font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">How much does The Call Taker cost?</h3>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary);">Starting at $497/month for Starter (HVAC, Plumbing, Electrical) or $997/month for Pro (Dental, Legal, Roofing, MedSpa, Property Mgmt). $500 one-time setup. 7-day free trial. No contracts, cancel anytime. Most businesses see a 10-30x return based on the calls they were missing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            The Call <span>Taker</span>
+          </a>
+          <p>AI receptionist that answers every call for service businesses. Never lose a customer to voicemail again.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="book.html">Demo</a>
+          <a href="your-audit.html">Free Audit</a>
+          <a href="blog.html">Blog</a>
+          <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+        <span><a href="privacy.html" style="color: var(--text-muted); transition: var(--transition);">Privacy</a> &middot; <a href="terms.html" style="color: var(--text-muted); transition: var(--transition);">Terms</a> &middot; Brentwood, TN</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Calculator state
+    var calcState = {
+      calls: 30,
+      missRate: 20,
+      jobValue: 350,
+      afterHours: false
+    };
+
+    // Slider updates
+    document.getElementById('calls-slider').addEventListener('input', function() {
+      calcState.calls = parseInt(this.value);
+      document.getElementById('calls-display').textContent = this.value;
+    });
+    document.getElementById('miss-slider').addEventListener('input', function() {
+      calcState.missRate = parseInt(this.value);
+      document.getElementById('miss-display').textContent = this.value;
+    });
+
+    function selectJob(value, el) {
+      calcState.jobValue = value;
+      document.querySelectorAll('#job-options .calc-option').forEach(function(btn) { btn.classList.remove('selected'); });
+      el.classList.add('selected');
+    }
+
+    function selectAfterHours(value, el) {
+      calcState.afterHours = value;
+      var btns = el.parentElement.querySelectorAll('.calc-option');
+      btns.forEach(function(btn) { btn.classList.remove('selected'); });
+      el.classList.add('selected');
+    }
+
+    function nextStep(n) {
+      for (var i = 1; i <= 5; i++) {
+        var step = document.getElementById('step-' + i);
+        if (step) step.classList.remove('active');
+      }
+      document.getElementById('step-' + n).classList.add('active');
+      updateProgress(n);
+    }
+
+    function prevStep(n) {
+      for (var i = 1; i <= 5; i++) {
+        var step = document.getElementById('step-' + i);
+        if (step) step.classList.remove('active');
+      }
+      document.getElementById('step-' + n).classList.add('active');
+      updateProgress(n);
+    }
+
+    function updateProgress(current) {
+      for (var i = 1; i <= 4; i++) {
+        var dot = document.getElementById('dot-' + i);
+        dot.className = 'calc-progress-dot';
+        if (i < current) dot.classList.add('done');
+        if (i === current) dot.classList.add('current');
+      }
+    }
+
+    function showResults() {
+      // Calculate
+      var missedPerWeek = calcState.calls * (calcState.missRate / 100);
+      // If they don't answer after hours, add 35% more missed calls
+      if (!calcState.afterHours) {
+        missedPerWeek = missedPerWeek * 1.35;
+      }
+      var missedPerMonth = Math.round(missedPerWeek * 4.33);
+      var lostMonthly = missedPerMonth * calcState.jobValue;
+      var lostYearly = lostMonthly * 12;
+      var roi = Math.round(lostMonthly / 497);
+
+      // Update results
+      document.getElementById('result-calls-month').textContent = missedPerMonth + ' calls per month';
+      document.getElementById('result-monthly').textContent = '$' + lostMonthly.toLocaleString();
+      document.getElementById('result-yearly').textContent = '$' + lostYearly.toLocaleString() + '/year';
+      document.getElementById('result-roi').textContent = roi + 'x return on investment';
+      document.getElementById('result-wait').textContent = '$' + lostMonthly.toLocaleString();
+
+      // Show results step
+      for (var i = 1; i <= 4; i++) {
+        var step = document.getElementById('step-' + i);
+        if (step) step.classList.remove('active');
+        var dot = document.getElementById('dot-' + i);
+        dot.className = 'calc-progress-dot done';
+      }
+      document.getElementById('step-results').classList.add('active');
+
+      // Track event
+      if (typeof fbq === 'function') {
+        fbq('track', 'ViewContent', {
+          content_name: 'Calculator Results',
+          content_category: 'HVAC',
+          value: lostYearly,
+          currency: 'USD'
+        });
+      }
+    }
+
+    // Lead capture form
+    document.getElementById('calc-lead-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var name = document.getElementById('calc-name').value.trim();
+      var email = document.getElementById('calc-lead-email').value.trim();
+      var phone = document.getElementById('calc-phone').value.trim();
+      var company = document.getElementById('calc-company').value.trim();
+      if (!name || !email || !phone || !company) return;
+
+      var btn = this.querySelector('button');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      // Format phone with +1 prefix
+      var formattedPhone = phone.replace(/\D/g, '');
+      if (formattedPhone.length === 10) formattedPhone = '+1' + formattedPhone;
+      else if (formattedPhone.length === 11 && formattedPhone.startsWith('1')) formattedPhone = '+' + formattedPhone;
+      else if (!formattedPhone.startsWith('+')) formattedPhone = '+1' + formattedPhone;
+
+      try {
+        // Create contact in GHL via API
+        var res = await fetch('https://services.leadconnectorhq.com/contacts/', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+            'Version': '2021-07-28',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            firstName: name,
+            email: email,
+            phone: formattedPhone,
+            companyName: company,
+            locationId: 'tQb9YmrGDrdVUJYPKrsY',
+            tags: ['calculator-lead', 'high-intent', 'has-email'].concat(typeof getTctAttributionTags === 'function' ? getTctAttributionTags() : (new URLSearchParams(window.location.search).get('gclid') ? ['google-ads', 'gclid'] : [])),
+            source: 'calculator'
+          })
+        });
+
+        if (res.ok) {
+          // Post attribution notes
+          try {
+            var resData = await res.clone().json();
+            var contactId = resData.contact ? resData.contact.id : null;
+            if (contactId && typeof getTctAttributionNotes === 'function') {
+              var attrNotes = getTctAttributionNotes();
+              if (attrNotes) {
+                fetch('https://services.leadconnectorhq.com/contacts/' + contactId + '/notes', {
+                  method: 'POST',
+                  headers: {
+                    'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+                    'Version': '2021-07-28',
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ body: attrNotes })
+                }).catch(function(){});
+              }
+            }
+          } catch(e) {}
+
+          var lostYearlyText = document.getElementById('result-yearly').textContent;
+          var lostMonthlyText = document.getElementById('result-monthly').textContent;
+
+          // Send HIGH PRIORITY war room alert
+          try {
+            fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+              method: 'POST',
+              headers: { 'Title': 'HIGH-INTENT Calculator Lead!', 'Priority': 'urgent', 'Tags': 'rotating_light,money_with_wings' },
+              body: 'Company: ' + company + '\nName: ' + name + '\nEmail: ' + email + '\nPhone: ' + formattedPhone + '\nCalculator showed: ' + lostYearlyText + ' lost/year (' + lostMonthlyText + '/mo)\n\nACTION: Secret shop this business TONIGHT, then send audit report link'
+            });
+          } catch(err) {}
+
+          // Also notify ops channel
+          try {
+            fetch('https://ntfy.sh/tct-activity-cn1Aqa85', {
+              method: 'POST',
+              headers: { 'Title': 'Calculator Lead: ' + company, 'Priority': 'high', 'Tags': 'calculator,money_with_wings' },
+              body: name + ' | ' + email + ' | ' + formattedPhone + '\nLost: ' + lostYearlyText
+            });
+          } catch(err) {}
+
+          // Track conversion — Meta Pixel
+          if (typeof fbq === 'function') {
+            fbq('track', 'Lead', { content_name: 'Calculator Lead', content_category: 'HVAC' });
+          }
+          // Track conversion — Google Ads
+          if (typeof gtag === 'function') {
+            gtag('event', 'conversion', { send_to: 'AW-17970510102/calculator_lead' });
+          }
+
+          document.getElementById('calc-lead-section').innerHTML = '<div style="text-align:center;padding:24px 0;"><div style="width:56px;height:56px;border-radius:50%;background:rgba(16,185,129,0.1);border:2px solid rgba(16,185,129,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--green-400)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><p style="font-size:1.125rem;font-weight:700;color:var(--green-400);margin-bottom:8px;">We\'ll send your personalized audit within 24 hours.</p><p style="font-size:0.9375rem;color:var(--text-secondary);margin-bottom:12px;">In the meantime, call our demo line:</p><a href="tel:+16157845747" style="display:inline-block;font-size:1.375rem;font-weight:800;color:var(--green-400);margin-bottom:4px;">(615) 784-5747</a><p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">It picks up 24/7. Try it.</p></div>';
+        } else {
+          btn.textContent = 'Get My Free Audit';
+          btn.disabled = false;
+        }
+      } catch(err) {
+        btn.textContent = 'Get My Free Audit';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
