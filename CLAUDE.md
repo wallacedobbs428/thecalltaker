@@ -307,10 +307,38 @@ HVAC, Roofing, Plumbing, Electrical, Dental, MedSpa, Legal, Property Mgmt, Veter
 ### Sales Toolkit (password: tctoolkit) — `website/toolkit/`
 - `index.html`, `call-cheatsheet.html`, `objection-handler.html`, `case-studies.html`
 
+### Case Studies (5) — `website/case-studies/`
+- `index.html` — hub page with aggregate stats + card grid
+- `palmetto-comfort.html` — HVAC, Charleston SC, 41%→0% missed, +$8,400/mo
+- `arctic-air-pros.html` — HVAC, Phoenix AZ, +$14,200/mo, 29x ROI
+- `reliable-rooter.html` — Plumbing, Tampa FL, solo plumber +72% revenue
+- `precision-plumbing.html` — Plumbing, Atlanta GA, replaced $1,400 answering service
+- `rapid-key-locksmith.html` — Locksmith, Nashville TN, +65% emergency revenue
+- All CTAs → book.html (free pilot). Used in trust email sequence + outreach.
+
+### Trust Email Sequence — `docs/trust-email-sequence.md`
+- 4-email sequence for site visitors who didn't convert (48hr cadence)
+- Email 1: Case study drop (industry-matched)
+- Email 2: Demo video link
+- Email 3: Personal note from Wallace
+- Email 4: Last-chance pilot offer with expiry
+- Trigger: `website-visitor` or `calculator-lead` tag + 48hr no conversion
+
+### Demo Video Script — `sales-toolkit/demo-video-script.md`
+- 3-minute Loom walkthrough: call demo line live → show GHL backend → numbers → close
+- Pre-record checklist, word-for-word script, post-recording distribution plan
+
+### Google Business Profile Guide — `docs/google-business-profile-guide.md`
+- Full GBP setup, optimization, review collection strategy, citation building
+- Review request templates for pilot users (SMS + email)
+- Weekly Google Post content calendar
+- Directory listing priority list (Yelp, BBB, Bing, Apple Maps, Clutch, G2)
+
 ### Internal (NOT deployed — local only)
 - `dashboard/` — tool-costs, warroom, pipeline, morning-briefing, sitemap-visual
-- `sales-toolkit/` — duplicate of /toolkit/
+- `sales-toolkit/` — demo-video-script.md + duplicate of /toolkit/
 - `reports/` — web-audit.html, replies report
+- `docs/` — trust-email-sequence.md, google-business-profile-guide.md
 - Root-level old industry pages — replaced by /industries/
 
 ## Pilot Program (14-Day Free Trial)
