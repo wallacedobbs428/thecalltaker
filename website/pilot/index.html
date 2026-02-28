@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free 14-Day Pilot — The Call Taker AI Receptionist</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <meta name="description" content="Let us answer your phones for 14 days. Free. No credit card. No catch. AI receptionist answers calls, books appointments, texts you leads.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Free 14-Day Pilot — Never Miss Another Call">
+  <meta property="og:description" content="We answer your phones for 14 days free. No card, no catch. See the results, then decide.">
+  <meta property="og:url" content="https://thecalltaker.com/pilot/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .pilot-hero { padding: 140px 0 80px; text-align: center; position: relative; overflow: hidden; }
+    @media (min-width: 768px) { .pilot-hero { padding: 180px 0 100px; } }
+    .pilot-hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, var(--green-glow) 0%, transparent 70%); pointer-events: none; opacity: 0.4; }
+
+    .free-badge { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(0,220,130,0.06); border: 1px solid rgba(0,220,130,0.15); border-radius: 100px; font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 24px; }
+    .free-badge svg { width: 16px; height: 16px; }
+
+    .hero-headline { font-size: clamp(32px, 6vw, 56px); font-weight: 900; color: #fff; line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 720px; margin-left: auto; margin-right: auto; }
+    .hero-sub { font-size: 18px; color: var(--text-2); max-width: 520px; margin: 0 auto 32px; line-height: 1.6; }
+
+    .social-proof-strip { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; padding: 20px 0; margin-bottom: 40px; }
+    .proof-item { text-align: center; }
+    .proof-item .val { font-size: 28px; font-weight: 800; color: #fff; }
+    .proof-item .lbl { font-size: 12px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 800px; margin: 0 auto 60px; }
+    @media (max-width: 640px) { .steps-grid { grid-template-columns: 1fr; gap: 16px; } }
+    .step-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; text-align: center; }
+    .step-num { width: 40px; height: 40px; border-radius: 50%; background: var(--green); color: #000; font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .step-card h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .step-card p { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+    .step-card .time { font-size: 12px; color: var(--green); font-weight: 600; margin-top: 8px; }
+
+    .pilot-form-card { max-width: 480px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 36px; }
+    .pilot-form-card h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 4px; text-align: center; }
+    .pilot-form-card .subtext { font-size: 13px; color: var(--text-3); text-align: center; margin-bottom: 24px; }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+    .field input, .field select {
+      width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border); border-radius: 8px; color: #fff;
+      font-size: 14px; font-family: inherit; transition: border-color 0.15s;
+    }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--green); }
+    .field input::placeholder { color: var(--text-3); }
+    .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2371717a' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+    .field select option { background: #111; color: #fff; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+
+    .pilot-success { display: none; text-align: center; padding: 40px 20px; }
+    .pilot-success .icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(0,220,130,0.1); border: 2px solid rgba(0,220,130,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+
+    .quote-section { max-width: 700px; margin: 0 auto; }
+    .quote-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+    .quote-card blockquote { font-size: 15px; color: var(--text-2); line-height: 1.6; margin: 0 0 12px; font-style: italic; }
+    .quote-card .attribution { font-size: 13px; color: var(--green); font-weight: 600; }
+
+    .faq-pilot { max-width: 600px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container" style="display: flex; align-items: center; justify-content: space-between; height: 64px;">
+      <a href="https://thecalltaker.com" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+        <span style="width: 32px; height: 32px; border-radius: 8px; background: var(--green); display: flex; align-items: center; justify-content: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </span>
+        <span style="font-size: 16px; font-weight: 700; color: #fff;">The Call Taker</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="tel:+16157845747" class="btn btn-sm" style="display: none;">Hear the AI</a>
+        <a href="#signup" class="btn btn-green btn-sm">Start Free Pilot</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="pilot-hero">
+    <div class="wrap">
+      <div class="free-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        14 Days Free &middot; No Card Required
+      </div>
+      <h1 class="hero-headline">Let us answer your phones for 14 days. Free.</h1>
+      <p class="hero-sub">No credit card. No contracts. No catch. Just forward your after-hours calls to our AI and watch the leads roll in.</p>
+      <a href="#signup" class="btn btn-green btn-lg">Start Your Free Pilot</a>
+    </div>
+  </section>
+
+  <!-- Social proof strip -->
+  <section style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="wrap">
+      <div class="social-proof-strip">
+        <div class="proof-item">
+          <div class="val">468</div>
+          <div class="lbl">Calls Caught</div>
+        </div>
+        <div class="proof-item">
+          <div class="val">177</div>
+          <div class="lbl">Jobs Booked</div>
+        </div>
+        <div class="proof-item">
+          <div class="val">$48,650</div>
+          <div class="lbl">Revenue Recovered</div>
+        </div>
+        <div class="proof-item">
+          <div class="val">2s</div>
+          <div class="lbl">Avg Answer Time</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 Steps -->
+  <section class="section">
+    <div class="wrap">
+      <h2 style="font-size: 24px; font-weight: 800; color: #fff; text-align: center; margin-bottom: 8px;">How It Works</h2>
+      <p style="font-size: 14px; color: var(--text-3); text-align: center; margin-bottom: 40px;">Up and running in under 5 minutes</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Sign Up</h3>
+          <p>Tell us your business name, industry, and phone number. That's it.</p>
+          <div class="time">60 seconds</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Forward Your Calls</h3>
+          <p>We send you simple instructions to forward after-hours calls to your AI receptionist.</p>
+          <div class="time">2 minutes</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Watch Leads Roll In</h3>
+          <p>Every call answered, every appointment booked, every lead texted to you instantly.</p>
+          <div class="time">Sit back</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case study quotes -->
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="quote-section">
+        <h2 style="font-size: 20px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 24px;">What Business Owners Are Saying</h2>
+
+        <div class="quote-card">
+          <blockquote>"We went from missing 41% of after-hours calls to missing zero. That's $8,400/month we were leaving on the table."</blockquote>
+          <div class="attribution">— Palmetto Comfort Services, Charleston SC (HVAC)</div>
+        </div>
+        <div class="quote-card">
+          <blockquote>"I'm a one-man shop. I can't answer the phone when I'm under a sink. The Call Taker books jobs for me while I work."</blockquote>
+          <div class="attribution">— Reliable Rooter, Tampa FL (Plumbing)</div>
+        </div>
+        <div class="quote-card">
+          <blockquote>"We replaced our $1,400/month answering service. The AI is faster, cheaper, and never puts anyone on hold."</blockquote>
+          <div class="attribution">— Precision Plumbing, Atlanta GA (Plumbing)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signup Form -->
+  <section class="section" id="signup" style="padding-top: 40px;">
+    <div class="wrap">
+      <div class="pilot-form-card" id="pilot-form-container">
+        <h2>Start Your Free 14-Day Pilot</h2>
+        <p class="subtext">No credit card &middot; No commitment &middot; Cancel anytime</p>
+
+        <div class="field">
+          <label>Business Name *</label>
+          <input type="text" id="p-company" placeholder="Acme Plumbing" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>First Name *</label>
+            <input type="text" id="p-first" placeholder="John" required>
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" id="p-last" placeholder="Smith">
+          </div>
+        </div>
+        <div class="field">
+          <label>Phone *</label>
+          <input type="tel" id="p-phone" placeholder="(555) 123-4567" required>
+        </div>
+        <div class="field">
+          <label>Email *</label>
+          <input type="email" id="p-email" placeholder="john@acmeplumbing.com" required>
+        </div>
+        <div class="field">
+          <label>Industry</label>
+          <select id="p-industry">
+            <option value="hvac">HVAC</option>
+            <option value="plumbing">Plumbing</option>
+            <option value="electrical">Electrical</option>
+            <option value="roofing">Roofing</option>
+            <option value="dental">Dental</option>
+            <option value="medspa">Med Spa</option>
+            <option value="legal">Legal</option>
+            <option value="property-management">Property Management</option>
+            <option value="veterinary">Veterinary</option>
+            <option value="locksmith">Locksmith</option>
+            <option value="garage-door">Garage Door</option>
+            <option value="towing">Towing</option>
+            <option value="funeral">Funeral Homes</option>
+          </select>
+        </div>
+
+        <button class="btn btn-green btn-lg" id="pilot-submit" onclick="submitPilot()" style="width: 100%; margin-top: 8px;">Start My Free Pilot</button>
+        <p style="font-size: 11px; color: var(--text-3); text-align: center; margin-top: 12px;">We'll call you within 1 hour to get you set up.</p>
+      </div>
+
+      <!-- Success state -->
+      <div class="pilot-success" id="pilot-success">
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 8px;">You're In!</h2>
+        <p style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Your free 14-day pilot for <strong id="p-company-name" style="color: #fff;">your company</strong> is being set up right now.</p>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+          <p style="font-size: 14px; color: var(--text-2); margin-bottom: 12px;">What happens next:</p>
+          <p style="font-size: 14px; color: #fff; margin-bottom: 8px;"><strong>1.</strong> We'll call you within 1 hour to finalize setup</p>
+          <p style="font-size: 14px; color: #fff; margin-bottom: 8px;"><strong>2.</strong> You'll get simple forwarding instructions via text</p>
+          <p style="font-size: 14px; color: #fff;"><strong>3.</strong> Your AI starts answering calls immediately</p>
+        </div>
+        <p style="font-size: 14px; color: var(--text-2); margin-bottom: 8px;">Want to hear your AI receptionist right now?</p>
+        <a href="tel:+16157845747" style="font-size: 24px; font-weight: 800; color: var(--green); text-decoration: none;">(615) 784-5747</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap faq-pilot">
+      <h3 style="font-size: 18px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 24px;">Common Questions</h3>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          What exactly do I get for free?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">For 14 days, our AI receptionist answers your after-hours calls using your business name, books appointments on your schedule, texts you every lead instantly, and detects emergencies. No credit card, no commitment — just forward your calls and watch.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          What happens after the 14 days?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">We'll send you a full performance report showing exactly how many calls we caught and how much revenue we recovered. If you love it, keep it for $97/mo. If not, no hard feelings — your calls simply go back to your phone.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Will callers know it's AI?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Most callers don't notice. The AI sounds natural, uses your business name, and handles conversations like a trained receptionist. Call our demo line at (615) 784-5747 right now and judge for yourself.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          How hard is it to set up call forwarding?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">It takes about 2 minutes. We'll text you step-by-step instructions for your exact phone carrier (AT&T, Verizon, T-Mobile, etc.). Most people do it from their phone in under a minute.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Is there really no catch?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">No catch. No credit card. No auto-billing. We limit pilots to 5 businesses at a time so we can give each one personal attention. After 14 days, you decide — keep it for $97/mo or walk away with zero obligation.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section style="text-align: center; padding: 60px 24px; border-top: 1px solid var(--border);">
+    <p style="font-size: 13px; color: var(--text-3); margin-bottom: 4px;">Every missed call costs you</p>
+    <p style="font-size: 32px; font-weight: 800; color: #ef4444; margin-bottom: 4px;">$350 — $8,500</p>
+    <p style="font-size: 13px; color: var(--text-3); margin-bottom: 24px;">depending on your industry. Find out how much you're losing — for free.</p>
+    <a href="#signup" class="btn btn-green btn-lg">Start Your Free Pilot</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="text-align: center;">
+        <span>&copy; 2026 The Call Taker. All rights reserved. Brentwood, TN</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky mobile bar -->
+  <div class="sticky-mobile-bar">
+    <a href="#signup">Start Free Pilot</a>
+    <a href="tel:+16157845747" style="background: transparent !important; color: #fff !important;">Hear the AI</a>
+  </div>
+
+  <!-- Tracking -->
+  <script src="../tct-tracking.js"></script>
+
+  <script>
+    // Header scroll
+    var header = document.querySelector('.header');
+    window.addEventListener('scroll', function() {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    async function submitPilot() {
+      var btn = document.getElementById('pilot-submit');
+      var company = document.getElementById('p-company').value.trim();
+      var first = document.getElementById('p-first').value.trim();
+      var phone = document.getElementById('p-phone').value.trim();
+      var email = document.getElementById('p-email').value.trim();
+
+      if (!company || !first || !phone || !email) {
+        alert('Please fill in the required fields.');
+        return;
+      }
+
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+
+      var data = {
+        company: company,
+        firstName: first,
+        lastName: document.getElementById('p-last').value.trim(),
+        phone: phone,
+        email: email,
+        industry: document.getElementById('p-industry').value
+      };
+
+      // Build tags
+      var tags = ['pilot-signup', 'free-pilot', 'industry-' + data.industry];
+
+      // Attribution tags
+      if (typeof getTctAttributionTags === 'function') {
+        var attrTags = getTctAttributionTags();
+        if (attrTags && attrTags.length) tags = tags.concat(attrTags);
+      }
+
+      // Capture gclid
+      var urlParams = new URLSearchParams(window.location.search);
+      var gclid = urlParams.get('gclid');
+      if (gclid) tags.push('google-ads', 'gclid');
+
+      // Create GHL contact
+      try {
+        var ghlBody = {
+          locationId: 'tQb9YmrGDrdVUJYPKrsY',
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          companyName: data.company,
+          tags: tags
+        };
+
+        var resp = await fetch('https://services.leadconnectorhq.com/contacts/', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+            'Version': '2021-07-28',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(ghlBody)
+        });
+        var result = await resp.json();
+
+        // Post attribution notes
+        if (result && result.contact && result.contact.id && typeof getTctAttributionNotes === 'function') {
+          var notes = getTctAttributionNotes();
+          if (notes) {
+            await fetch('https://services.leadconnectorhq.com/contacts/' + result.contact.id + '/notes', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+                'Version': '2021-07-28',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ body: 'Pilot Signup Attribution:\n' + notes })
+            });
+          }
+        }
+      } catch(e) {}
+
+      // War room alert
+      try {
+        await fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+          method: 'POST',
+          headers: {
+            'Title': 'NEW PILOT SIGNUP: ' + data.company,
+            'Priority': 'urgent',
+            'Tags': 'rocket,rotating_light,fire'
+          },
+          body: 'Company: ' + data.company +
+                '\nName: ' + data.firstName + ' ' + (data.lastName || '') +
+                '\nEmail: ' + data.email +
+                '\nPhone: ' + data.phone +
+                '\nIndustry: ' + data.industry +
+                '\nSource: Pilot Landing Page' +
+                '\n\nACTION: Call them within 1 hour to set up forwarding!'
+        });
+      } catch(e) {}
+
+      // Google Ads conversion
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', { send_to: 'AW-17970510102/pilot_signup' });
+      }
+
+      // Show success
+      document.getElementById('p-company-name').textContent = data.company;
+      document.getElementById('pilot-form-container').style.display = 'none';
+      document.getElementById('pilot-success').style.display = 'block';
+      window.scrollTo({ top: document.getElementById('signup').offsetTop - 80, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
