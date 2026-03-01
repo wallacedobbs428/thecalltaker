@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Client Setup Tracker | The Call Taker</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
+  <script src="../tct-tracking.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white: #ffffff;
+      --off-white: #f9fafb;
+      --light: #f3f4f6;
+      --border: #e5e7eb;
+      --text: #111827;
+      --text-secondary: #4b5563;
+      --text-muted: #9ca3af;
+      --navy: #1e3a5f;
+      --navy-dark: #0f2440;
+      --orange: #ea580c;
+      --orange-hover: #c2410c;
+      --orange-light: #fff7ed;
+      --green: #059669;
+      --green-light: #ecfdf5;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --radius: 12px;
+      --radius-full: 9999px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--off-white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      max-width: 1140px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      font-size: 1.35rem; font-weight: 800; color: var(--navy);
+      text-decoration: none; letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--orange); }
+    .nav-links {
+      display: flex; align-items: center; gap: 8px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none; font-size: 0.9rem; font-weight: 500;
+      color: var(--text-secondary); padding: 8px 14px; border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { color: var(--navy); background: var(--light); }
+    .nav-demo { color: var(--orange) !important; font-weight: 600 !important; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; font-weight: 600; border: none; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+    .btn-primary { background: var(--orange); color: var(--white); border-radius: var(--radius-full); }
+    .btn-primary:hover { background: var(--orange-hover); }
+    .btn-sm { padding: 8px 20px; font-size: 0.875rem; }
+    .mobile-toggle {
+      display: none; background: none; border: none; cursor: pointer;
+      flex-direction: column; gap: 5px; padding: 8px;
+    }
+    .mobile-toggle span {
+      display: block; width: 24px; height: 2px; background: var(--navy);
+      border-radius: 2px; transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-toggle { display: flex; }
+      .nav-links {
+        display: none; position: absolute; top: 72px; left: 0; right: 0;
+        background: var(--white); flex-direction: column;
+        padding: 16px 24px; border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
+      }
+      .nav-links.open { display: flex; }
+    }
+
+    /* ── Page Title ── */
+    .page-title {
+      padding: 48px 24px 32px;
+      text-align: center;
+    }
+    .page-title h1 {
+      font-size: 1.75rem; font-weight: 800; color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .page-title p {
+      font-size: 0.95rem; color: var(--text-muted);
+    }
+
+    /* ── Tracker Content ── */
+    .tracker {
+      max-width: 760px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+
+    .tracker-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tracker-card h2 {
+      font-size: 1.1rem; font-weight: 700; color: var(--navy);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--light);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .tracker-card h2 svg { flex-shrink: 0; color: var(--orange); }
+
+    /* Client info fields */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .info-field {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .info-field label {
+      font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .info-field input {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; color: var(--text);
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--off-white);
+      transition: border-color 0.2s;
+    }
+    .info-field input:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: var(--white);
+    }
+
+    @media (max-width: 500px) {
+      .info-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Checklist */
+    .checklist { display: flex; flex-direction: column; gap: 0; }
+
+    .checklist-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--light);
+      cursor: pointer;
+      transition: background 0.15s;
+      border-radius: 6px;
+      padding-left: 8px; padding-right: 8px;
+    }
+    .checklist-item:last-child { border-bottom: none; }
+    .checklist-item:hover { background: var(--off-white); }
+
+    .checklist-item input[type="checkbox"] {
+      -webkit-appearance: none; appearance: none;
+      width: 22px; height: 22px; flex-shrink: 0;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+    }
+    .checklist-item input[type="checkbox"]:checked {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .checklist-item input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 6px; top: 2px;
+      width: 6px; height: 11px;
+      border: solid white; border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .checklist-item label {
+      font-size: 0.93rem; color: var(--text);
+      cursor: pointer; flex: 1;
+      transition: all 0.2s;
+    }
+    .checklist-item input[type="checkbox"]:checked + label {
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .checklist-item .badge {
+      font-size: 0.7rem; font-weight: 600;
+      padding: 3px 10px; border-radius: var(--radius-full);
+      flex-shrink: 0;
+    }
+    .badge-test { background: var(--orange-light); color: var(--orange); }
+    .badge-comm { background: #ede9fe; color: #7c3aed; }
+    .badge-review { background: #e0f2fe; color: #0284c7; }
+
+    /* Progress bar */
+    .progress-wrap {
+      margin-bottom: 20px;
+    }
+    .progress-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 8px;
+    }
+    .progress-header span {
+      font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+    }
+    .progress-bar {
+      width: 100%; height: 8px;
+      background: var(--light);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--orange), var(--green));
+      border-radius: var(--radius-full);
+      transition: width 0.4s ease;
+    }
+
+    /* Notes */
+    .notes-area {
+      width: 100%;
+      min-height: 140px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.93rem;
+      color: var(--text);
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--off-white);
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+    .notes-area:focus {
+      outline: none;
+      border-color: var(--orange);
+      background: var(--white);
+    }
+    .notes-area::placeholder { color: var(--text-muted); }
+
+    /* Buttons */
+    .btn-row {
+      display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-clear {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      color: #dc2626;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-clear:hover { background: #fee2e2; }
+    .btn-save {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      color: var(--white);
+      background: var(--green);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-save:hover { background: #047857; }
+
+    .save-toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--navy); color: var(--white);
+      padding: 12px 24px; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.3s ease;
+      z-index: 200;
+    }
+    .save-toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--navy-dark); color: rgba(255,255,255,0.7);
+      padding: 60px 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    .footer-brand .logo { color: var(--white); font-size: 1.25rem; display: inline-block; margin-bottom: 12px; }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.6; }
+    .footer-col h4 { color: var(--white); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9rem; padding: 4px 0; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 0; margin-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.85rem;
+    }
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 8px; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Print Styles ── */
+    @media print {
+      .site-header, .site-footer, .mobile-toggle, .btn-row, .save-toast { display: none !important; }
+      body { background: white; }
+      .tracker { margin: 0; padding: 0; max-width: 100%; }
+      .tracker-card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; page-break-inside: avoid; }
+      .checklist-item input[type="checkbox"] {
+        -webkit-appearance: auto; appearance: auto;
+        width: 16px; height: 16px;
+      }
+      .info-field input { border: none; background: none; padding: 4px 0; }
+      .notes-area { border: 1px solid #ddd; background: none; }
+      .page-title { padding-top: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">The Call<span>Taker</span></a>
+    <ul class="nav-links" id="nav">
+      <li><a href="../index.html#how-it-works">How It Works</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="../case-studies/">Case Studies</a></li>
+      <li><a href="tel:+16157845747" class="nav-demo">Demo: (615) 784-5747</a></li>
+      <li><a href="../pilot/" class="btn btn-primary btn-sm">Try Free for 14 Days</a></li>
+    </ul>
+    <button class="mobile-toggle" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="page-title">
+  <h1>Client Setup Tracker</h1>
+  <p>Internal onboarding checklist — track every step from intake to go-live</p>
+</div>
+
+<div class="tracker">
+
+  <!-- Client Info -->
+  <div class="tracker-card">
+    <h2>
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      Client Info
+    </h2>
+    <div class="info-grid">
+      <div class="info-field">
+        <label>Client Name</label>
+        <input type="text" id="clientName" placeholder="e.g. Arctic Air Pros">
+      </div>
+      <div class="info-field">
+        <label>Industry</label>
+        <input type="text" id="clientIndustry" placeholder="e.g. HVAC">
+      </div>
+      <div class="info-field">
+        <label>Date Started</label>
+        <input type="date" id="clientDate">
+      </div>
+      <div class="info-field">
+        <label>AI Phone Number</label>
+        <input type="text" id="clientPhone" placeholder="e.g. (615) 555-0123">
+      </div>
+      <div class="info-field">
+        <label>Plan Tier</label>
+        <input type="text" id="clientPlan" placeholder="e.g. Starter $497/mo">
+      </div>
+    </div>
+  </div>
+
+  <!-- Setup Checklist -->
+  <div class="tracker-card">
+    <h2>
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+      Setup Checklist
+    </h2>
+
+    <div class="progress-wrap">
+      <div class="progress-header">
+        <span>Progress</span>
+        <span id="progressText">0 / 14</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <div class="checklist" id="checklist">
+      <div class="checklist-item">
+        <input type="checkbox" id="chk1" data-key="intake_received">
+        <label for="chk1">Intake form received</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk2" data-key="ghl_contact">
+        <label for="chk2">GHL contact created + tagged</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk3" data-key="voice_configured">
+        <label for="chk3">AI voice agent configured</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk4" data-key="phone_purchased">
+        <label for="chk4">Phone number purchased + assigned</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk5" data-key="test1">
+        <label for="chk5">Test call 1: Standard — PASSED</label>
+        <span class="badge badge-test">Test</span>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk6" data-key="test2">
+        <label for="chk6">Test call 2: Emergency — PASSED</label>
+        <span class="badge badge-test">Test</span>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk7" data-key="test3">
+        <label for="chk7">Test call 3: After-hours — PASSED</label>
+        <span class="badge badge-test">Test</span>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk8" data-key="client_approved">
+        <label for="chk8">Client approved test calls</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk9" data-key="forwarding_active">
+        <label for="chk9">Call forwarding activated</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk10" data-key="live_tag">
+        <label for="chk10">"Live" tag applied</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk11" data-key="welcome_sent">
+        <label for="chk11">Welcome messages sent</label>
+        <span class="badge badge-comm">Comms</span>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk12" data-key="checkin_24hr">
+        <label for="chk12">24-hour check-in scheduled</label>
+        <span class="badge badge-review">Review</span>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk13" data-key="checkin_1wk">
+        <label for="chk13">1-week review scheduled</label>
+        <span class="badge badge-review">Review</span>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="chk14" data-key="checkin_1mo">
+        <label for="chk14">1-month review scheduled</label>
+        <span class="badge badge-review">Review</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="tracker-card">
+    <h2>
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+      Notes
+    </h2>
+    <textarea class="notes-area" id="notesArea" placeholder="Add setup notes, special client requests, script customizations..."></textarea>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="btn-row">
+    <button class="btn-clear" id="clearBtn">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+      Clear All
+    </button>
+    <button class="btn-save" id="saveBtn">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+      Save
+    </button>
+  </div>
+</div>
+
+<div class="save-toast" id="toast">Saved</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">The Call<span>Taker</span></a>
+        <p>AI receptionist for service businesses. Answers every call, books every job, never takes a day off.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><a href="../index.html#how-it-works">How It Works</a><a href="../index.html#pricing">Pricing</a><a href="../industries/">Industries</a><a href="../pilot/">Start Free Pilot</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="../case-studies/">Case Studies</a><a href="../book.html">Book a Demo</a><a href="../blog/">Blog</a><a href="../agency.html">Agencies</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+16157845747">(615) 784-5747</a><a href="mailto:wallace@thecalltaker.com">wallace@thecalltaker.com</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Service</a></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 The Call Taker. All rights reserved.</p><p>Nashville, TN</p></div>
+  </div>
+</footer>
+
+<script>
+  // Password gate
+  (function() {
+    var authenticated = sessionStorage.getItem('tct_checklist_auth');
+    if (authenticated !== 'true') {
+      var pw = prompt('Enter setup password:');
+      if (pw !== 'tctsetup') {
+        window.location.href = '../index.html';
+        return;
+      }
+      sessionStorage.setItem('tct_checklist_auth', 'true');
+    }
+  })();
+
+  // Mobile menu
+  document.getElementById('menuBtn').addEventListener('click', function() {
+    document.getElementById('nav').classList.toggle('open');
+  });
+
+  var STORAGE_KEY = 'tct_setup_tracker';
+
+  // Load state from localStorage
+  function loadState() {
+    var saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return null;
+    try { return JSON.parse(saved); } catch(e) { return null; }
+  }
+
+  // Save state to localStorage
+  function saveState() {
+    var state = {
+      clientInfo: {
+        clientName: document.getElementById('clientName').value,
+        clientIndustry: document.getElementById('clientIndustry').value,
+        clientDate: document.getElementById('clientDate').value,
+        clientPhone: document.getElementById('clientPhone').value,
+        clientPlan: document.getElementById('clientPlan').value
+      },
+      checks: {},
+      notes: document.getElementById('notesArea').value
+    };
+    var checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+    checkboxes.forEach(function(cb) {
+      state.checks[cb.dataset.key] = cb.checked;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    showToast('Saved');
+  }
+
+  // Restore state
+  function restoreState() {
+    var state = loadState();
+    if (!state) return;
+    if (state.clientInfo) {
+      for (var key in state.clientInfo) {
+        var el = document.getElementById(key);
+        if (el) el.value = state.clientInfo[key] || '';
+      }
+    }
+    if (state.checks) {
+      var checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+      checkboxes.forEach(function(cb) {
+        if (state.checks[cb.dataset.key] !== undefined) {
+          cb.checked = state.checks[cb.dataset.key];
+        }
+      });
+    }
+    if (state.notes) {
+      document.getElementById('notesArea').value = state.notes;
+    }
+    updateProgress();
+  }
+
+  // Update progress bar
+  function updateProgress() {
+    var checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+    var total = checkboxes.length;
+    var checked = 0;
+    checkboxes.forEach(function(cb) { if (cb.checked) checked++; });
+    var pct = Math.round((checked / total) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = checked + ' / ' + total;
+  }
+
+  // Toast notification
+  function showToast(msg) {
+    var toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 2000);
+  }
+
+  // Event listeners
+  var checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+  checkboxes.forEach(function(cb) {
+    cb.addEventListener('change', function() {
+      updateProgress();
+      saveState();
+    });
+  });
+
+  document.getElementById('saveBtn').addEventListener('click', saveState);
+
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    if (!confirm('Clear all data? This cannot be undone.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    document.getElementById('clientName').value = '';
+    document.getElementById('clientIndustry').value = '';
+    document.getElementById('clientDate').value = '';
+    document.getElementById('clientPhone').value = '';
+    document.getElementById('clientPlan').value = '';
+    document.getElementById('notesArea').value = '';
+    checkboxes.forEach(function(cb) { cb.checked = false; });
+    updateProgress();
+    showToast('Cleared');
+  });
+
+  // Initialize
+  restoreState();
+</script>
+
+</body>
+</html>
