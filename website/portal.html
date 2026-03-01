@@ -1,416 +1,601 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Customer Portal — The Call Taker</title>
+  <title>Client Dashboard — The Call Taker</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    .portal-hero { padding: 120px 0 60px; text-align: center; }
-    @media (min-width: 768px) { .portal-hero { padding: 140px 0 80px; } }
+/* === VARIABLES === */
+:root {
+  --white: #ffffff;
+  --off-white: #f9fafb;
+  --light: #f3f4f6;
+  --border: #e5e7eb;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --navy: #1e3a5f;
+  --navy-dark: #0f2440;
+  --orange: #ea580c;
+  --orange-hover: #c2410c;
+  --orange-light: #fff7ed;
+  --green: #059669;
+  --green-light: #ecfdf5;
+  --red: #dc2626;
+  --red-light: #fef2f2;
+  --star: #f59e0b;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -2px rgba(0,0,0,.05);
+  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.03);
+  --shadow-xl: 0 20px 50px -12px rgba(0,0,0,.12);
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
 
-    .portal-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 48px; }
-    @media (min-width: 768px) { .portal-grid { grid-template-columns: repeat(2, 1fr); } }
+/* === RESET === */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; font-size: 17px; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+.container, .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-    .portal-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
-    .portal-card h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .portal-card p { font-size: 14px; color: var(--text-2); margin-bottom: 20px; }
+/* === HEADER === */
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
+.site-header.scrolled { border-bottom-color: var(--border); box-shadow: var(--shadow-sm); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.logo { font-size: 1.25rem; font-weight: 800; color: var(--navy); letter-spacing: -.02em; text-decoration: none; }
+.logo span { color: var(--orange); }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a { font-size: .9rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-demo { font-weight: 700 !important; color: var(--navy) !important; letter-spacing: -.01em; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit; font-weight: 700; border: none; cursor: pointer; text-decoration: none; transition: all .2s; line-height: 1; }
+.btn-primary { background: var(--orange); color: var(--white); padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; }
+.btn-primary:hover { background: var(--orange-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(234,88,12,.3); text-decoration: none; color: var(--white); }
+.btn-outline { background: transparent; color: var(--navy); padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; border: 2px solid var(--border); }
+.btn-outline:hover { border-color: var(--navy); background: var(--off-white); text-decoration: none; }
+.btn-sm { padding: 10px 20px; font-size: .85rem; }
+.btn-lg { padding: 16px 32px; font-size: 1rem; }
+.mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+.mobile-toggle span { display: block; width: 24px; height: 2px; background: var(--text); margin: 5px 0; transition: .3s; }
 
-    .status-indicator { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(0,220,130,0.08); border: 1px solid rgba(0,220,130,0.2); border-radius: 100px; font-size: 13px; font-weight: 600; color: var(--green); }
-    .status-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse-dot 2s infinite; }
-    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+/* === PASSWORD MODAL === */
+.pw-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(15,36,64,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; }
+.pw-overlay.hidden { display: none; }
+.pw-modal { background: var(--white); border-radius: var(--radius-lg); padding: 40px 36px; max-width: 400px; width: 90%; box-shadow: var(--shadow-xl); text-align: center; }
+.pw-modal .logo { font-size: 1.5rem; display: inline-block; margin-bottom: 24px; }
+.pw-modal h2 { font-size: 1.15rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 6px; }
+.pw-modal p { font-size: .9rem; color: var(--text-secondary); margin-bottom: 20px; }
+.pw-modal input { width: 100%; padding: 14px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: .95rem; font-family: inherit; margin-bottom: 12px; transition: border-color .15s; color: var(--text); }
+.pw-modal input:focus { outline: none; border-color: var(--orange); }
+.pw-modal .pw-error { font-size: .82rem; color: var(--red); margin-bottom: 12px; display: none; }
+.pw-modal .pw-error.show { display: block; }
+.pw-modal .btn { width: 100%; justify-content: center; }
 
-    .faq-section { margin-top: 64px; }
-    .faq-item { border-bottom: 1px solid var(--border); }
-    .faq-question { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 20px 0; font-size: 15px; font-weight: 600; color: #fff; text-align: left; cursor: pointer; background: none; border: none; font-family: inherit; }
-    .faq-question:hover { color: var(--green); }
-    .faq-question svg { width: 20px; height: 20px; color: var(--text-3); transition: transform 0.2s; flex-shrink: 0; margin-left: 16px; }
-    .faq-item.open .faq-question svg { transform: rotate(180deg); }
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-    .faq-answer-inner { padding: 0 0 20px; font-size: 14px; color: var(--text-2); line-height: 1.7; }
-    .faq-answer-inner ol, .faq-answer-inner ul { padding-left: 20px; margin: 8px 0; }
-    .faq-answer-inner li { margin-bottom: 4px; }
-    .faq-item.open .faq-answer { max-height: 500px; }
+/* === DASHBOARD === */
+.dashboard-content { display: none; }
+.dashboard-content.unlocked { display: block; }
 
-    .portal-form { display: flex; flex-direction: column; gap: 12px; }
-    .portal-form label { font-size: 13px; font-weight: 600; color: var(--text-2); }
-    .portal-form input, .portal-form textarea, .portal-form select { width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-family: inherit; font-size: 14px; }
-    .portal-form input:focus, .portal-form textarea:focus { outline: none; border-color: var(--green); }
-    .portal-form textarea { min-height: 100px; resize: vertical; }
-    .portal-form .btn { align-self: flex-start; }
+.dash-hero { padding: 120px 0 32px; }
+@media (min-width: 768px) { .dash-hero { padding: 120px 0 40px; } }
+.dash-hero h1 { font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: var(--navy-dark); margin-bottom: 4px; }
+.dash-hero p { font-size: .95rem; color: var(--text-secondary); }
 
-    .form-success { display: none; padding: 16px; background: rgba(0,220,130,0.08); border: 1px solid rgba(0,220,130,0.2); border-radius: 8px; color: var(--green); font-size: 14px; font-weight: 600; }
-    .form-success.show { display: block; }
+/* Section titles */
+.section { padding: 32px 0; }
+.section-title { font-size: 1.25rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 20px; }
 
-    .form-group { display: flex; flex-direction: column; gap: 4px; }
+/* === STATUS CARD === */
+.status-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow); }
+.status-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+.status-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: var(--radius-full); font-size: .82rem; font-weight: 600; }
+.status-badge.active { background: var(--green-light); color: var(--green); }
+.status-badge.inactive { background: var(--red-light); color: var(--red); }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; }
+.status-badge.active .status-dot { background: var(--green); animation: pulse-dot 2s infinite; }
+.status-badge.inactive .status-dot { background: var(--red); }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.status-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (min-width: 640px) { .status-grid { grid-template-columns: repeat(4, 1fr); } }
+.status-item label { display: block; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); margin-bottom: 4px; }
+.status-item .value { font-size: 1rem; font-weight: 600; color: var(--text); }
+
+/* === STAT CARDS === */
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (min-width: 640px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+.stat-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); text-align: center; }
+.stat-card .stat-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+.stat-card .stat-icon.calls { background: rgba(37,99,235,0.08); color: #2563eb; }
+.stat-card .stat-icon.leads { background: var(--orange-light); color: var(--orange); }
+.stat-card .stat-icon.jobs { background: var(--green-light); color: var(--green); }
+.stat-card .stat-icon.revenue { background: rgba(139,92,246,0.08); color: #8b5cf6; }
+.stat-card .stat-icon svg { width: 22px; height: 22px; }
+.stat-card .stat-value { font-size: 1.75rem; font-weight: 800; color: var(--navy-dark); margin-bottom: 2px; }
+.stat-card .stat-label { font-size: .82rem; color: var(--text-muted); }
+.stat-note { font-size: .78rem; color: var(--text-muted); text-align: center; margin-top: 12px; font-style: italic; }
+
+/* === QUICK LINKS === */
+.link-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (min-width: 640px) { .link-grid { grid-template-columns: repeat(4, 1fr); } }
+.link-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 20px; text-align: center; box-shadow: var(--shadow-sm); transition: all .2s; cursor: pointer; text-decoration: none; display: block; }
+.link-card:hover { border-color: var(--orange); box-shadow: var(--shadow); transform: translateY(-2px); }
+.link-card .link-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--off-white); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+.link-card .link-icon svg { width: 22px; height: 22px; color: var(--navy); }
+.link-card h3 { font-size: .9rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.link-card p { font-size: .78rem; color: var(--text-muted); line-height: 1.4; }
+
+/* === HELP SECTION === */
+.help-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 768px) { .help-grid { grid-template-columns: 1fr 1fr; } }
+.help-contact { background: var(--off-white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; }
+.help-contact h3 { font-size: 1rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 16px; }
+.contact-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.contact-row:last-child { border-bottom: none; }
+.contact-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--white); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.contact-icon svg { width: 18px; height: 18px; color: var(--navy); }
+.contact-info .label { font-size: .78rem; color: var(--text-muted); margin-bottom: 1px; }
+.contact-info a { font-size: .95rem; font-weight: 600; color: var(--navy); }
+.contact-info a:hover { color: var(--orange); }
+
+/* === FAQ === */
+.faq-section { background: var(--off-white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; }
+.faq-section h3 { font-size: 1rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 16px; }
+.faq-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; background: var(--white); }
+.faq-question { width: 100%; padding: 16px 20px; background: var(--white); border: none; text-align: left; font-size: .9rem; font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; transition: background .15s; }
+.faq-question:hover { background: var(--off-white); }
+.faq-icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--text-muted); transition: transform .3s; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.faq-item.open .faq-answer { max-height: 500px; }
+.faq-answer-inner { padding: 0 20px 16px; font-size: .87rem; color: var(--text-secondary); line-height: 1.7; }
+
+/* === UPGRADE SECTION === */
+.upgrade-section { background: linear-gradient(135deg, var(--navy-dark), var(--navy)); border-radius: var(--radius-lg); padding: 40px 32px; color: var(--white); }
+.upgrade-section h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
+.upgrade-section > p { font-size: .9rem; color: rgba(255,255,255,.7); margin-bottom: 28px; }
+.plan-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 640px) { .plan-grid { grid-template-columns: repeat(3, 1fr); } }
+.plan-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius); padding: 24px; text-align: center; position: relative; transition: all .2s; }
+.plan-card:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); }
+.plan-card.recommended { border-color: var(--orange); background: rgba(234,88,12,.1); }
+.plan-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--orange); color: var(--white); font-size: .7rem; font-weight: 700; padding: 3px 12px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+.plan-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; margin-top: 8px; }
+.plan-price { font-size: 2rem; font-weight: 800; margin-bottom: 4px; }
+.plan-price small { font-size: .85rem; font-weight: 500; color: rgba(255,255,255,.6); }
+.plan-features { list-style: none; text-align: left; margin: 16px 0; }
+.plan-features li { font-size: .82rem; color: rgba(255,255,255,.75); padding: 5px 0; display: flex; align-items: flex-start; gap: 8px; }
+.plan-features li svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; margin-top: 1px; }
+.plan-cta { display: block; width: 100%; padding: 12px; border-radius: var(--radius-full); font-size: .85rem; font-weight: 700; text-align: center; text-decoration: none; transition: all .2s; }
+.plan-cta.primary { background: var(--orange); color: var(--white); border: none; cursor: pointer; font-family: inherit; }
+.plan-cta.primary:hover { background: var(--orange-hover); }
+.plan-cta.secondary { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,.2); cursor: pointer; font-family: inherit; }
+.plan-cta.secondary:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.35); }
+
+/* === FOOTER === */
+.site-footer { background: var(--off-white); border-top: 1px solid var(--border); padding: 48px 0 32px; margin-top: 48px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer-brand .logo { display: inline-block; margin-bottom: 12px; }
+.footer-brand p { font-size: .9rem; color: var(--text-secondary); line-height: 1.6; max-width: 280px; }
+.footer-col h4 { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); margin-bottom: 16px; }
+.footer-col a { display: block; font-size: .9rem; color: var(--text-secondary); padding: 4px 0; transition: color .2s; text-decoration: none; }
+.footer-col a:hover { color: var(--text); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; }
+.footer-bottom p { font-size: .82rem; color: var(--text-muted); }
+
+/* === FADE === */
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .nav-links { display: none; }
+  .mobile-toggle { display: block; }
+  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--border); padding: 24px; gap: 16px; box-shadow: var(--shadow-lg); z-index: 999; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .link-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .status-grid { grid-template-columns: 1fr 1fr; }
+}
   </style>
+  <script src="tct-tracking.js"></script>
 </head>
 <body>
 
-<a href="#main" class="skip-link">Skip to content</a>
+<!-- PASSWORD GATE -->
+<div class="pw-overlay" id="pwOverlay">
+  <div class="pw-modal">
+    <a href="index.html" class="logo">The Call<span>Taker</span></a>
+    <h2>Client Dashboard</h2>
+    <p>Enter your password to access your dashboard.</p>
+    <form id="pwForm" onsubmit="return checkPassword(event)">
+      <input type="password" id="pwInput" placeholder="Password" autofocus autocomplete="current-password">
+      <div class="pw-error" id="pwError">Incorrect password. Please try again.</div>
+      <button type="submit" class="btn btn-primary">Sign In</button>
+    </form>
+  </div>
+</div>
 
-<!-- NAV -->
-<header class="header">
+<!-- HEADER -->
+<header class="site-header" id="header">
   <div class="header-inner">
-    <a href="index.html" class="logo">
-      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-      The Call <span>Taker</span>
-    </a>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="book.html">Demo</a>
-      <a href="portal.html" class="active">Customer Portal</a>
-    </nav>
-    <a href="tel:+16157845747" class="header-cta">Call Us</a>
-    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <a href="index.html" class="logo">The Call<span>Taker</span></a>
+    <ul class="nav-links" id="nav">
+      <li><a href="index.html#how-it-works">How It Works</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="case-studies/">Case Studies</a></li>
+      <li><a href="tel:+16157845747" class="nav-demo">Demo: (615) 784-5747</a></li>
+      <li><a href="pilot/" class="btn btn-primary btn-sm">Try Free for 14 Days</a></li>
+    </ul>
+    <button class="mobile-toggle" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
-<nav class="mobile-nav">
-  <a href="index.html">Home</a>
-  <a href="book.html">Demo</a>
-  <a href="portal.html">Customer Portal</a>
-  <a href="tel:+16157845747" class="btn btn-primary btn-lg">Call Us</a>
-</nav>
+<!-- DASHBOARD CONTENT (hidden until password verified) -->
+<div class="dashboard-content" id="dashboardContent">
 
-<!-- HERO -->
-<section class="portal-hero" id="main">
-  <div class="wrap">
-    <div class="status-indicator"><span class="status-dot"></span> Your AI Receptionist is Active</div>
-    <h1 class="section-title" style="margin-top: 24px; font-size: clamp(32px, 5vw, 48px);">Customer Portal</h1>
-    <p class="section-desc" style="max-width: 500px; margin: 12px auto 0;">Get help, check FAQs, submit a support request, or refer a friend.</p>
+  <!-- HERO / WELCOME -->
+  <div class="dash-hero">
+    <div class="wrap">
+      <h1>Welcome back.</h1>
+      <p>Here is a snapshot of your AI receptionist and how things are going.</p>
+    </div>
   </div>
-</section>
 
-<!-- QUICK HELP CARDS -->
-<section class="section" style="padding-top: 0;">
-  <div class="wrap">
-    <div class="portal-grid">
-
-      <div class="portal-card">
-        <h3>Account Status</h3>
-        <p>Your AI receptionist is answering calls 24/7 for your business. If anything seems off, submit a support request below.</p>
-        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
-          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
-            <span style="color: var(--text-3);">Service</span>
-            <span style="color: #fff; font-weight: 600;">AI Receptionist</span>
+  <!-- 1. YOUR AI RECEPTIONIST -->
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap">
+      <h2 class="section-title">Your AI Receptionist</h2>
+      <div class="status-card fade-up">
+        <div class="status-header">
+          <div style="font-size: 1.1rem; font-weight: 700; color: var(--navy-dark);">Account Overview</div>
+          <div class="status-badge active" id="statusBadge">
+            <span class="status-dot"></span> Active
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
-            <span style="color: var(--text-3);">Status</span>
-            <span style="color: var(--green); font-weight: 600;">Active</span>
+        </div>
+        <div class="status-grid">
+          <div class="status-item">
+            <label>AI Phone Number</label>
+            <div class="value">(XXX) XXX-XXXX</div>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
-            <span style="color: var(--text-3);">Support</span>
-            <span style="color: #fff; font-weight: 600;">(615) 784-5747</span>
+          <div class="status-item">
+            <label>Hours Active</label>
+            <div class="value">24/7</div>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px 0;">
-            <span style="color: var(--text-3);">Email</span>
-            <span style="color: #fff; font-weight: 600;">wallacemdobbs@icloud.com</span>
+          <div class="status-item">
+            <label>Agent Name</label>
+            <div class="value">Jessica</div>
+          </div>
+          <div class="status-item">
+            <label>Industry</label>
+            <div class="value">HVAC</div>
           </div>
         </div>
       </div>
-
-      <div class="portal-card">
-        <h3>Quick Links</h3>
-        <p>Common actions and resources for your account.</p>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <a href="#faq" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--surface-hover); border-radius: 8px; font-size: 14px; font-weight: 500; color: #fff;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            Troubleshooting FAQ
-          </a>
-          <a href="#support" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--surface-hover); border-radius: 8px; font-size: 14px; font-weight: 500; color: #fff;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Submit Support Request
-          </a>
-          <a href="#referral" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--surface-hover); border-radius: 8px; font-size: 14px; font-weight: 500; color: #fff;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            Refer a Friend — Get a Free Month
-          </a>
-        </div>
-      </div>
-
     </div>
+  </section>
 
-    <!-- FAQ SECTION -->
-    <div class="faq-section" id="faq">
-      <p class="section-label">Troubleshooting</p>
-      <h2 class="section-title">Frequently Asked Questions</h2>
+  <!-- 2. THIS MONTH'S RESULTS -->
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section-title">This Month's Results</h2>
+      <div class="stat-grid fade-up">
+        <div class="stat-card">
+          <div class="stat-icon calls">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="stat-value">&mdash;</div>
+          <div class="stat-label">Calls Answered</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon leads">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-value">&mdash;</div>
+          <div class="stat-label">Leads Captured</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon jobs">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="stat-value">&mdash;</div>
+          <div class="stat-label">Jobs Booked</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon revenue">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="stat-value">&mdash;</div>
+          <div class="stat-label">Est. Revenue Saved</div>
+        </div>
+      </div>
+      <p class="stat-note">Stats are updated weekly by your account manager.</p>
+    </div>
+  </section>
 
-      <div style="margin-top: 32px;">
+  <!-- 3. QUICK LINKS -->
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section-title">Quick Links</h2>
+      <div class="link-grid fade-up">
+        <a href="#" class="link-card">
+          <div class="link-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          </div>
+          <h3>Call Recordings</h3>
+          <p>Available in your GHL dashboard</p>
+        </a>
+        <a href="#" class="link-card">
+          <div class="link-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h3>Booking Calendar</h3>
+          <p>View and manage appointments</p>
+        </a>
+        <a href="https://app.gohighlevel.com" target="_blank" rel="noopener" class="link-card">
+          <div class="link-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>GHL Dashboard</h3>
+          <p>Full CRM and reporting</p>
+        </a>
+        <a href="tel:+1XXXXXXXXXX" class="link-card">
+          <div class="link-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h3>Call Your AI</h3>
+          <p>Test your receptionist live</p>
+        </a>
+      </div>
+    </div>
+  </section>
 
-        <div class="faq-item">
-          <button class="faq-question">
-            Call forwarding isn't working — calls aren't reaching the AI
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-answer"><div class="faq-answer-inner">
-            <ol>
-              <li>Open your phone app and go to <strong>Settings > Call Forwarding</strong></li>
-              <li>Make sure forwarding is set to your Call Taker number</li>
-              <li>Toggle call forwarding OFF, wait 10 seconds, toggle it back ON</li>
-              <li>Test by calling your business number from another phone</li>
-              <li>If using a carrier like AT&T or Verizon, dial <strong>*72</strong> followed by your Call Taker number to activate forwarding</li>
-            </ol>
-            <p style="margin-top: 12px;">Still not working? <a href="#support" style="color: var(--green); font-weight: 500;">Submit a support request</a> and we'll fix it within the hour.</p>
-          </div></div>
+  <!-- 4. NEED HELP? -->
+  <section class="section">
+    <div class="wrap">
+      <h2 class="section-title">Need Help?</h2>
+      <div class="help-grid fade-up">
+
+        <!-- Contact Card -->
+        <div class="help-contact">
+          <h3>Get in Touch</h3>
+          <div class="contact-row">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="contact-info">
+              <div class="label">Text or call us</div>
+              <a href="tel:+16157845747">(615) 784-5747</a>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="contact-info">
+              <div class="label">Email us</div>
+              <a href="mailto:wallace@thecalltaker.com">wallace@thecalltaker.com</a>
+            </div>
+          </div>
+          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+            <p style="font-size: .82rem; color: var(--text-muted); line-height: 1.5;">We typically respond within a few hours during business hours. For urgent issues, call or text us directly.</p>
+          </div>
         </div>
 
-        <div class="faq-item">
-          <button class="faq-question">
-            The AI greeting sounds wrong or uses the wrong company name
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-answer"><div class="faq-answer-inner">
-            <p>We can update the AI greeting, company name, voice style, and pacing in under 5 minutes.</p>
-            <ul>
-              <li><strong>Wrong name:</strong> Reply to any email from us or submit a support request with the correct company name</li>
-              <li><strong>Greeting sounds off:</strong> Tell us exactly what you'd like it to say and we'll update it</li>
-              <li><strong>Voice style:</strong> We can adjust tone (professional, friendly, warm) and speaking speed</li>
+        <!-- FAQ Card -->
+        <div class="faq-section">
+          <h3>Common Questions</h3>
+          <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+              How do I check my call recordings?
+              <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">Log into your GHL dashboard at <a href="https://app.gohighlevel.com" target="_blank" style="color: var(--orange); font-weight: 500;">app.gohighlevel.com</a> and navigate to Conversations. Each call recording will be listed with the date, duration, and a playback button. You can also see the full transcript.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+              Can I change my AI's script?
+              <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">Yes! Just text us at <a href="tel:+16157845747" style="color: var(--orange); font-weight: 500;">(615) 784-5747</a> with exactly what you'd like changed -- greeting, company name, tone, services mentioned, anything. We'll update it within the hour and it takes effect immediately with zero downtime.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+              How do I pause my service?
+              <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">Text us and we'll pause your service within the hour. No cancellation fees, no hassle. When you're ready to resume, just text us again and we'll have you back up within minutes. You only pay for the months you're active.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+              How do I upgrade my plan?
+              <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">Text us or visit <a href="pilot/" style="color: var(--orange); font-weight: 500;">thecalltaker.com/pilot</a> to learn about our plans. We'll walk you through the differences and help you pick the right fit. Upgrades take effect immediately -- no downtime, no setup fees.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. UPGRADE YOUR PLAN -->
+  <section class="section" style="padding-bottom: 48px;">
+    <div class="wrap">
+      <div class="upgrade-section fade-up">
+        <h2>Upgrade Your Plan</h2>
+        <p>Get more from your AI receptionist. Choose the plan that fits your business.</p>
+        <div class="plan-grid">
+          <!-- After-Hours -->
+          <div class="plan-card">
+            <h3>After-Hours</h3>
+            <div class="plan-price">$97<small>/mo</small></div>
+            <ul class="plan-features">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                After-hours call answering
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Lead capture + text alerts
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Basic appointment scheduling
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Ideal for smaller businesses
+              </li>
             </ul>
-            <p style="margin-top: 8px;">These changes take effect immediately — no downtime for your callers.</p>
-          </div></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question">
-            Scheduling or calendar sync issues
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-answer"><div class="faq-answer-inner">
-            <ul>
-              <li><strong>Calendar not syncing:</strong> Make sure your Google or Outlook calendar is connected in your dashboard. Disconnect and reconnect if needed.</li>
-              <li><strong>Double bookings:</strong> Check that buffer times are set between appointments (we recommend 15-30 min)</li>
-              <li><strong>Wrong time zone:</strong> Verify your time zone in account settings — this affects all scheduled times</li>
-              <li><strong>Appointments not showing:</strong> Allow up to 5 minutes for sync. If still missing, submit a support request.</li>
+            <button class="plan-cta secondary" onclick="window.location.href='tel:+16157845747'">Call to Upgrade</button>
+          </div>
+          <!-- Starter -->
+          <div class="plan-card recommended">
+            <div class="plan-badge">Most Popular</div>
+            <h3>Starter</h3>
+            <div class="plan-price">$497<small>/mo</small></div>
+            <ul class="plan-features">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                24/7 call answering
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Custom AI voice + script
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Full CRM dashboard
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                HVAC, Plumbing, Electrical
+              </li>
             </ul>
-          </div></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question">
-            I'm not getting text notifications after calls
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-answer"><div class="faq-answer-inner">
-            <ol>
-              <li>Check that your phone number is correct in your account settings</li>
-              <li>Make sure texts from us aren't going to spam or a filtered inbox</li>
-              <li>Verify Do Not Disturb isn't blocking texts during business hours</li>
-              <li>Try replying "YES" to the last notification text to confirm the number is active</li>
-            </ol>
-            <p style="margin-top: 8px;">If texts still aren't coming through, we can switch to email notifications or set up push alerts instead.</p>
-          </div></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question">
-            Billing, invoices, and subscription questions
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="faq-answer"><div class="faq-answer-inner">
-            <ul>
-              <li><strong>Monthly plan:</strong> $497/mo, billed on your signup date each month</li>
-              <li><strong>No contracts:</strong> Cancel anytime with no cancellation fees</li>
-              <li><strong>Receipts:</strong> Sent automatically to your email after each charge</li>
-              <li><strong>Payment methods:</strong> Credit card, debit card, or ACH</li>
-              <li><strong>Cancel or change plan:</strong> Email wallacemdobbs@icloud.com or submit a support request</li>
+            <button class="plan-cta primary" onclick="window.location.href='tel:+16157845747'">Call to Upgrade</button>
+          </div>
+          <!-- Pro -->
+          <div class="plan-card">
+            <h3>Pro</h3>
+            <div class="plan-price">$997<small>/mo</small></div>
+            <ul class="plan-features">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Everything in Starter
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Priority support + weekly reports
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Multi-location support
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                All industries supported
+              </li>
             </ul>
-          </div></div>
+            <button class="plan-cta secondary" onclick="window.location.href='tel:+16157845747'">Call to Upgrade</button>
+          </div>
         </div>
-
       </div>
     </div>
+  </section>
 
-    <!-- SUPPORT REQUEST FORM -->
-    <div style="margin-top: 64px;" id="support">
-      <p class="section-label">Need Help?</p>
-      <h2 class="section-title">Submit a Support Request</h2>
-      <p class="section-desc" style="margin-bottom: 32px;">Describe your issue and we'll get back to you within a few hours. For urgent issues, call (615) 784-5747.</p>
-
-      <div class="portal-card" style="max-width: 600px;">
-        <form class="portal-form" id="supportForm">
-          <div class="form-group">
-            <label for="support-name">Your Name</label>
-            <input type="text" id="support-name" name="name" required placeholder="John Smith">
-          </div>
-          <div class="form-group">
-            <label for="support-company">Company Name</label>
-            <input type="text" id="support-company" name="company" required placeholder="Smith's HVAC">
-          </div>
-          <div class="form-group">
-            <label for="support-email">Email</label>
-            <input type="email" id="support-email" name="email" required placeholder="john@smithshvac.com">
-          </div>
-          <div class="form-group">
-            <label for="support-category">Issue Category</label>
-            <select id="support-category" name="category">
-              <option value="forwarding">Call Forwarding</option>
-              <option value="ai_quality">AI Quality / Greeting</option>
-              <option value="scheduling">Scheduling / Calendar</option>
-              <option value="notifications">Notifications</option>
-              <option value="billing">Billing</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="support-message">Describe the Issue</label>
-            <textarea id="support-message" name="message" required placeholder="Tell us what's happening..."></textarea>
-          </div>
-          <button type="submit" class="btn btn-green btn-md">Submit Request</button>
-        </form>
-        <div class="form-success" id="supportSuccess">Got it! We'll get back to you within a few hours. For urgent issues, call (615) 784-5747.</div>
-      </div>
-    </div>
-
-    <!-- REFERRAL FORM -->
-    <div style="margin-top: 64px; padding-bottom: 80px;" id="referral">
-      <p class="section-label">Earn Free Service</p>
-      <h2 class="section-title">Refer a Friend</h2>
-      <p class="section-desc" style="margin-bottom: 32px;">Know an HVAC owner who's losing jobs to voicemail? Refer them to The Call Taker and get a <strong style="color: var(--green);">free month</strong> for every one that signs up.</p>
-
-      <div class="portal-card" style="max-width: 600px;">
-        <form class="portal-form" id="referralForm">
-          <div class="form-group">
-            <label for="ref-your-name">Your Name</label>
-            <input type="text" id="ref-your-name" name="referrer_name" required placeholder="Your name">
-          </div>
-          <div class="form-group">
-            <label for="ref-your-company">Your Company</label>
-            <input type="text" id="ref-your-company" name="referrer_company" required placeholder="Your HVAC company">
-          </div>
-          <div class="form-group">
-            <label for="ref-name">Referral's Name</label>
-            <input type="text" id="ref-name" name="referral_name" required placeholder="Their name">
-          </div>
-          <div class="form-group">
-            <label for="ref-company">Referral's Company</label>
-            <input type="text" id="ref-company" name="referral_company" required placeholder="Their HVAC company">
-          </div>
-          <div class="form-group">
-            <label for="ref-phone">Referral's Phone</label>
-            <input type="tel" id="ref-phone" name="referral_phone" placeholder="(615) 555-0123">
-          </div>
-          <div class="form-group">
-            <label for="ref-email">Referral's Email</label>
-            <input type="email" id="ref-email" name="referral_email" placeholder="their@email.com">
-          </div>
-          <button type="submit" class="btn btn-green btn-md">Submit Referral</button>
-        </form>
-        <div class="form-success" id="referralSuccess">Referral submitted! We'll reach out to them and credit your account when they sign up. Thank you!</div>
-      </div>
-    </div>
-
-  </div>
-</section>
+</div><!-- end dashboard-content -->
 
 <!-- FOOTER -->
-<footer style="border-top: 1px solid var(--border); padding: 40px 0; text-align: center;">
-  <div class="wrap">
-    <p style="font-size: 13px; color: var(--text-3);">The Call Taker — AI Receptionist for HVAC Companies</p>
-    <p style="font-size: 12px; color: var(--text-3); margin-top: 8px;">(615) 784-5747 &middot; wallacemdobbs@icloud.com</p>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="logo">The Call<span>Taker</span></a><p>AI receptionist for service businesses.</p></div>
+      <div class="footer-col"><h4>Product</h4><a href="index.html#how-it-works">How It Works</a><a href="index.html#pricing">Pricing</a><a href="industries/">Industries</a><a href="pilot/">Start Free Pilot</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="case-studies/">Case Studies</a><a href="book.html">Book a Demo</a><a href="blog/">Blog</a><a href="agency.html">Agencies</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+16157845747">(615) 784-5747</a><a href="mailto:wallace@thecalltaker.com">wallace@thecalltaker.com</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 The Call Taker. All rights reserved.</p><p>Nashville, TN</p></div>
   </div>
 </footer>
 
 <script>
-// Mobile nav toggle
-const toggle = document.querySelector('.menu-toggle');
-const mobileNav = document.querySelector('.mobile-nav');
-if (toggle) {
-  toggle.addEventListener('click', () => {
-    toggle.classList.toggle('open');
-    mobileNav.classList.toggle('open');
-  });
+// === PASSWORD PROTECTION ===
+function checkPassword(e) {
+  e.preventDefault();
+  var pw = document.getElementById('pwInput').value;
+  if (pw === 'tctclient') {
+    sessionStorage.setItem('tct_portal_auth', 'true');
+    unlockDashboard();
+  } else {
+    document.getElementById('pwError').classList.add('show');
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+  return false;
 }
 
-// FAQ accordion
-document.querySelectorAll('.faq-question').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.parentElement;
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+function unlockDashboard() {
+  document.getElementById('pwOverlay').classList.add('hidden');
+  document.getElementById('dashboardContent').classList.add('unlocked');
+}
+
+// Check session on load
+if (sessionStorage.getItem('tct_portal_auth') === 'true') {
+  unlockDashboard();
+}
+
+// === STICKY HEADER ===
+var h = document.getElementById('header');
+if (h) window.addEventListener('scroll', function() {
+  h.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// === MOBILE MENU ===
+var mb = document.getElementById('menuBtn'), nv = document.getElementById('nav');
+if (mb && nv) {
+  mb.addEventListener('click', function() { nv.classList.toggle('open'); });
+}
+if (nv) document.querySelectorAll('#nav a').forEach(function(a) {
+  a.addEventListener('click', function() { nv.classList.remove('open'); });
+});
+
+// === FAQ ACCORDION ===
+document.querySelectorAll('.faq-question').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var item = this.parentElement;
+    var wasOpen = item.classList.contains('open');
+    item.parentElement.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
     if (!wasOpen) item.classList.add('open');
   });
 });
 
-// Support form — creates a note on the contact via GHL API
-document.getElementById('supportForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const data = {
-    firstName: form.name.value.split(' ')[0],
-    lastName: form.name.value.split(' ').slice(1).join(' '),
-    companyName: form.company.value,
-    email: form.email.value,
-    tags: ['customer', 'support-request'],
-    customFields: [
-      { key: 'support_category', value: form.category.value },
-      { key: 'support_message', value: form.message.value },
-    ],
-  };
-
-  try {
-    const resp = await fetch('https://services.leadconnectorhq.com/contacts/', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
-        'Version': '2021-07-28',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...data, locationId: 'tQb9YmrGDrdVUJYPKrsY' }),
-    });
-  } catch (err) {
-    // Silent fail — still show success since ntfy will catch it
-  }
-
-  form.style.display = 'none';
-  document.getElementById('supportSuccess').classList.add('show');
-});
-
-// Referral form — creates a new contact with referral tag
-document.getElementById('referralForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const data = {
-    firstName: form.referral_name.value.split(' ')[0],
-    lastName: form.referral_name.value.split(' ').slice(1).join(' '),
-    companyName: form.referral_company.value,
-    phone: form.referral_phone.value,
-    email: form.referral_email.value,
-    tags: ['referral', 'customer-referred'],
-    source: 'Customer Portal Referral',
-    customFields: [
-      { key: 'referred_by', value: form.referrer_name.value + ' - ' + form.referrer_company.value },
-    ],
-  };
-
-  try {
-    const resp = await fetch('https://services.leadconnectorhq.com/contacts/', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
-        'Version': '2021-07-28',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...data, locationId: 'tQb9YmrGDrdVUJYPKrsY' }),
-    });
-  } catch (err) {
-    // Silent fail
-  }
-
-  form.style.display = 'none';
-  document.getElementById('referralSuccess').classList.add('show');
-});
-
-// Header scroll effect
-const header = document.querySelector('.header');
-window.addEventListener('scroll', () => {
-  header.classList.toggle('scrolled', window.scrollY > 20);
-});
+// === FADE-IN OBSERVER ===
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(en) {
+    if (en.isIntersecting) { en.target.classList.add('visible'); obs.unobserve(en.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-up').forEach(function(el) { obs.observe(el); });
 </script>
 </body>
 </html>

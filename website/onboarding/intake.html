@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Intake Form — The Call Taker</title>
+<meta name="description" content="Complete this form to get your AI receptionist set up. We'll configure your account and have you live within 48 hours.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://thecalltaker.com/onboarding/intake.html">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-29LL5GPBQV');</script>
+<!-- Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+<script>gtag('config','AW-17970510102');</script>
+<!-- Attribution -->
+<script src="/tct-tracking.js"></script>
+
+<style>
+/* ============================================
+   THE CALL TAKER — Client Intake Form
+   Matches homepage warm design system exactly.
+   ============================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --white: #ffffff;
+  --off-white: #f9fafb;
+  --light: #f3f4f6;
+  --border: #e5e7eb;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --navy: #1e3a5f;
+  --navy-dark: #0f2440;
+  --blue: #2563eb;
+  --blue-light: #eff6ff;
+  --orange: #ea580c;
+  --orange-hover: #c2410c;
+  --orange-light: #fff7ed;
+  --green: #059669;
+  --green-light: #ecfdf5;
+  --red: #ef4444;
+  --red-light: #fef2f2;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -2px rgba(0,0,0,.05);
+  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.03);
+  --shadow-xl: 0 20px 50px -12px rgba(0,0,0,.12);
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  font-size: 17px;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--blue); text-decoration: none; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ===== STICKY HEADER ===== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s, box-shadow .3s;
+}
+.site-header.scrolled {
+  border-bottom-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+.logo {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -.02em;
+  text-decoration: none;
+}
+.logo span { color: var(--orange); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: .9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-demo {
+  font-weight: 700 !important;
+  color: var(--navy) !important;
+  letter-spacing: -.01em;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .2s;
+  line-height: 1;
+}
+.btn-primary {
+  background: var(--orange);
+  color: var(--white);
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  font-size: .95rem;
+}
+.btn-primary:hover {
+  background: var(--orange-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(234,88,12,.3);
+  text-decoration: none;
+  color: var(--white);
+}
+.btn-sm {
+  padding: 10px 20px;
+  font-size: .85rem;
+}
+
+/* Mobile menu toggle */
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+.mobile-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  margin: 5px 0;
+  transition: .3s;
+}
+
+/* ===== PAGE CONTENT ===== */
+.intake-page {
+  padding: 120px 0 80px;
+  background: var(--off-white);
+  min-height: 100vh;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar-wrap {
+  max-width: 680px;
+  margin: 0 auto 32px;
+  padding: 0 24px;
+}
+.progress-label {
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.progress-fill {
+  width: 100%;
+  height: 100%;
+  background: var(--orange);
+  border-radius: var(--radius-full);
+  transition: width .4s ease;
+}
+
+/* ===== FORM CARD ===== */
+.form-card {
+  max-width: 680px;
+  margin: 0 auto;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  padding: 48px 44px;
+}
+.form-card h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--navy-dark);
+  letter-spacing: -.02em;
+  margin-bottom: 8px;
+}
+.form-card .form-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 36px;
+}
+
+/* ===== FORM SECTIONS ===== */
+.form-section {
+  margin-bottom: 36px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--border);
+}
+.form-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 24px;
+}
+.form-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.form-section-title .section-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--orange-light);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .85rem;
+  flex-shrink: 0;
+}
+
+/* ===== FORM FIELDS ===== */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.form-row.single {
+  grid-template-columns: 1fr;
+}
+.form-group {
+  margin-bottom: 0;
+}
+.form-group.full {
+  grid-column: 1 / -1;
+}
+.form-group-stack {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+label .required {
+  color: var(--red);
+  margin-left: 2px;
+}
+label .optional {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: .8rem;
+  margin-left: 4px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: .95rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(234,88,12,.1);
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239ca3af' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Validation states */
+input.error,
+select.error,
+textarea.error {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(239,68,68,.1);
+}
+.field-error {
+  font-size: .8rem;
+  color: var(--red);
+  margin-top: 4px;
+  display: none;
+}
+.field-error.show {
+  display: block;
+}
+
+/* ===== CHECKBOX GROUP ===== */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.checkbox-grid.days {
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+}
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  user-select: none;
+}
+.checkbox-item:hover {
+  border-color: var(--orange);
+  background: var(--orange-light);
+}
+.checkbox-item.checked {
+  border-color: var(--orange);
+  background: var(--orange-light);
+}
+.checkbox-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--orange);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.checkbox-item span {
+  font-size: .88rem;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+/* ===== TOGGLE (Yes/No) ===== */
+.toggle-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.toggle-btn {
+  padding: 10px 24px;
+  font-size: .9rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--white);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all .2s;
+}
+.toggle-btn:hover {
+  border-color: var(--text-muted);
+}
+.toggle-btn.active {
+  border-color: var(--orange);
+  background: var(--orange-light);
+  color: var(--orange);
+}
+
+/* Conditional fields */
+.conditional-fields {
+  display: none;
+  margin-top: 12px;
+  padding: 16px;
+  background: var(--off-white);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.conditional-fields.show {
+  display: block;
+}
+.conditional-fields .form-row {
+  margin-bottom: 12px;
+}
+.conditional-fields .form-row:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== PLAN SELECTOR ===== */
+.plan-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+.plan-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+  background: var(--white);
+}
+.plan-card:hover {
+  border-color: var(--text-muted);
+}
+.plan-card.selected {
+  border-color: var(--orange);
+  background: var(--orange-light);
+}
+.plan-card input[type="radio"] {
+  display: none;
+}
+.plan-card .plan-name {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.plan-card .plan-price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--orange);
+}
+.plan-card .plan-price span {
+  font-size: .8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.plan-card .plan-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--green);
+  color: var(--white);
+  font-size: .7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+/* ===== SUBMIT BUTTON ===== */
+.submit-wrap {
+  margin-top: 32px;
+}
+.btn-submit {
+  width: 100%;
+  padding: 16px 32px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-family: inherit;
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all .2s;
+  line-height: 1;
+}
+.btn-submit:hover {
+  background: var(--orange-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(234,88,12,.3);
+}
+.btn-submit:active {
+  transform: translateY(0);
+}
+.btn-submit:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.submit-note {
+  text-align: center;
+  font-size: .82rem;
+  color: var(--text-muted);
+  margin-top: 12px;
+}
+.submit-note svg {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+/* Global form error */
+.form-error-banner {
+  display: none;
+  background: var(--red-light);
+  border: 1px solid var(--red);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  font-size: .9rem;
+  color: var(--red);
+  font-weight: 500;
+}
+.form-error-banner.show {
+  display: block;
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  background: var(--off-white);
+  border-top: 1px solid var(--border);
+  padding: 48px 0 32px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-brand .logo { display: inline-block; margin-bottom: 12px; }
+.footer-brand p {
+  font-size: .9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 280px;
+}
+.footer-col h4 {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.footer-col a {
+  display: block;
+  font-size: .9rem;
+  color: var(--text-secondary);
+  padding: 4px 0;
+  transition: color .2s;
+  text-decoration: none;
+}
+.footer-col a:hover { color: var(--text); }
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-bottom p {
+  font-size: .82rem;
+  color: var(--text-muted);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .nav-links { display: none; }
+  .mobile-toggle { display: block; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 24px;
+    gap: 16px;
+    box-shadow: var(--shadow-lg);
+  }
+  .intake-page {
+    padding: 100px 0 48px;
+  }
+  .form-card {
+    padding: 32px 24px;
+    border-radius: var(--radius);
+  }
+  .form-card h1 {
+    font-size: 1.4rem;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  .checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+  .checkbox-grid.days {
+    grid-template-columns: 1fr 1fr;
+  }
+  .plan-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .form-card {
+    padding: 24px 18px;
+  }
+  .toggle-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .toggle-btn {
+    text-align: center;
+  }
+  .checkbox-grid.days {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">The Call<span>Taker</span></a>
+    <ul class="nav-links" id="nav">
+      <li><a href="../index.html#how-it-works">How It Works</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="../case-studies/">Case Studies</a></li>
+      <li><a href="tel:+16157845747" class="nav-demo">Demo: (615) 784-5747</a></li>
+      <li><a href="../pilot/" class="btn btn-primary btn-sm">Try Free for 14 Days</a></li>
+    </ul>
+    <button class="mobile-toggle" id="menuBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== INTAKE FORM ===== -->
+<main class="intake-page">
+
+  <!-- Progress Bar -->
+  <div class="progress-bar-wrap">
+    <div class="progress-label">Step 1 of 1: Tell us about your business</div>
+    <div class="progress-track">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <h1>Client Intake Form</h1>
+    <p class="form-subtitle">Complete this form so we can configure your AI receptionist. We'll have you live within 48 hours.</p>
+
+    <div class="form-error-banner" id="formErrorBanner">Please fix the highlighted fields below before submitting.</div>
+
+    <form id="intakeForm" novalidate>
+
+      <!-- ===== SECTION 1: Business Info ===== -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <div class="section-icon">1</div>
+          Business Information
+        </div>
+
+        <div class="form-group-stack">
+          <label for="businessName">Business Name <span class="required">*</span></label>
+          <input type="text" id="businessName" name="businessName" placeholder="e.g. Comfort Pro HVAC" required>
+          <div class="field-error" id="err-businessName">Business name is required.</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ownerFirst">Owner First Name <span class="required">*</span></label>
+            <input type="text" id="ownerFirst" name="ownerFirst" placeholder="First name" required>
+            <div class="field-error" id="err-ownerFirst">First name is required.</div>
+          </div>
+          <div class="form-group">
+            <label for="ownerLast">Owner Last Name <span class="required">*</span></label>
+            <input type="text" id="ownerLast" name="ownerLast" placeholder="Last name" required>
+            <div class="field-error" id="err-ownerLast">Last name is required.</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ownerEmail">Owner Email <span class="required">*</span></label>
+            <input type="email" id="ownerEmail" name="ownerEmail" placeholder="you@company.com" required>
+            <div class="field-error" id="err-ownerEmail">Please enter a valid email address.</div>
+          </div>
+          <div class="form-group">
+            <label for="ownerPhone">Owner Phone <span class="required">*</span></label>
+            <input type="tel" id="ownerPhone" name="ownerPhone" placeholder="(555) 123-4567" required>
+            <div class="field-error" id="err-ownerPhone">Please enter a valid phone number.</div>
+          </div>
+        </div>
+
+        <div class="form-group-stack">
+          <label for="industry">Industry <span class="required">*</span></label>
+          <select id="industry" name="industry" required>
+            <option value="">Select your industry</option>
+            <option value="hvac">HVAC</option>
+            <option value="plumbing">Plumbing</option>
+            <option value="locksmith">Locksmith</option>
+            <option value="dental">Dental</option>
+            <option value="medspa">Med Spa</option>
+            <option value="legal">Legal</option>
+            <option value="property-management">Property Management</option>
+            <option value="veterinary">Veterinary</option>
+            <option value="towing">Towing</option>
+            <option value="roofing">Roofing</option>
+            <option value="electrical">Electrical</option>
+            <option value="garage-door">Garage Door</option>
+            <option value="funeral">Funeral</option>
+          </select>
+          <div class="field-error" id="err-industry">Please select your industry.</div>
+        </div>
+      </div>
+
+      <!-- ===== SECTION 2: Hours & Services ===== -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <div class="section-icon">2</div>
+          Hours &amp; Services
+        </div>
+
+        <div class="form-row" style="margin-bottom:16px">
+          <div class="form-group">
+            <label for="openTime">Open Time</label>
+            <select id="openTime" name="openTime">
+              <option value="6:00 AM">6:00 AM</option>
+              <option value="6:30 AM">6:30 AM</option>
+              <option value="7:00 AM">7:00 AM</option>
+              <option value="7:30 AM">7:30 AM</option>
+              <option value="8:00 AM" selected>8:00 AM</option>
+              <option value="8:30 AM">8:30 AM</option>
+              <option value="9:00 AM">9:00 AM</option>
+              <option value="9:30 AM">9:30 AM</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="10:30 AM">10:30 AM</option>
+              <option value="11:00 AM">11:00 AM</option>
+              <option value="11:30 AM">11:30 AM</option>
+              <option value="12:00 PM">12:00 PM</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="closeTime">Close Time</label>
+            <select id="closeTime" name="closeTime">
+              <option value="12:00 PM">12:00 PM</option>
+              <option value="12:30 PM">12:30 PM</option>
+              <option value="1:00 PM">1:00 PM</option>
+              <option value="1:30 PM">1:30 PM</option>
+              <option value="2:00 PM">2:00 PM</option>
+              <option value="2:30 PM">2:30 PM</option>
+              <option value="3:00 PM">3:00 PM</option>
+              <option value="3:30 PM">3:30 PM</option>
+              <option value="4:00 PM">4:00 PM</option>
+              <option value="4:30 PM">4:30 PM</option>
+              <option value="5:00 PM" selected>5:00 PM</option>
+              <option value="5:30 PM">5:30 PM</option>
+              <option value="6:00 PM">6:00 PM</option>
+              <option value="6:30 PM">6:30 PM</option>
+              <option value="7:00 PM">7:00 PM</option>
+              <option value="7:30 PM">7:30 PM</option>
+              <option value="8:00 PM">8:00 PM</option>
+              <option value="8:30 PM">8:30 PM</option>
+              <option value="9:00 PM">9:00 PM</option>
+              <option value="9:30 PM">9:30 PM</option>
+              <option value="10:00 PM">10:00 PM</option>
+              <option value="10:30 PM">10:30 PM</option>
+              <option value="11:00 PM">11:00 PM</option>
+              <option value="11:30 PM">11:30 PM</option>
+              <option value="12:00 AM">12:00 AM</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group-stack">
+          <label>Days Open</label>
+          <div class="checkbox-grid days" id="daysGrid">
+            <label class="checkbox-item checked"><input type="checkbox" name="days" value="Monday" checked><span>Monday</span></label>
+            <label class="checkbox-item checked"><input type="checkbox" name="days" value="Tuesday" checked><span>Tuesday</span></label>
+            <label class="checkbox-item checked"><input type="checkbox" name="days" value="Wednesday" checked><span>Wednesday</span></label>
+            <label class="checkbox-item checked"><input type="checkbox" name="days" value="Thursday" checked><span>Thursday</span></label>
+            <label class="checkbox-item checked"><input type="checkbox" name="days" value="Friday" checked><span>Friday</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="days" value="Saturday"><span>Saturday</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="days" value="Sunday"><span>Sunday</span></label>
+          </div>
+        </div>
+
+        <div class="form-group-stack" id="servicesWrap" style="display:none">
+          <label>Services Offered <span class="optional">(check all that apply)</span></label>
+          <div class="checkbox-grid" id="servicesGrid"></div>
+        </div>
+
+        <div class="form-group-stack">
+          <label for="serviceArea">Service Area</label>
+          <input type="text" id="serviceArea" name="serviceArea" placeholder="e.g. Nashville and surrounding 30 miles">
+        </div>
+      </div>
+
+      <!-- ===== SECTION 3: Phone Setup ===== -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <div class="section-icon">3</div>
+          Phone &amp; Call Handling
+        </div>
+
+        <div class="form-group-stack">
+          <label for="businessPhone">Current Business Phone Number <span class="required">*</span></label>
+          <input type="tel" id="businessPhone" name="businessPhone" placeholder="(555) 123-4567" required>
+          <div class="field-error" id="err-businessPhone">Business phone number is required.</div>
+        </div>
+
+        <div class="form-group-stack">
+          <label>Emergency On-Call Technician?</label>
+          <div class="toggle-group" id="emergencyToggle">
+            <button type="button" class="toggle-btn" data-value="yes">Yes</button>
+            <button type="button" class="toggle-btn active" data-value="no">No</button>
+          </div>
+          <input type="hidden" name="emergencyOnCall" id="emergencyOnCall" value="no">
+          <div class="conditional-fields" id="emergencyFields">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="techName">Tech Name</label>
+                <input type="text" id="techName" name="techName" placeholder="e.g. Mike Johnson">
+              </div>
+              <div class="form-group">
+                <label for="techPhone">Tech Phone</label>
+                <input type="tel" id="techPhone" name="techPhone" placeholder="(555) 987-6543">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group-stack">
+          <label for="callbackTime">Callback Time Promise</label>
+          <select id="callbackTime" name="callbackTime">
+            <option value="Within 5 min">Within 5 minutes</option>
+            <option value="Within 15 min" selected>Within 15 minutes</option>
+            <option value="Within 30 min">Within 30 minutes</option>
+            <option value="Within 1 hour">Within 1 hour</option>
+            <option value="ASAP">ASAP</option>
+          </select>
+        </div>
+
+        <div class="form-group-stack">
+          <label>Does your AI give callers pricing info?</label>
+          <div class="toggle-group" id="pricingToggle">
+            <button type="button" class="toggle-btn" data-value="yes">Yes</button>
+            <button type="button" class="toggle-btn active" data-value="no">No</button>
+          </div>
+          <input type="hidden" name="givePricing" id="givePricing" value="no">
+          <div class="conditional-fields" id="pricingFields">
+            <div class="form-group-stack" style="margin-bottom:0">
+              <label for="pricingInfo">Pricing Details</label>
+              <textarea id="pricingInfo" name="pricingInfo" placeholder="e.g. Service calls start at $89. AC tune-up is $59. We provide free estimates for installations."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group-stack">
+          <label for="currentHandling">How are calls currently handled?</label>
+          <select id="currentHandling" name="currentHandling">
+            <option value="">Select one</option>
+            <option value="I answer myself">I answer myself</option>
+            <option value="Voicemail">Voicemail</option>
+            <option value="Answering service">Answering service</option>
+            <option value="Staff answers">Staff answers</option>
+            <option value="Goes to voicemail after hours">Goes to voicemail after hours</option>
+          </select>
+        </div>
+
+        <div class="form-group-stack">
+          <label for="monthlyVolume">Estimated Monthly Call Volume</label>
+          <select id="monthlyVolume" name="monthlyVolume">
+            <option value="">Select one</option>
+            <option value="Under 50">Under 50</option>
+            <option value="50-100">50 - 100</option>
+            <option value="100-200">100 - 200</option>
+            <option value="200+">200+</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ===== SECTION 4: Plan & Preferences ===== -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <div class="section-icon">4</div>
+          Plan &amp; Preferences
+        </div>
+
+        <div class="form-group-stack">
+          <label>Select Your Plan <span class="required">*</span></label>
+          <div class="plan-cards" id="planCards">
+            <label class="plan-card" data-plan="after-hours">
+              <input type="radio" name="plan" value="After-Hours ($97/mo)">
+              <div class="plan-name">After-Hours</div>
+              <div class="plan-price">$97<span>/mo</span></div>
+            </label>
+            <label class="plan-card selected" data-plan="starter">
+              <div class="plan-badge">Most Popular</div>
+              <input type="radio" name="plan" value="Starter ($497/mo)" checked>
+              <div class="plan-name">Starter</div>
+              <div class="plan-price">$497<span>/mo</span></div>
+            </label>
+            <label class="plan-card" data-plan="pro">
+              <input type="radio" name="plan" value="Pro ($997/mo)">
+              <div class="plan-name">Pro</div>
+              <div class="plan-price">$997<span>/mo</span></div>
+            </label>
+          </div>
+          <div class="field-error" id="err-plan">Please select a plan.</div>
+        </div>
+
+        <div class="form-group-stack">
+          <label for="aiName">Preferred AI Receptionist Name <span class="optional">(optional)</span></label>
+          <input type="text" id="aiName" name="aiName" placeholder="e.g. Jessica, Sarah, Amy — or we'll pick one">
+        </div>
+
+        <div class="form-group-stack">
+          <label for="specialInstructions">Special Instructions <span class="optional">(optional)</span></label>
+          <textarea id="specialInstructions" name="specialInstructions" placeholder="Anything else we should know? Specific greetings, routing rules, things to say or avoid, etc."></textarea>
+        </div>
+      </div>
+
+      <!-- ===== SUBMIT ===== -->
+      <div class="submit-wrap">
+        <button type="submit" class="btn-submit" id="submitBtn">Submit Intake Form</button>
+        <p class="submit-note">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd"/></svg>
+          Your information is secure and only used to set up your AI receptionist.
+        </p>
+      </div>
+
+    </form>
+  </div>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">The Call<span>Taker</span></a>
+        <p>AI receptionist for service businesses. Answers every call, books every job, never takes a day off.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="../index.html#how-it-works">How It Works</a>
+        <a href="../index.html#pricing">Pricing</a>
+        <a href="../industries/">Industries</a>
+        <a href="../pilot/">Start Free Pilot</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../case-studies/">Case Studies</a>
+        <a href="../book.html">Book a Demo</a>
+        <a href="../blog/">Blog</a>
+        <a href="../agency.html">Agencies</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+16157845747">(615) 784-5747</a>
+        <a href="mailto:wallace@thecalltaker.com">wallace@thecalltaker.com</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 The Call Taker. All rights reserved.</p>
+      <p>Nashville, TN</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+(function() {
+  'use strict';
+
+  // =========================================================================
+  // Sticky Header
+  // =========================================================================
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function() {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // =========================================================================
+  // Mobile Menu
+  // =========================================================================
+  document.getElementById('menuBtn').addEventListener('click', function() {
+    document.getElementById('nav').classList.toggle('open');
+  });
+  document.querySelectorAll('#nav a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      document.getElementById('nav').classList.remove('open');
+    });
+  });
+
+  // =========================================================================
+  // Industry → Dynamic Services
+  // =========================================================================
+  var SERVICES = {
+    'hvac': ['AC Repair', 'Heating Repair', 'Installation', 'Maintenance', 'Duct Cleaning', 'Emergency Service', 'Heat Pump', 'Indoor Air Quality'],
+    'plumbing': ['Drain Cleaning', 'Water Heater', 'Pipe Repair', 'Sewer Line', 'Faucet/Fixture', 'Emergency Service', 'Water Filtration', 'Gas Line'],
+    'locksmith': ['Residential Lockout', 'Car Lockout', 'Rekey', 'Lock Installation', 'Commercial', 'Safe', 'Emergency 24/7', 'Key Duplication'],
+    'dental': ['General Checkup', 'Cleaning', 'Filling', 'Root Canal', 'Crown', 'Extraction', 'Whitening', 'Emergency Dental', 'Implants', 'Invisalign'],
+    'medspa': ['Facials', 'Botox', 'Laser Treatment', 'Body Contouring', 'Chemical Peels', 'Massage', 'Microneedling', 'IV Therapy', 'Lip Filler'],
+    'legal': ['Personal Injury', 'Family Law', 'Criminal Defense', 'Estate Planning', 'Real Estate', 'Business Law', 'Immigration', 'DUI/DWI'],
+    'property-management': ['Tenant Screening', 'Maintenance Requests', 'Rent Collection', 'Lease Management', 'Property Inspections', 'Emergency Repairs'],
+    'veterinary': ['Wellness Exams', 'Vaccinations', 'Spay/Neuter', 'Dental Care', 'Surgery', 'Emergency Care', 'Grooming', 'Boarding'],
+    'towing': ['Roadside Assistance', 'Flatbed Towing', 'Motorcycle Towing', 'Long Distance', 'Accident Recovery', 'Jump Start', 'Tire Change', 'Lockout'],
+    'roofing': ['Inspection', 'Repair', 'Replacement', 'Emergency Tarping', 'Gutter', 'Storm Damage', 'Flat Roof', 'Metal Roof'],
+    'electrical': ['Wiring', 'Panel Upgrade', 'Outlet/Switch', 'Lighting', 'Generator', 'Emergency Service', 'EV Charger', 'Ceiling Fan'],
+    'garage-door': ['Repair', 'Installation', 'Opener', 'Spring Replacement', 'Emergency Service', 'Maintenance', 'Keypad/Remote'],
+    'funeral': ['Traditional Service', 'Cremation', 'Memorial Service', 'Pre-Planning', 'Grief Support', 'Burial', 'Transport']
+  };
+
+  var industrySelect = document.getElementById('industry');
+  var servicesWrap = document.getElementById('servicesWrap');
+  var servicesGrid = document.getElementById('servicesGrid');
+
+  industrySelect.addEventListener('change', function() {
+    var val = this.value;
+    servicesGrid.innerHTML = '';
+
+    if (val && SERVICES[val]) {
+      var services = SERVICES[val];
+      for (var i = 0; i < services.length; i++) {
+        var lbl = document.createElement('label');
+        lbl.className = 'checkbox-item';
+        lbl.innerHTML = '<input type="checkbox" name="services" value="' + services[i] + '"><span>' + services[i] + '</span>';
+        servicesGrid.appendChild(lbl);
+      }
+      servicesWrap.style.display = 'block';
+      bindCheckboxItems(servicesGrid);
+    } else {
+      servicesWrap.style.display = 'none';
+    }
+  });
+
+  // =========================================================================
+  // Checkbox Item Toggle Styling
+  // =========================================================================
+  function bindCheckboxItems(container) {
+    container.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(function(cb) {
+      cb.addEventListener('change', function() {
+        this.closest('.checkbox-item').classList.toggle('checked', this.checked);
+      });
+    });
+  }
+
+  // Bind days checkboxes
+  bindCheckboxItems(document.getElementById('daysGrid'));
+
+  // =========================================================================
+  // Yes/No Toggles
+  // =========================================================================
+  function setupToggle(groupId, hiddenId, fieldsId) {
+    var group = document.getElementById(groupId);
+    var hidden = document.getElementById(hiddenId);
+    var fields = document.getElementById(fieldsId);
+    var buttons = group.querySelectorAll('.toggle-btn');
+
+    buttons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        buttons.forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        var val = this.getAttribute('data-value');
+        hidden.value = val;
+        if (val === 'yes') {
+          fields.classList.add('show');
+        } else {
+          fields.classList.remove('show');
+        }
+      });
+    });
+  }
+
+  setupToggle('emergencyToggle', 'emergencyOnCall', 'emergencyFields');
+  setupToggle('pricingToggle', 'givePricing', 'pricingFields');
+
+  // =========================================================================
+  // Plan Selector
+  // =========================================================================
+  var planCards = document.querySelectorAll('.plan-card');
+  planCards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      planCards.forEach(function(c) { c.classList.remove('selected'); });
+      this.classList.add('selected');
+      this.querySelector('input[type="radio"]').checked = true;
+    });
+  });
+
+  // =========================================================================
+  // Form Validation & Submission
+  // =========================================================================
+  var form = document.getElementById('intakeForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var errorBanner = document.getElementById('formErrorBanner');
+
+  function showError(fieldId, msg) {
+    var field = document.getElementById(fieldId);
+    var errEl = document.getElementById('err-' + fieldId);
+    if (field) field.classList.add('error');
+    if (errEl) {
+      if (msg) errEl.textContent = msg;
+      errEl.classList.add('show');
+    }
+  }
+
+  function clearErrors() {
+    form.querySelectorAll('.error').forEach(function(el) { el.classList.remove('error'); });
+    form.querySelectorAll('.field-error').forEach(function(el) { el.classList.remove('show'); });
+    errorBanner.classList.remove('show');
+  }
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function validatePhone(phone) {
+    // Accept common phone formats
+    var digits = phone.replace(/\D/g, '');
+    return digits.length >= 10;
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    clearErrors();
+
+    var errors = [];
+
+    // Required text fields
+    var businessName = form.businessName.value.trim();
+    if (!businessName) { showError('businessName'); errors.push('businessName'); }
+
+    var ownerFirst = form.ownerFirst.value.trim();
+    if (!ownerFirst) { showError('ownerFirst'); errors.push('ownerFirst'); }
+
+    var ownerLast = form.ownerLast.value.trim();
+    if (!ownerLast) { showError('ownerLast'); errors.push('ownerLast'); }
+
+    var ownerEmail = form.ownerEmail.value.trim();
+    if (!ownerEmail || !validateEmail(ownerEmail)) { showError('ownerEmail'); errors.push('ownerEmail'); }
+
+    var ownerPhone = form.ownerPhone.value.trim();
+    if (!ownerPhone || !validatePhone(ownerPhone)) { showError('ownerPhone'); errors.push('ownerPhone'); }
+
+    var industry = form.industry.value;
+    if (!industry) { showError('industry'); errors.push('industry'); }
+
+    var businessPhone = form.businessPhone.value.trim();
+    if (!businessPhone || !validatePhone(businessPhone)) { showError('businessPhone'); errors.push('businessPhone'); }
+
+    // Plan check
+    var planSelected = form.querySelector('input[name="plan"]:checked');
+    if (!planSelected) { showError('plan', 'Please select a plan.'); errors.push('plan'); }
+
+    if (errors.length > 0) {
+      errorBanner.classList.add('show');
+      // Scroll to first error
+      var firstErr = document.getElementById(errors[0]);
+      if (firstErr) {
+        firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
+    // Gather all data
+    var daysOpen = [];
+    form.querySelectorAll('input[name="days"]:checked').forEach(function(cb) {
+      daysOpen.push(cb.value);
+    });
+
+    var servicesSelected = [];
+    form.querySelectorAll('input[name="services"]:checked').forEach(function(cb) {
+      servicesSelected.push(cb.value);
+    });
+
+    var payload = {
+      businessName: businessName,
+      ownerFirst: ownerFirst,
+      ownerLast: ownerLast,
+      ownerEmail: ownerEmail,
+      ownerPhone: ownerPhone,
+      industry: industry,
+      openTime: form.openTime.value,
+      closeTime: form.closeTime.value,
+      daysOpen: daysOpen.join(', '),
+      services: servicesSelected.join(', '),
+      serviceArea: form.serviceArea.value.trim(),
+      businessPhone: businessPhone,
+      emergencyOnCall: form.emergencyOnCall.value,
+      techName: form.techName.value.trim(),
+      techPhone: form.techPhone.value.trim(),
+      callbackTime: form.callbackTime.value,
+      givePricing: form.givePricing.value,
+      pricingInfo: form.pricingInfo.value.trim(),
+      currentHandling: form.currentHandling.value,
+      monthlyVolume: form.monthlyVolume.value,
+      plan: planSelected.value,
+      aiName: form.aiName.value.trim(),
+      specialInstructions: form.specialInstructions.value.trim()
+    };
+
+    // Disable button
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    // TODO: Replace WEBHOOK_ID_HERE with the actual GHL webhook ID
+    var webhookUrl = 'https://services.leadconnectorhq.com/hooks/WEBHOOK_ID_HERE';
+
+    fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(function(response) {
+      if (!response.ok) throw new Error('Submission failed');
+      return response.text();
+    })
+    .then(function() {
+      // Track conversion
+      if (typeof gtag === 'function') {
+        gtag('event', 'intake_form_submit', {
+          event_category: 'conversion',
+          event_label: 'client_intake',
+          industry: industry,
+          plan: planSelected.value
+        });
+      }
+
+      // Redirect to next steps page
+      window.location.href = 'next-steps.html';
+    })
+    .catch(function(err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Intake Form';
+      errorBanner.textContent = 'Something went wrong. Please try again or call us at (615) 784-5747.';
+      errorBanner.classList.add('show');
+      errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+
+  // Live validation: clear errors on input
+  form.querySelectorAll('input, select, textarea').forEach(function(field) {
+    field.addEventListener('input', function() {
+      this.classList.remove('error');
+      var errEl = document.getElementById('err-' + this.id);
+      if (errEl) errEl.classList.remove('show');
+    });
+    field.addEventListener('change', function() {
+      this.classList.remove('error');
+      var errEl = document.getElementById('err-' + this.id);
+      if (errEl) errEl.classList.remove('show');
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>

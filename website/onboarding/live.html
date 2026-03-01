@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You're Live! | The Call Taker</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
+  <script src="../tct-tracking.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --white: #ffffff;
+      --off-white: #f9fafb;
+      --light: #f3f4f6;
+      --border: #e5e7eb;
+      --text: #111827;
+      --text-secondary: #4b5563;
+      --text-muted: #9ca3af;
+      --navy: #1e3a5f;
+      --navy-dark: #0f2440;
+      --orange: #ea580c;
+      --orange-hover: #c2410c;
+      --orange-light: #fff7ed;
+      --green: #059669;
+      --green-light: #ecfdf5;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --radius: 12px;
+      --radius-full: 9999px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Header ── */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      max-width: 1140px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      font-size: 1.35rem; font-weight: 800; color: var(--navy);
+      text-decoration: none; letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--orange); }
+    .nav-links {
+      display: flex; align-items: center; gap: 8px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none; font-size: 0.9rem; font-weight: 500;
+      color: var(--text-secondary); padding: 8px 14px; border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { color: var(--navy); background: var(--light); }
+    .nav-demo { color: var(--orange) !important; font-weight: 600 !important; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; font-weight: 600; border: none; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+    .btn-primary { background: var(--orange); color: var(--white); border-radius: var(--radius-full); }
+    .btn-primary:hover { background: var(--orange-hover); }
+    .btn-sm { padding: 8px 20px; font-size: 0.875rem; }
+    .mobile-toggle {
+      display: none; background: none; border: none; cursor: pointer;
+      flex-direction: column; gap: 5px; padding: 8px;
+    }
+    .mobile-toggle span {
+      display: block; width: 24px; height: 2px; background: var(--navy);
+      border-radius: 2px; transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-toggle { display: flex; }
+      .nav-links {
+        display: none; position: absolute; top: 72px; left: 0; right: 0;
+        background: var(--white); flex-direction: column;
+        padding: 16px 24px; border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
+      }
+      .nav-links.open { display: flex; }
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+      background: linear-gradient(180deg, var(--green-light) 0%, var(--white) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 800; color: var(--navy);
+      margin-bottom: 20px; letter-spacing: -1px;
+    }
+    .hero .subtitle {
+      font-size: 1.2rem; color: var(--text-secondary);
+      max-width: 600px; margin: 0 auto 32px;
+    }
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--green); color: var(--white);
+      font-size: 0.95rem; font-weight: 700;
+      padding: 12px 28px; border-radius: var(--radius-full);
+      margin-bottom: 32px;
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    .live-dot {
+      width: 10px; height: 10px;
+      background: var(--white);
+      border-radius: 50%;
+      animation: blink 1.5s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(5,150,105,0.4); }
+      50% { box-shadow: 0 0 0 12px rgba(5,150,105,0); }
+    }
+
+    /* Confetti decoration */
+    .confetti {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none; overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      opacity: 0;
+      animation: confetti-fall 3s ease-out forwards;
+    }
+    @keyframes confetti-fall {
+      0% { opacity: 1; transform: translateY(-20px) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(400px) rotate(720deg); }
+    }
+
+    /* ── Sections ── */
+    .section {
+      padding: 60px 24px;
+    }
+    .section-alt {
+      background: var(--off-white);
+    }
+    .section-title {
+      font-size: 1.5rem; font-weight: 700; color: var(--navy);
+      margin-bottom: 32px; text-align: center;
+    }
+
+    /* What happens now */
+    .how-it-works-list {
+      max-width: 700px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .how-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .how-check {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      background: var(--green-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .how-check svg { color: var(--green); }
+    .how-item p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
+
+    /* Dashboard CTA */
+    .dashboard-cta {
+      text-align: center;
+      max-width: 600px; margin: 0 auto;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 48px 36px;
+      box-shadow: var(--shadow-lg);
+    }
+    .dashboard-cta h2 {
+      font-size: 1.5rem; font-weight: 700; margin-bottom: 12px;
+    }
+    .dashboard-cta p {
+      font-size: 1rem; color: rgba(255,255,255,0.7); margin-bottom: 24px;
+    }
+    .btn-white {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); color: var(--navy);
+      font-size: 1rem; font-weight: 700;
+      padding: 14px 32px; border-radius: var(--radius-full);
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-white:hover { background: var(--light); transform: translateY(-1px); }
+
+    /* Tips */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 900px; margin: 0 auto;
+    }
+    .tip-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .tip-number {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      background: var(--orange-light); color: var(--orange);
+      font-size: 0.85rem; font-weight: 700;
+      border-radius: 50%; margin-bottom: 14px;
+    }
+    .tip-card h3 {
+      font-size: 1rem; font-weight: 600; color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .tip-card p {
+      font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;
+    }
+
+    /* Check-in schedule */
+    .schedule-list {
+      max-width: 600px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .schedule-item {
+      display: flex; align-items: center; gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .schedule-item:last-child { border-bottom: none; }
+    .schedule-time {
+      flex-shrink: 0;
+      width: 100px;
+      font-size: 0.9rem; font-weight: 700; color: var(--orange);
+      text-align: right;
+    }
+    .schedule-dot {
+      flex-shrink: 0;
+      width: 12px; height: 12px;
+      background: var(--navy);
+      border-radius: 50%;
+      position: relative;
+    }
+    .schedule-dot::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 100%;
+      width: 2px; height: 48px;
+      background: var(--border);
+      transform: translateX(-50%);
+    }
+    .schedule-item:last-child .schedule-dot::before { display: none; }
+    .schedule-text {
+      font-size: 0.95rem; color: var(--text-secondary);
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--navy-dark); color: rgba(255,255,255,0.7);
+      padding: 60px 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    .footer-brand .logo { color: var(--white); font-size: 1.25rem; display: inline-block; margin-bottom: 12px; }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.6; }
+    .footer-col h4 { color: var(--white); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.9rem; padding: 4px 0; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 0; margin-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.85rem;
+    }
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { flex-direction: column; gap: 8px; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">The Call<span>Taker</span></a>
+    <ul class="nav-links" id="nav">
+      <li><a href="../index.html#how-it-works">How It Works</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="../case-studies/">Case Studies</a></li>
+      <li><a href="tel:+16157845747" class="nav-demo">Demo: (615) 784-5747</a></li>
+      <li><a href="../pilot/" class="btn btn-primary btn-sm">Try Free for 14 Days</a></li>
+    </ul>
+    <button class="mobile-toggle" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="confetti" id="confetti"></div>
+  <div class="live-badge"><span class="live-dot"></span> LIVE</div>
+  <h1>You're Live! &#127881;</h1>
+  <p class="subtitle">Your AI receptionist is now answering every call to your business, 24/7.</p>
+</section>
+
+<!-- What happens now -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">What happens now?</h2>
+    <div class="how-it-works-list">
+
+      <div class="how-item">
+        <div class="how-check">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <p>When someone calls your number, your AI receptionist answers with your business name.</p>
+      </div>
+
+      <div class="how-item">
+        <div class="how-check">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <p>They collect the caller's name, phone, address, and what they need.</p>
+      </div>
+
+      <div class="how-item">
+        <div class="how-check">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <p>You get an instant text notification with all the details.</p>
+      </div>
+
+      <div class="how-item">
+        <div class="how-check">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <p>If it's an emergency, your on-call tech gets alerted immediately.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard -->
+<section class="section">
+  <div class="container">
+    <div class="dashboard-cta">
+      <h2>Your Dashboard</h2>
+      <p>See your call history, lead details, and performance metrics all in one place.</p>
+      <a href="../portal.html" class="btn-white">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+        Open Dashboard
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Tips -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Quick tips for your first week</h2>
+    <div class="tips-grid">
+
+      <div class="tip-card">
+        <div class="tip-number">1</div>
+        <h3>Call back fast</h3>
+        <p>Call back new leads within 5 minutes for the best close rate. Speed-to-lead is everything in service businesses.</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-number">2</div>
+        <h3>Watch your texts</h3>
+        <p>Check your notification texts throughout the day. Every lead is a potential job waiting to be booked.</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-number">3</div>
+        <h3>We adjust same day</h3>
+        <p>If anything sounds off, text us and we'll adjust the script the same day. Your receptionist should sound exactly right.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Check-in schedule -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Your check-in schedule</h2>
+    <div class="schedule-list">
+
+      <div class="schedule-item">
+        <span class="schedule-time">24 hours</span>
+        <span class="schedule-dot"></span>
+        <span class="schedule-text">We'll text to see how it's going and if you need any script tweaks.</span>
+      </div>
+
+      <div class="schedule-item">
+        <span class="schedule-time">1 week</span>
+        <span class="schedule-dot"></span>
+        <span class="schedule-text">Quick review of your call volume and results so far.</span>
+      </div>
+
+      <div class="schedule-item">
+        <span class="schedule-time">1 month</span>
+        <span class="schedule-dot"></span>
+        <span class="schedule-text">Full performance review with ROI breakdown and optimization recommendations.</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">The Call<span>Taker</span></a>
+        <p>AI receptionist for service businesses. Answers every call, books every job, never takes a day off.</p>
+      </div>
+      <div class="footer-col"><h4>Product</h4><a href="../index.html#how-it-works">How It Works</a><a href="../index.html#pricing">Pricing</a><a href="../industries/">Industries</a><a href="../pilot/">Start Free Pilot</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="../case-studies/">Case Studies</a><a href="../book.html">Book a Demo</a><a href="../blog/">Blog</a><a href="../agency.html">Agencies</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="tel:+16157845747">(615) 784-5747</a><a href="mailto:wallace@thecalltaker.com">wallace@thecalltaker.com</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Service</a></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 The Call Taker. All rights reserved.</p><p>Nashville, TN</p></div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  document.getElementById('menuBtn').addEventListener('click', function() {
+    document.getElementById('nav').classList.toggle('open');
+  });
+
+  // Confetti animation
+  (function() {
+    var container = document.getElementById('confetti');
+    var colors = ['#ea580c', '#1e3a5f', '#059669', '#f59e0b', '#8b5cf6', '#ec4899'];
+    for (var i = 0; i < 50; i++) {
+      var piece = document.createElement('div');
+      piece.classList.add('confetti-piece');
+      piece.style.left = Math.random() * 100 + '%';
+      piece.style.top = -10 + 'px';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.width = (Math.random() * 8 + 6) + 'px';
+      piece.style.height = (Math.random() * 8 + 6) + 'px';
+      piece.style.animationDelay = (Math.random() * 2) + 's';
+      piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      container.appendChild(piece);
+    }
+  })();
+</script>
+
+</body>
+</html>
