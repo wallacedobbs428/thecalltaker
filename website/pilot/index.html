@@ -21,87 +21,181 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css">
   <style>
-    .pilot-hero { padding: 140px 0 80px; text-align: center; position: relative; overflow: hidden; }
-    @media (min-width: 768px) { .pilot-hero { padding: 180px 0 100px; } }
-    .pilot-hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, var(--green-glow) 0%, transparent 70%); pointer-events: none; opacity: 0.4; }
+:root {
+  --white: #ffffff;
+  --off-white: #f9fafb;
+  --light: #f3f4f6;
+  --border: #e5e7eb;
+  --text: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --navy: #1e3a5f;
+  --navy-dark: #0f2440;
+  --blue: #2563eb;
+  --blue-light: #eff6ff;
+  --orange: #ea580c;
+  --orange-hover: #c2410c;
+  --orange-light: #fff7ed;
+  --green: #059669;
+  --green-light: #ecfdf5;
+  --star: #f59e0b;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -2px rgba(0,0,0,.05);
+  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.03);
+  --shadow-xl: 0 20px 50px -12px rgba(0,0,0,.12);
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  /* backwards compat with old var names */
+  --text-1: #111827;
+  --text-2: #4b5563;
+  --text-3: #9ca3af;
+  --surface: #f3f4f6;
+  --surface-hover: #e5e7eb;
+  --green-dim: #ecfdf5;
+  --green-glow: rgba(5,150,105,.15);
+}
 
-    .free-badge { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(0,220,130,0.06); border: 1px solid rgba(0,220,130,0.15); border-radius: 100px; font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 24px; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; font-size: 17px; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+.container, .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* HEADER */
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
+.site-header.scrolled { border-bottom-color: var(--border); box-shadow: var(--shadow-sm); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.logo { font-size: 1.25rem; font-weight: 800; color: var(--navy); letter-spacing: -.02em; text-decoration: none; }
+.logo span { color: var(--orange); }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a { font-size: .9rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-demo { font-weight: 700 !important; color: var(--navy) !important; letter-spacing: -.01em; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit; font-weight: 700; border: none; cursor: pointer; text-decoration: none; transition: all .2s; line-height: 1; }
+.btn-primary { background: var(--orange); color: var(--white); padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; }
+.btn-primary:hover { background: var(--orange-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(234,88,12,.3); text-decoration: none; color: var(--white); }
+.btn-outline { background: transparent; color: var(--navy); padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; border: 2px solid var(--border); }
+.btn-outline:hover { border-color: var(--navy); background: var(--off-white); text-decoration: none; }
+.btn-sm { padding: 10px 20px; font-size: .85rem; }
+.btn-lg { padding: 16px 32px; font-size: 1rem; }
+.mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+.mobile-toggle span { display: block; width: 24px; height: 2px; background: var(--text); margin: 5px 0; transition: .3s; }
+
+/* SECTION */
+.section { padding: 80px 0; }
+
+/* FOOTER */
+.site-footer { background: var(--off-white); border-top: 1px solid var(--border); padding: 48px 0 32px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer-brand .logo { display: inline-block; margin-bottom: 12px; }
+.footer-brand p { font-size: .9rem; color: var(--text-secondary); line-height: 1.6; max-width: 280px; }
+.footer-col h4 { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); margin-bottom: 16px; }
+.footer-col a { display: block; font-size: .9rem; color: var(--text-secondary); padding: 4px 0; transition: color .2s; text-decoration: none; }
+.footer-col a:hover { color: var(--text); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; }
+.footer-bottom p { font-size: .82rem; color: var(--text-muted); }
+
+/* FAQ */
+.faq-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; }
+.faq-question { width: 100%; padding: 16px 20px; background: var(--white); border: none; text-align: left; font-size: .95rem; font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: inherit; }
+.faq-question:hover { background: var(--off-white); }
+.faq-icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--text-muted); transition: transform .3s; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.faq-item.open .faq-answer { max-height: 500px; }
+.faq-answer-inner { padding: 0 20px 16px; font-size: .9rem; color: var(--text-secondary); line-height: 1.7; }
+
+/* FADE */
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .nav-links { display: none; }
+  .mobile-toggle { display: block; }
+  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--border); padding: 24px; gap: 16px; box-shadow: var(--shadow-lg); z-index: 999; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+.pilot-hero { padding: 140px 0 80px; text-align: center; position: relative; overflow: hidden; }
+    @media (min-width: 768px) { .pilot-hero { padding: 180px 0 100px; } }
+    .pilot-hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(5,150,105,.06) 0%, transparent 70%); pointer-events: none; opacity: 0.4; }
+
+    .free-badge { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(234,88,12,0.06); border: 1px solid rgba(5,150,105,0.12); border-radius: 100px; font-size: 14px; font-weight: 600; color: var(--green); margin-bottom: 24px; }
     .free-badge svg { width: 16px; height: 16px; }
 
-    .hero-headline { font-size: clamp(32px, 6vw, 56px); font-weight: 900; color: #fff; line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 720px; margin-left: auto; margin-right: auto; }
+    .hero-headline { font-size: clamp(32px, 6vw, 56px); font-weight: 900; color: var(--navy-dark); line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 16px; max-width: 720px; margin-left: auto; margin-right: auto; }
     .hero-sub { font-size: 18px; color: var(--text-2); max-width: 520px; margin: 0 auto 32px; line-height: 1.6; }
 
     .social-proof-strip { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; padding: 20px 0; margin-bottom: 40px; }
     .proof-item { text-align: center; }
-    .proof-item .val { font-size: 28px; font-weight: 800; color: #fff; }
+    .proof-item .val { font-size: 28px; font-weight: 800; color: var(--navy-dark); }
     .proof-item .lbl { font-size: 12px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; }
 
     .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 800px; margin: 0 auto 60px; }
     @media (max-width: 640px) { .steps-grid { grid-template-columns: 1fr; gap: 16px; } }
     .step-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; text-align: center; }
-    .step-num { width: 40px; height: 40px; border-radius: 50%; background: var(--green); color: #000; font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
-    .step-card h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .step-num { width: 40px; height: 40px; border-radius: 50%; background: var(--orange); color: var(--white); font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .step-card h3 { font-size: 15px; font-weight: 700; color: var(--navy-dark); margin-bottom: 6px; }
     .step-card p { font-size: 13px; color: var(--text-2); line-height: 1.5; }
-    .step-card .time { font-size: 12px; color: var(--green); font-weight: 600; margin-top: 8px; }
+    .step-card .time { font-size: 12px; color: var(--orange); font-weight: 600; margin-top: 8px; }
 
     .pilot-form-card { max-width: 480px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 36px; }
-    .pilot-form-card h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 4px; text-align: center; }
+    .pilot-form-card h2 { font-size: 20px; font-weight: 700; color: var(--navy-dark); margin-bottom: 4px; text-align: center; }
     .pilot-form-card .subtext { font-size: 13px; color: var(--text-3); text-align: center; margin-bottom: 24px; }
     .field { margin-bottom: 14px; }
     .field label { display: block; font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
     .field input, .field select {
-      width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.03);
+      width: 100%; padding: 12px 14px; background: var(--white);
       border: 1px solid var(--border); border-radius: 8px; color: #fff;
       font-size: 14px; font-family: inherit; transition: border-color 0.15s;
     }
-    .field input:focus, .field select:focus { outline: none; border-color: var(--green); }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--orange); }
     .field input::placeholder { color: var(--text-3); }
     .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2371717a' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
-    .field select option { background: #111; color: #fff; }
+    .field select option { background: var(--white); color: #fff; }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
 
     .pilot-success { display: none; text-align: center; padding: 40px 20px; }
-    .pilot-success .icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(0,220,130,0.1); border: 2px solid rgba(0,220,130,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .pilot-success .icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(5,150,105,0.08); border: 2px solid rgba(5,150,105,0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
 
     .quote-section { max-width: 700px; margin: 0 auto; }
     .quote-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
     .quote-card blockquote { font-size: 15px; color: var(--text-2); line-height: 1.6; margin: 0 0 12px; font-style: italic; }
-    .quote-card .attribution { font-size: 13px; color: var(--green); font-weight: 600; }
+    .quote-card .attribution { font-size: 13px; color: var(--orange); font-weight: 600; }
 
     .faq-pilot { max-width: 600px; margin: 0 auto; }
   </style>
+<script src="../tct-tracking.js"></script>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-inner">
-      <a href="../index.html" class="logo">
-        <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-        The Call <span>Taker</span>
-      </a>
-      <nav class="nav">
-        <a href="../index.html">Home</a>
-        <a href="../services.html">Services</a>
-        <a href="../index.html#pricing">Pricing</a>
-        <a href="../book.html">Demo</a>
-      </nav>
-      <a href="../book.html" class="header-cta">Book a Demo</a>
-      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
-  </header>
+  
 
-  <nav class="mobile-nav">
-    <a href="../index.html">Home</a>
-    <a href="../services.html">Services</a>
-    <a href="../index.html#pricing">Pricing</a>
-    <a href="../book.html">Demo</a>
-    <a href="../book.html" class="btn btn-primary btn-lg">Book a Demo</a>
-  </nav>
+<header class="site-header" id="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">The Call<span>Taker</span></a>
+    <ul class="nav-links" id="nav">
+      <li><a href="../index.html#how-it-works">How It Works</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+      <li><a href="../case-studies/">Case Studies</a></li>
+      <li><a href="tel:+16157845747" class="nav-demo">Demo: (615) 784-5747</a></li>
+      <li><a href="../pilot/" class="btn btn-primary btn-sm">Try Free for 14 Days</a></li>
+    </ul>
+    <button class="mobile-toggle" id="menuBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
 
+<!-- Header -->
   <!-- Hero -->
   <section class="pilot-hero">
     <div class="wrap">
@@ -111,7 +205,7 @@
       </div>
       <h1 class="hero-headline">Let us answer your phones for 14 days. Free.</h1>
       <p class="hero-sub">No credit card. No contracts. No catch. Just forward your after-hours calls to our AI and watch the leads roll in.</p>
-      <a href="#signup" class="btn btn-green btn-lg">Start Your Free Pilot</a>
+      <a href="#signup" class="btn btn-primary">Start Your Free Pilot</a>
     </div>
   </section>
 
@@ -142,7 +236,7 @@
   <!-- 3 Steps -->
   <section class="section">
     <div class="wrap">
-      <h2 style="font-size: 24px; font-weight: 800; color: #fff; text-align: center; margin-bottom: 8px;">How It Works</h2>
+      <h2 style="font-size: 24px; font-weight: 800; color: var(--navy-dark); text-align: center; margin-bottom: 8px;">How It Works</h2>
       <p style="font-size: 14px; color: var(--text-3); text-align: center; margin-bottom: 40px;">Up and running in under 5 minutes</p>
 
       <div class="steps-grid">
@@ -172,7 +266,7 @@
   <section class="section" style="padding-top: 0;">
     <div class="wrap">
       <div class="quote-section">
-        <h2 style="font-size: 20px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 24px;">What Business Owners Are Saying</h2>
+        <h2 style="font-size: 20px; font-weight: 700; color: var(--navy-dark); text-align: center; margin-bottom: 24px;">What Business Owners Are Saying</h2>
 
         <div class="quote-card">
           <blockquote>"We went from missing 41% of after-hours calls to missing zero. That's $8,400/month we were leaving on the table."</blockquote>
@@ -238,7 +332,7 @@
           </select>
         </div>
 
-        <button class="btn btn-green btn-lg" id="pilot-submit" onclick="submitPilot()" style="width: 100%; margin-top: 8px;">Start My Free Pilot</button>
+        <button class="btn btn-primary" id="pilot-submit" onclick="submitPilot()" style="width: 100%; margin-top: 8px;">Start My Free Pilot</button>
         <p style="font-size: 11px; color: var(--text-3); text-align: center; margin-top: 12px;">We'll call you within 1 hour to get you set up.</p>
       </div>
 
@@ -247,13 +341,13 @@
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <h2 style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 8px;">You're In!</h2>
-        <p style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Your free 14-day pilot for <strong id="p-company-name" style="color: #fff;">your company</strong> is being set up right now.</p>
+        <h2 style="font-size: 24px; font-weight: 800; color: var(--navy-dark); margin-bottom: 8px;">You're In!</h2>
+        <p style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Your free 14-day pilot for <strong id="p-company-name" style="color: var(--navy-dark);">your company</strong> is being set up right now.</p>
         <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
           <p style="font-size: 14px; color: var(--text-2); margin-bottom: 12px;">What happens next:</p>
-          <p style="font-size: 14px; color: #fff; margin-bottom: 8px;"><strong>1.</strong> We'll call you within 1 hour to finalize setup</p>
-          <p style="font-size: 14px; color: #fff; margin-bottom: 8px;"><strong>2.</strong> You'll get simple forwarding instructions via text</p>
-          <p style="font-size: 14px; color: #fff;"><strong>3.</strong> Your AI starts answering calls immediately</p>
+          <p style="font-size: 14px; color: var(--navy-dark); margin-bottom: 8px;"><strong>1.</strong> We'll call you within 1 hour to finalize setup</p>
+          <p style="font-size: 14px; color: var(--navy-dark); margin-bottom: 8px;"><strong>2.</strong> You'll get simple forwarding instructions via text</p>
+          <p style="font-size: 14px; color: var(--navy-dark);"><strong>3.</strong> Your AI starts answering calls immediately</p>
         </div>
         <p style="font-size: 14px; color: var(--text-2); margin-bottom: 8px;">Want to hear your AI receptionist right now?</p>
         <a href="tel:+16157845747" style="font-size: 24px; font-weight: 800; color: var(--green); text-decoration: none;">(615) 784-5747</a>
@@ -264,7 +358,7 @@
   <!-- FAQ -->
   <section class="section" style="padding-top: 0;">
     <div class="wrap faq-pilot">
-      <h3 style="font-size: 18px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 24px;">Common Questions</h3>
+      <h3 style="font-size: 18px; font-weight: 700; color: var(--navy-dark); text-align: center; margin-bottom: 24px;">Common Questions</h3>
 
       <div class="faq-item">
         <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
@@ -309,48 +403,12 @@
     <p style="font-size: 13px; color: var(--text-3); margin-bottom: 4px;">Every missed call costs you</p>
     <p style="font-size: 32px; font-weight: 800; color: #ef4444; margin-bottom: 4px;">$350 — $8,500</p>
     <p style="font-size: 13px; color: var(--text-3); margin-bottom: 24px;">depending on your industry. Find out how much you're losing — for free.</p>
-    <a href="#signup" class="btn btn-green btn-lg">Start Your Free Pilot</a>
+    <a href="#signup" class="btn btn-primary">Start Your Free Pilot</a>
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <a href="../index.html" class="logo">
-            <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-            The Call <span>Taker</span>
-          </a>
-          <p>AI receptionist for service businesses.</p>
-        </div>
-        <div class="footer-links">
-          <a href="../index.html">Home</a>
-          <a href="../services.html">Services</a>
-          <a href="../book.html">Demo</a>
-          <a href="../calculator.html">Calculator</a>
-          <a href="../privacy.html">Privacy Policy</a>
-          <a href="../terms.html">Terms of Service</a>
-          <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
-          <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-        <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
-      </div>
-    </div>
-  </footer>
-
   <!-- Sticky mobile bar -->
-  <div class="sticky-mobile-bar">
-    <a href="#signup"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Start Free Pilot</a>
-    <a href="tel:+16157845747" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
-  </div>
-
   <!-- Scripts -->
-  <script src="../script.js"></script>
-  <script src="../tct-tracking.js"></script>
-
   <script>
     async function submitPilot() {
       var btn = document.getElementById('pilot-submit');
@@ -461,5 +519,56 @@
       window.scrollTo({ top: document.getElementById('signup').offsetTop - 80, behavior: 'smooth' });
     }
   </script>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">The Call<span>Taker</span></a>
+        <p>AI receptionist for service businesses. Answers every call, books every job, never takes a day off.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="../index.html#how-it-works">How It Works</a>
+        <a href="../index.html#pricing">Pricing</a>
+        <a href="../industries/">Industries</a>
+        <a href="../pilot/">Start Free Pilot</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="../case-studies/">Case Studies</a>
+        <a href="../book.html">Book a Demo</a>
+        <a href="../blog/">Blog</a>
+        <a href="../agency.html">Agencies</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+16157845747">(615) 784-5747</a>
+        <a href="mailto:wallace@thecalltaker.com">wallace@thecalltaker.com</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 The Call Taker. All rights reserved.</p>
+      <p>Nashville, TN</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Sticky header
+var h=document.getElementById('header');
+if(h)window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>20);});
+// Mobile menu
+var mb=document.getElementById('menuBtn'),nv=document.getElementById('nav');
+if(mb&&nv){mb.addEventListener('click',function(){nv.classList.toggle('open');});}
+if(nv)document.querySelectorAll('#nav a').forEach(function(a){a.addEventListener('click',function(){nv.classList.remove('open');});});
+// Fade-in
+var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('visible');obs.unobserve(en.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(function(el){obs.observe(el);});
+// FAQ accordion
+document.querySelectorAll('.faq-question').forEach(function(btn){btn.addEventListener('click',function(){var item=this.parentElement;var wasOpen=item.classList.contains('open');item.parentElement.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});if(!wasOpen)item.classList.add('open');});});
+</script>
 </body>
 </html>
