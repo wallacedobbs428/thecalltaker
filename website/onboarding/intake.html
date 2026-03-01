@@ -1278,21 +1278,78 @@ textarea.error {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Submitting...';
 
-    // TODO: Replace WEBHOOK_ID_HERE with the actual GHL webhook ID
-    var webhookUrl = 'https://services.leadconnectorhq.com/hooks/WEBHOOK_ID_HERE';
+    // Create contact in GHL via Contacts API
+    var GHL_BASE = 'https://services.leadconnectorhq.com';
+    var GHL_KEY = 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35';
+    var GHL_LOCATION = 'tQb9YmrGDrdVUJYPKrsY';
 
-    fetch(webhookUrl, {
+    var contactData = {
+      firstName: ownerFirst,
+      lastName: ownerLast,
+      email: ownerEmail,
+      phone: ownerPhone,
+      companyName: businessName,
+      locationId: GHL_LOCATION,
+      tags: ['intake-submitted', industry.toLowerCase().replace(/\s+/g, '-')],
+      customFields: [
+        { key: 'industry', field_value: industry },
+        { key: 'services', field_value: servicesSelected.join(', ') },
+        { key: 'service_area', field_value: payload.serviceArea },
+        { key: 'business_phone', field_value: businessPhone },
+        { key: 'business_hours', field_value: payload.openTime + ' - ' + payload.closeTime },
+        { key: 'days_open', field_value: payload.daysOpen },
+        { key: 'plan_selected', field_value: payload.plan },
+        { key: 'ai_name', field_value: payload.aiName },
+        { key: 'callback_time', field_value: payload.callbackTime },
+        { key: 'monthly_volume', field_value: payload.monthlyVolume },
+        { key: 'current_handling', field_value: payload.currentHandling }
+      ]
+    };
+
+    fetch(GHL_BASE + '/contacts/', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Authorization': 'Bearer ' + GHL_KEY,
+        'Version': '2021-07-28',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(contactData)
     })
     .then(function(response) {
       if (!response.ok) throw new Error('Submission failed');
-      return response.text();
+      return response.json();
     })
-    .then(function() {
+    .then(function(data) {
+      // Add intake details as a note on the contact
+      var noteBody = '--- INTAKE FORM SUBMISSION ---\n' +
+        'Business: ' + businessName + '\n' +
+        'Industry: ' + industry + '\n' +
+        'Services: ' + servicesSelected.join(', ') + '\n' +
+        'Service Area: ' + payload.serviceArea + '\n' +
+        'Hours: ' + payload.openTime + ' - ' + payload.closeTime + ' (' + payload.daysOpen + ')\n' +
+        'Business Phone: ' + businessPhone + '\n' +
+        'Emergency On-Call: ' + payload.emergencyOnCall + (payload.techName ? ' (' + payload.techName + ' ' + payload.techPhone + ')' : '') + '\n' +
+        'Callback Time: ' + payload.callbackTime + '\n' +
+        'Pricing: ' + payload.givePricing + (payload.pricingInfo ? ' — ' + payload.pricingInfo : '') + '\n' +
+        'Current Handling: ' + payload.currentHandling + '\n' +
+        'Monthly Volume: ' + payload.monthlyVolume + '\n' +
+        'Plan: ' + payload.plan + '\n' +
+        'AI Name: ' + (payload.aiName || 'Not specified') + '\n' +
+        'Special Instructions: ' + (payload.specialInstructions || 'None');
+
+      if (data.contact && data.contact.id) {
+        fetch(GHL_BASE + '/contacts/' + data.contact.id + '/notes', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + GHL_KEY,
+            'Version': '2021-07-28',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ body: noteBody, userId: 'g4Ocu4qnhv7O8CrqpDTC' })
+        }).catch(function() { /* note is nice-to-have, don't block */ });
+      }
+
       // Track conversion
       if (typeof gtag === 'function') {
         gtag('event', 'intake_form_submit', {

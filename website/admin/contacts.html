@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Contacts — Admin — The Call Taker</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <div id="admin-sidebar"></div>
+
+    <button id="admin-mobile-toggle" aria-label="Toggle sidebar">
+      <span></span><span></span><span></span>
+    </button>
+
+    <main class="admin-main">
+      <!-- Top Bar -->
+      <div class="admin-topbar">
+        <h1>Contacts</h1>
+        <div class="admin-topbar-actions">
+          <button class="admin-btn btn-primary" id="btn-new-contact">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Contact
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="mb-24">
+        <div class="admin-search" id="search-wrap">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="search-input" placeholder="Search contacts by name, email, phone, or company...">
+        </div>
+        <div class="flex gap-8 mt-16" id="tag-filters" style="flex-wrap:wrap;">
+          <button class="admin-btn btn-primary btn-sm" data-filter="all">All</button>
+          <button class="admin-btn btn-secondary btn-sm" data-filter="customer">Customers</button>
+          <button class="admin-btn btn-secondary btn-sm" data-filter="prospect">Prospects</button>
+          <button class="admin-btn btn-secondary btn-sm" data-filter="pilot-active">Pilots</button>
+          <button class="admin-btn btn-secondary btn-sm" data-filter="water-damage">Water Damage</button>
+          <button class="admin-btn btn-secondary btn-sm" data-filter="cold-outreach">Cold Outreach</button>
+        </div>
+      </div>
+
+      <!-- Contacts Table -->
+      <div class="admin-card" id="contacts-card">
+        <div id="contacts-loading" class="admin-loading">
+          <div class="admin-spinner admin-spinner-lg"></div>
+          <span>Loading contacts...</span>
+        </div>
+
+        <div id="contacts-empty" class="admin-empty hidden">
+          <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <p>No contacts found</p>
+        </div>
+
+        <div id="contacts-table-wrap" class="admin-table-wrap hidden">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Company</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Tags</th>
+                <th>Added</th>
+              </tr>
+            </thead>
+            <tbody id="contacts-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination-wrap" class="hidden">
+        <div class="admin-pagination" id="pagination-controls"></div>
+        <div class="text-center mt-16">
+          <span class="text-sm text-muted" id="pagination-info"></span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Contact Detail Panel -->
+  <div class="admin-panel-overlay" id="panel-overlay"></div>
+  <div class="admin-panel" id="contact-panel">
+    <div class="admin-panel-header">
+      <h2 id="panel-name" style="font-size:1.15rem;font-weight:700;color:var(--navy-dark);">Contact</h2>
+      <button class="admin-modal-close" id="panel-close" aria-label="Close panel">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Info Section -->
+    <div id="panel-info">
+      <div class="flex-between mb-16">
+        <span class="admin-card-title">Contact Info</span>
+        <button class="admin-btn btn-ghost btn-sm" id="btn-edit-toggle">Edit</button>
+      </div>
+      <div id="panel-fields"></div>
+      <div id="panel-edit-actions" class="hidden" style="margin-top:12px;">
+        <button class="admin-btn btn-primary btn-sm" id="btn-save-contact">Save</button>
+        <button class="admin-btn btn-ghost btn-sm" id="btn-cancel-edit">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Tags Section -->
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);">
+      <span class="admin-card-title">Tags</span>
+      <div id="panel-tags" class="tag-list mt-16" style="margin-bottom:12px;"></div>
+      <div class="flex gap-8" style="margin-top:8px;">
+        <input type="text" class="admin-input" id="panel-tag-input" placeholder="Add a tag..." style="flex:1;">
+        <button class="admin-btn btn-secondary btn-sm" id="btn-add-tag">Add</button>
+      </div>
+    </div>
+
+    <!-- Recent Messages Section -->
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);">
+      <span class="admin-card-title">Recent Messages</span>
+      <div id="panel-messages" class="mt-16">
+        <div class="admin-loading" style="padding:24px 0;">
+          <div class="admin-spinner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Contact Modal -->
+  <div class="admin-modal-overlay" id="create-modal-overlay">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title">New Contact</h3>
+        <button class="admin-modal-close" id="modal-close" aria-label="Close modal">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <form id="create-form">
+        <div class="grid-2">
+          <div class="admin-form-group">
+            <label class="admin-label" for="create-first">First Name</label>
+            <input type="text" class="admin-input" id="create-first" required>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-label" for="create-last">Last Name</label>
+            <input type="text" class="admin-input" id="create-last">
+          </div>
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-label" for="create-email">Email</label>
+          <input type="email" class="admin-input" id="create-email">
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-label" for="create-phone">Phone</label>
+          <input type="tel" class="admin-input" id="create-phone" placeholder="+1 (555) 123-4567">
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-label" for="create-company">Company Name</label>
+          <input type="text" class="admin-input" id="create-company">
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-label">Tags</label>
+          <div class="flex gap-8" style="flex-wrap:wrap;margin-bottom:8px;">
+            <label style="display:flex;align-items:center;gap:6px;font-size:.85rem;cursor:pointer;">
+              <input type="checkbox" name="create-tags" value="hvac"> HVAC
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:.85rem;cursor:pointer;">
+              <input type="checkbox" name="create-tags" value="plumbing"> Plumbing
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:.85rem;cursor:pointer;">
+              <input type="checkbox" name="create-tags" value="electrical"> Electrical
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:.85rem;cursor:pointer;">
+              <input type="checkbox" name="create-tags" value="water-damage"> Water Damage
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:.85rem;cursor:pointer;">
+              <input type="checkbox" name="create-tags" value="roofing"> Roofing
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:.85rem;cursor:pointer;">
+              <input type="checkbox" name="create-tags" value="customer"> Customer
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:.85rem;cursor:pointer;">
+              <input type="checkbox" name="create-tags" value="prospect"> Prospect
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:.85rem;cursor:pointer;">
+              <input type="checkbox" name="create-tags" value="cold-outreach"> Cold Outreach
+            </label>
+          </div>
+          <input type="text" class="admin-input" id="create-custom-tags" placeholder="Additional tags (comma-separated)">
+        </div>
+      </form>
+
+      <div class="admin-modal-footer">
+        <button class="admin-btn btn-ghost" id="btn-cancel-create">Cancel</button>
+        <button class="admin-btn btn-primary" id="btn-submit-create">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Create Contact
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="admin-toast" id="toast"></div>
+
+  <script src="js/admin-auth.js"></script>
+  <script src="js/ghl-api.js"></script>
+  <script src="js/admin-nav.js"></script>
+  <script>
+  (function() {
+    // Auth gate
+    if (!AdminAuth.requireAuth()) return;
+
+    // === STATE ===
+    var currentPage = 1;
+    var totalContacts = 0;
+    var perPage = 20;
+    var searchQuery = '';
+    var activeFilter = 'all';
+    var allContacts = [];
+    var selectedContactId = null;
+    var editMode = false;
+    var searchTimer = null;
+
+    // === DOM REFS ===
+    var searchInput = document.getElementById('search-input');
+    var tagFilters = document.getElementById('tag-filters');
+    var contactsLoading = document.getElementById('contacts-loading');
+    var contactsEmpty = document.getElementById('contacts-empty');
+    var contactsTableWrap = document.getElementById('contacts-table-wrap');
+    var contactsTbody = document.getElementById('contacts-tbody');
+    var paginationWrap = document.getElementById('pagination-wrap');
+    var paginationControls = document.getElementById('pagination-controls');
+    var paginationInfo = document.getElementById('pagination-info');
+    var panelOverlay = document.getElementById('panel-overlay');
+    var contactPanel = document.getElementById('contact-panel');
+    var panelName = document.getElementById('panel-name');
+    var panelFields = document.getElementById('panel-fields');
+    var panelTags = document.getElementById('panel-tags');
+    var panelMessages = document.getElementById('panel-messages');
+    var panelTagInput = document.getElementById('panel-tag-input');
+    var panelEditActions = document.getElementById('panel-edit-actions');
+    var createModalOverlay = document.getElementById('create-modal-overlay');
+    var toast = document.getElementById('toast');
+
+    // === TAG COLORS ===
+    function tagColor(tag) {
+      var t = (tag || '').toLowerCase();
+      if (['water-damage','hvac','plumbing','electrical','roofing'].indexOf(t) !== -1) return 'badge-blue';
+      if (['customer','active-client'].indexOf(t) !== -1) return 'badge-green';
+      if (['cold-outreach','prospect','intake-submitted'].indexOf(t) !== -1) return 'badge-orange';
+      if (['pilot-active','pilot-requested'].indexOf(t) !== -1) return 'badge-purple';
+      if (['demo-booked','demo-called'].indexOf(t) !== -1) return 'badge-yellow';
+      return 'badge-gray';
+    }
+
+    // === TOAST ===
+    function showToast(msg, type) {
+      toast.textContent = msg;
+      toast.className = 'admin-toast ' + (type || '') + ' show';
+      setTimeout(function() { toast.classList.remove('show'); }, 3500);
+    }
+
+    // === FETCH & RENDER CONTACTS ===
+    async function loadContacts() {
+      contactsLoading.classList.remove('hidden');
+      contactsTableWrap.classList.add('hidden');
+      contactsEmpty.classList.add('hidden');
+      paginationWrap.classList.add('hidden');
+
+      try {
+        var data = await GHL.listContacts({
+          page: currentPage,
+          limit: perPage,
+          query: searchQuery,
+          noCache: true
+        });
+
+        allContacts = data.contacts || [];
+        var meta = data.meta || {};
+        totalContacts = meta.total || allContacts.length;
+
+        var filtered = filterByTag(allContacts);
+        renderTable(filtered);
+        renderPagination(meta);
+      } catch (err) {
+        console.error('Failed to load contacts:', err);
+        showToast('Failed to load contacts: ' + err.message, 'error');
+        contactsLoading.classList.add('hidden');
+        contactsEmpty.classList.remove('hidden');
+        contactsEmpty.querySelector('p').textContent = 'Error loading contacts';
+      }
+    }
+
+    function filterByTag(contacts) {
+      if (activeFilter === 'all') return contacts;
+      return contacts.filter(function(c) {
+        var tags = c.tags || [];
+        // Handle filter values that map to multiple tag variants
+        if (activeFilter === 'customer') {
+          return tags.indexOf('customer') !== -1 || tags.indexOf('active-client') !== -1;
+        }
+        if (activeFilter === 'prospect') {
+          return tags.indexOf('prospect') !== -1;
+        }
+        return tags.indexOf(activeFilter) !== -1;
+      });
+    }
+
+    function renderTable(contacts) {
+      contactsLoading.classList.add('hidden');
+
+      if (!contacts.length) {
+        contactsEmpty.classList.remove('hidden');
+        contactsEmpty.querySelector('p').textContent = activeFilter !== 'all'
+          ? 'No contacts match this filter'
+          : 'No contacts found';
+        contactsTableWrap.classList.add('hidden');
+        return;
+      }
+
+      contactsEmpty.classList.add('hidden');
+      contactsTableWrap.classList.remove('hidden');
+
+      var html = '';
+      contacts.forEach(function(c) {
+        var name = ((c.firstName || '') + ' ' + (c.lastName || '')).trim() || 'No Name';
+        var company = c.companyName || '';
+        var email = c.email || '';
+        var phone = GHL.formatPhone(c.phone || '');
+        var tags = c.tags || [];
+        var added = GHL.timeAgo(c.dateAdded || c.createdAt);
+
+        html += '<tr data-id="' + c.id + '">';
+        html += '<td class="name-cell">' + escHtml(name) + '</td>';
+        html += '<td>' + escHtml(company) + '</td>';
+        html += '<td class="truncate" style="max-width:200px;">' + escHtml(email) + '</td>';
+        html += '<td style="white-space:nowrap;">' + escHtml(phone) + '</td>';
+        html += '<td><div class="tag-list">';
+
+        var maxShow = 3;
+        for (var i = 0; i < Math.min(tags.length, maxShow); i++) {
+          html += '<span class="admin-badge ' + tagColor(tags[i]) + '">' + escHtml(tags[i]) + '</span>';
+        }
+        if (tags.length > maxShow) {
+          html += '<span class="admin-badge badge-gray">+' + (tags.length - maxShow) + ' more</span>';
+        }
+
+        html += '</div></td>';
+        html += '<td class="muted" style="white-space:nowrap;">' + escHtml(added) + '</td>';
+        html += '</tr>';
+      });
+
+      contactsTbody.innerHTML = html;
+
+      // Row click handlers
+      var rows = contactsTbody.querySelectorAll('tr');
+      rows.forEach(function(row) {
+        row.addEventListener('click', function() {
+          openPanel(row.getAttribute('data-id'));
+        });
+      });
+    }
+
+    function renderPagination(meta) {
+      var total = meta.total || totalContacts;
+      var curPage = meta.currentPage || currentPage;
+      var totalPages = Math.ceil(total / perPage) || 1;
+
+      if (total <= perPage) {
+        paginationWrap.classList.add('hidden');
+        return;
+      }
+
+      paginationWrap.classList.remove('hidden');
+
+      var start = (curPage - 1) * perPage + 1;
+      var end = Math.min(curPage * perPage, total);
+      paginationInfo.textContent = 'Showing ' + start + '-' + end + ' of ' + total + ' contacts';
+
+      var html = '';
+
+      // Previous
+      html += '<button ' + (curPage <= 1 ? 'disabled' : '') + ' data-page="' + (curPage - 1) + '">';
+      html += '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>';
+      html += '</button>';
+
+      // Page numbers
+      var pages = buildPageNumbers(curPage, totalPages);
+      pages.forEach(function(p) {
+        if (p === '...') {
+          html += '<span class="admin-pagination-info">...</span>';
+        } else {
+          html += '<button class="' + (p === curPage ? 'active' : '') + '" data-page="' + p + '">' + p + '</button>';
+        }
+      });
+
+      // Next
+      html += '<button ' + (curPage >= totalPages ? 'disabled' : '') + ' data-page="' + (curPage + 1) + '">';
+      html += '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>';
+      html += '</button>';
+
+      paginationControls.innerHTML = html;
+
+      // Pagination click handlers
+      paginationControls.querySelectorAll('button[data-page]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (btn.disabled) return;
+          currentPage = parseInt(btn.getAttribute('data-page'));
+          loadContacts();
+        });
+      });
+    }
+
+    function buildPageNumbers(current, total) {
+      if (total <= 7) {
+        var arr = [];
+        for (var i = 1; i <= total; i++) arr.push(i);
+        return arr;
+      }
+      var pages = [1];
+      if (current > 3) pages.push('...');
+      for (var j = Math.max(2, current - 1); j <= Math.min(total - 1, current + 1); j++) {
+        pages.push(j);
+      }
+      if (current < total - 2) pages.push('...');
+      pages.push(total);
+      return pages;
+    }
+
+    // === SEARCH ===
+    searchInput.addEventListener('input', function() {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(function() {
+        searchQuery = searchInput.value.trim();
+        currentPage = 1;
+        loadContacts();
+      }, 500);
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        clearTimeout(searchTimer);
+        searchQuery = searchInput.value.trim();
+        currentPage = 1;
+        loadContacts();
+      }
+    });
+
+    // === TAG FILTERS ===
+    tagFilters.addEventListener('click', function(e) {
+      var btn = e.target.closest('button[data-filter]');
+      if (!btn) return;
+
+      activeFilter = btn.getAttribute('data-filter');
+
+      tagFilters.querySelectorAll('button').forEach(function(b) {
+        b.className = 'admin-btn btn-sm ' + (b.getAttribute('data-filter') === activeFilter ? 'btn-primary' : 'btn-secondary');
+      });
+
+      // Client-side filter on already-fetched data
+      var filtered = filterByTag(allContacts);
+      renderTable(filtered);
+    });
+
+    // === CONTACT DETAIL PANEL ===
+    async function openPanel(contactId) {
+      selectedContactId = contactId;
+      editMode = false;
+
+      panelOverlay.classList.add('open');
+      contactPanel.classList.add('open');
+
+      // Update URL hash without reload
+      history.replaceState(null, '', '#' + contactId);
+
+      panelName.textContent = 'Loading...';
+      panelFields.innerHTML = '<div class="admin-loading" style="padding:20px 0;"><div class="admin-spinner"></div></div>';
+      panelTags.innerHTML = '';
+      panelMessages.innerHTML = '<div class="admin-loading" style="padding:24px 0;"><div class="admin-spinner"></div></div>';
+      panelEditActions.classList.add('hidden');
+      document.getElementById('btn-edit-toggle').textContent = 'Edit';
+
+      try {
+        var data = await GHL.getContact(contactId);
+        var c = data.contact || data;
+
+        var fullName = ((c.firstName || '') + ' ' + (c.lastName || '')).trim() || 'No Name';
+        panelName.textContent = fullName;
+
+        renderPanelFields(c);
+        renderPanelTags(c.tags || []);
+        loadPanelMessages(contactId);
+      } catch (err) {
+        console.error('Failed to load contact:', err);
+        panelName.textContent = 'Error';
+        panelFields.innerHTML = '<p class="text-muted">Failed to load contact details.</p>';
+      }
+    }
+
+    function renderPanelFields(contact) {
+      var fields = [
+        { key: 'firstName', label: 'First Name', val: contact.firstName || '' },
+        { key: 'lastName', label: 'Last Name', val: contact.lastName || '' },
+        { key: 'email', label: 'Email', val: contact.email || '' },
+        { key: 'phone', label: 'Phone', val: contact.phone || '' },
+        { key: 'companyName', label: 'Company', val: contact.companyName || '' },
+        { key: 'address1', label: 'Address', val: contact.address1 || '' },
+        { key: 'city', label: 'City', val: contact.city || '' },
+        { key: 'state', label: 'State', val: contact.state || '' }
+      ];
+
+      var html = '';
+      fields.forEach(function(f) {
+        html += '<div class="admin-form-group" style="margin-bottom:12px;">';
+        html += '<label class="admin-label">' + f.label + '</label>';
+        if (editMode) {
+          html += '<input type="text" class="admin-input" data-field="' + f.key + '" value="' + escAttr(f.val) + '">';
+        } else {
+          var display = f.key === 'phone' ? GHL.formatPhone(f.val) : f.val;
+          html += '<div style="font-size:.9rem;color:var(--text);padding:4px 0;">' + (escHtml(display) || '<span class="text-muted">--</span>') + '</div>';
+        }
+        html += '</div>';
+      });
+
+      panelFields.innerHTML = html;
+    }
+
+    function renderPanelTags(tags) {
+      var html = '';
+      tags.forEach(function(tag) {
+        html += '<span class="admin-badge ' + tagColor(tag) + '" style="padding-right:6px;">';
+        html += escHtml(tag);
+        html += ' <button data-remove-tag="' + escAttr(tag) + '" style="background:none;border:none;cursor:pointer;padding:0 2px;margin-left:4px;font-size:.8rem;opacity:.6;line-height:1;">&times;</button>';
+        html += '</span>';
+      });
+
+      if (!tags.length) {
+        html = '<span class="text-muted text-sm">No tags</span>';
+      }
+
+      panelTags.innerHTML = html;
+
+      // Tag remove handlers
+      panelTags.querySelectorAll('button[data-remove-tag]').forEach(function(btn) {
+        btn.addEventListener('click', async function(e) {
+          e.stopPropagation();
+          var tagName = btn.getAttribute('data-remove-tag');
+          try {
+            await GHL.removeTags(selectedContactId, [tagName]);
+            // Remove from local array and re-render
+            var idx = tags.indexOf(tagName);
+            if (idx !== -1) tags.splice(idx, 1);
+            renderPanelTags(tags);
+            showToast('Tag removed: ' + tagName, 'success');
+            loadContacts(); // Refresh table
+          } catch (err) {
+            showToast('Failed to remove tag', 'error');
+          }
+        });
+      });
+    }
+
+    async function loadPanelMessages(contactId) {
+      try {
+        var convData = await GHL.searchConversations(contactId);
+        var conversations = convData.conversations || [];
+
+        if (!conversations.length) {
+          panelMessages.innerHTML = '<p class="text-muted text-sm">No conversations found.</p>';
+          return;
+        }
+
+        var convId = conversations[0].id;
+        var msgData = await GHL.getMessages(convId);
+        var messages = (msgData.messages || msgData || []);
+
+        // Ensure messages is an array
+        if (!Array.isArray(messages)) {
+          messages = messages.messages || [];
+        }
+
+        // Show last 5 messages
+        var recent = messages.slice(-5);
+
+        if (!recent.length) {
+          panelMessages.innerHTML = '<p class="text-muted text-sm">No messages yet.</p>';
+          return;
+        }
+
+        var html = '';
+        recent.forEach(function(msg) {
+          if (typeof msg === 'string') return; // Skip non-object messages
+          var dir = (msg.direction === 'inbound' || msg.direction === 1) ? 'inbound' : 'outbound';
+          var body = msg.body || msg.message || msg.text || '(no content)';
+          if (body.length > 120) body = body.substring(0, 120) + '...';
+          var time = GHL.timeAgo(msg.dateAdded || msg.createdAt || '');
+
+          html += '<div style="padding:10px 0;border-bottom:1px solid var(--light);">';
+          html += '<div class="flex-between" style="margin-bottom:4px;">';
+          html += '<span class="admin-badge ' + (dir === 'inbound' ? 'badge-blue' : 'badge-gray') + '">' + dir + '</span>';
+          html += '<span class="text-muted text-sm">' + escHtml(time) + '</span>';
+          html += '</div>';
+          html += '<p style="font-size:.85rem;color:var(--text);line-height:1.5;margin:0;">' + escHtml(body) + '</p>';
+          html += '</div>';
+        });
+
+        html += '<div style="margin-top:12px;">';
+        html += '<a href="inbox.html?contact=' + contactId + '" class="admin-btn btn-ghost btn-sm" style="text-decoration:none;">View Full Conversation &rarr;</a>';
+        html += '</div>';
+
+        panelMessages.innerHTML = html;
+      } catch (err) {
+        console.error('Failed to load messages:', err);
+        panelMessages.innerHTML = '<p class="text-muted text-sm">Could not load messages.</p>';
+      }
+    }
+
+    // Close panel
+    function closePanel() {
+      panelOverlay.classList.remove('open');
+      contactPanel.classList.remove('open');
+      selectedContactId = null;
+      editMode = false;
+      history.replaceState(null, '', window.location.pathname);
+    }
+
+    panelOverlay.addEventListener('click', closePanel);
+    document.getElementById('panel-close').addEventListener('click', closePanel);
+
+    // Edit toggle
+    document.getElementById('btn-edit-toggle').addEventListener('click', async function() {
+      if (!selectedContactId) return;
+
+      if (!editMode) {
+        editMode = true;
+        this.textContent = 'Cancel';
+        panelEditActions.classList.remove('hidden');
+        // Re-fetch and render in edit mode
+        try {
+          var data = await GHL.getContact(selectedContactId);
+          var c = data.contact || data;
+          renderPanelFields(c);
+        } catch (err) {
+          showToast('Failed to load contact for editing', 'error');
+        }
+      } else {
+        editMode = false;
+        this.textContent = 'Edit';
+        panelEditActions.classList.add('hidden');
+        // Re-fetch and render in read mode
+        try {
+          var data2 = await GHL.getContact(selectedContactId);
+          var c2 = data2.contact || data2;
+          renderPanelFields(c2);
+        } catch (err) {
+          showToast('Failed to reload contact', 'error');
+        }
+      }
+    });
+
+    // Cancel edit
+    document.getElementById('btn-cancel-edit').addEventListener('click', async function() {
+      editMode = false;
+      document.getElementById('btn-edit-toggle').textContent = 'Edit';
+      panelEditActions.classList.add('hidden');
+      try {
+        var data = await GHL.getContact(selectedContactId);
+        var c = data.contact || data;
+        renderPanelFields(c);
+      } catch (err) {}
+    });
+
+    // Save contact
+    document.getElementById('btn-save-contact').addEventListener('click', async function() {
+      if (!selectedContactId) return;
+
+      var updates = {};
+      panelFields.querySelectorAll('input[data-field]').forEach(function(input) {
+        var key = input.getAttribute('data-field');
+        updates[key] = input.value.trim();
+      });
+
+      try {
+        this.disabled = true;
+        this.textContent = 'Saving...';
+        await GHL.updateContact(selectedContactId, updates);
+        showToast('Contact updated', 'success');
+        editMode = false;
+        document.getElementById('btn-edit-toggle').textContent = 'Edit';
+        panelEditActions.classList.add('hidden');
+
+        var fullName = ((updates.firstName || '') + ' ' + (updates.lastName || '')).trim() || 'No Name';
+        panelName.textContent = fullName;
+
+        // Re-render in read mode
+        var data = await GHL.getContact(selectedContactId);
+        var c = data.contact || data;
+        renderPanelFields(c);
+        loadContacts(); // Refresh table
+      } catch (err) {
+        showToast('Failed to update contact: ' + err.message, 'error');
+      } finally {
+        this.disabled = false;
+        this.textContent = 'Save';
+      }
+    });
+
+    // Add tag
+    document.getElementById('btn-add-tag').addEventListener('click', async function() {
+      var val = panelTagInput.value.trim();
+      if (!val || !selectedContactId) return;
+
+      try {
+        await GHL.addTags(selectedContactId, [val]);
+        panelTagInput.value = '';
+        showToast('Tag added: ' + val, 'success');
+        // Refresh tags
+        var data = await GHL.getContact(selectedContactId);
+        var c = data.contact || data;
+        renderPanelTags(c.tags || []);
+        loadContacts();
+      } catch (err) {
+        showToast('Failed to add tag', 'error');
+      }
+    });
+
+    panelTagInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('btn-add-tag').click();
+      }
+    });
+
+    // === CREATE CONTACT MODAL ===
+    function openCreateModal() {
+      createModalOverlay.classList.add('open');
+      document.getElementById('create-first').focus();
+    }
+
+    function closeCreateModal() {
+      createModalOverlay.classList.remove('open');
+      document.getElementById('create-form').reset();
+      document.getElementById('create-custom-tags').value = '';
+      history.replaceState(null, '', window.location.pathname);
+    }
+
+    document.getElementById('btn-new-contact').addEventListener('click', function() {
+      openCreateModal();
+      history.replaceState(null, '', '#new');
+    });
+
+    document.getElementById('modal-close').addEventListener('click', closeCreateModal);
+    document.getElementById('btn-cancel-create').addEventListener('click', closeCreateModal);
+
+    createModalOverlay.addEventListener('click', function(e) {
+      if (e.target === createModalOverlay) closeCreateModal();
+    });
+
+    // Submit create
+    document.getElementById('btn-submit-create').addEventListener('click', async function() {
+      var firstName = document.getElementById('create-first').value.trim();
+      var lastName = document.getElementById('create-last').value.trim();
+      var email = document.getElementById('create-email').value.trim();
+      var phone = document.getElementById('create-phone').value.trim();
+      var company = document.getElementById('create-company').value.trim();
+
+      if (!firstName) {
+        showToast('First name is required', 'error');
+        return;
+      }
+
+      // Collect checked tags
+      var tags = [];
+      document.querySelectorAll('input[name="create-tags"]:checked').forEach(function(cb) {
+        tags.push(cb.value);
+      });
+
+      // Custom tags
+      var customTags = document.getElementById('create-custom-tags').value.trim();
+      if (customTags) {
+        customTags.split(',').forEach(function(t) {
+          var cleaned = t.trim().toLowerCase();
+          if (cleaned && tags.indexOf(cleaned) === -1) tags.push(cleaned);
+        });
+      }
+
+      var payload = { firstName: firstName };
+      if (lastName) payload.lastName = lastName;
+      if (email) payload.email = email;
+      if (phone) payload.phone = phone;
+      if (company) payload.companyName = company;
+      if (tags.length) payload.tags = tags;
+
+      try {
+        this.disabled = true;
+        this.textContent = 'Creating...';
+        await GHL.createContact(payload);
+        showToast('Contact created: ' + firstName + (lastName ? ' ' + lastName : ''), 'success');
+        closeCreateModal();
+        currentPage = 1;
+        loadContacts();
+      } catch (err) {
+        showToast('Failed to create contact: ' + err.message, 'error');
+      } finally {
+        this.disabled = false;
+        this.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Create Contact';
+      }
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (createModalOverlay.classList.contains('open')) {
+          closeCreateModal();
+        } else if (contactPanel.classList.contains('open')) {
+          closePanel();
+        }
+      }
+    });
+
+    // === URL HASH SUPPORT ===
+    function handleHash() {
+      var hash = window.location.hash.slice(1);
+      if (!hash) return;
+      if (hash === 'new') {
+        openCreateModal();
+      } else if (hash.length > 5) {
+        // Assume it's a contact ID
+        openPanel(hash);
+      }
+    }
+
+    // === UTILITY ===
+    function escHtml(str) {
+      if (!str) return '';
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function escAttr(str) {
+      return (str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // === INIT ===
+    loadContacts().then(function() {
+      handleHash();
+    });
+  })();
+  </script>
+</body>
+</html>

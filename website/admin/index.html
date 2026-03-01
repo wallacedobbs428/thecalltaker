@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Dashboard — Admin — The Call Taker</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- ============ PASSWORD GATE ============ -->
+<div class="pw-overlay" id="pw-overlay">
+  <div class="pw-modal">
+    <div class="pw-logo">The Call<span>Taker</span></div>
+    <h2>Admin Dashboard</h2>
+    <p>Enter your password to continue</p>
+    <form id="pw-form" autocomplete="off">
+      <input type="password" id="pw-input" placeholder="Password" autocomplete="current-password" autofocus>
+      <div class="pw-error" id="pw-error">Wrong password</div>
+      <button type="submit" class="admin-btn btn-primary btn-block btn-lg">Unlock</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div class="admin-layout hidden" id="admin-dashboard">
+  <div id="admin-sidebar"></div>
+
+  <button id="admin-mobile-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <main class="admin-main">
+    <!-- Top Bar -->
+    <div class="admin-topbar">
+      <h1>Dashboard</h1>
+      <div class="admin-topbar-actions">
+        <button class="admin-btn btn-secondary btn-sm" id="btn-refresh" title="Refresh data">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="admin-stats">
+      <div class="admin-stat" id="stat-total">
+        <div class="admin-stat-label">Total Contacts</div>
+        <div class="admin-stat-value" id="stat-total-val">
+          <span class="admin-spinner"></span>
+        </div>
+        <div class="admin-stat-sub" id="stat-total-sub"></div>
+      </div>
+      <div class="admin-stat" id="stat-week">
+        <div class="admin-stat-label">New This Week</div>
+        <div class="admin-stat-value" id="stat-week-val">
+          <span class="admin-spinner"></span>
+        </div>
+        <div class="admin-stat-sub" id="stat-week-sub"></div>
+      </div>
+      <div class="admin-stat" id="stat-clients">
+        <div class="admin-stat-label">Active Clients</div>
+        <div class="admin-stat-value">&mdash;</div>
+        <div class="admin-stat-sub text-muted">Coming soon</div>
+      </div>
+      <div class="admin-stat" id="stat-demos">
+        <div class="admin-stat-label">Demo Calls</div>
+        <div class="admin-stat-value">&mdash;</div>
+        <div class="admin-stat-sub text-muted">Coming soon</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="admin-actions">
+      <a href="contacts.html#new" class="admin-action-card">
+        <div class="admin-action-icon orange">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        </div>
+        <span class="admin-action-label">New Contact</span>
+      </a>
+      <a href="inbox.html" class="admin-action-card">
+        <div class="admin-action-icon green">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <span class="admin-action-label">Send Message</span>
+      </a>
+      <a href="pipeline.html" class="admin-action-card">
+        <div class="admin-action-icon blue">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </div>
+        <span class="admin-action-label">View Pipeline</span>
+      </a>
+      <a href="contacts.html" class="admin-action-card">
+        <div class="admin-action-icon purple">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <span class="admin-action-label">View Contacts</span>
+      </a>
+    </div>
+
+    <!-- Recent Contacts -->
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <h2 class="admin-card-title">Recent Contacts</h2>
+      </div>
+      <div id="contacts-content">
+        <div class="admin-loading">
+          <span class="admin-spinner admin-spinner-lg"></span>
+          <span>Loading contacts...</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ TOAST CONTAINER ============ -->
+<div id="toast-container"></div>
+
+<!-- Shared JS -->
+<script src="js/admin-auth.js"></script>
+<script src="js/ghl-api.js"></script>
+<script src="js/admin-nav.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  // === TAG COLOR MAP ===
+  var TAG_COLORS = {
+    'water-damage': 'badge-blue',
+    'hvac': 'badge-blue',
+    'plumbing': 'badge-blue',
+    'electrical': 'badge-blue',
+    'customer': 'badge-green',
+    'active-client': 'badge-green',
+    'cold-outreach': 'badge-orange',
+    'prospect': 'badge-orange',
+    'intake-submitted': 'badge-orange',
+    'pilot-active': 'badge-purple',
+    'pilot-requested': 'badge-purple',
+    'demo-booked': 'badge-yellow',
+    'demo-called': 'badge-yellow'
+  };
+
+  function getTagClass(tag) {
+    return TAG_COLORS[tag] || 'badge-gray';
+  }
+
+  // === TOAST ===
+  window.showToast = function(msg, type) {
+    var container = document.getElementById('toast-container');
+    var toast = document.createElement('div');
+    toast.className = 'admin-toast' + (type ? ' ' + type : '');
+    toast.textContent = msg;
+    container.appendChild(toast);
+    // Trigger reflow for animation
+    toast.offsetHeight;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+      setTimeout(function() { toast.remove(); }, 300);
+    }, 3500);
+  };
+
+  // === PASSWORD GATE ===
+  var overlay = document.getElementById('pw-overlay');
+  var dashboard = document.getElementById('admin-dashboard');
+  var pwForm = document.getElementById('pw-form');
+  var pwInput = document.getElementById('pw-input');
+  var pwError = document.getElementById('pw-error');
+
+  function showDashboard() {
+    overlay.classList.add('hidden');
+    dashboard.classList.remove('hidden');
+    loadDashboardData();
+  }
+
+  // Check if already authenticated
+  if (AdminAuth.isAuthenticated()) {
+    showDashboard();
+  }
+
+  pwForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var pw = pwInput.value.trim();
+    if (!pw) return;
+
+    if (AdminAuth.authenticate(pw)) {
+      pwError.classList.remove('show');
+      showDashboard();
+    } else {
+      pwError.classList.add('show');
+      pwInput.value = '';
+      pwInput.focus();
+    }
+  });
+
+  // === DASHBOARD DATA ===
+  function loadDashboardData() {
+    loadTotalContacts();
+    loadNewThisWeek();
+    loadRecentContacts();
+  }
+
+  // --- Total Contacts ---
+  async function loadTotalContacts() {
+    var valEl = document.getElementById('stat-total-val');
+    var subEl = document.getElementById('stat-total-sub');
+    try {
+      var data = await GHL.listContacts({ limit: 1, noCache: true });
+      var total = (data.meta && data.meta.total) ? data.meta.total : 0;
+      valEl.textContent = total.toLocaleString();
+      subEl.textContent = 'In GHL';
+      subEl.className = 'admin-stat-sub';
+    } catch (err) {
+      console.error('Failed to load total contacts:', err);
+      valEl.textContent = '--';
+      subEl.textContent = 'Failed to load';
+      subEl.className = 'admin-stat-sub negative';
+    }
+  }
+
+  // --- New This Week ---
+  async function loadNewThisWeek() {
+    var valEl = document.getElementById('stat-week-val');
+    var subEl = document.getElementById('stat-week-sub');
+    try {
+      var data = await GHL.listContacts({ limit: 100, noCache: true });
+      var contacts = data.contacts || [];
+      var now = Date.now();
+      var weekAgo = now - (7 * 24 * 60 * 60 * 1000);
+      var count = 0;
+      contacts.forEach(function(c) {
+        if (c.dateAdded && new Date(c.dateAdded).getTime() >= weekAgo) {
+          count++;
+        }
+      });
+      valEl.textContent = count;
+      subEl.textContent = 'Last 7 days';
+      subEl.className = 'admin-stat-sub';
+      if (count > 0) {
+        subEl.className = 'admin-stat-sub positive';
+        subEl.textContent = '+' + count + ' last 7 days';
+      }
+    } catch (err) {
+      console.error('Failed to load new contacts:', err);
+      valEl.textContent = '--';
+      subEl.textContent = 'Failed to load';
+      subEl.className = 'admin-stat-sub negative';
+    }
+  }
+
+  // --- Recent Contacts Table ---
+  async function loadRecentContacts() {
+    var container = document.getElementById('contacts-content');
+    try {
+      var data = await GHL.listContacts({ limit: 20, noCache: true });
+      var contacts = data.contacts || [];
+
+      if (contacts.length === 0) {
+        container.innerHTML = '<div class="admin-empty"><p>No contacts found</p></div>';
+        return;
+      }
+
+      var html = '<div class="admin-table-wrap"><table class="admin-table">';
+      html += '<thead><tr>';
+      html += '<th>Name</th>';
+      html += '<th>Email</th>';
+      html += '<th>Phone</th>';
+      html += '<th>Tags</th>';
+      html += '<th>Added</th>';
+      html += '</tr></thead>';
+      html += '<tbody>';
+
+      contacts.forEach(function(c) {
+        var name = ((c.firstName || '') + ' ' + (c.lastName || '')).trim() || 'No Name';
+        var email = c.email || '';
+        var phone = GHL.formatPhone(c.phone) || '';
+        var tags = c.tags || [];
+        var added = c.dateAdded ? GHL.timeAgo(c.dateAdded) : '';
+        var contactId = c.id || '';
+
+        html += '<tr onclick="window.location.href=\'contacts.html#' + contactId + '\'" role="button" tabindex="0">';
+        html += '<td class="name-cell">' + escapeHtml(name) + '</td>';
+        html += '<td class="muted">' + escapeHtml(email) + '</td>';
+        html += '<td class="muted">' + escapeHtml(phone) + '</td>';
+        html += '<td><div class="tag-list">';
+        tags.forEach(function(tag) {
+          html += '<span class="admin-badge ' + getTagClass(tag) + '">' + escapeHtml(tag) + '</span>';
+        });
+        if (tags.length === 0) {
+          html += '<span class="muted text-sm">--</span>';
+        }
+        html += '</div></td>';
+        html += '<td class="muted">' + escapeHtml(added) + '</td>';
+        html += '</tr>';
+      });
+
+      html += '</tbody></table></div>';
+      container.innerHTML = html;
+
+    } catch (err) {
+      console.error('Failed to load recent contacts:', err);
+      container.innerHTML = '<div class="admin-empty" style="color:var(--red);">' +
+        '<p>Failed to load contacts. Check console for details.</p></div>';
+    }
+  }
+
+  // === REFRESH ===
+  document.getElementById('btn-refresh').addEventListener('click', function() {
+    GHL.clearCache();
+    // Reset stat values to spinners
+    document.getElementById('stat-total-val').innerHTML = '<span class="admin-spinner"></span>';
+    document.getElementById('stat-total-sub').textContent = '';
+    document.getElementById('stat-week-val').innerHTML = '<span class="admin-spinner"></span>';
+    document.getElementById('stat-week-sub').textContent = '';
+    document.getElementById('contacts-content').innerHTML =
+      '<div class="admin-loading"><span class="admin-spinner admin-spinner-lg"></span><span>Loading contacts...</span></div>';
+    loadDashboardData();
+    showToast('Refreshing data...', '');
+  });
+
+  // === UTILITY ===
+  function escapeHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+})();
+</script>
+</body>
+</html>

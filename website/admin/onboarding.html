@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Onboarding — Admin — The Call Taker</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div class="admin-layout">
+  <div id="admin-sidebar"></div>
+
+  <button id="admin-mobile-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <main class="admin-main">
+    <!-- Top Bar -->
+    <div class="admin-topbar">
+      <h1>Client Onboarding</h1>
+      <div class="admin-topbar-actions">
+        <a href="../onboarding/checklist.html" class="admin-btn btn-secondary btn-sm">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Open Setup Tracker
+        </a>
+      </div>
+    </div>
+
+    <!-- Status Cards -->
+    <div class="admin-stats" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="admin-stat">
+        <div class="admin-stat-label">Pilot Requested</div>
+        <div class="admin-stat-value" id="stat-pilot-requested">
+          <span class="admin-spinner"></span>
+        </div>
+        <div class="admin-stat-sub text-muted">Awaiting onboarding</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-label">Pilot Active</div>
+        <div class="admin-stat-value" id="stat-pilot-active">
+          <span class="admin-spinner"></span>
+        </div>
+        <div class="admin-stat-sub text-muted">In 14-day trial</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-label">Live Clients</div>
+        <div class="admin-stat-value" id="stat-live-clients">
+          <span class="admin-spinner"></span>
+        </div>
+        <div class="admin-stat-sub text-muted">Paying customers</div>
+      </div>
+    </div>
+
+    <!-- Onboarding Table -->
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <h2 class="admin-card-title">Onboarding Pipeline</h2>
+      </div>
+      <div id="onboarding-content">
+        <div class="admin-loading">
+          <span class="admin-spinner admin-spinner-lg"></span>
+          <span>Loading onboarding data...</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Toast -->
+<div id="toast-container"></div>
+
+<!-- Shared JS -->
+<script src="js/admin-auth.js"></script>
+<script src="js/ghl-api.js"></script>
+<script src="js/admin-nav.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  // Auth gate
+  AdminAuth.requireAuth();
+
+  // === TAG-TO-STATUS MAP ===
+  var ONBOARDING_TAGS = ['pilot-requested', 'pilot-active', 'pilot-converted', 'customer', 'active-client', 'intake-submitted'];
+
+  var STATUS_MAP = {
+    'pilot-requested': { label: 'Pilot Requested', badge: 'badge-yellow' },
+    'pilot-active':    { label: 'Pilot Active',    badge: 'badge-purple' },
+    'pilot-converted': { label: 'Converted',       badge: 'badge-green' },
+    'customer':        { label: 'Customer',         badge: 'badge-green' },
+    'active-client':   { label: 'Active Client',    badge: 'badge-green' },
+    'intake-submitted':{ label: 'Intake Submitted', badge: 'badge-orange' }
+  };
+
+  var INDUSTRY_TAGS = ['hvac', 'roofing', 'plumbing', 'electrical', 'dental', 'medspa', 'legal',
+    'property-management', 'veterinary', 'locksmith', 'garage-door', 'towing', 'funeral', 'restoration', 'water-damage'];
+
+  // === TOAST ===
+  window.showToast = function(msg, type) {
+    var container = document.getElementById('toast-container');
+    var toast = document.createElement('div');
+    toast.className = 'admin-toast' + (type ? ' ' + type : '');
+    toast.textContent = msg;
+    container.appendChild(toast);
+    toast.offsetHeight;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+      setTimeout(function() { toast.remove(); }, 300);
+    }, 3500);
+  };
+
+  // === LOAD DATA ===
+  async function loadOnboarding() {
+    try {
+      var data = await GHL.listContacts({ limit: 100, noCache: true });
+      var contacts = data.contacts || [];
+
+      // Filter to onboarding-relevant contacts
+      var onboarding = contacts.filter(function(c) {
+        var tags = c.tags || [];
+        return ONBOARDING_TAGS.some(function(t) { return tags.indexOf(t) !== -1; });
+      });
+
+      // Count stats
+      var pilotRequested = 0;
+      var pilotActive = 0;
+      var liveClients = 0;
+
+      contacts.forEach(function(c) {
+        var tags = c.tags || [];
+        if (tags.indexOf('pilot-requested') !== -1) pilotRequested++;
+        if (tags.indexOf('pilot-active') !== -1) pilotActive++;
+        if (tags.indexOf('customer') !== -1 || tags.indexOf('active-client') !== -1) liveClients++;
+      });
+
+      document.getElementById('stat-pilot-requested').textContent = pilotRequested;
+      document.getElementById('stat-pilot-active').textContent = pilotActive;
+      document.getElementById('stat-live-clients').textContent = liveClients;
+
+      renderTable(onboarding);
+
+    } catch (err) {
+      console.error('Failed to load onboarding data:', err);
+      document.getElementById('stat-pilot-requested').textContent = '--';
+      document.getElementById('stat-pilot-active').textContent = '--';
+      document.getElementById('stat-live-clients').textContent = '--';
+      document.getElementById('onboarding-content').innerHTML =
+        '<div class="admin-empty" style="color:var(--red);"><p>Failed to load data. Check console for details.</p></div>';
+    }
+  }
+
+  function renderTable(contacts) {
+    var container = document.getElementById('onboarding-content');
+
+    if (contacts.length === 0) {
+      container.innerHTML = '<div class="admin-empty"><svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><p>No onboarding contacts found. Contacts with pilot or customer tags will appear here.</p></div>';
+      return;
+    }
+
+    var html = '<div class="admin-table-wrap"><table class="admin-table">';
+    html += '<thead><tr>';
+    html += '<th>Name</th>';
+    html += '<th>Company</th>';
+    html += '<th>Industry</th>';
+    html += '<th>Status</th>';
+    html += '<th>Plan</th>';
+    html += '<th>Date</th>';
+    html += '<th>Actions</th>';
+    html += '</tr></thead>';
+    html += '<tbody>';
+
+    contacts.forEach(function(c) {
+      var name = ((c.firstName || '') + ' ' + (c.lastName || '')).trim() || 'No Name';
+      var company = c.companyName || '--';
+      var tags = c.tags || [];
+      var contactId = c.id || '';
+      var added = c.dateAdded ? GHL.formatDate(c.dateAdded) : '--';
+
+      // Determine industry
+      var industry = '--';
+      for (var i = 0; i < INDUSTRY_TAGS.length; i++) {
+        if (tags.indexOf(INDUSTRY_TAGS[i]) !== -1) {
+          industry = INDUSTRY_TAGS[i].replace(/-/g, ' ');
+          industry = industry.charAt(0).toUpperCase() + industry.slice(1);
+          break;
+        }
+      }
+
+      // Determine status (priority order)
+      var status = getStatus(tags);
+
+      // Determine plan
+      var plan = '--';
+      if (tags.indexOf('starter') !== -1) plan = 'Starter $497';
+      else if (tags.indexOf('pro') !== -1) plan = 'Pro $997';
+      else if (tags.indexOf('try-funnel') !== -1) plan = 'Try $97';
+      else if (tags.indexOf('pilot-active') !== -1 || tags.indexOf('pilot-requested') !== -1) plan = 'Pilot (Free)';
+
+      html += '<tr>';
+      html += '<td class="name-cell">' + escapeHtml(name) + '</td>';
+      html += '<td class="muted">' + escapeHtml(company) + '</td>';
+      html += '<td class="muted" style="text-transform:capitalize;">' + escapeHtml(industry) + '</td>';
+      html += '<td><span class="admin-badge ' + status.badge + '">' + escapeHtml(status.label) + '</span></td>';
+      html += '<td class="muted">' + escapeHtml(plan) + '</td>';
+      html += '<td class="muted">' + escapeHtml(added) + '</td>';
+      html += '<td>';
+      html += '<div class="flex gap-8">';
+      html += '<a href="contacts.html#' + contactId + '" class="admin-btn btn-ghost btn-sm">View</a>';
+      html += '<a href="../onboarding/checklist.html" class="admin-btn btn-ghost btn-sm">Checklist</a>';
+      html += '</div>';
+      html += '</td>';
+      html += '</tr>';
+    });
+
+    html += '</tbody></table></div>';
+    container.innerHTML = html;
+  }
+
+  function getStatus(tags) {
+    // Priority order: active states first
+    if (tags.indexOf('customer') !== -1 || tags.indexOf('active-client') !== -1) {
+      return STATUS_MAP['customer'];
+    }
+    if (tags.indexOf('pilot-converted') !== -1) return STATUS_MAP['pilot-converted'];
+    if (tags.indexOf('pilot-active') !== -1) return STATUS_MAP['pilot-active'];
+    if (tags.indexOf('pilot-requested') !== -1) return STATUS_MAP['pilot-requested'];
+    if (tags.indexOf('intake-submitted') !== -1) return STATUS_MAP['intake-submitted'];
+    return { label: 'Unknown', badge: 'badge-gray' };
+  }
+
+  // === UTILITY ===
+  function escapeHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Init
+  loadOnboarding();
+
+})();
+</script>
+</body>
+</html>

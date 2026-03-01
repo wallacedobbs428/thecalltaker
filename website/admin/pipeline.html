@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Pipeline — Admin — The Call Taker</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div class="admin-layout" id="admin-app">
+  <div id="admin-sidebar"></div>
+
+  <button id="admin-mobile-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <main class="admin-main">
+    <!-- Top Bar -->
+    <div class="admin-topbar">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <h1>Pipeline</h1>
+        <select id="pipeline-select" class="admin-select" style="display:inline-block;max-width:300px;width:auto;min-width:200px;">
+          <option value="">Loading pipelines...</option>
+        </select>
+      </div>
+      <div class="admin-topbar-actions">
+        <button class="admin-btn btn-secondary btn-sm" id="btn-refresh" title="Refresh data">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="admin-stats" id="stats-bar" style="grid-template-columns:repeat(3,1fr);">
+      <div class="admin-stat">
+        <div class="admin-stat-label">Total Opportunities</div>
+        <div class="admin-stat-value" id="stat-total">--</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-label">Total Value</div>
+        <div class="admin-stat-value" id="stat-value">--</div>
+      </div>
+      <div class="admin-stat">
+        <div class="admin-stat-label">Oldest</div>
+        <div class="admin-stat-value" id="stat-oldest" style="font-size:1.1rem;">--</div>
+      </div>
+    </div>
+
+    <!-- Kanban Board -->
+    <div id="kanban-container">
+      <div class="admin-loading" id="kanban-loading">
+        <span class="admin-spinner admin-spinner-lg"></span>
+        <span>Loading pipeline...</span>
+      </div>
+      <div class="kanban-board hidden" id="kanban-board"></div>
+      <div class="admin-empty hidden" id="kanban-empty">
+        <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        <p id="kanban-empty-msg">No pipelines found. Create one in GoHighLevel.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<!-- Shared JS -->
+<script src="js/admin-auth.js"></script>
+<script src="js/ghl-api.js"></script>
+<script src="js/admin-nav.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  // === AUTH CHECK ===
+  if (!AdminAuth.requireAuth()) return;
+
+  // === STATE ===
+  var pipelines = [];
+  var currentPipelineId = null;
+  var allOpportunities = [];
+
+  // === DOM REFS ===
+  var selectEl = document.getElementById('pipeline-select');
+  var boardEl = document.getElementById('kanban-board');
+  var loadingEl = document.getElementById('kanban-loading');
+  var emptyEl = document.getElementById('kanban-empty');
+  var emptyMsgEl = document.getElementById('kanban-empty-msg');
+  var statTotalEl = document.getElementById('stat-total');
+  var statValueEl = document.getElementById('stat-value');
+  var statOldestEl = document.getElementById('stat-oldest');
+
+  // === TOAST ===
+  window.showToast = function(msg, type) {
+    var container = document.getElementById('toast-container');
+    var toast = document.createElement('div');
+    toast.className = 'admin-toast' + (type ? ' ' + type : '');
+    toast.textContent = msg;
+    container.appendChild(toast);
+    toast.offsetHeight;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+      setTimeout(function() { toast.remove(); }, 300);
+    }, 3500);
+  };
+
+  // === UTILITY ===
+  function escapeHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function formatCurrency(val) {
+    if (val === null || val === undefined || isNaN(val)) return '$0';
+    return '$' + Number(val).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  }
+
+  function showView(view) {
+    loadingEl.classList.toggle('hidden', view !== 'loading');
+    boardEl.classList.toggle('hidden', view !== 'board');
+    emptyEl.classList.toggle('hidden', view !== 'empty');
+  }
+
+  // === TAG COLOR MAP ===
+  var TAG_COLORS = {
+    'water-damage': 'badge-blue',
+    'hvac': 'badge-blue',
+    'plumbing': 'badge-blue',
+    'electrical': 'badge-blue',
+    'roofing': 'badge-orange',
+    'customer': 'badge-green',
+    'active-client': 'badge-green',
+    'cold-outreach': 'badge-orange',
+    'prospect': 'badge-orange',
+    'intake-submitted': 'badge-orange',
+    'pilot-active': 'badge-purple',
+    'pilot-requested': 'badge-purple',
+    'demo-booked': 'badge-yellow',
+    'demo-called': 'badge-yellow'
+  };
+
+  function getTagClass(tag) {
+    return TAG_COLORS[tag] || 'badge-gray';
+  }
+
+  // === INIT: LOAD PIPELINES ===
+  async function init() {
+    showView('loading');
+    try {
+      var data = await GHL.getPipelines();
+      pipelines = (data && data.pipelines) ? data.pipelines : [];
+
+      if (pipelines.length === 0) {
+        emptyMsgEl.textContent = 'No pipelines found. Create one in GoHighLevel.';
+        showView('empty');
+        selectEl.innerHTML = '<option value="">No pipelines</option>';
+        return;
+      }
+
+      // Populate dropdown
+      selectEl.innerHTML = '';
+      pipelines.forEach(function(p) {
+        var opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = p.name;
+        selectEl.appendChild(opt);
+      });
+
+      // Restore last selected pipeline
+      var savedId = localStorage.getItem('tct_pipeline_id');
+      var validSaved = pipelines.some(function(p) { return p.id === savedId; });
+      if (validSaved) {
+        selectEl.value = savedId;
+      }
+
+      currentPipelineId = selectEl.value;
+      localStorage.setItem('tct_pipeline_id', currentPipelineId);
+
+      await loadPipeline(currentPipelineId);
+    } catch (err) {
+      console.error('Failed to load pipelines:', err);
+      emptyMsgEl.textContent = 'Failed to load pipelines. Check console for details.';
+      showView('empty');
+    }
+  }
+
+  // === LOAD PIPELINE OPPORTUNITIES ===
+  async function loadPipeline(pipelineId) {
+    showView('loading');
+    allOpportunities = [];
+
+    try {
+      // Fetch all pages of opportunities
+      var page = 1;
+      var hasMore = true;
+      while (hasMore) {
+        var data = await GHL.searchOpportunities(pipelineId, page);
+        var opps = (data && data.opportunities) ? data.opportunities : [];
+        allOpportunities = allOpportunities.concat(opps);
+
+        // Check if there are more pages
+        if (opps.length === 0 || (data.meta && data.meta.total && allOpportunities.length >= data.meta.total)) {
+          hasMore = false;
+        } else if (opps.length < 20) {
+          // Default page size is typically 20; fewer results means last page
+          hasMore = false;
+        } else {
+          page++;
+          // Safety cap to avoid infinite loops
+          if (page > 50) hasMore = false;
+        }
+      }
+
+      updateStats();
+      renderBoard(pipelineId);
+    } catch (err) {
+      console.error('Failed to load opportunities:', err);
+      emptyMsgEl.textContent = 'Failed to load opportunities. Check console for details.';
+      showView('empty');
+    }
+  }
+
+  // === UPDATE STATS ===
+  function updateStats() {
+    statTotalEl.textContent = allOpportunities.length.toLocaleString();
+
+    var totalValue = 0;
+    var oldestDate = null;
+
+    allOpportunities.forEach(function(opp) {
+      if (opp.monetaryValue) {
+        totalValue += Number(opp.monetaryValue) || 0;
+      }
+      if (opp.dateAdded) {
+        var d = new Date(opp.dateAdded);
+        if (!oldestDate || d < oldestDate) {
+          oldestDate = d;
+        }
+      }
+    });
+
+    statValueEl.textContent = formatCurrency(totalValue);
+    statOldestEl.textContent = oldestDate ? GHL.formatDate(oldestDate.toISOString()) : '--';
+  }
+
+  // === RENDER KANBAN BOARD ===
+  function renderBoard(pipelineId) {
+    var pipeline = pipelines.find(function(p) { return p.id === pipelineId; });
+    if (!pipeline) {
+      emptyMsgEl.textContent = 'Pipeline not found.';
+      showView('empty');
+      return;
+    }
+
+    var stages = (pipeline.stages || []).slice().sort(function(a, b) {
+      return (a.position || 0) - (b.position || 0);
+    });
+
+    if (stages.length === 0) {
+      emptyMsgEl.textContent = 'This pipeline has no stages. Add stages in GoHighLevel.';
+      showView('empty');
+      return;
+    }
+
+    // Group opportunities by stage
+    var oppsByStage = {};
+    stages.forEach(function(s) { oppsByStage[s.id] = []; });
+
+    allOpportunities.forEach(function(opp) {
+      var stageId = opp.pipelineStageId;
+      if (oppsByStage[stageId]) {
+        oppsByStage[stageId].push(opp);
+      }
+    });
+
+    // Build board HTML
+    var html = '';
+    stages.forEach(function(stage) {
+      var stageOpps = oppsByStage[stage.id] || [];
+
+      html += '<div class="kanban-column">';
+      html += '<div class="kanban-column-header">';
+      html += '<span class="kanban-column-title">' + escapeHtml(stage.name) + '</span>';
+      html += '<span class="kanban-column-count">' + stageOpps.length + '</span>';
+      html += '</div>';
+      html += '<div class="kanban-cards">';
+
+      if (stageOpps.length === 0) {
+        html += '<div style="text-align:center;padding:20px 8px;color:var(--text-muted);font-size:.8rem;">No opportunities</div>';
+      } else {
+        stageOpps.forEach(function(opp) {
+          var name = opp.name || (opp.contact ? ((opp.contact.name || '').trim() || opp.contact.email || 'Unnamed') : 'Unnamed');
+          var contactId = opp.contact ? opp.contact.id : '';
+          var companyName = opp.contact ? (opp.contact.companyName || '') : (opp.companyName || '');
+          var value = opp.monetaryValue ? formatCurrency(opp.monetaryValue) : '';
+          var added = opp.dateAdded ? GHL.timeAgo(opp.dateAdded) : '';
+          var tags = (opp.contact && opp.contact.tags) ? opp.contact.tags : [];
+
+          html += '<div class="kanban-card" data-contact-id="' + escapeHtml(contactId) + '" data-opp-id="' + escapeHtml(opp.id) + '">';
+          html += '<div class="kanban-card-name">' + escapeHtml(name) + '</div>';
+
+          if (companyName) {
+            html += '<div class="kanban-card-meta" style="margin-bottom:2px;">' + escapeHtml(companyName) + '</div>';
+          }
+
+          // Value and date row
+          var metaParts = [];
+          if (value) metaParts.push('<strong style="color:var(--green);">' + value + '</strong>');
+          if (added) metaParts.push(added);
+          if (metaParts.length > 0) {
+            html += '<div class="kanban-card-meta">' + metaParts.join(' &middot; ') + '</div>';
+          }
+
+          // Tags
+          if (tags.length > 0) {
+            html += '<div class="tag-list" style="margin-top:6px;">';
+            var displayTags = tags.slice(0, 3);
+            displayTags.forEach(function(tag) {
+              html += '<span class="admin-badge ' + getTagClass(tag) + '">' + escapeHtml(tag) + '</span>';
+            });
+            if (tags.length > 3) {
+              html += '<span class="admin-badge badge-gray">+' + (tags.length - 3) + '</span>';
+            }
+            html += '</div>';
+          }
+
+          // Stage move selector
+          html += '<div style="margin-top:8px;border-top:1px solid var(--border);padding-top:8px;">';
+          html += '<select class="admin-select stage-move-select" data-opp-id="' + escapeHtml(opp.id) + '" style="font-size:.75rem;padding:4px 8px;width:100%;">';
+          stages.forEach(function(s) {
+            var selected = s.id === opp.pipelineStageId ? ' selected' : '';
+            html += '<option value="' + escapeHtml(s.id) + '"' + selected + '>' + escapeHtml(s.name) + '</option>';
+          });
+          html += '</select>';
+          html += '<div style="font-size:.65rem;color:var(--text-muted);margin-top:4px;text-align:center;">';
+          html += '<a href="https://app.gohighlevel.com/v2/location/' + GHL.LOCATION + '/opportunities" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline;">Move in GHL Dashboard</a>';
+          html += '</div>';
+          html += '</div>';
+
+          html += '</div>'; // .kanban-card
+        });
+      }
+
+      html += '</div>'; // .kanban-cards
+      html += '</div>'; // .kanban-column
+    });
+
+    boardEl.innerHTML = html;
+    showView('board');
+
+    // Attach card click handlers (navigate to contact)
+    boardEl.querySelectorAll('.kanban-card').forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        // Don't navigate if clicking the stage select or the GHL link
+        if (e.target.closest('.stage-move-select') || e.target.closest('a')) return;
+        var contactId = card.getAttribute('data-contact-id');
+        if (contactId) {
+          window.location.href = 'contacts.html#' + contactId;
+        }
+      });
+    });
+
+    // Attach stage move select handlers
+    boardEl.querySelectorAll('.stage-move-select').forEach(function(sel) {
+      sel.addEventListener('change', function() {
+        var oppId = sel.getAttribute('data-opp-id');
+        var newStageId = sel.value;
+        showToast('To move opportunities, use the GHL Dashboard link below the dropdown.', '');
+        // Reset to the original value since we can't move via API
+        var opp = allOpportunities.find(function(o) { return o.id === oppId; });
+        if (opp) sel.value = opp.pipelineStageId;
+      });
+    });
+  }
+
+  // === PIPELINE SELECT CHANGE ===
+  selectEl.addEventListener('change', function() {
+    currentPipelineId = selectEl.value;
+    localStorage.setItem('tct_pipeline_id', currentPipelineId);
+    if (currentPipelineId) {
+      loadPipeline(currentPipelineId);
+    }
+  });
+
+  // === REFRESH ===
+  document.getElementById('btn-refresh').addEventListener('click', function() {
+    GHL.clearCache();
+    showToast('Refreshing pipeline...', '');
+    statTotalEl.textContent = '--';
+    statValueEl.textContent = '--';
+    statOldestEl.textContent = '--';
+    if (currentPipelineId) {
+      loadPipeline(currentPipelineId);
+    } else {
+      init();
+    }
+  });
+
+  // === START ===
+  init();
+
+})();
+</script>
+</body>
+</html>

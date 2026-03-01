@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Settings — Admin — The Call Taker</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+  <style>
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--light);
+    }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      min-width: 120px;
+      flex-shrink: 0;
+    }
+    .settings-value {
+      font-size: .875rem;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      color: var(--text);
+      word-break: break-all;
+      flex: 1;
+      margin: 0 12px;
+    }
+    .settings-value a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .settings-value a:hover {
+      text-decoration: underline;
+    }
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all .15s;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .copy-btn:hover {
+      border-color: var(--navy);
+      color: var(--navy);
+      background: var(--off-white);
+    }
+    .copy-btn.copied {
+      border-color: var(--green);
+      color: var(--green);
+      background: var(--green-light);
+    }
+    .copy-feedback {
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--navy-dark);
+      color: var(--white);
+      font-size: .7rem;
+      font-family: 'Inter', sans-serif;
+      padding: 4px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s;
+    }
+    .copy-btn.copied .copy-feedback {
+      opacity: 1;
+    }
+    .reveal-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: .75rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      color: var(--blue);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background .15s;
+    }
+    .reveal-btn:hover { background: var(--blue-light); }
+    .team-member {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--light);
+    }
+    .team-member:last-child { border-bottom: none; }
+    .team-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .team-name {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--navy-dark);
+    }
+    .team-role {
+      font-size: .8rem;
+      color: var(--text-muted);
+    }
+    .team-email {
+      font-size: .8rem;
+      color: var(--blue);
+      margin-left: auto;
+    }
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--light);
+      color: var(--blue);
+      font-size: .875rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .quick-link:last-child { border-bottom: none; }
+    .quick-link:hover { color: var(--navy); }
+    .quick-link svg { flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <div id="admin-sidebar"></div>
+
+  <button id="admin-mobile-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <main class="admin-main">
+    <!-- Top Bar -->
+    <div class="admin-topbar">
+      <h1>Settings</h1>
+    </div>
+
+    <!-- Settings Cards Grid -->
+    <div class="grid-2 mb-24">
+
+      <!-- Card 1: API Credentials -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">API Credentials</h2>
+          <svg width="20" height="20" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">GHL API Key</span>
+          <span class="settings-value" id="api-key-display">pit-••••••••35</span>
+          <button class="reveal-btn" id="api-key-reveal" onclick="toggleApiKey()">Reveal</button>
+          <button class="copy-btn" onclick="copyValue('pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">Location ID</span>
+          <span class="settings-value">tQb9YmrGDrdVUJYPKrsY</span>
+          <button class="copy-btn" onclick="copyValue('tQb9YmrGDrdVUJYPKrsY', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">API Base URL</span>
+          <span class="settings-value">https://services.leadconnectorhq.com</span>
+          <button class="copy-btn" onclick="copyValue('https://services.leadconnectorhq.com', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2: Phone Numbers -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Phone Numbers</h2>
+          <svg width="20" height="20" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">Demo Line</span>
+          <span class="settings-value">(615) 784-5747</span>
+          <button class="copy-btn" onclick="copyValue('(615) 784-5747', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">SMS Line</span>
+          <span class="settings-value">(615) 653-9004</span>
+          <button class="copy-btn" onclick="copyValue('(615) 653-9004', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">Voice AI Agent</span>
+          <span class="settings-value">695947c64b9ed67d8f1077ad</span>
+          <button class="copy-btn" onclick="copyValue('695947c64b9ed67d8f1077ad', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3: Passwords -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Passwords</h2>
+          <svg width="20" height="20" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">Admin Dashboard</span>
+          <span class="settings-value">tctadmin</span>
+          <button class="copy-btn" onclick="copyValue('tctadmin', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">Client Portal</span>
+          <span class="settings-value">tctclient</span>
+          <button class="copy-btn" onclick="copyValue('tctclient', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">Setup Tracker</span>
+          <span class="settings-value">tctsetup</span>
+          <button class="copy-btn" onclick="copyValue('tctsetup', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">Sales Toolkit</span>
+          <span class="settings-value">tctoolkit</span>
+          <button class="copy-btn" onclick="copyValue('tctoolkit', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 4: ntfy Topics -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">ntfy Topics</h2>
+          <svg width="20" height="20" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">Urgent</span>
+          <span class="settings-value">tct-urgent-Hk9UOEZR</span>
+          <button class="copy-btn" onclick="copyValue('tct-urgent-Hk9UOEZR', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">Sales</span>
+          <span class="settings-value">tct-sales-63uYsIT9</span>
+          <button class="copy-btn" onclick="copyValue('tct-sales-63uYsIT9', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">System</span>
+          <span class="settings-value">tct-system-vRsfXQRQ</span>
+          <button class="copy-btn" onclick="copyValue('tct-system-vRsfXQRQ', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">Activity</span>
+          <span class="settings-value">tct-activity-cn1Aqa85</span>
+          <button class="copy-btn" onclick="copyValue('tct-activity-cn1Aqa85', this)" title="Copy">
+            <span class="copy-feedback">Copied!</span>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 5: Quick Links -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Quick Links</h2>
+          <svg width="20" height="20" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+
+        <a href="https://app.gohighlevel.com" target="_blank" rel="noopener" class="quick-link">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          GHL Dashboard
+        </a>
+        <a href="https://github.com/wallacedobbs428/thecalltaker" target="_blank" rel="noopener" class="quick-link">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          GitHub Repo
+        </a>
+        <a href="https://app.bland.ai" target="_blank" rel="noopener" class="quick-link">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Bland.ai
+        </a>
+        <a href="https://ntfy.sh" target="_blank" rel="noopener" class="quick-link">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          ntfy
+        </a>
+        <a href="https://thecalltaker.com" target="_blank" rel="noopener" class="quick-link">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Website
+        </a>
+      </div>
+
+      <!-- Card 6: Team -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Team</h2>
+          <svg width="20" height="20" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+
+        <div class="team-member">
+          <div class="team-avatar" style="background: var(--orange-light); color: var(--orange);">WD</div>
+          <div>
+            <div class="team-name">Wallace Dobbs</div>
+            <div class="team-role">Founder / CEO</div>
+          </div>
+          <span class="team-email">wallacemdobbs@icloud.com</span>
+        </div>
+
+        <div class="team-member">
+          <div class="team-avatar" style="background: var(--blue-light); color: var(--blue);">M</div>
+          <div>
+            <div class="team-name">Mills</div>
+            <div class="team-role">Co-founder / Partner</div>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <div class="team-avatar" style="background: var(--purple-light); color: var(--purple);">W</div>
+          <div>
+            <div class="team-name">William</div>
+            <div class="team-role">Demo Closer</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Toast -->
+<div id="toast-container"></div>
+
+<!-- Shared JS -->
+<script src="js/admin-auth.js"></script>
+<script src="js/ghl-api.js"></script>
+<script src="js/admin-nav.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  // Auth gate
+  AdminAuth.requireAuth();
+
+  // === TOAST ===
+  window.showToast = function(msg, type) {
+    var container = document.getElementById('toast-container');
+    var toast = document.createElement('div');
+    toast.className = 'admin-toast' + (type ? ' ' + type : '');
+    toast.textContent = msg;
+    container.appendChild(toast);
+    toast.offsetHeight;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+      setTimeout(function() { toast.remove(); }, 300);
+    }, 3500);
+  };
+
+  // === COPY TO CLIPBOARD ===
+  var apiKeyRevealed = false;
+
+  window.copyValue = function(value, btn) {
+    navigator.clipboard.writeText(value).then(function() {
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.classList.remove('copied');
+      }, 1500);
+    }).catch(function() {
+      // Fallback for older browsers
+      var ta = document.createElement('textarea');
+      ta.value = value;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.classList.remove('copied');
+      }, 1500);
+    });
+  };
+
+  // === REVEAL / HIDE API KEY ===
+  window.toggleApiKey = function() {
+    var display = document.getElementById('api-key-display');
+    var btn = document.getElementById('api-key-reveal');
+    apiKeyRevealed = !apiKeyRevealed;
+    if (apiKeyRevealed) {
+      display.textContent = 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35';
+      btn.textContent = 'Hide';
+    } else {
+      display.textContent = 'pit-\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u202235';
+      btn.textContent = 'Reveal';
+    }
+  };
+
+})();
+</script>
+</body>
+</html>
