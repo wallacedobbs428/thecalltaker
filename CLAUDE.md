@@ -170,6 +170,7 @@ All in `ops/config.py` with environment variable fallbacks:
 - **Size:** ~5KB JS, ~2KB CSS (under 7KB total)
 - **To disable:** Remove the `CURSOR EFFECTS v2` CSS block + the cursor `<script>` block
 - **Hero copy:** "An AI Receptionist Trained For Your Business" — universal multi-industry (plumber, dentist, attorney, locksmith). Updated title + OG + Twitter meta.
+- **Hero subline:** Desktop (`.subtitle-desktop`) = long version emphasizing custom AI per business. Mobile (`.subtitle-mobile`) = shorter version. Toggled via CSS at 768px breakpoint. `max-width: 600px` on `.hero .subtitle`.
 
 ### Hero Phone Mockup (March 1, 2026)
 - **Location:** `website/index.html` — replaced Unsplash stock photo with pure CSS/SVG animated phone
