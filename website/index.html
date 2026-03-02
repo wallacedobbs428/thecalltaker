@@ -1279,79 +1279,32 @@ a { color: var(--blue); text-decoration: none; }
   .problem-stats { grid-template-columns: 1fr; }
 }
 /* ============================================
-   CURSOR EFFECTS v2 — Elite Premium
-   Glow cursor, trail, magnetic, spotlight,
-   text scatter, section color morph.
-   Desktop only (pointer:fine). ~2KB CSS.
+   CURSOR EFFECTS v3 — Crosshair + Particles
+   Canvas particles, magnetic, spotlight, scatter.
+   Desktop only (pointer:fine + hover:hover).
    ============================================ */
-@media (pointer: fine) {
+@media (pointer: fine) and (hover: hover) {
+  html.has-cursor { cursor: none; }
   html.has-cursor *, html.has-cursor *::before, html.has-cursor *::after { cursor: none !important; }
 
-  .cx-dot {
-    position: fixed; top: 0; left: 0;
-    width: 12px; height: 12px;
-    background: #F97316;
-    border-radius: 50%;
-    pointer-events: none; z-index: 9999;
-    will-change: transform;
-    box-shadow: 0 0 8px rgba(249,115,22,.6), 0 0 24px rgba(249,115,22,.2);
-  }
-  .cx-ring {
-    position: fixed; top: 0; left: 0;
-    width: 40px; height: 40px;
-    border: 1.5px solid rgba(249,115,22,.35);
-    border-radius: 50%;
-    pointer-events: none; z-index: 9998;
-    will-change: transform;
-    box-shadow: 0 0 20px rgba(249,115,22,.12), 0 0 40px rgba(249,115,22,.06);
-    transition: width .3s, height .3s, border-color .3s, background .3s, opacity .3s;
-  }
-  .cx-trail {
-    position: fixed; top: 0; left: 0;
-    width: 8px; height: 8px;
-    background: #F97316;
-    border-radius: 50%;
-    pointer-events: none; z-index: 9997;
-    will-change: transform;
-  }
-  .cx-label {
+  .cx-svg {
     position: fixed; top: 0; left: 0;
     pointer-events: none; z-index: 10000;
-    font-family: 'Inter', sans-serif;
-    font-size: .65rem; font-weight: 800;
-    text-transform: uppercase; letter-spacing: .08em;
-    color: #fff; opacity: 0;
-    will-change: transform; transition: opacity .15s;
-    white-space: nowrap;
+    will-change: transform;
+    filter: drop-shadow(0 0 6px rgba(249,115,22,.5));
+    transition: filter .3s;
+  }
+  .cx-svg.locked {
+    filter: drop-shadow(0 0 12px rgba(249,115,22,.8)) drop-shadow(0 0 24px rgba(249,115,22,.3));
   }
 
-  /* Hover states */
-  .cx-ring.on-btn {
-    width: 64px; height: 64px;
-    background: #F97316;
-    border-color: #F97316;
-    opacity: .9;
-  }
-  .cx-ring.on-text { width: 6px; height: 6px; border-color: rgba(249,115,22,.5); opacity: .6; }
-  .cx-ring.on-card {
-    width: 56px; height: 56px;
-    border-color: rgba(249,115,22,.4);
-    animation: cxSpin 3s linear infinite;
-    border-style: dashed;
-  }
-  .cx-label.visible { opacity: 1; }
-  @keyframes cxSpin { to { transform: translate(-50%,-50%) rotate(360deg); } }
-
-  /* Click ripple */
-  .cx-ripple {
-    position: fixed; pointer-events: none; z-index: 9996;
-    width: 0; height: 0;
-    border-radius: 50%;
-    background: rgba(249,115,22,.3);
-    will-change: transform, opacity;
+  #cursorCanvas {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 9998;
+    width: 100vw; height: 100vh;
   }
 
-  /* Hero spotlight + grid */
+  /* Hero effects */
   html.has-cursor .hero { position: relative; overflow: hidden; }
   html.has-cursor .hero > .container { position: relative; z-index: 2; }
   .cx-spotlight {
@@ -1365,17 +1318,85 @@ a { color: var(--blue); text-decoration: none; }
     pointer-events: none; z-index: 1; opacity: 0;
     transition: opacity .5s;
     background-image:
-      linear-gradient(rgba(249,115,22,.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(249,115,22,.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    -webkit-mask-image: radial-gradient(400px circle at var(--gx,50%) var(--gy,50%), black, transparent 70%);
-    mask-image: radial-gradient(400px circle at var(--gx,50%) var(--gy,50%), black, transparent 70%);
+      linear-gradient(rgba(249,115,22,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(249,115,22,.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(500px circle at var(--gx,50%) var(--gy,50%), black, transparent 65%);
+    mask-image: radial-gradient(500px circle at var(--gx,50%) var(--gy,50%), black, transparent 65%);
   }
   .cx-grid.active { opacity: 1; }
+
+  /* Floating hero icons */
+  .cx-float {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    opacity: .08;
+    color: var(--orange);
+    transition: transform .6s cubic-bezier(.25,.46,.45,.94);
+  }
+
+  /* Button sweep fill */
+  .btn-primary, .btn-outline { position: relative; overflow: hidden; }
+  .btn-primary::after, .btn-outline::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(255,255,255,.15), rgba(255,255,255,0));
+    transform: translateX(-110%);
+    transition: transform .5s ease;
+  }
+  html.has-cursor .btn-primary:hover::after,
+  html.has-cursor .btn-outline:hover::after { transform: translateX(110%); }
+
+  /* Nav underline draw */
+  .nav-links a { position: relative; }
+  .nav-links a::after {
+    content: ''; position: absolute; left: 0; bottom: -4px;
+    width: 100%; height: 2px;
+    background: var(--orange);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .4s cubic-bezier(.4,0,.2,1);
+  }
+  html.has-cursor .nav-links a:hover::after { transform: scaleX(1); }
+  html.has-cursor .nav-links a:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 20px rgba(249,115,22,.3);
+  }
+
+  /* Card traveling border glow */
+  .pricing-card, .testimonial-card, .step-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .pricing-card::before, .testimonial-card::before, .step-card::before {
+    content: '';
+    position: absolute; inset: -2px;
+    background: conic-gradient(from var(--border-angle, 0deg), transparent 60%, rgba(249,115,22,.4) 80%, transparent 100%);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  html.has-cursor .pricing-card:hover::before,
+  html.has-cursor .testimonial-card:hover::before,
+  html.has-cursor .step-card:hover::before { opacity: 1; }
+
+  /* Card light reflection */
+  .pricing-card::after, .step-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.06), transparent 60%);
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  html.has-cursor .pricing-card:hover::after,
+  html.has-cursor .step-card:hover::after { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cx-dot, .cx-ring, .cx-trail, .cx-label, .cx-spotlight, .cx-grid, .cx-ripple { display: none !important; }
-  html.has-cursor *, html.has-cursor *::before, html.has-cursor *::after { cursor: auto !important; }
+  .cx-svg, #cursorCanvas, .cx-spotlight, .cx-grid, .cx-float { display: none !important; }
+  html.has-cursor, html.has-cursor *, html.has-cursor *::before, html.has-cursor *::after { cursor: auto !important; }
 }
 </style>
 
@@ -2062,92 +2083,156 @@ a { color: var(--blue); text-decoration: none; }
 
 <script>
 /* ============================================
-   CURSOR EFFECTS v2 — Elite Premium
-   Glow + trail + magnetic + spotlight + scatter
-   + section color morph. Desktop only. ~5KB.
+   CURSOR EFFECTS v3 — Crosshair + Canvas Particles
+   SVG crosshair, canvas particle trail, magnetic,
+   spotlight, text scatter, floating icons, scroll-reactive.
+   Desktop only (pointer:fine + hover:hover). ~9KB.
    ============================================ */
 (function() {
-  if (!window.gsap || !matchMedia('(pointer:fine)').matches) return;
+  if (!window.gsap) return;
+  if (!matchMedia('(pointer:fine) and (hover:hover)').matches) return;
   if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   document.documentElement.classList.add('has-cursor');
 
-  // === 1. CREATE ELEMENTS ===
-  var dot = document.createElement('div'); dot.className = 'cx-dot';
-  var ring = document.createElement('div'); ring.className = 'cx-ring';
-  var lbl = document.createElement('div'); lbl.className = 'cx-label';
-  document.body.appendChild(dot);
-  document.body.appendChild(ring);
-  document.body.appendChild(lbl);
-  gsap.set([dot, ring, lbl], { xPercent: -50, yPercent: -50 });
+  // === 1. SVG CROSSHAIR CURSOR ===
+  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', '32');
+  svg.setAttribute('height', '32');
+  svg.setAttribute('viewBox', '0 0 32 32');
+  svg.className.baseVal = 'cx-svg';
+  svg.innerHTML =
+    '<line x1="16" y1="4" x2="16" y2="12" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
+    '<line x1="16" y1="20" x2="16" y2="28" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
+    '<line x1="4" y1="16" x2="12" y2="16" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
+    '<line x1="20" y1="16" x2="28" y2="16" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
+    '<circle cx="16" cy="16" r="3" fill="none" stroke="#fff" stroke-width="1" opacity=".8"/>' +
+    '<circle cx="16" cy="16" r="1.5" fill="#F97316" opacity=".9"/>';
+  document.body.appendChild(svg);
 
-  // Trail ghosts (4 copies, decreasing opacity)
-  var trails = [];
-  for (var i = 0; i < 4; i++) {
-    var t = document.createElement('div'); t.className = 'cx-trail';
-    t.style.opacity = (0.4 - i * 0.1);
-    var s = 8 - i * 1.5;
-    t.style.width = s + 'px'; t.style.height = s + 'px';
-    document.body.appendChild(t);
-    gsap.set(t, { xPercent: -50, yPercent: -50 });
-    trails.push({ el: t, x: -100, y: -100 });
+  // === 2. CANVAS PARTICLE SYSTEM ===
+  var cvs = document.createElement('canvas');
+  cvs.id = 'cursorCanvas';
+  document.body.appendChild(cvs);
+  var ctx = cvs.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function resizeCanvas() {
+    cvs.width = window.innerWidth * dpr;
+    cvs.height = window.innerHeight * dpr;
+    ctx.scale(dpr, dpr);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  var particles = [];
+  var MAX_P = 100;
+  var colors = ['#F97316','#F97316','#F97316','#FBBF24','#FBBF24','#FFFFFF'];
+  var mx = -200, my = -200, pmx = -200, pmy = -200;
+  var speed = 0;
+  var fpsSamples = [], lowFPS = false, killParticles = false;
+  var lastFrame = performance.now();
+
+  function spawnParticle() {
+    if (particles.length >= MAX_P || killParticles) return;
+    var angle = Math.random() * Math.PI * 2;
+    var spread = Math.min(speed * 0.15, 4);
+    particles.push({
+      x: mx, y: my,
+      vx: Math.cos(angle) * spread * (0.5 + Math.random()),
+      vy: Math.sin(angle) * spread * (0.5 + Math.random()) - 0.5,
+      size: 2 + Math.random() * 3,
+      life: 1,
+      decay: 0.015 + Math.random() * 0.02,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      gravity: 0.03 + Math.random() * 0.02
+    });
   }
 
-  // Hero spotlight + grid
+  // === 3. HERO SETUP ===
   var hero = document.querySelector('.hero');
   var spotlight = document.createElement('div'); spotlight.className = 'cx-spotlight';
   var grid = document.createElement('div'); grid.className = 'cx-grid';
   if (hero) { hero.insertBefore(grid, hero.firstChild); hero.insertBefore(spotlight, hero.firstChild); }
 
-  // Section color zones
-  var zones = [
-    { sel: '.hero', color: '#F97316' },
-    { sel: '.section', color: '#d97706' },
-    { sel: '#pricing', color: '#F97316' },
-    { sel: '.site-footer', color: 'rgba(255,255,255,.5)' }
+  // Floating icons in hero
+  var floatIcons = [
+    'M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z',
+    'M22 11.08V12a10 10 0 11-5.93-9.14M22 4L12 14.01l-3-3.01',
+    'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z',
+    'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+    'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+    'M18.36 5.64a9 9 0 11-12.73 0M12 2v10'
   ];
-  var curColor = '#F97316';
+  var floats = [];
+  if (hero) {
+    floatIcons.forEach(function(d, i) {
+      var el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      el.setAttribute('width', '28');
+      el.setAttribute('height', '28');
+      el.setAttribute('viewBox', '0 0 24 24');
+      el.setAttribute('fill', 'none');
+      el.setAttribute('stroke', 'currentColor');
+      el.setAttribute('stroke-width', '1.5');
+      el.className.baseVal = 'cx-float';
+      el.innerHTML = '<path d="' + d + '"/>';
+      el.style.left = (10 + (i % 3) * 35 + Math.random() * 15) + '%';
+      el.style.top = (10 + Math.floor(i / 3) * 40 + Math.random() * 15) + '%';
+      hero.appendChild(el);
+      floats.push({ el: el, ox: parseFloat(el.style.left), oy: parseFloat(el.style.top), x: 0, y: 0 });
+    });
+  }
 
   // Text scatter — split hero h1 into spans
   var heroH1 = hero ? hero.querySelector('h1') : null;
   var scatterSpans = [];
   if (heroH1) {
-    var text = heroH1.textContent;
+    var txt = heroH1.textContent;
     heroH1.innerHTML = '';
     heroH1.style.display = 'inline';
-    for (var c = 0; c < text.length; c++) {
-      var span = document.createElement('span');
-      span.textContent = text[c] === ' ' ? '\u00A0' : text[c];
-      span.style.display = 'inline-block';
-      span.style.transition = 'transform .3s ease';
-      heroH1.appendChild(span);
-      scatterSpans.push(span);
+    for (var c = 0; c < txt.length; c++) {
+      var sp = document.createElement('span');
+      sp.textContent = txt[c] === ' ' ? '\u00A0' : txt[c];
+      sp.style.cssText = 'display:inline-block;transition:transform .3s ease';
+      heroH1.appendChild(sp);
+      scatterSpans.push(sp);
     }
   }
 
-  // === 2. MOUSE TRACKING ===
-  var mx = -100, my = -100;
+  // === 4. SCROLL SECTION DETECTION ===
+  var curSection = 'hero';
+  var sectionEls = {
+    hero: document.querySelector('.hero'),
+    demo: document.querySelector('.demo-section'),
+    pricing: document.querySelector('#pricing'),
+    footer: document.querySelector('.site-footer')
+  };
 
+  function detectSection() {
+    var y = window.scrollY + window.innerHeight / 2;
+    if (sectionEls.footer && y >= sectionEls.footer.offsetTop) curSection = 'footer';
+    else if (sectionEls.pricing && y >= sectionEls.pricing.offsetTop) curSection = 'pricing';
+    else if (sectionEls.demo && y >= sectionEls.demo.offsetTop) curSection = 'demo';
+    else curSection = 'hero';
+  }
+  window.addEventListener('scroll', detectSection, { passive: true });
+  detectSection();
+
+  // === 5. MOUSE TRACKING ===
   function onMove(e) {
+    pmx = mx; pmy = my;
     mx = e.clientX; my = e.clientY;
-    gsap.set(dot, { x: mx, y: my });
-    gsap.to(ring, { x: mx, y: my, duration: .18, ease: 'power2.out', overwrite: true });
-    gsap.to(lbl, { x: mx, y: my - 32, duration: .18, ease: 'power2.out', overwrite: true });
+    speed = Math.sqrt((mx - pmx) * (mx - pmx) + (my - pmy) * (my - pmy));
 
-    // Section color detection
-    var el = document.elementFromPoint(mx, my);
-    if (el) {
-      var newColor = '#F97316';
-      for (var z = zones.length - 1; z >= 0; z--) {
-        if (el.closest(zones[z].sel)) { newColor = zones[z].color; break; }
-      }
-      if (newColor !== curColor) {
-        curColor = newColor;
-        gsap.to(dot, { background: curColor, boxShadow: '0 0 8px ' + curColor + ', 0 0 24px ' + curColor.replace(')', ',.2)').replace('rgb', 'rgba'), duration: .4 });
-        gsap.to(ring, { borderColor: curColor.replace(')', ',.35)').replace('#', 'rgba(').replace(/^rgba\(([0-9a-fA-F]{6})/, function(m, hex) {
-          var r = parseInt(hex.substr(0,2),16), g = parseInt(hex.substr(2,2),16), b = parseInt(hex.substr(4,2),16);
-          return 'rgba(' + r + ',' + g + ',' + b;
-        }), duration: .4 });
-      }
+    // Move crosshair
+    gsap.set(svg, { x: mx - 16, y: my - 16 });
+
+    // Spawn particles (velocity-reactive)
+    if (!killParticles) {
+      var count = speed > 20 ? 3 : speed > 8 ? 2 : speed > 3 ? 1 : 0;
+      // Section modifiers
+      if (curSection === 'footer') count = 0;
+      else if (curSection !== 'hero' && curSection !== 'pricing') count = Math.max(0, count - 1);
+      for (var p = 0; p < count; p++) spawnParticle();
     }
 
     // Hero spotlight
@@ -2158,24 +2243,41 @@ a { color: var(--blue); text-decoration: none; }
       grid.classList.toggle('active', inH);
       if (inH) {
         var lx = mx - hr.left, ly = my - hr.top;
-        spotlight.style.background = 'radial-gradient(400px circle at ' + lx + 'px ' + ly + 'px, rgba(249,115,22,.08), transparent 65%)';
+        spotlight.style.background = 'radial-gradient(500px circle at ' + lx + 'px ' + ly + 'px, rgba(249,115,22,.07), transparent 60%)';
         grid.style.setProperty('--gx', lx + 'px');
         grid.style.setProperty('--gy', ly + 'px');
       }
     }
 
-    // Text scatter
+    // Floating icons repulsion
+    if (hero && floats.length) {
+      var hr2 = hero.getBoundingClientRect();
+      floats.forEach(function(f) {
+        var fr = f.el.getBoundingClientRect();
+        var fcx = fr.left + fr.width / 2, fcy = fr.top + fr.height / 2;
+        var fdx = fcx - mx, fdy = fcy - my;
+        var fd = Math.sqrt(fdx * fdx + fdy * fdy);
+        if (fd < 150 && fd > 0) {
+          var push = (150 - fd) / 150 * 20;
+          f.el.style.transform = 'translate(' + (fdx / fd * push) + 'px,' + (fdy / fd * push) + 'px)';
+        } else {
+          f.el.style.transform = '';
+        }
+      });
+    }
+
+    // Text scatter in hero
     if (scatterSpans.length && heroH1) {
-      var hRect = heroH1.getBoundingClientRect();
-      var inH1 = mx >= hRect.left - 80 && mx <= hRect.right + 80 && my >= hRect.top - 60 && my <= hRect.bottom + 60;
+      var hR = heroH1.getBoundingClientRect();
+      var nearH1 = mx >= hR.left - 80 && mx <= hR.right + 80 && my >= hR.top - 60 && my <= hR.bottom + 60;
       for (var s = 0; s < scatterSpans.length; s++) {
-        if (inH1) {
+        if (nearH1) {
           var sr = scatterSpans[s].getBoundingClientRect();
           var scx = sr.left + sr.width / 2, scy = sr.top + sr.height / 2;
           var sdx = scx - mx, sdy = scy - my;
           var sd = Math.sqrt(sdx * sdx + sdy * sdy);
-          if (sd < 100 && sd > 0) {
-            var force = Math.min(3, 30 / sd);
+          if (sd < 90 && sd > 0) {
+            var force = Math.min(3, 25 / sd);
             scatterSpans[s].style.transform = 'translate(' + (sdx / sd * force) + 'px,' + (sdy / sd * force) + 'px)';
           } else {
             scatterSpans[s].style.transform = '';
@@ -2188,100 +2290,79 @@ a { color: var(--blue); text-decoration: none; }
   }
   document.addEventListener('mousemove', onMove, { passive: true });
 
-  // Trail animation via rAF
-  function animTrails() {
-    for (var i = trails.length - 1; i > 0; i--) {
-      trails[i].x += (trails[i-1].x - trails[i].x) * .35;
-      trails[i].y += (trails[i-1].y - trails[i].y) * .35;
-      gsap.set(trails[i].el, { x: trails[i].x, y: trails[i].y });
-    }
-    trails[0].x += (mx - trails[0].x) * .5;
-    trails[0].y += (my - trails[0].y) * .5;
-    gsap.set(trails[0].el, { x: trails[0].x, y: trails[0].y });
-    requestAnimationFrame(animTrails);
-  }
-  animTrails();
+  // Hide/show cursor on window leave
+  document.addEventListener('mouseleave', function() { gsap.to(svg, { opacity: 0, duration: .2 }); });
+  document.addEventListener('mouseenter', function() { gsap.to(svg, { opacity: 1, duration: .2 }); });
 
-  // Hide/show on window leave
-  var allEls = [dot, ring, lbl].concat(trails.map(function(t) { return t.el; }));
-  document.addEventListener('mouseleave', function() { gsap.to(allEls, { opacity: 0, duration: .2 }); });
-  document.addEventListener('mouseenter', function() {
-    gsap.to(dot, { opacity: 1, duration: .2 });
-    gsap.to(ring, { opacity: 1, duration: .2 });
-    trails.forEach(function(t, i) { gsap.to(t.el, { opacity: .4 - i * .1, duration: .2 }); });
-  });
-
-  // === 3. HOVER TRANSFORMATIONS ===
+  // === 6. MAGNETIC HOVER ===
   var btnSel = '.btn-primary, .btn-outline, .header-cta, .demo-phone, .mobile-menu-cta';
-  var cardSel = '.pricing-card, .testimonial-card, .step-card, .phone-device';
-  var textSel = 'p, .subtitle, .faq-answer-inner, .section-subtitle, li';
+  var cardSel = '.pricing-card, .testimonial-card, .step-card';
 
-  document.addEventListener('mouseover', function(e) {
-    var btn = e.target.closest(btnSel);
-    var card = e.target.closest(cardSel);
-    var txt = e.target.closest(textSel);
-    ring.classList.remove('on-btn', 'on-card', 'on-text');
-    if (btn) {
-      ring.classList.add('on-btn');
-      gsap.to(dot, { scale: 0, duration: .15 });
-      lbl.textContent = btn.href && btn.href.indexOf('tel:') > -1 ? 'CALL' : 'GO';
-      lbl.classList.add('visible');
-    } else if (card) {
-      ring.classList.add('on-card');
-      gsap.to(dot, { scale: .5, duration: .15 });
-    } else if (txt && !e.target.closest(btnSel + ',' + cardSel)) {
-      ring.classList.add('on-text');
-      gsap.to(dot, { scale: .6, duration: .15 });
-    }
-  });
-  document.addEventListener('mouseout', function(e) {
-    if (e.target.closest(btnSel + ',' + cardSel + ',' + textSel)) {
-      ring.classList.remove('on-btn', 'on-card', 'on-text');
-      gsap.to(dot, { scale: 1, duration: .15 });
-      lbl.classList.remove('visible');
-    }
-  });
-
-  // === 4. MAGNETIC PULL (100px range) + CLICK RIPPLE ===
+  // Buttons — 150px magnetic pull
   document.querySelectorAll(btnSel).forEach(function(btn) {
     btn.addEventListener('mousemove', function(e) {
       var r = btn.getBoundingClientRect();
       var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
       var dx = e.clientX - cx, dy = e.clientY - cy;
       var dist = Math.sqrt(dx * dx + dy * dy);
-      var pull = Math.min(1, Math.max(0, (100 - dist) / 100));
-      gsap.to(btn, { x: dx * pull * .25, y: dy * pull * .25, duration: .3, ease: 'power2.out' });
+      var pull = Math.min(1, Math.max(0, (150 - dist) / 150));
+      gsap.to(btn, { x: dx * pull * .3, y: dy * pull * .3, duration: .3, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseenter', function() {
+      svg.classList.add('locked');
     });
     btn.addEventListener('mouseleave', function() {
       gsap.to(btn, { x: 0, y: 0, duration: .6, ease: 'elastic.out(1,.35)' });
+      svg.classList.remove('locked');
     });
   });
 
-  // Click ripple on ALL clickable
+  // Click — shockwave + particle burst
   document.addEventListener('click', function(e) {
-    var rip = document.createElement('div'); rip.className = 'cx-ripple';
-    rip.style.left = e.clientX + 'px'; rip.style.top = e.clientY + 'px';
-    document.body.appendChild(rip);
-    gsap.to(rip, {
-      width: 120, height: 120, x: -60, y: -60, opacity: 0,
-      duration: .5, ease: 'power2.out',
-      onComplete: function() { rip.remove(); }
-    });
+    // Particle burst from click point
+    for (var b = 0; b < 12; b++) {
+      var angle = (b / 12) * Math.PI * 2;
+      particles.push({
+        x: e.clientX, y: e.clientY,
+        vx: Math.cos(angle) * (3 + Math.random() * 3),
+        vy: Math.sin(angle) * (3 + Math.random() * 3),
+        size: 3 + Math.random() * 3,
+        life: 1, decay: 0.03,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        gravity: 0.04
+      });
+    }
+    // Crosshair snap animation
+    gsap.fromTo(svg, { scale: .7 }, { scale: 1, duration: .3, ease: 'elastic.out(1,.4)' });
   });
 
-  // === 5. CARD TILT (3D) ===
-  document.querySelectorAll('.testimonial-card, .step-card, .pricing-card').forEach(function(card) {
+  // Cards — 3D tilt + light reflection + border glow rotation
+  document.querySelectorAll(cardSel).forEach(function(card) {
+    var borderAngle = 0;
+    var borderTween;
     card.addEventListener('mousemove', function(e) {
       var r = card.getBoundingClientRect();
       var x = (e.clientX - r.left) / r.width - .5;
       var y = (e.clientY - r.top) / r.height - .5;
       gsap.to(card, {
-        rotateY: x * 8, rotateX: y * -8, y: -4,
-        boxShadow: '0 20px 40px -8px rgba(249,115,22,.1)',
+        rotateY: x * 10, rotateX: y * -10, y: -6,
+        boxShadow: '0 ' + (20 + y * 10) + 'px 40px -8px rgba(249,115,22,.12)',
         duration: .3, ease: 'power2.out', transformPerspective: 800
+      });
+      // Light reflection
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+    card.addEventListener('mouseenter', function() {
+      // Start border glow rotation
+      borderAngle = 0;
+      borderTween = gsap.to({ a: 0 }, {
+        a: 360, duration: 3, repeat: -1, ease: 'none',
+        onUpdate: function() { card.style.setProperty('--border-angle', this.targets()[0].a + 'deg'); }
       });
     });
     card.addEventListener('mouseleave', function() {
+      if (borderTween) borderTween.kill();
       gsap.to(card, {
         rotateY: 0, rotateX: 0, y: 0,
         boxShadow: '0 4px 6px -1px rgba(0,0,0,.07)',
@@ -2289,6 +2370,57 @@ a { color: var(--blue); text-decoration: none; }
       });
     });
   });
+
+  // Nav links — magnetic at 80px
+  document.querySelectorAll('.nav-links a:not(.btn)').forEach(function(link) {
+    link.addEventListener('mousemove', function(e) {
+      var r = link.getBoundingClientRect();
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      var dx = e.clientX - cx, dy = e.clientY - cy;
+      gsap.to(link, { x: dx * .15, y: dy * .15, duration: .3, ease: 'power2.out' });
+    });
+    link.addEventListener('mouseleave', function() {
+      gsap.to(link, { x: 0, y: 0, duration: .5, ease: 'elastic.out(1,.4)' });
+    });
+  });
+
+  // === 7. RENDER LOOP (rAF) ===
+  function render(now) {
+    // FPS monitoring
+    var delta = now - lastFrame;
+    lastFrame = now;
+    var fps = 1000 / Math.max(delta, 1);
+    fpsSamples.push(fps);
+    if (fpsSamples.length > 60) fpsSamples.shift();
+    if (fpsSamples.length === 60) {
+      var avg = fpsSamples.reduce(function(a, b) { return a + b; }, 0) / 60;
+      if (avg < 30) { killParticles = true; particles.length = 0; }
+      else if (avg < 45 && !lowFPS) { lowFPS = true; MAX_P = 50; }
+    }
+
+    // Clear canvas
+    ctx.clearRect(0, 0, cvs.width / dpr, cvs.height / dpr);
+
+    // Update + draw particles
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.gravity;
+      p.vx *= 0.98;
+      p.life -= p.decay;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      ctx.globalAlpha = p.life * 0.7;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
 })();
 </script>
 
