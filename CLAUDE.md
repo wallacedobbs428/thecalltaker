@@ -171,6 +171,16 @@ All in `ops/config.py` with environment variable fallbacks:
 - **To disable:** Remove the `CURSOR EFFECTS v2` CSS block + the cursor `<script>` block
 - **Hero copy:** "An AI Receptionist Trained For Your Business" — universal multi-industry (plumber, dentist, attorney, locksmith). Updated title + OG + Twitter meta.
 
+### Hero Phone Mockup (March 1, 2026)
+- **Location:** `website/index.html` — replaced Unsplash stock photo with pure CSS/SVG animated phone
+- **No external images:** Zero network requests, instant load, no Lighthouse penalty
+- **Phone device:** Dark gradient frame (`#1a1a2e` → `#0f0f1a`) with orange accent border + glow shadow
+- **5 notification cards:** Stagger-animated (`.phone-notif` with `animation-delay: .6s/.1.4s/2.2s/3s`). Shows: locksmith emergency call, HVAC appointment booked, details texted, dental patient, roofing estimate
+- **Status bar:** "AI Active" with green pulse dot, "The Call Taker" branding, "24/7"
+- **3 floating bubbles:** "3 calls answered this hour", "$2,400 in jobs booked today", "0 missed calls" — hidden on mobile
+- **Responsive:** Scales down at 1024px (260px wide) and 768px (240px wide, smaller padding/radii)
+- **Old classes removed:** `.hero-image`, `.hero-image-badge`, `.hero-image img` — all replaced with `.hero-phone`, `.phone-device`, etc.
+
 ### Public Contact Email
 - **Email:** `thecalltakerai@gmail.com` — used across all 80+ public-facing website pages
 - **Agency operational emails:** `wallace@mail.thecalltaker.com` — NOT changed (used in setup-guide.html + pricing-sheet.html)
