@@ -521,10 +521,7 @@
       threadContent.classList.remove('hidden');
 
       var messagesEl = document.getElementById('threadMessages');
-      var loadingEl = document.getElementById('messagesLoading');
-      messagesEl.innerHTML = '';
-      loadingEl.style.display = 'flex';
-      messagesEl.appendChild(loadingEl);
+      messagesEl.innerHTML = '<div class="inbox-loading-center" style="display:flex;"><div class="admin-spinner admin-spinner-lg"></div></div>';
 
       try {
         // Load contact details
@@ -557,7 +554,6 @@
         var conversations = convData.conversations || [];
 
         if (conversations.length === 0) {
-          loadingEl.style.display = 'none';
           messagesEl.innerHTML = '<div class="admin-empty" style="padding:40px;"><p>No conversation history</p><p class="text-sm text-muted">Send a message to start the conversation</p></div>';
           return;
         }
@@ -572,7 +568,6 @@
         if (!Array.isArray(messages)) messages = messages ? [messages] : [];
         // Filter out non-object entries (GHL can return strings)
         messages = messages.filter(function(m) { return m && typeof m === 'object'; });
-        loadingEl.style.display = 'none';
 
         if (messages.length === 0) {
           messagesEl.innerHTML = '<div class="admin-empty" style="padding:40px;"><p>No messages yet</p><p class="text-sm text-muted">Send a message to start the conversation</p></div>';
@@ -582,7 +577,6 @@
         renderMessages(messages);
 
       } catch (err) {
-        loadingEl.style.display = 'none';
         messagesEl.innerHTML = '<div class="admin-empty"><p>Error loading conversation</p><p class="text-sm text-muted">' + escapeHtml(err.message) + '</p></div>';
       }
     }
