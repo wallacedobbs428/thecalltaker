@@ -147,6 +147,19 @@ All in `ops/config.py` with environment variable fallbacks:
 - Embed URL: `https://api.leadconnectorhq.com/widget/booking/h4IlzccZ1m3JprEQqpMJ`
 - All 13 industry pages use this calendar ID
 
+### Premium Navigation (March 1, 2026)
+- **Location:** `website/index.html` (inline CSS + JS)
+- **Glassmorphism header:** Transparent on hero → frosted blur (`backdrop-filter: blur(20px)`) on scroll
+- **Nav underline animation:** Orange underline slides left-to-right on hover via `::after` pseudo-element
+- **Scroll spy:** Active section highlighted in nav (`.active` class toggled on `a[href^="#"]`)
+- **Header CTA:** Ghost/outline style → filled orange with glow pulse animation after hero scroll
+- **Mobile menu:** Fullscreen overlay (`#mobileOverlay`) with GSAP stagger animations on `#mobileMenu li`
+- **Hamburger morph:** 3-line → X via CSS transforms on `.mobile-toggle.active span`
+- **Scroll progress bar:** `#scrollProgress` — 3px orange gradient fixed at top, z-index 1100
+- **Accessibility:** `aria-expanded` on hamburger, `role="dialog"` + `aria-modal` on overlay, Escape key closes menu
+- **CTA link:** `/pilot/` (Start Free Pilot) — separate from nav-links for independent styling/visibility
+- **Mobile hides:** `.nav-links` + `.header-cta` hidden at 768px, hamburger + overlay take over
+
 ### Cursor Effects (March 1, 2026)
 - **Location:** `website/index.html` (inline CSS + JS at bottom of file)
 - **Dependency:** GSAP 3.12.5 loaded from cdnjs CDN
@@ -294,7 +307,7 @@ Shared file at `ops/contact-registry.json`. All engines read/write through `tct_
 **Total: 82 pages live on thecalltaker.com** (as of Feb 25, 2026)
 
 ### Core Pages (in `website/`)
-- `index.html` — homepage with industry selector + premium cursor effects (GSAP)
+- `index.html` — homepage with industry selector + premium nav (glassmorphism, scroll spy, GSAP mobile menu) + cursor effects
 - `signup.html` — 3-step purchase flow ($97/$297/$497)
 - `calculator.html` — ROI calculator (lead capture + war room alert)
 - `book.html` — demo booking (GHL calendar embed, ID: h4IlzccZ1m3JprEQqpMJ)
