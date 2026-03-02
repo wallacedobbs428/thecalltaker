@@ -156,6 +156,14 @@ var GHL = (function() {
       return request('GET', url);
     },
 
+    updateOpportunity: async function(oppId, data) {
+      return request('PUT', '/opportunities/' + oppId, data);
+    },
+
+    deleteContact: async function(contactId) {
+      return request('DELETE', '/contacts/' + contactId);
+    },
+
     // === NOTES ===
 
     addNote: async function(contactId, body) {

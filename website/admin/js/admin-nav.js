@@ -78,11 +78,12 @@ var AdminNav = (function() {
 
   // Auto-init when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { render(); initMobileToggle(); initDarkMode(); });
+    document.addEventListener('DOMContentLoaded', function() { render(); initMobileToggle(); initDarkMode(); checkUnread(); });
   } else {
     render();
     initMobileToggle();
     initDarkMode();
+    checkUnread();
   }
 
   // Check for unread messages and add badge to Inbox link

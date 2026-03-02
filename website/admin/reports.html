@@ -649,8 +649,17 @@
   async function fetchContacts() {
     if (cachedContacts) return cachedContacts;
     try {
-      var data = await GHL.listContacts({ limit: 100, noCache: true });
-      cachedContacts = data.contacts || [];
+      var all = [];
+      var page = 1;
+      var maxPages = 10; // Up to 1000 contacts for accurate reports
+      while (page <= maxPages) {
+        var data = await GHL.listContacts({ limit: 100, page: page, noCache: page === 1 });
+        var batch = data.contacts || [];
+        all = all.concat(batch);
+        if (batch.length < 100) break; // last page
+        page++;
+      }
+      cachedContacts = all;
       return cachedContacts;
     } catch(err) {
       console.error('Failed to fetch contacts:', err);
