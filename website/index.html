@@ -1199,6 +1199,111 @@ a { color: var(--blue); text-decoration: none; }
 .trust-logo-item:hover { opacity: .9; filter: grayscale(0); }
 .trust-logo-item svg { width: 24px; height: 24px; }
 
+/* ===== REVENUE FRAME ===== */
+.revenue-frame {
+  background: var(--navy-dark);
+  color: var(--white);
+  text-align: center;
+  padding: 20px 24px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+.revenue-frame .rf-loss {
+  display: block;
+  margin-bottom: 4px;
+}
+.revenue-frame .rf-price {
+  color: #F97316;
+}
+.rf-cta {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 24px;
+  background: #F97316;
+  color: var(--white);
+  font-weight: 700;
+  font-size: .95rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background .2s;
+}
+.rf-cta:hover { background: #ea580c; color: var(--white); }
+.rf-cta-desktop { display: none; }
+@media (min-width: 769px) {
+  .rf-cta-mobile { display: none; }
+  .rf-cta-desktop { display: inline-block; }
+}
+
+/* ===== SCARCITY LINE ===== */
+.scarcity-line {
+  font-size: .85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 16px;
+}
+
+/* ===== CALL BAR SUB-TEXT ===== */
+.call-bar-sub {
+  display: block;
+  font-size: .75rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.8);
+  margin-bottom: 2px;
+}
+
+/* ===== MOBILE EXIT TOAST ===== */
+.mobile-exit-toast {
+  display: none;
+  position: fixed;
+  bottom: 64px;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-top: 3px solid var(--orange);
+  padding: 16px 20px;
+  z-index: 997;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.12);
+  text-align: center;
+  animation: toastSlideUp .3s ease-out;
+}
+.mobile-exit-toast.visible { display: block; }
+.mobile-exit-toast p {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.mobile-exit-toast .toast-btn {
+  display: inline-block;
+  background: var(--orange);
+  color: var(--white);
+  font-weight: 700;
+  font-size: .95rem;
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-exit-toast .toast-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+}
+@keyframes toastSlideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
   .ticker-row, .testimonial-track, .trust-bar-track { animation: none !important; }
@@ -1323,16 +1428,22 @@ a { color: var(--blue); text-decoration: none; }
   text-decoration: none;
   font-weight: 700;
   font-size: 1.05rem;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 16px 24px;
+  gap: 2px;
+  padding: 10px 24px 14px;
   box-shadow: 0 -4px 20px rgba(0,0,0,.15);
   -webkit-tap-highlight-color: transparent;
 }
 .mobile-call-bar:hover, .mobile-call-bar:active {
   color: var(--white);
   text-decoration: none;
+}
+.call-bar-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .mobile-call-bar svg { width: 20px; height: 20px; flex-shrink: 0; }
 /* ============================================
@@ -1537,17 +1648,18 @@ a { color: var(--blue); text-decoration: none; }
         <div class="trust-row">
           <span class="trust-item">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
-            No credit card required
+            14-Day Risk-Free Pilot
           </span>
           <span class="trust-item">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
-            Setup in 5 minutes
+            No Contracts
           </span>
           <span class="trust-item">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
-            Cancel anytime
+            Cancel Anytime
           </span>
         </div>
+        <p class="scarcity-line">Only onboarding 3 businesses this month</p>
       </div>
       <div class="hero-phone fade-up" style="transition-delay:.15s" aria-label="Phone showing AI receptionist handling calls in real time">
         <div class="phone-device">
@@ -1627,6 +1739,14 @@ a { color: var(--blue); text-decoration: none; }
     </div>
   </div>
 </section>
+
+<!-- ===== REVENUE FRAME ===== -->
+<div class="revenue-frame">
+  <span class="rf-loss">Miss just 1 after-hours call? That&rsquo;s $300&ndash;$1,000 gone.</span>
+  We answer it for <span class="rf-price">$97/month</span>.
+  <a href="sms:+16157845747?body=PILOT%20%E2%80%94%20interested.%20Business%3A%20___.%20Industry%3A%20___.%20Best%20callback%3A%20___." class="rf-cta rf-cta-mobile">Start Free Pilot (Text PILOT)</a>
+  <a href="#demo" class="rf-cta rf-cta-desktop">Start Free Pilot (Text PILOT)</a>
+</div>
 
 <!-- ===== INDUSTRY TICKER ===== -->
 <section class="industry-ticker" aria-label="Industries we serve">
@@ -1735,7 +1855,7 @@ a { color: var(--blue); text-decoration: none; }
 </section>
 
 <!-- ===== LIVE DEMO ===== -->
-<section class="demo-section">
+<section class="demo-section" id="demo">
   <div class="container fade-up">
     <span class="section-label">Live Demo</span>
     <h2 class="section-title">Hear It Yourself Right Now</h2>
@@ -1754,7 +1874,7 @@ a { color: var(--blue); text-decoration: none; }
     <div class="section-header fade-up">
       <span class="section-label">Real Results</span>
       <h2 class="section-title">They Were Missing Calls Too. Then They Tried The Call Taker.</h2>
-      <p class="section-subtitle">Real business owners. Real results. No inflated numbers.</p>
+      <p class="section-subtitle">Local businesses lose $2,000&ndash;$10,000 every month in missed calls. These owners fixed it.</p>
     </div>
   </div>
   <div class="testimonial-scroll">
@@ -2034,8 +2154,11 @@ a { color: var(--blue); text-decoration: none; }
 
 <!-- ===== MOBILE STICKY CALL BAR ===== -->
 <a href="tel:+16157845747" class="mobile-call-bar" aria-label="Call us now">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-  Call Us Now &mdash; (615) 784-5747
+  <span class="call-bar-sub">Takes 60 seconds to see how it works</span>
+  <span class="call-bar-main">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Call Us Now &mdash; (615) 784-5747
+  </span>
 </a>
 
 <!-- ===== JAVASCRIPT ===== -->
@@ -2600,6 +2723,143 @@ a { color: var(--blue); text-decoration: none; }
         stepsGrid.scrollTo({ left: cardWidth * i, behavior: 'smooth' });
       });
     });
+  }
+})();
+</script>
+
+<!-- ===== MOBILE EXIT TOAST ===== -->
+<div class="mobile-exit-toast" id="mobileExitToast">
+  <button class="toast-close" aria-label="Close">&times;</button>
+  <p>Want to see how many calls you&rsquo;re missing?</p>
+  <a href="sms:+16157845747?body=PILOT%20%E2%80%94%20interested.%20Business%3A%20___.%20Industry%3A%20___.%20Best%20callback%3A%20___." class="toast-btn" id="exitToastBtn">Reply PILOT &mdash; We&rsquo;ll Set It Up</a>
+</div>
+
+<!-- ===== CALL-TO-TEXT FALLBACK TOAST ===== -->
+<div class="mobile-exit-toast" id="callTextFallback" style="bottom:64px">
+  <button class="toast-close" aria-label="Close">&times;</button>
+  <p>Can&rsquo;t call right now?</p>
+  <a href="sms:+16157845747?body=PILOT%20%E2%80%94%20interested.%20Business%3A%20___.%20Industry%3A%20___.%20Best%20callback%3A%20___." class="toast-btn">Text PILOT &mdash; We&rsquo;ll Set It Up</a>
+</div>
+
+<!-- ===== CONVERSION TRACKING + EXIT INTENT ===== -->
+<script>
+(function() {
+  // --- Debug Mode: set window.TCT_DEBUG=true in console to log all events ---
+  function tctTrack(eventName, params) {
+    if (window.TCT_DEBUG) console.log('[TCT]', eventName, params);
+    if (typeof gtag === 'function') gtag('event', eventName, params);
+  }
+
+  // Helper: find closest section name for a clicked element
+  function getSection(el) {
+    var s = el.closest('section, .revenue-frame, footer');
+    if (!s) return 'unknown';
+    return s.id || s.className.split(' ')[0] || 'unknown';
+  }
+
+  // --- Scroll Depth Tracking ---
+  var scrollFired = {};
+  var thresholds = [25, 50, 75, 100];
+  window.addEventListener('scroll', function() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    if (max <= 0) return;
+    var scrollPct = Math.round(window.scrollY / max * 100);
+    thresholds.forEach(function(t) {
+      if (scrollPct >= t && !scrollFired[t]) {
+        scrollFired[t] = true;
+        tctTrack('tct_scroll_' + t, { event_category: 'engagement', value: t });
+      }
+    });
+  }, { passive: true });
+
+  // --- Click Tracking (CTA + Call + Toast) ---
+  var calledTel = false;
+  document.addEventListener('click', function(e) {
+    // CTA clicks
+    var cta = e.target.closest('.btn-primary, .btn-outline, .header-cta, .mobile-menu-cta, .rf-cta');
+    if (cta) {
+      tctTrack('tct_cta_click', {
+        event_category: 'conversion',
+        button_class: cta.className.split(' ')[0],
+        section: getSection(cta),
+        event_label: cta.getAttribute('href') || cta.textContent.trim().substring(0, 50)
+      });
+    }
+
+    // Call clicks (mobile call bar + demo phone)
+    var callEl = e.target.closest('.mobile-call-bar, .demo-phone');
+    if (callEl) {
+      var src = callEl.classList.contains('mobile-call-bar') ? 'call_bar' : 'demo_phone';
+      tctTrack('tct_call_click', { event_category: 'conversion', source: src });
+      calledTel = true;
+    }
+
+    // Any tel: link
+    if (e.target.closest('a[href*="tel:"]')) calledTel = true;
+
+    // Exit toast PILOT button
+    if (e.target.closest('#exitToastBtn')) {
+      tctTrack('tct_exit_toast_click', { event_category: 'conversion' });
+    }
+
+    // Call-text fallback button
+    if (e.target.closest('#callTextFallback .toast-btn')) {
+      tctTrack('tct_call_text_fallback_click', { event_category: 'conversion' });
+    }
+  });
+
+  // --- Mobile-Only Features ---
+  var isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (isMobile) {
+    // --- Exit-Intent Toast (75% scroll) ---
+    var toast = document.getElementById('mobileExitToast');
+    var toastClose = toast.querySelector('.toast-close');
+    var toastShown = false;
+
+    window.addEventListener('scroll', function() {
+      if (toastShown || calledTel) return;
+      if (sessionStorage.getItem('tct_popup_shown')) return;
+      if (sessionStorage.getItem('tct_mobile_exit')) return;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max <= 0) return;
+      var scrollPct = Math.round(window.scrollY / max * 100);
+      if (scrollPct >= 75) {
+        toastShown = true;
+        sessionStorage.setItem('tct_mobile_exit', '1');
+        toast.classList.add('visible');
+        tctTrack('tct_exit_toast_shown', { event_category: 'engagement' });
+        setTimeout(function() { toast.classList.remove('visible'); }, 8000);
+      }
+    }, { passive: true });
+
+    toastClose.addEventListener('click', function() {
+      toast.classList.remove('visible');
+    });
+
+    // --- Call → Text Fallback (10s after call bar tap) ---
+    var callFallback = document.getElementById('callTextFallback');
+    var callFallbackClose = callFallback.querySelector('.toast-close');
+    var callBarEl = document.querySelector('.mobile-call-bar');
+
+    callFallbackClose.addEventListener('click', function() {
+      callFallback.classList.remove('visible');
+    });
+
+    if (callBarEl) {
+      callBarEl.addEventListener('click', function() {
+        // Only show once per day per device
+        var lastShown = localStorage.getItem('tct_call_fallback_date');
+        var today = new Date().toISOString().slice(0, 10);
+        if (lastShown === today) return;
+
+        setTimeout(function() {
+          localStorage.setItem('tct_call_fallback_date', today);
+          callFallback.classList.add('visible');
+          tctTrack('tct_call_text_fallback_shown', { event_category: 'engagement' });
+          setTimeout(function() { callFallback.classList.remove('visible'); }, 8000);
+        }, 10000);
+      });
+    }
   }
 })();
 </script>

@@ -207,12 +207,13 @@ All in `ops/config.py` with environment variable fallbacks:
 - Welcome: "Hey, thanks for calling The Call Taker! This is a live AI demo. Tell me what kind of business you run and I will show you how I handle your calls."
 - **UNIVERSAL DEMO:** Adapts to ANY industry — caller says "locked out" → locksmith mode, "AC broken" → HVAC mode, "need a dentist" → dental mode. After ~1 min pitches free 14-day pilot.
 - Voice ID: `w9rPM8AIZle60Nbpw7nl` (current), Jessica backup: `lxYfHSkYm1EzQzGhdbfc`
-- **Prompt:** Universal demo, 148 words, starts with "CRITICAL: 1-2 sentences max." Full text in `~/Desktop/voice-agent-speed-fix/industry-prompts/universal-demo.md`
+- **Prompt:** Universal demo, ~263 words (v5), pain-first closer with revenue anchor + scarcity. Full text in `~/Desktop/voice-agent-speed-fix/industry-prompts/universal-demo.md`
 - **Responsiveness:** 1.0 (max) — respond as fast as possible after caller stops
 - **Mid-call actions:** NONE (removed Feb 27 — were adding 200-500ms latency per turn)
 - **Knowledge base:** Removed (reduces latency)
 - **After-call:** Extract name action still active. Call-end workflow `6e7084f1-a3f2-4ca7-95e8-59c7ba5b1526` fires post-call.
 - **Speed fix (Feb 27):** Prompt 925→160 words (v3), responsiveness 0.8→1.0, greeting 16→10 words, removed mid-call data extraction actions + knowledge base. 7 Bland.ai test calls run. Anti-repeat + digit readback workarounds deployed. Full audit: `~/Desktop/voice-agent-speed-fix/CALL-AUDIT.md`
+- **Pain-first closer (March 2):** v5 prompt (~263 words). Closer now simulates pain ("imagine nobody picked up — $300-500 job gone"), revenue anchor ("$2K-10K/mo in missed calls"), scarcity ("3 businesses this month"), price anchor ("$97/mo, less than one missed job"). Team detection section compressed to save words.
 - **GHL latency:** Info collection turns: 2-4.5s. Complex turns: 5-13s. GHL has no model selection, no max_tokens, no response_length setting. All available levers maxed.
 - **Demo line rule:** Demo line (615) 784-5747 = ALWAYS universal demo prompt. Client lines = industry-specific prompts. NEVER overwrite the demo line with a single-industry prompt.
 - **Industry prompts (for clients):** Locksmith, HVAC, Water Damage — all in `~/Desktop/voice-agent-speed-fix/industry-prompts/`. Universal demo prompt also there.
@@ -248,10 +249,23 @@ All in `ops/config.py` with environment variable fallbacks:
   - `com.thecalltaker.demo.pilot-text` — every 5 min (catches PILOT texts)
   - `com.thecalltaker.demo.call-track` — every 15 min (tags calls by duration)
   - `com.thecalltaker.demo.summary` — 9:15pm daily (stats to ntfy SALES)
-- **PILOT text trigger:** Detects "pilot", "interested", "yes", "sign me up", etc. → auto-replies asking for business name/industry/callback → tags `demo-to-pilot` + `hot-lead` → URGENT ntfy alert
+- **PILOT text trigger:** Detects "pilot", "interested", "yes", "sign me up", etc. → scarcity-aware auto-reply (counts down from 3 spots/month, resets monthly; spots=0 gets "making an exception" message) → tags `demo-to-pilot` + `hot-lead` → URGENT ntfy alert
+- **Beta spots counter:** `beta_spots_remaining` (3/month), `beta_spots_month`, `beta_signups_this_month` in state. Resets on new month. Visible in `status` command.
 - **Call duration tiers:** `demo-caller` (all), `engaged-demo` (60s+), `hot-demo` (120s+ → URGENT alert)
 - **Tracking doc:** `~/Desktop/thecalltaker/demo-line/TRACKING-SETUP.md`
-- **Works alongside:** demo-followup-engine (4-step sequence), max (reply catching), notification-hub (routing), demo-qa (test calls)
+- **Works alongside:** demo-followup-engine (4-touch pain-first sequence), max (reply catching), notification-hub (routing), demo-qa (test calls)
+
+### Demo Follow-Up Engine v2 — Pain-First (March 2, 2026)
+- **Script:** `ops/demo-followup-engine.py` — 4 commands: scan, send, run, status
+- **State:** `ops/demo-followup-state.json`
+- **4-touch pain-first sequence:**
+  - Touch 1 (10min): SMS pain hook — "that AI you just talked to? That's what your customers hear at 2am..."
+  - Touch 2 (1hr): Email — "[Company] is losing $2K-$10K/month in missed calls" + scarcity (3 spots) + $97 anchor
+  - Touch 3 (next morning 7-9am): SMS to prospect ("how many calls did [Company] miss last night?") + ntfy alert to Wallace with call script
+  - Touch 4 (day 2): Hard scarcity SMS — "1 pilot spot left this week... After that it's $97/mo"
+- **Industry-aware:** `get_job_word()` maps 17 industry tags to job words (service call, appointment, case, etc.)
+- **Stores:** tags, industry per contact for personalized messaging
+- **launchd:** `com.thecalltaker.demo.followup` (every 15 min, runs scan+send)
 
 ### Logs
 All centralized in `~/thecalltaker-ops/logs/`:
@@ -439,6 +453,14 @@ HVAC, Roofing, Plumbing, Electrical, Dental, MedSpa, Legal, Property Mgmt, Veter
 - **Call Tracker:** `~/Desktop/thecalltaker/sales-toolkit/call-tracker-v2.html` — loads from hot-100.json, filter by industry, auto-populated scripts, outcome tracking
 - **Engine Updates:** blast-engine.py + funnel-engine.py both updated to handle 19 industries (13 original + 6 new)
 - **Background Scraper:** `multi-industry-lead-gen.py` runs in background to fill industry gaps; when done, re-run `lead-list-builder.py build` to update lists
+
+## 72-Hour Revenue Strike Plan (March 2, 2026)
+- **File:** `~/Desktop/thecalltaker/72-HOUR-STRIKE.md`
+- Hour-by-hour 3-day battle plan: Day 1 blitz (50 calls), Day 2 convert (50 calls), Day 3 close (30 calls)
+- 30-second cold call script, voicemail script, SMS follow-up copy
+- KPI targets: 130 calls, 100 SMS, 50 emails, 8 demo calls, 3 PILOT texts, 1 paid
+- Top 5 objection rebuttals, industry job value table, revenue anchor lines
+- Uses same pain/scarcity messaging as Voice AI prompt + demo followup engine
 
 ## Known Issues / TODOs
 1. **Stripe not connected** — needs parent/guardian (Wallace is 16). Setup guide sent via ntfy.

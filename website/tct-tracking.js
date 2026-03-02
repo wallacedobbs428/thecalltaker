@@ -481,17 +481,20 @@
   // D. Track Key Events
   // =========================================================================
   document.addEventListener('click', function(e) {
-    // Track phone call clicks
+    // Track phone call clicks (tel: links, call bar, demo phone)
     var telLink = e.target.closest('a[href*="tel:"]');
-    if (telLink) {
-      gtag('event', 'demo_call_click', { event_category: 'engagement' });
+    var callBar = e.target.closest('.mobile-call-bar');
+    var demoPhone = e.target.closest('.demo-phone');
+    if (telLink || callBar || demoPhone) {
+      var src = callBar ? 'call_bar' : demoPhone ? 'demo_phone' : 'tel_link';
+      gtag('event', 'tct_call_click', { event_category: 'conversion', source: src });
       if (typeof fbq !== 'undefined') fbq('track', 'Contact');
     }
 
     // Track CTA / pricing button clicks
-    var ctaBtn = e.target.closest('.btn-submit, .pricing-btn');
+    var ctaBtn = e.target.closest('.btn-primary, .btn-outline, .header-cta, .mobile-menu-cta, .rf-cta');
     if (ctaBtn) {
-      gtag('event', 'cta_click', { event_category: 'conversion' });
+      gtag('event', 'tct_cta_click', { event_category: 'conversion', event_label: ctaBtn.getAttribute('href') || '' });
       if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
     }
   });
