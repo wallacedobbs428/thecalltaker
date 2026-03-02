@@ -86,6 +86,7 @@ Two repos, 60+ Python scripts, 86 launchd services running 24/7 on a single Mac.
 | `weekly-report-engine.py` | Sunday weekly totals, trends, best performers, WoW comparison | Sun 9:30pm |
 | `ab-tracker.py` | A/B conversion attribution: groups contacts by variant, cross-references Max/Donny | 8:30pm |
 | `speed-alert.py` | Speed-to-lead SMS alerts to Wallace every 2 min | Every 2min |
+| `demo-line-monitor.py` | PILOT text trigger + call duration tagging + daily demo summary | pilot-text 5min, call-track 15min, summary 9:15pm |
 | `pilot-onboarding-engine.py` | 14-day free pilot: scan, onboard, expire (3 slots max) | 6x daily (8am-6pm) |
 | `pilot-conversion-engine.py` | Day 7 + Day 12 conversion emails with real call stats | 2x daily (9:30am, 3:30pm) |
 | `try-funnel-engine.py` | $97/mo After-Hours Starter: cold sequence + nurture + upgrade | 2x daily (10am, 2pm) |
@@ -160,15 +161,21 @@ All in `ops/config.py` with environment variable fallbacks:
 - **CTA link:** `/pilot/` (Start Free Pilot) — separate from nav-links for independent styling/visibility
 - **Mobile hides:** `.nav-links` + `.header-cta` hidden at 768px, hamburger + overlay take over
 
-### Cursor Effects v2 — Elite Premium (March 1, 2026)
+### Cursor Effects v3 — Crosshair + Canvas Particles (March 2, 2026)
 - **Location:** `website/index.html` (inline CSS `cx-*` classes + JS at bottom)
-- **Dependency:** GSAP 3.12.5 loaded from cdnjs CDN
-- **Desktop only:** `@media (pointer: fine)` + JS `matchMedia('(pointer:fine)')` + `prefers-reduced-motion` check. Zero code on mobile/tablet.
-- **Color:** ALL orange `#F97316` — dot, ring, trail, spotlight, ripple. Section-based morph: hero=bright orange, mid=amber, pricing=orange, footer=dim white.
-- **7 effects:** (1) Glow cursor — 12px dot + 40px ring with neon bloom shadow, (2) Comet trail — 4 ghost copies with decreasing opacity following cursor via rAF, (3) Hover morphs — buttons get filled orange circle + "GO"/"CALL" label, text gets tiny reading dot, cards get spinning dashed ring, (4) Magnetic pull — 100px range, rubber-band distortion toward cursor, (5) Click ripple — orange circle expands from click point on ALL clickable elements, (6) Hero spotlight — 400px radial glow at 8% opacity + grid texture reveal via CSS mask, (7) Text scatter — hero h1 letters split into spans, push 1-3px away from cursor within 100px radius
-- **Class gating:** `html.has-cursor` added by JS on init. All CSS in `@media (pointer: fine)`. If GSAP fails or reduced-motion, normal cursor remains.
-- **Size:** ~5KB JS, ~2KB CSS (under 7KB total)
-- **To disable:** Remove the `CURSOR EFFECTS v2` CSS block + the cursor `<script>` block
+- **Dependency:** GSAP 3.12.5 from cdnjs CDN (already loaded)
+- **Desktop only:** `@media (pointer:fine) and (hover:hover)` + JS matchMedia + prefers-reduced-motion. Zero code on mobile/tablet.
+- **Custom cursor:** SVG crosshair (32x32) — 4 orange lines + white center ring + filled orange dot. Drop-shadow glow intensifies on button lock-on (`.locked` class).
+- **Canvas particle trail:** Velocity-reactive spawning (fast=3, medium=2, slow=1, stopped=0). Particles: 2-5px, gravity drift downward like embers, 60% orange #F97316, 25% amber #FBBF24, 15% white. Max 100 particles. Fade over 0.5-0.8s.
+- **FPS auto-degrade:** Samples 60 frames. <45fps → halves max to 50 particles. <30fps → kills all particles, falls back to just SVG crosshair.
+- **Hero effects:** (1) Spotlight — 500px radial glow revealing circuit grid pattern via CSS mask, (2) Text scatter — h1 letters push 1-3px from cursor within 90px radius, elastic snap-back, (3) 6 floating SVG icons (phone, checkmark, chat, bolt, shield, signal) at 8% opacity, repel from cursor like objects in water within 150px
+- **Magnetic hover:** Buttons pull at 150px range, nav links at 80px, elastic snap-back on leave. Button sweep-fill gradient on hover (CSS ::after). Nav underline draws in like pen stroke (CSS scaleX transition).
+- **Card effects:** 3D tilt (10deg), dynamic shadow shifts with cursor position, light reflection gradient follows cursor (CSS --mx/--my vars), conic-gradient border glow orbits card on hover (GSAP-animated --border-angle).
+- **Click:** 12-particle burst from click point + crosshair snap-scale animation (0.7→1 elastic).
+- **Scroll-reactive sections:** hero=full particles, features=reduced, demo=cursor-only, pricing=full particles, footer=no particles.
+- **Class gating:** `html.has-cursor` on init. If GSAP missing or reduced-motion, normal cursor.
+- **Size:** ~9KB JS, ~2.5KB CSS
+- **To disable:** Remove `CURSOR EFFECTS v3` CSS block + cursor `<script>` block
 - **Hero copy:** "An AI Receptionist Trained For Your Business" — universal multi-industry (plumber, dentist, attorney, locksmith). Updated title + OG + Twitter meta.
 - **Hero subline:** Desktop (`.subtitle-desktop`) = long version emphasizing custom AI per business. Mobile (`.subtitle-mobile`) = shorter version. Toggled via CSS at 768px breakpoint. `max-width: 600px` on `.hero .subtitle`.
 
@@ -233,6 +240,18 @@ All in `ops/config.py` with environment variable fallbacks:
 - **What it does:** Detects inbound replies, demo calls, hot signals; sends SMS to Wallace (+16156539004, GHL contact DtKLG28VzgUb6q3brILD) + ntfy war room backup
 - **Hot keywords:** interested, pricing, demo, sign me up, ready, how much, schedule, etc.
 - **Commands:** `watch` (continuous), `check` (single pass), `status`, `test`
+
+### Demo Line Monitor (March 2, 2026)
+- **Script:** `ops/demo-line-monitor.py` — 6 commands: pilot-text, call-track, summary, run, status, all
+- **State:** `ops/demo-line-monitor-state.json`
+- **launchd (3 services):**
+  - `com.thecalltaker.demo.pilot-text` — every 5 min (catches PILOT texts)
+  - `com.thecalltaker.demo.call-track` — every 15 min (tags calls by duration)
+  - `com.thecalltaker.demo.summary` — 9:15pm daily (stats to ntfy SALES)
+- **PILOT text trigger:** Detects "pilot", "interested", "yes", "sign me up", etc. → auto-replies asking for business name/industry/callback → tags `demo-to-pilot` + `hot-lead` → URGENT ntfy alert
+- **Call duration tiers:** `demo-caller` (all), `engaged-demo` (60s+), `hot-demo` (120s+ → URGENT alert)
+- **Tracking doc:** `~/Desktop/thecalltaker/demo-line/TRACKING-SETUP.md`
+- **Works alongside:** demo-followup-engine (4-step sequence), max (reply catching), notification-hub (routing), demo-qa (test calls)
 
 ### Logs
 All centralized in `~/thecalltaker-ops/logs/`:
@@ -428,6 +447,9 @@ HVAC, Roofing, Plumbing, Electrical, Dental, MedSpa, Legal, Property Mgmt, Veter
 4. **Gmail SMTP passwords** are in plaintext in `gmail-sender.py`. Move to environment variables when possible.
 5. **Meta Ads** — Ad Account ID 25895456013410801, needs API token from developers.facebook.com.
 6. **ColdDMs** — CANCELED ($174/mo, no API). Instagram DM targeting handled by dm-tracker script.
+
+## Disabled Services
+1. **[2026-03-02] com.thecalltaker.toolcosts — DISABLED.** Internal cost-tracking dashboard updater. Crashed in infinite loop due to macOS TCC blocking writes to `~/Desktop/thecalltaker/dashboard/tool-costs-data.json`. Not revenue-essential — just generates internal API cost reports. Disabled to stop crash-monitor churn. Fix later by changing OUTPUT_FILE to `~/thecalltaker-ops/`. Postmortem: `~/thecalltaker-ops/logs/crash-postmortem-toolcosts.md`
 
 ## Known Issues (Resolved)
 1. **[2026-02-27] Pilot onboarding + conversion engines never ran from launchd** — Root cause: scripts were in `~/Desktop/` (macOS TCC-protected directory). Python couldn't even open the file. Fix: moved both scripts to `~/thecalltaker-ops/pilot/`, updated plists, added startup self-test + crash handler + heartbeat + null safety. Also fixed conversion plist passing nonexistent `run` command (changed to `check`). Crash-monitor upgraded with consecutive crash tracking + URGENT alerts for rapid crashes. Full postmortem: `~/thecalltaker-ops/logs/crash-postmortem-pilot-onboarding.md`
