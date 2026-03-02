@@ -142,6 +142,42 @@
       </div>
     </div>
 
+    <!-- Call List — Contacts with Phone Numbers Only -->
+    <div class="admin-card" style="margin-bottom:24px;">
+      <div class="admin-card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h2 class="admin-card-title" style="margin:0;">
+            <svg width="20" height="20" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:6px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Call List
+          </h2>
+          <span class="admin-badge badge-gray" id="cl-count" style="font-size:.7rem;">Loading...</span>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="admin-btn btn-primary btn-sm" data-cl-filter="all">All</button>
+          <button class="admin-btn btn-secondary btn-sm" data-cl-filter="hot-lead">Hot Leads</button>
+          <button class="admin-btn btn-secondary btn-sm" data-cl-filter="fresh">Fresh</button>
+          <button class="admin-btn btn-secondary btn-sm" data-cl-filter="water-damage">Water Damage</button>
+          <button class="admin-btn btn-secondary btn-sm" data-cl-filter="hvac">HVAC</button>
+          <button class="admin-btn btn-secondary btn-sm" data-cl-filter="plumbing">Plumbing</button>
+          <button class="admin-btn btn-secondary btn-sm" data-cl-filter="legal">Legal</button>
+          <button class="admin-btn btn-secondary btn-sm" data-cl-filter="locksmith">Locksmith</button>
+        </div>
+      </div>
+      <div id="cl-search-wrap" style="margin-bottom:12px;">
+        <div class="admin-search" style="max-width:400px;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="cl-search" placeholder="Search by name, company, or phone...">
+        </div>
+      </div>
+      <div id="cl-content">
+        <div class="admin-loading" style="padding:24px 0;">
+          <div class="admin-spinner admin-spinner-lg"></div>
+          <span>Loading call list...</span>
+        </div>
+      </div>
+      <div id="cl-pagination" style="display:flex;justify-content:center;gap:8px;margin-top:12px;"></div>
+    </div>
+
     <!-- Quick Compose + ntfy Feed Row -->
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
       <!-- Quick Compose -->
@@ -632,6 +668,255 @@
     loadDashboardData();
     showToast('Refreshing data...', '');
   });
+
+  // === CALL LIST ===
+  (function() {
+    var clContent = document.getElementById('cl-content');
+    var clCount = document.getElementById('cl-count');
+    var clSearch = document.getElementById('cl-search');
+    var clPagination = document.getElementById('cl-pagination');
+    var clFilter = 'all';
+    var clSearchQuery = '';
+    var clPage = 1;
+    var clPerPage = 25;
+    var clAllContacts = []; // all contacts with phones
+    var clSearchTimer = null;
+
+    // Fetch contacts with phones — fetches multiple pages from GHL
+    async function fetchCallList() {
+      clContent.innerHTML = '<div class="admin-loading" style="padding:24px 0;"><div class="admin-spinner admin-spinner-lg"></div><span>Loading call list...</span></div>';
+      clCount.textContent = 'Loading...';
+      clPagination.innerHTML = '';
+
+      try {
+        var allWithPhone = [];
+        var maxPages = 10; // fetch up to 1000 contacts
+        for (var p = 1; p <= maxPages; p++) {
+          var data = await GHL.listContacts({ page: p, limit: 100, query: clSearchQuery, noCache: p === 1 });
+          var contacts = data.contacts || [];
+          if (contacts.length === 0) break;
+
+          contacts.forEach(function(c) {
+            var phone = (c.phone || '').replace(/\D/g, '');
+            if (phone.length >= 10) {
+              allWithPhone.push(c);
+            }
+          });
+
+          // If less than 100 returned, no more pages
+          if (contacts.length < 100) break;
+        }
+
+        // Sort: hot-lead first, then pilot-candidate, then by dateAdded desc
+        allWithPhone.sort(function(a, b) {
+          var aHot = (a.tags || []).indexOf('hot-lead') !== -1 ? 0 : 1;
+          var bHot = (b.tags || []).indexOf('hot-lead') !== -1 ? 0 : 1;
+          if (aHot !== bHot) return aHot - bHot;
+
+          var aPilot = (a.tags || []).indexOf('pilot-candidate') !== -1 ? 0 : 1;
+          var bPilot = (b.tags || []).indexOf('pilot-candidate') !== -1 ? 0 : 1;
+          if (aPilot !== bPilot) return aPilot - bPilot;
+
+          // Not bland-called first
+          var aCalled = (a.tags || []).indexOf('bland-called') !== -1 ? 1 : 0;
+          var bCalled = (b.tags || []).indexOf('bland-called') !== -1 ? 1 : 0;
+          if (aCalled !== bCalled) return aCalled - bCalled;
+
+          return new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0);
+        });
+
+        clAllContacts = allWithPhone;
+        renderCallList();
+      } catch (err) {
+        console.error('Failed to load call list:', err);
+        clContent.innerHTML = '<div class="admin-empty" style="color:var(--red);"><p>Failed to load call list</p></div>';
+        clCount.textContent = 'Error';
+      }
+    }
+
+    function filterContacts() {
+      var filtered = clAllContacts;
+
+      if (clFilter === 'hot-lead') {
+        filtered = filtered.filter(function(c) { return (c.tags || []).indexOf('hot-lead') !== -1; });
+      } else if (clFilter === 'fresh') {
+        filtered = filtered.filter(function(c) { return (c.tags || []).indexOf('bland-called') === -1; });
+      } else if (clFilter !== 'all') {
+        filtered = filtered.filter(function(c) { return (c.tags || []).indexOf(clFilter) !== -1; });
+      }
+
+      return filtered;
+    }
+
+    function renderCallList() {
+      var filtered = filterContacts();
+      var total = filtered.length;
+      var totalPages = Math.ceil(total / clPerPage) || 1;
+      if (clPage > totalPages) clPage = 1;
+      var start = (clPage - 1) * clPerPage;
+      var page = filtered.slice(start, start + clPerPage);
+
+      clCount.textContent = total + ' callable';
+
+      if (total === 0) {
+        clContent.innerHTML = '<div class="admin-empty" style="padding:24px 0;"><p class="text-sm text-muted">No contacts with phone numbers found</p></div>';
+        clPagination.innerHTML = '';
+        return;
+      }
+
+      var html = '<div class="admin-table-wrap"><table class="admin-table">';
+      html += '<thead><tr>';
+      html += '<th style="width:32px;">#</th>';
+      html += '<th>Name</th>';
+      html += '<th>Company</th>';
+      html += '<th style="min-width:140px;">Phone</th>';
+      html += '<th>Industry</th>';
+      html += '<th>Status</th>';
+      html += '<th>Added</th>';
+      html += '<th style="width:60px;"></th>';
+      html += '</tr></thead>';
+      html += '<tbody>';
+
+      page.forEach(function(c, i) {
+        var name = ((c.firstName || '') + ' ' + (c.lastName || '')).trim() || 'No Name';
+        var company = c.companyName || '';
+        var phone = GHL.formatPhone(c.phone) || c.phone || '';
+        var rawPhone = (c.phone || '').replace(/\D/g, '');
+        if (rawPhone.length === 10) rawPhone = '1' + rawPhone;
+        var tags = c.tags || [];
+        var added = c.dateAdded ? GHL.timeAgo(c.dateAdded) : '';
+        var contactId = c.id || '';
+
+        // Determine industry
+        var industries = ['hvac','water-damage','plumbing','electrical','roofing','dental','medspa','legal','locksmith','garage-door','towing','funeral','veterinary','property-management'];
+        var industry = '';
+        for (var j = 0; j < industries.length; j++) {
+          if (tags.indexOf(industries[j]) !== -1) { industry = industries[j]; break; }
+        }
+
+        // Status badges
+        var statusHtml = '';
+        if (tags.indexOf('hot-lead') !== -1) {
+          statusHtml += '<span class="admin-badge" style="background:#ef4444;color:#fff;font-size:.65rem;">HOT</span> ';
+        }
+        if (tags.indexOf('pilot-candidate') !== -1) {
+          statusHtml += '<span class="admin-badge badge-purple" style="font-size:.65rem;">Pilot</span> ';
+        }
+        if (tags.indexOf('bland-called') !== -1) {
+          statusHtml += '<span class="admin-badge badge-gray" style="font-size:.65rem;">AI Called</span> ';
+        } else {
+          statusHtml += '<span class="admin-badge badge-green" style="font-size:.65rem;">Fresh</span> ';
+        }
+        if (tags.indexOf('customer') !== -1 || tags.indexOf('active-client') !== -1) {
+          statusHtml += '<span class="admin-badge badge-green" style="font-size:.65rem;">Client</span> ';
+        }
+
+        var rowNum = start + i + 1;
+
+        html += '<tr data-id="' + contactId + '" style="cursor:pointer;" onclick="window.location.href=\'contacts.html#' + contactId + '\'">';
+        html += '<td style="color:var(--text-muted);font-size:.75rem;">' + rowNum + '</td>';
+        html += '<td class="name-cell" style="font-weight:600;">' + escapeHtml(name) + '</td>';
+        html += '<td class="muted">' + escapeHtml(company) + '</td>';
+        html += '<td><a href="tel:+' + rawPhone + '" onclick="event.stopPropagation();" style="color:var(--orange);font-weight:600;text-decoration:none;font-size:.9rem;">' + escapeHtml(phone) + '</a></td>';
+        html += '<td>';
+        if (industry) {
+          html += '<span class="admin-badge badge-blue" style="font-size:.65rem;">' + escapeHtml(industry) + '</span>';
+        } else {
+          html += '<span class="muted text-sm">--</span>';
+        }
+        html += '</td>';
+        html += '<td>' + statusHtml + '</td>';
+        html += '<td class="muted" style="font-size:.75rem;white-space:nowrap;">' + escapeHtml(added) + '</td>';
+        html += '<td><button class="admin-btn btn-ghost btn-sm cl-copy-btn" data-phone="' + escapeHtml(phone) + '" onclick="event.stopPropagation();" title="Copy number" style="padding:4px 6px;">';
+        html += '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+        html += '</button></td>';
+        html += '</tr>';
+      });
+
+      html += '</tbody></table></div>';
+      clContent.innerHTML = html;
+
+      // Copy button handlers
+      clContent.querySelectorAll('.cl-copy-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var num = btn.getAttribute('data-phone');
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(num);
+            showToast('Copied: ' + num, 'success');
+          }
+        });
+      });
+
+      // Pagination
+      if (totalPages <= 1) {
+        clPagination.innerHTML = '';
+        return;
+      }
+      var pgHtml = '';
+      pgHtml += '<button class="admin-btn btn-ghost btn-sm" ' + (clPage <= 1 ? 'disabled' : '') + ' data-cl-page="' + (clPage - 1) + '">&laquo;</button>';
+      for (var pp = 1; pp <= Math.min(totalPages, 10); pp++) {
+        pgHtml += '<button class="admin-btn btn-sm ' + (pp === clPage ? 'btn-primary' : 'btn-secondary') + '" data-cl-page="' + pp + '">' + pp + '</button>';
+      }
+      if (totalPages > 10) {
+        pgHtml += '<span class="text-muted text-sm" style="padding:0 4px;">...</span>';
+        pgHtml += '<button class="admin-btn btn-sm btn-secondary" data-cl-page="' + totalPages + '">' + totalPages + '</button>';
+      }
+      pgHtml += '<button class="admin-btn btn-ghost btn-sm" ' + (clPage >= totalPages ? 'disabled' : '') + ' data-cl-page="' + (clPage + 1) + '">&raquo;</button>';
+      clPagination.innerHTML = pgHtml;
+
+      clPagination.querySelectorAll('[data-cl-page]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (btn.disabled) return;
+          clPage = parseInt(btn.getAttribute('data-cl-page'));
+          renderCallList();
+          clContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    }
+
+    // Filter buttons
+    document.querySelectorAll('[data-cl-filter]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        clFilter = btn.getAttribute('data-cl-filter');
+        clPage = 1;
+        document.querySelectorAll('[data-cl-filter]').forEach(function(b) {
+          b.className = 'admin-btn btn-sm ' + (b.getAttribute('data-cl-filter') === clFilter ? 'btn-primary' : 'btn-secondary');
+        });
+        renderCallList();
+      });
+    });
+
+    // Search
+    clSearch.addEventListener('input', function() {
+      clearTimeout(clSearchTimer);
+      clSearchTimer = setTimeout(function() {
+        clSearchQuery = clSearch.value.trim();
+        clPage = 1;
+        fetchCallList();
+      }, 600);
+    });
+
+    clSearch.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        clearTimeout(clSearchTimer);
+        clSearchQuery = clSearch.value.trim();
+        clPage = 1;
+        fetchCallList();
+      }
+    });
+
+    // Load on dashboard init
+    var origLoadDashboard = loadDashboardData;
+    loadDashboardData = function() {
+      origLoadDashboard();
+      fetchCallList();
+    };
+
+    // Also load if dashboard is already showing
+    if (!document.getElementById('admin-dashboard').classList.contains('hidden')) {
+      fetchCallList();
+    }
+  })();
 
   // === UTILITY ===
   function escapeHtml(str) {
