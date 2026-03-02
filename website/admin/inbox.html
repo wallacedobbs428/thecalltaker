@@ -567,7 +567,11 @@
 
         // Load messages
         var msgData = await GHL.getMessages(state.activeConversationId);
-        var messages = msgData.messages || [];
+        var messages = msgData.messages;
+        // GHL sometimes returns messages as non-array — normalize
+        if (!Array.isArray(messages)) messages = messages ? [messages] : [];
+        // Filter out non-object entries (GHL can return strings)
+        messages = messages.filter(function(m) { return m && typeof m === 'object'; });
         loadingEl.style.display = 'none';
 
         if (messages.length === 0) {

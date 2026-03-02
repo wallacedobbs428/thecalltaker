@@ -470,17 +470,26 @@
     var topics = [
       { id: 'tct-urgent-Hk9UOEZR', label: 'Urgent', color: 'var(--red)' },
       { id: 'tct-sales-63uYsIT9', label: 'Sales', color: 'var(--green)' },
-      { id: 'tct-system-vRsfXQRQ', label: 'System', color: 'var(--blue)' }
+      { id: 'tct-system-vRsfXQRQ', label: 'System', color: 'var(--blue)' },
+      { id: 'tct-activity-cn1Aqa85', label: 'Activity', color: 'var(--purple, #8b5cf6)' }
     ];
     try {
       var allMessages = [];
       for (var i = 0; i < topics.length; i++) {
         try {
-          var res = await fetch('https://ntfy.sh/v1/messages?topic=' + topics[i].id + '&since=24h&poll=1');
+          var res = await fetch('https://ntfy.sh/' + topics[i].id + '/json?poll=1&since=24h');
           if (res.ok) {
-            var msgs = await res.json();
-            (Array.isArray(msgs) ? msgs : []).forEach(function(m) {
-              allMessages.push({ message: m.message || m.title || '', time: m.time || 0, topic: topics[i] });
+            var text = await res.text();
+            // ntfy returns newline-delimited JSON (one JSON object per line)
+            var lines = text.trim().split('\n');
+            lines.forEach(function(line) {
+              if (!line.trim()) return;
+              try {
+                var m = JSON.parse(line);
+                if (m.event === 'message' || !m.event) {
+                  allMessages.push({ message: m.message || m.title || '', time: m.time || 0, topic: topics[i] });
+                }
+              } catch(pe) { /* skip malformed lines */ }
             });
           }
         } catch(e) { /* skip topic errors */ }

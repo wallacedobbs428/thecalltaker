@@ -346,9 +346,6 @@
             html += '<option value="' + escapeHtml(s.id) + '"' + selected + '>' + escapeHtml(s.name) + '</option>';
           });
           html += '</select>';
-          html += '<div style="font-size:.65rem;color:var(--text-muted);margin-top:4px;text-align:center;">';
-          html += '<a href="https://app.gohighlevel.com/v2/location/' + GHL.LOCATION + '/opportunities" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline;">Move in GHL Dashboard</a>';
-          html += '</div>';
           html += '</div>';
 
           html += '</div>'; // .kanban-card
@@ -374,15 +371,27 @@
       });
     });
 
-    // Attach stage move select handlers
+    // Attach stage move select handlers — actually move via API
     boardEl.querySelectorAll('.stage-move-select').forEach(function(sel) {
-      sel.addEventListener('change', function() {
+      sel.addEventListener('change', async function() {
         var oppId = sel.getAttribute('data-opp-id');
         var newStageId = sel.value;
-        showToast('To move opportunities, use the GHL Dashboard link below the dropdown.', '');
-        // Reset to the original value since we can't move via API
         var opp = allOpportunities.find(function(o) { return o.id === oppId; });
-        if (opp) sel.value = opp.pipelineStageId;
+        if (!opp || newStageId === opp.pipelineStageId) return;
+        sel.disabled = true;
+        try {
+          await GHL.updateOpportunity(oppId, { pipelineStageId: newStageId });
+          opp.pipelineStageId = newStageId;
+          showToast('Moved to new stage', 'success');
+          // Re-render board to show card in new column
+          updateStats();
+          renderBoard(currentPipelineId);
+        } catch (err) {
+          console.error('Failed to move opportunity:', err);
+          showToast('Failed to move: ' + err.message, 'error');
+          sel.value = opp.pipelineStageId;
+          sel.disabled = false;
+        }
       });
     });
   }
