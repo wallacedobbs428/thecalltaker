@@ -1,6 +1,6 @@
 # The Call Taker — System Documentation
 
-> AI Receptionist SaaS for service businesses. $497/mo. Demo line: (615) 784-5747
+> AI Receptionist SaaS for service businesses. $97/$297/$497/mo. Demo line: (615) 784-5747
 > Built and run by Wallace Dobbs (@moneymaker99)
 
 ## Architecture Overview
@@ -62,9 +62,9 @@ Two repos, 60+ Python scripts, 86 launchd services running 24/7 on a single Mac.
 
 | Script | Purpose | Schedule |
 |--------|---------|----------|
-| `blast-engine.py` | Cold email with A/B testing, warmup ramp, 13 industries | Every run |
+| `blast-engine.py` | Cold email with A/B testing, warmup ramp, 19 industries | Every run |
 | `cold-caller.py` | Bland.ai outbound: 20 calls/day + 15 secret shopper | 10am + 6pm |
-| `funnel-engine.py` | 7-touch multi-channel inbound funnel (email+SMS+Bland.ai call), 13 industries | 6x daily (8am-6pm) |
+| `funnel-engine.py` | 7-touch multi-channel inbound funnel (email+SMS+Bland.ai call) + 4-email trust sequence for site visitors, 19 industries | 6x daily (8am-6pm) |
 | `drip-engine.py` | 1 nurture sequence (calculator-lead + demo-listener DISABLED — replaced by funnel-engine) | Daily |
 | `gmail-sender.py` | 4 Gmail SMTP accounts, 160/day, score-based targeting | 3x daily |
 | `rescue-email-engine.py` | Review-mining personalized emails, industry-specific | Daily |
@@ -92,6 +92,9 @@ Two repos, 60+ Python scripts, 86 launchd services running 24/7 on a single Mac.
 | `agency-outreach.py` | Agency white-label cold email + scraper + import | Daily 11:30am |
 | `lead-recycler.py` | Weekly lead recycling: premium→$97→pilot→breakup rotation | Sun 8am |
 | `warm-lead-rescue.py` | Cross-engine warm lead finder + personal follow-up sender | On demand |
+| `multi-industry-lead-gen.py` | Scrapes 500+ leads across 17 industries × 20 metros, scores 1-100 | On demand |
+| `lead-list-builder.py` | Combines scraped data into scored CSV/JSON, generates hot-100 | On demand |
+| `ghl-lead-importer.py` | Imports hot-100 leads into GHL with industry tags + pilot-candidate | On demand |
 
 ## Infrastructure
 
@@ -144,6 +147,17 @@ All in `ops/config.py` with environment variable fallbacks:
 - Embed URL: `https://api.leadconnectorhq.com/widget/booking/h4IlzccZ1m3JprEQqpMJ`
 - All 13 industry pages use this calendar ID
 
+### Cursor Effects (March 1, 2026)
+- **Location:** `website/index.html` (inline CSS + JS at bottom of file)
+- **Dependency:** GSAP 3.12.5 loaded from cdnjs CDN
+- **Desktop only:** Uses `@media (pointer: fine)` + JS `matchMedia` check. Zero code runs on mobile/tablet.
+- **5 effects:** (1) Custom cursor dot + ring with elastic follow, (2) Color-adaptive cursor (blue on dark sections), (3) Magnetic buttons with elastic snap-back, (4) Hero section glow spotlight, (5) 3D parallax card tilt on testimonials + steps
+- **Cursor label:** Shows "click" or "call" text when hovering CTAs
+- **Class gating:** All CSS scoped under `html.has-cursor` (added by JS on init). If GSAP fails to load, normal cursor remains.
+- **Size:** ~3.5KB JS, ~1.5KB CSS (under 5KB total)
+- **To disable:** Remove the `CURSOR EFFECTS` CSS block + the second `<script>` block (GSAP CDN + cursor JS)
+- **To tweak individual effects:** Each JS section is labeled (1-5) with clear comments
+
 ### Attribution Tracking
 - `tct-tracking.js` captures UTM params, gclid, fbclid, referrer, landing page on first touch
 - Stored in `sessionStorage` as `tct_attribution` (first-touch, don't overwrite)
@@ -154,13 +168,26 @@ All in `ops/config.py` with environment variable fallbacks:
 ### Voice AI
 - Agent ID: `695947c64b9ed67d8f1077ad`
 - Agent Name: "The Call Taker - Demo Line"
-- Business Name: "Comfort Pro Services (Demo)" — generic home services, covers all industries
-- Welcome: "Hey thanks for calling Comfort Pro Services, this is Jessica -- how can I help you today?"
-- Character: Jessica, receptionist — handles HVAC, plumbing, electrical, roofing, general repairs
+- Business Name: "The Call Taker (Demo)"
+- Welcome: "Hey, thanks for calling The Call Taker! This is a live AI demo. Tell me what kind of business you run and I will show you how I handle your calls."
+- **UNIVERSAL DEMO:** Adapts to ANY industry — caller says "locked out" → locksmith mode, "AC broken" → HVAC mode, "need a dentist" → dental mode. After ~1 min pitches free 14-day pilot.
 - Voice ID: `w9rPM8AIZle60Nbpw7nl` (current), Jessica backup: `lxYfHSkYm1EzQzGhdbfc`
+- **Prompt:** Universal demo, 148 words, starts with "CRITICAL: 1-2 sentences max." Full text in `~/Desktop/voice-agent-speed-fix/industry-prompts/universal-demo.md`
+- **Responsiveness:** 1.0 (max) — respond as fast as possible after caller stops
+- **Mid-call actions:** NONE (removed Feb 27 — were adding 200-500ms latency per turn)
+- **Knowledge base:** Removed (reduces latency)
+- **After-call:** Extract name action still active. Call-end workflow `6e7084f1-a3f2-4ca7-95e8-59c7ba5b1526` fires post-call.
+- **Speed fix (Feb 27):** Prompt 925→160 words (v3), responsiveness 0.8→1.0, greeting 16→10 words, removed mid-call data extraction actions + knowledge base. 7 Bland.ai test calls run. Anti-repeat + digit readback workarounds deployed. Full audit: `~/Desktop/voice-agent-speed-fix/CALL-AUDIT.md`
+- **GHL latency:** Info collection turns: 2-4.5s. Complex turns: 5-13s. GHL has no model selection, no max_tokens, no response_length setting. All available levers maxed.
+- **Demo line rule:** Demo line (615) 784-5747 = ALWAYS universal demo prompt. Client lines = industry-specific prompts. NEVER overwrite the demo line with a single-industry prompt.
+- **Industry prompts (for clients):** Locksmith, HVAC, Water Damage — all in `~/Desktop/voice-agent-speed-fix/industry-prompts/`. Universal demo prompt also there.
+- **Platform comparison:** Retell.ai recommended for voice layer (~600ms latency, 7.5x faster than GHL). Full analysis: `~/Desktop/voice-agent-speed-fix/PLATFORM-COMPARISON.md`
+- **Retell agent:** Also updated to universal demo. Agent ID: `agent_5acbcae27d34f7f82f1355e546`, LLM: `llm_c1d92953d343725223ebc9ae02ec`. BLOCKED: needs payment card for phone number ($2/mo).
+- **API:** PATCH `/voice-ai/agents/{id}?locationId=` (plural "agents"), GET `/voice-ai/agents?locationId=` to list
 - PATCH endpoint needs `locationId` in query string, not body
 - Demo breaks character after ~1 min to pitch The Call Taker and collect prospect info
-- If asked about pricing: "$297/mo after-hours, no contracts"
+- If asked about pricing: "$97/mo after-hours, $297/mo full 24/7, no contracts"
+- **GHL bugs (workarounds deployed):** TTS repeat loop → "Never repeat yourself" instruction (Call 7: 0 repeats). Phone number glitches → digit readback instruction (Call 7: clean in 2s). Variable latency → GHL platform limit, no fix available.
 
 ### Monitoring & Alerting
 - **Crash Monitor:** `ops/crash-monitor.py` — every 5 min, checks all launchd services, auto-restarts crashed ones, sends ntfy alert
@@ -234,8 +261,8 @@ python3 ~/thecalltaker-ops/ben/ben-engine.py score
 python3 ~/thecalltaker-ops/sam/sam-engine.py support
 python3 ~/thecalltaker-ops/donny/donny-engine.py speed
 python3 ~/thecalltaker-ops/ops/funnel-engine.py status
-python3 ~/Desktop/thecalltaker/pilot-program/pilot-onboarding-engine.py status
-python3 ~/Desktop/thecalltaker/pilot-program/pilot-conversion-engine.py status
+python3 ~/thecalltaker-ops/pilot/pilot-onboarding-engine.py status
+python3 ~/thecalltaker-ops/pilot/pilot-conversion-engine.py status
 ```
 
 ## State Files
@@ -246,8 +273,8 @@ Each engine saves state to JSON. State files are atomic-written (tempfile + os.r
 - `sam/sam-state.json` — customer health scores, issues, checkins, referrals, NPS
 - `donny/donny-state.json` — closing scores, close sequences, speed responses, objections
 - `ops/blast-state.json` — email sent/bounced/skipped counts, daily limits
-- `ops/funnel-state.json` — 7-touch funnel enrollments, steps completed, daily send counts
-- `pilot-program/pilot-state.json` — pilot enrollments, slots, waitlist, conversion tracking
+- `ops/funnel-state.json` — 7-touch funnel enrollments + trust sequence enrollments, steps completed, daily send counts
+- `pilot/pilot-state.json` — pilot enrollments, slots, waitlist, conversion tracking
 - `ops/try-funnel-state.json` — $97 cold sequence, nurture, upgrade enrollments
 - `ops/agency-outreach-state.json` — agency cold email tracking, template A/B stats
 - `ops/lead-recycler-state.json` — recycled contacts, rotation tracking, breakup counts
@@ -267,11 +294,11 @@ Shared file at `ops/contact-registry.json`. All engines read/write through `tct_
 **Total: 82 pages live on thecalltaker.com** (as of Feb 25, 2026)
 
 ### Core Pages (in `website/`)
-- `index.html` — homepage with industry selector
-- `signup.html` — 3-step purchase flow ($497/mo)
+- `index.html` — homepage with industry selector + premium cursor effects (GSAP)
+- `signup.html` — 3-step purchase flow ($97/$297/$497)
 - `calculator.html` — ROI calculator (lead capture + war room alert)
 - `book.html` — demo booking (GHL calendar embed, ID: h4IlzccZ1m3JprEQqpMJ)
-- `checkout.html` — $297/$497 plan checkout (Stripe links pending)
+- `checkout.html` — $97/$297/$497 plan checkout (routes to /pilot/ until Stripe connected)
 - `demo-showcase.html` — live demo line showcase
 - `your-results.html` — 30-day results simulator (shareable URL)
 - `your-audit.html` — personalized audit reports (noindex)
@@ -342,14 +369,29 @@ HVAC, Roofing, Plumbing, Electrical, Dental, MedSpa, Legal, Property Mgmt, Veter
 - Root-level old industry pages — replaced by /industries/
 
 ## Pilot Program (14-Day Free Trial)
-- **Directory:** `~/Desktop/thecalltaker/pilot-program/`
-- **Max Slots:** 3 concurrent pilots (scarcity by design)
-- **Onboarding Engine:** `pilot-onboarding-engine.py` — scans for `pilot-requested` tag, auto-onboards (welcome email/SMS, GHL tags, war room + William alerts)
-- **Conversion Engine:** `pilot-conversion-engine.py` — Day 7 soft check-in with real call stats, Day 12 urgency push with monthly projection
+- **Directory:** `~/thecalltaker-ops/pilot/` (moved from Desktop Feb 27 — macOS TCC fix)
+- **Max Slots:** 5 concurrent pilots
+- **Onboarding Engine:** `pilot-onboarding-engine.py` — scans for `pilot-signup` tag, auto-onboards (welcome email/SMS, forwarding instructions, GHL tags, war room + William alerts)
+- **Conversion Engine:** `pilot-conversion-engine.py` — Day 7 check-in, Day 10 ROI, Day 12 urgency, post-expiry Day 15/17/21
+- **State:** `~/thecalltaker-ops/pilot/pilot-state.json` (shared by both engines, atomic writes)
+- **Heartbeats:** `pilot-onboarding.heartbeat`, `pilot-conversion.heartbeat` (written each run)
 - **Results Simulator:** `your-results.html` — 3-question form → personalized 30-day projection dashboard, shareable via URL hash
 - **CTA Strategy:** All outreach engines updated from "buy at $X/mo" → "free 14-day pilot, no card, no risk"
-- **launchd:** `com.thecalltaker.pilot.onboarding` (6x daily), `com.thecalltaker.pilot.conversion` (2x daily)
-- **GHL Tags:** `pilot-requested` (trigger), `pilot-active` (during), `pilot-expired` / `pilot-converted` (after)
+- **launchd:** `com.thecalltaker.pilot.onboarding` (6x daily, runs scan+touchpoints+expire), `com.thecalltaker.pilot.conversion` (2x daily, runs check+post-expiry)
+- **GHL Tags:** `pilot-signup` (trigger), `pilot-active` (during), `pilot-expired` / `pilot-converted` (after)
+
+## Multi-Industry Outreach System (Feb 27 2026)
+- **Target:** ANY service business that answers phones — 17 industries, 20 metros
+- **Industries:** Locksmith, HVAC, Plumbing, Electrical, Roofing, Pest Control, Towing, Dental, Med Spa, Legal, Veterinary, Auto Repair, Cleaning, Property Mgmt, Water Damage, Landscaping, General Contractor
+- **Target Metros:** Nashville, Memphis, Knoxville, Chattanooga, Atlanta, Birmingham, Louisville, Huntsville, Lexington, Jackson MS, Dallas, Houston, Phoenix, Tampa, Charlotte, Jacksonville, San Antonio, Indianapolis, Columbus OH, Kansas City
+- **Lead List:** `~/Desktop/thecalltaker/leads/master-all-industries.csv` (600 leads), `hot-100.csv`, per-industry CSVs in `by-industry/`
+- **Scoring:** 1-100 based on: small team (+20), no website (+15), high reviews (+15), high-value industry (+15), has email (+10), top 10 metro (+5)
+- **GHL Import:** Top 100 imported, tagged `pilot-candidate` + industry tag, top 25 tagged `hot-lead`
+- **Templates:** `~/Desktop/thecalltaker/outreach/universal/` — 3 emails, 2 SMS, 1 cold call script (all universal with [INDUSTRY] variable)
+- **Industry Hooks:** `~/Desktop/thecalltaker/outreach/industry-hooks.md` — one-liner pain points per industry
+- **Call Tracker:** `~/Desktop/thecalltaker/sales-toolkit/call-tracker-v2.html` — loads from hot-100.json, filter by industry, auto-populated scripts, outcome tracking
+- **Engine Updates:** blast-engine.py + funnel-engine.py both updated to handle 19 industries (13 original + 6 new)
+- **Background Scraper:** `multi-industry-lead-gen.py` runs in background to fill industry gaps; when done, re-run `lead-list-builder.py build` to update lists
 
 ## Known Issues / TODOs
 1. **Stripe not connected** — needs parent/guardian (Wallace is 16). Setup guide sent via ntfy.
@@ -359,6 +401,21 @@ HVAC, Roofing, Plumbing, Electrical, Dental, MedSpa, Legal, Property Mgmt, Veter
 5. **Meta Ads** — Ad Account ID 25895456013410801, needs API token from developers.facebook.com.
 6. **ColdDMs** — CANCELED ($174/mo, no API). Instagram DM targeting handled by dm-tracker script.
 
+## Known Issues (Resolved)
+1. **[2026-02-27] Pilot onboarding + conversion engines never ran from launchd** — Root cause: scripts were in `~/Desktop/` (macOS TCC-protected directory). Python couldn't even open the file. Fix: moved both scripts to `~/thecalltaker-ops/pilot/`, updated plists, added startup self-test + crash handler + heartbeat + null safety. Also fixed conversion plist passing nonexistent `run` command (changed to `check`). Crash-monitor upgraded with consecutive crash tracking + URGENT alerts for rapid crashes. Full postmortem: `~/thecalltaker-ops/logs/crash-postmortem-pilot-onboarding.md`
+
+## Coordination Protocol
+
+> **MANDATORY: Before starting any work session, read `war-room/task-board.md` and `war-room/handoff-log.md`. Before ending any work session, update both files.**
+
+- **Task Board:** `~/Desktop/thecalltaker/war-room/task-board.md` — live task tracker with WALLACE/MILLS/SHARED columns
+- **Handoff Log:** `~/Desktop/thecalltaker/war-room/handoff-log.md` — session-by-session changelog (what was done, what changed, what's next, blockers)
+- **Rules:** `~/Desktop/thecalltaker/war-room/rules.md` — lane ownership, shared decisions, conflict resolution
+- **Lane ownership:** Wallace = sales/outreach/content/ads/pricing. Mills = code/repos/voice agent/GHL/integrations. William = demos/Zoom calls.
+- **Cross-lane work:** Log it on the task board FIRST. Emergency exceptions must be logged after.
+- **Shared decisions:** Goes in SHARED section — no one moves forward until both agree.
+- **Engine changes:** Log which file, what changed, and whether launchd was restarted.
+
 ## Team
 - **Wallace Dobbs** — founder/CEO, builds everything, funds everything
 - **William** (Wallace's brother) — demo closer, face on Zoom calls
@@ -367,3 +424,24 @@ HVAC, Roofing, Plumbing, Electrical, Dental, MedSpa, Legal, Property Mgmt, Veter
 - **Ben** — 24/7 AI intelligence engine
 - **Sam** — 24/7 AI customer success
 - **Donny** — 24/7 AI conversion closer
+
+## Secret Shopper System (Feb 27, 2026)
+- **Engine:** `~/thecalltaker-ops/secret-shopper.py` — precision daily shopper (30 calls/batch)
+- **Commands:** `call`, `check`, `status`, `dashboard`
+- **NOT the same as:** `secret-shopper-blitz.py` (mass 200-call campaigns) or `secret-shopper-list.py` (manual list)
+- **Data flow:** CSV leads → score/filter → Bland.ai calls → check outcomes → generate HTML reports → SMS + email with report link → tag GHL → dashboard JSON
+- **Lead sources:** `~/Desktop/thecalltaker/leads/hot-100.csv` (primary), `master-all-industries.csv` (fallback)
+- **Reports:** `~/Desktop/thecalltaker/website/shopper-reports/{contact_id}.html` — branded proof reports (noindex)
+- **Dashboard:** `~/Desktop/thecalltaker/dashboard/shopper-dashboard.html` — loads `shopper-dashboard-data.json`
+- **Call Script:** `~/Desktop/thecalltaker/outreach/shopper-call-script.md` — Wallace's morning follow-up script
+- **State:** `~/thecalltaker-ops/shopper-state.json`
+- **Results CSV:** `~/thecalltaker-ops/shopper-results.csv`
+- **launchd (4 services):**
+  - `com.thecalltaker.shopper.evening` — call at 6pm daily
+  - `com.thecalltaker.shopper.night` — call at 9:30pm daily
+  - `com.thecalltaker.shopper.check` — check every 10 min
+  - `com.thecalltaker.shopper.saturday` — call Sat 9am
+- **GHL tags added:** `shopper-failed`, `hot-lead`, `shopper-called`, `shopper-{date}`
+- **Exclusions:** Skips customer, active-client, pilot-active, donny-closing, do-not-contact, unsubscribed, shopper-called
+- **Bland.ai 402:** Auto-stops + ntfy SYSTEM alert if balance depleted
+- **19 industries supported** with per-industry scenarios and job values
