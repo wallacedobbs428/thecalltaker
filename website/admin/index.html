@@ -67,13 +67,17 @@
       </div>
       <div class="admin-stat" id="stat-clients">
         <div class="admin-stat-label">Active Clients</div>
-        <div class="admin-stat-value">&mdash;</div>
-        <div class="admin-stat-sub text-muted">Coming soon</div>
+        <div class="admin-stat-value" id="stat-clients-val">
+          <span class="admin-spinner"></span>
+        </div>
+        <div class="admin-stat-sub" id="stat-clients-sub"></div>
       </div>
       <div class="admin-stat" id="stat-demos">
         <div class="admin-stat-label">Demo Calls</div>
-        <div class="admin-stat-value">&mdash;</div>
-        <div class="admin-stat-sub text-muted">Coming soon</div>
+        <div class="admin-stat-value" id="stat-demos-val">
+          <span class="admin-spinner"></span>
+        </div>
+        <div class="admin-stat-sub" id="stat-demos-sub"></div>
       </div>
     </div>
 
@@ -105,15 +109,66 @@
       </a>
     </div>
 
-    <!-- Recent Contacts -->
-    <div class="admin-card">
-      <div class="admin-card-header">
-        <h2 class="admin-card-title">Recent Contacts</h2>
+    <!-- Quick Compose + ntfy Feed Row -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
+      <!-- Quick Compose -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Quick SMS</h2>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <input type="text" class="admin-input" id="qc-phone" placeholder="Phone number or contact name">
+          <div id="qc-suggestions" style="display:none;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);max-height:120px;overflow-y:auto;"></div>
+          <textarea class="admin-textarea" id="qc-message" placeholder="Type your message..." rows="2" style="min-height:60px;"></textarea>
+          <button class="admin-btn btn-primary btn-sm" id="qc-send" style="align-self:flex-end;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send SMS
+          </button>
+        </div>
       </div>
-      <div id="contacts-content">
-        <div class="admin-loading">
-          <span class="admin-spinner admin-spinner-lg"></span>
-          <span>Loading contacts...</span>
+
+      <!-- ntfy Feed -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">ntfy Feed</h2>
+          <button class="admin-btn btn-ghost btn-sm" id="ntfy-refresh" title="Refresh">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </button>
+        </div>
+        <div id="ntfy-content" style="max-height:200px; overflow-y:auto;">
+          <div class="admin-loading" style="padding:20px 0;">
+            <span class="admin-spinner"></span>
+            <span class="text-sm text-muted">Loading notifications...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Feed + Recent Contacts Row -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <!-- Activity Feed -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Activity Feed</h2>
+        </div>
+        <div id="activity-content" style="max-height:400px; overflow-y:auto;">
+          <div class="admin-loading" style="padding:20px 0;">
+            <span class="admin-spinner"></span>
+            <span class="text-sm text-muted">Loading activity...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Contacts -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Recent Contacts</h2>
+        </div>
+        <div id="contacts-content">
+          <div class="admin-loading">
+            <span class="admin-spinner admin-spinner-lg"></span>
+            <span>Loading contacts...</span>
+          </div>
         </div>
       </div>
     </div>
@@ -206,7 +261,11 @@
   function loadDashboardData() {
     loadTotalContacts();
     loadNewThisWeek();
+    loadActiveClients();
+    loadDemoCalls();
     loadRecentContacts();
+    loadActivityFeed();
+    loadNtfyFeed();
   }
 
   // --- Total Contacts ---
@@ -313,6 +372,207 @@
     }
   }
 
+  // --- Active Clients ---
+  async function loadActiveClients() {
+    var valEl = document.getElementById('stat-clients-val');
+    var subEl = document.getElementById('stat-clients-sub');
+    try {
+      var data = await GHL.listContacts({ limit: 100, noCache: true });
+      var contacts = data.contacts || [];
+      var count = 0;
+      contacts.forEach(function(c) {
+        var tags = c.tags || [];
+        if (tags.indexOf('customer') !== -1 || tags.indexOf('active-client') !== -1 || tags.indexOf('pilot-converted') !== -1) {
+          count++;
+        }
+      });
+      valEl.textContent = count;
+      subEl.textContent = count > 0 ? 'Paying clients' : 'No clients yet';
+      subEl.className = 'admin-stat-sub' + (count > 0 ? ' positive' : '');
+    } catch (err) {
+      console.error('Failed to load active clients:', err);
+      valEl.textContent = '--';
+      subEl.textContent = 'Failed to load';
+      subEl.className = 'admin-stat-sub negative';
+    }
+  }
+
+  // --- Demo Calls ---
+  async function loadDemoCalls() {
+    var valEl = document.getElementById('stat-demos-val');
+    var subEl = document.getElementById('stat-demos-sub');
+    try {
+      var data = await GHL.listContacts({ limit: 100, noCache: true });
+      var contacts = data.contacts || [];
+      var count = 0;
+      contacts.forEach(function(c) {
+        var tags = c.tags || [];
+        if (tags.indexOf('demo-booked') !== -1 || tags.indexOf('demo-called') !== -1 || tags.indexOf('demo-caller') !== -1) {
+          count++;
+        }
+      });
+      valEl.textContent = count;
+      subEl.textContent = 'Demo interactions';
+      subEl.className = 'admin-stat-sub';
+    } catch (err) {
+      console.error('Failed to load demo calls:', err);
+      valEl.textContent = '--';
+      subEl.textContent = 'Failed to load';
+      subEl.className = 'admin-stat-sub negative';
+    }
+  }
+
+  // --- Activity Feed ---
+  async function loadActivityFeed() {
+    var container = document.getElementById('activity-content');
+    try {
+      var data = await GHL.listContacts({ limit: 50, noCache: true });
+      var contacts = data.contacts || [];
+      if (contacts.length === 0) {
+        container.innerHTML = '<div class="admin-empty"><p class="text-sm">No recent activity</p></div>';
+        return;
+      }
+      var html = '';
+      contacts.slice(0, 25).forEach(function(c) {
+        var name = ((c.firstName || '') + ' ' + (c.lastName || '')).trim() || 'Unknown';
+        var tags = c.tags || [];
+        var time = c.dateAdded ? GHL.timeAgo(c.dateAdded) : '';
+        var action = 'added';
+        var icon = '&#x1F464;';
+        var color = 'var(--text-muted)';
+        if (tags.indexOf('demo-called') !== -1 || tags.indexOf('demo-booked') !== -1) { action = 'booked a demo'; icon = '&#x1F4DE;'; color = 'var(--green)'; }
+        else if (tags.indexOf('bland-called') !== -1) { action = 'AI called'; icon = '&#x1F916;'; color = 'var(--blue)'; }
+        else if (tags.indexOf('hot-lead') !== -1) { action = 'marked hot lead'; icon = '&#x1F525;'; color = 'var(--orange)'; }
+        else if (tags.indexOf('customer') !== -1 || tags.indexOf('active-client') !== -1) { action = 'became a client'; icon = '&#x2B50;'; color = 'var(--green)'; }
+        else if (tags.indexOf('cold-outreach') !== -1) { action = 'found by scraper'; icon = '&#x1F50D;'; color = 'var(--text-muted)'; }
+        else if (tags.indexOf('intake-submitted') !== -1) { action = 'submitted intake'; icon = '&#x1F4CB;'; color = 'var(--purple)'; }
+        else if (tags.indexOf('pilot-active') !== -1) { action = 'started pilot'; icon = '&#x1F680;'; color = 'var(--purple)'; }
+
+        html += '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--light);">';
+        html += '<span style="font-size:1.1rem;width:24px;text-align:center;">' + icon + '</span>';
+        html += '<div style="flex:1;min-width:0;">';
+        html += '<span style="font-weight:600;font-size:.85rem;color:var(--navy-dark);">' + escapeHtml(name) + '</span>';
+        html += ' <span style="font-size:.8rem;color:' + color + ';">' + action + '</span>';
+        html += '</div>';
+        html += '<span style="font-size:.7rem;color:var(--text-muted);white-space:nowrap;">' + time + '</span>';
+        html += '</div>';
+      });
+      container.innerHTML = html;
+    } catch (err) {
+      console.error('Failed to load activity:', err);
+      container.innerHTML = '<div class="admin-empty" style="color:var(--red);"><p class="text-sm">Failed to load activity</p></div>';
+    }
+  }
+
+  // --- ntfy Feed ---
+  async function loadNtfyFeed() {
+    var container = document.getElementById('ntfy-content');
+    var topics = [
+      { id: 'tct-urgent-Hk9UOEZR', label: 'Urgent', color: 'var(--red)' },
+      { id: 'tct-sales-63uYsIT9', label: 'Sales', color: 'var(--green)' },
+      { id: 'tct-system-vRsfXQRQ', label: 'System', color: 'var(--blue)' }
+    ];
+    try {
+      var allMessages = [];
+      for (var i = 0; i < topics.length; i++) {
+        try {
+          var res = await fetch('https://ntfy.sh/v1/messages?topic=' + topics[i].id + '&since=24h&poll=1');
+          if (res.ok) {
+            var msgs = await res.json();
+            (Array.isArray(msgs) ? msgs : []).forEach(function(m) {
+              allMessages.push({ message: m.message || m.title || '', time: m.time || 0, topic: topics[i] });
+            });
+          }
+        } catch(e) { /* skip topic errors */ }
+      }
+      allMessages.sort(function(a, b) { return b.time - a.time; });
+
+      if (allMessages.length === 0) {
+        container.innerHTML = '<div class="admin-empty" style="padding:20px 0;"><p class="text-sm text-muted">No notifications in the last 24h</p></div>';
+        return;
+      }
+
+      var html = '';
+      allMessages.slice(0, 15).forEach(function(m) {
+        var ago = m.time ? GHL.timeAgo(new Date(m.time * 1000).toISOString()) : '';
+        var msgText = m.message.length > 120 ? m.message.substring(0, 120) + '...' : m.message;
+        html += '<div style="padding:8px 0;border-bottom:1px solid var(--light);display:flex;gap:8px;align-items:flex-start;">';
+        html += '<span class="admin-badge" style="background:' + m.topic.color + ';color:#fff;font-size:.6rem;flex-shrink:0;margin-top:2px;">' + m.topic.label + '</span>';
+        html += '<div style="flex:1;min-width:0;">';
+        html += '<div style="font-size:.8rem;color:var(--text);line-height:1.4;">' + escapeHtml(msgText) + '</div>';
+        html += '<div style="font-size:.65rem;color:var(--text-muted);margin-top:2px;">' + ago + '</div>';
+        html += '</div></div>';
+      });
+      container.innerHTML = html;
+    } catch (err) {
+      console.error('Failed to load ntfy:', err);
+      container.innerHTML = '<div class="admin-empty" style="padding:20px 0;"><p class="text-sm text-muted">Could not load notifications</p></div>';
+    }
+  }
+
+  // --- Quick Compose ---
+  (function() {
+    var phoneInput = document.getElementById('qc-phone');
+    var msgInput = document.getElementById('qc-message');
+    var sendBtn = document.getElementById('qc-send');
+    var suggestions = document.getElementById('qc-suggestions');
+    var selectedContact = null;
+    var debounceTimer;
+
+    phoneInput.addEventListener('input', function() {
+      var q = phoneInput.value.trim();
+      selectedContact = null;
+      if (q.length < 2) { suggestions.style.display = 'none'; return; }
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(async function() {
+        try {
+          var data = await GHL.listContacts({ query: q, limit: 10 });
+          var contacts = data.contacts || [];
+          if (contacts.length === 0) { suggestions.style.display = 'none'; return; }
+          var html = '';
+          contacts.forEach(function(c) {
+            var name = ((c.firstName || '') + ' ' + (c.lastName || '')).trim() || 'Unknown';
+            var phone = GHL.formatPhone(c.phone) || c.email || '';
+            html += '<div style="padding:8px 12px;cursor:pointer;font-size:.85rem;border-bottom:1px solid var(--light);" ' +
+              'onmouseover="this.style.background=\'var(--off-white)\'" onmouseout="this.style.background=\'transparent\'" ' +
+              'data-id="' + c.id + '" data-phone="' + (c.phone || '') + '" data-name="' + escapeHtml(name).replace(/"/g,'&quot;') + '">' +
+              '<strong>' + escapeHtml(name) + '</strong> <span style="color:var(--text-muted);">' + escapeHtml(phone) + '</span></div>';
+          });
+          suggestions.innerHTML = html;
+          suggestions.style.display = 'block';
+          suggestions.querySelectorAll('[data-id]').forEach(function(el) {
+            el.addEventListener('click', function() {
+              selectedContact = { id: el.dataset.id, phone: el.dataset.phone, name: el.dataset.name };
+              phoneInput.value = el.dataset.name + ' (' + GHL.formatPhone(el.dataset.phone) + ')';
+              suggestions.style.display = 'none';
+            });
+          });
+        } catch(e) { suggestions.style.display = 'none'; }
+      }, 400);
+    });
+
+    sendBtn.addEventListener('click', async function() {
+      var msg = msgInput.value.trim();
+      if (!msg) { showToast('Type a message first', 'error'); return; }
+      if (!selectedContact || !selectedContact.id) { showToast('Select a contact first', 'error'); return; }
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Sending...';
+      try {
+        await GHL.sendMessage({ type: 'SMS', contactId: selectedContact.id, message: msg });
+        showToast('SMS sent to ' + selectedContact.name, 'success');
+        phoneInput.value = '';
+        msgInput.value = '';
+        selectedContact = null;
+      } catch(err) {
+        showToast('Failed to send: ' + err.message, 'error');
+      }
+      sendBtn.disabled = false;
+      sendBtn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send SMS';
+    });
+
+    document.getElementById('ntfy-refresh').addEventListener('click', function() { loadNtfyFeed(); });
+  })();
+
   // === REFRESH ===
   document.getElementById('btn-refresh').addEventListener('click', function() {
     GHL.clearCache();
@@ -321,6 +581,10 @@
     document.getElementById('stat-total-sub').textContent = '';
     document.getElementById('stat-week-val').innerHTML = '<span class="admin-spinner"></span>';
     document.getElementById('stat-week-sub').textContent = '';
+    document.getElementById('stat-clients-val').innerHTML = '<span class="admin-spinner"></span>';
+    document.getElementById('stat-clients-sub').textContent = '';
+    document.getElementById('stat-demos-val').innerHTML = '<span class="admin-spinner"></span>';
+    document.getElementById('stat-demos-sub').textContent = '';
     document.getElementById('contacts-content').innerHTML =
       '<div class="admin-loading"><span class="admin-spinner admin-spinner-lg"></span><span>Loading contacts...</span></div>';
     loadDashboardData();

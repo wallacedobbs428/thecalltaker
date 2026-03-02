@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Reports — Admin — The Call Taker</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+  <style>
+    /* === REPORTS PAGE STYLES === */
+
+    /* Date Range Selector */
+    .date-range-btns {
+      display: flex;
+      gap: 6px;
+    }
+    .date-range-btns button {
+      padding: 6px 14px;
+      font-size: .8rem;
+      font-weight: 600;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      background: var(--white);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .date-range-btns button:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+    .date-range-btns button.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: var(--white);
+    }
+
+    /* KPI Grid — 3 cols */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .kpi-card-label {
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kpi-card-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+      line-height: 1.2;
+    }
+    .kpi-card-sub {
+      font-size: .8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .kpi-card-sub.positive { color: var(--green); }
+    .kpi-card .kpi-editable {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .kpi-card .kpi-editable input {
+      width: 80px;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 1.25rem;
+      font-weight: 800;
+      font-family: inherit;
+      color: var(--navy-dark);
+      text-align: center;
+      background: var(--off-white);
+    }
+    .kpi-card .kpi-editable input:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(234,88,12,.1);
+    }
+    .kpi-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .kpi-indicator.api { background: var(--blue); }
+    .kpi-indicator.manual { background: var(--purple); }
+
+    /* CSS Bar Charts */
+    .chart-section {
+      margin-bottom: 24px;
+    }
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .bar-label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      width: 50px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+    .bar-track {
+      flex: 1;
+      height: 28px;
+      background: var(--light);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: var(--radius-sm);
+      transition: width .6s cubic-bezier(.4,0,.2,1);
+      min-width: 2px;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+    }
+    .bar-fill-label {
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--white);
+      white-space: nowrap;
+    }
+    .bar-count {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      width: 36px;
+      flex-shrink: 0;
+      text-align: left;
+    }
+
+    /* Tag Distribution Colors */
+    .bar-water-damage { background: #2563eb; }
+    .bar-hvac { background: #0891b2; }
+    .bar-plumbing { background: #0d9488; }
+    .bar-electrical { background: #ca8a04; }
+    .bar-medspa { background: #c026d3; }
+    .bar-prospect { background: var(--orange); }
+    .bar-customer { background: var(--green); }
+    .bar-cold-outreach { background: #64748b; }
+    .bar-pilot-active { background: var(--purple); }
+    .bar-default { background: var(--navy); }
+
+    /* Growth Chart Colors */
+    .bar-growth { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+
+    /* Funnel */
+    .funnel-section {
+      margin-bottom: 24px;
+    }
+    .funnel-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: center;
+    }
+    .funnel-level {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 14px 0;
+      position: relative;
+      width: 100%;
+    }
+    .funnel-bar-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .funnel-bar {
+      height: 44px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: width .6s cubic-bezier(.4,0,.2,1);
+      min-width: 120px;
+    }
+    .funnel-bar-name {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--white);
+      white-space: nowrap;
+    }
+    .funnel-bar-count {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .funnel-pct {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      position: absolute;
+      right: 12px;
+    }
+    .funnel-level:nth-child(1) .funnel-bar { background: var(--navy); }
+    .funnel-level:nth-child(2) .funnel-bar { background: var(--blue); }
+    .funnel-level:nth-child(3) .funnel-bar { background: var(--orange); }
+    .funnel-level:nth-child(4) .funnel-bar { background: var(--purple); }
+    .funnel-level:nth-child(5) .funnel-bar { background: var(--green); }
+
+    .funnel-arrow {
+      color: var(--text-muted);
+      text-align: center;
+      font-size: .7rem;
+    }
+
+    /* Pipeline Summary */
+    .pipeline-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .pipeline-card {
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+    }
+    .pipeline-card-name {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .pipeline-card-count {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--navy-dark);
+    }
+    .pipeline-card-sub {
+      font-size: .75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Daily Log Form */
+    .log-form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .log-form .full-width {
+      grid-column: 1 / -1;
+    }
+    .log-form .admin-input,
+    .log-form .admin-textarea {
+      font-size: .85rem;
+    }
+    .log-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    /* Log Table */
+    .log-table-wrap {
+      margin-top: 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+    .log-table-title {
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-bottom: 10px;
+    }
+
+    /* Section Headers */
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .section-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .log-form { grid-template-columns: 1fr 1fr; }
+      .date-range-btns { flex-wrap: wrap; }
+      .funnel-pct { position: static; margin-top: 4px; }
+    }
+    @media (max-width: 480px) {
+      .log-form { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="admin-layout" id="admin-reports">
+  <div id="admin-sidebar"></div>
+
+  <button id="admin-mobile-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <main class="admin-main">
+    <!-- Top Bar -->
+    <div class="admin-topbar">
+      <h1>Reports</h1>
+      <div class="admin-topbar-actions">
+        <div class="date-range-btns">
+          <button class="active" data-range="today">Today</button>
+          <button data-range="week">This Week</button>
+          <button data-range="month">This Month</button>
+        </div>
+        <button class="admin-btn btn-secondary btn-sm" id="btn-refresh" title="Refresh data">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- KPI Overview — 2 rows of 3 -->
+    <div class="kpi-grid" id="kpi-grid">
+      <!-- Row 1: API-driven -->
+      <div class="kpi-card">
+        <div class="kpi-card-label"><span class="kpi-indicator api"></span> Total Contacts</div>
+        <div class="kpi-card-value" id="kpi-total"><span class="admin-spinner"></span></div>
+        <div class="kpi-card-sub" id="kpi-total-sub">Loading from GHL...</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-card-label"><span class="kpi-indicator api"></span> Contacts This Week</div>
+        <div class="kpi-card-value" id="kpi-week"><span class="admin-spinner"></span></div>
+        <div class="kpi-card-sub" id="kpi-week-sub">Loading...</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-card-label"><span class="kpi-indicator api"></span> Contacts This Month</div>
+        <div class="kpi-card-value" id="kpi-month"><span class="admin-spinner"></span></div>
+        <div class="kpi-card-sub" id="kpi-month-sub">Loading...</div>
+      </div>
+      <!-- Row 2: Manual entry (editable) -->
+      <div class="kpi-card">
+        <div class="kpi-card-label"><span class="kpi-indicator manual"></span> Emails Sent</div>
+        <div class="kpi-editable">
+          <input type="number" id="kpi-emails" min="0" value="0" data-metric="emailsSent">
+        </div>
+        <div class="kpi-card-sub">Manual — saved to browser</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-card-label"><span class="kpi-indicator manual"></span> SMS Sent</div>
+        <div class="kpi-editable">
+          <input type="number" id="kpi-sms" min="0" value="0" data-metric="smsSent">
+        </div>
+        <div class="kpi-card-sub">Manual — saved to browser</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-card-label"><span class="kpi-indicator manual"></span> AI Calls Made</div>
+        <div class="kpi-editable">
+          <input type="number" id="kpi-calls" min="0" value="0" data-metric="aiCallsMade">
+        </div>
+        <div class="kpi-card-sub">Manual — saved to browser</div>
+      </div>
+    </div>
+
+    <!-- Contact Growth + Tag Distribution -->
+    <div class="section-grid">
+      <!-- Contact Growth Chart -->
+      <div class="admin-card chart-section">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Contact Growth (Last 7 Days)</h2>
+        </div>
+        <div id="growth-chart">
+          <div class="admin-loading" style="padding:30px 0;">
+            <span class="admin-spinner"></span>
+            <span class="text-sm text-muted">Loading chart...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tag Distribution -->
+      <div class="admin-card chart-section">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Tag Distribution</h2>
+        </div>
+        <div id="tag-chart">
+          <div class="admin-loading" style="padding:30px 0;">
+            <span class="admin-spinner"></span>
+            <span class="text-sm text-muted">Loading tags...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pipeline Summary + Conversion Funnel -->
+    <div class="section-grid">
+      <!-- Pipeline Summary -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Pipeline Summary</h2>
+        </div>
+        <div id="pipeline-summary">
+          <div class="admin-loading" style="padding:30px 0;">
+            <span class="admin-spinner"></span>
+            <span class="text-sm text-muted">Loading pipelines...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conversion Funnel -->
+      <div class="admin-card funnel-section">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Conversion Funnel</h2>
+        </div>
+        <div id="funnel-chart">
+          <div class="admin-loading" style="padding:30px 0;">
+            <span class="admin-spinner"></span>
+            <span class="text-sm text-muted">Loading funnel...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daily Log -->
+    <div class="admin-card" style="margin-bottom:24px;">
+      <div class="admin-card-header">
+        <h2 class="admin-card-title">Daily Log</h2>
+        <span class="text-sm text-muted">Saved to localStorage</span>
+      </div>
+
+      <div class="log-form" id="log-form">
+        <div class="admin-form-group">
+          <label class="admin-label" for="log-date">Date</label>
+          <input type="date" class="admin-input" id="log-date">
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-label" for="log-emails">Emails Sent</label>
+          <input type="number" class="admin-input" id="log-emails" min="0" value="0" placeholder="0">
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-label" for="log-sms">SMS Sent</label>
+          <input type="number" class="admin-input" id="log-sms" min="0" value="0" placeholder="0">
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-label" for="log-ai-calls">AI Calls Made</label>
+          <input type="number" class="admin-input" id="log-ai-calls" min="0" value="0" placeholder="0">
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-label" for="log-demos">Demo Calls Booked</label>
+          <input type="number" class="admin-input" id="log-demos" min="0" value="0" placeholder="0">
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-label" for="log-clients">New Clients</label>
+          <input type="number" class="admin-input" id="log-clients" min="0" value="0" placeholder="0">
+        </div>
+        <div class="admin-form-group full-width">
+          <label class="admin-label" for="log-notes">Notes</label>
+          <textarea class="admin-textarea" id="log-notes" rows="2" placeholder="Anything noteworthy today..."></textarea>
+        </div>
+      </div>
+      <div class="log-actions">
+        <button class="admin-btn btn-ghost btn-sm" id="log-clear">Clear</button>
+        <button class="admin-btn btn-primary btn-sm" id="log-save">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          Save Entry
+        </button>
+      </div>
+
+      <!-- Log History Table -->
+      <div class="log-table-wrap">
+        <div class="log-table-title">Last 7 Days</div>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="log-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Emails</th>
+                <th>SMS</th>
+                <th>AI Calls</th>
+                <th>Demos</th>
+                <th>Clients</th>
+                <th>Notes</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="log-table-body">
+              <tr><td colspan="8" class="text-center text-muted" style="padding:20px;">No entries yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<!-- Shared JS -->
+<script src="js/admin-auth.js"></script>
+<script src="js/ghl-api.js"></script>
+<script src="js/admin-nav.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  // === AUTH GATE ===
+  if (!AdminAuth.requireAuth()) return;
+
+  // === CONSTANTS ===
+  var LS_LOG_KEY = 'tct_daily_log';
+  var LS_KPI_KEY = 'tct_kpi_manual';
+  var TRACKED_TAGS = [
+    'water-damage', 'hvac', 'plumbing', 'electrical', 'medspa',
+    'prospect', 'customer', 'cold-outreach', 'pilot-active'
+  ];
+  var TAG_BAR_CLASSES = {
+    'water-damage': 'bar-water-damage',
+    'hvac': 'bar-hvac',
+    'plumbing': 'bar-plumbing',
+    'electrical': 'bar-electrical',
+    'medspa': 'bar-medspa',
+    'prospect': 'bar-prospect',
+    'customer': 'bar-customer',
+    'cold-outreach': 'bar-cold-outreach',
+    'pilot-active': 'bar-pilot-active'
+  };
+
+  // === TOAST ===
+  window.showToast = function(msg, type) {
+    var container = document.getElementById('toast-container');
+    var toast = document.createElement('div');
+    toast.className = 'admin-toast' + (type ? ' ' + type : '');
+    toast.textContent = msg;
+    container.appendChild(toast);
+    toast.offsetHeight;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+      setTimeout(function() { toast.remove(); }, 300);
+    }, 3500);
+  };
+
+  // === UTILITY ===
+  function escapeHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  function dayName(dateStr) {
+    var d = new Date(dateStr + 'T12:00:00');
+    return d.toLocaleDateString('en-US', { weekday: 'short' });
+  }
+
+  function shortDate(dateStr) {
+    var d = new Date(dateStr + 'T12:00:00');
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  // === DATE RANGE SELECTOR ===
+  var selectedRange = 'today';
+  document.querySelectorAll('.date-range-btns button').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.date-range-btns button').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      selectedRange = btn.dataset.range;
+      // Reload date-sensitive stats
+      loadKPIs();
+    });
+  });
+
+  // === MANUAL KPI INPUTS ===
+  // Load saved manual values for today
+  function loadManualKPIs() {
+    try {
+      var saved = JSON.parse(localStorage.getItem(LS_KPI_KEY) || '{}');
+      var today = todayStr();
+      var todayData = saved[today] || {};
+      document.getElementById('kpi-emails').value = todayData.emailsSent || 0;
+      document.getElementById('kpi-sms').value = todayData.smsSent || 0;
+      document.getElementById('kpi-calls').value = todayData.aiCallsMade || 0;
+    } catch(e) { /* ignore */ }
+  }
+
+  // Auto-save on change
+  document.querySelectorAll('.kpi-editable input').forEach(function(input) {
+    input.addEventListener('change', function() {
+      var metric = input.dataset.metric;
+      var val = parseInt(input.value) || 0;
+      try {
+        var saved = JSON.parse(localStorage.getItem(LS_KPI_KEY) || '{}');
+        var today = todayStr();
+        if (!saved[today]) saved[today] = {};
+        saved[today][metric] = val;
+        localStorage.setItem(LS_KPI_KEY, JSON.stringify(saved));
+      } catch(e) { /* ignore */ }
+    });
+  });
+
+  // === LOAD ALL DATA ===
+  var cachedContacts = null;
+
+  async function fetchContacts() {
+    if (cachedContacts) return cachedContacts;
+    try {
+      var data = await GHL.listContacts({ limit: 100, noCache: true });
+      cachedContacts = data.contacts || [];
+      return cachedContacts;
+    } catch(err) {
+      console.error('Failed to fetch contacts:', err);
+      return [];
+    }
+  }
+
+  async function loadKPIs() {
+    // Total contacts
+    var totalEl = document.getElementById('kpi-total');
+    var totalSub = document.getElementById('kpi-total-sub');
+    try {
+      var data = await GHL.listContacts({ limit: 1, noCache: true });
+      var total = (data.meta && data.meta.total) ? data.meta.total : 0;
+      totalEl.textContent = total.toLocaleString();
+      totalSub.textContent = 'In GHL';
+      totalSub.className = 'kpi-card-sub';
+    } catch(err) {
+      totalEl.textContent = '--';
+      totalSub.textContent = 'API error';
+      totalSub.className = 'kpi-card-sub';
+    }
+
+    // Contacts this week + this month
+    var weekEl = document.getElementById('kpi-week');
+    var weekSub = document.getElementById('kpi-week-sub');
+    var monthEl = document.getElementById('kpi-month');
+    var monthSub = document.getElementById('kpi-month-sub');
+    try {
+      var contacts = await fetchContacts();
+      var now = new Date();
+      var weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      var monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      var weekCount = 0;
+      var monthCount = 0;
+      contacts.forEach(function(c) {
+        if (!c.dateAdded) return;
+        var added = new Date(c.dateAdded);
+        if (added >= weekAgo) weekCount++;
+        if (added >= monthStart) monthCount++;
+      });
+      weekEl.textContent = weekCount;
+      weekSub.textContent = weekCount > 0 ? '+' + weekCount + ' last 7 days' : 'Last 7 days';
+      weekSub.className = weekCount > 0 ? 'kpi-card-sub positive' : 'kpi-card-sub';
+      monthEl.textContent = monthCount;
+      monthSub.textContent = monthCount > 0 ? '+' + monthCount + ' since ' + now.toLocaleDateString('en-US', { month: 'short' }) + ' 1' : 'This month';
+      monthSub.className = monthCount > 0 ? 'kpi-card-sub positive' : 'kpi-card-sub';
+    } catch(err) {
+      weekEl.textContent = '--';
+      weekSub.textContent = 'Error';
+      monthEl.textContent = '--';
+      monthSub.textContent = 'Error';
+    }
+  }
+
+  // === CONTACT GROWTH CHART ===
+  async function loadGrowthChart() {
+    var container = document.getElementById('growth-chart');
+    try {
+      var contacts = await fetchContacts();
+      // Build last 7 days
+      var days = [];
+      for (var i = 6; i >= 0; i--) {
+        var d = new Date();
+        d.setDate(d.getDate() - i);
+        var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        days.push({ date: key, label: dayName(key), count: 0 });
+      }
+      // Count contacts per day
+      contacts.forEach(function(c) {
+        if (!c.dateAdded) return;
+        var cd = new Date(c.dateAdded);
+        var key = cd.getFullYear() + '-' + String(cd.getMonth() + 1).padStart(2, '0') + '-' + String(cd.getDate()).padStart(2, '0');
+        days.forEach(function(day) {
+          if (day.date === key) day.count++;
+        });
+      });
+
+      var maxCount = Math.max.apply(null, days.map(function(d) { return d.count; }));
+      if (maxCount === 0) maxCount = 1;
+
+      var html = '<div class="bar-chart">';
+      days.forEach(function(day) {
+        var pct = Math.round((day.count / maxCount) * 100);
+        if (day.count > 0 && pct < 5) pct = 5; // minimum visible width
+        html += '<div class="bar-row">';
+        html += '<div class="bar-label">' + day.label + '</div>';
+        html += '<div class="bar-track">';
+        html += '<div class="bar-fill bar-growth" style="width:' + pct + '%">';
+        if (day.count > 0) {
+          html += '<span class="bar-fill-label">' + day.count + '</span>';
+        }
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="bar-count">' + day.count + '</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+      container.innerHTML = html;
+
+    } catch(err) {
+      container.innerHTML = '<div class="admin-empty"><p class="text-sm" style="color:var(--red);">Failed to load chart</p></div>';
+    }
+  }
+
+  // === TAG DISTRIBUTION ===
+  async function loadTagChart() {
+    var container = document.getElementById('tag-chart');
+    try {
+      var contacts = await fetchContacts();
+      var tagCounts = {};
+      TRACKED_TAGS.forEach(function(t) { tagCounts[t] = 0; });
+
+      contacts.forEach(function(c) {
+        var tags = c.tags || [];
+        tags.forEach(function(tag) {
+          if (TRACKED_TAGS.indexOf(tag) !== -1) {
+            tagCounts[tag]++;
+          }
+        });
+      });
+
+      // Sort by count descending
+      var sorted = TRACKED_TAGS.slice().sort(function(a, b) {
+        return tagCounts[b] - tagCounts[a];
+      });
+
+      // Filter out zero-count tags
+      sorted = sorted.filter(function(t) { return tagCounts[t] > 0; });
+
+      if (sorted.length === 0) {
+        container.innerHTML = '<div class="admin-empty"><p class="text-sm text-muted">No tagged contacts found</p></div>';
+        return;
+      }
+
+      var maxTag = tagCounts[sorted[0]];
+      if (maxTag === 0) maxTag = 1;
+
+      var html = '<div class="bar-chart">';
+      sorted.forEach(function(tag) {
+        var count = tagCounts[tag];
+        var pct = Math.round((count / maxTag) * 100);
+        if (count > 0 && pct < 5) pct = 5;
+        var barClass = TAG_BAR_CLASSES[tag] || 'bar-default';
+        html += '<div class="bar-row">';
+        html += '<div class="bar-label" style="width:auto;min-width:90px;">' + escapeHtml(tag) + '</div>';
+        html += '<div class="bar-track">';
+        html += '<div class="bar-fill ' + barClass + '" style="width:' + pct + '%">';
+        if (count > 0) {
+          html += '<span class="bar-fill-label">' + count + '</span>';
+        }
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="bar-count">' + count + '</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+      container.innerHTML = html;
+
+    } catch(err) {
+      container.innerHTML = '<div class="admin-empty"><p class="text-sm" style="color:var(--red);">Failed to load tags</p></div>';
+    }
+  }
+
+  // === PIPELINE SUMMARY ===
+  async function loadPipelineSummary() {
+    var container = document.getElementById('pipeline-summary');
+    try {
+      var data = await GHL.getPipelines();
+      var pipelines = data.pipelines || [];
+
+      if (pipelines.length === 0) {
+        container.innerHTML = '<div class="admin-empty"><p class="text-sm text-muted">No pipelines found</p></div>';
+        return;
+      }
+
+      var html = '<div class="pipeline-cards">';
+
+      // For each pipeline, fetch opportunity count
+      for (var i = 0; i < pipelines.length; i++) {
+        var p = pipelines[i];
+        var stageCount = (p.stages || []).length;
+        var oppCount = 0;
+        try {
+          var oppData = await GHL.searchOpportunities(p.id);
+          oppCount = (oppData.meta && oppData.meta.total) ? oppData.meta.total : (oppData.opportunities || []).length;
+        } catch(e) { /* ignore */ }
+
+        html += '<div class="pipeline-card">';
+        html += '<div class="pipeline-card-name">' + escapeHtml(p.name) + '</div>';
+        html += '<div class="pipeline-card-count">' + oppCount + '</div>';
+        html += '<div class="pipeline-card-sub">' + stageCount + ' stage' + (stageCount !== 1 ? 's' : '') + '</div>';
+        html += '</div>';
+      }
+
+      html += '</div>';
+      container.innerHTML = html;
+
+    } catch(err) {
+      console.error('Failed to load pipelines:', err);
+      container.innerHTML = '<div class="admin-empty"><p class="text-sm" style="color:var(--red);">Failed to load pipelines</p></div>';
+    }
+  }
+
+  // === CONVERSION FUNNEL ===
+  async function loadFunnel() {
+    var container = document.getElementById('funnel-chart');
+    try {
+      var contacts = await fetchContacts();
+      var totalContacts = contacts.length;
+
+      // Count by funnel tags
+      var funnelCounts = {
+        total: totalContacts,
+        prospect: 0,
+        demo: 0,
+        pilot: 0,
+        customer: 0
+      };
+
+      contacts.forEach(function(c) {
+        var tags = c.tags || [];
+        if (tags.indexOf('prospect') !== -1 || tags.indexOf('cold-outreach') !== -1) funnelCounts.prospect++;
+        if (tags.indexOf('demo-booked') !== -1 || tags.indexOf('demo-called') !== -1 || tags.indexOf('demo-caller') !== -1) funnelCounts.demo++;
+        if (tags.indexOf('pilot-active') !== -1 || tags.indexOf('pilot-requested') !== -1) funnelCounts.pilot++;
+        if (tags.indexOf('customer') !== -1 || tags.indexOf('active-client') !== -1 || tags.indexOf('pilot-converted') !== -1) funnelCounts.customer++;
+      });
+
+      var levels = [
+        { name: 'Total Contacts', count: funnelCounts.total },
+        { name: 'Prospects', count: funnelCounts.prospect },
+        { name: 'Demo Booked', count: funnelCounts.demo },
+        { name: 'Pilot Active', count: funnelCounts.pilot },
+        { name: 'Customer', count: funnelCounts.customer }
+      ];
+
+      var maxWidth = 100; // percentage
+      var html = '<div class="funnel-container">';
+
+      levels.forEach(function(level, idx) {
+        var widthPct = levels[0].count > 0 ? Math.max(20, Math.round((level.count / levels[0].count) * maxWidth)) : 20;
+        var convPct = '';
+        if (idx > 0 && levels[idx - 1].count > 0) {
+          convPct = Math.round((level.count / levels[idx - 1].count) * 100) + '% of ' + levels[idx - 1].name;
+        }
+
+        if (idx > 0) {
+          html += '<div class="funnel-arrow">';
+          html += '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>';
+          html += '</div>';
+        }
+
+        html += '<div class="funnel-level">';
+        html += '<div class="funnel-bar-wrap" style="width:100%;display:flex;justify-content:center;">';
+        html += '<div class="funnel-bar" style="width:' + widthPct + '%;">';
+        html += '<span class="funnel-bar-name">' + escapeHtml(level.name) + '</span>';
+        html += '<span class="funnel-bar-count">' + level.count + '</span>';
+        html += '</div>';
+        html += '</div>';
+        if (convPct) {
+          html += '<span class="funnel-pct">' + convPct + '</span>';
+        }
+        html += '</div>';
+      });
+
+      html += '</div>';
+      container.innerHTML = html;
+
+    } catch(err) {
+      container.innerHTML = '<div class="admin-empty"><p class="text-sm" style="color:var(--red);">Failed to load funnel</p></div>';
+    }
+  }
+
+  // === DAILY LOG ===
+  var LOG_STORAGE = LS_LOG_KEY;
+
+  function getLogData() {
+    try {
+      return JSON.parse(localStorage.getItem(LOG_STORAGE) || '{}');
+    } catch(e) { return {}; }
+  }
+
+  function saveLogData(data) {
+    localStorage.setItem(LOG_STORAGE, JSON.stringify(data));
+  }
+
+  // Set default date
+  document.getElementById('log-date').value = todayStr();
+
+  // Save entry
+  document.getElementById('log-save').addEventListener('click', function() {
+    var date = document.getElementById('log-date').value;
+    if (!date) { showToast('Select a date', 'error'); return; }
+
+    var entry = {
+      emails: parseInt(document.getElementById('log-emails').value) || 0,
+      sms: parseInt(document.getElementById('log-sms').value) || 0,
+      aiCalls: parseInt(document.getElementById('log-ai-calls').value) || 0,
+      demos: parseInt(document.getElementById('log-demos').value) || 0,
+      clients: parseInt(document.getElementById('log-clients').value) || 0,
+      notes: document.getElementById('log-notes').value.trim()
+    };
+
+    var data = getLogData();
+    data[date] = entry;
+    saveLogData(data);
+    renderLogTable();
+    showToast('Entry saved for ' + shortDate(date), 'success');
+  });
+
+  // Clear form
+  document.getElementById('log-clear').addEventListener('click', function() {
+    document.getElementById('log-emails').value = 0;
+    document.getElementById('log-sms').value = 0;
+    document.getElementById('log-ai-calls').value = 0;
+    document.getElementById('log-demos').value = 0;
+    document.getElementById('log-clients').value = 0;
+    document.getElementById('log-notes').value = '';
+  });
+
+  // Render log table
+  function renderLogTable() {
+    var tbody = document.getElementById('log-table-body');
+    var data = getLogData();
+    var dates = Object.keys(data).sort().reverse().slice(0, 7);
+
+    if (dates.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted" style="padding:20px;">No entries yet</td></tr>';
+      return;
+    }
+
+    var html = '';
+    dates.forEach(function(date) {
+      var entry = data[date];
+      html += '<tr>';
+      html += '<td class="name-cell">' + shortDate(date) + '</td>';
+      html += '<td>' + (entry.emails || 0) + '</td>';
+      html += '<td>' + (entry.sms || 0) + '</td>';
+      html += '<td>' + (entry.aiCalls || 0) + '</td>';
+      html += '<td>' + (entry.demos || 0) + '</td>';
+      html += '<td>' + (entry.clients || 0) + '</td>';
+      html += '<td class="muted truncate" style="max-width:140px;">' + escapeHtml(entry.notes || '--') + '</td>';
+      html += '<td><button class="admin-btn btn-ghost btn-sm" onclick="deleteLogEntry(\'' + date + '\')" title="Delete">';
+      html += '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
+      html += '</button></td>';
+      html += '</tr>';
+    });
+    tbody.innerHTML = html;
+  }
+
+  // Delete log entry (global so onclick works)
+  window.deleteLogEntry = function(date) {
+    var data = getLogData();
+    delete data[date];
+    saveLogData(data);
+    renderLogTable();
+    showToast('Entry deleted', '');
+  };
+
+  // Load existing entry when date changes
+  document.getElementById('log-date').addEventListener('change', function() {
+    var date = this.value;
+    var data = getLogData();
+    var entry = data[date] || {};
+    document.getElementById('log-emails').value = entry.emails || 0;
+    document.getElementById('log-sms').value = entry.sms || 0;
+    document.getElementById('log-ai-calls').value = entry.aiCalls || 0;
+    document.getElementById('log-demos').value = entry.demos || 0;
+    document.getElementById('log-clients').value = entry.clients || 0;
+    document.getElementById('log-notes').value = entry.notes || '';
+  });
+
+  // === REFRESH BUTTON ===
+  document.getElementById('btn-refresh').addEventListener('click', function() {
+    GHL.clearCache();
+    cachedContacts = null;
+    // Reset all sections to loading
+    document.getElementById('kpi-total').innerHTML = '<span class="admin-spinner"></span>';
+    document.getElementById('kpi-total-sub').textContent = 'Loading...';
+    document.getElementById('kpi-week').innerHTML = '<span class="admin-spinner"></span>';
+    document.getElementById('kpi-week-sub').textContent = 'Loading...';
+    document.getElementById('kpi-month').innerHTML = '<span class="admin-spinner"></span>';
+    document.getElementById('kpi-month-sub').textContent = 'Loading...';
+    document.getElementById('growth-chart').innerHTML = '<div class="admin-loading" style="padding:30px 0;"><span class="admin-spinner"></span><span class="text-sm text-muted">Loading chart...</span></div>';
+    document.getElementById('tag-chart').innerHTML = '<div class="admin-loading" style="padding:30px 0;"><span class="admin-spinner"></span><span class="text-sm text-muted">Loading tags...</span></div>';
+    document.getElementById('pipeline-summary').innerHTML = '<div class="admin-loading" style="padding:30px 0;"><span class="admin-spinner"></span><span class="text-sm text-muted">Loading pipelines...</span></div>';
+    document.getElementById('funnel-chart').innerHTML = '<div class="admin-loading" style="padding:30px 0;"><span class="admin-spinner"></span><span class="text-sm text-muted">Loading funnel...</span></div>';
+    loadAll();
+    showToast('Refreshing data...', '');
+  });
+
+  // === INIT ===
+  function loadAll() {
+    loadKPIs();
+    loadGrowthChart();
+    loadTagChart();
+    loadPipelineSummary();
+    loadFunnel();
+  }
+
+  loadManualKPIs();
+  renderLogTable();
+  loadAll();
+
+})();
+</script>
+</body>
+</html>
