@@ -49,6 +49,22 @@
 
       <!-- Contacts Table -->
       <div class="admin-card" id="contacts-card">
+        <!-- Bulk Action Bar -->
+        <div class="bulk-bar hidden" id="bulk-bar">
+          <span id="bulk-count">0 selected</span>
+          <div class="flex gap-8" style="position:relative;">
+            <button class="admin-btn btn-primary btn-sm" id="bulk-add-tag">Add Tag</button>
+            <button class="admin-btn btn-secondary btn-sm" id="bulk-remove-tag">Remove Tag</button>
+            <button class="admin-btn btn-ghost btn-sm" id="bulk-deselect">Deselect All</button>
+          </div>
+          <!-- Tag input dropdown for bulk actions -->
+          <div id="bulk-tag-dropdown" class="hidden" style="position:absolute;top:100%;left:0;right:0;background:var(--surface-2, #1a1d24);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:8px;z-index:10;display:flex;gap:8px;align-items:center;">
+            <input type="text" class="admin-input" id="bulk-tag-input" placeholder="Enter tag name..." style="flex:1;">
+            <button class="admin-btn btn-primary btn-sm" id="bulk-tag-confirm">Apply</button>
+            <button class="admin-btn btn-ghost btn-sm" id="bulk-tag-cancel">Cancel</button>
+          </div>
+        </div>
+
         <div id="contacts-loading" class="admin-loading">
           <div class="admin-spinner admin-spinner-lg"></div>
           <span>Loading contacts...</span>
@@ -63,6 +79,7 @@
           <table class="admin-table">
             <thead>
               <tr>
+                <th style="width:36px;"><input type="checkbox" id="bulk-select-all" class="bulk-check" title="Select all"></th>
                 <th>Name</th>
                 <th>Company</th>
                 <th>Email</th>
@@ -336,8 +353,17 @@
         var tags = c.tags || [];
         var added = GHL.timeAgo(c.dateAdded || c.createdAt);
 
+        // Lead score badge
+        var scoreBadge = '';
+        if (tags.indexOf('hot-lead') !== -1) {
+          scoreBadge = '<span class="lead-score score-hot">H</span>';
+        } else if (tags.indexOf('warm-lead') !== -1 || tags.indexOf('pilot-candidate') !== -1) {
+          scoreBadge = '<span class="lead-score score-warm">W</span>';
+        }
+
         html += '<tr data-id="' + c.id + '">';
-        html += '<td class="name-cell">' + escHtml(name) + '</td>';
+        html += '<td style="width:36px;" onclick="event.stopPropagation();"><input type="checkbox" class="bulk-check" data-contact-id="' + c.id + '"></td>';
+        html += '<td class="name-cell">' + scoreBadge + escHtml(name) + '</td>';
         html += '<td>' + escHtml(company) + '</td>';
         html += '<td class="truncate" style="max-width:200px;">' + escHtml(email) + '</td>';
         html += '<td style="white-space:nowrap;">' + escHtml(phone) + '</td>';
@@ -846,6 +872,145 @@
 
     function escAttr(str) {
       return (str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // === BULK ACTIONS ===
+    var bulkBar = document.getElementById('bulk-bar');
+    var bulkCount = document.getElementById('bulk-count');
+    var bulkTagDropdown = document.getElementById('bulk-tag-dropdown');
+    var bulkTagInput = document.getElementById('bulk-tag-input');
+    var pendingBulkAction = null; // 'add' or 'remove'
+
+    function getSelectedIds() {
+      var ids = [];
+      contactsTbody.querySelectorAll('.bulk-check:checked').forEach(function(cb) {
+        ids.push(cb.getAttribute('data-contact-id'));
+      });
+      return ids;
+    }
+
+    function updateBulkBar() {
+      var selected = getSelectedIds();
+      if (selected.length > 0) {
+        bulkBar.classList.remove('hidden');
+        bulkCount.textContent = selected.length + ' selected';
+      } else {
+        bulkBar.classList.add('hidden');
+        bulkTagDropdown.classList.add('hidden');
+        pendingBulkAction = null;
+      }
+      // Sync select-all checkbox
+      var selectAll = document.getElementById('bulk-select-all');
+      var allChecks = contactsTbody.querySelectorAll('.bulk-check');
+      if (selectAll && allChecks.length) {
+        selectAll.checked = selected.length === allChecks.length;
+        selectAll.indeterminate = selected.length > 0 && selected.length < allChecks.length;
+      }
+    }
+
+    // Delegate checkbox change events from tbody
+    contactsTbody.addEventListener('change', function(e) {
+      if (e.target.classList.contains('bulk-check')) {
+        updateBulkBar();
+      }
+    });
+
+    // Select all checkbox
+    document.getElementById('bulk-select-all').addEventListener('change', function() {
+      var checked = this.checked;
+      contactsTbody.querySelectorAll('.bulk-check').forEach(function(cb) {
+        cb.checked = checked;
+      });
+      updateBulkBar();
+    });
+
+    // Deselect all
+    document.getElementById('bulk-deselect').addEventListener('click', function() {
+      contactsTbody.querySelectorAll('.bulk-check').forEach(function(cb) {
+        cb.checked = false;
+      });
+      document.getElementById('bulk-select-all').checked = false;
+      updateBulkBar();
+    });
+
+    // Add Tag button — show dropdown
+    document.getElementById('bulk-add-tag').addEventListener('click', function() {
+      pendingBulkAction = 'add';
+      bulkTagDropdown.classList.remove('hidden');
+      bulkTagInput.value = '';
+      bulkTagInput.placeholder = 'Tag to add...';
+      bulkTagInput.focus();
+    });
+
+    // Remove Tag button — show dropdown
+    document.getElementById('bulk-remove-tag').addEventListener('click', function() {
+      pendingBulkAction = 'remove';
+      bulkTagDropdown.classList.remove('hidden');
+      bulkTagInput.value = '';
+      bulkTagInput.placeholder = 'Tag to remove...';
+      bulkTagInput.focus();
+    });
+
+    // Cancel tag dropdown
+    document.getElementById('bulk-tag-cancel').addEventListener('click', function() {
+      bulkTagDropdown.classList.add('hidden');
+      pendingBulkAction = null;
+    });
+
+    // Confirm bulk tag action
+    document.getElementById('bulk-tag-confirm').addEventListener('click', executeBulkTag);
+    bulkTagInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); executeBulkTag(); }
+    });
+
+    async function executeBulkTag() {
+      var tagName = bulkTagInput.value.trim().toLowerCase();
+      if (!tagName || !pendingBulkAction) return;
+
+      var ids = getSelectedIds();
+      if (!ids.length) return;
+
+      var action = pendingBulkAction;
+      var confirmBtn = document.getElementById('bulk-tag-confirm');
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = 'Working...';
+
+      var succeeded = 0;
+      var failed = 0;
+
+      for (var i = 0; i < ids.length; i++) {
+        try {
+          if (action === 'add') {
+            await GHL.addTags(ids[i], [tagName]);
+          } else {
+            await GHL.removeTags(ids[i], [tagName]);
+          }
+          succeeded++;
+        } catch (err) {
+          console.error('Bulk tag error for ' + ids[i] + ':', err);
+          failed++;
+        }
+      }
+
+      // Reset UI
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = 'Apply';
+      bulkTagDropdown.classList.add('hidden');
+      pendingBulkAction = null;
+
+      // Deselect all
+      contactsTbody.querySelectorAll('.bulk-check').forEach(function(cb) { cb.checked = false; });
+      document.getElementById('bulk-select-all').checked = false;
+      updateBulkBar();
+
+      // Toast
+      var verb = action === 'add' ? 'added to' : 'removed from';
+      var msg = 'Tag "' + tagName + '" ' + verb + ' ' + succeeded + ' contact' + (succeeded !== 1 ? 's' : '');
+      if (failed > 0) msg += ' (' + failed + ' failed)';
+      showToast(msg, failed > 0 ? 'warning' : 'success');
+
+      // Refresh table
+      loadContacts();
     }
 
     // === INIT ===
