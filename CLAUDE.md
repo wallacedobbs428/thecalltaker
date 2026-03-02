@@ -160,16 +160,20 @@ All in `ops/config.py` with environment variable fallbacks:
 - **CTA link:** `/pilot/` (Start Free Pilot) — separate from nav-links for independent styling/visibility
 - **Mobile hides:** `.nav-links` + `.header-cta` hidden at 768px, hamburger + overlay take over
 
-### Cursor Effects (March 1, 2026)
-- **Location:** `website/index.html` (inline CSS + JS at bottom of file)
+### Cursor Effects v2 — Elite Premium (March 1, 2026)
+- **Location:** `website/index.html` (inline CSS `cx-*` classes + JS at bottom)
 - **Dependency:** GSAP 3.12.5 loaded from cdnjs CDN
-- **Desktop only:** Uses `@media (pointer: fine)` + JS `matchMedia` check. Zero code runs on mobile/tablet.
-- **5 effects:** (1) Custom cursor dot + ring with elastic follow, (2) Color-adaptive cursor (blue on dark sections), (3) Magnetic buttons with elastic snap-back, (4) Hero section glow spotlight, (5) 3D parallax card tilt on testimonials + steps
-- **Cursor label:** Shows "click" or "call" text when hovering CTAs
-- **Class gating:** All CSS scoped under `html.has-cursor` (added by JS on init). If GSAP fails to load, normal cursor remains.
-- **Size:** ~3.5KB JS, ~1.5KB CSS (under 5KB total)
-- **To disable:** Remove the `CURSOR EFFECTS` CSS block + the second `<script>` block (GSAP CDN + cursor JS)
-- **To tweak individual effects:** Each JS section is labeled (1-5) with clear comments
+- **Desktop only:** `@media (pointer: fine)` + JS `matchMedia('(pointer:fine)')` + `prefers-reduced-motion` check. Zero code on mobile/tablet.
+- **Color:** ALL orange `#F97316` — dot, ring, trail, spotlight, ripple. Section-based morph: hero=bright orange, mid=amber, pricing=orange, footer=dim white.
+- **7 effects:** (1) Glow cursor — 12px dot + 40px ring with neon bloom shadow, (2) Comet trail — 4 ghost copies with decreasing opacity following cursor via rAF, (3) Hover morphs — buttons get filled orange circle + "GO"/"CALL" label, text gets tiny reading dot, cards get spinning dashed ring, (4) Magnetic pull — 100px range, rubber-band distortion toward cursor, (5) Click ripple — orange circle expands from click point on ALL clickable elements, (6) Hero spotlight — 400px radial glow at 8% opacity + grid texture reveal via CSS mask, (7) Text scatter — hero h1 letters split into spans, push 1-3px away from cursor within 100px radius
+- **Class gating:** `html.has-cursor` added by JS on init. All CSS in `@media (pointer: fine)`. If GSAP fails or reduced-motion, normal cursor remains.
+- **Size:** ~5KB JS, ~2KB CSS (under 7KB total)
+- **To disable:** Remove the `CURSOR EFFECTS v2` CSS block + the cursor `<script>` block
+- **Hero copy:** "An AI Receptionist Trained For Your Business" — universal multi-industry (plumber, dentist, attorney, locksmith). Updated title + OG + Twitter meta.
+
+### Public Contact Email
+- **Email:** `thecalltakerai@gmail.com` — used across all 80+ public-facing website pages
+- **Agency operational emails:** `wallace@mail.thecalltaker.com` — NOT changed (used in setup-guide.html + pricing-sheet.html)
 
 ### Attribution Tracking
 - `tct-tracking.js` captures UTM params, gclid, fbclid, referrer, landing page on first touch
