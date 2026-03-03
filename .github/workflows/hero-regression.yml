@@ -20,5 +20,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run hero headline regression test
+      - name: Run static regression test
         run: python3 website/tests/hero-regression.py
+
+      - name: Run live regression test + capture screenshots
+        run: |
+          python3 -m http.server 8765 --directory website &
+          sleep 1
+          python3 website/tests/hero-regression.py --live --url http://localhost:8765 --screenshots ./hero-screenshots
+
+      - name: Upload hero screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hero-screenshots
+          path: hero-screenshots/
+          retention-days: 30
