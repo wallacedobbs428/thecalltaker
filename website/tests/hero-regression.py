@@ -12,10 +12,11 @@ Usage:
   python3 website/tests/hero-regression.py              # static only (CI default)
   python3 website/tests/hero-regression.py --live        # static + live Chrome check
   python3 website/tests/hero-regression.py --live --url http://localhost:8080
+  python3 website/tests/hero-regression.py --live --screenshots ./artifacts
 
 Exit codes: 0 = all pass, 1 = failure(s)
 """
-import re, sys, os
+import re, subprocess, sys, os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 INDEX = os.path.join(ROOT, "website", "index.html")
@@ -131,31 +132,51 @@ def run_static():
 
 # ─── LAYER 2: LIVE HEADLESS CHROME ────────────────────────────────────
 
-def run_live(url):
-    import subprocess, json, time
+def find_chrome():
+    """Find Chrome/Chromium binary."""
+    for p in [
+        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "google-chrome-stable",
+        "google-chrome",
+        "chromium-browser",
+        "chromium",
+    ]:
+        try:
+            subprocess.run([p, "--version"], capture_output=True, timeout=5)
+            return p
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            continue
+    return None
+
+
+def capture_screenshots(chrome_bin, url, out_dir):
+    """Capture hero screenshots at 320px and 1200px."""
+    os.makedirs(out_dir, exist_ok=True)
+    for w in [320, 1200]:
+        out_path = os.path.join(out_dir, f"hero-{w}.png")
+        subprocess.run(
+            [chrome_bin, "--headless=new", "--disable-gpu", "--no-sandbox",
+             f"--window-size={w},900",
+             f"--screenshot={out_path}",
+             url],
+            capture_output=True, timeout=30,
+        )
+        if os.path.exists(out_path):
+            size_kb = os.path.getsize(out_path) / 1024
+            print(f"  SAVED {out_path} ({size_kb:.0f} KB)")
+        else:
+            print(f"  WARN  Failed to capture {w}px screenshot")
+
+
+def run_live(url, screenshot_dir=None):
+    import json, time
 
     print("\n=== Layer 2: Live Headless Chrome ===")
     print(f"URL: {url}\n")
 
     viewports = [320, 375, 414, 768, 1200]
 
-    # Find Chrome
-    chrome_paths = [
-        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-        "google-chrome-stable",
-        "google-chrome",
-        "chromium-browser",
-        "chromium",
-    ]
-    chrome_bin = None
-    for p in chrome_paths:
-        try:
-            subprocess.run([p, "--version"], capture_output=True, timeout=5)
-            chrome_bin = p
-            break
-        except (FileNotFoundError, subprocess.TimeoutExpired):
-            continue
-
+    chrome_bin = find_chrome()
     if not chrome_bin:
         print("  SKIP  Chrome/Chromium not found — skipping live checks")
         return
@@ -174,6 +195,12 @@ def run_live(url):
         )
         time.sleep(1)
         url = f"http://localhost:{port}"
+
+    # Capture screenshots if requested
+    if screenshot_dir:
+        print("--- Screenshots ---")
+        capture_screenshots(chrome_bin, url + "/index.html", screenshot_dir)
+        print()
 
     js_payload = r"""
     (function() {
@@ -276,10 +303,13 @@ def main():
 
     if "--live" in sys.argv:
         url = "https://thecalltaker.com"
+        screenshot_dir = None
         for i, arg in enumerate(sys.argv):
             if arg == "--url" and i + 1 < len(sys.argv):
                 url = sys.argv[i + 1]
-        run_live(url)
+            if arg == "--screenshots" and i + 1 < len(sys.argv):
+                screenshot_dir = sys.argv[i + 1]
+        run_live(url, screenshot_dir=screenshot_dir)
 
     print("\n" + "=" * 60)
     print(f"Results: {passes} passed, {len(failures)} failed")
