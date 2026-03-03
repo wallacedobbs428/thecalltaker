@@ -391,12 +391,25 @@ a { color: var(--blue); text-decoration: none; }
   fill: currentColor;
 }
 .hero h1 {
+  display: block;
   font-size: clamp(2.2rem, 4.5vw, 3.4rem);
   font-weight: 900;
   color: var(--navy-dark);
   line-height: 1.1;
   letter-spacing: -.03em;
   margin-bottom: 20px;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+.hero h1 .no-break-word {
+  white-space: nowrap;
+  display: inline;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 .hero .subtitle {
   font-size: 1.2rem;
@@ -1581,6 +1594,8 @@ a { color: var(--blue); text-decoration: none; }
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
+<link rel="stylesheet" href="/shared/ui.css">
+<script src="/shared/ab-split.js"></script>
 </head>
 <body>
 
@@ -1638,7 +1653,7 @@ a { color: var(--blue); text-decoration: none; }
           <svg viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
           14-Day Free Pilot &mdash; No Credit Card
         </div>
-        <h1>An AI Receptionist Trained For Your Business</h1>
+        <h1>An AI <span class="no-break-word">Receptionist</span> Trained For Your Business</h1>
         <p class="subtitle subtitle-desktop">Tell us your business. We&rsquo;ll train an AI that answers your phones like your best employee &mdash; plumber, dentist, attorney, locksmith, or anything. Literally anything. We build a custom AI receptionist around YOUR business &mdash; your services, your pricing, your tone, your rules. It doesn&rsquo;t just answer calls. It becomes your front desk. 24/7. No missed calls. No missed revenue.</p>
         <p class="subtitle subtitle-mobile">We build a custom AI receptionist around YOUR business &mdash; your services, your tone, your rules. Plumber, dentist, attorney, locksmith, or anything. It becomes your front desk. 24/7.</p>
         <div class="hero-actions">
@@ -2163,6 +2178,8 @@ a { color: var(--blue); text-decoration: none; }
 
 <!-- ===== JAVASCRIPT ===== -->
 <script>
+window.__tctUILoaded = true;
+
 (function() {
   var header = document.getElementById('header');
   var headerCta = document.getElementById('headerCta');
@@ -2367,19 +2384,26 @@ a { color: var(--blue); text-decoration: none; }
     });
   }
 
-  // Text scatter — split hero h1 into spans
+  // Text scatter — split hero h1 into spans, preserving word boundaries
   var heroH1 = hero ? hero.querySelector('h1') : null;
   var scatterSpans = [];
   if (heroH1) {
     var txt = heroH1.textContent;
     heroH1.innerHTML = '';
-    heroH1.style.display = 'inline';
-    for (var c = 0; c < txt.length; c++) {
-      var sp = document.createElement('span');
-      sp.textContent = txt[c] === ' ' ? '\u00A0' : txt[c];
-      sp.style.cssText = 'display:inline-block;transition:transform .3s ease';
-      heroH1.appendChild(sp);
-      scatterSpans.push(sp);
+    heroH1.style.display = 'block';
+    var words = txt.split(/\s+/);
+    for (var w = 0; w < words.length; w++) {
+      if (w > 0) heroH1.appendChild(document.createTextNode(' '));
+      var wordWrap = document.createElement('span');
+      wordWrap.style.cssText = 'white-space:nowrap;display:inline-block';
+      for (var c = 0; c < words[w].length; c++) {
+        var sp = document.createElement('span');
+        sp.textContent = words[w][c];
+        sp.style.cssText = 'display:inline-block;transition:transform .3s ease';
+        wordWrap.appendChild(sp);
+        scatterSpans.push(sp);
+      }
+      heroH1.appendChild(wordWrap);
     }
   }
 
@@ -2745,7 +2769,10 @@ a { color: var(--blue); text-decoration: none; }
 <script>
 (function() {
   // --- Debug Mode: set window.TCT_DEBUG=true in console to log all events ---
+  var _tctV = window.TCT_UI_VARIANT || 'A';
   function tctTrack(eventName, params) {
+    params = params || {};
+    params.variant = _tctV;
     if (window.TCT_DEBUG) console.log('[TCT]', eventName, params);
     if (typeof gtag === 'function') gtag('event', eventName, params);
   }
@@ -2862,6 +2889,7 @@ a { color: var(--blue); text-decoration: none; }
     }
   }
 })();
+<script src="/shared/variant-b.js" defer></script>
 </script>
 </body>
 </html>
