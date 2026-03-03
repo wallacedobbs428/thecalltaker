@@ -5,7 +5,7 @@
 
 ## Architecture Overview
 
-Two repos, 60+ Python scripts, 86 launchd services running 24/7 on a single Mac.
+Two repos, 60+ Python scripts, 105+ launchd services running 24/7 on a single Mac.
 
 ```
 ~/Desktop/thecalltaker/          # Website, lead tools, dashboard
@@ -96,6 +96,7 @@ Two repos, 60+ Python scripts, 86 launchd services running 24/7 on a single Mac.
 | `multi-industry-lead-gen.py` | Scrapes 500+ leads across 17 industries × 20 metros, scores 1-100 | On demand |
 | `lead-list-builder.py` | Combines scraped data into scored CSV/JSON, generates hot-100 | On demand |
 | `ghl-lead-importer.py` | Imports hot-100 leads into GHL with industry tags + pilot-candidate | On demand |
+| `ntfy-hub.py` | Unified notification engine — war room context in every alert, milestone/prime/summary/nopilot | 4 launchd services |
 
 ## Infrastructure
 
@@ -124,12 +125,44 @@ All in `ops/config.py` with environment variable fallbacks:
 - **Lemlist:** `1884b87d8e73813f479b4764dc0e1294` (env: `TCT_LEMLIST_API_KEY`)
 - **GHL Location ID:** `tQb9YmrGDrdVUJYPKrsY`
 
-### ntfy Topics (4-Tier System, Feb 25 2026)
+### ntfy Topics (5 Topics, ntfy-hub v2 standardized March 2 2026)
 - **URGENT:** `tct-urgent-Hk9UOEZR` — real human replies, demo callers, booked demos, checkout clicks, cold escalations. Checked every 5 min.
 - **SALES:** `tct-sales-63uYsIT9` — daily/weekly reports, pipeline updates, A/B results, tool cost alerts, morning briefings. Checked 1-2x/day.
 - **SYSTEM:** `tct-system-vRsfXQRQ` — engine crashes, service restarts, API errors, health checks. Only checked when something seems broken.
 - **ACTIVITY:** `tct-activity-cn1Aqa85` — every email/SMS/call sent, leads enriched, contacts tagged, auto-responders, scrapers. High volume, rarely checked.
 - **William:** `tct-william-Qm8nR3vK` — William's call sheets, hot leads only (unchanged)
+
+### Ntfy Hub v2 — Unified Notification Engine (March 2, 2026)
+- **Script:** `ops/ntfy-hub.py` — 6 commands: prime, nopilot, milestone, summary, status, test
+- **State:** `ops/ntfy-hub-state.json` — milestones fired, last prime/summary/nopilot, today's stats (calls/convos/pilots/paid/revenue/mrr)
+- **Log:** `logs/ntfy-hub.log` | **Heartbeat:** `ops/ntfy-hub.heartbeat`
+- **launchd (4 services):**
+  - `com.thecalltaker.ntfy.prime` — Daily 3:25pm (pre-call prime)
+  - `com.thecalltaker.ntfy.nopilot` — Daily 6pm + 9pm (24h no-pilot check + beta scarcity)
+  - `com.thecalltaker.ntfy.summary` — Daily 9pm (day grade A/B/C/F + stats)
+  - `com.thecalltaker.ntfy.milestone` — Every 30min (MRR milestones: $97, $500, $1K, $3K)
+- **Core function:** `ntfy_war()` delegates to `tct_common.ntfy_standard()` — war room context + 30-min dedupe + JSON logging in every alert
+- **Typed API (canonical in tct_common.py, available via `from tct_common import notify_*`):**
+  - `notify_demo_call(name, phone, company, industry, duration, source)` — CRITICAL 120s+, HIGH 60s+, INFO below. OWNER: demo-line-monitor
+  - `notify_pilot_signup(name, company, phone, email, industry, plan)` — always CRITICAL. OWNER: pilot-onboarding-engine
+  - `notify_payment(name, company, phone, amount, plan, method)` — always CRITICAL, NEVER deduped. OWNER: notification-hub
+  - `notify_hot_reply(name, company, phone, industry, message, signals)` — always CRITICAL. OWNER: max-engine
+  - `notify_pilot_text(name, phone, company)` — always HIGH. OWNER: demo-line-monitor
+  - `notify_engine_crash(engine, command, error, tb)` — always CRITICAL to SYSTEM
+- **Priority levels:** CRITICAL → ntfy `urgent`, HIGH → `high`, INFO → `default`, LOW → `low`
+- **Title format:** `[CRITICAL] Event Name` — scannable at a glance
+- **Dedupe:** `tct_common._ntfy_dedupe_check()` — 30-min window by `phone:event_type` key, stored in `ops/ntfy-dedupe.json`. Payment never deduped (empty phone). Pruned every 2 hours.
+- **War room context:** Every alert appends calls/demos/pilots/revenue/MRR/beta-spots via `tct_common.get_war_room_status()`
+- **Self-crash alerting:** Catches own exceptions and fires SYSTEM CRITICAL
+- **Routing test:** `ops/ntfy-routing-test.py` — 15 assertions covering all typed functions + dedupe
+- **Migration (DONE March 2):**
+  - Duplicate demo call alerts removed from: notification-hub (→log-only), max (→log-only), speed-alert (→SMS-only, no ntfy)
+  - Donny funnel/revenue reports: URGENT → SALES (lines 971, 1095)
+  - Ben health checks: URGENT → SYSTEM (lines 1338, 1359, 1372, 1441)
+  - Ben send confirmations: URGENT → ACTIVITY (lines 2042, 2154)
+  - Pilot-onboarding: raw ntfy() → `notify_pilot_signup()`
+  - Notification-hub: raw ntfy() → `notify_payment()`
+  - See `~/Desktop/thecalltaker/NTFY-AUDIT.md` for full 80-trigger audit
 
 ### GHL API Notes
 - Email body field = `"html"` (NOT `"message"`)
@@ -178,6 +211,12 @@ All in `ops/config.py` with environment variable fallbacks:
 - **To disable:** Remove `CURSOR EFFECTS v3` CSS block + cursor `<script>` block
 - **Hero copy:** "An AI Receptionist Trained For Your Business" — universal multi-industry (plumber, dentist, attorney, locksmith). Updated title + OG + Twitter meta.
 - **Hero subline:** Desktop (`.subtitle-desktop`) = long version emphasizing custom AI per business. Mobile (`.subtitle-mobile`) = shorter version. Toggled via CSS at 768px breakpoint. `max-width: 600px` on `.hero .subtitle`.
+- **CRITICAL — Hero H1 rules (March 3, 2026):**
+  - NEVER set `.hero h1` to `display: inline` — this was the root cause of "Receptionist" splitting as "Rec/eptionist". The badge (278px inline-flex) steals the first line.
+  - Text scatter (cursor effect) MUST preserve word-level grouping. Each word's character spans go inside a `white-space:nowrap; display:inline-block` wrapper. Spaces are real text nodes between wrappers so browsers break at word boundaries only.
+  - "Receptionist" is wrapped in `<span class="no-break-word">` with CSS `white-space: nowrap` — do NOT remove this span.
+  - `.hero h1` has `display:block; word-break:normal; overflow-wrap:normal; hyphens:none` — do NOT change these.
+  - Regression test: `python3 website/tests/hero-regression.py` (11 assertions, runs in CI on every push/PR touching index.html).
 
 ### Hero Phone Mockup (March 1, 2026)
 - **Location:** `website/index.html` — replaced Unsplash stock photo with pure CSS/SVG animated phone
@@ -226,7 +265,7 @@ All in `ops/config.py` with environment variable fallbacks:
 - **GHL bugs (workarounds deployed):** TTS repeat loop → "Never repeat yourself" instruction (Call 7: 0 repeats). Phone number glitches → digit readback instruction (Call 7: clean in 2s). Variable latency → GHL platform limit, no fix available.
 
 ### Monitoring & Alerting
-- **Crash Monitor:** `ops/crash-monitor.py` — every 5 min, checks all launchd services, auto-restarts crashed ones, sends ntfy alert
+- **Crash Monitor:** `ops/crash-monitor.py` — every 5 min, checks all launchd services, auto-restarts crashed ones, sends ntfy alert. **Revenue-critical demo services** get URGENT priority alerts (not just SYSTEM). Restart timestamps logged to `logs/service-restarts.log`.
 - **Dashboard:** `~/Desktop/thecalltaker/dashboard/index.html` — open in browser, auto-refreshes every 5 min, includes conversion funnel + A/B test performance sections
 - **Daily Reports:** `~/thecalltaker-ops/reports/{YYYY-MM-DD}.json` — generated 9pm nightly by `daily-report-engine.py`
 - **Weekly Reports:** `~/thecalltaker-ops/reports/weekly-{YYYY-MM-DD}.json` — generated Sunday 9:30pm by `weekly-report-engine.py`
@@ -242,16 +281,23 @@ All in `ops/config.py` with environment variable fallbacks:
 - **Hot keywords:** interested, pricing, demo, sign me up, ready, how much, schedule, etc.
 - **Commands:** `watch` (continuous), `check` (single pass), `status`, `test`
 
-### Demo Line Monitor (March 2, 2026)
-- **Script:** `ops/demo-line-monitor.py` — 6 commands: pilot-text, call-track, summary, run, status, all
+### Demo Line Monitor — Hardened (March 2, 2026)
+- **Script:** `ops/demo-line-monitor.py` — 10 commands: pilot-text, call-track, escalate, watchdog, convert, conversions, summary, run, status, all
 - **State:** `ops/demo-line-monitor-state.json`
-- **launchd (3 services):**
+- **Test:** `ops/demo-funnel-test.py` — 49 assertions, 11 test suites, all 6 scenarios validated
+- **launchd (5 services):**
   - `com.thecalltaker.demo.pilot-text` — every 5 min (catches PILOT texts)
   - `com.thecalltaker.demo.call-track` — every 15 min (tags calls by duration)
+  - `com.thecalltaker.demo.escalate` — every 5 min (15min reminder + 1hr escalation for hot leads)
+  - `com.thecalltaker.demo.watchdog` — 3pm daily (alerts if 0 calls/texts in 24h)
   - `com.thecalltaker.demo.summary` — 9:15pm daily (stats to ntfy SALES)
-- **PILOT text trigger:** Detects "pilot", "interested", "yes", "sign me up", etc. → scarcity-aware auto-reply (counts down from 3 spots/month, resets monthly; spots=0 gets "making an exception" message) → tags `demo-to-pilot` + `hot-lead` → URGENT ntfy alert
-- **Beta spots counter:** `beta_spots_remaining` (3/month), `beta_spots_month`, `beta_signups_this_month` in state. Resets on new month. Visible in `status` command.
-- **Call duration tiers:** `demo-caller` (all), `engaged-demo` (60s+), `hot-demo` (120s+ → URGENT alert)
+- **PILOT text trigger:** Detects keywords → scarcity-aware auto-reply → tags → URGENT ntfy. **Phone-locked:** same phone can't double-decrement beta counter. Duplicate texts get acknowledgment message instead.
+- **Beta spots counter:** 3/month, resets monthly with archive of previous month (signups, phones, paid, MRR). `beta_phones_used` prevents gaming.
+- **Call duration tiers:** `demo-caller` (all), `engaged-demo` (60s+), `hot-demo` (120s+ → CRITICAL escalation)
+- **Hot Lead Escalation:** 120s+ calls OR pricing questions → escalation queue. 15min reminder if no `contacted` tag. 1hr hard escalation if still untouched. Resolves when `contacted` or `pilot-active` tagged.
+- **No-Activity Watchdog:** Daily 3pm check. Alerts URGENT if 0 demo calls or 0 texts in 24h. Single alert per day.
+- **Conversion Attribution:** `convert <id> <source> <plan> <amount>` logs paid clients. `conversions` shows summary by source, avg days to close, monthly archive. Sources: cold_call, demo_inbound, referral, followup, pilot_convert.
+- **Fail-safe:** crash-monitor.py upgraded: CRITICAL_SERVICES list for all demo services → URGENT ntfy on ANY crash. Restart timestamps logged to `logs/service-restarts.log`.
 - **Tracking doc:** `~/Desktop/thecalltaker/demo-line/TRACKING-SETUP.md`
 - **Works alongside:** demo-followup-engine (4-touch pain-first sequence), max (reply catching), notification-hub (routing), demo-qa (test calls)
 
