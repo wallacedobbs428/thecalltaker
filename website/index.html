@@ -1479,7 +1479,7 @@ a { color: var(--blue); text-decoration: none; }
     </div>
   </div>
   <script>
-  (function(){
+  (window.requestIdleCallback||function(cb){setTimeout(cb,200)})(function(){
     var s=document.getElementById('missed-call-wall');
     if(!s)return;
     var rows=s.querySelectorAll('.mcw-row');
@@ -1515,7 +1515,7 @@ a { color: var(--blue); text-decoration: none; }
       });
     },{threshold:0.12});
     obs.observe(s);
-  })();
+  });
   </script>
 </section>
 <script>
@@ -2453,7 +2453,7 @@ window.__tctUILoaded = true;
 
 <!-- ===== CAROUSEL ENGINE ===== -->
 <script>
-(function() {
+(window.requestIdleCallback||function(cb){setTimeout(cb,200)})(function() {
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // === 1. INFINITE TICKER — clone items for seamless loop ===
@@ -2575,7 +2575,7 @@ window.__tctUILoaded = true;
       });
     });
   }
-})();
+});
 </script>
 
 <!-- ===== MOBILE EXIT TOAST ===== -->
@@ -2832,10 +2832,10 @@ window.__tctUILoaded = true;
 <script src="/shared/premium.js" defer></script>
 
 <!-- ===== DEMO CONSOLE (shared component) ===== -->
-<script src="/shared/demo-console.js"></script>
-<script src="/shared/case-studies-data.js"></script>
+<script src="/shared/demo-console.js" defer></script>
+<script src="/shared/case-studies-data.js" defer></script>
 <script>
-(function() {
+(window.requestIdleCallback||function(cb){setTimeout(cb,200)})(function() {
   var d = window.TCT_CaseStudies; if (!d) return;
   var grid = document.getElementById('industryResultsGrid'); if (!grid) return;
   var keys = Object.keys(d);
@@ -2851,7 +2851,7 @@ window.__tctUILoaded = true;
       (hasLink ? '<a href="' + c.link + '" style="display:inline-block;margin-top:12px;font-size:.78rem;font-weight:700;color:var(--orange)">Read case study &rarr;</a>' : '') +
     '</div>';
   });
-})();
+});
 </script>
 <script src="/shared/command-palette.js" defer></script>
 
@@ -2882,9 +2882,9 @@ window.__tctUILoaded = true;
 </script>
 
 <!-- ===== SHARED DATA + INDUSTRY SELECTOR + ROI SIMULATOR JS ===== -->
-<script src="/shared/site-data.js"></script>
+<script src="/shared/site-data.js" defer></script>
 <script>
-(function() {
+(window.requestIdleCallback||function(cb){setTimeout(cb,200)})(function() {
   var data = (window.TCT_DATA && window.TCT_DATA.industries) || {};
 
   // --- Industry Selector ---
@@ -2944,7 +2944,7 @@ window.__tctUILoaded = true;
     calc();
   });
   calc();
-})();
+});
 </script>
 
 
@@ -2960,7 +2960,7 @@ window.__tctUILoaded = true;
 
 <!-- AI Call Flow Visualizer -->
 <script>
-(function(){
+(window.requestIdleCallback||function(cb){setTimeout(cb,200)})(function(){
   var track = document.getElementById('acfTrack');
   if (!track) return;
   var nodes = track.querySelectorAll('.acf-node');
@@ -3055,12 +3055,12 @@ window.__tctUILoaded = true;
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(drawLines, 200);
   });
-})();
+});
 </script>
 
 <!-- ===== PROOF METRICS LOADER ===== -->
 <script>
-(function(){
+(window.requestIdleCallback||function(cb){setTimeout(cb,200)})(function(){
   var DEFAULTS = {
     calls_answered: 1247, avg_answer_time_seconds: 1.8,
     businesses_live: 6, industries_supported: 17,
@@ -3094,7 +3094,7 @@ window.__tctUILoaded = true;
   }).catch(function(){
     apply(DEFAULTS);
   });
-})();
+});
 </script>
 
 </body>
