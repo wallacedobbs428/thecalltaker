@@ -1,0 +1,388 @@
+/* ============================================
+   THE CALL TAKER — Carousel Module v2
+   Revenue-driving infinite ticker + GSAP parallax.
+   Clickable items, scarcity toasts, CTA reinforcement.
+   Works in both light and dark themes.
+   ============================================ */
+
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --tct-carousel-gap: 40px;
+  --tct-carousel-speed: 30s;
+}
+
+/* ===== CSS-ONLY INFINITE TICKER ===== */
+.tct-carousel-ticker {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.tct-carousel-ticker-track {
+  display: flex;
+  gap: var(--tct-carousel-gap);
+  width: max-content;
+  animation: tctTickScroll var(--tct-carousel-speed) linear infinite;
+  will-change: transform;
+}
+.tct-carousel-ticker-track.reverse {
+  animation-direction: reverse;
+}
+.tct-carousel-ticker:hover .tct-carousel-ticker-track,
+.tct-carousel-ticker-track.paused {
+  animation-play-state: paused;
+}
+
+/* Ticker items — base flex shrink */
+.tct-carousel-ticker-track > * {
+  flex-shrink: 0;
+}
+
+/* CLS prevention: explicit min-height on ticker container */
+.tct-carousel-ticker {
+  min-height: 52px;
+}
+.tct-carousel-ticker[data-type="testimonial"] {
+  min-height: 140px;
+}
+
+@keyframes tctTickScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Tab-hidden pause (applied by JS) */
+.tct-carousel-ticker-track.tct-tab-hidden {
+  animation-play-state: paused !important;
+}
+
+/* ===== GSAP PARALLAX CAROUSEL ===== */
+.tct-carousel-scroll {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.tct-carousel-track {
+  display: flex;
+  gap: var(--tct-carousel-gap);
+  width: max-content;
+  will-change: transform;
+}
+.tct-carousel-track > * {
+  flex-shrink: 0;
+}
+
+/* ===== CLICKABLE TICKER ITEMS ===== */
+a.tct-ticker-item,
+a.tct-ticker-testimonial,
+a.tct-ticker-badge {
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+a.tct-ticker-item:hover,
+a.tct-ticker-badge:hover {
+  border-color: rgba(0,220,130,0.3);
+  color: #fff;
+}
+a.tct-ticker-item--dark:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(0,220,130,0.3);
+  color: #fff;
+}
+a.tct-ticker-item--light:hover {
+  background: rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.12);
+  color: #111827;
+}
+a.tct-ticker-testimonial:hover {
+  border-color: rgba(0,220,130,0.25);
+}
+a.tct-ticker-testimonial--dark:hover {
+  background: rgba(255,255,255,0.06);
+}
+a.tct-ticker-testimonial--light:hover {
+  border-color: rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+/* ===== COMMON TICKER ITEM STYLES ===== */
+.tct-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-size: .875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+  transition: background .2s, border-color .2s, color .2s;
+}
+
+/* Dark theme ticker items */
+.tct-ticker-item--dark {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+}
+.tct-ticker-item--dark svg,
+.tct-ticker-item--dark img {
+  width: 20px;
+  height: 20px;
+  opacity: .6;
+}
+
+/* Light theme ticker items */
+.tct-ticker-item--light {
+  background: rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.06);
+  color: #4b5563;
+}
+.tct-ticker-item--light svg,
+.tct-ticker-item--light img {
+  width: 20px;
+  height: 20px;
+  opacity: .5;
+}
+
+/* Testimonial ticker card */
+.tct-ticker-testimonial {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 24px;
+  border-radius: 12px;
+  min-width: 280px;
+  max-width: 340px;
+  transition: background .2s, border-color .2s, box-shadow .2s;
+}
+.tct-ticker-testimonial--dark {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.8);
+}
+.tct-ticker-testimonial--light {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  color: #111827;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.tct-ticker-testimonial .tct-ticker-quote {
+  font-size: .9rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+.tct-ticker-testimonial .tct-ticker-author {
+  font-size: .8rem;
+  font-weight: 600;
+  opacity: .7;
+}
+.tct-ticker-testimonial .tct-ticker-stars {
+  color: #f59e0b;
+  font-size: .85rem;
+  letter-spacing: 2px;
+}
+
+/* ===== TRUST BADGE ITEMS ===== */
+.tct-ticker-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: .8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+  transition: background .2s, border-color .2s;
+}
+.tct-ticker-badge--dark {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.6);
+}
+
+/* ===== REVENUE MICROCOPY ===== */
+.tct-carousel-microcopy {
+  text-align: center;
+  padding: 8px 16px 0;
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .01em;
+  opacity: .55;
+  transition: opacity .3s;
+}
+.tct-carousel-microcopy:hover {
+  opacity: .8;
+}
+.tct-carousel-microcopy--dark {
+  color: rgba(255,255,255,0.6);
+}
+.tct-carousel-microcopy--light {
+  color: #6b7280;
+}
+.tct-carousel-microcopy a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ===== SCARCITY MICRO-TOAST ===== */
+.tct-scarcity-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 1200;
+  background: rgba(0,0,0,0.92);
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,220,130,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .4s, transform .4s, visibility .4s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.tct-scarcity-toast.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+.tct-scarcity-toast .tct-toast-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00dc82;
+  margin-right: 8px;
+  animation: tctToastPulse 1.5s ease-in-out infinite;
+}
+@keyframes tctToastPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+
+/* ===== CTA REINFORCEMENT PULSE ===== */
+@keyframes tctCtaReinforce {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,220,130,.5); }
+  40% { transform: scale(1.06); box-shadow: 0 0 0 10px rgba(0,220,130,0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,220,130,0); }
+}
+.tct-cta-reinforce {
+  animation: tctCtaReinforce .7s cubic-bezier(.4,0,.2,1) !important;
+}
+
+/* Light theme CTA reinforcement (orange accent) */
+@keyframes tctCtaReinforcLight {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(234,88,12,.5); }
+  40% { transform: scale(1.06); box-shadow: 0 0 0 10px rgba(234,88,12,0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(234,88,12,0); }
+}
+
+/* ===== MICRO URGENCY BANNER ===== */
+.tct-urgency-banner {
+  text-align: center;
+  padding: 10px 20px;
+  font-size: .82rem;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-top: 12px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .4s, transform .4s;
+}
+.tct-urgency-banner.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tct-urgency-banner--dark {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.6);
+}
+.tct-urgency-banner--light {
+  background: rgba(0,0,0,0.02);
+  border: 1px solid rgba(0,0,0,0.05);
+  color: #6b7280;
+}
+.tct-urgency-banner a {
+  color: #00dc82;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ===== PROOF INJECTION LINE ===== */
+.tct-proof-line {
+  text-align: center;
+  padding: 8px 16px;
+  font-size: .8rem;
+  font-weight: 600;
+  border-radius: 6px;
+  margin-top: 10px;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .35s, transform .35s;
+}
+.tct-proof-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tct-proof-line--dark {
+  color: #00dc82;
+  background: rgba(0,220,130,0.06);
+  border: 1px solid rgba(0,220,130,0.12);
+}
+.tct-proof-line--light {
+  color: #059669;
+  background: rgba(5,150,105,0.06);
+  border: 1px solid rgba(5,150,105,0.12);
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .tct-carousel-ticker-track {
+    animation: none !important;
+  }
+  .tct-carousel-track {
+    animation: none !important;
+  }
+  .tct-scarcity-toast {
+    transition: none;
+  }
+  .tct-cta-reinforce {
+    animation: none !important;
+  }
+  .tct-ticker-item,
+  .tct-ticker-testimonial,
+  .tct-ticker-badge {
+    transition: none;
+  }
+  .tct-urgency-banner {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .tct-proof-line {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  @keyframes tctToastPulse { 0%, 100% { opacity: 1; } }
+}

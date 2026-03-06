@@ -24,11 +24,13 @@
   <meta property="og:description" content="Free calculator for service business owners. Answer 4 questions, see how much revenue you're losing to missed calls in 30 seconds.">
   <meta property="og:url" content="https://thecalltaker.com/calculator">
   <meta property="og:site_name" content="The Call Taker">
+  <meta property="og:image" content="https://thecalltaker.com/og-image.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Free Missed Call Revenue Calculator for Service Businesses">
   <meta name="twitter:description" content="Answer 4 questions. See how much you're losing. Most business owners are shocked.">
+  <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -126,6 +128,8 @@
       .result-breakdown { grid-template-columns: 1fr; }
     }
   </style>
+<link rel="stylesheet" href="/shared/ui-dark.css">
+<link rel="stylesheet" href="/shared/carousel.css">
 </head>
 <body>
 
@@ -184,6 +188,38 @@
       </div>
     </div>
   </section>
+
+<!-- Testimonial Ticker -->
+<div class="tct-carousel-ticker" data-variant="calculator" data-speed="45s" style="padding: 24px 0;" data-type="testimonial">
+  <div class="tct-carousel-ticker-track">
+    <div class="tct-ticker-testimonial tct-ticker-testimonial--dark">
+      <div class="tct-ticker-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="tct-ticker-quote">"We stopped losing emergency calls at 2am. Paid for itself the first week."</div>
+      <div class="tct-ticker-author">Mike R. &mdash; HVAC Owner, Nashville</div>
+    </div>
+    <div class="tct-ticker-testimonial tct-ticker-testimonial--dark">
+      <div class="tct-ticker-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="tct-ticker-quote">"Replaced our $1,400/mo answering service. Better quality, fraction of the price."</div>
+      <div class="tct-ticker-author">Sarah T. &mdash; Plumbing Company, Atlanta</div>
+    </div>
+    <div class="tct-ticker-testimonial tct-ticker-testimonial--dark">
+      <div class="tct-ticker-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="tct-ticker-quote">"41% of our calls were going to voicemail. Now zero do. Revenue up $8,400/mo."</div>
+      <div class="tct-ticker-author">James P. &mdash; HVAC, Charleston</div>
+    </div>
+    <div class="tct-ticker-testimonial tct-ticker-testimonial--dark">
+      <div class="tct-ticker-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="tct-ticker-quote">"Emergency lockout calls used to go to voicemail at night. Now we book every one."</div>
+      <div class="tct-ticker-author">David K. &mdash; Locksmith, Nashville</div>
+    </div>
+    <div class="tct-ticker-testimonial tct-ticker-testimonial--dark">
+      <div class="tct-ticker-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="tct-ticker-quote">"Sounds so real our customers don't know it's AI. Best $97 we spend each month."</div>
+      <div class="tct-ticker-author">Lisa M. &mdash; Dental Office, Memphis</div>
+    </div>
+  </div>
+</div>
+
 
   <!-- Calculator -->
   <section class="section" id="calculator-start" style="padding-top: 0;">
@@ -301,7 +337,7 @@
             </div>
             <div class="result-stat">
               <div class="result-stat-label" style="color: var(--green-400);">The Call Taker Cost</div>
-              <div class="result-stat-value" style="color: var(--green-400);" id="result-tct-cost">$497/mo</div>
+              <div class="result-stat-value" style="color: var(--green-400);" id="result-tct-cost">$297/mo</div>
             </div>
           </div>
 
@@ -390,7 +426,7 @@
 
         <div class="faq-item reveal" style="padding: 20px 0;">
           <h3 style="font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">How much does The Call Taker cost?</h3>
-          <p style="font-size: 0.9375rem; color: var(--text-secondary);">Starting at $497/month for Starter (HVAC, Plumbing, Electrical) or $997/month for Pro (Dental, Legal, Roofing, MedSpa, Property Mgmt). $500 one-time setup. 7-day free trial. No contracts, cancel anytime. Most businesses see a 10-30x return based on the calls they were missing.</p>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary);">Starting at $97/month for after-hours coverage, $297/month for full 24/7, or $497/month for premium with priority support. No setup fees. 14-day free pilot. No contracts, cancel anytime. Most businesses see a 10-30x return based on the calls they were missing.</p>
         </div>
       </div>
     </div>
@@ -426,7 +462,8 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>if(!window.__tctUILoaded){window.__tctScriptJsOK=true;}</script>
+<script src="script.js"></script>
   <script>
     // Calculator state
     var calcState = {
@@ -496,7 +533,7 @@
       var missedPerMonth = Math.round(missedPerWeek * 4.33);
       var lostMonthly = missedPerMonth * calcState.jobValue;
       var lostYearly = lostMonthly * 12;
-      var roi = Math.round(lostMonthly / 497);
+      var roi = Math.round(lostMonthly / 297);
 
       // Update results
       document.getElementById('result-calls-month').textContent = missedPerMonth + ' calls per month';
@@ -626,5 +663,8 @@
       }
     });
   </script>
+<script src="/shared/ui-dark.js" defer></script>
+<script src="/shared/carousel.js" defer></script>
+<script src="/shared/variant-b.js" defer></script>
 </body>
 </html>

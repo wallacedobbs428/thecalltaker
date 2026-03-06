@@ -49,7 +49,6 @@
 
 <!-- Tracking -->
 
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17970510102');</script>
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -197,9 +196,9 @@ a { color: inherit; text-decoration: none; }
   .blog-hero .breadcrumb a:hover { color: var(--text); }
 </style>
 <script src="../tct-tracking.js"></script>
+<link rel="stylesheet" href="/shared/ui.css">
 </head>
 <body>
-
 
 <header class="site-header" id="header">
   <div class="header-inner">
@@ -216,7 +215,6 @@ a { color: inherit; text-decoration: none; }
     </button>
   </div>
 </header>
-
 
 <div class="blog-hero">
 <h1>Best Answering Service for Electricians and Electrical Companies in 2026</h1>
@@ -407,19 +405,6 @@ a { color: inherit; text-decoration: none; }
   </div>
 </footer>
 
-<script>
-// Sticky header
-var h=document.getElementById('header');
-if(h)window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>20);});
-// Mobile menu
-var mb=document.getElementById('menuBtn'),nv=document.getElementById('nav');
-if(mb&&nv){mb.addEventListener('click',function(){nv.classList.toggle('open');});}
-if(nv)document.querySelectorAll('#nav a').forEach(function(a){a.addEventListener('click',function(){nv.classList.remove('open');});});
-// Fade-in
-var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('visible');obs.unobserve(en.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.fade-up').forEach(function(el){obs.observe(el);});
-// FAQ accordion
-document.querySelectorAll('.faq-question').forEach(function(btn){btn.addEventListener('click',function(){var item=this.parentElement;var wasOpen=item.classList.contains('open');item.parentElement.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});if(!wasOpen)item.classList.add('open');});});
-</script>
+<script src="/shared/ui.js" defer></script>
 </body>
 </html>

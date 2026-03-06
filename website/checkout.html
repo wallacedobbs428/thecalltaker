@@ -191,17 +191,31 @@
   }
   .footer a { color: #58a6ff; text-decoration: none; }
 
-  /* Stripe placeholder notice */
-  .stripe-notice {
-    background: rgba(210,153,34,0.1);
-    border: 1px solid rgba(210,153,34,0.3);
+  /* Payment option buttons */
+  .payment-options { margin: 20px 0; }
+  .pay-btn {
+    display: block; width: 100%;
+    border: none; border-radius: 14px;
+    padding: 16px; font-size: 16px; font-weight: 700;
+    text-align: center; cursor: pointer;
+    text-decoration: none; margin: 8px 0;
+    transition: all 0.15s;
+  }
+  .pay-btn:active { transform: scale(0.98); opacity: 0.9; }
+  .paypal-btn { background: #0070ba; color: #fff; }
+  .venmo-btn { background: #3d95ce; color: #fff; }
+
+  /* Urgency bar */
+  .urgency-bar {
+    background: rgba(248,81,73,0.12);
+    border: 1px solid rgba(248,81,73,0.25);
     border-radius: 10px;
-    padding: 14px; margin: 16px 0;
-    font-size: 13px; color: #d29922;
-    text-align: center; line-height: 1.5;
-    display: none;
+    padding: 12px 16px; margin: 16px 0;
+    text-align: center; font-size: 13px; color: #f85149;
+    font-weight: 600;
   }
 </style>
+<script src="/shared/ab-split.js"></script>
 </head>
 <body>
 
@@ -223,16 +237,16 @@
   <div class="plans">
     <div class="plan-label">Choose Your Plan</div>
 
-    <div class="plan-card selected" id="plan-starter" onclick="selectPlan('starter')">
+    <div class="plan-card selected" id="plan-afterhours" onclick="selectPlan('afterhours')">
       <div class="badge">MOST POPULAR</div>
       <div class="plan-top" style="margin-bottom: 4px;">
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="radio-dot"></div>
-          <div class="plan-name">After-Hours Starter</div>
+          <div class="plan-name">After-Hours</div>
         </div>
-        <div class="plan-price">$297<span>/mo</span></div>
+        <div class="plan-price">$97<span>/mo</span></div>
       </div>
-      <div class="plan-desc">Covers nights, weekends, holidays, and lunch breaks</div>
+      <div class="plan-desc">Nights, weekends, holidays — never miss an after-hours call again</div>
       <ul class="plan-features">
         <li>After-hours coverage</li>
         <li>Weekends &amp; holidays</li>
@@ -243,15 +257,15 @@
       </ul>
     </div>
 
-    <div class="plan-card" id="plan-full" onclick="selectPlan('full')">
+    <div class="plan-card" id="plan-full247" onclick="selectPlan('full247')">
       <div class="plan-top" style="margin-bottom: 4px;">
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="radio-dot"></div>
-          <div class="plan-name">Full 24/7 Coverage</div>
+          <div class="plan-name">Full 24/7</div>
         </div>
-        <div class="plan-price">$497<span>/mo</span></div>
+        <div class="plan-price">$297<span>/mo</span></div>
       </div>
-      <div class="plan-desc">Everything in Starter + business hours overflow</div>
+      <div class="plan-desc">Every call, every hour — plus business hours overflow</div>
       <ul class="plan-features">
         <li>24/7/365 coverage</li>
         <li>Business hours overflow</li>
@@ -261,25 +275,53 @@
         <li>Cancel anytime</li>
       </ul>
     </div>
+
+    <div class="plan-card" id="plan-premium" onclick="selectPlan('premium')">
+      <div class="plan-top" style="margin-bottom: 4px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="radio-dot"></div>
+          <div class="plan-name">Premium</div>
+        </div>
+        <div class="plan-price">$497<span>/mo</span></div>
+      </div>
+      <div class="plan-desc">White-glove — custom voice, CRM integration, dedicated manager</div>
+      <ul class="plan-features">
+        <li>Everything in 24/7</li>
+        <li>Custom voice &amp; scripts</li>
+        <li>CRM integration</li>
+        <li>Dedicated manager</li>
+        <li>Priority support</li>
+        <li>Cancel anytime</li>
+      </ul>
+    </div>
   </div>
 
   <!-- ROI CALLOUT -->
   <div class="roi-callout">
-    <div class="big" id="roi-text">$297 &lt; 1 service call</div>
+    <div class="big" id="roi-text">$97 &lt; 1 missed call</div>
     <div class="sub">Most businesses make it back with the first call we catch</div>
   </div>
 
-  <!-- CTA BUTTON -->
+  <!-- FREE PILOT CTA -->
   <div class="cta-area">
-    <a class="cta-btn" id="checkout-btn" href="#" onclick="startCheckout(event)">
-      Get Started Now
+    <a class="cta-btn" href="https://thecalltaker.com/signup.html" id="checkout-btn" onclick="trackCheckout(event)">
+      Start Free 14-Day Pilot
     </a>
-    <div class="cta-sub">Secure checkout &bull; Cancel anytime &bull; No setup fees</div>
+    <div class="cta-sub">No credit card &bull; No contracts &bull; Cancel anytime</div>
   </div>
 
-  <!-- STRIPE NOTICE (shown when links aren't live yet) -->
-  <div class="stripe-notice" id="stripe-notice">
-    Payment processing is being set up. Text Wallace at the number below to get started today.
+  <!-- PAYMENT OPTIONS -->
+  <div class="payment-options" id="payment-options" style="display:none;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:14px;text-align:center;">Ready to Pay? Choose How</div>
+    <a class="pay-btn paypal-btn" id="paypal-btn" href="#" onclick="payWithPayPal(event)">
+      Pay with PayPal — <span id="paypal-price">$97/mo</span>
+    </a>
+    <a class="pay-btn venmo-btn" href="https://venmo.com/u/Wallace-Dobbs" target="_blank">
+      Pay with Venmo — @Wallace-Dobbs
+    </a>
+    <div style="text-align:center;font-size:12px;color:#8b949e;margin-top:8px;">
+      Or text "READY" to <a href="sms:+16157845747" style="color:#58a6ff;">(615) 784-5747</a> and we'll send you an invoice
+    </div>
   </div>
 
   <!-- WHAT YOU GET -->
@@ -330,8 +372,8 @@
   <!-- GUARANTEE -->
   <div class="guarantee">
     <div class="icon">&#128170;</div>
-    <div class="title">Zero Risk Guarantee</div>
-    <div class="desc">No contracts. No setup fees. Cancel anytime with one message. If we don't catch a single call that would've gone to voicemail in your first 30 days, we'll refund you. Period.</div>
+    <div class="title">Zero Risk — 14-Day Free Pilot</div>
+    <div class="desc">Try it free for 14 days. No credit card. No contracts. No setup fees. If you don't catch at least one call that would've gone to voicemail, walk away. No questions asked.</div>
   </div>
 
   <!-- DEMO LINE -->
@@ -341,11 +383,17 @@
     <div class="sub">Call our demo line — hear exactly what your customers will hear</div>
   </div>
 
+  <!-- URGENCY -->
+  <div class="urgency-bar">
+    3 free pilot slots left this week — first come, first served
+  </div>
+
   <!-- SECOND CTA -->
   <div class="cta-area" style="padding: 20px 0;">
-    <a class="cta-btn" href="#" onclick="startCheckout(event)">
-      Get Started — <span id="cta-price-2">$297/mo</span>
+    <a class="cta-btn" href="https://thecalltaker.com/signup.html" onclick="trackCheckout(event)">
+      Start Free Pilot — <span id="cta-price-2">$97/mo</span> after trial
     </a>
+    <div class="cta-sub">14 days free &bull; No credit card required</div>
   </div>
 
 </div>
@@ -358,54 +406,60 @@
 </div>
 
 <script>
-  // ── PLAN SELECTION ──
-  let selectedPlan = 'starter';
+  // ── PLAN CONFIG ──
+  var selectedPlan = 'afterhours';
+  var PLANS = {
+    afterhours: { name: 'After-Hours', price: 97, roi: '$97 < 1 missed call', paypal: 'https://paypal.me/wallacedobbs/97' },
+    full247:    { name: 'Full 24/7',    price: 297, roi: '$297 < 1 service call', paypal: 'https://paypal.me/wallacedobbs/297' },
+    premium:    { name: 'Premium',      price: 497, roi: '$497 < 2 service calls', paypal: 'https://paypal.me/wallacedobbs/497' }
+  };
 
   // Stripe payment links — REPLACE THESE when Stripe is connected
-  const STRIPE_LINKS = {
-    starter: '',  // e.g., 'https://buy.stripe.com/XXXXX'
-    full: ''      // e.g., 'https://buy.stripe.com/YYYYY'
-  };
+  var STRIPE_LINKS = { afterhours: '', full247: '', premium: '' };
 
   function selectPlan(plan) {
     selectedPlan = plan;
-    document.getElementById('plan-starter').classList.toggle('selected', plan === 'starter');
-    document.getElementById('plan-full').classList.toggle('selected', plan === 'full');
-
-    const price = plan === 'starter' ? '$297/mo' : '$497/mo';
-    const roi = plan === 'starter' ? '$297 < 1 service call' : '$497 < 2 service calls';
-
-    document.getElementById('roi-text').textContent = roi;
-    document.getElementById('cta-price-2').textContent = price;
+    var p = PLANS[plan];
+    document.getElementById('plan-afterhours').classList.toggle('selected', plan === 'afterhours');
+    document.getElementById('plan-full247').classList.toggle('selected', plan === 'full247');
+    document.getElementById('plan-premium').classList.toggle('selected', plan === 'premium');
+    document.getElementById('roi-text').textContent = p.roi;
+    document.getElementById('cta-price-2').textContent = '$' + p.price + '/mo';
+    document.getElementById('paypal-price').textContent = '$' + p.price + '/mo';
+    document.getElementById('paypal-btn').href = p.paypal;
   }
 
-  function startCheckout(e) {
+  function trackCheckout(e) {
+    var p = PLANS[selectedPlan];
+    // Send war room alert
+    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+      method: 'POST',
+      headers: { 'Title': 'CHECKOUT CLICK: ' + p.name + ' $' + p.price, 'Priority': 'urgent', 'Tags': 'money_with_wings' },
+      body: 'Someone clicked Start Free Pilot for ' + p.name + ' ($' + p.price + '/mo). Redirecting to signup.'
+    }).catch(function(){});
+
+    // Show payment options for returning visitors
+    document.getElementById('payment-options').style.display = 'block';
+  }
+
+  function payWithPayPal(e) {
     e.preventDefault();
-    const link = STRIPE_LINKS[selectedPlan];
-
-    if (link) {
-      // Stripe is connected — redirect to payment
-      window.location.href = link;
-    } else {
-      // Stripe not connected yet — show signup flow
-      document.getElementById('stripe-notice').style.display = 'block';
-
-      // Send alert to war room that someone is trying to pay
-      const plan = selectedPlan === 'starter' ? 'After-Hours $297' : 'Full 24/7 $497';
-      fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-        method: 'POST',
-        headers: { 'Title': 'CHECKOUT ATTEMPT', 'Priority': 'urgent', 'Tags': 'money_with_wings' },
-        body: 'Someone clicked checkout for ' + plan + ' plan! Stripe not connected yet. Follow up ASAP.'
-      }).catch(() => {});
-
-      // Redirect to signup page as fallback
-      window.location.href = 'https://thecalltaker.com/signup.html?plan=' + selectedPlan;
-    }
+    var p = PLANS[selectedPlan];
+    // War room alert for PayPal payment
+    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+      method: 'POST',
+      headers: { 'Title': 'PAYPAL PAYMENT: ' + p.name + ' $' + p.price, 'Priority': 'urgent', 'Tags': 'dollar,fire' },
+      body: 'Someone clicked PAY WITH PAYPAL for ' + p.name + ' ($' + p.price + '/mo)! Check PayPal NOW.'
+    }).catch(function(){});
+    window.open(p.paypal, '_blank');
   }
 
   // Auto-select plan from URL param
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('plan') === 'full') selectPlan('full');
+  var params = new URLSearchParams(window.location.search);
+  var urlPlan = params.get('plan');
+  if (urlPlan && PLANS[urlPlan]) selectPlan(urlPlan);
+  // Show payment options if returning from signup
+  if (params.get('pay') === '1') document.getElementById('payment-options').style.display = 'block';
 </script>
 
 </body>

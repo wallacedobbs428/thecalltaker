@@ -88,8 +88,10 @@
 
   @media (min-width: 500px) { .tk-grid { max-width: 460px; } }
 </style>
+<script>window.TCT_UI_V2 = true;</script>
+<link rel="stylesheet" href="/shared/ui-dark.css">
 </head>
-<body>
+<body data-app="admin">
 
 <!-- AUTH GATE -->
 <div id="auth-gate">
@@ -185,5 +187,6 @@ document.getElementById('pw-input').addEventListener('keydown', e => {
 // Auto-unlock if already authenticated this session
 if (sessionStorage.getItem(AUTH_KEY) === HASH) showToolkit();
 </script>
+<script src="/shared/ui-dark.js" defer></script>
 </body>
 </html>

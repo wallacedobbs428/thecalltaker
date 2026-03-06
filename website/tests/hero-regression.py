@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Hero headline regression test — prevents "Receptionist" from ever breaking again.
+Hero headline regression test — prevents word-breaking regressions.
 
 Two layers:
-  Layer 1 (static): Parse index.html source — assert CSS rules, HTML structure,
-                     and JS text scatter are correct. Zero dependencies, fast, CI-safe.
+  Layer 1 (static): Parse index.html source — assert CSS rules, HTML structure.
+                     Zero dependencies, fast, CI-safe.
   Layer 2 (live):   Optional headless Chrome check at 5 viewports. Runs locally
                      or in CI with Chrome/Chromium installed.
 
@@ -36,7 +36,7 @@ def fail(label):
     print(f"  FAIL  {label}")
 
 
-# ─── LAYER 1: STATIC SOURCE ANALYSIS ─────────────────────────────────
+# --- LAYER 1: STATIC SOURCE ANALYSIS ---
 
 def run_static():
     print("=== Layer 1: Static Source Analysis ===")
@@ -46,91 +46,64 @@ def run_static():
         src = f.read()
 
     # 1. CSS: .hero h1 has display: block
-    hero_h1_block = re.search(r'\.hero\s+h1\s*\{[^}]*display:\s*block', src)
-    if hero_h1_block:
+    if re.search(r'\.hero\s+h1\s*\{[^}]*display:\s*block', src):
         ok(".hero h1 CSS has display: block")
     else:
         fail(".hero h1 CSS missing display: block")
 
     # 2. CSS: .hero h1 has word-break: normal
-    hero_h1_wb = re.search(r'\.hero\s+h1\s*\{[^}]*word-break:\s*normal', src)
-    if hero_h1_wb:
+    if re.search(r'\.hero\s+h1\s*\{[^}]*word-break:\s*normal', src):
         ok(".hero h1 CSS has word-break: normal")
     else:
         fail(".hero h1 CSS missing word-break: normal")
 
     # 3. CSS: .hero h1 has overflow-wrap: normal
-    hero_h1_ow = re.search(r'\.hero\s+h1\s*\{[^}]*overflow-wrap:\s*normal', src)
-    if hero_h1_ow:
+    if re.search(r'\.hero\s+h1\s*\{[^}]*overflow-wrap:\s*normal', src):
         ok(".hero h1 CSS has overflow-wrap: normal")
     else:
         fail(".hero h1 CSS missing overflow-wrap: normal")
 
     # 4. CSS: .hero h1 has hyphens: none
-    hero_h1_hyp = re.search(r'\.hero\s+h1\s*\{[^}]*hyphens:\s*none', src)
-    if hero_h1_hyp:
+    if re.search(r'\.hero\s+h1\s*\{[^}]*hyphens:\s*none', src):
         ok(".hero h1 CSS has hyphens: none")
     else:
         fail(".hero h1 CSS missing hyphens: none")
 
     # 5. CSS: .no-break-word class exists with white-space: nowrap
-    nbw_class = re.search(r'\.no-break-word\s*\{[^}]*white-space:\s*nowrap', src)
-    if nbw_class:
+    if re.search(r'\.no-break-word\s*\{[^}]*white-space:\s*nowrap', src):
         ok(".no-break-word class has white-space: nowrap")
     else:
         fail(".no-break-word class missing or lacks white-space: nowrap")
 
-    # 6. HTML: h1 contains <span class="no-break-word">Receptionist</span>
+    # 6. HTML: h1 contains <span class="no-break-word"> wrapping multi-word phrase
     h1_span = re.search(
-        r'<h1>[^<]*<span\s+class="no-break-word">Receptionist</span>[^<]*</h1>',
+        r'<h1>[^<]*<span\s+class="no-break-word">[^<]+</span>[^<]*</h1>',
         src
     )
     if h1_span:
-        ok('H1 contains <span class="no-break-word">Receptionist</span>')
+        ok('H1 contains <span class="no-break-word"> protecting a phrase')
     else:
-        fail('H1 missing <span class="no-break-word">Receptionist</span>')
+        fail('H1 missing <span class="no-break-word"> protection')
 
-    # 7. HTML: h1 text reads "An AI Receptionist Trained For Your Business"
+    # 7. HTML: h1 text is current copy
     h1_match = re.search(r'<h1>(.*?)</h1>', src, re.DOTALL)
     if h1_match:
         h1_text = re.sub(r'<[^>]+>', '', h1_match.group(1)).strip()
-        if "Receptionist" in h1_text and "Trained" in h1_text:
-            ok(f'H1 text intact: "{h1_text[:60]}..."')
+        if "Missed Call" in h1_text and "Never" in h1_text:
+            ok(f'H1 text intact: "{h1_text[:60]}"')
         else:
             fail(f'H1 text changed: "{h1_text[:80]}"')
     else:
         fail("No <h1> found in hero section")
 
-    # 8. JS: text scatter sets display: block (NOT inline)
-    scatter_display = re.search(r"heroH1\.style\.display\s*=\s*'block'", src)
-    if scatter_display:
-        ok("Text scatter sets h1 display to 'block'")
+    # 8. CSS: .hero h1 does NOT have display: inline
+    if not re.search(r'\.hero\s+h1\s*\{[^}]*display:\s*inline[^-]', src):
+        ok(".hero h1 does NOT set display: inline")
     else:
-        fail("Text scatter missing display='block' (may be 'inline' — DANGER)")
-
-    # 9. JS: text scatter does NOT set display: inline
-    scatter_inline = re.search(r"heroH1\.style\.display\s*=\s*'inline'", src)
-    if not scatter_inline:
-        ok("Text scatter does NOT set display: inline")
-    else:
-        fail("Text scatter sets display: inline — THIS WILL BREAK THE HEADLINE")
-
-    # 10. JS: text scatter uses word-level grouping (nowrap word wrappers)
-    scatter_words = re.search(r"white-space:\s*nowrap.*display:\s*inline-block", src)
-    if scatter_words:
-        ok("Text scatter uses nowrap word-level grouping")
-    else:
-        fail("Text scatter missing word-level nowrap grouping")
-
-    # 11. JS: text scatter splits by words (not just characters)
-    scatter_split = re.search(r"txt\.split\(\s*/\\s\+/\s*\)", src)
-    if scatter_split:
-        ok("Text scatter splits text by words")
-    else:
-        fail("Text scatter may not split by words (character-level = breaks words)")
+        fail(".hero h1 has display: inline — THIS WILL BREAK THE HEADLINE")
 
 
-# ─── LAYER 2: LIVE HEADLESS CHROME ────────────────────────────────────
+# --- LAYER 2: LIVE HEADLESS CHROME ---
 
 def find_chrome():
     """Find Chrome/Chromium binary."""
@@ -181,10 +154,8 @@ def run_live(url, screenshot_dir=None):
         print("  SKIP  Chrome/Chromium not found — skipping live checks")
         return
 
-    # Serve website locally if URL is localhost
     server_proc = None
     if "localhost" in url or "127.0.0.1" in url:
-        import socket
         port = int(url.split(":")[-1].rstrip("/")) if ":" in url.split("//")[-1] else 8765
         website_dir = os.path.join(ROOT, "website")
         server_proc = subprocess.Popen(
@@ -196,7 +167,6 @@ def run_live(url, screenshot_dir=None):
         time.sleep(1)
         url = f"http://localhost:{port}"
 
-    # Capture screenshots if requested
     if screenshot_dir:
         print("--- Screenshots ---")
         capture_screenshots(chrome_bin, url + "/index.html", screenshot_dir)
@@ -210,19 +180,16 @@ def run_live(url, screenshot_dir=None):
       var style = window.getComputedStyle(h1);
       var nbw = h1.querySelector('.no-break-word');
       var nbwWS = nbw ? window.getComputedStyle(nbw).whiteSpace : 'N/A';
-      var wordGroups = h1.querySelectorAll('span[style*="nowrap"]').length;
       return [
         'TEXT=' + text.replace(/\n/g, ' '),
         'DISPLAY=' + style.display,
         'WORD_BREAK=' + style.wordBreak,
         'HYPHENS=' + (style.hyphens || style.webkitHyphens || 'N/A'),
-        'NBW_WS=' + nbwWS,
-        'SCATTER_GROUPS=' + wordGroups
+        'NBW_WS=' + nbwWS
       ].join('|');
     })();
     """.strip()
 
-    # Create wrapper page that navigates and reports via <title>
     for w in viewports:
         wrapper = f"""<!DOCTYPE html><html><head><meta charset="utf-8">
 <script>
@@ -257,33 +224,20 @@ fetch('{url}/index.html').then(function(r){{return r.text()}}).then(function(htm
 
         fields = dict(kv.split("=", 1) for kv in data.split("|") if "=" in kv)
 
-        text = fields.get("TEXT", "")
         display = fields.get("DISPLAY", "?")
         hyphens = fields.get("HYPHENS", "?")
         nbw_ws = fields.get("NBW_WS", "?")
-        groups = int(fields.get("SCATTER_GROUPS", "0"))
 
-        # Check 1: "Receptionist" in text
-        if "Receptionist" in text:
-            ok(f"[{w}px] H1 text contains 'Receptionist'")
-        else:
-            fail(f"[{w}px] H1 text missing 'Receptionist': {text[:60]}")
-
-        # Check 2: display: block
         if display == "block":
             ok(f"[{w}px] h1 display: block")
         else:
             fail(f"[{w}px] h1 display: {display} (expected block)")
 
-        # Check 3: .no-break-word nowrap OR scatter word groups
         if nbw_ws == "nowrap":
             ok(f"[{w}px] .no-break-word white-space: nowrap")
-        elif groups >= 5:
-            ok(f"[{w}px] Text scatter has {groups} word groups (nowrap)")
         else:
-            fail(f"[{w}px] No nowrap protection (nbw={nbw_ws}, groups={groups})")
+            fail(f"[{w}px] No nowrap protection (nbw={nbw_ws})")
 
-        # Check 4: hyphens
         if hyphens in ("none", "manual"):
             ok(f"[{w}px] h1 hyphens: {hyphens}")
         else:
@@ -293,7 +247,7 @@ fetch('{url}/index.html').then(function(r){{return r.text()}}).then(function(htm
         server_proc.terminate()
 
 
-# ─── MAIN ─────────────────────────────────────────────────────────────
+# --- MAIN ---
 
 def main():
     print("Hero Headline Regression Test")
