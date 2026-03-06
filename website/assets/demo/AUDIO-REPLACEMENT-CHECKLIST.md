@@ -26,6 +26,12 @@
 7. Test on all 3 pages: index.html, pricing.html, demo-showcase.html
 8. Verify the sim-label changes to "Demo audio loaded" (green text)
 
+### Transcript Sync
+- After replacing the audio, check that transcript highlight timing matches the real recording
+- Transcript timestamps are in `demo-console.js` INDUSTRIES data (start/end per line)
+- If timing is off, adjust the `start` and `end` values to match the real audio segments
+- The waveform and output cards animate based on playback percentage, not absolute time — they auto-adapt
+
 ### Pages Using This Audio
 - `/index.html` (homepage demo console)
 - `/pricing.html` (pricing page demo)
