@@ -18,6 +18,11 @@
   <meta property="og:title" content="Free 14-Day Pilot — Never Miss Another Call">
   <meta property="og:description" content="We answer your phones for 14 days free. No card, no catch. See the results, then decide.">
   <meta property="og:url" content="https://thecalltaker.com/pilot/">
+  <meta property="og:image" content="https://thecalltaker.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free 14-Day Pilot — Never Miss Another Call">
+  <meta name="twitter:description" content="We answer your phones for 14 days free. No card, no catch. See the results, then decide.">
+  <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -174,6 +179,9 @@ a { color: inherit; text-decoration: none; }
     .faq-pilot { max-width: 600px; margin: 0 auto; }
   </style>
 <script src="../tct-tracking.js"></script>
+<link rel="stylesheet" href="/shared/ui.css">
+<link rel="stylesheet" href="/shared/carousel.css">
+<script src="/shared/ab-split.js"></script>
 </head>
 <body>
 
@@ -208,6 +216,33 @@ a { color: inherit; text-decoration: none; }
       <a href="#signup" class="btn btn-primary">Start Your Free Pilot</a>
     </div>
   </section>
+
+<!-- Pilot Social Proof Ticker -->
+<div class="tct-carousel-ticker" data-variant="pilot" data-speed="45s" style="padding: 24px 0;" data-type="testimonial">
+  <div class="tct-carousel-ticker-track">
+    <div class="tct-ticker-testimonial tct-ticker-testimonial--light">
+      <div class="tct-ticker-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="tct-ticker-quote">"Signed up for the pilot on Monday. By Wednesday we'd booked 3 after-hours jobs."</div>
+      <div class="tct-ticker-author">Mike R. &mdash; HVAC Owner</div>
+    </div>
+    <div class="tct-ticker-testimonial tct-ticker-testimonial--light">
+      <div class="tct-ticker-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="tct-ticker-quote">"The AI knew our services better than our last receptionist. We converted in 4 days."</div>
+      <div class="tct-ticker-author">Sarah T. &mdash; Plumbing Co.</div>
+    </div>
+    <div class="tct-ticker-testimonial tct-ticker-testimonial--light">
+      <div class="tct-ticker-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="tct-ticker-quote">"Zero missed calls during the 14-day pilot. That's never happened in 12 years."</div>
+      <div class="tct-ticker-author">James P. &mdash; Electrical</div>
+    </div>
+    <div class="tct-ticker-testimonial tct-ticker-testimonial--light">
+      <div class="tct-ticker-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="tct-ticker-quote">"My competitor uses The Call Taker. I found out because his reviews tripled."</div>
+      <div class="tct-ticker-author">David K. &mdash; Locksmith</div>
+    </div>
+  </div>
+</div>
+
 
   <!-- Social proof strip -->
   <section style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
@@ -556,19 +591,8 @@ a { color: inherit; text-decoration: none; }
   </div>
 </footer>
 
-<script>
-// Sticky header
-var h=document.getElementById('header');
-if(h)window.addEventListener('scroll',function(){h.classList.toggle('scrolled',window.scrollY>20);});
-// Mobile menu
-var mb=document.getElementById('menuBtn'),nv=document.getElementById('nav');
-if(mb&&nv){mb.addEventListener('click',function(){nv.classList.toggle('open');});}
-if(nv)document.querySelectorAll('#nav a').forEach(function(a){a.addEventListener('click',function(){nv.classList.remove('open');});});
-// Fade-in
-var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('visible');obs.unobserve(en.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.fade-up').forEach(function(el){obs.observe(el);});
-// FAQ accordion
-document.querySelectorAll('.faq-question').forEach(function(btn){btn.addEventListener('click',function(){var item=this.parentElement;var wasOpen=item.classList.contains('open');item.parentElement.querySelectorAll('.faq-item.open').forEach(function(el){el.classList.remove('open');});if(!wasOpen)item.classList.add('open');});});
-</script>
+<script src="/shared/ui.js" defer></script>
+<script src="/shared/carousel.js" defer></script>
+<script src="/shared/variant-b.js" defer></script>
 </body>
 </html>

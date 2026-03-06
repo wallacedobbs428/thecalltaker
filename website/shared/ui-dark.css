@@ -1,0 +1,313 @@
+/* ============================================
+   THE CALL TAKER — Shared UI Module v2 (Dark)
+   Premium header, mobile overlay, scroll bar,
+   fade-up reveals, CTA escalation for Pattern B
+   dark-theme pages. Zero dependencies.
+   ============================================ */
+
+/* ===== SCROLL PROGRESS BAR ===== */
+.tct-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #00dc82, #34d399);
+  z-index: 1100;
+  pointer-events: none;
+}
+
+/* ===== GLASSMORPHISM HEADER (Pattern B) ===== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: all .4s cubic-bezier(.4,0,.2,1);
+}
+.header.scrolled {
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom-color: rgba(255,255,255,0.06);
+  box-shadow: 0 4px 30px rgba(0,0,0,.3);
+}
+
+/* ===== NAV LINKS — underline slide animation ===== */
+.header .nav a {
+  position: relative;
+  padding-bottom: 4px;
+}
+.header .nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #00dc82;
+  border-radius: 1px;
+  transition: width .3s cubic-bezier(.4,0,.2,1);
+}
+.header .nav a:hover::after,
+.header .nav a.active::after {
+  width: 100%;
+}
+
+/* ===== HEADER CTA — ghost -> filled -> escalated ===== */
+.header .header-cta {
+  transition: all .4s cubic-bezier(.4,0,.2,1);
+  border: 2px solid transparent;
+}
+.header .header-cta.tct-ghost {
+  background: transparent;
+  border-color: #00dc82;
+  color: #00dc82;
+}
+.header .header-cta.tct-ghost:hover {
+  background: rgba(0,220,130,0.08);
+}
+.header .header-cta.filled {
+  background: #00dc82;
+  color: #000;
+  border-color: #00dc82;
+  animation: tctCtaGlowDark 2.5s ease-in-out infinite;
+}
+.header .header-cta.filled:hover {
+  background: #00c974;
+  border-color: #00c974;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0,220,130,.4);
+  animation: none;
+}
+@keyframes tctCtaGlowDark {
+  0%, 100% { box-shadow: 0 0 16px rgba(0,220,130,.18), 0 0 32px rgba(0,220,130,.06); }
+  50% { box-shadow: 0 0 24px rgba(0,220,130,.32), 0 0 48px rgba(0,220,130,.12); }
+}
+
+/* CTA escalation — 50% scroll pulse (one-shot) */
+.header .header-cta.tct-pulse {
+  animation: tctCtaPulseDark .6s cubic-bezier(.4,0,.2,1);
+}
+@keyframes tctCtaPulseDark {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,220,130,.5); }
+  50% { transform: scale(1.08); box-shadow: 0 0 0 12px rgba(0,220,130,0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,220,130,0); }
+}
+
+/* CTA escalation — 75% scroll scarcity text */
+.header .header-cta.tct-escalated {
+  background: #00dc82;
+  color: #000;
+  border-color: #00dc82;
+  animation: tctCtaGlowDark 2s ease-in-out infinite;
+}
+
+/* ===== HAMBURGER MORPH — 3-bar to X (enhanced) ===== */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1050;
+  position: relative;
+}
+.menu-toggle span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: #fff;
+  border-radius: 1px;
+  transition: all .35s cubic-bezier(.4,0,.2,1);
+}
+.menu-toggle.active span:nth-child(1),
+.menu-toggle.open span:nth-child(1) {
+  transform: translateY(5.5px) rotate(45deg);
+}
+.menu-toggle.active span:nth-child(2),
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-8px);
+}
+.menu-toggle.active span:nth-child(3),
+.menu-toggle.open span:nth-child(3) {
+  transform: translateY(-5.5px) rotate(-45deg);
+}
+
+@media (min-width: 768px) {
+  .menu-toggle { display: none; }
+}
+
+/* ===== FULLSCREEN MOBILE OVERLAY (upgraded) ===== */
+.mobile-nav.tct-upgraded {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(0,0,0,0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transform: none;
+  transition: opacity .4s, visibility .4s;
+}
+.mobile-nav.tct-upgraded.open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+/* Staggered link entries */
+.mobile-nav.tct-upgraded a {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .4s ease, transform .4s ease, color .2s;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 0;
+  border-bottom: none;
+  letter-spacing: -.02em;
+}
+.mobile-nav.tct-upgraded a:active {
+  color: #00dc82;
+  transform: scale(1.03);
+}
+.mobile-nav.tct-upgraded.open a {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mobile-nav.tct-upgraded.open a:nth-child(1) { transition-delay: .08s; }
+.mobile-nav.tct-upgraded.open a:nth-child(2) { transition-delay: .14s; }
+.mobile-nav.tct-upgraded.open a:nth-child(3) { transition-delay: .20s; }
+.mobile-nav.tct-upgraded.open a:nth-child(4) { transition-delay: .26s; }
+.mobile-nav.tct-upgraded.open a:nth-child(5) { transition-delay: .32s; }
+.mobile-nav.tct-upgraded.open a:nth-child(6) { transition-delay: .38s; }
+
+/* Mobile CTA button in overlay */
+.mobile-nav.tct-upgraded .btn {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 16px 40px;
+  background: #00dc82;
+  color: #000;
+  border-radius: 9999px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(0,220,130,.25);
+  transition: transform .2s, box-shadow .2s;
+  text-decoration: none;
+  border: none;
+}
+.mobile-nav.tct-upgraded .btn:active {
+  transform: scale(.97);
+}
+
+/* ===== FADE-UP REVEALS ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== MOBILE STICKY CALL BAR ===== */
+.tct-call-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
+  background: #00dc82;
+  color: #000;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 10px 24px 14px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.3);
+  -webkit-tap-highlight-color: transparent;
+  transition: box-shadow .4s, background .4s;
+}
+.tct-call-bar:hover,
+.tct-call-bar:active {
+  color: #000;
+  text-decoration: none;
+}
+.tct-call-bar-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tct-call-bar svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* Smart call bar — reduced after CTA click */
+.tct-call-bar.tct-reduced {
+  box-shadow: none;
+  background: #00b86e;
+}
+
+/* Smart call bar — attention pulse (one-shot) */
+.tct-call-bar.tct-attention {
+  animation: tctBarAttentionDark 1s ease-in-out;
+}
+@keyframes tctBarAttentionDark {
+  0%, 100% { transform: translateY(0); box-shadow: 0 -4px 20px rgba(0,0,0,.3); }
+  30% { transform: translateY(-4px); box-shadow: 0 -6px 28px rgba(0,220,130,.4); }
+  60% { transform: translateY(-2px); box-shadow: 0 -4px 24px rgba(0,220,130,.25); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 767px) {
+  .tct-call-bar { display: flex; }
+}
+
+/* ===== ADMIN SCOPE — only scroll progress + fade-ups ===== */
+body[data-app="admin"] .header,
+body[data-app="admin"] .mobile-nav,
+body[data-app="admin"] .tct-call-bar,
+body[data-app="admin"] .menu-toggle {
+  /* Admin pages have sidebar nav — don't touch their nav */
+}
+body[data-app="admin"] .tct-scroll-progress {
+  /* Keep scroll progress on admin */
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .tct-scroll-progress { transition: none; }
+  .header { transition: none; }
+  .header .header-cta { transition: none; animation: none; }
+  .header .header-cta.filled { animation: none; }
+  .header .header-cta.tct-pulse { animation: none; }
+  .header .header-cta.tct-escalated { animation: none; }
+  .menu-toggle span { transition: none; }
+  .mobile-nav.tct-upgraded { transition: none; }
+  .mobile-nav.tct-upgraded a { transition: none; opacity: 1; transform: none; }
+  .fade-up { opacity: 1; transform: none; transition: none; }
+  .header .nav a::after { transition: none; }
+  .tct-call-bar { transition: none; }
+  .tct-call-bar.tct-attention { animation: none; }
+}

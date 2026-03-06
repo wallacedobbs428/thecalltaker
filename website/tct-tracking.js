@@ -8,17 +8,18 @@
   'use strict';
 
   // =========================================================================
-  // A. Google Analytics 4 (gtag.js)
+  // A. Google Analytics 4 (gtag.js) — skip if already loaded by page
   // =========================================================================
-  var gtagScript = document.createElement('script');
-  gtagScript.async = true;
-  gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV';
-  document.head.appendChild(gtagScript);
-
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-29LL5GPBQV');
+  if (typeof window.gtag !== 'function') {
+    window.gtag = function(){dataLayer.push(arguments);};
+    var gtagScript = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV';
+    document.head.appendChild(gtagScript);
+    window.gtag('js', new Date());
+    window.gtag('config', 'G-29LL5GPBQV');
+  }
 
   // =========================================================================
   // B. Meta Pixel
@@ -478,23 +479,52 @@
   }
 
   // =========================================================================
-  // D. Track Key Events
+  // D1. UTM Forwarding — append stored UTMs to outbound conversion links
   // =========================================================================
+  function appendUtmsToLink(href) {
+    try {
+      var attr = JSON.parse(sessionStorage.getItem('tct_attribution') || '{}');
+      var keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','fbclid'];
+      var sep = href.indexOf('?') !== -1 ? '&' : '?';
+      keys.forEach(function(k) {
+        if (attr[k]) { href += sep + k + '=' + encodeURIComponent(attr[k]); sep = '&'; }
+      });
+    } catch(e) {}
+    return href;
+  }
+
+  // Decorate outbound links on click (pilot, book, checkout, signup, stripe)
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a[href*="/pilot"], a[href*="/book"], a[href*="/checkout"], a[href*="/signup"], a[href*="stripe.com"]');
+    if (a && a.href && !a.hasAttribute('data-utm-done')) {
+      a.href = appendUtmsToLink(a.href);
+      a.setAttribute('data-utm-done', '1');
+    }
+  }, true);
+
+  // =========================================================================
+  // D. Track Key Events (skips pages with inline tracking to avoid double-fire)
+  // =========================================================================
+  var pageHasInlineTracking = typeof window.tctTrack === 'function' || typeof window.__tctVariant !== 'undefined';
   document.addEventListener('click', function(e) {
     // Track phone call clicks (tel: links, call bar, demo phone)
     var telLink = e.target.closest('a[href*="tel:"]');
     var callBar = e.target.closest('.mobile-call-bar');
     var demoPhone = e.target.closest('.demo-phone');
     if (telLink || callBar || demoPhone) {
-      var src = callBar ? 'call_bar' : demoPhone ? 'demo_phone' : 'tel_link';
-      gtag('event', 'tct_call_click', { event_category: 'conversion', source: src });
+      if (!pageHasInlineTracking) {
+        var src = callBar ? 'call_bar' : demoPhone ? 'demo_phone' : 'tel_link';
+        window.gtag('event', 'tct_call_click', { event_category: 'conversion', source: src });
+      }
       if (typeof fbq !== 'undefined') fbq('track', 'Contact');
     }
 
     // Track CTA / pricing button clicks
     var ctaBtn = e.target.closest('.btn-primary, .btn-outline, .header-cta, .mobile-menu-cta, .rf-cta');
     if (ctaBtn) {
-      gtag('event', 'tct_cta_click', { event_category: 'conversion', event_label: ctaBtn.getAttribute('href') || '' });
+      if (!pageHasInlineTracking) {
+        window.gtag('event', 'tct_cta_click', { event_category: 'conversion', event_label: ctaBtn.getAttribute('href') || '' });
+      }
       if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
     }
   });
