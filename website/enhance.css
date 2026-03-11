@@ -1,0 +1,97 @@
+/* === ENHANCEMENT LAYER — Clean, Apple-inspired design refinements === */
+/* Loaded ON TOP of existing site. Does NOT replace anything. */
+/* Philosophy: whitespace, typography, cinematic scroll reveals, zero gimmicks. */
+
+/* Smooth scroll body (Lenis) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+/* === TYPOGRAPHY — Tighten headings, bigger presence === */
+.section-title, h1, h2, h3 {
+  letter-spacing: -0.025em;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3.25rem) !important;
+  line-height: 1.1 !important;
+  font-weight: 700 !important;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem) !important;
+  letter-spacing: -0.035em;
+  line-height: 1.05 !important;
+}
+
+.section-label {
+  font-size: 0.8rem !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase;
+  font-weight: 600 !important;
+  opacity: 0.5;
+}
+
+/* === SPACING — Clean section breathing room === */
+.section {
+  padding-top: clamp(60px, 7vw, 100px) !important;
+  padding-bottom: clamp(60px, 7vw, 100px) !important;
+}
+
+/* === GSAP REVEAL — override basic CSS transitions === */
+.gsap-enhanced .fade-up {
+  transition: none !important;
+}
+
+/* === TEXT SPLIT ANIMATION === */
+.split-line { overflow: hidden; display: block; }
+.split-word {
+  display: inline-block;
+  transform: translateY(110%);
+  will-change: transform;
+}
+
+/* === CARD REFINEMENTS — cleaner, more whitespace === */
+.feature-card, .step-card, .po-card, .pricing-card {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1) !important;
+}
+.feature-card:hover, .step-card:hover, .po-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 24px 48px -12px rgba(0,0,0,.08) !important;
+}
+
+/* === COUNTER ANIMATION === */
+.counter-animate {
+  font-variant-numeric: tabular-nums;
+}
+
+/* === PROOF STRIP — refined spacing === */
+.proof-strip {
+  padding: 28px 0 !important;
+}
+
+/* === SECTION DIVIDERS — clean hairline === */
+.section-line {
+  height: 1px;
+  background: var(--border, #e5e7eb);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* === HIDE GIMMICK ELEMENTS === */
+.gradient-mesh,
+.noise-overlay,
+.marquee-bar {
+  display: none !important;
+}
+
+/* === Reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .split-word { transform: none !important; }
+  .gsap-enhanced .fade-up { opacity: 1; transform: none; }
+}
