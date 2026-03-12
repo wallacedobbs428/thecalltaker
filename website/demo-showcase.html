@@ -30,14 +30,14 @@
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --white: #ffffff; --off-white: #f9fafb; --light: #f3f4f6; --border: #e5e7eb;
-  --text: #111827; --text-secondary: #4b5563; --text-muted: #9ca3af;
-  --navy: #1e3a5f; --navy-dark: #0f2440; --orange: #ea580c; --orange-hover: #c2410c;
-  --green: #059669; --green-light: #ecfdf5; --star: #f59e0b;
+  --white: #000; --off-white: #0a0a0a; --light: #111; --border: rgba(255,255,255,0.08);
+  --text: #fff; --text-secondary: #a1a1aa; --text-muted: #71717a;
+  --navy: #fff; --navy-dark: #fff; --orange: #00dc82; --orange-hover: #00c974;
+  --green: #00dc82; --green-light: rgba(0,220,130,0.08); --star: #fbbf24;
   --radius: 12px; --radius-lg: 16px; --radius-full: 9999px;
 }
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: #000; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
 .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
 
@@ -77,15 +77,15 @@ a { color: inherit; text-decoration: none; }
 
 /* Handoff Toggle */
 .handoff-wrap { text-align: center; margin-bottom: 40px; }
-.handoff-toggle { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: var(--off-white); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: border-color .2s; }
+.handoff-toggle { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: #000; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: border-color .2s; }
 .handoff-toggle:hover { border-color: var(--orange); }
 .handoff-toggle input { display: none; }
 .handoff-switch { width: 36px; height: 20px; border-radius: 10px; background: var(--border); position: relative; transition: background .2s; flex-shrink: 0; }
-.handoff-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .2s; }
+.handoff-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #000; transition: transform .2s; }
 .handoff-toggle input:checked ~ .handoff-switch { background: var(--orange); }
 .handoff-toggle input:checked ~ .handoff-switch::after { transform: translateX(16px); }
 .handoff-label { font-size: .82rem; font-weight: 600; color: var(--text-secondary); }
-.handoff-panel { max-width: 560px; margin: 0 auto 32px; background: var(--off-white); border: 1px solid var(--border); border-radius: 14px; padding: 20px; display: none; text-align: left; animation: fadeSlide .3s ease; }
+.handoff-panel { max-width: 560px; margin: 0 auto 32px; background: #000; border: 1px solid var(--border); border-radius: 14px; padding: 20px; display: none; text-align: left; animation: fadeSlide .3s ease; }
 .handoff-panel.show { display: block; }
 @keyframes fadeSlide { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 .handoff-panel h3 { font-size: .9rem; font-weight: 750; color: var(--navy-dark); margin-bottom: 8px; }
@@ -105,13 +105,14 @@ a { color: inherit; text-decoration: none; }
 .ba-outline:hover { border-color: rgba(255,255,255,.3); color: #fff; }
 
 /* Footer */
-.site-footer { background: var(--off-white); border-top: 1px solid rgba(0,0,0,.04); padding: 40px 0 28px; text-align: center; }
+.site-footer { background: #000; border-top: 1px solid rgba(0,0,0,.04); padding: 40px 0 28px; text-align: center; }
 .site-footer p { font-size: .8rem; color: var(--text-muted); }
 .site-footer a { color: var(--text-secondary); margin: 0 12px; font-size: .82rem; }
 .site-footer a:hover { color: var(--orange); }
 </style>
 <link rel="stylesheet" href="/shared/premium.css">
 <link rel="stylesheet" href="/shared/demo-console.css">
+<link rel="stylesheet" href="/shared/ui-dark.css">
 </head>
 <body>
 
@@ -310,5 +311,6 @@ a { color: inherit; text-decoration: none; }
 </script>
 <script src="/shared/command-palette.js" defer></script>
 <script src="/shared/share-demo.js" defer></script>
+<script src="/shared/ui-dark.js" defer></script>
 </body>
 </html>
