@@ -15,11 +15,11 @@
     hvac: {
       label: 'HVAC',
       transcript: [
-        { speaker: 'Caller', text: 'My AC stopped working and it\u2019s 95 degrees in here. Can someone come out today?', start: 0, end: 3.5 },
-        { speaker: 'AI', text: 'I\u2019m sorry to hear that \u2014 I can get a technician out to you right away. What\u2019s your address?', start: 3.5, end: 7 },
-        { speaker: 'Caller', text: '142 Oak Street, Nashville.', start: 7, end: 9 },
-        { speaker: 'AI', text: 'Got it. I have a tech available this afternoon between 2 and 4 PM. I\u2019ll text you a confirmation with all the details.', start: 9, end: 13 },
-        { speaker: 'Caller', text: 'That\u2019s perfect, thank you.', start: 13, end: 15 }
+        { speaker: 'Caller', text: 'My AC stopped working and it\u2019s 95 degrees in here. Can someone come out today?', start: 0, end: 5 },
+        { speaker: 'AI', text: 'I\u2019m sorry to hear that \u2014 I can get a technician out to you right away. What\u2019s your address?', start: 5, end: 11 },
+        { speaker: 'Caller', text: '142 Oak Street, Nashville.', start: 11, end: 14 },
+        { speaker: 'AI', text: 'Got it. I have a tech available this afternoon between 2 and 4 PM. I\u2019ll text you a confirmation with all the details.', start: 14, end: 22 },
+        { speaker: 'Caller', text: 'That\u2019s perfect, thank you.', start: 22, end: 25 }
       ],
       summary: { name: 'Sarah M.', issue: 'AC not cooling \u2014 95\u00b0 inside', location: '142 Oak St, Nashville', urgency: 'High \u2014 emergency' },
       booking: { service: 'AC Repair', time: 'Today 2\u20134 PM', tech: 'Next available', address: '142 Oak St, Nashville' },
@@ -29,11 +29,11 @@
     plumbing: {
       label: 'Plumbing',
       transcript: [
-        { speaker: 'Caller', text: 'I have a burst pipe flooding my kitchen! I need someone now!', start: 0, end: 3 },
-        { speaker: 'AI', text: 'I\u2019m dispatching an emergency plumber right away. What\u2019s your address so I can send the closest tech?', start: 3, end: 6.5 },
-        { speaker: 'Caller', text: '88 Elm Drive, apartment 4B.', start: 6.5, end: 8.5 },
-        { speaker: 'AI', text: 'Got it. Turn off the main water valve under your sink if you can. A plumber will be there within 45 minutes.', start: 8.5, end: 12.5 },
-        { speaker: 'Caller', text: 'Okay, I\u2019ll do that. Thank you so much.', start: 12.5, end: 15 }
+        { speaker: 'Caller', text: 'I have a burst pipe flooding my kitchen! I need someone now!', start: 0, end: 4 },
+        { speaker: 'AI', text: 'I\u2019m dispatching an emergency plumber right away. What\u2019s your address so I can send the closest tech?', start: 4, end: 10 },
+        { speaker: 'Caller', text: '88 Elm Drive, apartment 4B.', start: 10, end: 13 },
+        { speaker: 'AI', text: 'Got it. Turn off the main water valve under your sink if you can. A plumber will be there within 45 minutes.', start: 13, end: 21 },
+        { speaker: 'Caller', text: 'Okay, I\u2019ll do that. Thank you so much.', start: 21, end: 25 }
       ],
       summary: { name: 'Mike R.', issue: 'Burst pipe \u2014 kitchen flooding', location: '88 Elm Dr, Apt 4B', urgency: 'Critical \u2014 water damage' },
       booking: { service: 'Emergency Pipe Repair', time: 'Within 45 min', tech: 'Nearest available', address: '88 Elm Dr, Apt 4B' },
@@ -43,11 +43,11 @@
     dental: {
       label: 'Dental',
       transcript: [
-        { speaker: 'Caller', text: 'I need to reschedule my cleaning appointment. I can\u2019t make it Thursday.', start: 0, end: 3.5 },
-        { speaker: 'AI', text: 'No problem at all. Let me check available times. How does next Tuesday at 10 AM work?', start: 3.5, end: 7 },
-        { speaker: 'Caller', text: 'Tuesday works great.', start: 7, end: 9 },
-        { speaker: 'AI', text: 'Perfect. I\u2019ve rescheduled you for Tuesday at 10 AM. You\u2019ll get a text confirmation shortly. Anything else?', start: 9, end: 13 },
-        { speaker: 'Caller', text: 'That\u2019s it, thank you!', start: 13, end: 15 }
+        { speaker: 'Caller', text: 'I need to reschedule my cleaning appointment. I can\u2019t make it Thursday.', start: 0, end: 5 },
+        { speaker: 'AI', text: 'No problem at all. Let me check available times. How does next Tuesday at 10 AM work?', start: 5, end: 11 },
+        { speaker: 'Caller', text: 'Tuesday works great.', start: 11, end: 13 },
+        { speaker: 'AI', text: 'Perfect. I\u2019ve rescheduled you for Tuesday at 10 AM. You\u2019ll get a text confirmation shortly. Anything else?', start: 13, end: 21 },
+        { speaker: 'Caller', text: 'That\u2019s it, thank you!', start: 21, end: 24 }
       ],
       summary: { name: 'Lisa K.', issue: 'Reschedule cleaning', location: 'Existing patient', urgency: 'Low \u2014 routine' },
       booking: { service: 'Dental Cleaning', time: 'Tuesday 10:00 AM', tech: 'Dr. Williams', address: 'On file' },
@@ -57,10 +57,10 @@
     legal: {
       label: 'Legal',
       transcript: [
-        { speaker: 'Caller', text: 'I was just in a car accident and I need to talk to an attorney.', start: 0, end: 3.5 },
-        { speaker: 'AI', text: 'I\u2019m sorry to hear that. Are you safe right now? Let me get your information so an attorney can call you back as soon as possible.', start: 3.5, end: 7.5 },
-        { speaker: 'Caller', text: 'Yes, I\u2019m okay. My name is James and the accident happened on I-65.', start: 7.5, end: 10.5 },
-        { speaker: 'AI', text: 'Thank you, James. I have your number. An attorney will call you within the hour. Don\u2019t speak to any insurance adjusters until then.', start: 10.5, end: 15 }
+        { speaker: 'Caller', text: 'I was just in a car accident and I need to talk to an attorney.', start: 0, end: 4 },
+        { speaker: 'AI', text: 'I\u2019m sorry to hear that. Are you safe right now? Let me get your information so an attorney can call you back as soon as possible.', start: 4, end: 12 },
+        { speaker: 'Caller', text: 'Yes, I\u2019m okay. My name is James and the accident happened on I-65.', start: 12, end: 17 },
+        { speaker: 'AI', text: 'Thank you, James. I have your number. An attorney will call you within the hour. Don\u2019t speak to any insurance adjusters until then.', start: 17, end: 25 }
       ],
       summary: { name: 'James T.', issue: 'Car accident \u2014 I-65', location: 'Nashville area', urgency: 'High \u2014 time-sensitive' },
       booking: { service: 'Free Consultation', time: 'Callback within 1 hour', tech: 'Next available attorney', address: 'Phone consultation' },
@@ -70,11 +70,11 @@
     medspa: {
       label: 'Med Spa',
       transcript: [
-        { speaker: 'Caller', text: 'Hi, I\u2019d like to book a Botox appointment. Do you have anything this week?', start: 0, end: 3.5 },
-        { speaker: 'AI', text: 'Absolutely! We have openings on Wednesday at 2 PM and Friday at 11 AM. Which works better for you?', start: 3.5, end: 7.5 },
-        { speaker: 'Caller', text: 'Wednesday at 2 sounds great.', start: 7.5, end: 9.5 },
-        { speaker: 'AI', text: 'You\u2019re all set for Wednesday at 2 PM. Is this your first visit? I\u2019ll text you a link to fill out your intake form.', start: 9.5, end: 13.5 },
-        { speaker: 'Caller', text: 'Yes, first time. Thanks!', start: 13.5, end: 15 }
+        { speaker: 'Caller', text: 'Hi, I\u2019d like to book a Botox appointment. Do you have anything this week?', start: 0, end: 5 },
+        { speaker: 'AI', text: 'Absolutely! We have openings on Wednesday at 2 PM and Friday at 11 AM. Which works better for you?', start: 5, end: 11 },
+        { speaker: 'Caller', text: 'Wednesday at 2 sounds great.', start: 11, end: 14 },
+        { speaker: 'AI', text: 'You\u2019re all set for Wednesday at 2 PM. Is this your first visit? I\u2019ll text you a link to fill out your intake form.', start: 14, end: 22 },
+        { speaker: 'Caller', text: 'Yes, first time. Thanks!', start: 22, end: 25 }
       ],
       summary: { name: 'Amanda P.', issue: 'Botox appointment', location: 'New patient', urgency: 'Normal' },
       booking: { service: 'Botox Treatment', time: 'Wednesday 2:00 PM', tech: 'First available', address: 'New patient \u2014 intake sent' },
@@ -84,10 +84,10 @@
     other: {
       label: 'Other',
       transcript: [
-        { speaker: 'Caller', text: 'I need someone to come look at my garage door. It won\u2019t close all the way.', start: 0, end: 3.5 },
-        { speaker: 'AI', text: 'I can help with that. Is the door stuck open right now, or does it go partway down and come back up?', start: 3.5, end: 7.5 },
-        { speaker: 'Caller', text: 'It goes about halfway and then reverses.', start: 7.5, end: 10 },
-        { speaker: 'AI', text: 'That\u2019s usually a sensor or spring issue. I have a tech available tomorrow morning between 9 and 11. Should I book that?', start: 10, end: 15 }
+        { speaker: 'Caller', text: 'I need someone to come look at my garage door. It won\u2019t close all the way.', start: 0, end: 5 },
+        { speaker: 'AI', text: 'I can help with that. Is the door stuck open right now, or does it go partway down and come back up?', start: 5, end: 12 },
+        { speaker: 'Caller', text: 'It goes about halfway and then reverses.', start: 12, end: 15 },
+        { speaker: 'AI', text: 'That\u2019s usually a sensor or spring issue. I have a tech available tomorrow morning between 9 and 11. Should I book that?', start: 15, end: 24 }
       ],
       summary: { name: 'David W.', issue: 'Garage door won\u2019t close', location: 'Residential', urgency: 'Medium' },
       booking: { service: 'Garage Door Repair', time: 'Tomorrow 9\u201311 AM', tech: 'Next available', address: 'Pending address' },
@@ -136,9 +136,11 @@
     var panels = root.querySelectorAll('.dc-panel');
     var indBtns = root.querySelectorAll('.dc-ind');
 
-    // State
+    // State — auto-calculate duration from transcript
     var playing = false;
-    var audioDuration = 15;
+    var initData = INDUSTRIES[industry];
+    var lastLine = initData && initData.transcript ? initData.transcript[initData.transcript.length - 1] : null;
+    var audioDuration = lastLine ? lastLine.end : 25;
     var currentTime = 0;
     var simInterval = null;
     var done = false;
@@ -146,6 +148,63 @@
     var hasRealAudio = false;
     var bars = [];
     var barCount = 44;
+
+    // === TTS (text-to-speech) for simulated playback ===
+    var ttsSupported = 'speechSynthesis' in window;
+    var ttsSpokenLines = {};  // track which lines have been spoken by start time
+    var ttsCallerVoice = null;
+    var ttsAIVoice = null;
+
+    function ttsPickVoices() {
+      if (!ttsSupported) return;
+      var voices = speechSynthesis.getVoices();
+      if (!voices.length) return;
+      // Prefer English voices; use different ones for Caller vs AI
+      var en = voices.filter(function(v) { return v.lang && v.lang.startsWith('en'); });
+      if (!en.length) en = voices;
+      // Try to pick a male-sounding for caller and female-sounding for AI
+      var female = en.filter(function(v) { return /samantha|victoria|karen|fiona|allison|susan|zira|female/i.test(v.name); });
+      var male = en.filter(function(v) { return /daniel|alex|thomas|david|james|male|guy/i.test(v.name); });
+      ttsCallerVoice = (male.length ? male[0] : en[0]) || null;
+      ttsAIVoice = (female.length ? female[0] : (en.length > 1 ? en[1] : en[0])) || null;
+    }
+    if (ttsSupported) {
+      ttsPickVoices();
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = ttsPickVoices;
+      }
+    }
+
+    function ttsSpeak(text, isCaller) {
+      if (!ttsSupported || REDUCED) return;
+      var utter = new SpeechSynthesisUtterance(text);
+      utter.rate = isCaller ? 1.05 : 0.95;
+      utter.pitch = isCaller ? 1.1 : 0.9;
+      utter.volume = 1;
+      var voice = isCaller ? ttsCallerVoice : ttsAIVoice;
+      if (voice) utter.voice = voice;
+      speechSynthesis.speak(utter);
+    }
+
+    function ttsCancel() {
+      if (ttsSupported) {
+        speechSynthesis.cancel();
+      }
+      ttsSpokenLines = {};
+    }
+
+    function ttsSyncLine(t) {
+      if (!ttsSupported || hasRealAudio || REDUCED) return;
+      var data = INDUSTRIES[currentIndustry];
+      if (!data || !data.transcript) return;
+      data.transcript.forEach(function(line) {
+        var key = line.start + ':' + line.speaker;
+        if (t >= line.start && !ttsSpokenLines[key]) {
+          ttsSpokenLines[key] = true;
+          ttsSpeak(line.text, line.speaker === 'Caller');
+        }
+      });
+    }
 
     // Generate waveform
     for (var i = 0; i < barCount; i++) {
@@ -167,11 +226,11 @@
         if (audioEl.duration > 0 && isFinite(audioEl.duration)) {
           var simLabel = root.querySelector('.dc-sim-label');
           if (audioEl.duration < 5) {
-            // Placeholder file — too short to be a real demo recording
+            // Placeholder file — use TTS-voiced playback
             hasRealAudio = false;
             if (simLabel) {
-              simLabel.textContent = 'Simulated demo (real recording coming soon)';
-              simLabel.classList.remove('dc-audio-loaded');
+              simLabel.textContent = ttsSupported ? 'AI-voiced demo' : 'Simulated demo';
+              simLabel.classList.toggle('dc-audio-loaded', ttsSupported);
             }
           } else {
             audioDuration = audioEl.duration;
@@ -193,8 +252,8 @@
       audioEl.addEventListener('error', function() {
         var simLabel = root.querySelector('.dc-sim-label');
         if (simLabel) {
-          simLabel.textContent = simLabel.getAttribute('data-sim');
-          simLabel.classList.remove('dc-audio-loaded');
+          simLabel.textContent = ttsSupported ? 'AI-voiced demo' : simLabel.getAttribute('data-sim');
+          simLabel.classList.toggle('dc-audio-loaded', ttsSupported);
         }
       });
     }
@@ -239,6 +298,9 @@
     function loadIndustry(ind) {
       var data = INDUSTRIES[ind];
       if (!data) return;
+      // Recalculate duration from transcript
+      var last = data.transcript[data.transcript.length - 1];
+      if (last && !hasRealAudio) audioDuration = last.end;
       // Rebuild panels content
       root.querySelector('[data-panel="transcript"]').innerHTML = buildTranscriptPanel(data.transcript);
       root.querySelector('[data-panel="summary"]').innerHTML = buildSummaryPanel(data.summary);
@@ -246,6 +308,7 @@
       root.querySelector('[data-panel="text"]').innerHTML = buildTextPanel(data.textMsg);
       // Reset refs
       completeEl = root.querySelector('.dc-complete');
+      if (durationEl) durationEl.textContent = '0:00 / ' + fmt(audioDuration);
     }
 
     // === Playback ===
@@ -284,6 +347,7 @@
       setPlayIcon('play');
       if (hasRealAudio) audioEl.pause();
       if (simInterval) { clearInterval(simInterval); simInterval = null; }
+      ttsCancel();
     }
 
     function startSimulated() {
@@ -313,9 +377,10 @@
       if (durationEl) durationEl.textContent = fmt(currentTime) + ' / ' + fmt(audioDuration);
       // Progress
       if (progressFill) progressFill.style.width = (pct * 100) + '%';
-      // Transcript sync
+      // Transcript sync + TTS
       try { document.dispatchEvent(new CustomEvent('tct:console-time', { detail: { time: currentTime } })); } catch(e) {}
       syncTranscript(currentTime);
+      ttsSyncLine(currentTime);
       // Summary live-fill
       fillSummary(pct);
       // Booking lock
@@ -352,8 +417,9 @@
       root.querySelector('.dc-booking') && root.querySelector('.dc-booking').classList.remove('locked');
       var typeEl = root.querySelector('.dc-text-type');
       if (typeEl) typeEl.classList.remove('revealed');
-      // Reset transcript
+      // Reset transcript + TTS
       root.querySelectorAll('.dc-line').forEach(function(l) { l.classList.remove('highlight', 'spoken'); });
+      ttsCancel();
       if (hasRealAudio) audioEl.currentTime = 0;
     }
 
@@ -446,7 +512,7 @@
     html += '<div class="dc-player">';
     html += '<button class="dc-play" aria-label="Play demo call"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg></button>';
     html += '<div class="dc-waveform"></div>';
-    html += '<span class="dc-duration">0:00 / 0:15</span>';
+    html += '<span class="dc-duration">0:00 / 0:25</span>';
     html += '</div>';
     html += '<div class="dc-progress"><div class="dc-progress-fill"></div></div>';
     // Tabs
