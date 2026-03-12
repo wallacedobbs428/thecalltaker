@@ -19,23 +19,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --white: #ffffff;
-      --off-white: #f9fafb;
-      --light: #f3f4f6;
-      --border: #e5e7eb;
-      --text: #111827;
-      --text-secondary: #4b5563;
-      --text-muted: #9ca3af;
-      --navy: #1e3a5f;
-      --navy-dark: #0f2440;
-      --orange: #ea580c;
-      --orange-hover: #c2410c;
-      --orange-light: #fff7ed;
-      --green: #059669;
-      --green-light: #ecfdf5;
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      --white: #000;
+      --off-white: #0a0a0a;
+      --light: #111;
+      --border: rgba(255,255,255,0.08);
+      --text: #fff;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --navy: #fff;
+      --navy-dark: #fff;
+      --orange: #00dc82;
+      --orange-hover: #00c974;
+      --orange-light: rgba(0,220,130,0.06);
+      --green: #00dc82;
+      --green-light: rgba(0,220,130,0.08);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+      --shadow: 0 4px 6px -1px rgba(0,0,0,.4), 0 2px 4px -2px rgba(0,0,0,.3);
+      --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.5), 0 4px 6px -4px rgba(0,0,0,.3);
       --radius: 12px;
       --radius-full: 9999px;
     }
@@ -45,7 +45,7 @@
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--text);
-      background: var(--off-white);
+      background: #000;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
@@ -97,7 +97,7 @@
       .mobile-toggle { display: flex; }
       .nav-links {
         display: none; position: absolute; top: 72px; left: 0; right: 0;
-        background: var(--white); flex-direction: column;
+        background: #000; flex-direction: column;
         padding: 16px 24px; border-bottom: 1px solid var(--border);
         box-shadow: var(--shadow-lg);
       }
@@ -125,7 +125,7 @@
     }
 
     .tracker-card {
-      background: var(--white);
+      background: #000;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 32px;
@@ -161,13 +161,13 @@
       padding: 10px 14px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      background: var(--off-white);
+      background: #000;
       transition: border-color 0.2s;
     }
     .info-field input:focus {
       outline: none;
       border-color: var(--orange);
-      background: var(--white);
+      background: #000;
     }
 
     @media (max-width: 500px) {
@@ -187,7 +187,7 @@
       padding-left: 8px; padding-right: 8px;
     }
     .checklist-item:last-child { border-bottom: none; }
-    .checklist-item:hover { background: var(--off-white); }
+    .checklist-item:hover { background: #000; }
 
     .checklist-item input[type="checkbox"] {
       -webkit-appearance: none; appearance: none;
@@ -264,14 +264,14 @@
       padding: 16px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      background: var(--off-white);
+      background: #000;
       resize: vertical;
       transition: border-color 0.2s;
     }
     .notes-area:focus {
       outline: none;
       border-color: var(--orange);
-      background: var(--white);
+      background: #000;
     }
     .notes-area::placeholder { color: var(--text-muted); }
 
@@ -350,19 +350,19 @@
     /* ── Print Styles ── */
     @media print {
       .site-header, .site-footer, .mobile-toggle, .btn-row, .save-toast { display: none !important; }
-      body { background: white; }
+      body { background: #000; }
       .tracker { margin: 0; padding: 0; max-width: 100%; }
-      .tracker-card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; page-break-inside: avoid; }
+      .tracker-card { box-shadow: none; border: 1px solid rgba(255,255,255,0.08); break-inside: avoid; page-break-inside: avoid; }
       .checklist-item input[type="checkbox"] {
         -webkit-appearance: auto; appearance: auto;
         width: 16px; height: 16px;
       }
       .info-field input { border: none; background: none; padding: 4px 0; }
-      .notes-area { border: 1px solid #ddd; background: none; }
+      .notes-area { border: 1px solid rgba(255,255,255,0.08); background: none; }
       .page-title { padding-top: 0; }
     }
   </style>
-<link rel="stylesheet" href="/shared/ui.css">
+<link rel="stylesheet" href="/shared/ui-dark.css">
 </head>
 <body>
 
@@ -661,6 +661,6 @@
   restoreState();
 </script>
 
-<script src="/shared/ui.js" defer></script>
+<script src="/shared/ui-dark.js" defer></script>
 </body>
 </html>
