@@ -510,7 +510,7 @@ a { color: inherit; text-decoration: none; }
     <div class="fallback-form" id="fallback-form">
       <h3>Or, tell us when works best</h3>
       <p class="form-sub">If the calendar above isn't loading, fill this out and we'll confirm your time within the hour.</p>
-      <form action="https://services.leadconnectorhq.com/hooks/YOUR_WEBHOOK_ID" method="POST">
+      <form id="fallback-demo-form" onsubmit="return submitFallbackForm(event)">
         <div class="form-grid">
           <div class="form-group">
             <label for="name">Your Name *</label>
@@ -590,5 +590,90 @@ a { color: inherit; text-decoration: none; }
 
 <script>if(!window.__tctUILoaded){window.__tctScriptJsOK=true;}</script>
 <script src="/shared/ui-dark.js" defer></script>
+<script>
+function submitFallbackForm(e) {
+  e.preventDefault();
+  var form = document.getElementById("fallback-demo-form");
+  var btn = form.querySelector(".btn-submit");
+  var origText = btn.textContent;
+  btn.textContent = "Submitting...";
+  btn.disabled = true;
+
+  var name = (form.querySelector("#name") || {}).value || "";
+  var email = (form.querySelector("#email") || {}).value || "";
+  var phone = (form.querySelector("#phone") || {}).value || "";
+  var company = (form.querySelector("#company") || {}).value || "";
+  var time = (form.querySelector("#time") || {}).value || "";
+  var plan = (form.querySelector("#plan") || {}).value || "";
+  var message = (form.querySelector("#message") || {}).value || "";
+  var industry = window.location.pathname.replace("/industries/","").replace(".html","").replace("/","");
+
+  if (!name || !email || !phone) {
+    alert("Please fill in the required fields.");
+    btn.textContent = origText;
+    btn.disabled = false;
+    return false;
+  }
+
+  var nameParts = name.trim().split(" ");
+  var firstName = nameParts[0] || "";
+  var lastName = nameParts.slice(1).join(" ") || "";
+  var tags = ["industry-page-lead", "industry-" + industry, "demo-request"];
+  var notes = "Demo request from " + industry + " industry page";
+  if (time) notes += "\nPreferred time: " + time;
+  if (plan) notes += "\nInterested in: " + plan;
+  if (message) notes += "\nMessage: " + message;
+  if (company) notes += "\nCompany: " + company;
+
+  fetch("https://services.leadconnectorhq.com/contacts/", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35",
+      "Version": "2021-07-28",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      locationId: "tQb9YmrGDrdVUJYPKrsY",
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+      companyName: company,
+      tags: tags,
+      source: "Industry Page - " + industry
+    })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    var cid = data.contact ? data.contact.id : null;
+    if (cid) {
+      fetch("https://services.leadconnectorhq.com/contacts/" + cid + "/notes", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35",
+          "Version": "2021-07-28",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ body: notes })
+      }).catch(function(){});
+    }
+    fetch("https://ntfy.sh/tct-urgent-Hk9UOEZR", {
+      method: "POST",
+      headers: {
+        "Title": "INDUSTRY PAGE LEAD: " + (company || name),
+        "Priority": "high",
+        "Tags": "rotating_light,phone"
+      },
+      body: "Name: " + name + "\nCompany: " + company + "\nPhone: " + phone + "\nEmail: " + email + "\nIndustry: " + industry + "\nPlan: " + (plan || "N/A") + "\nTime: " + (time || "N/A")
+    }).catch(function(){});
+    form.innerHTML = "<div style="text-align:center;padding:2rem"><h3 style="color:var(--green);margin-bottom:.5rem">Request Received!</h3><p style="color:var(--text-2)">We'll reach out within the hour to schedule your demo.</p><p style="margin-top:1rem"><a href="tel:+16157845747" style="color:var(--green);font-weight:700">Or call now: (615) 784-5747</a></p></div>";
+  }).catch(function() {
+    btn.textContent = origText;
+    btn.disabled = false;
+    alert("Something went wrong. Please call us at (615) 784-5747.");
+  });
+
+  if (typeof gtag === "function") gtag("event", "demo_request", { event_category: "conversion", industry: industry });
+  return false;
+}
+</script>
 </body>
 </html>
