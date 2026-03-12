@@ -29,7 +29,7 @@ GHL_BASE = "https://services.leadconnectorhq.com"
 NTFY_OPS_TOPIC = "tct-xK9mW4vR7pLd"
 NTFY_WAR_TOPIC = "tct-warroom-Kx7mN9pQ"
 
-FROM_EMAIL = "wallacemdobbs@icloud.com"
+FROM_EMAIL = "thecalltakerai@gmail.com"
 
 BLAST_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(BLAST_DIR, "arizona-blast-log.txt")
@@ -187,7 +187,7 @@ def build_email_html(first_name, company_name, city):
 
 <p>Would you be open to a quick demo? Takes 15 minutes and you'll actually call the AI yourself so you can hear how it sounds.</p>
 
-<p>Just reply "show me" and I'll send over some times. Or book directly: <a href="https://thecalltaker.com/demo.html">thecalltaker.com/demo</a></p>
+<p>Just reply "show me" and I'll send over some times. Or book directly: <a href="https://thecalltaker.com/book.html">thecalltaker.com/book</a></p>
 
 <p>— Wallace</p>
 

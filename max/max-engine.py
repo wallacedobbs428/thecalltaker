@@ -41,9 +41,9 @@ NTFY_WAR_TOPIC = "tct-warroom-Kx7mN9pQ"
 
 DEMO_LINE = "(615) 784-5747"
 DEMO_LINE_NUMBER = "+16157845747"
-DEMO_URL = "https://thecalltaker.com/demo.html"
-CALENDAR_URL = "https://thecalltaker.com/demo.html"
-FROM_EMAIL = "wallacemdobbs@icloud.com"
+DEMO_URL = "https://thecalltaker.com/demo-showcase.html"
+CALENDAR_URL = "https://thecalltaker.com/book.html"
+FROM_EMAIL = "thecalltakerai@gmail.com"
 FROM_NAME = "Wallace Dobbs"
 
 MAX_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -97,14 +97,38 @@ def get_weather(city):
         return None
 
 
+def get_weather_condition(city):
+    """Get current weather condition string for a city via wttr.in."""
+    if not city:
+        return None
+    try:
+        url = f"https://wttr.in/{city.replace(' ', '+')}?format=%C"
+        req = Request(url, headers={"User-Agent": "MaxEngine/3.0"})
+        with urlopen(req, timeout=5) as resp:
+            return resp.read().decode().strip().lower()
+    except:
+        return None
+
+
+STORM_KEYWORDS = ["thunder", "storm", "tornado", "hail", "severe", "hurricane", "blizzard", "ice"]
+
+
 def get_weather_angle(city):
-    """Return a weather-triggered email angle if extreme temps detected."""
+    """Return a weather-triggered email angle if extreme temps or storm conditions detected."""
     temp = get_weather(city)
+    condition = get_weather_condition(city)
+
+    # Storm condition detection — triggers on active severe weather
+    if condition and any(kw in condition for kw in STORM_KEYWORDS):
+        return f"Severe weather hitting {city} right now — {condition}. When storms knock out systems, your phone explodes. Every missed call is a lost emergency job."
+
     if temp is None:
         return None
-    if temp >= 90:
+    # Heat: AC emergency threshold (lowered for spring/shoulder season)
+    if temp >= 85:
         return f"Temperatures hitting {temp}°F in {city} — your phone is about to ring off the hook. Every missed call is a lost AC job."
-    elif temp <= 32:
+    # Cold: heating emergency threshold
+    elif temp <= 35:
         return f"It's {temp}°F in {city} right now. When a furnace dies tonight, your customer calls once. Voicemail means they call someone else."
     return None
 
@@ -134,7 +158,7 @@ WARM_FOLLOWUP_DAY5 = {
 <p>Quick reminder — you can hear exactly what your customers would experience by calling our demo line:</p>
 <p style="font-size:18px;font-weight:bold;text-align:center;">(615) 784-5747</p>
 <p>It picks up in under 2 seconds. Ask it anything — it handles scheduling, emergency calls, after-hours, you name it.</p>
-<p>Or if you'd rather, grab a 15-minute slot and I'll walk you through it personally: <a href="https://thecalltaker.com/demo.html">Book a Demo</a></p>
+<p>Or if you'd rather, grab a 15-minute slot and I'll walk you through it personally: <a href="https://thecalltaker.com/book.html">Book a Demo</a></p>
 <p>— Wallace</p>""",
 }
 
@@ -175,7 +199,7 @@ DEMO_FOLLOWUP_EMAIL = {
 <p>What you heard is exactly what your customers would experience when they call {{companyName}} after hours, on weekends, or when your team is busy.</p>
 <p>Every call answered. Every job booked. Every detail texted to you. 24/7.</p>
 <p>Want to set it up for {{companyName}}? Takes 48 hours and $497/mo — no contracts, cancel anytime.</p>
-<p>Grab a quick slot and I'll walk you through it: <a href="https://thecalltaker.com/demo.html">Book a Demo</a></p>
+<p>Grab a quick slot and I'll walk you through it: <a href="https://thecalltaker.com/book.html">Book a Demo</a></p>
 <p>— Wallace Dobbs<br>The Call Taker</p>""",
 }
 
