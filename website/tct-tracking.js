@@ -11,13 +11,15 @@
   // A. Google Analytics 4 (gtag.js) — skip if already loaded by page
   // =========================================================================
   window.dataLayer = window.dataLayer || [];
-  if (typeof window.gtag !== 'function' && !document.querySelector('script[src*="gtag/js?id=G-29LL5GPBQV"]')) {
-    window.gtag = function(){dataLayer.push(arguments);};
-    var gtagScript = document.createElement('script');
-    gtagScript.async = true;
-    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV';
-    document.head.appendChild(gtagScript);
-    window.gtag('js', new Date());
+  if (!document.querySelector('script[src*="gtag/js?id=G-29LL5GPBQV"]')) {
+    if (typeof window.gtag !== 'function') {
+      window.gtag = function(){dataLayer.push(arguments);};
+      var gtagScript = document.createElement('script');
+      gtagScript.async = true;
+      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV';
+      document.head.appendChild(gtagScript);
+      window.gtag('js', new Date());
+    }
     window.gtag('config', 'G-29LL5GPBQV');
   }
 

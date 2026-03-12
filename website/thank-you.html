@@ -22,28 +22,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
 
-  <!-- Google Analytics 4 — Replace G-XXXXXXXXXX with your GA4 Measurement ID -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script> -->
-
-  <!-- Meta/Facebook Pixel — Replace YOUR_PIXEL_ID with your actual Pixel ID -->
-  <script>
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-    document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'YOUR_PIXEL_ID');
-    fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
-
-  <!-- Conversion tracking — fires on page load after Pixel is ready -->
+  <!-- Conversion tracking — fires on page load after tct-tracking.js loads GA4 + Pixel -->
   <script>
     window.addEventListener('load', function() {
       // Meta Pixel — Lead conversion
@@ -168,5 +147,6 @@
   <script>if(!window.__tctUILoaded){window.__tctScriptJsOK=true;}</script>
 <script src="script.js"></script>
 <script src="/shared/ui-dark.js" defer></script>
+<script src="tct-tracking.js"></script>
 </body>
 </html>
