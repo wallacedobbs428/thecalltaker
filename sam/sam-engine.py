@@ -39,7 +39,7 @@ GHL_BASE = "https://services.leadconnectorhq.com"
 NTFY_OPS_TOPIC = "tct-xK9mW4vR7pLd"
 NTFY_WAR_TOPIC = "tct-warroom-Kx7mN9pQ"
 
-FROM_EMAIL = "wallacemdobbs@icloud.com"
+FROM_EMAIL = "thecalltakerai@gmail.com"
 FROM_NAME = "Wallace Dobbs"
 DEMO_LINE = "(615) 784-5747"
 
