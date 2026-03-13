@@ -680,6 +680,66 @@ a { color: inherit; text-decoration: none; }
   .subtitle-mobile { display: block; }
 }
 
+/* ===== LIVE ACTIVITY TICKER ===== */
+.live-ticker {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 90;
+  background: rgba(0,0,0,.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,220,130,.15);
+  border-radius: 100px;
+  padding: 10px 20px;
+  opacity: 0;
+  transition: opacity .5s, transform .5s;
+  pointer-events: none;
+}
+.live-ticker.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.live-ticker.slide-up { transform: translateX(-50%) translateY(8px); opacity: 0; }
+.live-ticker-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.live-ticker-dot {
+  width: 8px;
+  height: 8px;
+  background: #00dc82;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+.live-ticker-text {
+  font-size: .8rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.85);
+  letter-spacing: -.01em;
+}
+@media (max-width: 767px) {
+  .live-ticker { bottom: 72px; padding: 8px 16px; max-width: calc(100% - 32px); }
+  .live-ticker-text { font-size: .72rem; }
+  .live-ticker-inner { white-space: normal; }
+}
+
+/* ===== GSAP SCROLL REVEAL ===== */
+.gs-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: opacity, transform;
+}
+.gs-reveal.revealed {
+  opacity: 1;
+  transform: none;
+  transition: opacity .6s ease, transform .6s ease;
+}
+
 </style>
 <link rel="stylesheet" href="/shared/below-fold.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="/shared/below-fold.css"></noscript>
@@ -765,6 +825,7 @@ a { color: inherit; text-decoration: none; }
       <li><a href="/pricing.html">Pricing</a></li>
       <li><a href="/demo-showcase.html">Demo</a></li>
       <li><a href="/case-studies/">Case Studies</a></li>
+      <li><a href="/compare.html">Why Us</a></li>
       <li><a href="tel:+16157845747" class="nav-demo">Call Demo: (615) 784-5747</a></li>
     </ul>
     <a href="/pilot/" class="header-cta" id="headerCta">Start Free Pilot</a>
@@ -780,9 +841,18 @@ a { color: inherit; text-decoration: none; }
     <li><a href="#features">Features</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="/case-studies/">Case Studies</a></li>
+    <li><a href="/compare.html">Why Us</a></li>
     <li><a href="/pilot/" class="mobile-menu-cta">Start Free Pilot &rarr;</a></li>
     <li><a href="tel:+16157845747">Call Demo: (615) 784-5747</a></li>
   </ul>
+</div>
+
+<!-- ===== LIVE ACTIVITY TICKER ===== -->
+<div class="live-ticker" id="liveTicker" aria-live="polite" aria-label="Live activity feed">
+  <div class="live-ticker-inner">
+    <span class="live-ticker-dot"></span>
+    <span class="live-ticker-text" id="liveTickerText"></span>
+  </div>
 </div>
 
 <main>
@@ -1820,7 +1890,7 @@ a { color: inherit; text-decoration: none; }
         </div>
       </div>
     </div>
-    <p class="roi-disclaimer">Estimates vary by business, call volume, and close rate. Based on a 70&ndash;100% answer rate improvement.</p>
+    <p class="roi-disclaimer">Estimates vary by business, call volume, and close rate. Based on a 70&ndash;100% answer rate improvement.<br><a href="/roi-calculator.html" style="color:#00dc82;font-weight:600;font-size:.85rem">Get your full ROI breakdown &rarr;</a></p>
   </div>
 </section>
 
@@ -3119,6 +3189,148 @@ window.__tctUILoaded = true;
 </script>
 
 <script src="/shared/ui-dark.js" defer></script>
+
+<!-- ===== LENIS SMOOTH SCROLL + GSAP SCROLLTRIGGER ===== -->
+<script>
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.innerWidth < 768) return; // Skip on mobile for performance
+
+  // Load Lenis
+  var lenisScript = document.createElement('script');
+  lenisScript.src = 'https://unpkg.com/lenis@1.1.18/dist/lenis.min.js';
+  lenisScript.onload = function() {
+    var lenis = new Lenis({ duration: 1.1, easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+  };
+  document.head.appendChild(lenisScript);
+
+  // Load GSAP + ScrollTrigger
+  var gsapScript = document.createElement('script');
+  gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+  gsapScript.onload = function() {
+    var stScript = document.createElement('script');
+    stScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js';
+    stScript.onload = initScrollAnimations;
+    document.head.appendChild(stScript);
+  };
+  document.head.appendChild(gsapScript);
+
+  function initScrollAnimations() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Fade-up section titles
+    document.querySelectorAll('.section-title, .section-label').forEach(function(el) {
+      gsap.from(el, {
+        y: 30, opacity: 0, duration: 0.7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+      });
+    });
+
+    // Count-up stat numbers
+    document.querySelectorAll('.problem-stat .num, .proof-strip-value').forEach(function(el) {
+      var text = el.textContent.trim();
+      var match = text.match(/([\d,]+)/);
+      if (!match) return;
+      var target = parseInt(match[1].replace(/,/g, ''), 10);
+      if (isNaN(target) || target === 0) return;
+      var prefix = text.slice(0, text.indexOf(match[1]));
+      var suffix = text.slice(text.indexOf(match[1]) + match[1].length);
+
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        once: true,
+        onEnter: function() {
+          var obj = { val: 0 };
+          gsap.to(obj, {
+            val: target, duration: 1.2, ease: 'power2.out',
+            onUpdate: function() {
+              el.textContent = prefix + Math.round(obj.val).toLocaleString() + suffix;
+            }
+          });
+        }
+      });
+    });
+  }
+})();
+</script>
+
+<!-- ===== LIVE ACTIVITY TICKER ===== -->
+<script>
+(function(){
+  var ticker = document.getElementById('liveTicker');
+  var textEl = document.getElementById('liveTickerText');
+  if (!ticker || !textEl) return;
+
+  var cities = ['Austin', 'Nashville', 'Phoenix', 'Tampa', 'Charlotte', 'Atlanta', 'Dallas', 'Houston', 'Memphis', 'Jacksonville', 'San Antonio', 'Louisville', 'Kansas City', 'Indianapolis', 'Birmingham'];
+  var industries = [
+    { type: 'dental office', verb: 'set up their AI receptionist' },
+    { type: 'HVAC company', verb: 'activated 24/7 call answering' },
+    { type: 'plumbing company', verb: 'stopped missing after-hours calls' },
+    { type: 'locksmith', verb: 'started capturing emergency calls' },
+    { type: 'roofing company', verb: 'set up storm-season call handling' },
+    { type: 'law firm', verb: 'activated AI intake for new cases' },
+    { type: 'dental practice', verb: 'started booking appointments automatically' },
+    { type: 'towing company', verb: 'activated 24/7 dispatch answering' },
+    { type: 'electrical contractor', verb: 'set up emergency call routing' },
+    { type: 'veterinary clinic', verb: 'started answering after-hours pet emergencies' },
+    { type: 'med spa', verb: 'activated AI appointment booking' },
+    { type: 'property manager', verb: 'set up tenant emergency call handling' },
+    { type: 'garage door company', verb: 'started capturing weekend service calls' }
+  ];
+
+  var lastIndex = -1;
+  function getMessage() {
+    var idx;
+    do { idx = Math.floor(Math.random() * industries.length); } while (idx === lastIndex);
+    lastIndex = idx;
+    var city = cities[Math.floor(Math.random() * cities.length)];
+    var ind = industries[idx];
+    return 'A ' + ind.type + ' in ' + city + ' just ' + ind.verb;
+  }
+
+  var visible = false;
+  var interval;
+
+  function showTicker() {
+    textEl.textContent = getMessage();
+    ticker.classList.remove('slide-up');
+    ticker.classList.add('visible');
+    visible = true;
+  }
+
+  function cycleTicker() {
+    if (visible) {
+      ticker.classList.add('slide-up');
+      setTimeout(function() {
+        textEl.textContent = getMessage();
+        ticker.classList.remove('slide-up');
+      }, 500);
+    }
+  }
+
+  // Show first message after 3s, then cycle every 4s
+  setTimeout(function() {
+    showTicker();
+    interval = setInterval(cycleTicker, 4000);
+  }, 3000);
+
+  // Hide when user scrolls near bottom (footer)
+  var footer = document.querySelector('footer');
+  if (footer) {
+    var footerObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { ticker.classList.remove('visible'); }
+        else if (visible) { ticker.classList.add('visible'); ticker.classList.remove('slide-up'); }
+      });
+    }, { threshold: 0.1 });
+    footerObs.observe(footer);
+  }
+})();
+</script>
+
 </body>
 </html>
 
