@@ -3448,6 +3448,60 @@ window.__tctUILoaded = true;
 })();
 </script>
 
+<!-- EXIT-INTENT POPUP — desktop only, once per session -->
+<style>
+#exitPopup{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center}
+#exitPopup.visible{display:flex;animation:exitFadeIn .35s ease}
+@keyframes exitFadeIn{from{opacity:0}to{opacity:1}}
+#exitPopup .exit-card{position:relative;max-width:480px;width:90%;background:#1a1a2e;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:48px 36px 36px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,0.5)}
+#exitPopup .exit-close{position:absolute;top:14px;right:18px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:24px;cursor:pointer;line-height:1;padding:4px 8px;transition:color .2s}
+#exitPopup .exit-close:hover{color:#fff}
+#exitPopup h3{color:#fff;font-size:1.55rem;line-height:1.35;margin:0 0 12px;font-weight:700}
+#exitPopup .exit-sub{color:rgba(255,255,255,0.6);font-size:1rem;line-height:1.5;margin:0 0 28px}
+#exitPopup .exit-cta{display:inline-block;background:#00dc82;color:#fff;font-size:1.05rem;font-weight:700;padding:14px 32px;border-radius:50px;text-decoration:none;transition:box-shadow .25s,transform .25s}
+#exitPopup .exit-cta:hover{box-shadow:0 0 24px rgba(0,220,130,0.45);transform:translateY(-1px)}
+#exitPopup .exit-dismiss{display:block;margin-top:18px;color:rgba(255,255,255,0.35);font-size:.85rem;background:none;border:none;cursor:pointer;text-decoration:underline;transition:color .2s}
+#exitPopup .exit-dismiss:hover{color:rgba(255,255,255,0.6)}
+</style>
+
+<div id="exitPopup">
+  <div class="exit-card">
+    <button class="exit-close" aria-label="Close">&times;</button>
+    <h3>Wait &mdash; Hear Your AI Receptionist Before You Go</h3>
+    <p class="exit-sub">15 seconds. That&rsquo;s all it takes to hear the future of your business.</p>
+    <a href="/demo-showcase.html" class="exit-cta">Try It Free &mdash; Takes 10 Seconds</a>
+    <button class="exit-dismiss">No thanks</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var finePointer = window.matchMedia('(pointer:fine) and (hover:hover)');
+  if (!finePointer.matches || window.innerWidth <= 768) return;
+  if (sessionStorage.getItem('tct_exit_shown')) return;
+
+  var popup = document.getElementById('exitPopup');
+  if (!popup) return;
+
+  function closePopup(){popup.classList.remove('visible')}
+
+  popup.querySelector('.exit-close').addEventListener('click',closePopup);
+  popup.querySelector('.exit-dismiss').addEventListener('click',closePopup);
+  popup.addEventListener('click',function(e){if(e.target===popup)closePopup()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopup()});
+
+  setTimeout(function(){
+    document.documentElement.addEventListener('mouseleave',function handler(e){
+      if(e.clientY<0){
+        popup.classList.add('visible');
+        sessionStorage.setItem('tct_exit_shown','1');
+        document.documentElement.removeEventListener('mouseleave',handler);
+      }
+    });
+  },5000);
+})();
+</script>
+
 </body>
 </html>
 
