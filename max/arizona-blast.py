@@ -28,7 +28,7 @@ GHL_BASE = "https://services.leadconnectorhq.com"
 
 NTFY_OPS_TOPIC = "tct-xK9mW4vR7pLd"
 NTFY_WAR_TOPIC = "tct-warroom-Kx7mN9pQ"
-NTFY_CALLS_TOPIC = "tct-calls-Wk4mP8nJ"
+NTFY_CALLS_TOPIC = "tct-finishtask"
 
 FROM_EMAIL = "wallacemdobbs@icloud.com"
 
