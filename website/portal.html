@@ -11,6 +11,7 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="noindex, nofollow">
   <title>Client Dashboard — The Call Taker</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -20,42 +21,51 @@
   <style>
 /* === VARIABLES === */
 :root {
-  --white: #ffffff;
-  --off-white: #f9fafb;
-  --light: #f3f4f6;
-  --border: #e5e7eb;
-  --text: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #9ca3af;
-  --navy: #1e3a5f;
-  --navy-dark: #0f2440;
-  --orange: #ea580c;
-  --orange-hover: #c2410c;
-  --orange-light: #fff7ed;
-  --green: #059669;
-  --green-light: #ecfdf5;
+  --white: #000;
+  --off-white: #0a0a0a;
+  --light: #111;
+  --border: rgba(255,255,255,0.08);
+  --text: #fff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --navy: #fff;
+  --navy-dark: #fff;
+  --blue: #00dc82;
+  --blue-light: rgba(0,220,130,0.08);
+  --orange: #00dc82;
+  --orange-hover: #00c974;
+  --orange-light: rgba(0,220,130,0.06);
+  --green: #00dc82;
+  --green-light: rgba(0,220,130,0.08);
   --red: #dc2626;
-  --red-light: #fef2f2;
-  --star: #f59e0b;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
-  --shadow: 0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -2px rgba(0,0,0,.05);
-  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.03);
-  --shadow-xl: 0 20px 50px -12px rgba(0,0,0,.12);
+  --red-light: rgba(220,38,38,0.08);
+  --star: #fbbf24;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 6px -1px rgba(0,0,0,.4), 0 2px 4px -2px rgba(0,0,0,.3);
+  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.5), 0 4px 6px -4px rgba(0,0,0,.3);
+  --shadow-xl: 0 20px 50px -12px rgba(0,0,0,.6);
   --radius: 12px;
   --radius-lg: 16px;
   --radius-full: 9999px;
+  --text-1: #fff;
+  --text-2: #a1a1aa;
+  --text-3: #71717a;
+  --surface: rgba(255,255,255,0.03);
+  --surface-hover: rgba(255,255,255,0.06);
+  --green-dim: rgba(0,220,130,0.12);
+  --green-glow: rgba(0,220,130,0.25);
 }
 
 /* === RESET === */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; font-size: 17px; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #a1a1aa; background: #0a0a0a; line-height: 1.6; -webkit-font-smoothing: antialiased; font-size: 17px; }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 .container, .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
 /* === HEADER === */
-.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
 .site-header.scrolled { border-bottom-color: var(--border); box-shadow: var(--shadow-sm); }
 .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 72px; }
 .logo { font-size: 1.25rem; font-weight: 800; color: var(--navy); letter-spacing: -.02em; text-decoration: none; }
@@ -65,24 +75,24 @@ a { color: inherit; text-decoration: none; }
 .nav-links a:hover { color: var(--text); }
 .nav-demo { font-weight: 700 !important; color: var(--navy) !important; letter-spacing: -.01em; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit; font-weight: 700; border: none; cursor: pointer; text-decoration: none; transition: all .2s; line-height: 1; }
-.btn-primary { background: var(--orange); color: var(--white); padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; }
-.btn-primary:hover { background: var(--orange-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(234,88,12,.3); text-decoration: none; color: var(--white); }
-.btn-outline { background: transparent; color: var(--navy); padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; border: 2px solid var(--border); }
-.btn-outline:hover { border-color: var(--navy); background: var(--off-white); text-decoration: none; }
+.btn-primary { background: #fff; color: #000; padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; }
+.btn-primary:hover { background: #e4e4e7; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.2); text-decoration: none; color: #000; }
+.btn-outline { background: transparent; color: #fff; padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; border: 2px solid rgba(255,255,255,0.15); }
+.btn-outline:hover { border-color: #00dc82; background: rgba(0,220,130,0.06); text-decoration: none; }
 .btn-sm { padding: 10px 20px; font-size: .85rem; }
 .btn-lg { padding: 16px 32px; font-size: 1rem; }
 .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
 .mobile-toggle span { display: block; width: 24px; height: 2px; background: var(--text); margin: 5px 0; transition: .3s; }
 
 /* === PASSWORD MODAL === */
-.pw-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(15,36,64,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; }
+.pw-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; }
 .pw-overlay.hidden { display: none; }
 .pw-modal { background: var(--white); border-radius: var(--radius-lg); padding: 40px 36px; max-width: 400px; width: 90%; box-shadow: var(--shadow-xl); text-align: center; }
 .pw-modal .logo { font-size: 1.5rem; display: inline-block; margin-bottom: 24px; }
 .pw-modal h2 { font-size: 1.15rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 6px; }
 .pw-modal p { font-size: .9rem; color: var(--text-secondary); margin-bottom: 20px; }
 .pw-modal input { width: 100%; padding: 14px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: .95rem; font-family: inherit; margin-bottom: 12px; transition: border-color .15s; color: var(--text); }
-.pw-modal input:focus { outline: none; border-color: var(--orange); }
+.pw-modal input:focus { outline: none; border-color: #00dc82; }
 .pw-modal .pw-error { font-size: .82rem; color: var(--red); margin-bottom: 12px; display: none; }
 .pw-modal .pw-error.show { display: block; }
 .pw-modal .btn { width: 100%; justify-content: center; }
@@ -133,7 +143,7 @@ a { color: inherit; text-decoration: none; }
 .link-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 @media (min-width: 640px) { .link-grid { grid-template-columns: repeat(4, 1fr); } }
 .link-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 20px; text-align: center; box-shadow: var(--shadow-sm); transition: all .2s; cursor: pointer; text-decoration: none; display: block; }
-.link-card:hover { border-color: var(--orange); box-shadow: var(--shadow); transform: translateY(-2px); }
+.link-card:hover { border-color: #00dc82; box-shadow: var(--shadow); transform: translateY(-2px); }
 .link-card .link-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--off-white); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
 .link-card .link-icon svg { width: 22px; height: 22px; color: var(--navy); }
 .link-card h3 { font-size: .9rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
@@ -150,7 +160,7 @@ a { color: inherit; text-decoration: none; }
 .contact-icon svg { width: 18px; height: 18px; color: var(--navy); }
 .contact-info .label { font-size: .78rem; color: var(--text-muted); margin-bottom: 1px; }
 .contact-info a { font-size: .95rem; font-weight: 600; color: var(--navy); }
-.contact-info a:hover { color: var(--orange); }
+.contact-info a:hover { color: #00dc82; }
 
 /* === FAQ === */
 .faq-section { background: var(--off-white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; }
@@ -165,15 +175,15 @@ a { color: inherit; text-decoration: none; }
 .faq-answer-inner { padding: 0 20px 16px; font-size: .87rem; color: var(--text-secondary); line-height: 1.7; }
 
 /* === UPGRADE SECTION === */
-.upgrade-section { background: linear-gradient(135deg, var(--navy-dark), var(--navy)); border-radius: var(--radius-lg); padding: 40px 32px; color: var(--white); }
+.upgrade-section { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 40px 32px; color: #fff; }
 .upgrade-section h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; }
 .upgrade-section > p { font-size: .9rem; color: rgba(255,255,255,.7); margin-bottom: 28px; }
 .plan-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
 @media (min-width: 640px) { .plan-grid { grid-template-columns: repeat(3, 1fr); } }
 .plan-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius); padding: 24px; text-align: center; position: relative; transition: all .2s; }
 .plan-card:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.2); }
-.plan-card.recommended { border-color: var(--orange); background: rgba(234,88,12,.1); }
-.plan-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--orange); color: var(--white); font-size: .7rem; font-weight: 700; padding: 3px 12px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+.plan-card.recommended { border-color: #00dc82; background: rgba(0,220,130,.1); }
+.plan-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #00dc82; color: #000; font-size: .7rem; font-weight: 700; padding: 3px 12px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
 .plan-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; margin-top: 8px; }
 .plan-price { font-size: 2rem; font-weight: 800; margin-bottom: 4px; }
 .plan-price small { font-size: .85rem; font-weight: 500; color: rgba(255,255,255,.6); }
@@ -181,8 +191,8 @@ a { color: inherit; text-decoration: none; }
 .plan-features li { font-size: .82rem; color: rgba(255,255,255,.75); padding: 5px 0; display: flex; align-items: flex-start; gap: 8px; }
 .plan-features li svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; margin-top: 1px; }
 .plan-cta { display: block; width: 100%; padding: 12px; border-radius: var(--radius-full); font-size: .85rem; font-weight: 700; text-align: center; text-decoration: none; transition: all .2s; }
-.plan-cta.primary { background: var(--orange); color: var(--white); border: none; cursor: pointer; font-family: inherit; }
-.plan-cta.primary:hover { background: var(--orange-hover); }
+.plan-cta.primary { background: #fff; color: #000; border: none; cursor: pointer; font-family: inherit; }
+.plan-cta.primary:hover { background: #e4e4e7; }
 .plan-cta.secondary { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,.2); cursor: pointer; font-family: inherit; }
 .plan-cta.secondary:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.35); }
 
@@ -410,14 +420,14 @@ a { color: inherit; text-decoration: none; }
               How do I check my call recordings?
               <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </button>
-            <div class="faq-answer"><div class="faq-answer-inner">Log into your GHL dashboard at <a href="https://app.gohighlevel.com" target="_blank" style="color: var(--orange); font-weight: 500;">app.gohighlevel.com</a> and navigate to Conversations. Each call recording will be listed with the date, duration, and a playback button. You can also see the full transcript.</div></div>
+            <div class="faq-answer"><div class="faq-answer-inner">Log into your GHL dashboard at <a href="https://app.gohighlevel.com" target="_blank" style="color: #00dc82; font-weight: 500;">app.gohighlevel.com</a> and navigate to Conversations. Each call recording will be listed with the date, duration, and a playback button. You can also see the full transcript.</div></div>
           </div>
           <div class="faq-item">
             <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
               Can I change my AI's script?
               <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </button>
-            <div class="faq-answer"><div class="faq-answer-inner">Yes! Just text us at <a href="tel:+16157845747" style="color: var(--orange); font-weight: 500;">(615) 784-5747</a> with exactly what you'd like changed -- greeting, company name, tone, services mentioned, anything. We'll update it within the hour and it takes effect immediately with zero downtime.</div></div>
+            <div class="faq-answer"><div class="faq-answer-inner">Yes! Just text us at <a href="tel:+16157845747" style="color: #00dc82; font-weight: 500;">(615) 784-5747</a> with exactly what you'd like changed -- greeting, company name, tone, services mentioned, anything. We'll update it within the hour and it takes effect immediately with zero downtime.</div></div>
           </div>
           <div class="faq-item">
             <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
@@ -431,7 +441,7 @@ a { color: inherit; text-decoration: none; }
               How do I upgrade my plan?
               <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </button>
-            <div class="faq-answer"><div class="faq-answer-inner">Text us or visit <a href="pilot/" style="color: var(--orange); font-weight: 500;">thecalltaker.com/pilot</a> to learn about our plans. We'll walk you through the differences and help you pick the right fit. Upgrades take effect immediately -- no downtime, no setup fees.</div></div>
+            <div class="faq-answer"><div class="faq-answer-inner">Text us or visit <a href="pilot/" style="color: #00dc82; font-weight: 500;">thecalltaker.com/pilot</a> to learn about our plans. We'll walk you through the differences and help you pick the right fit. Upgrades take effect immediately -- no downtime, no setup fees.</div></div>
           </div>
         </div>
 

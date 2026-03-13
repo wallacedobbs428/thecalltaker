@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
 <title>Rapid Key Locksmith Case Study | The Call Taker</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17970510102');</script>
@@ -13,49 +14,48 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --white: #ffffff;
-  --off-white: #f9fafb;
-  --light: #f3f4f6;
-  --border: #e5e7eb;
-  --text: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #9ca3af;
-  --navy: #1e3a5f;
-  --navy-dark: #0f2440;
-  --blue: #2563eb;
-  --blue-light: #eff6ff;
-  --orange: #ea580c;
-  --orange-hover: #c2410c;
-  --orange-light: #fff7ed;
-  --green: #059669;
-  --green-light: #ecfdf5;
-  --star: #f59e0b;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
-  --shadow: 0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -2px rgba(0,0,0,.05);
-  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.03);
-  --shadow-xl: 0 20px 50px -12px rgba(0,0,0,.12);
+  --white: #000;
+  --off-white: #0a0a0a;
+  --light: #111;
+  --border: rgba(255,255,255,0.08);
+  --text: #fff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --navy: #fff;
+  --navy-dark: #fff;
+  --blue: #00dc82;
+  --blue-light: rgba(0,220,130,0.08);
+  --orange: #00dc82;
+  --orange-hover: #00c974;
+  --orange-light: rgba(0,220,130,0.06);
+  --green: #00dc82;
+  --green-light: rgba(0,220,130,0.08);
+  --star: #fbbf24;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 6px -1px rgba(0,0,0,.4), 0 2px 4px -2px rgba(0,0,0,.3);
+  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.5), 0 4px 6px -4px rgba(0,0,0,.3);
+  --shadow-xl: 0 20px 50px -12px rgba(0,0,0,.6);
   --radius: 12px;
   --radius-lg: 16px;
   --radius-full: 9999px;
-  /* backwards compat with old var names */
-  --text-1: #111827;
-  --text-2: #4b5563;
-  --text-3: #9ca3af;
-  --surface: #f3f4f6;
-  --surface-hover: #e5e7eb;
-  --green-dim: #ecfdf5;
-  --green-glow: rgba(5,150,105,.15);
+  --text-1: #fff;
+  --text-2: #a1a1aa;
+  --text-3: #71717a;
+  --surface: rgba(255,255,255,0.03);
+  --surface-hover: rgba(255,255,255,0.06);
+  --green-dim: rgba(0,220,130,0.12);
+  --green-glow: rgba(0,220,130,0.25);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; font-size: 17px; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #a1a1aa; background: #0a0a0a; line-height: 1.6; -webkit-font-smoothing: antialiased; font-size: 17px; }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 .container, .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
 /* HEADER */
-.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s; }
 .site-header.scrolled { border-bottom-color: var(--border); box-shadow: var(--shadow-sm); }
 .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 72px; }
 .logo { font-size: 1.25rem; font-weight: 800; color: var(--navy); letter-spacing: -.02em; text-decoration: none; }
@@ -65,10 +65,10 @@ a { color: inherit; text-decoration: none; }
 .nav-links a:hover { color: var(--text); }
 .nav-demo { font-weight: 700 !important; color: var(--navy) !important; letter-spacing: -.01em; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit; font-weight: 700; border: none; cursor: pointer; text-decoration: none; transition: all .2s; line-height: 1; }
-.btn-primary { background: var(--orange); color: var(--white); padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; }
-.btn-primary:hover { background: var(--orange-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(234,88,12,.3); text-decoration: none; color: var(--white); }
-.btn-outline { background: transparent; color: var(--navy); padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; border: 2px solid var(--border); }
-.btn-outline:hover { border-color: var(--navy); background: var(--off-white); text-decoration: none; }
+.btn-primary { background: #fff; color: #000; padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; }
+.btn-primary:hover { background: #e4e4e7; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.2); text-decoration: none; color: #000; }
+.btn-outline { background: transparent; color: #fff; padding: 14px 28px; border-radius: var(--radius-full); font-size: .95rem; border: 2px solid rgba(255,255,255,0.15); }
+.btn-outline:hover { border-color: #00dc82; background: rgba(0,220,130,0.06); text-decoration: none; }
 .btn-sm { padding: 10px 20px; font-size: .85rem; }
 .btn-lg { padding: 16px 32px; font-size: 1rem; }
 .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
@@ -115,8 +115,8 @@ a { color: inherit; text-decoration: none; }
 
 .cs-hero { padding: 140px 0 80px; text-align: center; position: relative; overflow: hidden; }
   @media (min-width: 768px) { .cs-hero { padding: 160px 0 80px; } }
-  .cs-hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(5,150,105,.06) 0%, transparent 70%); pointer-events: none; opacity: 0.4; }
-  .cs-hero .tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: var(--green-dim); border: 1px solid rgba(5,150,105,0.12); border-radius: 100px; font-size: 12px; font-weight: 600; color: var(--green); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 24px; }
+  .cs-hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, rgba(0,220,130,.06) 0%, transparent 70%); pointer-events: none; opacity: 0.4; }
+  .cs-hero .tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: var(--green-dim); border: 1px solid rgba(0,220,130,0.12); border-radius: 100px; font-size: 12px; font-weight: 600; color: var(--green); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 24px; }
   .cs-hero h1 { font-size: clamp(28px, 5vw, 42px); color: var(--navy-dark); max-width: 700px; margin: 0 auto 16px; line-height: 1.15; letter-spacing: -0.02em; font-weight: 800; }
   .cs-hero p { color: var(--text-2); font-size: 16px; max-width: 500px; margin: 0 auto; }
   .cs-content { max-width: 720px; margin: 0 auto; padding: 40px 24px; }
@@ -128,22 +128,22 @@ a { color: inherit; text-decoration: none; }
   .stat .num { font-size: 32px; font-weight: 800; color: var(--navy-dark); }
   .stat .num.red { color: #ef4444; }
   .stat .lbl { font-size: 11px; color: var(--text-3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-  .cs-quote { background: rgba(5,150,105,0.04); border-left: 3px solid var(--green); padding: 24px; margin: 32px 0; border-radius: 0 12px 12px 0; }
+  .cs-quote { background: rgba(0,220,130,0.04); border-left: 3px solid var(--green); padding: 24px; margin: 32px 0; border-radius: 0 12px 12px 0; }
   .cs-quote p { font-size: 16px; font-style: italic; color: var(--text-2); margin-bottom: 12px; line-height: 1.65; }
   .cs-quote .attr { font-size: 13px; color: var(--green); font-style: normal; font-weight: 600; }
   .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 24px 0; }
   .before, .after { padding: 24px; background: var(--white); }
-  .after { background: rgba(5,150,105,0.03); }
+  .after { background: rgba(0,220,130,0.03); }
   .before h4 { color: #ef4444; font-size: 14px; font-weight: 700; margin-bottom: 12px; }
   .after h4 { color: var(--green); font-size: 14px; font-weight: 700; margin-bottom: 12px; }
   .before li, .after li { font-size: 14px; margin-bottom: 8px; color: var(--text-2); list-style: none; padding-left: 20px; position: relative; line-height: 1.5; }
   .before li::before { content: "\2717"; position: absolute; left: 0; color: #ef4444; }
   .after li::before { content: "\2713"; position: absolute; left: 0; color: var(--green); }
   @media (max-width: 600px) { .before-after { grid-template-columns: 1fr; } .stat .num { font-size: 24px; } }
-  .cs-cta { background: rgba(5,150,105,0.04); border: 1px solid rgba(5,150,105,0.12); border-radius: 16px; padding: 40px 32px; text-align: center; margin: 48px 0 0; }
+  .cs-cta { background: rgba(0,220,130,0.04); border: 1px solid rgba(0,220,130,0.12); border-radius: 16px; padding: 40px 32px; text-align: center; margin: 48px 0 0; }
   .cs-cta h3 { color: var(--navy-dark); margin-bottom: 8px; font-size: 20px; font-weight: 700; }
   .cs-cta p { color: var(--text-2); margin-bottom: 24px; font-size: 15px; }
-  .cs-callout { background: rgba(5,150,105,0.04); border: 1px solid rgba(5,150,105,0.12); border-radius: 12px; padding: 24px; margin: 24px 0; }
+  .cs-callout { background: rgba(0,220,130,0.04); border: 1px solid rgba(0,220,130,0.12); border-radius: 12px; padding: 24px; margin: 24px 0; }
   .cs-callout h4 { color: var(--green); font-size: 15px; font-weight: 700; margin-bottom: 8px; }
   .cs-callout p { margin-bottom: 0; font-size: 14px; }
 </style>
