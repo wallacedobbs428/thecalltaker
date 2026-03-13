@@ -26,8 +26,9 @@ GHL_API_KEY = "pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35"
 GHL_LOCATION_ID = "tQb9YmrGDrdVUJYPKrsY"
 GHL_BASE = "https://services.leadconnectorhq.com"
 
-NTFY_OPS_TOPIC = "tct-xK9mW4vR7pLd"
-NTFY_WAR_TOPIC = "tct-warroom-Kx7mN9pQ"
+NTFY_OPS_TOPIC = "tct-sales-63uYsIT9"
+NTFY_WAR_TOPIC = "tct-urgent-Hk9UOEZR"
+NTFY_CALLS_TOPIC = "tct-finishtask"
 
 FROM_EMAIL = "wallacemdobbs@icloud.com"
 
@@ -631,4 +632,18 @@ def run_blast():
 
 
 if __name__ == "__main__":
-    run_blast()
+    try:
+        run_blast()
+        ntfy(NTFY_CALLS_TOPIC,
+             "Australia Blast finished",
+             f"Australia blast completed at {datetime.now().strftime('%I:%M %p')}",
+             tags="white_check_mark")
+    except Exception as _exc:
+        import traceback
+        _tb = traceback.format_exc()
+        log(f"CRASH in australia-blast: {_exc}")
+        ntfy(NTFY_CALLS_TOPIC,
+             "Australia Blast CRASHED",
+             f"Error: {_exc}\n\n{_tb[-500:]}",
+             priority="high", tags="rotating_light")
+        raise

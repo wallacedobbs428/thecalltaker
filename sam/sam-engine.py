@@ -36,8 +36,8 @@ GHL_API_KEY = "pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35"
 GHL_LOCATION_ID = "tQb9YmrGDrdVUJYPKrsY"
 GHL_BASE = "https://services.leadconnectorhq.com"
 
-NTFY_OPS_TOPIC = "tct-xK9mW4vR7pLd"
-NTFY_WAR_TOPIC = "tct-warroom-Kx7mN9pQ"
+NTFY_OPS_TOPIC = "tct-sales-63uYsIT9"
+NTFY_WAR_TOPIC = "tct-urgent-Hk9UOEZR"
 
 FROM_EMAIL = "wallacemdobbs@icloud.com"
 FROM_NAME = "Wallace Dobbs"

@@ -36,8 +36,9 @@ GHL_BASE = "https://services.leadconnectorhq.com"
 PIPELINE_ID = "KhFDURSwBi2fn416BnGf"
 CONTACTED_STAGE = "8285b2c9-9ca3-415f-a57b-ae458045aab4"
 
-NTFY_OPS_TOPIC = "tct-xK9mW4vR7pLd"
-NTFY_WAR_TOPIC = "tct-warroom-Kx7mN9pQ"
+NTFY_OPS_TOPIC = "tct-sales-63uYsIT9"
+NTFY_WAR_TOPIC = "tct-urgent-Hk9UOEZR"
+NTFY_CALLS_TOPIC = "tct-finishtask"
 
 DEMO_LINE = "(615) 784-5747"
 DEMO_LINE_NUMBER = "+16157845747"
@@ -735,4 +736,19 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    _cmd = sys.argv[1] if len(sys.argv) > 1 else "unknown"
+    try:
+        main()
+        ntfy(NTFY_CALLS_TOPIC,
+             f"Max finished: {_cmd}",
+             f"Max engine completed '{_cmd}' at {datetime.now().strftime('%I:%M %p')}",
+             tags="white_check_mark")
+    except Exception as _exc:
+        import traceback
+        _tb = traceback.format_exc()
+        log(f"CRASH in max-engine {_cmd}: {_exc}")
+        ntfy(NTFY_CALLS_TOPIC,
+             f"Max CRASHED: {_cmd}",
+             f"Command: {_cmd}\nError: {_exc}\n\n{_tb[-500:]}",
+             priority="high", tags="rotating_light")
+        raise

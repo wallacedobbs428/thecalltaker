@@ -38,3 +38,24 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Notify ntfy on deploy
+        if: success()
+        run: |
+          CHANGED=$(git log -1 --pretty=format:"%s")
+          curl -s \
+            -H "Title: Site deployed" \
+            -H "Priority: default" \
+            -H "Tags: rocket" \
+            -d "Deploy complete: ${CHANGED}" \
+            https://ntfy.sh/tct-finishtask
+
+      - name: Notify ntfy on failure
+        if: failure()
+        run: |
+          curl -s \
+            -H "Title: Deploy FAILED" \
+            -H "Priority: high" \
+            -H "Tags: rotating_light" \
+            -d "GitHub Pages deploy failed. Check Actions tab." \
+            https://ntfy.sh/tct-finishtask

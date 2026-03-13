@@ -1,0 +1,25 @@
+name: Notify on push
+
+on:
+  push:
+    branches: [main, 'claude/**']
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Send ntfy notification
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=format:"%s")
+          BRANCH="${GITHUB_REF_NAME}"
+          FILES_CHANGED=$(git log -1 --pretty=format:"" --name-only | head -10 | tr '\n' ', ')
+          curl -s \
+            -H "Title: Push to ${BRANCH}" \
+            -H "Priority: default" \
+            -H "Tags: white_check_mark" \
+            -d "Commit: ${COMMIT_MSG}
+Files: ${FILES_CHANGED}" \
+            https://ntfy.sh/tct-finishtask
