@@ -16,10 +16,18 @@ jobs:
           COMMIT_MSG=$(git log -1 --pretty=format:"%s")
           BRANCH="${GITHUB_REF_NAME}"
           FILES_CHANGED=$(git log -1 --pretty=format:"" --name-only | head -10 | tr '\n' ', ')
+          # Send to both topics so Wallace sees it regardless of subscription
+          curl -s \
+            -H "Title: [MILLS] Push to ${BRANCH}" \
+            -H "Priority: high" \
+            -H "Tags: hammer_and_wrench" \
+            -d "Commit: ${COMMIT_MSG}
+Files: ${FILES_CHANGED}" \
+            https://ntfy.sh/tct-urgent-Hk9UOEZR || true
           curl -s \
             -H "Title: Push to ${BRANCH}" \
             -H "Priority: default" \
             -H "Tags: white_check_mark" \
             -d "Commit: ${COMMIT_MSG}
 Files: ${FILES_CHANGED}" \
-            https://ntfy.sh/tct-finishtask
+            https://ntfy.sh/tct-finishtask || true
