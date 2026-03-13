@@ -36,8 +36,8 @@ GHL_BASE = "https://services.leadconnectorhq.com"
 PIPELINE_ID = "KhFDURSwBi2fn416BnGf"
 CONTACTED_STAGE = "8285b2c9-9ca3-415f-a57b-ae458045aab4"
 
-NTFY_OPS_TOPIC = "tct-xK9mW4vR7pLd"
-NTFY_WAR_TOPIC = "tct-warroom-Kx7mN9pQ"
+NTFY_OPS_TOPIC = "tct-sales-63uYsIT9"
+NTFY_WAR_TOPIC = "tct-urgent-Hk9UOEZR"
 NTFY_CALLS_TOPIC = "tct-finishtask"
 
 DEMO_LINE = "(615) 784-5747"
