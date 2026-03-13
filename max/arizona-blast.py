@@ -28,6 +28,7 @@ GHL_BASE = "https://services.leadconnectorhq.com"
 
 NTFY_OPS_TOPIC = "tct-xK9mW4vR7pLd"
 NTFY_WAR_TOPIC = "tct-warroom-Kx7mN9pQ"
+NTFY_CALLS_TOPIC = "tct-calls-Wk4mP8nJ"
 
 FROM_EMAIL = "wallacemdobbs@icloud.com"
 
@@ -335,4 +336,18 @@ def run_blast():
 
 
 if __name__ == "__main__":
-    run_blast()
+    try:
+        run_blast()
+        ntfy(NTFY_CALLS_TOPIC,
+             "Arizona Blast finished",
+             f"Arizona blast completed at {datetime.now().strftime('%I:%M %p')}",
+             tags="white_check_mark")
+    except Exception as _exc:
+        import traceback
+        _tb = traceback.format_exc()
+        log(f"CRASH in arizona-blast: {_exc}")
+        ntfy(NTFY_CALLS_TOPIC,
+             "Arizona Blast CRASHED",
+             f"Error: {_exc}\n\n{_tb[-500:]}",
+             priority="high", tags="rotating_light")
+        raise
