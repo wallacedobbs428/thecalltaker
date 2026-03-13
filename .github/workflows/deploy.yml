@@ -44,18 +44,30 @@ jobs:
         run: |
           CHANGED=$(git log -1 --pretty=format:"%s")
           curl -s \
+            -H "Title: [MILLS] Site deployed" \
+            -H "Priority: high" \
+            -H "Tags: rocket" \
+            -d "Deploy complete: ${CHANGED}" \
+            https://ntfy.sh/tct-urgent-Hk9UOEZR || true
+          curl -s \
             -H "Title: Site deployed" \
             -H "Priority: default" \
             -H "Tags: rocket" \
             -d "Deploy complete: ${CHANGED}" \
-            https://ntfy.sh/tct-finishtask
+            https://ntfy.sh/tct-finishtask || true
 
       - name: Notify ntfy on failure
         if: failure()
         run: |
           curl -s \
+            -H "Title: [MILLS] Deploy FAILED" \
+            -H "Priority: urgent" \
+            -H "Tags: rotating_light" \
+            -d "GitHub Pages deploy failed. Check Actions tab." \
+            https://ntfy.sh/tct-urgent-Hk9UOEZR || true
+          curl -s \
             -H "Title: Deploy FAILED" \
             -H "Priority: high" \
             -H "Tags: rotating_light" \
             -d "GitHub Pages deploy failed. Check Actions tab." \
-            https://ntfy.sh/tct-finishtask
+            https://ntfy.sh/tct-finishtask || true
