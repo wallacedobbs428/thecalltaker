@@ -58,6 +58,11 @@ a { color: inherit; text-decoration: none; }
 .demo-hero::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(234,88,12,.04), transparent 70%); pointer-events: none; }
 .demo-hero h1 { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 900; letter-spacing: -.04em; color: var(--navy-dark); line-height: 1.05; margin-bottom: 12px; }
 .demo-hero p { font-size: 1.05rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto 40px; line-height: 1.7; }
+.social-proof-line { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 32px; font-size: .82rem; font-weight: 600; color: var(--text-muted); }
+.social-proof-line .sp-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: sp-pulse 2s ease-in-out infinite; }
+@keyframes sp-pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,220,130,.4); } 50% { opacity: .8; box-shadow: 0 0 0 6px rgba(0,220,130,0); } }
+.live-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,220,130,.1); border: 1px solid rgba(0,220,130,.2); border-radius: 999px; padding: 6px 14px; font-size: .75rem; font-weight: 700; color: var(--green); }
+.live-badge .lb-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: sp-pulse 2s ease-in-out infinite; }
 
 /* Demo console wrapper */
 .demo-console-wrap { display: flex; justify-content: center; margin-bottom: 48px; }
@@ -148,6 +153,8 @@ a { color: inherit; text-decoration: none; }
   <div class="container" style="position:relative;z-index:1">
     <h1>Hear It. Judge It. Decide.</h1>
     <p>Press play. This is a real call the AI handled at 11:47 PM on a Tuesday. No script, no actor.</p>
+    <div class="social-proof-line"><span class="sp-dot"></span> Trusted by 500+ service businesses across 13 industries</div>
+    <div style="text-align:center;margin-bottom:24px"><span class="live-badge"><span class="lb-dot"></span> AI LIVE NOW — call to hear it yourself</span></div>
 
     <div class="demo-console-wrap">
       <div class="dc dc-large" data-industry="hvac"></div>
@@ -185,7 +192,7 @@ a { color: inherit; text-decoration: none; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
         (615) 784-5747
       </a>
-      <p class="call-note">Live 24/7. Tell it you&rsquo;re a plumber, dentist, or locksmith. Try to stump it.</p>
+      <p class="call-note"><span class="live-badge" style="margin-right:6px"><span class="lb-dot"></span> LIVE</span> 24/7. Tell it you&rsquo;re a plumber, dentist, or locksmith. Try to stump it.</p>
     </div>
   </div>
 </section>

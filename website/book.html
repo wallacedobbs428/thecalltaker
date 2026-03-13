@@ -3,26 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0a0a">
-<title>Book a Demo | The Call Taker - AI Answering Service</title>
-<meta name="description" content="Call our AI now or book a 10-minute demo. See how The Call Taker answers calls, books appointments, and captures leads 24/7.">
+<meta name="theme-color" content="#000000">
+<title>Book a Demo | The Call Taker - AI Receptionist for Your Business</title>
+<meta name="description" content="See your AI receptionist live in 10 minutes. We set it up as YOUR business, answer calls as YOUR company. Book a free personalized demo now.">
 
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://thecalltaker.com/book">
 
-<meta property="og:title" content="Book a Demo | The Call Taker - AI Answering Service">
-<meta property="og:description" content="Call the AI now or book a 10-minute demo. Answers calls, books jobs, never misses a lead.">
+<meta property="og:title" content="See Your AI Receptionist Live In 10 Minutes | The Call Taker">
+<meta property="og:description" content="We set it up as YOUR business, answer calls as YOUR company. Hear exactly what your customers will hear.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thecalltaker.com/book">
 <meta property="og:site_name" content="The Call Taker">
 <meta property="og:image" content="https://thecalltaker.com/og-image.png">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Book a Demo | The Call Taker">
-<meta name="twitter:description" content="Call the AI now or book a 10-minute demo.">
+<meta name="twitter:title" content="See Your AI Receptionist Live In 10 Minutes | The Call Taker">
+<meta name="twitter:description" content="We set it up as YOUR business, answer calls as YOUR company. Book a free personalized demo.">
 <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
 
-<script src="/tct-tracking.js"></script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<script src="/tct-tracking.js" defer></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17970510102');</script>
 
@@ -32,184 +34,549 @@
 
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
 :root{
-  --white:#000;--off-white:#0a0a0a;--light:#111;--border:rgba(255,255,255,0.08);
-  --text:#fff;--text-secondary:#a1a1aa;--text-muted:#71717a;
-  --navy:#fff;--navy-dark:#fff;
-  --blue:#00dc82;--blue-light:rgba(0,220,130,0.08);
-  --orange:#00dc82;--orange-hover:#00c974;--orange-light:rgba(0,220,130,0.06);
-  --green:#00dc82;--green-light:rgba(0,220,130,0.08);
-  --star:#fbbf24;
-  --shadow-sm:0 1px 2px rgba(0,0,0,.3);
-  --shadow:0 4px 6px -1px rgba(0,0,0,.4), 0 2px 4px -2px rgba(0,0,0,.3);
-  --shadow-lg:0 10px 25px -3px rgba(0,0,0,.5), 0 4px 6px -4px rgba(0,0,0,.3);
+  --green:#00dc82;
+  --green-hover:#00c974;
+  --green-light:rgba(0,220,130,0.08);
+  --green-dim:rgba(0,220,130,0.12);
+  --green-glow:rgba(0,220,130,0.25);
+  --border:rgba(255,255,255,0.08);
+  --text:#fff;
+  --text-secondary:#a1a1aa;
+  --text-muted:#71717a;
+  --surface:rgba(255,255,255,0.03);
+  --surface-hover:rgba(255,255,255,0.06);
+  --shadow:0 4px 6px -1px rgba(0,0,0,.4),0 2px 4px -2px rgba(0,0,0,.3);
+  --shadow-lg:0 10px 25px -3px rgba(0,0,0,.5),0 4px 6px -4px rgba(0,0,0,.3);
   --shadow-xl:0 20px 50px -12px rgba(0,0,0,.6);
-  --text-1:#fff;--text-2:#a1a1aa;--text-3:#71717a;
-  --surface:rgba(255,255,255,0.03);--surface-hover:rgba(255,255,255,0.06);
-  --green-dim:rgba(0,220,130,0.12);--green-glow:rgba(0,220,130,0.25);
 }
+
 html{scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#a1a1aa;background:#0a0a0a;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--text-secondary);background:#000;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
 
-/* Header */
-.bk-header{text-align:center;padding:20px 24px;border-bottom:1px solid var(--border)}
-.bk-logo{font-size:1.15rem;font-weight:850;color:var(--navy);letter-spacing:-.03em}
-.bk-logo span{color:var(--orange)}
+/* ===== HEADER ===== */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:background .4s,box-shadow .4s;
+}
+.site-header.scrolled{
+  background:rgba(0,0,0,.95);
+  box-shadow:0 4px 30px rgba(0,0,0,.4);
+}
+.header-inner{
+  max-width:1200px;margin:0 auto;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;height:72px;
+}
+.logo{font-size:1.25rem;font-weight:800;color:#fff;letter-spacing:-.02em;text-decoration:none}
+.logo span{color:var(--green)}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{
+  font-size:.9rem;font-weight:500;color:var(--text-secondary);
+  transition:color .2s;position:relative;padding:4px 0;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;
+  background:var(--green);transition:width .3s ease;border-radius:1px;
+}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after,
+.nav-links a.active::after{width:100%}
+.nav-links a.active{color:#fff}
+.header-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 22px;border-radius:10px;font-size:.88rem;font-weight:700;
+  background:var(--green);color:#000;border:none;cursor:pointer;
+  transition:all .2s;text-decoration:none;
+}
+.header-cta:hover{background:var(--green-hover);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,220,130,.3)}
 
-/* Hero */
-.bk-hero{padding:80px 24px 48px;text-align:center;max-width:600px;margin:0 auto}
-.bk-badge{display:inline-block;padding:5px 14px;background:var(--green-light);border:1px solid rgba(0,220,130,.12);border-radius:100px;font-size:.75rem;font-weight:700;color:var(--green);letter-spacing:.04em;text-transform:uppercase;margin-bottom:20px}
-.bk-hero h1{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:900;color:var(--navy-dark);letter-spacing:-.04em;line-height:1.1;margin-bottom:12px}
-.bk-hero p{font-size:.95rem;color:var(--text-secondary);max-width:440px;margin:0 auto 32px;line-height:1.7}
+/* Mobile nav */
+.mobile-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+.mobile-toggle span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+.mobile-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.mobile-toggle.active span:nth-child(2){opacity:0}
+.mobile-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:999;
+  flex-direction:column;align-items:center;justify-content:center;gap:32px;
+}
+.mobile-overlay.open{display:flex}
+.mobile-overlay a{font-size:1.4rem;font-weight:600;color:#fff;transition:color .2s}
+.mobile-overlay a:hover{color:var(--green)}
+.mobile-overlay .mobile-cta{
+  padding:14px 32px;border-radius:12px;background:var(--green);color:#000;
+  font-weight:700;font-size:1rem;margin-top:16px;
+}
 
-/* CTA Buttons */
-.bk-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.bk-btn{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;border-radius:12px;font-weight:700;font-size:.95rem;border:none;cursor:pointer;font-family:inherit;transition:all .2s}
-.bk-btn-call{background:#fff;color:#000;box-shadow:0 4px 20px rgba(0,0,0,.2)}
-.bk-btn-call:hover{box-shadow:0 8px 32px rgba(0,0,0,.3);transform:translateY(-2px)}
-.bk-btn-call svg{width:20px;height:20px}
-.bk-btn-demo{background:var(--white);color:var(--navy-dark);border:1.5px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.bk-btn-demo:hover{border-color:var(--orange);color:var(--orange)}
+@media(max-width:768px){
+  .nav-links,.header-cta{display:none}
+  .mobile-toggle{display:flex}
+}
 
-/* Timeline */
-.bk-timeline{max-width:560px;margin:0 auto;padding:48px 24px 40px}
-.bk-timeline h2{font-size:1.1rem;font-weight:800;color:var(--navy-dark);text-align:center;letter-spacing:-.02em;margin-bottom:28px}
-.bk-steps{display:flex;flex-direction:column;gap:0;position:relative}
-.bk-step{display:flex;gap:16px;align-items:flex-start;position:relative;padding-bottom:24px}
-.bk-step:last-child{padding-bottom:0}
-.bk-step-dot{width:36px;height:36px;border-radius:50%;background:rgba(0,220,130,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1}
-.bk-step-dot svg{width:18px;height:18px;color:var(--orange)}
-.bk-step:not(:last-child) .bk-step-dot::after{content:'';position:absolute;top:36px;left:50%;transform:translateX(-50%);width:2px;height:calc(100% + 24px - 36px);background:var(--border)}
-.bk-step-text h3{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:2px}
-.bk-step-text p{font-size:.82rem;color:var(--text-muted);line-height:1.5}
+/* ===== HERO ===== */
+.hero{
+  padding:140px 24px 80px;text-align:center;
+  background:radial-gradient(ellipse at 50% 0%,rgba(0,220,130,.06) 0%,transparent 70%);
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 16px;background:var(--green-light);border:1px solid var(--green-dim);
+  border-radius:100px;font-size:.75rem;font-weight:700;color:var(--green);
+  letter-spacing:.04em;text-transform:uppercase;margin-bottom:24px;
+}
+.hero-badge svg{width:14px;height:14px}
+.hero h1{
+  font-size:clamp(2rem,5.5vw,3.2rem);font-weight:900;color:#fff;
+  letter-spacing:-.04em;line-height:1.08;margin-bottom:16px;
+  max-width:720px;margin-left:auto;margin-right:auto;
+}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero-sub{
+  font-size:clamp(.95rem,2vw,1.15rem);color:var(--text-secondary);
+  max-width:580px;margin:0 auto 40px;line-height:1.7;
+}
 
-/* Trust */
-.bk-trust{max-width:480px;margin:0 auto;padding:0 24px 48px}
-.bk-trust-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.bk-trust-item{display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:500;color:var(--text-secondary)}
-.bk-trust-item svg{width:18px;height:18px;color:var(--green);flex-shrink:0}
+/* ===== FORM SECTION ===== */
+.form-section{
+  max-width:560px;margin:0 auto;padding:0 24px 80px;
+}
+.form-card{
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);
+  border-radius:20px;padding:40px 36px;
+  box-shadow:0 0 80px rgba(0,220,130,.04);
+}
+.form-card h2{
+  font-size:1.3rem;font-weight:800;color:#fff;text-align:center;
+  margin-bottom:4px;letter-spacing:-.02em;
+}
+.form-card .form-subtitle{
+  text-align:center;font-size:.88rem;color:var(--text-muted);margin-bottom:28px;
+}
+.form-group{margin-bottom:18px}
+.form-group label{
+  display:block;font-size:.82rem;font-weight:600;color:var(--text-secondary);
+  margin-bottom:6px;letter-spacing:.02em;
+}
+.form-group input,
+.form-group select{
+  width:100%;padding:14px 16px;border-radius:10px;
+  background:rgba(255,255,255,0.05);border:1px solid var(--border);
+  color:#fff;font-size:.95rem;font-family:inherit;
+  transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;appearance:none;
+}
+.form-group select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;
+  padding-right:40px;cursor:pointer;
+}
+.form-group input::placeholder{color:var(--text-muted)}
+.form-group input:focus,
+.form-group select:focus{
+  outline:none;border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(0,220,130,.15);
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
-/* Divider */
-.bk-divider{width:48px;height:2px;background:var(--border);margin:0 auto 48px;border-radius:1px}
+.form-submit{
+  width:100%;padding:16px;border-radius:12px;border:none;
+  background:var(--green);color:#000;font-size:1rem;font-weight:800;
+  font-family:inherit;cursor:pointer;transition:all .2s;
+  margin-top:8px;letter-spacing:-.01em;
+}
+.form-submit:hover{background:var(--green-hover);transform:translateY(-1px);box-shadow:0 8px 30px rgba(0,220,130,.3)}
+.form-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
 
-/* Footer */
-.bk-footer{text-align:center;padding:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:.78rem}
-.bk-footer a{color:var(--text-secondary)}
+.form-note{
+  text-align:center;font-size:.78rem;color:var(--text-muted);margin-top:14px;
+}
+.form-error{
+  background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);
+  color:#f87171;padding:12px 16px;border-radius:10px;font-size:.88rem;
+  margin-bottom:16px;display:none;text-align:center;
+}
+.form-success{
+  text-align:center;padding:40px 20px;display:none;
+}
+.form-success svg{width:56px;height:56px;color:var(--green);margin:0 auto 16px}
+.form-success h3{font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:8px}
+.form-success p{color:var(--text-secondary);font-size:.92rem}
 
-/* Calendar modal */
-.bk-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;padding:24px}
-.bk-modal-overlay.open{display:flex}
-.bk-modal{background:var(--white);border-radius:16px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-.bk-modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
-.bk-modal-header h2{font-size:1rem;font-weight:800;color:var(--navy-dark)}
-.bk-modal-close{width:32px;height:32px;border-radius:8px;border:none;background:var(--off-white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--text-muted);transition:background .2s}
-.bk-modal-close:hover{background:var(--border)}
-.bk-modal-body{padding:20px}
-.bk-modal-body iframe{width:100%;min-height:560px;border:none;display:block;border-radius:8px}
-.bk-modal-fallback{text-align:center;padding:24px;color:var(--text-secondary);font-size:.9rem;display:none}
-.bk-modal-fallback a{color:var(--orange);font-weight:600}
+/* Or divider */
+.or-divider{
+  display:flex;align-items:center;gap:16px;margin:28px 0;
+}
+.or-divider::before,.or-divider::after{
+  content:'';flex:1;height:1px;background:var(--border);
+}
+.or-divider span{font-size:.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em}
 
-/* Responsive */
+.calendar-btn{
+  width:100%;padding:14px;border-radius:12px;
+  background:transparent;border:1.5px solid var(--border);
+  color:#fff;font-size:.92rem;font-weight:600;font-family:inherit;
+  cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.calendar-btn:hover{border-color:var(--green);color:var(--green)}
+.calendar-btn svg{width:18px;height:18px}
+
+/* ===== TRUST SIGNALS ===== */
+.trust-signals{
+  max-width:800px;margin:0 auto;padding:0 24px 80px;
+}
+.trust-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+}
+.trust-card{
+  text-align:center;padding:32px 20px;
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  transition:border-color .3s,transform .3s;
+}
+.trust-card:hover{border-color:rgba(0,220,130,.2);transform:translateY(-2px)}
+.trust-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:var(--green-light);border:1px solid var(--green-dim);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;
+}
+.trust-icon svg{width:24px;height:24px;color:var(--green)}
+.trust-card h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:4px}
+.trust-card p{font-size:.82rem;color:var(--text-muted);line-height:1.5}
+
+@media(max-width:640px){
+  .trust-grid{grid-template-columns:1fr}
+}
+
+/* ===== TIMELINE ===== */
+.timeline-section{
+  max-width:680px;margin:0 auto;padding:0 24px 100px;
+}
+.timeline-section h2{
+  font-size:clamp(1.4rem,3vw,1.8rem);font-weight:900;color:#fff;
+  text-align:center;letter-spacing:-.03em;margin-bottom:12px;
+}
+.timeline-section .section-sub{
+  text-align:center;color:var(--text-secondary);font-size:.95rem;margin-bottom:48px;
+}
+.timeline{display:flex;flex-direction:column;gap:0;position:relative}
+.tl-step{display:flex;gap:20px;align-items:flex-start;position:relative;padding-bottom:40px}
+.tl-step:last-child{padding-bottom:0}
+.tl-num{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--green-light);border:2px solid var(--green-dim);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:1.1rem;font-weight:800;color:var(--green);
+  position:relative;z-index:1;
+}
+.tl-step:not(:last-child) .tl-num::after{
+  content:'';position:absolute;top:48px;left:50%;transform:translateX(-50%);
+  width:2px;height:calc(100% + 40px - 48px);
+  background:linear-gradient(to bottom,var(--green-dim),var(--border));
+}
+.tl-content{padding-top:8px}
+.tl-content h3{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:4px}
+.tl-content p{font-size:.9rem;color:var(--text-secondary);line-height:1.6}
+
+/* ===== FOOTER ===== */
+.site-footer{
+  border-top:1px solid var(--border);padding:60px 24px 32px;
+}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-grid{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;
+  margin-bottom:40px;
+}
+.footer-brand .logo{display:inline-block;margin-bottom:12px}
+.footer-brand p{font-size:.88rem;color:var(--text-muted);max-width:280px;line-height:1.6}
+.footer-col h3{font-size:.82rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.footer-col a{display:block;font-size:.88rem;color:var(--text-muted);padding:4px 0;transition:color .2s}
+.footer-col a:hover{color:var(--green)}
+.footer-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:24px;border-top:1px solid var(--border);
+  font-size:.8rem;color:var(--text-muted);
+}
+
+@media(max-width:768px){
+  .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+}
+@media(max-width:480px){
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:8px;text-align:center}
+}
+
+/* ===== CALENDAR MODAL ===== */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
+  z-index:2000;align-items:center;justify-content:center;padding:24px;
+}
+.modal-overlay.open{display:flex}
+.modal-box{
+  background:#111;border:1px solid var(--border);border-radius:20px;
+  width:100%;max-width:540px;max-height:90vh;overflow-y:auto;
+  position:relative;box-shadow:var(--shadow-xl);
+}
+.modal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 24px;border-bottom:1px solid var(--border);
+}
+.modal-header h2{font-size:1.05rem;font-weight:800;color:#fff}
+.modal-close{
+  width:34px;height:34px;border-radius:8px;border:1px solid var(--border);
+  background:transparent;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;color:var(--text-muted);font-size:1.2rem;transition:all .2s;
+}
+.modal-close:hover{border-color:var(--green);color:var(--green)}
+.modal-body{padding:20px 24px 24px}
+.modal-body iframe{width:100%;min-height:560px;border:none;display:block;border-radius:8px}
+.modal-fallback{
+  text-align:center;padding:24px;color:var(--text-secondary);font-size:.9rem;display:none;
+}
+.modal-fallback a{color:var(--green);font-weight:600}
+
+/* ===== RESPONSIVE ===== */
 @media(max-width:500px){
-  .bk-hero{padding:56px 20px 36px}
-  .bk-ctas{flex-direction:column;align-items:stretch;padding:0 20px}
-  .bk-btn{justify-content:center}
-  .bk-trust-list{grid-template-columns:1fr}
-  .bk-timeline{padding:36px 20px 32px}
+  .hero{padding:120px 20px 60px}
+  .form-card{padding:28px 20px}
+  .form-row{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<header class="bk-header">
-  <a href="/" class="bk-logo">The Call<span>Taker</span></a>
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="header">
+  <div class="header-inner">
+    <a href="/" class="logo">The Call<span>Taker</span></a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/pricing.html">Pricing</a></li>
+        <li><a href="/book.html" class="active">Demo</a></li>
+        <li><a href="/case-studies/">Case Studies</a></li>
+      </ul>
+    </nav>
+    <a href="/pilot/" class="header-cta">Start Free Pilot</a>
+    <button class="mobile-toggle" id="menuBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
-<section class="bk-hero">
-  <div class="bk-badge">Free 14-day pilot</div>
-  <h1>Hear the AI. Then decide.</h1>
-  <p>Call the demo line right now and hear how it handles a real call. Or book a 10-minute walkthrough with our team.</p>
-  <div class="bk-ctas">
-    <a href="tel:+16157845747" class="bk-btn bk-btn-call">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
-      Call the AI Now
-    </a>
-    <button class="bk-btn bk-btn-demo" id="openDemo">Book 10-Min Demo</button>
+<!-- Mobile overlay -->
+<div class="mobile-overlay" id="mobileOverlay" role="dialog" aria-modal="true">
+  <a href="/">Home</a>
+  <a href="/pricing.html">Pricing</a>
+  <a href="/book.html">Demo</a>
+  <a href="/case-studies/">Case Studies</a>
+  <a href="/pilot/" class="mobile-cta">Start Free Pilot</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    10-Minute Live Demo
+  </div>
+  <h1>See Your AI Receptionist <em>Live</em> In 10 Minutes</h1>
+  <p class="hero-sub">We'll set it up as YOUR business, answer calls as YOUR company, and you'll hear exactly what your customers will hear.</p>
+</section>
+
+<!-- ===== BOOKING FORM ===== -->
+<section class="form-section">
+  <div class="form-card">
+    <h2>Request Your Live Demo</h2>
+    <p class="form-subtitle">We'll call you and demo it live on the spot</p>
+
+    <div class="form-error" id="formError"></div>
+
+    <form id="demoForm" novalidate>
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="John Smith" required autocomplete="name">
+      </div>
+
+      <div class="form-group">
+        <label for="business">Business Name</label>
+        <input type="text" id="business" name="business" placeholder="Smith's Plumbing" required autocomplete="organization">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="(615) 555-1234" required autocomplete="tel">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="industry">Your Industry</label>
+          <select id="industry" name="industry" required>
+            <option value="" disabled selected>Select industry</option>
+            <option value="HVAC">HVAC</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Roofing">Roofing</option>
+            <option value="Dental">Dental</option>
+            <option value="Med Spa">Med Spa</option>
+            <option value="Legal">Legal</option>
+            <option value="Property Management">Property Management</option>
+            <option value="Veterinary">Veterinary</option>
+            <option value="Locksmith">Locksmith</option>
+            <option value="Garage Door">Garage Door</option>
+            <option value="Towing">Towing</option>
+            <option value="Funeral">Funeral</option>
+            <option value="Pest Control">Pest Control</option>
+            <option value="Auto Repair">Auto Repair</option>
+            <option value="Cleaning">Cleaning</option>
+            <option value="Landscaping">Landscaping</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="bestTime">Best Time to Call</label>
+          <select id="bestTime" name="bestTime" required>
+            <option value="" disabled selected>Select time</option>
+            <option value="Morning">Morning (9am-12pm)</option>
+            <option value="Afternoon">Afternoon (12-5pm)</option>
+            <option value="Evening">Evening (5-8pm)</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="form-submit" id="submitBtn">Get My Live Demo</button>
+    </form>
+
+    <p class="form-note">No credit card required. Takes 2 minutes.</p>
+
+    <div class="form-success" id="formSuccess">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10 16 7 13"/></svg>
+      <h3>You're all set!</h3>
+      <p>We'll call you during your selected time window. Redirecting you now...</p>
+    </div>
+
+    <!-- Secondary option: calendar booking -->
+    <div class="or-divider"><span>or</span></div>
+    <button class="calendar-btn" id="openCalendar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book 10-Min Demo on Calendar
+    </button>
   </div>
 </section>
 
-<div class="bk-divider"></div>
+<!-- ===== TRUST SIGNALS ===== -->
+<section class="trust-signals">
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <h3>Setup in 24 Hours</h3>
+      <p>Your AI receptionist is live and answering calls within one business day</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>14-Day Free Pilot</h3>
+      <p>Test it with real calls from real customers. No credit card, no commitment</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      <h3>30-Day Money Back</h3>
+      <p>If it doesn't pay for itself in the first month, you get a full refund</p>
+    </div>
+  </div>
+</section>
 
-<section class="bk-timeline">
-  <h2>What Happens Next</h2>
-  <div class="bk-steps">
-    <div class="bk-step">
-      <div class="bk-step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg></div>
-      <div class="bk-step-text">
-        <h3>You call or book a demo</h3>
-        <p>Hear the AI answer live or schedule a 10-minute walkthrough with our team.</p>
+<!-- ===== WHAT HAPPENS ON THE CALL ===== -->
+<section class="timeline-section">
+  <h2>What Happens on the Call</h2>
+  <p class="section-sub">Your personalized demo takes about 10 minutes</p>
+  <div class="timeline">
+    <div class="tl-step">
+      <div class="tl-num">1</div>
+      <div class="tl-content">
+        <h3>We demo it live as your business</h3>
+        <p>We'll set up the AI with your company name, your industry, and your services. Then we call it together so you hear exactly what your customers will hear.</p>
       </div>
     </div>
-    <div class="bk-step">
-      <div class="bk-step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-      <div class="bk-step-text">
-        <h3>We build your AI receptionist</h3>
-        <p>Customized for your business, industry, and scheduling in under 24 hours.</p>
+    <div class="tl-step">
+      <div class="tl-num">2</div>
+      <div class="tl-content">
+        <h3>We customize the script</h3>
+        <p>Tell us how you want calls handled, what questions to ask, when to escalate to your phone. We'll dial it in right there on the call.</p>
       </div>
     </div>
-    <div class="bk-step">
-      <div class="bk-step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="bk-step-text">
-        <h3>Start catching missed calls</h3>
-        <p>Forward your line and every call gets answered, booked, and logged. Free for 14 days.</p>
+    <div class="tl-step">
+      <div class="tl-num">3</div>
+      <div class="tl-content">
+        <h3>You're live in 24 hours</h3>
+        <p>Forward your line and every call gets answered, booked, and logged. Start your free 14-day pilot with zero risk.</p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="bk-divider"></div>
-
-<section class="bk-trust">
-  <ul class="bk-trust-list">
-    <li class="bk-trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-      Keep your existing number
-    </li>
-    <li class="bk-trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-      Works with your calendar
-    </li>
-    <li class="bk-trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-      Escalates to your phone
-    </li>
-    <li class="bk-trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-      Cancel anytime
-    </li>
-  </ul>
-</section>
-
-<footer class="bk-footer">
-  <p>&copy; 2026 <a href="/">The Call Taker</a>. AI-powered answering for service businesses.</p>
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo">The Call<span>Taker</span></a>
+        <p>AI receptionist for service businesses. Answers every call, books every job, never takes a day off.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Product</h3>
+        <a href="/#how-it-works">How It Works</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/demo-showcase.html">Live Demo</a>
+        <a href="/industries.html">Industries</a>
+        <a href="/pilot/">Start Free Pilot</a>
+      </div>
+      <div class="footer-col">
+        <h3>Resources</h3>
+        <a href="/case-studies/">Case Studies</a>
+        <a href="/book.html">Book a Demo</a>
+        <a href="/blog.html">Blog</a>
+        <a href="/agency.html">Agencies</a>
+      </div>
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <a href="tel:+16157845747">(615) 784-5747</a>
+        <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 The Call Taker. All rights reserved.</p>
+      <p>Nashville, TN</p>
+    </div>
+  </div>
 </footer>
 
-<!-- Calendar Modal -->
-<div class="bk-modal-overlay" id="demoModal">
-  <div class="bk-modal">
-    <div class="bk-modal-header">
+<!-- ===== CALENDAR MODAL ===== -->
+<div class="modal-overlay" id="calModal">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2>Pick a Time</h2>
-      <button class="bk-modal-close" id="closeDemo" aria-label="Close">&times;</button>
+      <button class="modal-close" id="closeCalendar" aria-label="Close">&times;</button>
     </div>
-    <div class="bk-modal-body">
+    <div class="modal-body">
       <iframe
-        id="cal-iframe"
+        id="calIframe"
         src="https://api.leadconnectorhq.com/widget/booking/h4IlzccZ1m3JprEQqpMJ"
         scrolling="no"
         title="Book a demo call"
       ></iframe>
-      <div class="bk-modal-fallback" id="calFallback">
+      <div class="modal-fallback" id="calFallback">
         Calendar not loading?<br>
         Call us at <a href="tel:+16157845747">(615) 784-5747</a> or email <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a>.
       </div>
@@ -219,60 +586,211 @@ a{color:inherit;text-decoration:none}
 
 <script>
 (function(){
-  var openBtn = document.getElementById('openDemo');
-  var closeBtn = document.getElementById('closeDemo');
-  var modal = document.getElementById('demoModal');
+  // ===== HEADER SCROLL =====
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function(){
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ===== MOBILE MENU =====
+  var menuBtn = document.getElementById('menuBtn');
+  var overlay = document.getElementById('mobileOverlay');
+  menuBtn.addEventListener('click', function(){
+    var open = overlay.classList.toggle('open');
+    menuBtn.classList.toggle('active');
+    menuBtn.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  overlay.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      overlay.classList.remove('open');
+      menuBtn.classList.remove('active');
+      menuBtn.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ===== CALENDAR MODAL =====
+  var calModal = document.getElementById('calModal');
+  var openCal = document.getElementById('openCalendar');
+  var closeCal = document.getElementById('closeCalendar');
   var fallback = document.getElementById('calFallback');
 
-  openBtn.addEventListener('click', function(){
-    modal.classList.add('open');
+  openCal.addEventListener('click', function(){
+    calModal.classList.add('open');
     document.body.style.overflow = 'hidden';
-    // Show fallback after 8s if iframe didn't load
     setTimeout(function(){
-      try {
-        var f = document.getElementById('cal-iframe');
+      try{
+        var f = document.getElementById('calIframe');
         var d = f.contentDocument;
         if(d && d.body && d.body.innerHTML === '') fallback.style.display = 'block';
-      } catch(e){}
+      }catch(e){}
     }, 8000);
-    // GA4
-    if(typeof gtag === 'function') gtag('event','demo_modal_open',{event_category:'engagement'});
+    if(typeof gtag === 'function') gtag('event','calendar_modal_open',{event_category:'engagement'});
   });
 
-  closeBtn.addEventListener('click', function(){
-    modal.classList.remove('open');
+  closeCal.addEventListener('click', function(){
+    calModal.classList.remove('open');
     document.body.style.overflow = '';
   });
-
-  modal.addEventListener('click', function(e){
-    if(e.target === modal){
-      modal.classList.remove('open');
-      document.body.style.overflow = '';
-    }
+  calModal.addEventListener('click', function(e){
+    if(e.target === calModal){calModal.classList.remove('open');document.body.style.overflow='';}
   });
-
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && modal.classList.contains('open')){
-      modal.classList.remove('open');
-      document.body.style.overflow = '';
+    if(e.key === 'Escape' && calModal.classList.contains('open')){
+      calModal.classList.remove('open');document.body.style.overflow='';
     }
   });
 
-  // Append UTMs to booking iframe
+  // Append UTMs to calendar iframe
   var params = new URLSearchParams(window.location.search);
-  var iframe = document.getElementById('cal-iframe');
+  var iframe = document.getElementById('calIframe');
   if(iframe){
-    var iframeUrl = iframe.src;
-    var utmKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','fbclid'];
-    utmKeys.forEach(function(k){
+    var u = iframe.src;
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','fbclid'].forEach(function(k){
       var v = params.get(k);
-      if(v) iframeUrl += (iframeUrl.indexOf('?')!==-1?'&':'?') + k + '=' + encodeURIComponent(v);
+      if(v) u += (u.indexOf('?')!==-1?'&':'?') + k + '=' + encodeURIComponent(v);
     });
-    if(iframeUrl !== iframe.src) iframe.src = iframeUrl;
+    if(u !== iframe.src) iframe.src = u;
   }
 
-  // Pre-fill from URL param
-  if(params.get('action') === 'book') openBtn.click();
+  // Auto-open calendar if ?action=book
+  if(params.get('action') === 'book') openCal.click();
+
+  // ===== FORM SUBMISSION =====
+  var form = document.getElementById('demoForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var errorDiv = document.getElementById('formError');
+  var successDiv = document.getElementById('formSuccess');
+
+  function formatPhone(raw){
+    var digits = raw.replace(/\D/g,'');
+    if(digits.length === 10) digits = '1' + digits;
+    if(digits.length === 11 && digits[0] === '1') return '+' + digits;
+    return null;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    errorDiv.style.display = 'none';
+
+    var name = document.getElementById('name').value.trim();
+    var business = document.getElementById('business').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var industry = document.getElementById('industry').value;
+    var bestTime = document.getElementById('bestTime').value;
+
+    if(!name || !business || !phone || !industry || !bestTime){
+      errorDiv.textContent = 'Please fill out all fields.';
+      errorDiv.style.display = 'block';
+      return;
+    }
+
+    var formattedPhone = formatPhone(phone);
+    if(!formattedPhone){
+      errorDiv.textContent = 'Please enter a valid 10-digit phone number.';
+      errorDiv.style.display = 'block';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    // Get attribution data
+    var attrTags = [];
+    var attrNotes = '';
+    try{
+      if(typeof getTctAttributionTags === 'function') attrTags = getTctAttributionTags();
+      if(typeof getTctAttributionNotes === 'function') attrNotes = getTctAttributionNotes();
+    }catch(ex){}
+
+    var tags = ['demo-request', industry.toLowerCase().replace(/\s+/g,'-')].concat(attrTags);
+
+    var contactPayload = {
+      firstName: name.split(' ')[0],
+      lastName: name.split(' ').slice(1).join(' ') || '',
+      phone: formattedPhone,
+      companyName: business,
+      tags: tags,
+      source: 'book-demo-form',
+      customField: {}
+    };
+
+    // Create GHL contact
+    fetch('https://services.leadconnectorhq.com/contacts/', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+        'Version': '2021-07-28',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(contactPayload)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      // Send ntfy urgent alert
+      var ntfyBody = '[DEMO REQUEST] ' + name + ' from ' + business +
+        '\nPhone: ' + formattedPhone +
+        '\nIndustry: ' + industry +
+        '\nBest time: ' + bestTime +
+        '\nSource: book.html form' +
+        (attrNotes ? '\nAttribution: ' + attrNotes : '');
+
+      return fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+        method: 'POST',
+        headers: {
+          'Title': 'Demo Request: ' + name + ' - ' + business,
+          'Priority': 'urgent',
+          'Tags': 'phone,demo'
+        },
+        body: ntfyBody
+      });
+    })
+    .then(function(){
+      // GA4 conversion event
+      if(typeof gtag === 'function'){
+        gtag('event','demo_request_submitted',{
+          event_category:'conversion',
+          event_label: industry,
+          value: 1
+        });
+      }
+
+      // Show success, hide form
+      form.style.display = 'none';
+      document.querySelector('.form-subtitle').style.display = 'none';
+      document.querySelector('.or-divider').style.display = 'none';
+      document.getElementById('openCalendar').style.display = 'none';
+      document.querySelector('.form-note').style.display = 'none';
+      successDiv.style.display = 'block';
+
+      // Redirect after 3 seconds
+      setTimeout(function(){
+        window.location.href = '/thank-you.html';
+      }, 3000);
+    })
+    .catch(function(err){
+      console.error('Form submission error:', err);
+      // Still redirect on error — the ntfy might have failed but contact was likely created
+      errorDiv.textContent = 'Something went wrong. Please call us at (615) 784-5747.';
+      errorDiv.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get My Live Demo';
+    });
+  });
+
+  // Phone formatting as user types
+  var phoneInput = document.getElementById('phone');
+  phoneInput.addEventListener('input', function(){
+    var x = this.value.replace(/\D/g,'');
+    if(x.length > 0){
+      if(x.length <= 3) this.value = '(' + x;
+      else if(x.length <= 6) this.value = '(' + x.substring(0,3) + ') ' + x.substring(3);
+      else this.value = '(' + x.substring(0,3) + ') ' + x.substring(3,6) + '-' + x.substring(6,10);
+    }
+  });
+
 })();
 </script>
 
