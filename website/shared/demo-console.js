@@ -12,9 +12,54 @@
 
   // === TTS VOICE SETTINGS ===
   var TTS_VOICES = {
-    jessica: { pitch: -0.1, rate: 0.85 },
-    caller:  { pitch: 0, rate: 1.0 }
+    AI:     { pitch: 1.1, rate: 0.92 },   // Higher pitch, slightly slower — "AI receptionist" feel
+    Caller: { pitch: 0.85, rate: 1.0 }    // Lower pitch, normal speed — caller
   };
+
+  // === TTS ENGINE (Web Speech API) ===
+  var ttsSupported = 'speechSynthesis' in window;
+  var ttsQueue = [];
+  var ttsSpeaking = false;
+  var ttsActive = false;
+
+  function ttsSpeak(text, speaker, onDone) {
+    if (!ttsSupported || REDUCED) { if (onDone) onDone(); return; }
+    var utt = new SpeechSynthesisUtterance(text);
+    var voice = TTS_VOICES[speaker] || TTS_VOICES.Caller;
+    utt.pitch = voice.pitch;
+    utt.rate = voice.rate;
+    utt.volume = 1;
+    // Try to pick a female English voice for AI, male for Caller
+    var voices = speechSynthesis.getVoices();
+    if (voices.length > 0) {
+      var preferred = speaker === 'AI'
+        ? voices.find(function(v) { return v.lang.indexOf('en') === 0 && /female|samantha|karen|victoria|zira|hazel/i.test(v.name); })
+        : voices.find(function(v) { return v.lang.indexOf('en') === 0 && /male|daniel|david|james|tom|george/i.test(v.name); });
+      if (preferred) utt.voice = preferred;
+      else {
+        var english = voices.find(function(v) { return v.lang.indexOf('en') === 0; });
+        if (english) utt.voice = english;
+      }
+    }
+    utt.onend = function() { ttsSpeaking = false; if (onDone) onDone(); };
+    utt.onerror = function() { ttsSpeaking = false; if (onDone) onDone(); };
+    ttsSpeaking = true;
+    speechSynthesis.speak(utt);
+  }
+
+  function ttsStop() {
+    if (ttsSupported) {
+      speechSynthesis.cancel();
+      ttsSpeaking = false;
+      ttsActive = false;
+    }
+  }
+
+  // Preload voices (some browsers load async)
+  if (ttsSupported && speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = function() { speechSynthesis.getVoices(); };
+  }
+  if (ttsSupported) speechSynthesis.getVoices();
 
   // === INDUSTRY DATASETS ===
   var INDUSTRIES = {
@@ -390,21 +435,50 @@
       setPlayIcon('play');
       if (hasRealAudio) audioEl.pause();
       if (simInterval) { clearInterval(simInterval); simInterval = null; }
+      ttsStop();
+      clearTTSTimeouts();
     }
 
     function startSimulated() {
       var startMs = Date.now() - (currentTime * 1000);
+      // Start TTS for transcript lines
+      if (ttsSupported && !REDUCED) {
+        ttsActive = true;
+        scheduleTTS(currentTime);
+      }
       simInterval = setInterval(function() {
         currentTime = (Date.now() - startMs) / 1000;
         if (currentTime >= audioDuration) {
           clearInterval(simInterval);
           simInterval = null;
           currentTime = audioDuration;
+          ttsStop();
           onComplete();
           return;
         }
         tick(currentTime / audioDuration);
       }, 80);
+    }
+
+    // Schedule TTS for each transcript line
+    var ttsTimeouts = [];
+    function scheduleTTS(fromTime) {
+      clearTTSTimeouts();
+      var data = INDUSTRIES[currentIndustry];
+      if (!data || !data.transcript) return;
+      data.transcript.forEach(function(line) {
+        if (line.start < fromTime) return;
+        var delay = (line.start - fromTime) * 1000;
+        var t = setTimeout(function() {
+          if (!ttsActive || !playing) return;
+          ttsSpeak(line.text, line.speaker);
+        }, delay);
+        ttsTimeouts.push(t);
+      });
+    }
+    function clearTTSTimeouts() {
+      ttsTimeouts.forEach(function(t) { clearTimeout(t); });
+      ttsTimeouts = [];
     }
 
     function tick(pct) {
@@ -447,6 +521,8 @@
       root.classList.remove('dc-done');
       playBtn.classList.remove('dc-done');
       setPlayIcon('play');
+      ttsStop();
+      clearTTSTimeouts();
       currentTime = 0;
       bars.forEach(function(b) { b.className = 'dc-bar'; });
       if (progressFill) progressFill.style.width = '0%';
@@ -537,7 +613,7 @@
     // Header
     html += '<div class="dc-header">';
     html += '<span class="dc-badge"><span class="dc-live-dot"></span>Call Session Viewer</span>';
-    html += '<span class="dc-sim-label" data-loaded="Demo audio loaded" data-sim="Using simulated demo">Using simulated demo</span>';
+    html += '<span class="dc-sim-label" data-loaded="Demo audio loaded" data-sim="' + (ttsSupported ? 'Demo with AI voice' : 'Simulated demo') + '">' + (ttsSupported ? 'Demo with AI voice' : 'Simulated demo') + '</span>';
     html += '<span class="dc-time">Real call \u2014 11:47 PM</span>';
     html += '</div>';
     // Industry pills

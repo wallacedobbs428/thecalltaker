@@ -211,7 +211,7 @@
       '#tct-popup-form input::placeholder { color: #9ca3af; }' +
       '#tct-popup-form input:focus,' +
       '#tct-popup-form select:focus {' +
-      '  border-color: #ea580c;' +
+      '  border-color: #00dc82;' +
       '}' +
       '#tct-popup-form select {' +
       '  color: #9ca3af;' +
@@ -225,8 +225,8 @@
       '#tct-popup-submit {' +
       '  width: 100%;' +
       '  padding: 14px 24px;' +
-      '  background: #ea580c;' +
-      '  color: #fff;' +
+      '  background: #00dc82;' +
+      '  color: #000;' +
       '  border: none;' +
       '  border-radius: 8px;' +
       '  font-size: 17px;' +
@@ -236,7 +236,7 @@
       '  font-family: inherit;' +
       '  margin-top: 4px;' +
       '}' +
-      '#tct-popup-submit:hover { background: #c2410c; }' +
+      '#tct-popup-submit:hover { background: #00c974; }' +
       '#tct-popup-submit:active { transform: scale(0.98); }' +
       '#tct-popup-submit:disabled {' +
       '  background: #d1d5db;' +
