@@ -48,3 +48,23 @@
 - SSL cert on thecalltaker.com: pending GitHub Pages issuance
 - Stripe: not connected
 - Voice agent: intermittent issues (random pauses, topic changes) — needs retesting
+
+---
+
+## Blog Post Standards (confirmed March 14 2026)
+- All blog posts in `/home/user/thecalltaker/website/blog/`
+- Minimum 550 HTML lines per post (line count, not word count)
+- Template: match `hvac-virtual-receptionist-guide.html` structure exactly
+- Schema: Article JSON-LD always. FAQ posts also need FAQPage JSON-LD.
+- CSS: `--blue` and `--orange` are both `#00dc82` (green). CTA button text: `color:#000`
+- CTAs: primary → `/try-live.html`, secondary → `/pilot/`
+- Shared scripts: `ui-dark.js` + `ui-dark.css` from `/shared/`
+- Google Ads tag: `AW-17970510102`
+- Pricing in posts: $97/mo after-hours, $297/mo 24/7, $497/mo enterprise. No contracts, no setup fee.
+
+## Blog Posts Written (P3 Part 2, March 14 2026)
+- `virtual-receptionist-vs-answering-service.html` — 560 lines — "virtual receptionist vs answering service"
+- `missed-calls-costing-business-money.html` — 550 lines — "missed calls costing business money"
+- `ai-receptionist-vs-smith-ai.html` — 551 lines — "Smith.ai alternative"
+- `after-hours-answering-service-plumbing.html` — 550 lines — "after hours answering service for plumbers"
+- `how-ai-answering-service-works.html` — 606 lines — "how does AI answering service work"
