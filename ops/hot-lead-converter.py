@@ -113,7 +113,7 @@ def get_email_touch_2(first_name, company_name, industry_word, job_value):
 <p>Only taking <strong>3 businesses this month</strong>. Two spots are already spoken for.</p>
 
 <p style="margin: 24px 0;">
-<a href="{BOOKING_URL}" style="background: #F97316; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Book Your Free Demo →</a>
+<a href="{BOOKING_URL}" style="background: #00dc82; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Book Your Free Demo →</a>
 </p>
 
 <p>Or just call the AI yourself right now: <strong>{DEMO_LINE}</strong><br>
@@ -150,22 +150,22 @@ def get_email_touch_4(first_name, company_name, industry_word):
 
 <p>Here's what three business owners said after their 14-day pilot:</p>
 
-<blockquote style="border-left: 3px solid #F97316; padding-left: 16px; margin: 16px 0; color: #333;">
+<blockquote style="border-left: 3px solid #00dc82; padding-left: 16px; margin: 16px 0; color: #333;">
 "I was skeptical. Then the AI booked 3 appointments on my calendar the first weekend. Real jobs. Real money. I signed up permanently that Monday."
 </blockquote>
 
-<blockquote style="border-left: 3px solid #F97316; padding-left: 16px; margin: 16px 0; color: #333;">
+<blockquote style="border-left: 3px solid #00dc82; padding-left: 16px; margin: 16px 0; color: #333;">
 "My wife used to answer our phones after hours. Now she doesn't have to. The AI handles everything and I get a text with the details. It's like having a full-time receptionist for $297/month."
 </blockquote>
 
-<blockquote style="border-left: 3px solid #F97316; padding-left: 16px; margin: 16px 0; color: #333;">
+<blockquote style="border-left: 3px solid #00dc82; padding-left: 16px; margin: 16px 0; color: #333;">
 "I tested it by calling my own number at 11pm. The AI picked up, asked what was wrong, booked me an appointment, and texted me the confirmation. I was sold."
 </blockquote>
 
 <p>14 days free. No card. No contract. If it doesn't book you more jobs, walk away.</p>
 
 <p style="margin: 24px 0;">
-<a href="{BOOKING_URL}" style="background: #F97316; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Grab the Last Spot →</a>
+<a href="{BOOKING_URL}" style="background: #00dc82; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Grab the Last Spot →</a>
 </p>
 
 <p>Or reply to this email. I'll personally set it up for {company_name}.</p>

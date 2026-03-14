@@ -201,7 +201,7 @@ def build_email_html(first_name, company_name, industry, city="your area"):
 <p><strong>We're running a free 14-day pilot.</strong> No card. No contract. We set it up in 48 hours.</p>
 
 <p style="margin: 24px 0;">
-<a href="{BOOKING_URL}" style="background: #F97316; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Book Your Free Demo →</a>
+<a href="{BOOKING_URL}" style="background: #00dc82; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Book Your Free Demo →</a>
 </p>
 
 <p>Or call the AI yourself: <strong>{DEMO_LINE}</strong>. Pretend you're a customer. Takes 2 minutes.</p>

@@ -303,7 +303,7 @@ def build_storm_email(first_name, company_name, city, weather_angle):
 <p><strong>We're running a free 14-day pilot.</strong> No card. No contract. We set it up in 48 hours and you keep every dollar it earns.</p>
 
 <p style="margin: 24px 0;">
-<a href="{BOOKING_URL}" style="background: #F97316; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Start Your Free Pilot →</a>
+<a href="{BOOKING_URL}" style="background: #00dc82; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Start Your Free Pilot →</a>
 </p>
 
 <p>Or hear it yourself right now — call <strong>{DEMO_LINE}</strong> and pretend you're a customer.</p>

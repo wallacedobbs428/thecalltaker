@@ -144,7 +144,7 @@ def reminder_email_96h(first_name, company):
 <p>That's a <strong>43x-72x return</strong> on a $97 investment. And the pilot is free.</p>
 
 <p style="margin: 24px 0;">
-<a href="{BOOKING_URL}" style="background: #F97316; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Claim Your Free Pilot →</a>
+<a href="{BOOKING_URL}" style="background: #00dc82; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Claim Your Free Pilot →</a>
 </p>
 
 <p>I'm holding this spot until end of day tomorrow. After that, I'll give it to the next business in line.</p>
