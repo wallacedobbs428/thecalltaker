@@ -217,6 +217,38 @@ a{color:inherit;text-decoration:none}
   color:#ef4444;font-size:.85rem;margin-top:10px;display:none;text-align:center;
 }
 
+/* ===== COUNTDOWN STATE ===== */
+.demo-countdown{
+  display:none;text-align:center;padding:20px 0;
+}
+.countdown-label{
+  font-size:.9rem;color:var(--text-secondary);margin-bottom:20px;
+  font-weight:500;
+}
+.countdown-label strong{color:var(--green)}
+/* SVG ring */
+.countdown-ring-wrap{
+  position:relative;width:120px;height:120px;margin:0 auto 20px;
+}
+.countdown-ring-wrap svg{transform:rotate(-90deg)}
+.countdown-ring-bg{
+  fill:none;stroke:rgba(0,220,130,.12);stroke-width:6;
+}
+.countdown-ring-fill{
+  fill:none;stroke:var(--green);stroke-width:6;
+  stroke-linecap:round;
+  stroke-dasharray:339.29; /* 2*pi*54 */
+  stroke-dashoffset:0;
+  transition:stroke-dashoffset 1s linear;
+}
+.countdown-number{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;font-weight:900;color:#fff;letter-spacing:-.04em;
+}
+.countdown-hint{
+  font-size:.82rem;color:var(--text-muted);
+}
+
 /* ===== SUCCESS STATE ===== */
 .demo-success{
   display:none;text-align:center;padding:20px 0;
@@ -242,6 +274,83 @@ a{color:inherit;text-decoration:none}
   font-size:.88rem;color:var(--text-muted);
 }
 .demo-success .fallback a{color:var(--green);font-weight:600}
+
+/* ===== FEEDBACK FORM ===== */
+.demo-feedback{
+  display:none;margin-top:32px;padding-top:28px;
+  border-top:1px solid var(--border);
+  text-align:center;
+  animation:feedbackFadeIn .5s ease;
+}
+@keyframes feedbackFadeIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.demo-feedback h4{
+  font-size:1rem;font-weight:700;color:#fff;margin-bottom:16px;
+}
+/* Stars */
+.star-rating{
+  display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px;
+}
+.star-rating button{
+  background:none;border:none;cursor:pointer;padding:2px;
+  transition:transform .15s;
+}
+.star-rating button:hover{transform:scale(1.2)}
+.star-rating button svg{
+  width:32px;height:32px;
+  fill:rgba(255,255,255,.12);stroke:rgba(255,255,255,.2);
+  stroke-width:1.5;transition:fill .15s,stroke .15s;
+}
+.star-rating button.active svg,
+.star-rating button.hovered svg{
+  fill:#facc15;stroke:#facc15;
+}
+/* Pilot yes/no */
+.pilot-question{
+  margin-bottom:18px;
+}
+.pilot-question p{
+  font-size:.88rem;color:var(--text-secondary);margin-bottom:10px;
+}
+.pilot-btns{
+  display:flex;gap:10px;justify-content:center;
+}
+.pilot-btn{
+  padding:9px 24px;border-radius:8px;border:1px solid var(--border);
+  background:rgba(255,255,255,.04);color:var(--text-secondary);
+  font-size:.88rem;font-weight:600;font-family:inherit;cursor:pointer;
+  transition:all .2s;
+}
+.pilot-btn:hover{border-color:var(--green);color:var(--green);background:var(--green-light)}
+.pilot-btn.selected-yes{background:var(--green-light);border-color:var(--green);color:var(--green)}
+.pilot-btn.selected-no{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15);color:#fff}
+/* Notes */
+.feedback-notes{
+  width:100%;padding:12px 14px;border-radius:10px;
+  background:rgba(255,255,255,0.05);border:1px solid var(--border);
+  color:#fff;font-size:.88rem;font-family:inherit;
+  resize:vertical;min-height:72px;outline:none;margin-bottom:16px;
+  transition:border-color .2s,box-shadow .2s;
+}
+.feedback-notes::placeholder{color:var(--text-muted)}
+.feedback-notes:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,220,130,.1)}
+/* Submit */
+.btn-feedback{
+  width:100%;padding:13px 24px;border-radius:10px;
+  background:var(--green);color:#000;border:none;
+  font-size:.95rem;font-weight:700;font-family:inherit;
+  cursor:pointer;transition:all .2s;
+}
+.btn-feedback:hover{background:var(--green-hover);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,220,130,.3)}
+.btn-feedback:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+.feedback-sent{
+  display:none;padding:14px;border-radius:10px;
+  background:var(--green-light);border:1px solid var(--green-dim);
+  color:var(--green);font-size:.9rem;font-weight:600;text-align:center;
+  margin-top:8px;
+}
 
 /* ===== ERROR STATE ===== */
 .demo-error{
@@ -291,7 +400,7 @@ a{color:inherit;text-decoration:none}
   .how-grid{grid-template-columns:1fr;gap:40px}
 }
 
-/* ===== TRUST ===== */
+/* ===== TRUST — animated counters + industry grid ===== */
 .trust-section{
   padding:80px 24px;text-align:center;
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
@@ -302,14 +411,40 @@ a{color:inherit;text-decoration:none}
 }
 .trust-stats{
   display:flex;align-items:center;justify-content:center;gap:48px;
-  flex-wrap:wrap;
+  flex-wrap:wrap;margin-bottom:60px;
 }
 .trust-stat .stat-number{
   font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;color:var(--green);
   letter-spacing:-.03em;line-height:1;margin-bottom:4px;
+  font-variant-numeric:tabular-nums;
 }
 .trust-stat .stat-label{
   font-size:.85rem;color:var(--text-muted);font-weight:500;
+}
+/* Industry grid */
+.industries-label{
+  font-size:.78rem;font-weight:700;color:var(--text-muted);
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px;
+}
+.industry-grid{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  max-width:700px;margin:0 auto;
+}
+.industry-chip{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 14px;border-radius:100px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+  font-size:.8rem;font-weight:500;color:var(--text-secondary);
+  transition:border-color .2s,color .2s,background .2s;
+  cursor:default;
+}
+.industry-chip:hover{
+  border-color:var(--green-dim);color:var(--green);background:var(--green-light);
+}
+.industry-chip svg{width:14px;height:14px;flex-shrink:0}
+
+@media(max-width:480px){
+  .trust-stats{gap:28px}
 }
 
 /* ===== FAQ ===== */
@@ -405,6 +540,7 @@ a{color:inherit;text-decoration:none}
 @media(prefers-reduced-motion:reduce){
   *{animation:none !important;transition:none !important}
   .fade-up{opacity:1;transform:none}
+  .countdown-ring-fill{transition:none !important}
 }
 </style>
 </head>
@@ -493,6 +629,19 @@ a{color:inherit;text-decoration:none}
       <p class="form-error" id="formError"></p>
     </form>
 
+    <!-- Countdown state -->
+    <div class="demo-countdown" id="demoCountdown" aria-live="polite" aria-label="Call connecting countdown">
+      <p class="countdown-label">Jessica is calling you in<strong id="countdownLabel"></strong></p>
+      <div class="countdown-ring-wrap">
+        <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="countdown-ring-bg" cx="60" cy="60" r="54"/>
+          <circle class="countdown-ring-fill" id="countdownRing" cx="60" cy="60" r="54"/>
+        </svg>
+        <div class="countdown-number" id="countdownNumber">30</div>
+      </div>
+      <p class="countdown-hint">Pick up when your phone rings</p>
+    </div>
+
     <!-- Success state -->
     <div class="demo-success" id="demoSuccess">
       <div class="check-circle">
@@ -504,6 +653,28 @@ a{color:inherit;text-decoration:none}
       <p>Pick up to hear Jessica answer as <span class="business-name" id="successBizName"></span>.</p>
       <div class="fallback">
         Didn't ring within 30 seconds? Call our demo line directly: <a href="tel:+16157845747">(615) 784-5747</a>
+      </div>
+
+      <!-- Post-call feedback form — appears 90s after call triggered -->
+      <div class="demo-feedback" id="demoFeedback">
+        <h4>How was the call?</h4>
+        <div class="star-rating" id="starRating" role="group" aria-label="Rate the call from 1 to 5 stars">
+          <button type="button" data-star="1" aria-label="1 star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+          <button type="button" data-star="2" aria-label="2 stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+          <button type="button" data-star="3" aria-label="3 stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+          <button type="button" data-star="4" aria-label="4 stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+          <button type="button" data-star="5" aria-label="5 stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+        </div>
+        <div class="pilot-question">
+          <p>Would you like to start a free 14-day pilot?</p>
+          <div class="pilot-btns">
+            <button type="button" class="pilot-btn" id="pilotYes">Yes, let's do it</button>
+            <button type="button" class="pilot-btn" id="pilotNo">Not right now</button>
+          </div>
+        </div>
+        <textarea class="feedback-notes" id="feedbackNotes" placeholder="Anything we should know? (optional)" aria-label="Additional feedback" rows="3"></textarea>
+        <button type="button" class="btn-feedback" id="submitFeedback">Submit Feedback</button>
+        <div class="feedback-sent" id="feedbackSent">Thanks — your feedback helps us improve every call.</div>
       </div>
     </div>
 
@@ -556,22 +727,110 @@ a{color:inherit;text-decoration:none}
   </div>
 </section>
 
-<!-- ===== TRUST ===== -->
-<section class="trust-section">
+<!-- ===== TRUST — animated counters + industry grid ===== -->
+<section class="trust-section" id="trustSection">
   <h2 class="fade-up">Join 35+ businesses already testing The Call Taker</h2>
   <div class="trust-stats fade-up">
     <div class="trust-stat">
-      <div class="stat-number">4,787</div>
+      <div class="stat-number" id="statCalls" data-target="4787" data-suffix="">0</div>
       <div class="stat-label">Calls handled</div>
     </div>
     <div class="trust-stat">
-      <div class="stat-number">17</div>
+      <div class="stat-number" id="statIndustries" data-target="17" data-suffix="">0</div>
       <div class="stat-label">Industries</div>
     </div>
     <div class="trust-stat">
-      <div class="stat-number">24/7</div>
+      <div class="stat-number" id="statUptime" data-target="24" data-suffix="/7">0</div>
       <div class="stat-label">Coverage</div>
     </div>
+  </div>
+  <p class="industries-label fade-up">Industries we serve</p>
+  <div class="industry-grid fade-up">
+    <!-- HVAC -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg>
+      HVAC
+    </span>
+    <!-- Plumbing -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22V12m0 0V2m0 10H2m10 0h10"/><circle cx="12" cy="12" r="3"/></svg>
+      Plumbing
+    </span>
+    <!-- Electrical -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Electrical
+    </span>
+    <!-- Roofing -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 12 3 21 12"/><polyline points="5 10 5 20 19 20 19 10"/></svg>
+      Roofing
+    </span>
+    <!-- Locksmith -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Locksmith
+    </span>
+    <!-- Dental -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C9 2 7 4 7 6c0 3 2 5 2 8 0 2 1 4 3 4s3-2 3-4c0-3 2-5 2-8 0-2-2-4-5-4z"/></svg>
+      Dental
+    </span>
+    <!-- Legal -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Legal
+    </span>
+    <!-- Towing -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Towing
+    </span>
+    <!-- Veterinary -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 00-7.65 0l-.77.78-.77-.78a5.4 5.4 0 00-7.65 7.65l8.42 8.42 8.42-8.42a5.4 5.4 0 000-7.65z"/></svg>
+      Veterinary
+    </span>
+    <!-- Med Spa -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Med Spa
+    </span>
+    <!-- Auto Repair -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>
+      Auto Repair
+    </span>
+    <!-- Cleaning -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M8.5 2H15a2 2 0 012 2v12.5M6 6H4a2 2 0 00-2 2v10a2 2 0 002 2h12"/></svg>
+      Cleaning
+    </span>
+    <!-- Property Mgmt -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 12 3 21 12"/><path d="M9 22V12h6v10"/><path d="M5 10V22h14V10"/></svg>
+      Property Mgmt
+    </span>
+    <!-- Pest Control -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M4.93 4.93l2.83 2.83M14.24 9.76l5.66-5.66M9.76 14.24l-5.66 5.66M19.07 19.07l-2.83-2.83"/></svg>
+      Pest Control
+    </span>
+    <!-- Landscaping -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12M12 12C12 7 7 3 2 3s3 9 10 9zM12 12c0-5 5-9 10-9s-3 9-10 9z"/></svg>
+      Landscaping
+    </span>
+    <!-- Water Damage -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+      Water Damage
+    </span>
+    <!-- General Contractor -->
+    <span class="industry-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      General Contractor
+    </span>
   </div>
 </section>
 
@@ -665,20 +924,84 @@ a{color:inherit;text-decoration:none}
 (function(){
   'use strict';
 
+  /* ===================================================
+     CONSTANTS
+  =================================================== */
   var GHL_API_BASE = 'https://services.leadconnectorhq.com';
-  var GHL_API_KEY = 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35';
+  var GHL_API_KEY  = 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35';
   var GHL_LOCATION_ID = 'tQb9YmrGDrdVUJYPKrsY';
   var AGENT_ID = '695947c64b9ed67d8f1077ad';
+  var COUNTDOWN_SECONDS = 30;
+  var FEEDBACK_DELAY_MS = 90000; // 90 seconds after call triggered
 
-  var form = document.getElementById('demoForm');
-  var callBtn = document.getElementById('callBtn');
-  var formError = document.getElementById('formError');
-  var successDiv = document.getElementById('demoSuccess');
-  var errorDiv = document.getElementById('demoError');
-  var successBizName = document.getElementById('successBizName');
+  /* ===================================================
+     DOM REFS
+  =================================================== */
+  var form          = document.getElementById('demoForm');
+  var callBtn       = document.getElementById('callBtn');
+  var formError     = document.getElementById('formError');
+  var countdownDiv  = document.getElementById('demoCountdown');
+  var countdownNum  = document.getElementById('countdownNumber');
+  var countdownRing = document.getElementById('countdownRing');
+  var countdownLabel= document.getElementById('countdownLabel');
+  var successDiv    = document.getElementById('demoSuccess');
+  var errorDiv      = document.getElementById('demoError');
+  var successBizName= document.getElementById('successBizName');
+  var feedbackDiv   = document.getElementById('demoFeedback');
+  var feedbackSent  = document.getElementById('feedbackSent');
+  var submitFbBtn   = document.getElementById('submitFeedback');
+  var feedbackNotes = document.getElementById('feedbackNotes');
+  var pilotYesBtn   = document.getElementById('pilotYes');
+  var pilotNoBtn    = document.getElementById('pilotNo');
+  var phoneInput    = document.getElementById('phone');
 
-  // Phone formatting as user types
-  var phoneInput = document.getElementById('phone');
+  /* ===================================================
+     STATE
+  =================================================== */
+  var selectedStars   = 0;
+  var pilotInterest   = null; // 'yes' | 'no' | null
+  var currentContactId = null;
+  var currentPhone     = null;
+  var countdownTimer   = null;
+  var feedbackTimer    = null;
+  var formFirstFocused = false;
+
+  /* ===================================================
+     TRACKING HELPER
+     Fires to both GA4 (gtag) and Meta Pixel (fbq)
+     with graceful fallback if either is absent.
+  =================================================== */
+  function trackEvent(eventName, params) {
+    try {
+      if (typeof gtag === 'function') {
+        gtag('event', eventName, Object.assign({ event_category: 'demo' }, params || {}));
+      }
+    } catch(e) {}
+    try {
+      if (typeof fbq !== 'undefined') {
+        fbq('trackCustom', eventName, params || {});
+      }
+    } catch(e) {}
+  }
+
+  /* ===================================================
+     CONVERSION EVENT 1: demo_form_started
+     Fires once, on first focus of any field.
+  =================================================== */
+  ['businessName','phone','industry'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('focus', function onFocusOnce() {
+      if (formFirstFocused) return;
+      formFirstFocused = true;
+      trackEvent('demo_form_started', { label: id });
+      el.removeEventListener('focus', onFocusOnce);
+    }, { once: true });
+  });
+
+  /* ===================================================
+     PHONE FORMATTING
+  =================================================== */
   phoneInput.addEventListener('input', function(){
     var x = this.value.replace(/\D/g,'');
     if(x.length > 0){
@@ -688,7 +1011,6 @@ a{color:inherit;text-decoration:none}
     }
   });
 
-  // Format phone to +1XXXXXXXXXX
   function formatPhone(raw){
     var digits = raw.replace(/\D/g,'');
     if(digits.length === 11 && digits[0] === '1') return '+' + digits;
@@ -696,22 +1018,23 @@ a{color:inherit;text-decoration:none}
     return null;
   }
 
-  // Validate US phone
   function isValidUSPhone(digits){
     var d = digits.replace(/\D/g,'');
     if(d.length === 11 && d[0] === '1') d = d.substring(1);
     return d.length === 10;
   }
 
+  /* ===================================================
+     FORM SUBMIT
+  =================================================== */
   form.addEventListener('submit', function(e){
     e.preventDefault();
     formError.style.display = 'none';
 
     var businessName = document.getElementById('businessName').value.trim();
-    var phone = document.getElementById('phone').value.trim();
-    var industry = document.getElementById('industry').value;
+    var phone        = document.getElementById('phone').value.trim();
+    var industry     = document.getElementById('industry').value;
 
-    // Validate
     if(!businessName){
       formError.textContent = 'Please enter your business name.';
       formError.style.display = 'block';
@@ -734,41 +1057,37 @@ a{color:inherit;text-decoration:none}
       formError.style.display = 'block';
       return;
     }
+    currentPhone = formattedPhone;
 
     // Loading state
     callBtn.disabled = true;
     callBtn.innerHTML = '<span class="spinner"></span> Calling you now...';
 
-    // Track event
-    if(typeof gtag === 'function'){
-      gtag('event', 'live_demo_request', {
-        event_category: 'conversion',
-        event_label: industry,
-        value: 1
-      });
-    }
-    if(typeof fbq !== 'undefined'){
-      fbq('track', 'Lead', { content_name: 'Live Demo Call', industry: industry });
-    }
+    /* CONVERSION EVENT 2: demo_form_submitted */
+    trackEvent('demo_form_submitted', {
+      event_label: industry,
+      value: 1,
+      industry: industry
+    });
 
     // Attribution
-    var attrTags = [];
+    var attrTags  = [];
     var attrNotes = '';
     try{
-      if(typeof getTctAttributionTags === 'function') attrTags = getTctAttributionTags();
+      if(typeof getTctAttributionTags  === 'function') attrTags  = getTctAttributionTags();
       if(typeof getTctAttributionNotes === 'function') attrNotes = getTctAttributionNotes();
     }catch(ex){}
 
-    var tags = ['live-demo-request', 'industry-' + industry].concat(attrTags);
+    var tags = ['live-demo-request','industry-' + industry].concat(attrTags);
 
     // 1) Create GHL contact
     var contactPayload = {
-      firstName: businessName,
-      phone: formattedPhone,
+      firstName:   businessName,
+      phone:       formattedPhone,
       companyName: businessName,
-      locationId: GHL_LOCATION_ID,
-      tags: tags,
-      source: 'Live Demo - try-live.html'
+      locationId:  GHL_LOCATION_ID,
+      tags:        tags,
+      source:      'Live Demo - try-live.html'
     };
 
     fetch(GHL_API_BASE + '/contacts/', {
@@ -776,16 +1095,24 @@ a{color:inherit;text-decoration:none}
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + GHL_API_KEY,
-        'Version': '2021-07-28',
-        'Accept': 'application/json'
+        'Version':        '2021-07-28',
+        'Accept':         'application/json'
       },
       body: JSON.stringify(contactPayload)
-    }).catch(function(){});
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      // Store contact ID for later feedback submission
+      if (data && data.contact && data.contact.id) {
+        currentContactId = data.contact.id;
+      }
+    })
+    .catch(function(){});
 
     // 2) Trigger Voice AI call
     var callPayload = {
-      agentId: AGENT_ID,
-      locationId: GHL_LOCATION_ID,
+      agentId:     AGENT_ID,
+      locationId:  GHL_LOCATION_ID,
       phoneNumber: formattedPhone
     };
 
@@ -794,8 +1121,8 @@ a{color:inherit;text-decoration:none}
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + GHL_API_KEY,
-        'Version': '2021-07-28',
-        'Accept': 'application/json'
+        'Version':        '2021-07-28',
+        'Accept':         'application/json'
       },
       body: JSON.stringify(callPayload)
     })
@@ -804,35 +1131,184 @@ a{color:inherit;text-decoration:none}
       return r.json();
     })
     .then(function(){
-      // Success — show ringing state
-      showSuccess(businessName);
+      startCountdown(businessName);
     })
     .catch(function(){
-      // API call failed (likely CORS from browser) — show success anyway with fallback
-      // The contact was still created, and the fallback phone number is shown
-      showSuccess(businessName);
+      // CORS or API failure — start countdown anyway, show fallback on success screen
+      startCountdown(businessName);
     });
 
-    // Send ntfy alert
+    // 3) ntfy alert
     fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
       method: 'POST',
       headers: {
-        'Title': 'Live Demo Request: ' + businessName,
+        'Title':    'Live Demo Request: ' + businessName,
         'Priority': 'urgent',
-        'Tags': 'phone,zap'
+        'Tags':     'phone,zap'
       },
       body: '[LIVE DEMO] ' + businessName + '\nPhone: ' + formattedPhone + '\nIndustry: ' + industry + '\nSource: try-live.html' + (attrNotes ? '\n' + attrNotes : '')
     }).catch(function(){});
   });
 
-  function showSuccess(bizName){
+  /* ===================================================
+     COUNTDOWN TIMER
+  =================================================== */
+  var CIRCUMFERENCE = 2 * Math.PI * 54; // matches r="54" in SVG
+
+  function startCountdown(bizName) {
     form.style.display = 'none';
-    successBizName.textContent = bizName;
-    successDiv.style.display = 'block';
+    countdownDiv.style.display = 'block';
+
+    var remaining = COUNTDOWN_SECONDS;
+    // Set ring to full
+    countdownRing.style.strokeDashoffset = '0';
+    countdownNum.textContent = remaining;
+
+    countdownTimer = setInterval(function() {
+      remaining -= 1;
+      countdownNum.textContent = remaining;
+
+      // Progress ring drains as seconds tick down
+      var pct = (COUNTDOWN_SECONDS - remaining) / COUNTDOWN_SECONDS;
+      countdownRing.style.strokeDashoffset = String(CIRCUMFERENCE * pct);
+
+      if (remaining <= 0) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+        /* CONVERSION EVENT 3: demo_call_connected (proxy) */
+        trackEvent('demo_call_connected', { label: 'countdown_finished' });
+        showSuccess(bizName);
+      }
+    }, 1000);
   }
 
-  // Mobile menu toggle
-  var menuBtn = document.querySelector('.menu-toggle');
+  /* ===================================================
+     SUCCESS + POST-CALL FEEDBACK
+  =================================================== */
+  function showSuccess(bizName) {
+    countdownDiv.style.display = 'none';
+    successBizName.textContent = bizName;
+    successDiv.style.display = 'block';
+
+    // Reveal feedback form after 90 seconds
+    feedbackTimer = setTimeout(function() {
+      feedbackDiv.style.display = 'block';
+      // Scroll into view smoothly
+      feedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, FEEDBACK_DELAY_MS);
+  }
+
+  /* ===================================================
+     STAR RATING
+  =================================================== */
+  var starBtns = document.querySelectorAll('.star-rating button');
+
+  starBtns.forEach(function(btn) {
+    btn.addEventListener('mouseenter', function() {
+      var hovered = parseInt(btn.dataset.star, 10);
+      starBtns.forEach(function(b) {
+        var n = parseInt(b.dataset.star, 10);
+        b.classList.toggle('hovered', n <= hovered);
+      });
+    });
+    btn.addEventListener('mouseleave', function() {
+      starBtns.forEach(function(b) { b.classList.remove('hovered'); });
+    });
+    btn.addEventListener('click', function() {
+      selectedStars = parseInt(btn.dataset.star, 10);
+      starBtns.forEach(function(b) {
+        var n = parseInt(b.dataset.star, 10);
+        b.classList.toggle('active', n <= selectedStars);
+        b.classList.remove('hovered');
+      });
+    });
+  });
+
+  /* ===================================================
+     PILOT YES / NO
+  =================================================== */
+  pilotYesBtn.addEventListener('click', function() {
+    pilotInterest = 'yes';
+    pilotYesBtn.classList.add('selected-yes');
+    pilotNoBtn.classList.remove('selected-no');
+  });
+  pilotNoBtn.addEventListener('click', function() {
+    pilotInterest = 'no';
+    pilotNoBtn.classList.add('selected-no');
+    pilotYesBtn.classList.remove('selected-yes');
+  });
+
+  /* ===================================================
+     FEEDBACK SUBMIT
+  =================================================== */
+  submitFbBtn.addEventListener('click', function() {
+    if (submitFbBtn.disabled) return;
+    submitFbBtn.disabled = true;
+    submitFbBtn.textContent = 'Sending...';
+
+    var rating   = selectedStars || 0;
+    var pilot    = pilotInterest || 'not_answered';
+    var notes    = feedbackNotes.value.trim();
+    var noteText = 'Demo Feedback\nRating: ' + rating + '/5\nWant pilot: ' + pilot + (notes ? '\nNotes: ' + notes : '');
+
+    /* CONVERSION EVENT 4: demo_feedback_submitted */
+    trackEvent('demo_feedback_submitted', {
+      rating:        rating,
+      pilot_interest: pilot,
+      has_notes:     notes.length > 0
+    });
+
+    // If pilot = yes, redirect after a short delay
+    var shouldRedirect = (pilotInterest === 'yes');
+
+    if (currentContactId) {
+      // Tag contact + add note
+      Promise.all([
+        // Add tag
+        fetch(GHL_API_BASE + '/contacts/' + currentContactId + '/tags', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + GHL_API_KEY,
+            'Version':       '2021-07-28',
+            'Accept':        'application/json'
+          },
+          body: JSON.stringify({ tags: ['demo-feedback'] })
+        }).catch(function(){}),
+        // Add note
+        fetch(GHL_API_BASE + '/contacts/' + currentContactId + '/notes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + GHL_API_KEY,
+            'Version':       '2021-07-28',
+            'Accept':        'application/json'
+          },
+          body: JSON.stringify({ body: noteText, userId: null })
+        }).catch(function(){})
+      ]).then(function() {
+        onFeedbackComplete(shouldRedirect);
+      });
+    } else {
+      // No contact ID (contact creation may have raced) — still complete
+      onFeedbackComplete(shouldRedirect);
+    }
+  });
+
+  function onFeedbackComplete(shouldRedirect) {
+    submitFbBtn.style.display = 'none';
+    feedbackSent.style.display = 'block';
+    if (shouldRedirect) {
+      setTimeout(function() {
+        window.location.href = '/pilot/';
+      }, 1800);
+    }
+  }
+
+  /* ===================================================
+     MOBILE MENU
+  =================================================== */
+  var menuBtn   = document.querySelector('.menu-toggle');
   var mobileNav = document.querySelector('.mobile-nav');
   if(menuBtn && mobileNav){
     var isOpen = false;
@@ -864,7 +1340,9 @@ a{color:inherit;text-decoration:none}
     });
   }
 
-  // Scroll handler for header
+  /* ===================================================
+     SCROLL — HEADER
+  =================================================== */
   var header = document.querySelector('.header');
   if(header){
     var ticking = false;
@@ -879,7 +1357,9 @@ a{color:inherit;text-decoration:none}
     }, {passive:true});
   }
 
-  // Fade-up reveals
+  /* ===================================================
+     FADE-UP REVEALS
+  =================================================== */
   var fadeEls = document.querySelectorAll('.fade-up');
   if(fadeEls.length > 0 && 'IntersectionObserver' in window){
     var obs = new IntersectionObserver(function(entries){
@@ -893,6 +1373,82 @@ a{color:inherit;text-decoration:none}
     fadeEls.forEach(function(el){ obs.observe(el); });
   } else {
     fadeEls.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+  /* ===================================================
+     FAQ ACCORDION
+  =================================================== */
+  document.querySelectorAll('.faq-question').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var item = btn.closest('.faq-item');
+      var ans  = item.querySelector('.faq-answer');
+      var open = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(function(i){
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.maxHeight = '0';
+        i.querySelector('.faq-question').setAttribute('aria-expanded','false');
+      });
+      if(!open){
+        item.classList.add('open');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+
+  /* ===================================================
+     ANIMATED COUNTERS (IntersectionObserver)
+     Counts up from 0 to data-target when scrolled into view.
+     Respects prefers-reduced-motion — shows final value instantly.
+  =================================================== */
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function easeOutQuad(t){ return t * (2 - t); }
+
+  function animateCounter(el) {
+    var target  = parseInt(el.dataset.target, 10);
+    var suffix  = el.dataset.suffix || '';
+    var duration = 1800; // ms
+
+    if (prefersReduced || !('IntersectionObserver' in window)) {
+      el.textContent = target.toLocaleString() + suffix;
+      return;
+    }
+
+    var start  = null;
+    function step(ts) {
+      if (!start) start = ts;
+      var elapsed = ts - start;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased   = easeOutQuad(progress);
+      var current = Math.round(eased * target);
+      el.textContent = current.toLocaleString() + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target.toLocaleString() + suffix;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  var counterEls = document.querySelectorAll('.stat-number[data-target]');
+  if ('IntersectionObserver' in window && counterEls.length) {
+    var counterObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(en) {
+        if (en.isIntersecting) {
+          animateCounter(en.target);
+          counterObs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    counterEls.forEach(function(el) { counterObs.observe(el); });
+  } else {
+    // Fallback: set final values immediately
+    counterEls.forEach(function(el) {
+      el.textContent = parseInt(el.dataset.target,10).toLocaleString() + (el.dataset.suffix||'');
+    });
   }
 
 })();
