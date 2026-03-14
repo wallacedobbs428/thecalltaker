@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Facebook Lead Ads Setup Guide — The Call Taker (Internal)</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:    #16a34a;
+    --green-lt: #22c55e;
+    --green-dk: #14532d;
+    --bg:       #0a0f0a;
+    --bg2:      #111811;
+    --bg3:      #182018;
+    --border:   #1e2e1e;
+    --text:     #e8f5e8;
+    --muted:    #6b9e6b;
+    --white:    #ffffff;
+    --orange:   #f97316;
+    --red:      #ef4444;
+    --yellow:   #eab308;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    padding: 0 0 80px;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--green-dk);
+    border-bottom: 1px solid var(--green);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar .badge {
+    background: var(--red);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .topbar .title { font-weight: 700; font-size: 14px; color: var(--white); }
+  .topbar .sub   { font-size: 12px; color: var(--muted); margin-left: auto; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--green-dk) 0%, var(--bg2) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 20px 36px;
+    text-align: center;
+  }
+  .hero h1 { font-size: clamp(22px, 4vw, 30px); font-weight: 800; color: var(--white); line-height: 1.2; }
+  .hero p  { margin-top: 10px; color: var(--muted); font-size: 14px; max-width: 560px; margin-inline: auto; }
+  .hero .kv { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 20px; }
+  .hero .kv span {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--green-lt);
+    font-weight: 600;
+  }
+
+  /* ── SECTION ── */
+  .section { padding: 40px 0 0; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .section-num {
+    width: 32px; height: 32px;
+    background: var(--green);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title { font-size: 18px; font-weight: 700; color: var(--white); }
+  .section-sub   { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green-lt);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 14px;
+  }
+
+  /* ── STEPS ── */
+  .steps { counter-reset: step; }
+  .step  {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .step-n {
+    counter-increment: step;
+    width: 26px; height: 26px;
+    min-width: 26px;
+    background: var(--bg3);
+    border: 1px solid var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green-lt);
+    margin-top: 2px;
+  }
+  .step-body strong { color: var(--white); font-size: 14px; display: block; margin-bottom: 4px; }
+  .step-body p      { font-size: 13px; color: var(--muted); }
+  .step-body .note  {
+    margin-top: 8px;
+    background: var(--bg3);
+    border-left: 3px solid var(--green);
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .step-body .warn  {
+    margin-top: 8px;
+    background: rgba(234,179,8,.08);
+    border-left: 3px solid var(--yellow);
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: #fef9c3;
+  }
+
+  /* ── AD CREATIVE CARDS ── */
+  .ad-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .ad-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .ad-card .ad-tag {
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .ad-card.hvac   .ad-tag { background: #1e3a5f; color: #60a5fa; }
+  .ad-card.dental .ad-tag { background: #1a3525; color: #4ade80; }
+  .ad-card.plumb  .ad-tag { background: #2a1a0a; color: #fb923c; }
+  .ad-card .ad-body { padding: 14px 16px; }
+  .ad-field { margin-bottom: 12px; }
+  .ad-field label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+  .ad-field .copy {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    position: relative;
+  }
+  .ad-field .copy .cta-pill {
+    display: inline-block;
+    margin-top: 6px;
+    background: var(--green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: .04em;
+  }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--bg3);
+    color: var(--green-lt);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(22,163,74,.05); }
+  td .pill {
+    display: inline-block;
+    background: rgba(22,163,74,.15);
+    color: var(--green-lt);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  td .pill-yellow {
+    background: rgba(234,179,8,.15);
+    color: #fde047;
+  }
+
+  /* ── CODE / MONO ── */
+  .mono {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--green-lt);
+    word-break: break-all;
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+
+  /* ── FORM PREVIEW ── */
+  .form-preview { display: grid; gap: 10px; }
+  .field-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .field-icon {
+    width: 32px; height: 32px;
+    background: rgba(22,163,74,.15);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .field-info strong { font-size: 13px; color: var(--white); display: block; }
+  .field-info span   { font-size: 11px; color: var(--muted); }
+  .field-required {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--orange);
+    background: rgba(249,115,22,.1);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* ── ALERT BOX ── */
+  .alert {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .alert.red    { background: rgba(239,68,68,.1);  border: 1px solid rgba(239,68,68,.3);  color: #fca5a5; }
+  .alert.yellow { background: rgba(234,179,8,.1);  border: 1px solid rgba(234,179,8,.3);  color: #fde68a; }
+  .alert.green  { background: rgba(22,163,74,.1);  border: 1px solid rgba(22,163,74,.3);  color: #86efac; }
+  .alert .icon  { font-size: 16px; flex-shrink: 0; }
+
+  /* ── BUDGET TABLE ── */
+  .budget-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .budget-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .budget-box .amount { font-size: 24px; font-weight: 800; color: var(--green-lt); }
+  .budget-box .label  { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .budget-box .sub    { font-size: 12px; color: var(--text); margin-top: 8px; }
+
+  /* ── WEBHOOK BLOCK ── */
+  .webhook-url {
+    background: var(--bg3);
+    border: 1px solid var(--green);
+    border-radius: 8px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .webhook-url .url-text {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    color: var(--green-lt);
+    word-break: break-all;
+    flex: 1;
+  }
+  .webhook-url .method-pill {
+    background: var(--green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 4px;
+    letter-spacing: .06em;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 40px 0 0;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; display: grid; gap: 10px; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .checklist li .box {
+    width: 18px; height: 18px;
+    min-width: 18px;
+    border: 2px solid var(--green);
+    border-radius: 4px;
+    margin-top: 2px;
+  }
+
+  @media (max-width: 600px) {
+    .ad-grid { grid-template-columns: 1fr; }
+    .budget-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero .kv { gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span class="badge">INTERNAL</span>
+  <span class="title">Facebook Lead Ads Setup Guide</span>
+  <span class="sub">The Call Taker — Wallace only</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <h1>Facebook Lead Ads — Setup Guide</h1>
+    <p>Step-by-step instructions to launch your first Lead Ad campaign from your phone. Wave 1: HVAC, Dental, Plumbing.</p>
+    <div class="kv">
+      <span>$5/day per ad set</span>
+      <span>Wave 1: 3 industries</span>
+      <span>Webhook: port 5091</span>
+      <span>Leads auto-import to GHL</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 1: PRE-LAUNCH CHECKLIST
+  ═══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title">Before You Start</div>
+        <div class="section-sub">Everything you need in place before touching Ads Manager</div>
+      </div>
+    </div>
+
+    <div class="alert yellow">
+      <span class="icon">⚠</span>
+      <div>Meta does NOT allow the word "AI" or "artificial intelligence" in ad copy. Use "professional phone answering" and "24/7 answering service" instead. Violating this gets your ad rejected and can get your account flagged.</div>
+    </div>
+
+    <div class="card">
+      <h3>Pre-Launch Checklist</h3>
+      <ul class="checklist">
+        <li><div class="box"></div> Facebook Business Page exists for The Call Taker (or use personal page temporarily)</li>
+        <li><div class="box"></div> Meta Ads Manager account created at <strong>business.facebook.com</strong></li>
+        <li><div class="box"></div> Payment method added to Ads Manager (debit/credit card)</li>
+        <li><div class="box"></div> Privacy policy URL ready: <strong>https://thecalltaker.com/privacy.html</strong></li>
+        <li><div class="box"></div> Webhook server running on port 5091 (<code>facebook-lead-webhook.py</code>)</li>
+        <li><div class="box"></div> Webhook exposed via ngrok or reverse proxy at <strong>https://thecalltaker.com/api/facebook-leads</strong></li>
+        <li><div class="box"></div> Facebook App created in Meta Developer portal with webhook subscription</li>
+        <li><div class="box"></div> <code>FB_VERIFY_TOKEN</code> and <code>FB_APP_SECRET</code> env vars set on server</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 2: CAMPAIGN STRUCTURE
+  ═══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">Campaign Structure</div>
+        <div class="section-sub">One campaign, three ad sets, one ad per set to start</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Architecture</h3>
+      <table>
+        <thead>
+          <tr><th>Level</th><th>Name</th><th>Setting</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Campaign</td>
+            <td><strong>TCT — Lead Gen Wave 1</strong></td>
+            <td>Objective: <span class="pill">Lead Generation</span></td>
+          </tr>
+          <tr>
+            <td>Ad Set 1</td>
+            <td><strong>TCT — HVAC Owners</strong></td>
+            <td>$5/day, HVAC targeting</td>
+          </tr>
+          <tr>
+            <td>Ad Set 2</td>
+            <td><strong>TCT — Dental Owners</strong></td>
+            <td>$5/day, Dental targeting</td>
+          </tr>
+          <tr>
+            <td>Ad Set 3</td>
+            <td><strong>TCT — Plumbing Owners</strong></td>
+            <td>$5/day, Plumbing targeting</td>
+          </tr>
+          <tr>
+            <td>Ads (3 total)</td>
+            <td><strong>One per ad set</strong></td>
+            <td>See creative copy below</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="budget-grid">
+      <div class="budget-box">
+        <div class="amount">$15</div>
+        <div class="label">Daily spend (3 ad sets)</div>
+        <div class="sub">$5 per industry</div>
+      </div>
+      <div class="budget-box">
+        <div class="amount">$450</div>
+        <div class="label">Monthly budget</div>
+        <div class="sub">Full month running</div>
+      </div>
+      <div class="budget-box">
+        <div class="amount">6-12</div>
+        <div class="label">Est. leads/month</div>
+        <div class="sub">At $35-75 CPL</div>
+      </div>
+      <div class="budget-box">
+        <div class="amount">$497</div>
+        <div class="label">First client closes</div>
+        <div class="sub">1 client pays for 1+ month</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3: STEP-BY-STEP SETUP
+  ═══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title">Step-by-Step: Creating the Campaign</div>
+        <div class="section-sub">Do this in Ads Manager from your phone or laptop</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Step 1 of 8 — Create the Campaign</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Go to Ads Manager</strong>
+            <p>Open <strong>business.facebook.com</strong> on your phone. Tap the menu (3 lines) → Ads Manager → green "Create" button.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Choose objective: "Leads"</strong>
+            <p>On the campaign objective screen, select <strong>Leads</strong>. This is what unlocks the instant lead form (so leads never leave Facebook).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Name your campaign</strong>
+            <p>Name it exactly: <code>TCT — Lead Gen Wave 1</code>. Leave campaign budget optimization OFF — you'll set budget per ad set.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Tap "Next" to go to Ad Set level</strong>
+            <p>You're now setting up Ad Set 1 (HVAC). You'll duplicate this for Dental and Plumbing after.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Step 2 of 8 — Ad Set Settings (Repeat for Each Industry)</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Name the ad set</strong>
+            <p>Name it: <code>TCT — HVAC Owners</code> (then repeat with Dental, Plumbing).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Lead method: "Instant Forms"</strong>
+            <p>Select <strong>Instant Forms</strong> (not website). This keeps leads inside Facebook and gets better completion rates on mobile.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Budget: $5.00/day</strong>
+            <p>Set daily budget to $5.00. Start date: today. End date: none (run until paused).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Audience — Locations</strong>
+            <p>Set location to: <strong>United States</strong>. Optionally start with your top 5 cities (Nashville, Atlanta, Dallas, Houston, Phoenix) and expand when you have data.</p>
+            <div class="note">Start broad. Meta's algorithm needs at least 50 conversions in 7 days to optimize. A narrow audience starves it.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Audience — Age &amp; Gender</strong>
+            <p>Age: <strong>25–65</strong>. Gender: <strong>All</strong>. Don't exclude women — many HVAC/dental/plumbing businesses are owner-operated by women.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Audience — Detailed Targeting (see table below)</strong>
+            <p>Enter the interests listed in Section 4 for each industry. Use "Narrow Audience" to layer small business owner interests on top.</p>
+            <div class="warn">Do NOT use "Advantage+ Audience" at this stage — you have no pixel data yet and it will waste spend. Use manual targeting.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Placements: Automatic</strong>
+            <p>Leave placements on Automatic. Facebook and Instagram feed + Stories get the best lead volume at $5/day.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Step 3 of 8 — Targeting Reference Table</h3>
+      <table>
+        <thead>
+          <tr><th>Industry</th><th>Primary Interests</th><th>Layered (Narrow)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="pill">HVAC</span></td>
+            <td>HVAC, Air conditioning, Heating, Ventilation, Home services, Contractors</td>
+            <td>Small business owners, Self-employed, Business owner</td>
+          </tr>
+          <tr>
+            <td><span class="pill-yellow pill">Dental</span></td>
+            <td>Dentistry, Dental care, Oral health, Dental practice management, Healthcare</td>
+            <td>Small business owners, Private practice, Medical practice management</td>
+          </tr>
+          <tr>
+            <td><span class="pill">Plumbing</span></td>
+            <td>Plumbing, Plumber, Home repair, Trade contractors, Construction</td>
+            <td>Small business owners, Self-employed, Skilled trades</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Step 4 of 8 — Create the Instant Lead Form</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>At the Ad level, tap "Create Form"</strong>
+            <p>Choose <strong>Higher Intent</strong> form type (not Volume). Higher Intent adds a review screen which filters out accidental taps and improves lead quality.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Form intro — Headline and body</strong>
+            <p>Headline: <strong>Stop Missing Business Calls</strong><br>Body: "Find out how much revenue you're losing every time your phone goes to voicemail. Takes 30 seconds."</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Questions — add these four fields</strong>
+            <p>See the Lead Form Fields section below for exact field configuration.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Privacy Policy URL</strong>
+            <p>Required by Meta. Enter: <code>https://thecalltaker.com/privacy.html</code></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Thank you screen</strong>
+            <p>Headline: <strong>We'll be in touch within 24 hours</strong><br>Description: "In the meantime, call (615) 784-5747 to hear your future AI receptionist right now."<br>CTA button: "Call Now" → tel:(615)784-5747</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Step 5 of 8 — Connect the Webhook</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Go to Meta for Developers</strong>
+            <p>Visit <strong>developers.facebook.com</strong> → My Apps → Create App → Business type → name it "The Call Taker Lead Handler".</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Add the Leads product</strong>
+            <p>In your app dashboard, find "Webhooks" product → Add. Subscribe to the <code>leadgen</code> field on your Page.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Set the webhook callback URL</strong>
+            <p>Callback URL: the webhook URL below. Verify token: match your <code>FB_VERIFY_TOKEN</code> env var exactly.</p>
+            <div class="webhook-url">
+              <span class="method-pill">POST</span>
+              <span class="url-text">https://thecalltaker.com/api/facebook-leads</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Get your Page Access Token</strong>
+            <p>In your Meta App → Tools → Graph API Explorer → select your Page → generate a long-lived Page Access Token. Set as <code>FB_PAGE_ACCESS_TOKEN</code> env var on your server.</p>
+            <div class="warn">Long-lived tokens expire in 60 days. Set a calendar reminder to refresh it.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Test the webhook</strong>
+            <p>Meta provides a "Send Test" button after subscribing. Tap it — you should see the lead appear in your GHL contacts within 30 seconds and receive an ntfy URGENT alert.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Step 6 of 8 — Add Ad Creative</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Ad format: Single Image</strong>
+            <p>Use a single 1080x1080 image to start. Canva works fine from your phone. Keep it simple: dark background, large white text, The Call Taker logo/name bottom-left.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Image text</strong>
+            <p>Keep text under 20% of the image area or Meta will reduce reach. One line: "24/7 Phone Answering for [Industry] Businesses" in white on dark background.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Paste ad copy from Section 5 below</strong>
+            <p>Copy the Primary Text, Headline, and Description for the matching industry. These are already Meta-compliant.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Step 7 of 8 — Duplicate for Dental and Plumbing</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Duplicate the HVAC ad set twice</strong>
+            <p>In Ads Manager, tap the HVAC ad set → Duplicate (2 copies). Rename to "TCT — Dental Owners" and "TCT — Plumbing Owners".</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Update targeting and creative per industry</strong>
+            <p>Swap in the targeting interests from Section 4 and the ad copy from Section 5 for each industry. Create a separate lead form for each so you know which industry each lead came from.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Step 8 of 8 — Publish and Monitor</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Review and publish</strong>
+            <p>Meta reviews new ads within 24 hours. If rejected, check for: "AI" mentions (not allowed), pricing claims, before/after claims, misleading text. See the Meta policy alert at the top of this guide.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Check after 48 hours</strong>
+            <p>You need at least 2-3 days of data before making changes. Look at: cost per lead, lead quality (do they answer?), which industry performs best.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n"></div>
+          <div class="step-body">
+            <strong>Kill underperformers after 7 days</strong>
+            <p>Pause any ad set with 0 leads after 7 days and shift budget to the winner. At $5/day you should see at least 1 lead per week per ad set if targeting is right.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4: LEAD FORM FIELDS
+  ═══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title">Lead Form Fields</div>
+        <div class="section-sub">Four fields — keep it short, more fields = lower completion rate</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Form Configuration</h3>
+      <div class="form-preview">
+        <div class="field-row">
+          <div class="field-icon">🏢</div>
+          <div class="field-info">
+            <strong>Business Name</strong>
+            <span>Custom question — Short answer — "What is your business name?"</span>
+          </div>
+          <span class="field-required">Required</span>
+        </div>
+        <div class="field-row">
+          <div class="field-icon">📞</div>
+          <div class="field-info">
+            <strong>Phone Number</strong>
+            <span>Pre-fill field (Meta auto-fills from their profile) — Phone number type</span>
+          </div>
+          <span class="field-required">Required</span>
+        </div>
+        <div class="field-row">
+          <div class="field-icon">🔧</div>
+          <div class="field-info">
+            <strong>Industry</strong>
+            <span>Custom question — Multiple choice — options: HVAC / Plumbing / Electrical / Dental / Other</span>
+          </div>
+          <span class="field-required">Required</span>
+        </div>
+        <div class="field-row">
+          <div class="field-icon">✉️</div>
+          <div class="field-info">
+            <strong>Email Address</strong>
+            <span>Pre-fill field (Meta auto-fills from their profile) — Email type</span>
+          </div>
+          <span class="field-required">Required</span>
+        </div>
+      </div>
+      <div class="alert green" style="margin-top: 14px;">
+        <span class="icon">✓</span>
+        <div>Use Meta's pre-fill fields for Phone and Email — they auto-populate from the user's Facebook profile, which dramatically increases completion rates on mobile.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 5: AD CREATIVE COPY SETS
+  ═══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <div>
+        <div class="section-title">Ad Creative Copy — Wave 1</div>
+        <div class="section-sub">Copy-paste ready. No "AI" language — Meta compliant.</div>
+      </div>
+    </div>
+
+    <div class="alert red">
+      <span class="icon">✕</span>
+      <div><strong>Do NOT use:</strong> "AI", "artificial intelligence", "machine learning", "automated AI", or any AI-related terms. Meta will reject the ad. Use "professional phone answering", "24/7 answering service", "live receptionist service" instead.</div>
+    </div>
+
+    <div class="ad-grid">
+
+      <!-- HVAC -->
+      <div class="ad-card hvac">
+        <div class="ad-tag">Ad Set 1 — HVAC</div>
+        <div class="ad-body">
+          <div class="ad-field">
+            <label>Primary Text</label>
+            <div class="copy">Every time your HVAC business sends a caller to voicemail, you lose a job.<br><br>The Call Taker answers your phone 24/7 — nights, weekends, and busy season. It books the appointment, captures the details, and texts you a summary.<br><br>No missed calls. No lost jobs. Less than one service call per month in cost.<br><br>See how much you're losing right now.</div>
+          </div>
+          <div class="ad-field">
+            <label>Headline</label>
+            <div class="copy">Never Miss an HVAC Call Again</div>
+          </div>
+          <div class="ad-field">
+            <label>Description</label>
+            <div class="copy">24/7 phone answering for HVAC companies. Books appointments. No contracts.</div>
+          </div>
+          <div class="ad-field">
+            <label>CTA Button</label>
+            <div class="copy"><span class="cta-pill">Get Quote</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DENTAL -->
+      <div class="ad-card dental">
+        <div class="ad-tag">Ad Set 2 — Dental</div>
+        <div class="ad-body">
+          <div class="ad-field">
+            <label>Primary Text</label>
+            <div class="copy">A new patient calls your dental practice after hours and gets voicemail.<br><br>They call the next practice. You just lost a patient worth $800-$2,000 a year.<br><br>The Call Taker answers for your practice 24/7 — evenings, weekends, holidays. It schedules appointments and sends you the details instantly.<br><br>Find out how many patients you're losing.</div>
+          </div>
+          <div class="ad-field">
+            <label>Headline</label>
+            <div class="copy">Stop Losing New Dental Patients</div>
+          </div>
+          <div class="ad-field">
+            <label>Description</label>
+            <div class="copy">24/7 answering for dental practices. Schedules appointments. No contracts.</div>
+          </div>
+          <div class="ad-field">
+            <label>CTA Button</label>
+            <div class="copy"><span class="cta-pill">Get Quote</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLUMBING -->
+      <div class="ad-card plumb">
+        <div class="ad-tag">Ad Set 3 — Plumbing</div>
+        <div class="ad-body">
+          <div class="ad-field">
+            <label>Primary Text</label>
+            <div class="copy">Burst pipe at 11pm. Homeowner calls you — voicemail. They call the next plumber and pay $400-$800 for an emergency job you could have had.<br><br>The Call Taker answers your phone around the clock — including evenings and weekends. It captures every emergency, books the job, and sends you a text summary.<br><br>Stop giving emergency work to your competitors.</div>
+          </div>
+          <div class="ad-field">
+            <label>Headline</label>
+            <div class="copy">Answer Every Plumbing Emergency</div>
+          </div>
+          <div class="ad-field">
+            <label>Description</label>
+            <div class="copy">24/7 answering for plumbing companies. Captures emergencies. No contracts.</div>
+          </div>
+          <div class="ad-field">
+            <label>CTA Button</label>
+            <div class="copy"><span class="cta-pill">Sign Up</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6: WEBHOOK + INTEGRATION
+  ═══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <div>
+        <div class="section-title">Webhook Integration</div>
+        <div class="section-sub">Where Facebook sends leads and what happens next</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Webhook URL (n8n or direct)</h3>
+      <p style="font-size:13px; color: var(--muted); margin-bottom: 10px;">Enter this URL in your Meta App webhook configuration and in the Facebook Lead Ads test tool.</p>
+      <div class="webhook-url">
+        <span class="method-pill">POST</span>
+        <span class="url-text">https://thecalltaker.com/api/facebook-leads</span>
+      </div>
+      <div class="webhook-url" style="margin-top:10px;">
+        <span class="method-pill" style="background:#555;">GET</span>
+        <span class="url-text">https://thecalltaker.com/api/facebook-leads?hub.mode=subscribe&hub.verify_token=YOUR_TOKEN&hub.challenge=CHALLENGE</span>
+      </div>
+      <p style="font-size:12px; color:var(--muted); margin-top:10px;">The GET request is Facebook's verification challenge. Your webhook server responds with the <code>hub.challenge</code> value to prove ownership.</p>
+    </div>
+
+    <div class="card">
+      <h3>What Happens When a Lead Comes In</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">1</div>
+          <div class="step-body">
+            <strong>Facebook POSTs lead data to webhook server</strong>
+            <p>Payload includes: lead ID, form ID, page ID, field_data (business name, phone, industry, email).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div class="step-body">
+            <strong>Webhook verifies signature using App Secret</strong>
+            <p>HMAC-SHA256 of the raw payload body against <code>FB_APP_SECRET</code>. Rejects tampered requests.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">3</div>
+          <div class="step-body">
+            <strong>GHL contact created with tags</strong>
+            <p>Tags applied: <code>facebook-lead</code>, <code>hot-lead</code>, <code>pilot-candidate</code>, and the industry tag (e.g., <code>hvac</code>). Note added: "Source: Facebook Lead Ad - [industry]".</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">4</div>
+          <div class="step-body">
+            <strong>ntfy URGENT alert fires</strong>
+            <p>You get a push notification: "[CRITICAL] Facebook Lead: [name] from [company] - [industry]". Checked by Donny speed-to-lead system within 10 minutes.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-n">5</div>
+          <div class="step-body">
+            <strong>Immediate SMS sent to the lead</strong>
+            <p>"Hey [name]! Thanks for your interest. We help [industry] businesses like [company] never miss another call. Want to hear your receptionist live? Call (615) 784-5747 or reply YES for a free 14-day pilot."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Environment Variables Required on Server</h3>
+      <div class="mono">
+FB_VERIFY_TOKEN=your_chosen_verify_token_here<br>
+FB_APP_SECRET=from_meta_developer_app_settings<br>
+FB_PAGE_ACCESS_TOKEN=long_lived_page_token<br>
+TCT_GHL_API_KEY=pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35<br>
+TCT_GHL_LOCATION_ID=tQb9YmrGDrdVUJYPKrsY
+      </div>
+      <div class="alert yellow" style="margin-top:12px;">
+        <span class="icon">⚠</span>
+        <div><code>FB_VERIFY_TOKEN</code> is a string YOU choose — it can be anything. Set it in your env vars, then enter the exact same string in the Meta webhook configuration screen. This proves to Meta that you own the server.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 7: RUNNING THE WEBHOOK SERVER
+  ═══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <div>
+        <div class="section-title">Running the Webhook Server</div>
+        <div class="section-sub">Port 5091 — runs alongside the Stripe webhook on 5090</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Start / Test Commands</h3>
+      <div class="mono">
+# Start the webhook server<br>
+python3 ~/thecalltaker/ops/facebook-lead-webhook.py<br><br>
+
+# Test the verification handshake (should return the challenge value)<br>
+curl "http://localhost:5091/webhook/facebook-leads?hub.mode=subscribe&hub.verify_token=YOUR_TOKEN&hub.challenge=test123"<br><br>
+
+# Check server status<br>
+python3 ~/thecalltaker/ops/facebook-lead-webhook.py status<br><br>
+
+# View recent leads<br>
+python3 ~/thecalltaker/ops/facebook-lead-webhook.py leads
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>launchd Plist (for 24/7 auto-start)</h3>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">Save this as <code>~/Library/LaunchAgents/com.thecalltaker.ops.facebook-webhook.plist</code> and load it with launchctl.</p>
+      <div class="mono">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
+&lt;!DOCTYPE plist ...&gt;<br>
+&lt;plist version="1.0"&gt;<br>
+&lt;dict&gt;<br>
+&nbsp;&nbsp;&lt;key&gt;Label&lt;/key&gt;&lt;string&gt;com.thecalltaker.ops.facebook-webhook&lt;/string&gt;<br>
+&nbsp;&nbsp;&lt;key&gt;ProgramArguments&lt;/key&gt;<br>
+&nbsp;&nbsp;&lt;array&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;string&gt;/usr/bin/python3&lt;/string&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;string&gt;/Users/moneymaker99/thecalltaker/ops/facebook-lead-webhook.py&lt;/string&gt;<br>
+&nbsp;&nbsp;&lt;/array&gt;<br>
+&nbsp;&nbsp;&lt;key&gt;RunAtLoad&lt;/key&gt;&lt;true/&gt;<br>
+&nbsp;&nbsp;&lt;key&gt;KeepAlive&lt;/key&gt;&lt;true/&gt;<br>
+&nbsp;&nbsp;&lt;key&gt;StandardOutPath&lt;/key&gt;&lt;string&gt;/Users/moneymaker99/thecalltaker-ops/logs/fb-webhook-stdout.log&lt;/string&gt;<br>
+&nbsp;&nbsp;&lt;key&gt;StandardErrorPath&lt;/key&gt;&lt;string&gt;/Users/moneymaker99/thecalltaker-ops/logs/fb-webhook-stderr.log&lt;/string&gt;<br>
+&lt;/dict&gt;<br>
+&lt;/plist&gt;
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 8: WHAT TO WATCH
+  ═══════════════════════════════════════════════ -->
+  <div class="section" style="padding-bottom: 40px;">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <div>
+        <div class="section-title">What to Watch</div>
+        <div class="section-sub">Key metrics and when to act</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>First 14 Days — What Good Looks Like</h3>
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Target</th><th>Action if Below</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cost per lead</td>
+            <td>&lt; $75</td>
+            <td>Test new ad copy. Check audience size (aim 500K-2M).</td>
+          </tr>
+          <tr>
+            <td>Lead form open rate</td>
+            <td>&gt; 10%</td>
+            <td>Rewrite headline — it's the first thing they see.</td>
+          </tr>
+          <tr>
+            <td>Lead form completion</td>
+            <td>&gt; 50%</td>
+            <td>Reduce form fields. Make Business Name optional.</td>
+          </tr>
+          <tr>
+            <td>SMS reply rate</td>
+            <td>&gt; 20%</td>
+            <td>Rewrite the welcome SMS. Test "YES" keyword CTA.</td>
+          </tr>
+          <tr>
+            <td>Demo booked rate</td>
+            <td>&gt; 10% of leads</td>
+            <td>Follow up faster. Speed-to-lead under 5 minutes matters most.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert green">
+      <span class="icon">✓</span>
+      <div><strong>Rule:</strong> Respond to every Facebook lead within 5 minutes. Donny's speed-to-lead system fires an ntfy URGENT alert the moment the contact is created. Don't let it sit. These leads are warm — they just filled out a form.</div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+</body>
+</html>
