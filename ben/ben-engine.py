@@ -38,7 +38,7 @@ NTFY_OPS_TOPIC = "tct-sales-63uYsIT9"
 NTFY_WAR_TOPIC = "tct-urgent-Hk9UOEZR"
 
 DEMO_LINE = "(615) 784-5747"
-FROM_EMAIL = "wallacemdobbs@icloud.com"
+FROM_EMAIL = "thecalltakerai@gmail.com"
 SMS_PHONE = "+16156539004"
 
 BEN_DIR = os.path.dirname(os.path.abspath(__file__))

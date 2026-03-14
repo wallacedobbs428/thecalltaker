@@ -30,7 +30,7 @@ NTFY_OPS_TOPIC = "tct-sales-63uYsIT9"
 NTFY_WAR_TOPIC = "tct-urgent-Hk9UOEZR"
 NTFY_CALLS_TOPIC = "tct-finishtask"
 
-FROM_EMAIL = "wallacemdobbs@icloud.com"
+FROM_EMAIL = "thecalltakerai@gmail.com"
 
 BLAST_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(BLAST_DIR, "arizona-blast-log.txt")
