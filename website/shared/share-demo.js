@@ -26,7 +26,7 @@
 
   // Inject CSS
   var style = document.createElement('style');
-  style.textContent = '.sd-wrap{text-align:center;margin:24px 0 0}.sd-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;border:1px solid var(--border,#e5e7eb);background:var(--off-white,#f9fafb);color:var(--text-secondary,#4b5563);font-size:.8rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}.sd-btn:hover{border-color:var(--orange,#ea580c);color:var(--orange,#ea580c)}.sd-btn svg{width:14px;height:14px}.sd-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#111827;color:#fff;padding:8px 20px;border-radius:8px;font-size:.82rem;font-weight:600;opacity:0;transition:all .3s ease;pointer-events:none;z-index:9999}.sd-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}';
+  style.textContent = '.sd-wrap{text-align:center;margin:24px 0 0}.sd-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;border:1px solid var(--border,#e5e7eb);background:var(--off-white,#f9fafb);color:var(--text-secondary,#4b5563);font-size:.8rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}.sd-btn:hover{border-color:var(--orange,#00dc82);color:var(--orange,#00dc82)}.sd-btn svg{width:14px;height:14px}.sd-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#111827;color:#fff;padding:8px 20px;border-radius:8px;font-size:.82rem;font-weight:600;opacity:0;transition:all .3s ease;pointer-events:none;z-index:9999}.sd-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}';
   document.head.appendChild(style);
 
   // Create toast
