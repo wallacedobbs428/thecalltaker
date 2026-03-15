@@ -147,10 +147,3 @@ Target: 5 walk-ins = 2 demo calls = 1 pilot signup. That's $297-497/mo in 48 hou
 That number on the try-live page ("Join 35+ businesses already testing") is a credibility risk if anyone asks for names. Change it to "See why service businesses are switching to AI" or use real case study numbers: "Palmetto Comfort went from 41% missed calls to zero."
 
 ---
-
----
-
-  File "<string>", line 8
-    print(f"API ERROR: {data[\"error\"][\"message\"]}")
-                                                      ^
-SyntaxError: f-string expression part cannot include a backslash
