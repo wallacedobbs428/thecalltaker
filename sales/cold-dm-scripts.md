@@ -4,6 +4,16 @@
 
 Send these DMs to service business owners on social media. Personalize everything in [brackets]. Keep it casual -- DMs are not emails. Short, punchy, human.
 
+## HVAC HERO IMAGE — ATTACH TO ALL HVAC DMs
+
+**CRITICAL:** Attach this image when DMing HVAC leads on Instagram/Facebook/LinkedIn.
+- **File URL:** `https://thecalltaker.com/images/hvac-hero.jpg`
+- **For Instagram DMs:** Save image to phone, attach when sending DM
+- **For Facebook DMs:** Paste URL or attach downloaded image
+- **For LinkedIn:** Attach as image in message
+- **For ColdDMs automation:** Set media URL to `https://thecalltaker.com/images/hvac-hero.jpg`
+- The image shows a branded HVAC tech with The Call Taker notification — builds instant credibility
+
 **Industries we serve:** HVAC, Plumbing, Electrical, Roofing, Dental, Med Spa, Legal, Property Management
 
 **Where to find prospects:**

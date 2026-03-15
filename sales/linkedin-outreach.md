@@ -2,6 +2,10 @@
 ## The Call Taker | AI Receptionist for HVAC Companies
 ### $297/mo | thecalltaker.com | Brentwood, TN
 
+**HVAC Hero Image — ATTACH TO ALL LINKEDIN MESSAGES:**
+Upload `https://thecalltaker.com/images/hvac-hero.jpg` as image attachment in LinkedIn DMs.
+Save to phone/desktop first, then attach when messaging HVAC prospects.
+
 ---
 
 ## Table of Contents

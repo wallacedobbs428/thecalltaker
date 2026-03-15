@@ -6,6 +6,13 @@
 
 **USAGE:** Each sequence is city-specific. Personalize with company name, owner name, and specific hook from the personalization options provided.
 
+**HVAC Hero Image — EMBED IN EVERY EMAIL:**
+Place below opening line, above CTA. Use this HTML in Instantly.ai / GHL:
+```html
+<img src="https://thecalltaker.com/images/hvac-hero.jpg" alt="Never Miss a Call. Never Miss Revenue. — The Call Taker" style="width:100%;max-width:600px;height:auto;border-radius:8px;margin:16px 0;" />
+```
+For markdown (manual sends): `![Never Miss a Call. Never Miss Revenue. — The Call Taker](https://thecalltaker.com/images/hvac-hero.jpg)`
+
 ---
 
 ## BIRMINGHAM, AL — 3-EMAIL SEQUENCE
