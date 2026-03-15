@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>The Call Taker — Sales Kit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ---- RESET ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    /* ---- ROOT ---- */
+    :root {
+      --green: #00dc82;
+      --green-dim: rgba(0,220,130,0.10);
+      --green-glow: rgba(0,220,130,0.20);
+      --green-border: rgba(0,220,130,0.22);
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface-2: #181818;
+      --border: rgba(255,255,255,0.07);
+      --text-1: #ffffff;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --red-dim: rgba(255,59,48,0.10);
+      --red: #ff3b30;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 16px;
+      line-height: 1.55;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* ---- PAGE WRAPPER ---- */
+    .page {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 36px 24px 48px;
+      position: relative;
+    }
+
+    /* ---- HEADER ---- */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+    }
+
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--green);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(0,220,130,0.35);
+    }
+
+    .logo-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .logo-text {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -0.03em;
+    }
+
+    .logo-text span {
+      color: var(--green);
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.8); }
+    }
+
+    /* ---- HERO TAGLINE ---- */
+    .tagline {
+      margin-bottom: 36px;
+    }
+
+    .tagline h1 {
+      font-size: clamp(26px, 7vw, 32px);
+      font-weight: 800;
+      color: var(--text-1);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .tagline h1 .accent {
+      color: var(--green);
+    }
+
+    .tagline p {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.55;
+      max-width: 340px;
+    }
+
+    /* ---- DIVIDER ---- */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    /* ---- QR SECTION ---- */
+    .qr-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .qr-section::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      height: 180px;
+      background: radial-gradient(ellipse, var(--green-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .qr-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .qr-wrapper {
+      display: inline-block;
+      background: #0a0a0a;
+      border: 2px solid var(--green-border);
+      border-radius: 16px;
+      padding: 12px;
+      margin-bottom: 18px;
+      box-shadow: 0 0 30px rgba(0,220,130,0.12);
+    }
+
+    .qr-wrapper img {
+      display: block;
+      width: 180px;
+      height: 180px;
+      border-radius: 6px;
+    }
+
+    /* Inline SVG QR fallback container */
+    .qr-svg-wrap {
+      display: inline-block;
+      background: #0a0a0a;
+      border: 2px solid var(--green-border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 0 30px rgba(0,220,130,0.12);
+    }
+
+    .qr-svg-wrap svg {
+      display: block;
+    }
+
+    .qr-cta {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .qr-sub {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* ---- PRICING ---- */
+    .pricing-section {
+      margin-bottom: 28px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .pricing-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pricing-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      transition: border-color 0.15s;
+    }
+
+    .pricing-row.featured {
+      background: var(--green-dim);
+      border-color: var(--green-border);
+    }
+
+    .pricing-row-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .pricing-tier {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+
+    .pricing-desc {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .pricing-amount {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+    }
+
+    .pricing-amount .mo {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+    }
+
+    .pilot-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--green-border);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    .pilot-badge {
+      background: var(--green);
+      color: #000;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+
+    .pilot-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+
+    .no-contracts {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 12px;
+    }
+
+    .no-contracts strong {
+      color: var(--text-2);
+    }
+
+    /* ---- COMPETITOR SECTION ---- */
+    .competitor-section {
+      margin-bottom: 28px;
+    }
+
+    .horror-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .horror-card {
+      background: var(--red-dim);
+      border: 1px solid rgba(255,59,48,0.15);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .horror-icon {
+      font-size: 16px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .horror-content {}
+
+    .horror-competitor {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .horror-text {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.45;
+    }
+
+    /* ---- FOOTER ---- */
+    .footer-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 20px;
+      text-align: center;
+    }
+
+    .footer-built {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-bottom: 12px;
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .footer-url {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: -0.01em;
+    }
+
+    .footer-phone {
+      font-size: 13px;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+
+    /* ---- PRINT STYLES ---- */
+    @media print {
+      body {
+        background: #ffffff;
+        color: #111111;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      :root {
+        --bg: #ffffff;
+        --surface: #f5f5f5;
+        --surface-2: #eeeeee;
+        --border: rgba(0,0,0,0.08);
+        --text-1: #0a0a0a;
+        --text-2: #444444;
+        --text-3: #888888;
+        --green: #00a060;
+        --green-dim: rgba(0,160,96,0.08);
+        --green-border: rgba(0,160,96,0.20);
+        --green-glow: rgba(0,160,96,0.10);
+        --red-dim: rgba(200,0,0,0.06);
+        --red: #cc0000;
+      }
+
+      .page { padding: 20px; max-width: 100%; }
+      .qr-section::before { display: none; }
+      .live-dot { animation: none; }
+      .logo-icon { box-shadow: none; }
+      .qr-wrapper { box-shadow: none; }
+    }
+
+    /* ---- LANDSCAPE MOBILE ADJUSTMENT ---- */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .page { padding: 20px 24px 32px; }
+      .tagline h1 { font-size: 22px; }
+      .qr-wrapper img { width: 140px; height: 140px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo-mark">
+        <div class="logo-icon">
+          <!-- Phone icon -->
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.5 2h3l1.5 3.5-1.75 1.25a9.5 9.5 0 0 0 4.5 4.5L12 9.5 15.5 11v3A1.5 1.5 0 0 1 14 15.5C7.1 15.5 2.5 10.9 2.5 4A1.5 1.5 0 0 1 3.5 2z" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="logo-text">The Call <span>Taker</span></div>
+      </div>
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        Live AI
+      </div>
+    </div>
+
+    <!-- TAGLINE -->
+    <div class="tagline">
+      <h1>An AI receptionist that <span class="accent">answers your phone,</span> books your jobs, and never misses a call.</h1>
+      <p>24/7 coverage. Real conversations. Zero voicemail. Your customers always get a live answer.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- QR CODE -->
+    <div class="qr-section">
+      <div class="qr-label">Hear it live — right now</div>
+
+      <!-- QR image via API with green-on-dark -->
+      <div class="qr-wrapper">
+        <img
+          src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fthecalltaker.com%2Ftry-live.html&bgcolor=0a0a0a&color=00dc82&margin=6&format=png&qzone=1"
+          alt="QR code linking to live AI demo at thecalltaker.com/try-live.html"
+          width="180"
+          height="180"
+          loading="eager"
+        >
+      </div>
+
+      <div class="qr-cta">Scan to hear your AI receptionist live</div>
+      <div class="qr-sub">Takes 30 seconds. No app download.</div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="pricing-section">
+      <div class="section-label">Pricing</div>
+
+      <div class="pricing-grid">
+
+        <!-- Free pilot -->
+        <div class="pilot-row">
+          <div class="pilot-badge">Free</div>
+          <div class="pilot-text">14-Day Pilot — no card, no risk</div>
+        </div>
+
+        <!-- After-Hours -->
+        <div class="pricing-row">
+          <div class="pricing-row-left">
+            <div class="pricing-tier">After-Hours</div>
+            <div class="pricing-desc">Evenings, weekends, overnight</div>
+          </div>
+          <div class="pricing-amount">$97<span class="mo">/mo</span></div>
+        </div>
+
+        <!-- Full 24/7 -->
+        <div class="pricing-row featured">
+          <div class="pricing-row-left">
+            <div class="pricing-tier">Full 24/7</div>
+            <div class="pricing-desc">Around the clock, every call</div>
+          </div>
+          <div class="pricing-amount">$297<span class="mo">/mo</span></div>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="pricing-row">
+          <div class="pricing-row-left">
+            <div class="pricing-tier">Enterprise</div>
+            <div class="pricing-desc">Multi-line, custom scripts, priority</div>
+          </div>
+          <div class="pricing-amount">$497<span class="mo">/mo</span></div>
+        </div>
+
+      </div>
+
+      <div class="no-contracts"><strong>No contracts.</strong> Cancel anytime. No setup fee.</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- COMPETITOR HORROR STORIES -->
+    <div class="competitor-section">
+      <div class="section-label">Why not the other guys</div>
+
+      <div class="horror-list">
+
+        <div class="horror-card">
+          <div class="horror-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="7" stroke="#ff3b30" stroke-width="1.5"/>
+              <path d="M8 4.5v4" stroke="#ff3b30" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="8" cy="11" r="0.75" fill="#ff3b30"/>
+            </svg>
+          </div>
+          <div class="horror-content">
+            <div class="horror-competitor">Ruby Receptionists</div>
+            <div class="horror-text">Charges $5,100/mo for human receptionists — and still misses calls during shift changes.</div>
+          </div>
+        </div>
+
+        <div class="horror-card">
+          <div class="horror-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="7" stroke="#ff3b30" stroke-width="1.5"/>
+              <path d="M8 4.5v4" stroke="#ff3b30" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="8" cy="11" r="0.75" fill="#ff3b30"/>
+            </svg>
+          </div>
+          <div class="horror-content">
+            <div class="horror-competitor">AnswerForce</div>
+            <div class="horror-text">Holds your business phone number hostage when you cancel — takes weeks to port out.</div>
+          </div>
+        </div>
+
+        <div class="horror-card">
+          <div class="horror-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="7" stroke="#ff3b30" stroke-width="1.5"/>
+              <path d="M8 4.5v4" stroke="#ff3b30" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="8" cy="11" r="0.75" fill="#ff3b30"/>
+            </svg>
+          </div>
+          <div class="horror-content">
+            <div class="horror-competitor">Nexa</div>
+            <div class="horror-text">Secretly routes 60% of calls to overseas agents. Your customers notice the accent.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-section">
+      <div class="footer-built">Built in Nashville. Powered by AI.</div>
+      <div class="footer-contact">
+        <div class="footer-url">thecalltaker.com</div>
+        <div class="footer-phone">(615) 784-5747 — call or text</div>
+      </div>
+    </div>
+
+  </div><!-- end .page -->
+</body>
+</html>
