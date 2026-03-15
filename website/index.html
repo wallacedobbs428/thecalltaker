@@ -553,6 +553,33 @@ a { color: inherit; text-decoration: none; }
   color: var(--green);
   flex-shrink: 0;
 }
+/* ===== TRUST SIGNALS BAR ===== */
+.trust-signals-bar {
+  position: sticky;
+  top: 64px;
+  z-index: 99;
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+}
+.trust-signals-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: .75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+.trust-sep { color: rgba(255,255,255,.15); font-size: .6rem; }
+@media (max-width: 768px) {
+  .trust-signals-bar { position: relative; top: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .trust-signals-inner { white-space: nowrap; padding: 0 16px; justify-content: flex-start; gap: 6px; font-size: .7rem; }
+}
+
 /* ===== HERO PRODUCT IMAGE ===== */
 .hero-phone {
   position: relative;
@@ -882,6 +909,19 @@ a { color: inherit; text-decoration: none; }
     </button>
   </div>
 </header>
+
+<!-- SECTION: TRUST SIGNALS BAR -->
+<div class="trust-signals-bar" id="trustSignalsBar">
+  <div class="trust-signals-inner">
+    <span>No credit card required</span>
+    <span class="trust-sep">&bull;</span>
+    <span>Setup in 5 minutes</span>
+    <span class="trust-sep">&bull;</span>
+    <span>Cancel anytime</span>
+    <span class="trust-sep">&bull;</span>
+    <span>1,247+ calls handled</span>
+  </div>
+</div>
 
 <!-- ===== MOBILE MENU OVERLAY ===== -->
 <div class="mobile-overlay" id="mobileOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
