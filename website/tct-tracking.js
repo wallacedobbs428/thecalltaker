@@ -137,9 +137,7 @@
       '  display: none;' +
       '  position: fixed;' +
       '  top: 0; left: 0; width: 100%; height: 100%;' +
-      '  background: rgba(0,0,0,0.8);' +
-      '  backdrop-filter: blur(8px);' +
-      '  -webkit-backdrop-filter: blur(8px);' +
+      '  background: rgba(0,0,0,0.5);' +
       '  z-index: 999999;' +
       '  justify-content: center;' +
       '  align-items: center;' +
@@ -154,14 +152,14 @@
       '  display: flex;' +
       '}' +
       '#tct-popup-modal {' +
-      '  background: linear-gradient(145deg, #111827 0%, #0f172a 100%);' +
-      '  border-radius: 20px;' +
-      '  padding: 44px 36px;' +
-      '  max-width: 480px;' +
-      '  width: 92%;' +
+      '  background: #ffffff;' +
+      '  border-radius: 16px;' +
+      '  padding: 40px 36px;' +
+      '  max-width: 520px;' +
+      '  width: 90%;' +
       '  position: relative;' +
-      '  box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 80px rgba(0,220,130,0.06);' +
-      '  border: 1px solid rgba(0,220,130,0.12);' +
+      '  box-shadow: 0 25px 60px rgba(0,0,0,0.15);' +
+      '  border: 1px solid rgba(0,0,0,0.08);' +
       '  transform: translateY(20px);' +
       '  transition: transform 0.4s ease;' +
       '  max-height: 90vh;' +
@@ -174,36 +172,34 @@
       '  position: absolute;' +
       '  top: 14px; right: 18px;' +
       '  background: none; border: none;' +
-      '  color: rgba(255,255,255,0.4); font-size: 28px;' +
+      '  color: #9ca3af; font-size: 28px;' +
       '  cursor: pointer; line-height: 1;' +
       '  padding: 4px 8px;' +
       '  transition: color 0.2s;' +
       '}' +
-      '#tct-popup-close:hover { color: #fff; }' +
+      '#tct-popup-close:hover { color: #111827; }' +
       '#tct-popup-modal h2 {' +
-      '  color: #fff;' +
-      '  font-size: 22px;' +
-      '  margin: 0 0 10px 0;' +
+      '  color: #111827;' +
+      '  font-size: 24px;' +
+      '  margin: 0 0 12px 0;' +
       '  line-height: 1.3;' +
       '  font-family: inherit;' +
-      '  font-weight: 800;' +
-      '  letter-spacing: -0.02em;' +
       '}' +
       '#tct-popup-modal p.tct-subhead {' +
-      '  color: rgba(255,255,255,0.5);' +
-      '  font-size: 14px;' +
+      '  color: #4b5563;' +
+      '  font-size: 15px;' +
       '  margin: 0 0 24px 0;' +
       '  line-height: 1.6;' +
       '}' +
       '#tct-popup-form input,' +
       '#tct-popup-form select {' +
       '  width: 100%;' +
-      '  padding: 13px 16px;' +
-      '  margin-bottom: 12px;' +
-      '  background: rgba(255,255,255,0.06);' +
-      '  border: 1.5px solid rgba(255,255,255,0.1);' +
-      '  border-radius: 12px;' +
-      '  color: #fff;' +
+      '  padding: 12px 16px;' +
+      '  margin-bottom: 14px;' +
+      '  background: #f9fafb;' +
+      '  border: 1px solid rgba(0,0,0,0.08);' +
+      '  border-radius: 8px;' +
+      '  color: #111827;' +
       '  font-size: 15px;' +
       '  outline: none;' +
       '  box-sizing: border-box;' +
@@ -212,39 +208,38 @@
       '  -webkit-appearance: none;' +
       '  appearance: none;' +
       '}' +
-      '#tct-popup-form input::placeholder { color: rgba(255,255,255,0.3); }' +
+      '#tct-popup-form input::placeholder { color: #9ca3af; }' +
       '#tct-popup-form input:focus,' +
       '#tct-popup-form select:focus {' +
-      '  border-color: rgba(0,220,130,0.4);' +
+      '  border-color: #00dc82;' +
       '}' +
       '#tct-popup-form select {' +
-      '  color: rgba(255,255,255,0.3);' +
+      '  color: #9ca3af;' +
       '  cursor: pointer;' +
-      '  background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'8\' viewBox=\'0 0 12 8\'%3E%3Cpath d=\'M1 1l5 5 5-5\' stroke=\'%23666\' stroke-width=\'2\' fill=\'none\'/%3E%3C/svg%3E");' +
+      '  background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'8\' viewBox=\'0 0 12 8\'%3E%3Cpath d=\'M1 1l5 5 5-5\' stroke=\'%239ca3af\' stroke-width=\'2\' fill=\'none\'/%3E%3C/svg%3E");' +
       '  background-repeat: no-repeat;' +
       '  background-position: right 16px center;' +
       '  padding-right: 40px;' +
       '}' +
-      '#tct-popup-form select.tct-selected { color: #fff; }' +
+      '#tct-popup-form select.tct-selected { color: #111827; }' +
       '#tct-popup-submit {' +
       '  width: 100%;' +
       '  padding: 14px 24px;' +
       '  background: #00dc82;' +
       '  color: #000;' +
       '  border: none;' +
-      '  border-radius: 12px;' +
-      '  font-size: 16px;' +
+      '  border-radius: 8px;' +
+      '  font-size: 17px;' +
       '  font-weight: 700;' +
       '  cursor: pointer;' +
-      '  transition: transform 0.15s, box-shadow 0.2s;' +
+      '  transition: background 0.2s, transform 0.1s;' +
       '  font-family: inherit;' +
       '  margin-top: 4px;' +
       '}' +
-      '#tct-popup-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,220,130,0.35); }' +
+      '#tct-popup-submit:hover { background: #00c974; }' +
       '#tct-popup-submit:active { transform: scale(0.98); }' +
       '#tct-popup-submit:disabled {' +
-      '  background: rgba(255,255,255,0.1);' +
-      '  color: rgba(255,255,255,0.3);' +
+      '  background: #d1d5db;' +
       '  cursor: not-allowed;' +
       '}' +
       '#tct-popup-success {' +
@@ -254,16 +249,16 @@
       '}' +
       '#tct-popup-success .tct-check {' +
       '  font-size: 48px;' +
-      '  color: #00dc82;' +
+      '  color: #059669;' +
       '  margin-bottom: 16px;' +
       '}' +
       '#tct-popup-success h3 {' +
-      '  color: #fff;' +
+      '  color: #111827;' +
       '  font-size: 20px;' +
       '  margin: 0 0 8px 0;' +
       '}' +
       '#tct-popup-success p {' +
-      '  color: rgba(255,255,255,0.55);' +
+      '  color: #4b5563;' +
       '  font-size: 15px;' +
       '  margin: 0;' +
       '}' +
@@ -275,12 +270,12 @@
       '}' +
       '@media (max-width: 600px) {' +
       '  #tct-popup-modal {' +
-      '    padding: 32px 24px;' +
+      '    padding: 28px 20px;' +
       '    margin: 10px;' +
       '    width: calc(100% - 20px);' +
       '  }' +
-      '  #tct-popup-modal h2 { font-size: 19px; }' +
-      '  #tct-popup-modal p.tct-subhead { font-size: 13px; }' +
+      '  #tct-popup-modal h2 { font-size: 20px; }' +
+      '  #tct-popup-modal p.tct-subhead { font-size: 14px; }' +
       '}';
     document.head.appendChild(style);
 
@@ -538,118 +533,6 @@
       if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
     }
   });
-
-  // =========================================================================
-  // E. Scroll Depth Tracking — fires GA4 events at 25/50/75/90% thresholds
-  // =========================================================================
-  (function initScrollDepth() {
-    var thresholds = [25, 50, 75, 90];
-    var fired = {};
-    function getScrollPct() {
-      var docH = document.documentElement.scrollHeight - window.innerHeight;
-      if (docH <= 0) return 100;
-      return Math.round((window.scrollY / docH) * 100);
-    }
-    var scrollTimer = null;
-    window.addEventListener('scroll', function() {
-      if (scrollTimer) return;
-      scrollTimer = setTimeout(function() {
-        scrollTimer = null;
-        var pct = getScrollPct();
-        for (var i = 0; i < thresholds.length; i++) {
-          var t = thresholds[i];
-          if (pct >= t && !fired[t]) {
-            fired[t] = true;
-            if (typeof gtag === 'function') {
-              gtag('event', 'scroll_depth', {
-                event_category: 'engagement',
-                event_label: t + '%',
-                page_path: window.location.pathname,
-                value: t
-              });
-            }
-          }
-        }
-      }, 200);
-    }, { passive: true });
-  })();
-
-  // =========================================================================
-  // F. Heatmap-Style Click Logger — stores click positions in localStorage
-  // =========================================================================
-  (function initClickHeatmap() {
-    var STORAGE_KEY = 'tct_clicks';
-    var MAX_ENTRIES = 500;
-
-    document.addEventListener('click', function(e) {
-      try {
-        var existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        var tag = e.target.tagName.toLowerCase();
-        var cls = (e.target.className && typeof e.target.className === 'string')
-          ? e.target.className.split(' ').slice(0, 2).join('.') : '';
-        var href = e.target.closest('a') ? e.target.closest('a').getAttribute('href') : '';
-        var entry = {
-          x: Math.round((e.clientX / window.innerWidth) * 100),
-          y: Math.round(e.pageY),
-          vw: window.innerWidth,
-          p: window.location.pathname,
-          el: tag + (cls ? '.' + cls : ''),
-          hr: href ? href.substring(0, 80) : '',
-          t: Date.now()
-        };
-        existing.push(entry);
-        // Keep only last MAX_ENTRIES
-        if (existing.length > MAX_ENTRIES) {
-          existing = existing.slice(-MAX_ENTRIES);
-        }
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
-      } catch(err) {}
-    });
-
-    // Expose getter for dashboards
-    window.getTctClickData = function() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-      catch(e) { return []; }
-    };
-
-    // Expose clear function
-    window.clearTctClickData = function() {
-      localStorage.removeItem(STORAGE_KEY);
-    };
-  })();
-
-  // =========================================================================
-  // G. Session Engagement Metrics — time on page, pages/session
-  // =========================================================================
-  (function initSessionMetrics() {
-    var SESSION_KEY = 'tct_session';
-    var session;
-    try {
-      session = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
-    } catch(e) { session = null; }
-    if (!session) {
-      session = { pages: 0, start: Date.now(), entries: [] };
-    }
-    session.pages++;
-    session.entries.push({
-      path: window.location.pathname,
-      ts: Date.now()
-    });
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
-
-    // On page unload, fire engagement event if user spent >30s
-    window.addEventListener('beforeunload', function() {
-      var elapsed = Math.round((Date.now() - session.start) / 1000);
-      if (elapsed >= 30 && typeof gtag === 'function') {
-        gtag('event', 'session_engagement', {
-          event_category: 'engagement',
-          session_duration: elapsed,
-          pages_viewed: session.pages,
-          landing_page: session.entries[0] ? session.entries[0].path : '/'
-        });
-      }
-    });
-  })();
 
   // =========================================================================
   // Initialize popup when DOM is ready

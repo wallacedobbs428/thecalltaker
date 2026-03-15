@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="robots" content="noindex, nofollow">
+<title>War Room — The Call Taker</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--surface:rgba(255,255,255,0.03);--surface-2:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.08);--green:#00dc82;--green-dim:rgba(0,220,130,0.1);
+  --green-glow:rgba(0,220,130,0.25);--red:#ef4444;--amber:#fbbf24;
+  --text-1:#fff;--text-2:#a1a1aa;--text-3:#71717a;
+}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text-1);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+/* PASSWORD GATE */
+#gate{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+#gate.hidden{display:none}
+#gate h2{font-size:1.1rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-2)}
+#gate input{padding:14px 20px;width:280px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text-1);font-family:inherit;font-size:1rem;text-align:center;outline:none}
+#gate input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-dim)}
+#gate .err{color:var(--red);font-size:.8rem;height:20px}
+
+/* LAYOUT */
+.dash{max-width:1100px;margin:0 auto;padding:24px 16px 60px;display:none}
+.dash.visible{display:block}
+
+/* HEADER */
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px}
+.dash-header h1{font-size:1.4rem;font-weight:800;letter-spacing:-.02em}
+.dash-header h1 span{color:var(--green)}
+.status-bar{display:flex;align-items:center;gap:12px;font-size:.8rem;color:var(--text-3)}
+.status-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 var(--green-glow)}50%{opacity:.7;box-shadow:0 0 0 6px transparent}}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:24px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--green);opacity:.4}
+.card h2{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card h2 .icon{font-size:.9rem}
+
+/* BIG METRIC */
+.metric{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
+.metric .val{font-size:2.2rem;font-weight:800;color:var(--text-1);letter-spacing:-.03em}
+.metric .label{font-size:.8rem;color:var(--text-3);font-weight:500}
+.metric.green .val{color:var(--green)}
+.metric.red .val{color:var(--red)}
+.metric.amber .val{color:var(--amber)}
+
+/* SMALL STATS ROW */
+.stats-row{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .s-val{font-size:1.3rem;font-weight:700}
+.stat .s-label{font-size:.7rem;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
+
+/* PIPELINE BAR */
+.pipeline{margin-top:16px}
+.pipe-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)}
+.pipe-row:last-child{border:none}
+.pipe-day{font-size:.75rem;font-weight:700;color:var(--text-2);width:50px;flex-shrink:0}
+.pipe-bar-wrap{flex:1;height:20px;background:rgba(255,255,255,0.04);border-radius:4px;overflow:hidden;position:relative}
+.pipe-bar{height:100%;background:linear-gradient(90deg,var(--green),rgba(0,220,130,0.6));border-radius:4px;transition:width .6s ease;min-width:2px}
+.pipe-count{font-size:.75rem;font-weight:600;color:var(--text-2);width:30px;text-align:right;flex-shrink:0}
+
+/* LEAD LIST */
+.lead-list{margin-top:12px;max-height:220px;overflow-y:auto}
+.lead-list::-webkit-scrollbar{width:4px}
+.lead-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.lead-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.lead-item:last-child{border:none}
+.lead-name{font-weight:600;color:var(--text-1)}
+.lead-co{color:var(--text-3);font-size:.75rem;margin-left:6px}
+.lead-tag{font-size:.65rem;font-weight:600;padding:3px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:.04em}
+.tag-hot{background:rgba(239,68,68,0.15);color:#ef4444}
+.tag-demo{background:var(--green-dim);color:var(--green)}
+.tag-pilot{background:rgba(251,191,36,0.15);color:var(--amber)}
+
+/* PROGRESS RING */
+.ring-wrap{display:flex;align-items:center;gap:16px;margin-top:12px}
+.ring{width:64px;height:64px;position:relative}
+.ring svg{width:64px;height:64px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5}
+.ring .bg{stroke:rgba(255,255,255,0.06)}
+.ring .fg{stroke:var(--green);stroke-linecap:round;transition:stroke-dashoffset .8s ease}
+.ring .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700}
+
+/* LINKS */
+.link-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.link-card{display:flex;align-items:center;gap:8px;padding:12px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text-2);font-size:.8rem;font-weight:600;transition:all .2s}
+.link-card:hover{border-color:var(--green);color:var(--text-1);background:var(--green-dim)}
+.link-card .l-icon{font-size:1rem}
+
+/* LOADING */
+.loading{display:flex;align-items:center;gap:8px;color:var(--text-3);font-size:.8rem;padding:20px 0}
+.spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* REFRESH BAR */
+.refresh-bar{position:fixed;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.04);z-index:100}
+.refresh-bar .fill{height:100%;background:var(--green);width:0%;transition:width linear}
+
+/* FULL WIDTH */
+.full{grid-column:1/-1}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <h2>War Room Access</h2>
+  <input type="password" id="pw" placeholder="Enter password" autocomplete="off" autofocus>
+  <div class="err" id="pwErr"></div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dash" id="dash">
+  <div class="dash-header">
+    <h1>War <span>Room</span></h1>
+    <div class="status-bar">
+      <span class="status-dot"></span>
+      <span id="lastUpdate">Loading...</span>
+      <span>&middot;</span>
+      <span id="nextRefresh">Refreshes in 5:00</span>
+    </div>
+  </div>
+
+  <!-- ROW 1: REVENUE + LEADS OVERVIEW -->
+  <div class="grid">
+
+    <!-- REVENUE -->
+    <div class="card">
+      <h2><span class="icon">$</span> Revenue</h2>
+      <div class="metric green">
+        <span class="val" id="mrr">$0</span>
+        <span class="label">MRR</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="s-val" id="clientCount">0</span>
+          <span class="s-label">Active Clients</span>
+        </div>
+        <div class="stat">
+          <span class="s-val" id="pipelineVal">$0</span>
+          <span class="s-label">Pipeline Value</span>
+        </div>
+        <div class="stat">
+          <span class="s-val" id="pilotCount">0</span>
+          <span class="s-label">Active Pilots</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEADS OVERVIEW -->
+    <div class="card">
+      <h2><span class="icon">&#9733;</span> Leads Overview</h2>
+      <div class="metric">
+        <span class="val" id="totalContacts">--</span>
+        <span class="label">Total Contacts</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="s-val" id="hotCount" style="color:var(--red)">--</span>
+          <span class="s-label">Hot Leads</span>
+        </div>
+        <div class="stat">
+          <span class="s-val" id="demoBooked" style="color:var(--green)">--</span>
+          <span class="s-label">Demos Booked</span>
+        </div>
+        <div class="stat">
+          <span class="s-val" id="convRate">--%</span>
+          <span class="s-label">Conversion Rate</span>
+        </div>
+        <div class="stat">
+          <span class="s-val" id="contactedToday">--</span>
+          <span class="s-label">Contacted Today</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2: PIPELINE + HOT LEADS -->
+  <div class="grid">
+
+    <!-- FOLLOW-UP PIPELINE -->
+    <div class="card">
+      <h2><span class="icon">&#9654;</span> Follow-Up Pipeline</h2>
+      <div class="pipeline" id="pipeline">
+        <div class="loading"><div class="spinner"></div> Loading pipeline...</div>
+      </div>
+    </div>
+
+    <!-- HOT LEADS -->
+    <div class="card">
+      <h2><span class="icon">&#128293;</span> Hot Leads</h2>
+      <div class="lead-list" id="hotLeadList">
+        <div class="loading"><div class="spinner"></div> Loading leads...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: OUTREACH + SITE -->
+  <div class="grid">
+
+    <!-- OUTREACH -->
+    <div class="card">
+      <h2><span class="icon">&#9993;</span> Outreach Today</h2>
+      <div class="ring-wrap">
+        <div class="ring">
+          <svg viewBox="0 0 64 64">
+            <circle class="bg" cx="32" cy="32" r="28"/>
+            <circle class="fg" id="emailRing" cx="32" cy="32" r="28" stroke-dasharray="175.93" stroke-dashoffset="175.93"/>
+          </svg>
+          <div class="pct" id="emailPct">0%</div>
+        </div>
+        <div>
+          <div style="font-size:.85rem;font-weight:700"><span id="emailsSent">0</span> / <span id="emailTarget">50</span> emails</div>
+          <div style="font-size:.75rem;color:var(--text-3)">Daily target progress</div>
+        </div>
+      </div>
+      <div class="stats-row" style="margin-top:16px">
+        <div class="stat">
+          <span class="s-val" id="emailRate">--%</span>
+          <span class="s-label">Open Rate</span>
+        </div>
+        <div class="stat">
+          <span class="s-val" id="callsMade">0</span>
+          <span class="s-label">Calls Today</span>
+        </div>
+        <div class="stat">
+          <span class="s-val" id="smsCount">0</span>
+          <span class="s-label">SMS Sent</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SITE + LINKS -->
+    <div class="card">
+      <h2><span class="icon">&#127760;</span> Command Center</h2>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="s-val">44</span>
+          <span class="s-label">Blog Posts</span>
+        </div>
+        <div class="stat">
+          <span class="s-val">13</span>
+          <span class="s-label">Industry Pages</span>
+        </div>
+        <div class="stat">
+          <span class="s-val">5</span>
+          <span class="s-label">Case Studies</span>
+        </div>
+      </div>
+      <div class="link-grid">
+        <a href="https://thecalltaker.com" target="_blank" class="link-card"><span class="l-icon">&#127968;</span> Live Site</a>
+        <a href="../demo-showcase.html" target="_blank" class="link-card"><span class="l-icon">&#128222;</span> Demo Page</a>
+        <a href="../blog/" target="_blank" class="link-card"><span class="l-icon">&#128221;</span> Blog</a>
+        <a href="../industries/" target="_blank" class="link-card"><span class="l-icon">&#127981;</span> Industries</a>
+        <a href="../case-studies/" target="_blank" class="link-card"><span class="l-icon">&#128200;</span> Case Studies</a>
+        <a href="../pilot/" target="_blank" class="link-card"><span class="l-icon">&#128640;</span> Pilot Signup</a>
+        <a href="../book.html" target="_blank" class="link-card"><span class="l-icon">&#128197;</span> Book Demo</a>
+        <a href="../calculator.html" target="_blank" class="link-card"><span class="l-icon">&#129518;</span> ROI Calc</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="refresh-bar"><div class="fill" id="refreshFill"></div></div>
+
+<script>
+(function(){
+  // ── CONFIG ──
+  var GHL_KEY = 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35';
+  var GHL_LOC = 'tQb9YmrGDrdVUJYPKrsY';
+  var GHL = 'https://services.leadconnectorhq.com';
+  var REFRESH_MS = 300000; // 5 minutes
+  var PASSWORD = 'warroom2025';
+
+  var HOT_TAGS = ['hot-lead','hot-demo','engaged-demo','demo-caller','pilot-candidate'];
+  var BOOKED_TAGS = ['demo-booked','demo-scheduled','booked'];
+  var CLIENT_TAGS = ['customer','active-client'];
+  var PILOT_TAGS = ['pilot-active'];
+  var CONTACTED_TAGS = ['contacted','email-sent','sms-sent','called','followup-day-0','followup-day-1','followup-day-3','followup-day-5','followup-day-7'];
+  var FOLLOWUP_DAYS = [0,1,3,5,7];
+
+  // ── PASSWORD GATE ──
+  var gate = document.getElementById('gate');
+  var pwInput = document.getElementById('pw');
+  var pwErr = document.getElementById('pwErr');
+  var dash = document.getElementById('dash');
+
+  if (sessionStorage.getItem('wr_auth') === '1') {
+    gate.classList.add('hidden');
+    dash.classList.add('visible');
+    init();
+  }
+
+  pwInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      if (pwInput.value === PASSWORD) {
+        sessionStorage.setItem('wr_auth', '1');
+        gate.classList.add('hidden');
+        dash.classList.add('visible');
+        init();
+      } else {
+        pwErr.textContent = 'Wrong password';
+        pwInput.value = '';
+        pwInput.focus();
+      }
+    }
+  });
+
+  // ── GHL API ──
+  function ghl(path, version) {
+    return fetch(GHL + path, {
+      headers: {
+        'Authorization': 'Bearer ' + GHL_KEY,
+        'Version': version || '2021-07-28',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then(function(r) {
+      if (r.status === 429) {
+        return new Promise(function(resolve) {
+          setTimeout(function() { resolve(ghl(path, version)); }, 30000);
+        });
+      }
+      return r.json();
+    }).catch(function() { return null; });
+  }
+
+  // ── FETCH ALL CONTACTS ──
+  function fetchAllContacts() {
+    var all = [];
+    function fetchPage(page) {
+      return ghl('/contacts/?locationId=' + GHL_LOC + '&limit=100&page=' + page).then(function(data) {
+        if (!data || !data.contacts || !data.contacts.length) return all;
+        all = all.concat(data.contacts);
+        if (data.contacts.length < 100) return all;
+        return new Promise(function(resolve) {
+          setTimeout(function() { resolve(fetchPage(page + 1)); }, 500);
+        });
+      });
+    }
+    return fetchPage(1);
+  }
+
+  // ── HELPERS ──
+  function hasAnyTag(tags, check) {
+    if (!tags) return false;
+    var lower = tags.map(function(t){ return t.toLowerCase(); });
+    return check.some(function(c){ return lower.indexOf(c) !== -1; });
+  }
+
+  function detectIndustry(tags) {
+    if (!tags) return '';
+    var industries = ['hvac','plumbing','dental','roofing','locksmith','electrical','towing','water-damage','pest-control','med-spa','legal','veterinary','auto-repair','cleaning','property-mgmt','landscaping','garage-door','funeral'];
+    var lower = tags.map(function(t){ return t.toLowerCase(); });
+    for (var i = 0; i < lower.length; i++) {
+      for (var j = 0; j < industries.length; j++) {
+        if (lower[i].indexOf(industries[j]) !== -1) return industries[j];
+      }
+    }
+    return '';
+  }
+
+  function daysSince(dateStr) {
+    if (!dateStr) return 999;
+    try {
+      var d = new Date(dateStr);
+      return Math.floor((Date.now() - d.getTime()) / 86400000);
+    } catch(e) { return 999; }
+  }
+
+  function $(id) { return document.getElementById(id); }
+
+  // ── RENDER ──
+  function render(contacts) {
+    var total = contacts.length;
+    var hot = [], booked = [], clients = [], pilots = [], contactedToday = 0;
+    var dayCounts = {0:0, 1:0, 3:0, 5:0, 7:0, '8+':0};
+    var today = new Date().toISOString().slice(0,10);
+
+    contacts.forEach(function(c) {
+      var tags = c.tags || [];
+      var isHot = hasAnyTag(tags, HOT_TAGS);
+      var isBooked = hasAnyTag(tags, BOOKED_TAGS);
+      var isClient = hasAnyTag(tags, CLIENT_TAGS);
+      var isPilot = hasAnyTag(tags, PILOT_TAGS);
+      var isContacted = hasAnyTag(tags, CONTACTED_TAGS);
+
+      if (isClient) clients.push(c);
+      if (isPilot) pilots.push(c);
+      if (isBooked) booked.push(c);
+      if (isHot) {
+        hot.push(c);
+        var days = daysSince(c.dateAdded || c.createdAt);
+        if (days <= 0) dayCounts[0]++;
+        else if (days <= 1) dayCounts[1]++;
+        else if (days <= 3) dayCounts[3]++;
+        else if (days <= 5) dayCounts[5]++;
+        else if (days <= 7) dayCounts[7]++;
+        else dayCounts['8+']++;
+      }
+
+      // Check if contacted today (rough: has contacted tag + created/modified today)
+      if (isContacted) {
+        var mod = c.dateUpdated || c.dateAdded || '';
+        if (mod.slice(0,10) === today) contactedToday++;
+      }
+    });
+
+    // ── REVENUE ──
+    var mrr = clients.length * 297; // Assume avg plan
+    $('mrr').textContent = '$' + mrr.toLocaleString();
+    $('clientCount').textContent = clients.length;
+    $('pipelineVal').textContent = '$' + (hot.length * 497).toLocaleString();
+    $('pilotCount').textContent = pilots.length;
+
+    // ── LEADS ──
+    $('totalContacts').textContent = total.toLocaleString();
+    $('hotCount').textContent = hot.length;
+    $('demoBooked').textContent = booked.length;
+    $('contactedToday').textContent = contactedToday;
+    var convRate = hot.length > 0 ? Math.round((booked.length / hot.length) * 100) : 0;
+    $('convRate').textContent = convRate + '%';
+
+    // ── PIPELINE ──
+    var maxDay = Math.max.apply(null, Object.values(dayCounts)) || 1;
+    var pipeHTML = '';
+    ['0','1','3','5','7','8+'].forEach(function(d) {
+      var count = dayCounts[d] || 0;
+      var pct = Math.round((count / maxDay) * 100);
+      pipeHTML += '<div class="pipe-row">' +
+        '<span class="pipe-day">Day ' + d + '</span>' +
+        '<div class="pipe-bar-wrap"><div class="pipe-bar" style="width:' + pct + '%"></div></div>' +
+        '<span class="pipe-count">' + count + '</span>' +
+        '</div>';
+    });
+    $('pipeline').innerHTML = pipeHTML;
+
+    // ── HOT LEADS LIST ──
+    if (hot.length === 0) {
+      $('hotLeadList').innerHTML = '<div style="color:var(--text-3);font-size:.85rem;padding:16px 0">No hot leads yet. Run manual-closer.py or blast-engine.</div>';
+    } else {
+      // Sort: booked first, then by recency
+      hot.sort(function(a,b) {
+        var aBooked = hasAnyTag(a.tags, BOOKED_TAGS) ? 1 : 0;
+        var bBooked = hasAnyTag(b.tags, BOOKED_TAGS) ? 1 : 0;
+        if (bBooked !== aBooked) return bBooked - aBooked;
+        return daysSince(a.dateAdded) - daysSince(b.dateAdded);
+      });
+
+      var listHTML = '';
+      hot.slice(0, 20).forEach(function(c) {
+        var name = ((c.firstName || '') + ' ' + (c.lastName || '')).trim() || 'Unknown';
+        var co = c.companyName || '';
+        var ind = detectIndustry(c.tags || []);
+        var isBooked = hasAnyTag(c.tags, BOOKED_TAGS);
+        var isPilot = hasAnyTag(c.tags, PILOT_TAGS);
+
+        var tagHTML = '';
+        if (isBooked) tagHTML = '<span class="lead-tag tag-demo">BOOKED</span>';
+        else if (isPilot) tagHTML = '<span class="lead-tag tag-pilot">PILOT</span>';
+        else tagHTML = '<span class="lead-tag tag-hot">HOT</span>';
+
+        listHTML += '<div class="lead-item">' +
+          '<div><span class="lead-name">' + name + '</span>' +
+          (co ? '<span class="lead-co">' + co + '</span>' : '') +
+          (ind ? '<span class="lead-co"> &middot; ' + ind + '</span>' : '') +
+          '</div>' + tagHTML + '</div>';
+      });
+      if (hot.length > 20) {
+        listHTML += '<div style="padding:8px 0;font-size:.75rem;color:var(--text-3)">+ ' + (hot.length - 20) + ' more</div>';
+      }
+      $('hotLeadList').innerHTML = listHTML;
+    }
+
+    // ── OUTREACH (estimated from tags) ──
+    var emailsSent = 0, smsSent = 0, callsMade = 0, opened = 0;
+    contacts.forEach(function(c) {
+      var tags = (c.tags || []).map(function(t){ return t.toLowerCase(); });
+      var mod = (c.dateUpdated || '').slice(0,10);
+      if (mod === today) {
+        if (tags.indexOf('email-sent') !== -1) emailsSent++;
+        if (tags.indexOf('sms-sent') !== -1) smsSent++;
+        if (tags.indexOf('called') !== -1 || tags.indexOf('shopper-called') !== -1) callsMade++;
+        if (tags.indexOf('opened') !== -1 || tags.indexOf('email-opened') !== -1) opened++;
+      }
+    });
+
+    var target = 50;
+    $('emailsSent').textContent = emailsSent;
+    $('emailTarget').textContent = target;
+    $('smsCount').textContent = smsSent;
+    $('callsMade').textContent = callsMade;
+
+    var emailPctVal = Math.min(100, Math.round((emailsSent / target) * 100));
+    $('emailPct').textContent = emailPctVal + '%';
+    var circumference = 2 * Math.PI * 28;
+    var offset = circumference - (emailPctVal / 100) * circumference;
+    $('emailRing').style.strokeDashoffset = offset;
+
+    var openRate = emailsSent > 0 ? Math.round((opened / emailsSent) * 100) : 0;
+    $('emailRate').textContent = openRate + '%';
+
+    // ── TIMESTAMP ──
+    var now = new Date();
+    $('lastUpdate').textContent = 'Updated ' + now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  }
+
+  // ── REFRESH TIMER ──
+  var refreshStart = 0;
+  function startRefreshBar() {
+    refreshStart = Date.now();
+    function tick() {
+      var elapsed = Date.now() - refreshStart;
+      var pct = Math.min(100, (elapsed / REFRESH_MS) * 100);
+      $('refreshFill').style.width = pct + '%';
+
+      var remaining = Math.max(0, REFRESH_MS - elapsed);
+      var min = Math.floor(remaining / 60000);
+      var sec = Math.floor((remaining % 60000) / 1000);
+      $('nextRefresh').textContent = 'Refreshes in ' + min + ':' + (sec < 10 ? '0' : '') + sec;
+
+      if (elapsed < REFRESH_MS) {
+        requestAnimationFrame(tick);
+      }
+    }
+    tick();
+  }
+
+  // ── INIT ──
+  function loadData() {
+    $('pipeline').innerHTML = '<div class="loading"><div class="spinner"></div> Loading pipeline...</div>';
+    $('hotLeadList').innerHTML = '<div class="loading"><div class="spinner"></div> Loading leads...</div>';
+
+    fetchAllContacts().then(function(contacts) {
+      if (!contacts) {
+        $('lastUpdate').textContent = 'API Error — retrying in 5min';
+        return;
+      }
+      render(contacts);
+    });
+
+    startRefreshBar();
+  }
+
+  function init() {
+    loadData();
+    setInterval(loadData, REFRESH_MS);
+  }
+})();
+</script>
+</body>
+</html>
