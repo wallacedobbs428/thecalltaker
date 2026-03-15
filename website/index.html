@@ -636,6 +636,22 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.7;
 }
 
+/* ===== COMPETITOR KILL SECTION ===== */
+.competitor-section { background: var(--off-white); }
+.compare-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 40px; }
+.compare-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+.compare-table th, .compare-table td { padding: 16px 20px; text-align: center; font-size: .88rem; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.compare-table th { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); padding-bottom: 20px; }
+.compare-table td:first-child, .compare-table th:first-child { text-align: left; font-weight: 600; color: var(--text-secondary); }
+.compare-highlight { background: rgba(0,220,130,.04); color: var(--text) !important; font-weight: 700 !important; }
+.compare-table th.compare-highlight { color: var(--green) !important; font-size: .78rem; }
+.cmp-yes { color: #00dc82; font-weight: 700; font-size: 1.1rem; }
+.cmp-no { color: #ef4444; font-weight: 700; font-size: 1.1rem; }
+@media (max-width: 768px) {
+  .compare-table-wrap { margin-left: -20px; margin-right: -20px; padding: 0 20px; }
+  .compare-table th, .compare-table td { padding: 12px 14px; font-size: .78rem; }
+}
+
 /* ===== HERO RESPONSIVE (must be inline to prevent CLS from async CSS) ===== */
 @media (max-width: 1024px) {
   .hero-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -2097,6 +2113,92 @@ a { color: inherit; text-decoration: none; }
     <div class="ind-strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg><span>Legal</span></div>
   </div>
 </div>
+
+<!-- SECTION: COMPETITOR KILL -->
+<section class="section competitor-section" id="compare">
+  <div class="container">
+    <div class="section-header reveal scale-in">
+      <span class="section-label">The Honest Comparison</span>
+      <h2 class="section-title">Why Owners Are Switching From Ruby &amp; AnswerForce</h2>
+      <p class="section-subtitle">See how The Call Taker stacks up against every alternative — including hiring a human.</p>
+    </div>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="compare-highlight">The Call Taker</th>
+            <th>Ruby</th>
+            <th>Smith.ai</th>
+            <th>AnswerForce</th>
+            <th>Human Receptionist</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="compare-row reveal fade-up">
+            <td>Price / month</td>
+            <td class="compare-highlight"><strong>$97</strong></td>
+            <td>$235+</td>
+            <td>$300+</td>
+            <td>$149+</td>
+            <td>$3,200+</td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="80">
+            <td>Answers in under 2s</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="160">
+            <td>Books appointments automatically</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-yes">&#10003;</span></td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="240">
+            <td>Texts you every lead</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="320">
+            <td>Custom-trained on your business</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-yes">&#10003;</span></td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="400">
+            <td>No contracts</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="480">
+            <td>AI-powered 24/7</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="/pilot/" class="btn btn-primary">Start Free 14-Day Pilot &rarr;</a>
+    </div>
+  </div>
+</section>
 
 <!-- ===== PRICING ===== -->
 <section class="section" id="pricing">
