@@ -697,6 +697,45 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.7;
 }
 
+/* ===== DEMO EXTRAS ===== */
+.demo-extras { margin-top: 20px; }
+.demo-skip {
+  background: none;
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.5);
+  font-size: .78rem;
+  padding: 8px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all .2s;
+  margin-bottom: 16px;
+}
+.demo-skip:hover { border-color: var(--green); color: var(--green); }
+.demo-industry-select { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.demo-ind-btn {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.6);
+  font-size: .78rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.demo-ind-btn:hover, .demo-ind-btn.active {
+  background: rgba(0,220,130,.1);
+  border-color: rgba(0,220,130,.3);
+  color: #00dc82;
+}
+.demo-challenge {
+  color: rgba(255,255,255,.35);
+  font-size: .85rem;
+  font-style: italic;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
 /* ===== COMPETITOR KILL SECTION ===== */
 .competitor-section { background: var(--off-white); }
 .compare-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 40px; }
@@ -1083,6 +1122,19 @@ a { color: inherit; text-decoration: none; }
 
     <!-- Audio element -->
     <audio id="demoAudio" preload="none" src="/assets/demo/jessica-demo.wav"></audio>
+
+    <!-- Skip + Industry selectors -->
+    <div class="demo-extras">
+      <button class="demo-skip" id="demoSkip">Skip to the appointment booking &rarr; 0:08</button>
+      <div class="demo-industry-select">
+        <button class="demo-ind-btn active" data-industry="hvac">Hear it for HVAC</button>
+        <button class="demo-ind-btn" data-industry="plumbing">Hear it for Plumbing</button>
+        <button class="demo-ind-btn" data-industry="dental">Hear it for Dental</button>
+      </div>
+    </div>
+
+    <!-- Challenge line -->
+    <p class="demo-challenge">Most business owners can&rsquo;t tell it&rsquo;s AI. Can you?</p>
 
     <!-- Testimonials -->
     <div class="demo-testimonials">
@@ -3267,6 +3319,30 @@ window.__tctUILoaded = true;
 <!-- ===== DEMO CONSOLE (shared component) ===== -->
 <script src="/shared/demo-console.js" defer></script>
 <script src="/shared/demo-experience.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Skip to good part
+  var skipBtn = document.getElementById('demoSkip');
+  var audio = document.getElementById('demoAudio');
+  if (skipBtn && audio) {
+    skipBtn.addEventListener('click', function() {
+      audio.currentTime = 8;
+      if (audio.paused) {
+        var playBtn = document.getElementById('demoPlayBtn');
+        if (playBtn) playBtn.click();
+      }
+    });
+  }
+  // Industry quick-select (visual only — same audio for now)
+  var indBtns = document.querySelectorAll('.demo-ind-btn');
+  indBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      indBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  });
+});
+</script>
 <script src="/shared/case-studies-data.js" defer></script>
 <script>
 (window.requestIdleCallback||function(cb){setTimeout(cb,200)})(function() {
