@@ -465,11 +465,38 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 24px;
   letter-spacing: .02em;
 }
-.hero-badge svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
+.hero-badge-dot {
+  width: 8px;
+  height: 8px;
+  background: #00dc82;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
 }
+.hero-badge-dot::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: #00dc82;
+  animation: badgePulse 1.5s ease-out infinite;
+}
+@keyframes badgePulse {
+  0% { transform: scale(1); opacity: .7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.hero-call-link {
+  font-size: .85rem;
+  color: var(--text-muted);
+  margin-top: 12px;
+}
+.hero-call-link a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+  transition: color .2s;
+}
+.hero-call-link a:hover { color: var(--green); }
 .hero h1 {
   display: block;
   font-size: clamp(2.2rem, 4.5vw, 3.4rem);
@@ -554,7 +581,10 @@ a { color: inherit; text-decoration: none; }
   height: auto;
   opacity: 0;
   transform: translateY(30px);
-  animation: heroImgIn 800ms ease-out 200ms forwards, heroBob 4s ease-in-out 1s infinite;
+  border-radius: 16px;
+  border: 1px solid rgba(34,197,94,0.2);
+  box-shadow: 0 0 40px rgba(34,197,94,0.08);
+  animation: heroImgIn 800ms ease-out 200ms forwards, heroBob 4s ease-in-out 1s infinite, imgBorderGlow 3s ease-in-out infinite;
 }
 @keyframes heroImgIn {
   to { opacity: 1; transform: translateY(0); }
@@ -562,6 +592,10 @@ a { color: inherit; text-decoration: none; }
 @keyframes heroBob {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
+}
+@keyframes imgBorderGlow {
+  0%, 100% { border-color: rgba(34,197,94,0.1); box-shadow: 0 0 30px rgba(34,197,94,0.05); }
+  50% { border-color: rgba(34,197,94,0.4); box-shadow: 0 0 50px rgba(34,197,94,0.12); }
 }
 
 /* Floating notification bubbles */
@@ -670,6 +704,7 @@ a { color: inherit; text-decoration: none; }
   .hero-badge { font-size: .72rem; padding: 6px 14px; max-width: 100%; text-align: center; justify-content: center; margin-left: auto; margin-right: auto; }
   .hero-actions { justify-content: center; flex-direction: column; align-items: center; width: 100%; max-width: 100%; padding: 0; }
   .hero-actions .btn { text-align: center; min-height: 52px; font-size: 1.05rem; width: 100%; max-width: 100%; box-sizing: border-box; }
+  .hero-call-link { text-align: center; font-size: .8rem; }
   .hero-proof { justify-content: center; gap: 16px; flex-wrap: wrap; text-align: center; }
   .trust-row { justify-content: center; gap: 12px; flex-wrap: wrap; }
   .trust-item { font-size: .78rem; }
@@ -876,7 +911,7 @@ a { color: inherit; text-decoration: none; }
     <div class="hero-grid">
       <div class="fade-up">
         <div class="hero-badge">
-          <svg viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+          <span class="hero-badge-dot"></span>
           Live right now &mdash; answering calls 24/7
         </div>
         <h1>Every Missed Call Is a Customer You'll Never <span class="no-break-word">Get Back.</span></h1>
@@ -886,9 +921,10 @@ a { color: inherit; text-decoration: none; }
           <a href="/pilot/" class="btn btn-primary" id="heroPrimaryCta">Start Free 14-Day Pilot &rarr;</a>
           <a href="#demo" class="btn btn-outline">Hear the AI Live</a>
         </div>
+        <p class="hero-call-link">Or call <a href="tel:+16157845747">(615) 784-5747</a> to hear Jessica right now</p>
         <div class="hero-proof reveal blur-in">
           <div class="hero-proof-item">
-            <div class="hero-proof-val" data-metric="hero_calls">1,247+</div>
+            <div class="hero-proof-val" data-metric="hero_calls" data-countup="1247" data-suffix="+">0</div>
             <div class="hero-proof-label">Calls Handled</div>
           </div>
           <div class="hero-proof-item">
@@ -896,7 +932,7 @@ a { color: inherit; text-decoration: none; }
             <div class="hero-proof-label">Answer Time</div>
           </div>
           <div class="hero-proof-item">
-            <div class="hero-proof-val">17+</div>
+            <div class="hero-proof-val" data-countup="17" data-suffix="+">0</div>
             <div class="hero-proof-label">Industries</div>
           </div>
           <div class="hero-proof-item">
@@ -3521,6 +3557,35 @@ window.__tctUILoaded = true;
       });
     });
   }
+})();
+</script>
+
+<!-- ===== COUNT-UP ANIMATION ===== -->
+<script>
+(function(){
+  var els = document.querySelectorAll('[data-countup]');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) return;
+      obs.unobserve(e.target);
+      var target = parseInt(e.target.getAttribute('data-countup'), 10);
+      var suffix = e.target.getAttribute('data-suffix') || '';
+      var start = 0;
+      var duration = 1200;
+      var startTime = null;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var ease = 1 - Math.pow(1 - progress, 3);
+        var val = Math.floor(ease * target);
+        e.target.textContent = val.toLocaleString() + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, { threshold: 0.5 });
+  els.forEach(function(el) { obs.observe(el); });
 })();
 </script>
 
