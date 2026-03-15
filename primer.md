@@ -68,16 +68,23 @@ Added 4 trust elements to `website/index.html`:
 4. **Response Time Claim** — Hero proof stat updated to "< 2 Rings Answer Speed".
 5. **Live Demo Nav Link** — Added `/try-live.html` link to both desktop nav and mobile menu.
 
-## Blog Posts (82+ pages total, 49+ blog posts)
+## Blog Posts (82+ pages total, 54+ blog posts)
 
 All in `website/blog/`. Green/black design system. Inter font. Schema.org Article markup. OG/Twitter meta. Mid-article and bottom CTAs. Related posts section. Mobile responsive.
 
-### New Posts Added (March 15, 2026)
+### New Posts Added (March 15, 2026) — Batch 1
 - `answering-service-water-damage.html` — Water damage answering service
 - `after-hours-answering-service-small-business.html` — After-hours answering for small business
 - `how-many-calls-small-business-miss.html` — Missed call statistics
 - `virtual-receptionist-cost-2026.html` — Virtual receptionist pricing guide
 - `best-ai-phone-answering-service.html` — Best AI answering services ranked
+
+### New Posts Added (March 15, 2026) — Batch 2
+- `answering-service-pest-control.html` — Best pest control answering service (emergency routing, seasonal surges, termite/bed bug/rodent)
+- `answering-service-auto-repair.html` — Auto repair shops losing $8K/mo in missed calls (hands-on work problem, Monday rush)
+- `answering-service-cleaning-companies.html` — Best cleaning company answering service (residential/commercial, Airbnb turnovers, recurring revenue)
+- `missed-calls-cost-contractors.html` — Data-driven missed call cost analysis by trade (roofing, plumbing, HVAC, electrical, GC, painting, landscaping, concrete)
+- `ai-receptionist-vs-voicemail.html` — AI receptionist vs voicemail deep dive (80% hang-up stat, psychology, revenue math, comparison table)
 
 ## Active Priorities
 
