@@ -9,6 +9,12 @@
 
 All messages written to sound like a real person texting. Most kept under 160 characters. No marketing speak. No emojis.
 
+**MMS IMAGE — ATTACH TO ALL HVAC SMS:**
+When sending via GHL or any SMS platform that supports MMS, attach this image:
+`https://thecalltaker.com/images/hvac-hero.jpg`
+Alt text: "Never Miss a Call. Never Miss Revenue. — The Call Taker"
+This converts SMS to MMS automatically. Image shows before the text body.
+
 ---
 
 ## 1. Initial Cold Texts -- 5 Different Angles

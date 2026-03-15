@@ -25,8 +25,9 @@ AI Receptionist SaaS for service businesses. $97/$297/$497/mo plans. 14-day free
 ```
 CLAUDE.md              # 44K system doc — the bible. Read before touching anything
 primer.md              # THIS FILE — session context primer
-index.html             # Homepage (glassmorphism nav, cursor effects, phone mockup)
+index.html             # Homepage (glassmorphism nav, cursor effects, Bloom hero image)
 website/               # All deployed pages (82 pages, GitHub Pages via Actions)
+  images/              # Hosted images (hvac-hero.jpg — Bloom-generated HVAC marketing photo)
   industries/          # 13 industry landing pages
   blog/                # 39 blog articles
   case-studies/        # 5 case studies
@@ -59,18 +60,29 @@ ben/, max/, sam/       # Engine state/config mirrors
 
 ## Current Session Context (March 15, 2026)
 
-- On branch `claude/fix-jessica-voice-agent-vt0s0`, 1 commit ahead of remote
-- Working tree is clean — no staged or unstaged changes
-- Recent work: PayPal/Venmo checkout built, 3-touch close sequence for 35 hot leads, Jessica voice v9, mobile fixes, demo page green theme
+- On branch `claude/improve-voice-quality-AiHpG`
+- HVAC hero image uploaded to repo and live on GitHub Pages
+- Recent work: Bloom HVAC hero image embedded across entire outreach system (19 files)
 
 ## Recent Work (as of March 15, 2026)
 
+- **HVAC hero image deployed**: Bloom AI-generated marketing photo embedded across entire HVAC outreach system
+  - Homepage hero: replaced CSS phone mockup with Bloom image (`website/images/hvac-hero.jpg`)
+  - Cold emails: embedded in all 3 sequences (cold-email-sequence.md, cold-sequences-v2.md, new-cities-cold-emails.md)
+  - SMS outreach: MMS image attached to all HVAC SMS (sms-cold-outreach.md, sms-reblast-templates)
+  - Hot lead sequence: embedded in all email touches
+  - Storm season campaign: embedded in all emails + ads + social posts
+  - Facebook ads: set as primary creative for all 4 ad sets
+  - DM scripts: attachment instructions for Instagram/Facebook/LinkedIn
+  - Automation scripts: `HVAC_HERO_IMAGE_HTML` constant in blast-engine-v2.py, hot-lead-converter.py, outbound-sms-engine.py
+  - Outbound SMS engine: MMS attachment for HVAC-tagged contacts
+  - Hosted URL: `https://thecalltaker.com/images/hvac-hero.jpg`
 - **PayPal/Venmo checkout** — Accept $97/$297/$497 payments today (Stripe blocked)
 - **3-touch close sequence** — Built for 35 hot leads
 - **Jessica voice agent v9** — Anti-squeaky rewrite. Deeper voice, pitch -1, rate 0.95, stability 0.75, similarity 0.85
 - **Demo page colors** — All orange replaced with green (#00C96B)
 - **Deploy script upgraded** — v9 with voice settings, fallback voices
-- **Competitor research** — Pricing/feature comparison for Smith.ai, Ruby, AnswerConnect, PATLive, Numa, Goodcall (in progress this session)
+- **Competitor research** — Pricing/feature comparison for Smith.ai, Ruby, AnswerConnect, PATLive, Numa, Goodcall
 
 ## Active Priorities
 
@@ -110,3 +122,20 @@ ben/, max/, sam/       # Engine state/config mirrors
 - **Hero H1**: NEVER set to `display: inline`. "Receptionist" has `no-break-word` span
 - **Demo page colors**: Green (#00C96B), NOT orange
 - **Public email**: `thecalltakerai@gmail.com` (website), `wallace@mail.thecalltaker.com` (agency ops)
+- **HVAC hero image**: URL is `https://thecalltaker.com/images/hvac-hero.jpg`. Embedded in all HVAC outreach. Python constant: `HVAC_HERO_IMAGE_HTML`
+
+## Key Files to Know
+
+| File | Why |
+|------|-----|
+| `CLAUDE.md` | Complete system documentation. 44K words. Read first |
+| `website/index.html` | Homepage. Cursor effects, Bloom hero image, glassmorphism nav |
+| `website/images/hvac-hero.jpg` | Bloom-generated HVAC marketing photo — used in ALL outreach |
+| `.github/workflows/deploy.yml` | GitHub Pages deployment |
+| `agents/` | 10 agent role configs |
+| `ops/blast-engine-v2.py` | Cold email engine with HVAC hero image in templates |
+| `ops/hot-lead-converter.py` | Hot lead follow-up with HVAC hero image in emails |
+| `ops/outbound-sms-engine.py` | SMS engine with MMS image for HVAC contacts |
+| `ops/update-jessica-prompt.py` | Voice agent deploy script |
+| `website/tct-tracking.js` | Attribution tracking (UTM, gclid, fbclid) |
+| `website/tests/hero-regression.py` | 11 assertions on hero H1 layout |

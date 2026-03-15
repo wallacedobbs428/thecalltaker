@@ -143,14 +143,20 @@ Book a demo and we'll set one up for your business in 48 hours.
 
 ---
 
-## Image/Creative Suggestions
+## Image/Creative — PRIMARY ASSET
 
-| Ad | Image Idea |
-|----|-----------|
-| Missed Call Pain | Phone screen showing "Missed Call" notification. Dark background, red glow. |
-| After-Hours | Split image: left side = dark house with broken AC, right side = phone ringing with green glow |
-| Money Angle | Calculator graphic showing $84,000/year. Red numbers on dark background. |
-| Demo Challenge | Phone with "(615) 784-5747" prominently displayed. Green glow. "Call me." |
+**USE THIS IMAGE FOR ALL ADS:**
+`https://thecalltaker.com/images/hvac-hero.jpg`
+Alt: "Never Miss a Call. Never Miss Revenue. — The Call Taker"
+
+This Bloom-generated hero image shows a branded HVAC tech holding a phone with The Call Taker notification. Professional, trustworthy, product-in-action. Use as the primary creative for ALL ad sets below. Upload to Meta Ads Manager directly.
+
+| Ad | Image |
+|----|-------|
+| Missed Call Pain | hvac-hero.jpg (primary) |
+| After-Hours | hvac-hero.jpg (primary) |
+| Money Angle | hvac-hero.jpg (primary) |
+| Demo Challenge | hvac-hero.jpg (primary) |
 
 **All ads should use:**
 - Dark backgrounds (match website brand: #0a0f1a)

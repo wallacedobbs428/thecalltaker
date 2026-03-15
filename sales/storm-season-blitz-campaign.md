@@ -3,6 +3,22 @@
 
 ---
 
+## HVAC HERO IMAGE — EMBED IN ALL CAMPAIGN EMAILS & ADS
+
+**Email HTML (inline):**
+```html
+<img src="https://thecalltaker.com/images/hvac-hero.jpg" alt="Never Miss a Call. Never Miss Revenue. — The Call Taker" style="width:100%;max-width:600px;height:auto;border-radius:8px;margin:16px 0;" />
+```
+Place BELOW the opening line, ABOVE the CTA in every email.
+
+**Facebook/Instagram Ads:** Use `https://thecalltaker.com/images/hvac-hero.jpg` as the primary creative for all 3 ad versions.
+
+**SMS (MMS):** Attach `https://thecalltaker.com/images/hvac-hero.jpg` to all 3 SMS templates.
+
+**Social Posts:** Attach the image to all 5 social media posts.
+
+---
+
 ## 1. CAMPAIGN OVERVIEW
 
 ### Positioning: "Storm Season Insurance for Your Phone"

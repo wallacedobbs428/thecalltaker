@@ -3,6 +3,8 @@
 # Created: 2026-03-14
 # 5 industry-specific 3-email sequences
 # Rules: max 150 words/email, one CTA, lowercase subject lines, no emojis, no corporate speak
+# HVAC Hero Image: Embed in ALL HVAC emails below opening line, above CTA
+# HTML: <img src="https://thecalltaker.com/images/hvac-hero.jpg" alt="Never Miss a Call. Never Miss Revenue. — The Call Taker" style="width:100%;max-width:600px;height:auto;border-radius:8px;margin:16px 0;" />
 
 ---
 
@@ -21,6 +23,8 @@ Hey [First Name],
 
 Quick question — what happens when an AC breaks at 9pm and someone calls [Company]?
 
+![Never Miss a Call. Never Miss Revenue. — The Call Taker](https://thecalltaker.com/images/hvac-hero.jpg)
+
 In July, that's a $500+ emergency repair. In peak season your phone rings all day. If you're on a job or asleep, that call goes to voicemail. Nine times out of ten, they call the next guy.
 
 I built an AI that answers every call to [Company] — 24/7, sounds like a real person, gets their info, books the appointment.
@@ -38,6 +42,8 @@ Can I show you in 30 seconds? thecalltaker.com/try-live
 ---
 
 Hey [First Name],
+
+![Never Miss a Call. Never Miss Revenue. — The Call Taker](https://thecalltaker.com/images/hvac-hero.jpg)
 
 One thing I forgot to mention — a lot of HVAC companies try Ruby Receptionists. Their bill hit $5,100 one month when calls spiked.
 
@@ -60,6 +66,8 @@ Free 14-day pilot, no card required: thecalltaker.com/try-live
 Hey [First Name],
 
 Last one, I promise.
+
+![Never Miss a Call. Never Miss Revenue. — The Call Taker](https://thecalltaker.com/images/hvac-hero.jpg)
 
 HVAC companies lose an average of $4,200/mo to unanswered calls. That's not me guessing — that's 9-12 missed calls a month at $350-500 each.
 

@@ -62,6 +62,14 @@ MAX_EMAILS_PER_RUN = 50
 DELAY_BETWEEN_SENDS = 8  # seconds
 MAX_RETRIES = 3
 
+# HVAC hero image — embed in all HVAC cold emails (below opening, above CTA)
+HVAC_HERO_IMAGE_URL = "https://thecalltaker.com/images/hvac-hero.jpg"
+HVAC_HERO_IMAGE_HTML = (
+    '<img src="https://thecalltaker.com/images/hvac-hero.jpg" '
+    'alt="Never Miss a Call. Never Miss Revenue. — The Call Taker" '
+    'style="width:100%;max-width:600px;height:auto;border-radius:8px;margin:16px 0;" />'
+)
+
 CONVERSATIONS_HEADERS = {
     "Authorization": f"Bearer {GHL_API_KEY}",
     "Version": "2021-04-15",
@@ -194,6 +202,8 @@ def build_email_html(first_name, company_name, industry, city="your area"):
 
 <p>I called {company_name} after hours last week. Got your voicemail.</p>
 
+{HVAC_HERO_IMAGE_HTML}
+
 <p>No judgment — but your customers are doing the same thing. When {scenario}, they Google your type of business and start calling. <strong>First company that picks up gets the job.</strong></p>
 
 <p>Here's what that's costing you:</p>
@@ -232,6 +242,8 @@ def build_local_email_html(first_name, company_name, industry, city="your area")
 <p>Hey {first_name},</p>
 
 <p>I called {company_name} after hours last week. Got your voicemail.</p>
+
+{HVAC_HERO_IMAGE_HTML}
 
 <p>No judgment — I hear it all the time. When {scenario}, they Google your type of business and start calling. <strong>First company that picks up gets the job.</strong> At {value} per {word}, those missed calls add up fast.</p>
 
