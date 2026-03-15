@@ -105,3 +105,87 @@ P.S. You can call the AI yourself during the demo. If you're not impressed, no h
 - **If they reply to any email:** Stop the sequence and move to a personal conversation.
 - **If no reply after all 3:** Wait 2 weeks, then restart with a fresh angle or call them directly using the cold call script.
 - **Personalization matters:** Always use their real company name. If you secret-shopped them and got their voicemail, mention the specific date and time you called in Email 1.
+
+---
+
+## LOCAL LEAD VARIANT (Within 1 hour of Brentwood, TN)
+
+**IMPORTANT:** If the prospect is local (Nashville metro, Middle TN — 615/629 area code, 37xxx zip), use these versions instead. The goal is NOT to sell — it's to book an in-person visit where Wallace shows them the technology live.
+
+### Local Email 1: The Drop-By
+
+**Subject:** I'm in [City] — can I show you something?
+
+**Body:**
+
+Hey [First Name],
+
+I called [Company Name] after hours last week. Got your voicemail.
+
+No judgment — I hear it from a lot of businesses around here. But at $350 a service call, those missed calls add up fast.
+
+I'm Wallace — I'm right here in Brentwood and I built something called The Call Taker that fixes this. It's an AI receptionist that answers every call to your business 24/7. No voicemail. No missed jobs.
+
+Since we're both in [City/Region], I'd love to come by and show you in person. Takes 10 minutes. I'll pull it up on my phone, you'll hear the AI answer a call live, and you can decide if it's worth a longer conversation.
+
+Would it be worth 10 minutes for me to stop by this week?
+
+Just reply with a day/time and I'll be there.
+
+— Wallace Dobbs
+Brentwood, TN
+(615) 784-5747
+
+---
+
+### Local Email 2: The Proof
+
+**Subject:** One of your neighbors is using this
+
+**Body:**
+
+Hey [First Name],
+
+I reached out last week about stopping by [Company Name]. Wanted to follow up with something quick.
+
+A [industry] company about 20 minutes from you just started using The Call Taker. First weekend, their AI answered 9 calls that would've gone to voicemail. Three of those turned into booked jobs.
+
+I could tell you more, but honestly it's the kind of thing you have to see. When I show it to people in person, they get it in about 30 seconds.
+
+I'm in [City/Region] every day. Would it be worth 10 minutes for me to swing by and show you?
+
+Just reply with a time.
+
+— Wallace
+
+---
+
+### Local Email 3: The Last Shot
+
+**Subject:** Not going to keep bugging you, [First Name]
+
+**Body:**
+
+Hey [First Name],
+
+I'll keep this short — last email from me.
+
+I've been trying to get 10 minutes with you because I genuinely think what I built would help [Company Name]. But I get it, you're busy running a business.
+
+The offer stands: I'm right here in Brentwood. Whenever you want to see it, just text me at (615) 784-5747 and I'll swing by.
+
+No pitch, no pressure — just a quick look at something new.
+
+Take care, [First Name].
+
+— Wallace
+
+---
+
+### Local Sequence Notes
+
+- **NEVER ask a local lead to buy, sign up, or start a trial on the first touch.** The only goal is booking an in-person meeting.
+- **CTA is always:** "Can I stop by for 10 minutes?" or "Would it be worth 10 minutes?"
+- **Lean into being local:** "I'm right here in [city]," "we're both in [area]," "I'm in the neighborhood."
+- **Trust mechanism is the in-person visit**, not a website or demo line.
+- **After the in-person meeting:** Then you can pitch the pilot, pricing, etc.
