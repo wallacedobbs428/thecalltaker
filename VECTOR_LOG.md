@@ -66,6 +66,13 @@
 
 3. **Consider raising prices.** At $497/mo we're still 40-60% cheaper than Ruby/AnswerForce at moderate volume. The value gap is huge. The VECTOR brief pricing ($497 Starter / $997 Pro) may be justified — test it.
 
+### Review-Sourced Weaknesses (from G2, Capterra, TrustRadius, PissedConsumer)
+
+- **Smith.ai:** AI misinterpretation bugs require transcript babysitting in month 1. Billing disputes ($700+ overcharges). Customer support hard to reach. $2,000 add-on for custom AI voice on monthly plans. Layoffs reported on Glassdoor.
+- **Ruby:** $3.19/min overages. 15% of calls are "dead air" — still billed. Bilingual only Mon-Fri 6am-5pm Pacific (NOT true 24/7). App described as "truly horrific." 26-day post-cancellation charges reported. No call recordings.
+- **AnswerForce:** CRM sync breaks during summer (peak HVAC/plumbing season). Same contact entered 4x in CRM. No public API. Kept customer's Google Voice number after cancellation. 90-day lock-in on all plans.
+- **PATLive:** English ONLY. Agents go off-script, creating confidentiality risk for law firms. 45-minute calls billed without audit. Employees overworked/underpaid per Glassdoor. $1,050/mo for Pro plan.
+
 ### Copy Angles to Run Right Now
 
 1. **"Your answering service charged you $1,200 last month. We charge $297. Same calls. Better answers."** — Target Ruby/AnswerForce customers directly.
@@ -75,6 +82,16 @@
 3. **"No per-minute charges. No surprise bills. No contracts. $297/mo flat."** — Address the #1 frustration with every competitor.
 
 4. **"Your competitor two miles away answers every call. Do you?"** — Local urgency. Perfect for walk-ins and Nashville outreach.
+
+5. **The "Bill Audit" angle (Ruby/PATLive):** "Pull your last 3 answering service bills. Add up the overages. That's money you paid for someone to read from a script. We charge $97/mo flat."
+
+6. **The "90 Days Locked In" angle (AnswerForce):** "AnswerForce wants 90 days before you see results. We'll show you results in 14 days — free — zero contract."
+
+7. **The "5pm Problem" angle:** "Your customers call at 7pm, 9pm, 2am. Your answering service is closed. Every one of those calls is a job booked for someone else."
+
+8. **The "Sick Day" angle:** "Your answering service called in sick last Tuesday. Did you know? The Call Taker never calls in sick."
+
+9. **The "Trained For Your Trade" angle:** "Smith.ai and Ruby answer calls for lawyers and dog groomers. They don't know what a dispatch fee is. The Call Taker is trained for YOUR business."
 
 ---
 
