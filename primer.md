@@ -36,6 +36,35 @@ Full 7-component outreach system rebuild. All scripts in `ops/`.
 | Sys | Health Monitor | `system-health-monitor.py` | Green/yellow/red for all components. SMS alert on red. |
 | Sys | Dashboard | `master-dashboard.html` | Visual command center. Auto-refreshes 60s. |
 
+## Current Branch & Recent Work
+
+- **Branch:** `claude/rebuild-outreach-stack-DYwVo`
+- **Homepage has unstaged changes** — Trust Layer added (see below)
+- **Latest session (March 15):** Added 5 new SEO blog posts targeting high-intent keywords (water damage answering service, after-hours answering service, missed call statistics, virtual receptionist cost, best AI answering service)
+
+## Homepage Trust Layer (March 15, 2026)
+
+Added 4 trust elements to `website/index.html`:
+
+1. **Trust Logo Bar** — Infinite-scroll bar with 6 logos (ACCA, PHCC, Nashville Chamber, BBB, Google Verified, Inc. 5000). Duplicated set for seamless CSS animation loop. Gray/muted on dark bg, hover brightens. Positioned between hero and demo sections.
+2. **Live Call Counter** — Fixed floating badge: "Jessica has answered X calls this month". Starts at 2,847, increments every 45-90s (random), persists in localStorage, resets monthly. Green pulse on increment. Shows after 300px scroll.
+3. **Uptime Badge** — Pill badge in hero: "99.9% Uptime - 24/7/365 - Answers in Under 2 Rings". Shield icon.
+4. **Response Time Claim** — Hero proof stat updated from "< 2s Answer Time" to "< 2 Rings Answer Speed".
+5. **Live Demo Nav Link** — Added `/try-live.html` link to both desktop nav (after Demo) and mobile menu.
+
+All CSS was already staged in the diff. HTML + JS added via surgical edits.
+
+## Blog Posts (82+ pages total, 49+ blog posts)
+
+All in `website/blog/`. Green/black design system. Inter font. Schema.org Article markup. OG/Twitter meta. Mid-article and bottom CTAs. Related posts section. Mobile responsive. Standard header/footer.
+
+### New Posts Added (March 15, 2026)
+- `answering-service-water-damage.html` — Water damage answering service
+- `after-hours-answering-service-small-business.html` — After-hours answering for small business
+- `how-many-calls-small-business-miss.html` — Missed call statistics
+- `virtual-receptionist-cost-2026.html` — Virtual receptionist pricing guide
+- `best-ai-phone-answering-service.html` — Best AI answering services ranked
+
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal
@@ -44,6 +73,7 @@ Full 7-component outreach system rebuild. All scripts in `ops/`.
 - **Bland.ai balance**: Cold caller + voicemails require funded account
 - **GHL aliases**: Blast v3 needs 5 aliases verified (wallace@, hello@, support@, info@, team@)
 - **Unsubscribe page**: Blast v3 links to thecalltaker.com/unsubscribe — needs building
+- **SEO content**: Continue expanding blog with high-intent keyword posts
 
 ## Known Blockers
 
