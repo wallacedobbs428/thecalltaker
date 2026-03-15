@@ -4,6 +4,13 @@ At the beginning of EVERY session, before doing anything else:
 2. Rewrite `primer.md` completely based on what you now know about the current state of the project — including recent changes, active priorities, known blockers, file structure, and any context that would help you hit the ground running next session
 3. Confirm to the user: "Primer updated." then proceed normally
 
+## Git Context Injection
+At the start of every session, run:
+```bash
+bash memory.sh
+```
+Read the full output before doing anything. Treat this as ground truth for the current repo state. Never assume branch, staged files, or recent changes — always check memory.sh output first.
+
 ---
 
 # The Call Taker — System Documentation
