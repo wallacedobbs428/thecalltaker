@@ -14,124 +14,93 @@ AI Receptionist SaaS for service businesses. $97/$297/$497/mo plans. 14-day free
 
 ## Architecture
 
-- **This repo** (`~/Desktop/thecalltaker/` or `/home/user/thecalltaker/`): Website (GitHub Pages), lead tools, dashboard, agent configs, sales assets
+- **This repo** (`~/Desktop/thecalltaker/` or `/home/user/thecalltaker/`): Website (GitHub Pages), lead tools, dashboard, agent configs, sales assets, outreach ops scripts
 - **Ops repo** (`~/thecalltaker-ops/`): 4 AI engines (Max, Ben, Sam, Donny), 40+ ops scripts, state files, logs — all on launchd on a Mac
 - **Voice AI**: GHL Voice AI agent (Jessica, universal demo). Voice ID: `lxYfHSkYm1EzQzGhdbfc` (deep variant, v9)
 - **CRM**: GoHighLevel (GHL). All contacts, conversations, pipelines
 - **Notifications**: ntfy.sh (5 topics: urgent, sales, system, activity, william)
 
-## Repo Structure (this repo, top-level)
+## Outreach Stack v2 (Rebuilt March 15, 2026)
 
-```
-CLAUDE.md              # 44K system doc — the bible. Read before touching anything
-primer.md              # THIS FILE — session context primer
-index.html             # Homepage (glassmorphism nav, cursor effects, phone mockup)
-website/               # All deployed pages (93 pages, GitHub Pages via Actions)
-  industries/          # 13 industry landing pages
-  blog/                # 49 blog articles (upgraded with SEO machine)
-  case-studies/        # 5 case studies (NOTE: these are fabricated — no real customers yet)
-  pilot/               # Pilot signup flow — PRIMARY CONVERSION PATH
-  walkin.html          # Walk-in closer kit (NEW — print-ready leave-behind for Nashville)
-  try-funnel/          # $97 starter funnel
-  agency-program/      # White-label partner program
-  toolkit/             # Sales toolkit (password-gated)
-  shared/              # Shared CSS/JS (demo-console.css, demo-experience.css, ui.css)
-  dashboard/           # Internal dashboards (not deployed)
-  tests/               # Hero regression tests
-agents/                # 10 specialized agent configs (01-10)
-ops/                   # Voice prompt versions + deploy scripts
-sales/                 # Sales assets
-outreach/              # Email/SMS templates, call scripts
-docs/                  # Trust email sequence, GBP guide
-onboarding/            # Customer onboarding assets
-tools/                 # Internal tools
-ben/, max/, sam/       # Engine state/config mirrors
-.github/workflows/     # deploy.yml — deploys website/ to GitHub Pages on push to main
-```
+Full 7-component outreach system rebuild. All scripts in `ops/`.
 
-## 4 AI Engines (in ops repo)
+| # | Component | Script | What It Does |
+|---|-----------|--------|-------------|
+| C6 | Hot Lead 7-Touch | `hot-lead-converter.py` | 7-touch SMS/email/call sequence. Bland.ai voicemail Day 1. Per-touch GHL tagging. |
+| C1 | Cold Caller v2 | `cold-caller-v2.py` | Bland.ai outbound calls. Hot leads first. 2x retry with 4hr gaps. |
+| C2 | Storm Chaser v3 | `storm-chaser-v3.py` | NWS API storm detection. Emails within 5 min of hail/tornado/wind. |
+| C3 | Blast Engine v3 | `blast-engine-v3.py` | 40/day/address, 90s gaps, 5-address rotation, A/B auto-promote. |
+| C4 | Lead Quality | `lead-quality-engine.py` | Dedup + quality score 1-10. Only 5+ leads pass to blast. |
+| C5 | Speed-to-Lead v2 | `speed-to-lead-v2.py` | 15s hot signal checks. SMS 60s, call 5min, email 10min. Dead lead resurrection. |
+| C7 | DM Outreach v2 | `dm-outreach-v2.py` | 3-DM sequence per industry. Copy-paste export for Wallace. |
+| NEW | Hot Lead 5-Step | `hot-lead-sequence.py` | 5-step SMS/email/voicemail sequence (Day 0/1/2/4/7). Pain-first + scarcity. |
+| Sys | Health Monitor | `system-health-monitor.py` | Green/yellow/red for all components. SMS alert on red. |
+| Sys | Dashboard | `master-dashboard.html` | Visual command center. Auto-refreshes 60s. |
 
-| Engine | Role | Key File |
-|--------|------|----------|
-| **Max** | Reply catcher + follow-up machine | `max/max-engine.py` (3,302 lines) |
-| **Ben** | Intelligence + conversion scoring | `ben/ben-engine.py` (2,847 lines) |
-| **Sam** | Customer success | `sam/sam-engine.py` (2,037 lines) |
-| **Donny** | Conversion closer | `donny/donny-engine.py` (2,952 lines) |
+## Current Branch & Recent Work
 
-## Current Session Context (March 15, 2026)
+- **Branch:** `claude/rebuild-outreach-stack-DYwVo`
+- **Homepage has unstaged changes** — Trust Layer added (see below)
+- **Latest session (March 15):** Created `hot-lead-sequence.py` — 5-step automated follow-up for hot-lead tagged contacts. Also previously added 5 SEO blog posts.
 
-- On branch `claude/fix-jessica-voice-agent-vt0s0`, synced with remote
-- **CRITICAL BUSINESS STATE**: 4,787 GHL contacts, 35 hot leads, 0 paying customers, $0 MRR, 0 demos booked
-- Fake social proof REMOVED this session — replaced with honest "founding member" positioning
-- All homepage CTAs consolidated to `/pilot/` (single conversion path)
-- Walk-in closer kit built at `/walkin.html` for Nashville in-person sales
+## Hot Lead Sequence (March 15, 2026)
 
-## Recent Work (as of March 15, 2026)
+New 5-step follow-up script at `ops/hot-lead-sequence.py`:
+- Step 1 (Day 0): SMS pain hook + pilot offer
+- Step 2 (Day 1): Email with missed call costs, competitor angle, case studies
+- Step 3 (Day 2): Bland.ai voicemail drop
+- Step 4 (Day 4): SMS social proof + scarcity countdown
+- Step 5 (Day 7): Breakup email
+- Commands: scan, send, status, run, test (dry run)
+- State: `ops/hot-lead-sequence-state.json`
+- Rate limits: 20 SMS/day, 30 emails/day
+- Contact registry integration for cross-engine coordination
+- 19 industries with pain hooks in INDUSTRY_HOOKS dict
+- launchd templates in docstring (scan every 2hrs, send 3x daily)
 
-### This Session — Revenue-Critical Changes
-- **Walk-in closer kit** (`/walkin.html`) — print-ready page for Nashville walk-ins with QR code to demo line
-- **Fake social proof removed** — 6 fabricated testimonials, Google Review badges, fake 4.9/23 rating all deleted
-- **Founding member positioning** — 5 spots, locked price, founder access, honest "hear it yourself" cards
-- **Single conversion path** — all book.html links on homepage redirected to /pilot/
-- **Schema.org aggregateRating removed** — was fake (0 real reviews exist)
+## Homepage Trust Layer (March 15, 2026)
 
-### Previous Sessions
-- **Conversion tracking** — scroll depth, click heatmap, session metrics in tct-tracking.js
-- **Blog SEO machine** — all 49 blog posts upgraded (author, title format, cover images, mid-article CTAs)
-- **Mobile overhaul** — dual sticky bottom bar with call + pilot CTA
-- **Phase 3 full build** — revenue counter, industry selector, pricing dominance, case studies rebuild
-- **Phase 2 full build** — competitor kill section, trust signals, demo upgrade, OG tags
-- **Phase 1** — hero split layout with product image
+Added 4 trust elements to `website/index.html`:
+
+1. **Trust Logo Bar** — Infinite-scroll bar with 6 logos. Positioned between hero and demo sections.
+2. **Live Call Counter** — Fixed floating badge: "Jessica has answered X calls this month".
+3. **Uptime Badge** — Pill badge in hero: "99.9% Uptime - 24/7/365 - Answers in Under 2 Rings".
+4. **Response Time Claim** — Hero proof stat updated to "< 2 Rings Answer Speed".
+5. **Live Demo Nav Link** — Added `/try-live.html` link to both desktop nav and mobile menu.
+
+## Blog Posts (82+ pages total, 54+ blog posts)
+
+All in `website/blog/`. Green/black design system. Inter font. Schema.org Article markup. OG/Twitter meta. Mid-article and bottom CTAs. Related posts section. Mobile responsive.
+
+### New Posts Added (March 15, 2026) — Batch 1
+- `answering-service-water-damage.html` — Water damage answering service
+- `after-hours-answering-service-small-business.html` — After-hours answering for small business
+- `how-many-calls-small-business-miss.html` — Missed call statistics
+- `virtual-receptionist-cost-2026.html` — Virtual receptionist pricing guide
+- `best-ai-phone-answering-service.html` — Best AI answering services ranked
+
+### New Posts Added (March 15, 2026) — Batch 2
+- `answering-service-pest-control.html` — Best pest control answering service (emergency routing, seasonal surges, termite/bed bug/rodent)
+- `answering-service-auto-repair.html` — Auto repair shops losing $8K/mo in missed calls (hands-on work problem, Monday rush)
+- `answering-service-cleaning-companies.html` — Best cleaning company answering service (residential/commercial, Airbnb turnovers, recurring revenue)
+- `missed-calls-cost-contractors.html` — Data-driven missed call cost analysis by trade (roofing, plumbing, HVAC, electrical, GC, painting, landscaping, concrete)
+- `ai-receptionist-vs-voicemail.html` — AI receptionist vs voicemail deep dive (80% hang-up stat, psychology, revenue math, comparison table)
 
 ## Active Priorities
 
-1. **GET FIRST CUSTOMER** — Nothing else matters. Wallace should walk into Nashville businesses TODAY with walkin.html on his phone
-2. **Call the 35 hot leads** — Every single one, today. Not email. Phone calls.
-3. **Stripe still blocked** — Wallace is 16, needs parent/guardian. PayPal/Venmo workaround exists
-4. **Case studies are fabricated** — Need to be replaced with real customer stories once first customer signs
-5. **Pilot page testimonials** — Still have fake quotes, should be updated to match homepage founding member angle
-
-## Audit Findings (This Session)
-
-### Why 0 Customers Despite 35 Hot Leads:
-1. No human follow-up — automation runs but nobody calls leads back
-2. Fake social proof was destroying trust (now fixed)
-3. Too many conversion paths was causing confusion (now fixed)
-
-### Competitor Gaps:
-1. Competitors have established trust (Smith.ai: 5K+ businesses, Ruby: 14K+, BBB ratings)
-2. Competitors offer instant self-serve onboarding (Goodcall: 5-min setup)
-3. Competitors have deep CRM integrations (Smith.ai: 30+ integrations)
+- **Revenue**: Get to first paid customer. $20K MRR goal
+- **Outreach stack**: ALL 7 components rebuilt + new hot-lead-sequence — deploy to Mac
+- **Stripe**: NOT connected (Wallace is 16). PayPal/Venmo workaround live
+- **Bland.ai balance**: Cold caller + voicemails require funded account
+- **GHL aliases**: Blast v3 needs 5 aliases verified (wallace@, hello@, support@, info@, team@)
+- **Unsubscribe page**: Blast v3 links to thecalltaker.com/unsubscribe — needs building
+- **SEO content**: Continue expanding blog with high-intent keyword posts
 
 ## Known Blockers
 
-1. **Stripe not connected** — can't take card payments. PayPal/Venmo workaround live
-2. **GHL API unreachable from CI** — voice agent settings must be deployed from Mac
-3. **Retell.ai blocked** — needs payment card for phone number ($2/mo)
-4. **Meta Ads** — needs API token from developers.facebook.com
-5. **reply-monitor** — has exit code 1, may need restart
-6. **Gmail SMTP passwords** — plaintext in gmail-sender.py
-7. **Cold caller dead** — Bland.ai cold calling hasn't run since Feb 24
-
-## Voice Agent Quick Reference
-
-| Item | Value |
-|------|-------|
-| Agent ID | `695947c64b9ed67d8f1077ad` |
-| Voice ID (v9) | `lxYfHSkYm1EzQzGhdbfc` (Jessica deep) |
-| Prompt version | v9 (`ops/jessica-voice-prompt-v9.md`) |
-| Deploy script | `ops/update-jessica-prompt.py` |
-| Fallback voices | Rachel, Bella, Elli |
-
-## Key Conventions
-
-- **State files**: Atomic writes (tempfile + os.replace). JSON format
-- **Contact registry**: File-locked cross-engine coordination. 3-day gap between same-type touches
-- **GHL API**: Must set User-Agent header. Email = `html` field, SMS = `message` field. Phone: `+1XXXXXXXXXX`
-- **ntfy**: 5 standardized topics. Typed API via `tct_common.py`. 30-min dedupe
-- **Deployment**: Only `website/` dir deploys via GitHub Actions. Push to `main` triggers deploy
-- **Hero H1**: NEVER set to `display: inline`. "Receptionist" has `no-break-word` span
-- **Demo page colors**: Green (#00C96B), NOT orange
-- **Public email**: `thecalltakerai@gmail.com` (website), `wallace@mail.thecalltaker.com` (agency ops)
-- **Single conversion path**: ALL CTAs should go to `/pilot/`. Do NOT add book.html links.
-- **No fake social proof**: Do NOT add fabricated testimonials, fake review badges, or invented customer names
+1. Stripe not connected — PayPal/Venmo workaround live
+2. GHL API unreachable from CI — deploy from Mac only
+3. Retell.ai blocked — needs payment card
+4. Bland.ai balance — must be funded before cold caller goes live
+5. 5 GHL email aliases need verification
+6. Unsubscribe page needs to be built
