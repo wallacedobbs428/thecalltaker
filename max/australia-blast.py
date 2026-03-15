@@ -490,7 +490,7 @@ def build_email_html(first_name, company_name, city, state):
 
 <p>Would you be open to a quick demo? Takes 15 minutes and you'll actually call the AI yourself so you can hear how it sounds.</p>
 
-<p>Just reply "show me" and I'll send over some times. Or check it out here: <a href="https://thecalltaker.com/demo.html">thecalltaker.com/demo</a></p>
+<p>Just reply "show me" and I'll send over some times. Or check it out here: <a href="https://thecalltaker.com/book.html">thecalltaker.com/book</a></p>
 
 <p>— Wallace</p>
 

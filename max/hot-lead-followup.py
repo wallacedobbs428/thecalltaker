@@ -1,29 +1,33 @@
 #!/usr/bin/env python3
 """
-HOT LEAD FOLLOW-UP ENGINE — SMS Drip for Warm Prospects
-Mar 12, 2026
+HOT LEAD FOLLOW-UP — 5-Step Automated Sequence
+March 2026
 
-Enrolls hot leads from GHL into a multi-day SMS follow-up sequence.
-Fires Day 0 SMS immediately on enrollment, then follows up on schedule.
+Pulls all contacts tagged "hot-lead" who haven't booked a demo,
+then runs a 5-step follow-up sequence:
 
-Targets contacts tagged: hot-lead, warm-demo-prospect, bland-interested
-Skips contacts tagged: customer, pilot-active, dnc, opted-out, do-not-contact
-
-Zero external dependencies — stdlib only.
+  Day 0: SMS — casual check-in
+  Day 1: Email — demo link + pain angle
+  Day 3: Bland.ai call trigger
+  Day 5: Email — case study + scarcity
+  Day 7: Final SMS — last chance
 
 Usage:
-  python3 hot-lead-followup.py enroll   # Enroll hot leads + fire Day 0 SMS
-  python3 hot-lead-followup.py run      # Process due follow-ups (run every 4 hours)
-  python3 hot-lead-followup.py status   # Print dashboard
+  python3 hot-lead-followup.py scan      # Find hot leads, enroll new ones
+  python3 hot-lead-followup.py send      # Process sequence steps for enrolled leads
+  python3 hot-lead-followup.py run       # scan + send (for launchd)
+  python3 hot-lead-followup.py enroll    # Force-enroll all current hot leads NOW
+  python3 hot-lead-followup.py status    # Print current stats
 """
 
 import json
-import os
 import sys
+import os
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
+
 
 # ===================================================
 # CONFIG
@@ -33,68 +37,59 @@ GHL_API_KEY = "pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35"
 GHL_LOCATION_ID = "tQb9YmrGDrdVUJYPKrsY"
 GHL_BASE = "https://services.leadconnectorhq.com"
 
-NTFY_OPS_TOPIC = "tct-sales-63uYsIT9"
-NTFY_WAR_TOPIC = "tct-urgent-Hk9UOEZR"
-NTFY_CALLS_TOPIC = "tct-finishtask"
+BLAND_API_KEY = "org_e0d7505641638621fc1c02564ed065b7048d83678de74f1d2725fedf18bea03fa821105788d98c879fe969"
+BLAND_BASE = "https://api.bland.ai/v1"
 
-DEMO_LINE = "(615) 784-5747"
-DEMO_URL = "https://thecalltaker.com/demo.html"
-FROM_NUMBER = "+16157845747"
+VOICE_AGENT_ID = "695947c64b9ed67d8f1077ad"
 
-ENGINE_DIR = os.path.dirname(os.path.abspath(__file__))
-STATE_FILE = os.path.join(ENGINE_DIR, "hot-lead-followup-state.json")
-LOG_FILE = os.path.join(ENGINE_DIR, "hot-lead-followup-log.txt")
+FROM_EMAIL = "thecalltakerai@gmail.com"
 
-# Tags that qualify a contact for enrollment
-HOT_TAGS = {"hot-lead", "warm-demo-prospect", "bland-interested"}
+NTFY_ACTIVITY = "tct-activity-cn1Aqa85"
+NTFY_URGENT = "tct-urgent-Hk9UOEZR"
+NTFY_SALES = "tct-sales-63uYsIT9"
 
-# Tags that disqualify a contact
-SKIP_TAGS = {"customer", "pilot-active", "dnc", "opted-out", "do-not-contact",
-             "active-client", "sms-failed-a2p", "suppressed"}
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+LOG_FILE = os.path.join(SCRIPT_DIR, "hot-lead-followup.log")
+STATE_FILE = os.path.join(SCRIPT_DIR, "hot-lead-followup-state.json")
 
-SMS_DELAY_SECONDS = 5  # between sends to avoid throttling
+BOOK_URL = "https://thecalltaker.com/book.html"
 
-# ===================================================
-# SMS SEQUENCE — 7-touch drip over 14 days
-# ===================================================
+# Skip tags — never enroll these contacts
+SKIP_TAGS = {
+    "customer", "active-client", "pilot-active", "pilot-converted",
+    "do-not-contact", "unsubscribed", "demo-booked",
+}
 
-SMS_SEQUENCE = [
-    {
-        "day": 0,
-        "name": "Day 0 — Instant Intro",
-        "message": "Hey {{firstName}}, this is Wallace from The Call Taker. You showed interest in our AI receptionist for {{companyName}} — it answers every call 24/7, books jobs, and texts you the details. Want to hear it live? Call our demo line right now: (615) 784-5747. It picks up in 2 seconds.",
-    },
-    {
-        "day": 1,
-        "name": "Day 1 — Social Proof",
-        "message": "{{firstName}} — quick update. We just set up an HVAC company in Nashville last week. They missed 11 calls their first month with us — every one of those got answered and booked. That's $3,850 in jobs they would've lost. Your demo line is live anytime: (615) 784-5747",
-    },
-    {
-        "day": 3,
-        "name": "Day 3 — Pain Point",
-        "message": "Hey {{firstName}}, real talk — 85% of callers who hit voicemail never call back. They just call your competitor. The Call Taker makes sure that never happens for {{companyName}}. $497/mo, no contracts. Try the demo: (615) 784-5747",
-    },
-    {
-        "day": 5,
-        "name": "Day 5 — Easy CTA",
-        "message": "{{firstName}} — just reply YES and I'll set up a 15-min walkthrough this week. Or call the AI yourself right now: (615) 784-5747. Either way, happy to show you what it does for {{companyName}}.",
-    },
-    {
-        "day": 7,
-        "name": "Day 7 — Urgency",
-        "message": "{{firstName}}, spring season is ramping up. Every missed call is a lost job for {{companyName}}. We can have The Call Taker answering your phones in 48 hours. Reply DEMO and I'll send you the link.",
-    },
-    {
-        "day": 10,
-        "name": "Day 10 — ROI Math",
-        "message": "{{firstName}} — quick math: if {{companyName}} misses just 3 calls/week at $350 avg, that's $4,500/mo walking out the door. The Call Taker is $497/mo. That's a 9x return. Demo line: (615) 784-5747",
-    },
-    {
-        "day": 14,
-        "name": "Day 14 — Last Touch",
-        "message": "Last text from me {{firstName}} — I respect your time. If you ever want to hear what your customers would experience, the demo line is always live: (615) 784-5747. Good luck this season. — Wallace, The Call Taker",
-    },
+INDUSTRY_LIST = [
+    "hvac", "plumbing", "roofing", "electrical", "locksmith",
+    "dental", "medspa", "legal", "towing", "veterinary",
+    "pest-control", "auto-repair", "cleaning", "water-damage",
+    "property-management", "landscaping", "general-contractor",
+    "garage-door", "funeral",
 ]
+
+# Industry → job word mapping for personalized copy
+INDUSTRY_JOBS = {
+    "hvac": "service call",
+    "plumbing": "service call",
+    "roofing": "roofing job",
+    "electrical": "service call",
+    "locksmith": "lockout call",
+    "dental": "appointment",
+    "medspa": "appointment",
+    "legal": "case",
+    "towing": "tow call",
+    "veterinary": "appointment",
+    "pest-control": "service call",
+    "auto-repair": "repair job",
+    "cleaning": "cleaning job",
+    "water-damage": "emergency call",
+    "property-management": "maintenance call",
+    "landscaping": "estimate call",
+    "general-contractor": "project call",
+    "garage-door": "service call",
+    "funeral": "arrangement call",
+}
 
 
 # ===================================================
@@ -103,7 +98,7 @@ SMS_SEQUENCE = [
 
 def log(msg):
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    line = f"[{ts}] FOLLOWUP: {msg}"
+    line = f"[{ts}] HOT-FOLLOWUP: {msg}"
     print(line)
     try:
         with open(LOG_FILE, "a") as f:
@@ -128,13 +123,40 @@ def ghl_request(method, path, body=None, version="2021-07-28"):
             return json.loads(resp.read().decode())
     except HTTPError as e:
         error_body = e.read().decode() if e.fp else ""
-        log(f"GHL API Error {e.code}: {method} {path} — {error_body[:200]}")
+        log(f"GHL Error {e.code}: {method} {path} — {error_body[:200]}")
         return None
     except URLError as e:
         log(f"GHL Network Error: {method} {path} — {e.reason}")
         return None
     except Exception as e:
         log(f"GHL Error: {method} {path} — {e}")
+        return None
+
+
+def bland_request(method, path, body=None):
+    url = f"{BLAND_BASE}{path}"
+    headers = {
+        "Authorization": BLAND_API_KEY,
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
+    data = json.dumps(body).encode() if body else None
+    req = Request(url, data=data, headers=headers, method=method)
+    try:
+        with urlopen(req, timeout=30) as resp:
+            return json.loads(resp.read().decode())
+    except HTTPError as e:
+        error_body = e.read().decode() if e.fp else ""
+        log(f"Bland Error {e.code}: {method} {path} — {error_body[:300]}")
+        if e.code == 402:
+            log("BLAND.AI BALANCE DEPLETED — skipping call step")
+            ntfy(NTFY_URGENT,
+                 "[CRITICAL] Bland.ai balance depleted",
+                 "Hot lead followup call step skipped — Bland.ai 402. Top up balance.",
+                 priority="urgent")
+        return None
+    except Exception as e:
+        log(f"Bland Error: {method} {path} — {e}")
         return None
 
 
@@ -146,48 +168,199 @@ def ntfy(topic, title, msg, priority="default", tags=""):
             headers["Tags"] = tags
         req = Request(url, data=msg.encode(), headers=headers, method="POST")
         urlopen(req, timeout=10)
-        log(f"ntfy sent: {title}")
     except Exception as e:
         log(f"ntfy error: {e}")
 
 
 def load_state():
     if os.path.exists(STATE_FILE):
-        with open(STATE_FILE) as f:
-            return json.load(f)
+        try:
+            with open(STATE_FILE) as f:
+                return json.load(f)
+        except:
+            log("State file corrupted, starting fresh")
     return {
-        "enrolled": {},           # contact_id: {name, company, phone, enrolled_at, last_step, last_sent_at, completed}
+        "enrolled": {},       # contact_id → {name, company, phone, email, industry, enrolled_date, step, tags_applied}
+        "completed": {},      # contact_id → {name, company, outcome, completed_date}
         "total_enrolled": 0,
         "total_sms_sent": 0,
-        "total_sms_failed": 0,
+        "total_emails_sent": 0,
+        "total_calls_made": 0,
         "total_completed": 0,
-        "last_run": None,
+        "total_booked": 0,
+        "last_scan": None,
+        "last_send": None,
     }
 
 
 def save_state(state):
-    with open(STATE_FILE, "w") as f:
+    tmp = STATE_FILE + ".tmp"
+    with open(tmp, "w") as f:
         json.dump(state, f, indent=2, default=str)
+    os.replace(tmp, STATE_FILE)
 
 
-def get_all_contacts():
-    contacts = []
-    page = 1
-    while True:
-        resp = ghl_request("GET", f"/contacts/?locationId={GHL_LOCATION_ID}&limit=100&page={page}")
-        if not resp or "contacts" not in resp:
-            break
-        batch = resp["contacts"]
-        if not batch:
-            break
-        contacts.extend(batch)
-        page += 1
-        if len(batch) < 100:
-            break
-    return contacts
+def days_since(date_str):
+    if not date_str:
+        return 999
+    try:
+        dt = datetime.fromisoformat(str(date_str).replace("Z", "+00:00").split("+")[0].split("T")[0])
+        return (datetime.now() - dt).days
+    except:
+        return 999
 
 
-def send_sms(contact_id, message):
+def get_industry(tags):
+    return next((t for t in tags if t in INDUSTRY_LIST), "service")
+
+
+def get_job_word(industry):
+    return INDUSTRY_JOBS.get(industry, "call")
+
+
+def tag_contact(contact_id, new_tag):
+    """Add a tag to a GHL contact."""
+    resp = ghl_request("GET", f"/contacts/{contact_id}")
+    if not resp or "contact" not in resp:
+        return False
+    existing = resp["contact"].get("tags", [])
+    if new_tag not in existing:
+        existing.append(new_tag)
+        result = ghl_request("PUT", f"/contacts/{contact_id}", {"tags": existing})
+        return result is not None
+    return True
+
+
+def remove_tag(contact_id, tag_to_remove):
+    """Remove a tag from a GHL contact."""
+    resp = ghl_request("GET", f"/contacts/{contact_id}")
+    if not resp or "contact" not in resp:
+        return False
+    existing = resp["contact"].get("tags", [])
+    if tag_to_remove in existing:
+        existing.remove(tag_to_remove)
+        result = ghl_request("PUT", f"/contacts/{contact_id}", {"tags": existing})
+        return result is not None
+    return True
+
+
+# ===================================================
+# SEQUENCE COPY
+# ===================================================
+
+# Step 0 — Day 0: SMS (casual, direct)
+def sms_day0(name, company, industry):
+    job = get_job_word(industry)
+    return (
+        f"Hey {name}, this is Wallace from The Call Taker — "
+        f"did you still want to see how the AI receptionist works for {company}? "
+        f"It picks up every {job} 24/7 so you never miss one. "
+        f"I can set up a free demo whenever you're ready"
+    )
+
+
+# Step 1 — Day 1: Email (pain angle + demo link)
+def email_day1(name, company, industry):
+    job = get_job_word(industry)
+    subject = f"{company} — quick question about missed calls"
+    body = f"""<p>Hey {name},</p>
+
+<p>I wanted to follow up — we flagged {company} as a business that could
+benefit from an AI receptionist, and I wanted to make sure you had the chance
+to see it in action before we fill our pilot spots.</p>
+
+<p>Here's the thing most {industry} businesses don't realize: every missed call
+is a {job} that goes to your competitor. That's $300-$2,000 walking out the door
+every time nobody picks up.</p>
+
+<p>Our AI answers in 2 rings, sounds like a real person, books the {job},
+and texts you the details — 24/7, even at 2am on a Saturday.</p>
+
+<p><strong><a href="{BOOK_URL}?utm_source=hot-followup&utm_medium=email&utm_campaign=day1">Book a quick 10-minute demo</a></strong>
+and I'll show you exactly how it works for {industry} businesses like yours.</p>
+
+<p>Or just call our demo line at <strong>(615) 784-5747</strong> right now to hear it live.</p>
+
+<p>— Wallace<br>
+The Call Taker<br>
+<em>AI receptionist that never misses a call</em></p>"""
+    return subject, body
+
+
+# Step 2 — Day 3: Bland.ai call trigger
+def call_day3_task(name, company, industry):
+    job = get_job_word(industry)
+    return f"""You are calling {name} at {company} on behalf of Wallace from The Call Taker.
+
+Opening: "Hey {name}, this is a quick follow-up from Wallace at The Call Taker. I reached out
+a few days ago about our AI receptionist for {industry} businesses. Did you get a chance to
+check it out?"
+
+If YES or curious: "Awesome — the easiest way to see it is to call our demo line at
+615-784-5747. You'll talk to the AI live. It handles {job}s, books appointments, texts you
+the details. Takes 60 seconds. Want me to text you that number?"
+
+If NO or busy: "Totally understand. Quick version — it picks up every {job} 24/7 so you
+never miss revenue. We're doing free 14-day pilots for {industry} businesses right now,
+no card needed. Can I set one up for {company}?"
+
+If not interested: "No problem at all. If you ever want to hear it, demo line is
+615-784-5747. Have a good one."
+
+Keep it under 45 seconds. Be friendly, not pushy."""
+
+
+# Step 3 — Day 5: Email (case study + scarcity)
+def email_day5(name, company, industry):
+    job = get_job_word(industry)
+    subject = f"How a {industry} company added $8K/mo (doing what {company} does)"
+    body = f"""<p>Hey {name},</p>
+
+<p>Wanted to share a quick story —</p>
+
+<p>One of our {industry} clients was missing 40% of their after-hours calls.
+Within the first month of using our AI receptionist, they recovered
+<strong>$8,400/month</strong> in jobs that would've gone to voicemail.</p>
+
+<p>Same {job}s you handle. Same hours you probably miss.</p>
+
+<p>We have <strong>2 pilot spots left this month</strong> for {industry} businesses.
+14 days free, no credit card, cancel anytime.</p>
+
+<p><strong><a href="{BOOK_URL}?utm_source=hot-followup&utm_medium=email&utm_campaign=day5">Grab your pilot spot now →</a></strong></p>
+
+<p>Or reply to this email and I'll set it up personally.</p>
+
+<p>— Wallace<br>
+The Call Taker</p>"""
+    return subject, body
+
+
+# Step 4 — Day 7: Final SMS (last chance)
+def sms_day7(name, company, industry):
+    return (
+        f"Last follow-up {name} — we have 1 pilot spot left this month for {industry} businesses. "
+        f"14 days free, no card. "
+        f"Book here: {BOOK_URL}?utm_source=hot-followup&utm_medium=sms&utm_campaign=day7 "
+        f"or call our demo line at (615) 784-5747 to hear the AI live. "
+        f"After this I won't bug you again"
+    )
+
+
+# ===================================================
+# SEQUENCE STEPS
+# ===================================================
+
+SEQUENCE_STEPS = [
+    {"step": 0, "day": 0, "type": "sms",   "label": "Day 0 SMS"},
+    {"step": 1, "day": 1, "type": "email", "label": "Day 1 Email"},
+    {"step": 2, "day": 3, "type": "call",  "label": "Day 3 Call"},
+    {"step": 3, "day": 5, "type": "email", "label": "Day 5 Email"},
+    {"step": 4, "day": 7, "type": "sms",   "label": "Day 7 SMS"},
+]
+
+
+def send_sms(contact_id, phone, message):
     """Send SMS via GHL conversations API."""
     body = {
         "type": "SMS",
@@ -196,308 +369,353 @@ def send_sms(contact_id, message):
     }
     resp = ghl_request("POST", "/conversations/messages", body, version="2021-04-15")
     if resp:
+        msg_id = resp.get("messageId", resp.get("id", "ok"))
+        log(f"  SMS sent to {phone} — msgId: {msg_id}")
         return True
+    log(f"  SMS FAILED to {phone}")
     return False
 
 
-def personalize(template, contact_data):
-    """Replace {{firstName}} and {{companyName}} placeholders."""
-    first = contact_data.get("name", "there")
-    if not first or first == "?" or first.startswith("("):
-        first = "there"
-    company = contact_data.get("company", "your company")
-    if not company:
-        company = "your company"
-    text = template.replace("{{firstName}}", first)
-    text = text.replace("{{companyName}}", company)
-    return text
+def send_email(contact_id, subject, html_body):
+    """Send email via GHL conversations API."""
+    body = {
+        "type": "Email",
+        "contactId": contact_id,
+        "subject": subject,
+        "html": html_body,
+        "emailFrom": FROM_EMAIL,
+    }
+    resp = ghl_request("POST", "/conversations/messages", body, version="2021-04-15")
+    if resp:
+        msg_id = resp.get("messageId", resp.get("id", "ok"))
+        log(f"  Email sent — msgId: {msg_id}")
+        return True
+    log(f"  Email FAILED for contact {contact_id}")
+    return False
 
 
-def add_tag(contact_id, tag):
-    resp = ghl_request("PUT", f"/contacts/{contact_id}", {"tags": [tag]})
-    return resp
+def trigger_call(contact_id, phone, company, industry, name):
+    """Trigger a Bland.ai outbound call."""
+    task = call_day3_task(name, company, industry)
+    call_body = {
+        "phone_number": phone,
+        "task": task,
+        "voice_id": "w9rPM8AIZle60Nbpw7nl",
+        "reduce_latency": True,
+        "wait_for_greeting": True,
+        "max_duration": 90,
+        "record": True,
+        "metadata": {
+            "contact_id": contact_id,
+            "company": company,
+            "industry": industry,
+            "source": "hot-lead-followup-day3",
+        },
+    }
+    resp = bland_request("POST", "/calls", call_body)
+    if resp and resp.get("call_id"):
+        log(f"  Call triggered to {phone} — call_id: {resp['call_id']}")
+        return True
+    log(f"  Call FAILED to {phone}")
+    return False
 
 
 # ===================================================
-# COMMANDS
+# CORE ENGINE
 # ===================================================
 
-def cmd_enroll():
-    """Find hot leads in GHL and enroll them into the follow-up sequence."""
-    log("=== HOT LEAD FOLLOWUP: Enrolling leads ===")
+def get_all_contacts():
+    """Fetch all contacts from GHL with pagination."""
+    contacts = []
+    page = 1
+    while page <= 10:
+        resp = ghl_request("GET", f"/contacts/?locationId={GHL_LOCATION_ID}&limit=100&page={page}")
+        if not resp or "contacts" not in resp:
+            break
+        batch = resp["contacts"]
+        if not batch:
+            break
+        contacts.extend(batch)
+        if len(batch) < 100:
+            break
+        page += 1
+        time.sleep(1)
+    return contacts
 
-    state = load_state()
-    already_enrolled = set(state.get("enrolled", {}).keys())
 
-    # Pull all contacts
-    log("Pulling contacts from GHL...")
-    all_contacts = get_all_contacts()
-    log(f"Total contacts in GHL: {len(all_contacts)}")
+def scan_and_enroll(state, force=False):
+    """Find hot leads not yet enrolled and add them to the sequence."""
+    log("=== SCANNING for hot leads ===")
+    contacts = get_all_contacts()
+    log(f"Fetched {len(contacts)} total contacts from GHL")
 
-    # Filter to hot leads
-    hot_leads = []
-    for c in all_contacts:
-        tags = {t.lower() for t in c.get("tags", [])}
-        # Must have at least one hot tag
-        if not (tags & HOT_TAGS):
-            continue
-        # Must not have skip tags
-        if tags & SKIP_TAGS:
-            continue
-        # Must have a phone number
-        phone = c.get("phone", "")
-        if not phone or len(phone) < 10:
-            continue
-        # Not already enrolled
-        if c["id"] in already_enrolled:
-            continue
-        hot_leads.append(c)
-
-    log(f"New hot leads to enroll: {len(hot_leads)}")
-
-    if not hot_leads:
-        log("No new hot leads found to enroll")
-        ntfy(NTFY_OPS_TOPIC, "Hot Lead Followup: No new leads",
-             "All hot leads already enrolled or none found.",
-             tags="information_source")
-        return
-
-    # Enroll each lead and fire Day 0 SMS
     enrolled_count = 0
-    sms_sent = 0
-    sms_failed = 0
+    skipped = 0
 
-    ntfy(NTFY_WAR_TOPIC,
-         f"HOT LEAD FOLLOWUP: Enrolling {len(hot_leads)} leads",
-         f"Firing Day 0 SMS to {len(hot_leads)} hot leads now.",
-         priority="high", tags="rocket,sms")
+    for c in contacts:
+        cid = c.get("id", "")
+        tags = [t.lower() for t in c.get("tags", [])]
 
-    for i, contact in enumerate(hot_leads):
-        contact_id = contact["id"]
-        name = contact.get("contactName", contact.get("firstName", "there"))
-        company = contact.get("companyName", "")
-        phone = contact.get("phone", "")
+        # Must have "hot-lead" tag
+        if "hot-lead" not in tags:
+            continue
 
-        log(f"[{i+1}/{len(hot_leads)}] Enrolling {name} / {company} ({phone})...")
+        # Skip if already enrolled or completed
+        if cid in state["enrolled"] or cid in state["completed"]:
+            continue
 
-        # Build contact data for personalization
-        contact_data = {
+        # Skip if they have any blocking tags
+        if SKIP_TAGS & set(tags):
+            skipped += 1
+            continue
+
+        # Need either phone or email to run the sequence
+        phone = c.get("phone", "")
+        email = c.get("email", "")
+        if not phone and not email:
+            skipped += 1
+            continue
+
+        name = c.get("firstName") or c.get("name") or "there"
+        company = c.get("companyName") or "your company"
+        industry = get_industry(tags)
+
+        # Enroll
+        state["enrolled"][cid] = {
             "name": name,
             "company": company,
             "phone": phone,
+            "email": email,
+            "industry": industry,
+            "enrolled_date": datetime.now().isoformat(),
+            "step": -1,  # hasn't received step 0 yet
+            "tags_applied": [],
         }
-
-        # Fire Day 0 SMS
-        day0 = SMS_SEQUENCE[0]
-        message = personalize(day0["message"], contact_data)
-
-        if send_sms(contact_id, message):
-            sms_sent += 1
-            log(f"Day 0 SMS sent to {name} / {company}")
-        else:
-            sms_failed += 1
-            log(f"FAILED Day 0 SMS to {name} / {company}")
-
-        # Record enrollment
-        state["enrolled"][contact_id] = {
-            "name": name,
-            "company": company,
-            "phone": phone,
-            "enrolled_at": datetime.now().isoformat(),
-            "last_step": 0,
-            "last_sent_at": datetime.now().isoformat(),
-            "completed": False,
-        }
+        state["total_enrolled"] += 1
         enrolled_count += 1
 
-        # Tag contact
-        add_tag(contact_id, "followup-active")
+        # Tag in GHL
+        tag_contact(cid, "follow-up-sequence-active")
+        state["enrolled"][cid]["tags_applied"].append("follow-up-sequence-active")
 
-        save_state(state)
-        time.sleep(SMS_DELAY_SECONDS)
+        log(f"  ENROLLED: {name} ({company}) [{industry}] — {phone or email}")
+        time.sleep(0.5)
 
-    # Update totals
-    state["total_enrolled"] = state.get("total_enrolled", 0) + enrolled_count
-    state["total_sms_sent"] = state.get("total_sms_sent", 0) + sms_sent
-    state["total_sms_failed"] = state.get("total_sms_failed", 0) + sms_failed
+    state["last_scan"] = datetime.now().isoformat()
     save_state(state)
+    log(f"Scan complete: {enrolled_count} new enrollments, {skipped} skipped, {len(state['enrolled'])} active")
 
-    # Report
-    summary = (
-        f"HOT LEAD ENROLLMENT COMPLETE\n"
-        f"{'='*30}\n"
-        f"New leads enrolled: {enrolled_count}\n"
-        f"Day 0 SMS sent: {sms_sent}\n"
-        f"Day 0 SMS failed: {sms_failed}\n"
-        f"Total enrolled (all time): {state['total_enrolled']}\n"
-    )
-    log(summary)
-    ntfy(NTFY_WAR_TOPIC,
-         f"ENROLLED {enrolled_count} — Day 0 SMS: {sms_sent} sent, {sms_failed} failed",
-         summary, priority="high", tags="white_check_mark,sms")
+    if enrolled_count > 0:
+        ntfy(NTFY_SALES,
+             f"Hot Lead Followup: {enrolled_count} enrolled",
+             f"{enrolled_count} new hot leads entered follow-up sequence.\n"
+             f"Total active: {len(state['enrolled'])}\n"
+             f"Total ever enrolled: {state['total_enrolled']}",
+             tags="fire,envelope")
+
+    return enrolled_count
 
 
-def cmd_run():
-    """Process due follow-ups for enrolled leads."""
-    log("=== HOT LEAD FOLLOWUP: Processing due follow-ups ===")
+def process_sends(state):
+    """Walk through enrolled contacts and send the next step if due."""
+    log("=== PROCESSING sequence sends ===")
 
-    state = load_state()
-    state["last_run"] = datetime.now().isoformat()
-    enrolled = state.get("enrolled", {})
-
-    if not enrolled:
-        log("No enrolled leads")
+    if not state["enrolled"]:
+        log("No enrolled contacts. Run 'scan' first.")
         return
 
-    now = datetime.now()
-    due_count = 0
     sent_count = 0
-    failed_count = 0
     completed_count = 0
+    to_remove = []
 
-    for contact_id, data in enrolled.items():
-        if data.get("completed"):
-            continue
+    for cid, data in list(state["enrolled"].items()):
+        name = data.get("name", "there")
+        company = data.get("company", "your company")
+        phone = data.get("phone", "")
+        email = data.get("email", "")
+        industry = data.get("industry", "service")
+        enrolled_date = data.get("enrolled_date")
+        current_step = data.get("step", -1)
+        days_enrolled = days_since(enrolled_date)
 
-        enrolled_at = datetime.fromisoformat(data["enrolled_at"])
-        days_since_enroll = (now - enrolled_at).days
-        last_step = data.get("last_step", 0)
+        # Check if they booked a demo (tag check)
+        contact_resp = ghl_request("GET", f"/contacts/{cid}")
+        if contact_resp and "contact" in contact_resp:
+            live_tags = [t.lower() for t in contact_resp["contact"].get("tags", [])]
+            if "demo-booked" in live_tags or "pilot-active" in live_tags or "customer" in live_tags:
+                log(f"  {name} ({company}) — already converted (demo-booked/pilot/customer). Completing.")
+                state["completed"][cid] = {
+                    "name": name,
+                    "company": company,
+                    "outcome": "converted",
+                    "completed_date": datetime.now().isoformat(),
+                }
+                state["total_completed"] += 1
+                state["total_booked"] += 1
+                to_remove.append(cid)
+                continue
+            if "do-not-contact" in live_tags or "unsubscribed" in live_tags:
+                log(f"  {name} ({company}) — opted out. Removing.")
+                to_remove.append(cid)
+                continue
+        time.sleep(0.5)
 
         # Find the next step that's due
-        next_step = None
-        for step in SMS_SEQUENCE:
-            if step["day"] > last_step and step["day"] <= days_since_enroll:
-                next_step = step
-                break
-
-        if not next_step:
-            # Check if sequence is complete
-            if last_step >= SMS_SEQUENCE[-1]["day"]:
-                data["completed"] = True
-                completed_count += 1
-                add_tag(contact_id, "followup-complete")
-                log(f"Sequence complete for {data['name']} / {data['company']}")
+        next_step = current_step + 1
+        if next_step >= len(SEQUENCE_STEPS):
+            # Sequence complete
+            log(f"  {name} ({company}) — sequence complete (all 5 steps sent)")
+            remove_tag(cid, "follow-up-sequence-active")
+            state["completed"][cid] = {
+                "name": name,
+                "company": company,
+                "outcome": "sequence-complete",
+                "completed_date": datetime.now().isoformat(),
+            }
+            state["total_completed"] += 1
+            to_remove.append(cid)
             continue
 
-        due_count += 1
-        contact_data = {"name": data["name"], "company": data["company"], "phone": data["phone"]}
-        message = personalize(next_step["message"], contact_data)
+        step_info = SEQUENCE_STEPS[next_step]
+        required_day = step_info["day"]
 
-        log(f"Sending {next_step['name']} to {data['name']} / {data['company']}...")
+        if days_enrolled < required_day:
+            continue  # Not time yet
 
-        if send_sms(contact_id, message):
+        step_type = step_info["type"]
+        step_label = step_info["label"]
+        success = False
+
+        if step_type == "sms" and phone:
+            if next_step == 0:
+                msg = sms_day0(name, company, industry)
+            else:
+                msg = sms_day7(name, company, industry)
+            success = send_sms(cid, phone, msg)
+            if success:
+                state["total_sms_sent"] += 1
+
+        elif step_type == "email" and email:
+            if next_step == 1:
+                subject, body = email_day1(name, company, industry)
+            else:
+                subject, body = email_day5(name, company, industry)
+            success = send_email(cid, subject, body)
+            if success:
+                state["total_emails_sent"] += 1
+
+        elif step_type == "call" and phone:
+            success = trigger_call(cid, phone, company, industry, name)
+            if success:
+                state["total_calls_made"] += 1
+
+        elif step_type == "sms" and not phone:
+            # No phone — skip SMS steps, mark as sent
+            log(f"  {name} — no phone, skipping {step_label}")
+            success = True
+
+        elif step_type == "call" and not phone:
+            log(f"  {name} — no phone, skipping {step_label}")
+            success = True
+
+        elif step_type == "email" and not email:
+            log(f"  {name} — no email, skipping {step_label}")
+            success = True
+
+        if success:
+            data["step"] = next_step
             sent_count += 1
-            data["last_step"] = next_step["day"]
-            data["last_sent_at"] = now.isoformat()
-            log(f"{next_step['name']} sent to {data['name']}")
-        else:
-            failed_count += 1
-            log(f"FAILED {next_step['name']} to {data['name']}")
+            log(f"  [{step_label}] {name} ({company}) — sent")
 
-        save_state(state)
-        time.sleep(SMS_DELAY_SECONDS)
+        time.sleep(2)  # Rate limiting between sends
 
-    state["total_sms_sent"] = state.get("total_sms_sent", 0) + sent_count
-    state["total_sms_failed"] = state.get("total_sms_failed", 0) + failed_count
-    state["total_completed"] = state.get("total_completed", 0) + completed_count
+    # Remove completed contacts from active list
+    for cid in to_remove:
+        state["enrolled"].pop(cid, None)
+
+    state["last_send"] = datetime.now().isoformat()
     save_state(state)
 
-    if due_count > 0 or completed_count > 0:
-        summary = (
-            f"FOLLOWUP RUN COMPLETE\n"
-            f"{'='*30}\n"
-            f"Due follow-ups: {due_count}\n"
-            f"SMS sent: {sent_count}\n"
-            f"SMS failed: {failed_count}\n"
-            f"Sequences completed: {completed_count}\n"
-        )
-        log(summary)
-        ntfy(NTFY_OPS_TOPIC,
-             f"Followup Run: {sent_count} SMS sent",
-             summary, tags="sms")
-    else:
-        log("No follow-ups due right now")
+    log(f"Send complete: {sent_count} messages sent, {completed_count + len(to_remove)} completed/removed")
+    log(f"Active: {len(state['enrolled'])} | Completed: {len(state['completed'])}")
 
 
-def cmd_status():
-    """Print dashboard."""
+def force_enroll_all(state):
+    """Force-enroll all hot leads right now, even if scan already ran today."""
+    log("=== FORCE ENROLLING all hot leads ===")
+    count = scan_and_enroll(state, force=True)
+    if count == 0:
+        log("No new hot leads to enroll (all may already be in sequence)")
+    return count
+
+
+def print_status():
     state = load_state()
     enrolled = state.get("enrolled", {})
+    completed = state.get("completed", {})
 
-    active = sum(1 for d in enrolled.values() if not d.get("completed"))
-    completed = sum(1 for d in enrolled.values() if d.get("completed"))
-
-    # Count by step
-    step_counts = {}
-    for d in enrolled.values():
-        if not d.get("completed"):
-            step = d.get("last_step", 0)
-            step_counts[step] = step_counts.get(step, 0) + 1
-
-    print("=" * 55)
-    print("  HOT LEAD FOLLOW-UP ENGINE — STATUS DASHBOARD")
+    print("\n" + "=" * 60)
+    print("  HOT LEAD FOLLOW-UP — STATUS")
     print(f"  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("=" * 55)
-    print(f"  Total enrolled (all time): {state.get('total_enrolled', 0)}")
-    print(f"  Currently active:          {active}")
-    print(f"  Completed sequences:       {completed}")
-    print(f"  Total SMS sent:            {state.get('total_sms_sent', 0)}")
-    print(f"  Total SMS failed:          {state.get('total_sms_failed', 0)}")
-    print(f"  Last run:                  {state.get('last_run', 'never')}")
-    print(f"  ---")
+    print("=" * 60)
+    print(f"  Total ever enrolled:  {state.get('total_enrolled', 0)}")
+    print(f"  Currently active:     {len(enrolled)}")
+    print(f"  Completed:            {len(completed)}")
+    print(f"  Demos booked:         {state.get('total_booked', 0)}")
+    print(f"  SMS sent:             {state.get('total_sms_sent', 0)}")
+    print(f"  Emails sent:          {state.get('total_emails_sent', 0)}")
+    print(f"  Calls made:           {state.get('total_calls_made', 0)}")
+    print(f"  Last scan:            {state.get('last_scan', 'Never')}")
+    print(f"  Last send:            {state.get('last_send', 'Never')}")
+    print("=" * 60)
 
-    if step_counts:
-        print(f"  ACTIVE LEADS BY STEP:")
-        for step_day in sorted(step_counts.keys()):
-            step_name = next((s["name"] for s in SMS_SEQUENCE if s["day"] == step_day), f"Day {step_day}")
-            print(f"    {step_name}: {step_counts[step_day]} leads")
+    if enrolled:
+        print("\n  ACTIVE CONTACTS:")
+        for cid, data in enrolled.items():
+            step = data.get("step", -1)
+            step_label = SEQUENCE_STEPS[step]["label"] if 0 <= step < len(SEQUENCE_STEPS) else "Not started"
+            days = days_since(data.get("enrolled_date"))
+            print(f"    {data['name']:15s} ({data['company']:20s}) — Step {step + 1}/5 [{step_label}] — Day {days}")
 
-    print(f"\n  --- ENROLLED LEADS ({len(enrolled)}) ---")
-    for cid, d in list(enrolled.items())[:40]:
-        status_icon = "done" if d.get("completed") else f"step {d.get('last_step', 0)}"
-        name = d.get("name", "?")
-        company = d.get("company", "")
-        phone = d.get("phone", "")
-        print(f"  [{status_icon:<8}] {(name or '?'):<25} {(company or ''):<30} {phone}")
+    if completed:
+        booked = [d for d in completed.values() if d.get("outcome") == "converted"]
+        seq_done = [d for d in completed.values() if d.get("outcome") == "sequence-complete"]
+        print(f"\n  OUTCOMES: {len(booked)} booked demos, {len(seq_done)} completed sequence")
 
-    print("=" * 55)
+    print()
 
 
 # ===================================================
 # MAIN
 # ===================================================
 
-if __name__ == "__main__":
+def main():
     if len(sys.argv) < 2:
-        print("Usage: python3 hot-lead-followup.py [enroll|run|status]")
-        print("  enroll — Find hot leads + fire Day 0 SMS")
-        print("  run    — Process due follow-ups (run every 4 hours)")
-        print("  status — Print dashboard")
+        print(__doc__)
         sys.exit(1)
 
-    command = sys.argv[1].lower()
+    cmd = sys.argv[1].lower()
+    state = load_state()
 
-    try:
-        if command == "enroll":
-            cmd_enroll()
-        elif command == "run":
-            cmd_run()
-        elif command == "status":
-            cmd_status()
-        else:
-            print(f"Unknown command: {command}")
-            print("Usage: python3 hot-lead-followup.py [enroll|run|status]")
-            sys.exit(1)
-        ntfy(NTFY_CALLS_TOPIC,
-             f"Hot Lead Followup finished: {command}",
-             f"Hot Lead Followup completed '{command}' at {datetime.now().strftime('%I:%M %p')}",
-             tags="white_check_mark")
-    except Exception as _exc:
-        import traceback
-        _tb = traceback.format_exc()
-        log(f"CRASH in hot-lead-followup {command}: {_exc}")
-        ntfy(NTFY_CALLS_TOPIC,
-             f"Hot Lead Followup CRASHED: {command}",
-             f"Command: {command}\nError: {_exc}\n\n{_tb[-500:]}",
-             priority="high", tags="rotating_light")
-        raise
+    if cmd == "scan":
+        scan_and_enroll(state)
+    elif cmd == "send":
+        process_sends(state)
+    elif cmd == "run":
+        scan_and_enroll(state)
+        process_sends(state)
+    elif cmd == "enroll":
+        force_enroll_all(state)
+        # Immediately send Day 0 SMS to all newly enrolled
+        state = load_state()
+        process_sends(state)
+    elif cmd == "status":
+        print_status()
+    else:
+        print(f"Unknown command: {cmd}")
+        print(__doc__)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

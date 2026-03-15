@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hear Your AI Receptionist — Live Demo | The Call Taker</title>
+<meta name="description" content="Pick your industry, type your business name, and hear the AI answer as YOUR business. Live demo — call now. Free 14-day pilot.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://thecalltaker.com/demo-live">
+
+<meta property="og:title" content="Hear Your AI Receptionist Answer As Your Business">
+<meta property="og:description" content="Pick your industry, type your business name, and call the AI live. It answers as YOUR business.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thecalltaker.com/demo-live">
+<meta property="og:site_name" content="The Call Taker">
+<meta property="og:image" content="https://thecalltaker.com/og-image.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hear Your AI Receptionist Answer As Your Business">
+<meta name="twitter:description" content="Pick your industry, type your business name, and call the AI live.">
+<meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script src="/tct-tracking.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17970510102');</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111113;
+  --bg-input: #18181b;
+  --border: rgba(255,255,255,0.08);
+  --border-focus: rgba(0,220,130,0.4);
+  --text: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --green: #00dc82;
+  --green-dim: rgba(0,220,130,0.12);
+  --green-glow: rgba(0,220,130,0.25);
+  --green-dark: #00b368;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ===== HEADER ===== */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  max-width: 1100px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between; height: 64px;
+}
+.logo { font-size: 1.2rem; font-weight: 850; color: #fff; letter-spacing: -.03em; }
+.logo span { color: var(--green); }
+.header-nav { display: flex; gap: 24px; align-items: center; }
+.header-nav a { font-size: .85rem; font-weight: 550; color: var(--text-secondary); transition: color .2s; }
+.header-nav a:hover { color: #fff; }
+.header-cta {
+  background: var(--green) !important; color: #0a0a0a !important;
+  padding: 9px 20px; border-radius: 10px; font-weight: 700; font-size: .85rem;
+}
+@media (max-width: 768px) { .header-nav { display: none; } }
+
+/* ===== AMBIENT GLOW ===== */
+.ambient {
+  position: fixed; top: -200px; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 600px;
+  background: radial-gradient(ellipse, rgba(0,220,130,0.06) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+.ambient-2 {
+  position: fixed; bottom: -300px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(ellipse, rgba(0,220,130,0.03) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ===== HERO ===== */
+.hero {
+  padding: 140px 24px 40px; text-align: center; position: relative; z-index: 1;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 16px; border-radius: var(--radius-full);
+  background: var(--green-dim); border: 1px solid rgba(0,220,130,0.15);
+  font-size: .75rem; font-weight: 700; color: var(--green);
+  letter-spacing: .04em; text-transform: uppercase; margin-bottom: 24px;
+}
+.hero-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+  animation: pulse-dot 2s ease infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,220,130,0.4); }
+  50% { opacity: .7; box-shadow: 0 0 0 6px rgba(0,220,130,0); }
+}
+.hero h1 {
+  font-size: clamp(1.8rem, 6vw, 3.2rem); font-weight: 900;
+  letter-spacing: -.04em; line-height: 1.05; margin-bottom: 16px;
+  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p {
+  font-size: clamp(.95rem, 2.5vw, 1.1rem); color: var(--text-secondary);
+  max-width: 480px; margin: 0 auto; line-height: 1.7;
+}
+
+/* ===== DEMO CARD ===== */
+.demo-card-wrap {
+  max-width: 520px; margin: 48px auto 0; padding: 0 24px; position: relative; z-index: 1;
+}
+.demo-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px 32px;
+  position: relative; overflow: hidden;
+}
+.demo-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,220,130,0.3), transparent);
+}
+
+.demo-label {
+  display: block; font-size: .78rem; font-weight: 650; color: var(--text-muted);
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px;
+}
+
+.demo-select-wrap {
+  position: relative; margin-bottom: 20px;
+}
+.demo-select {
+  width: 100%; padding: 14px 44px 14px 16px;
+  background: var(--bg-input); border: 1.5px solid var(--border);
+  border-radius: var(--radius); color: var(--text); font-family: inherit;
+  font-size: .95rem; font-weight: 500; appearance: none; cursor: pointer;
+  transition: border-color .2s, box-shadow .2s; outline: none;
+}
+.demo-select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(0,220,130,0.08);
+}
+.demo-select option { background: #18181b; color: #f4f4f5; }
+.demo-select-arrow {
+  position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px; color: var(--text-muted); pointer-events: none;
+}
+
+.demo-input-wrap { margin-bottom: 28px; }
+.demo-input {
+  width: 100%; padding: 14px 16px;
+  background: var(--bg-input); border: 1.5px solid var(--border);
+  border-radius: var(--radius); color: var(--text); font-family: inherit;
+  font-size: .95rem; font-weight: 500; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.demo-input::placeholder { color: var(--text-muted); }
+.demo-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(0,220,130,0.08);
+}
+
+/* ===== CALL BUTTON ===== */
+.call-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 18px 24px;
+  background: linear-gradient(135deg, #00dc82, #00b368);
+  color: #0a0a0a; border: none; border-radius: var(--radius);
+  font-family: inherit; font-size: 1.1rem; font-weight: 800;
+  cursor: pointer; transition: all .25s ease; position: relative;
+  box-shadow: 0 4px 24px rgba(0,220,130,0.25), 0 0 0 0 rgba(0,220,130,0);
+}
+.call-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(0,220,130,0.35), 0 0 0 0 rgba(0,220,130,0);
+}
+.call-btn:active { transform: translateY(0); }
+.call-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+/* Pulse ring animation on the button */
+.call-btn::after {
+  content: ''; position: absolute; inset: -4px;
+  border-radius: calc(var(--radius) + 4px);
+  border: 2px solid var(--green);
+  animation: btn-ring 2.5s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes btn-ring {
+  0% { opacity: .6; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.06); }
+}
+
+.call-btn-note {
+  text-align: center; font-size: .78rem; color: var(--text-muted);
+  margin-top: 14px; line-height: 1.5;
+}
+
+/* ===== CALLING STATE ===== */
+.call-active-overlay {
+  display: none; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 40px 20px; min-height: 260px;
+}
+.call-active-overlay.show { display: flex; }
+.call-active-overlay .call-ring {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--green-dim); display: flex; align-items: center; justify-content: center;
+  position: relative; margin-bottom: 24px;
+}
+.call-ring-pulse {
+  position: absolute; inset: -8px; border-radius: 50%;
+  border: 2px solid var(--green);
+  animation: ring-pulse 1.5s ease-out infinite;
+}
+.call-ring-pulse:nth-child(2) { animation-delay: .5s; }
+.call-ring-pulse:nth-child(3) { animation-delay: 1s; }
+@keyframes ring-pulse {
+  0% { opacity: .5; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+.call-ring svg { width: 36px; height: 36px; color: var(--green); }
+.call-active-label {
+  font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 8px;
+}
+.call-active-msg {
+  font-size: .9rem; color: var(--text-secondary); line-height: 1.6; max-width: 380px;
+}
+.call-active-msg strong { color: var(--green); font-weight: 700; }
+.call-active-number {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 20px; padding: 10px 20px; border-radius: var(--radius-full);
+  background: var(--bg-input); border: 1px solid var(--border);
+  font-size: .9rem; font-weight: 600; color: #fff;
+  text-decoration: none; transition: border-color .2s;
+}
+.call-active-number:hover { border-color: var(--green); }
+.call-active-number svg { width: 16px; height: 16px; color: var(--green); }
+.call-back-btn {
+  margin-top: 16px; padding: 8px 16px; border-radius: var(--radius);
+  background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+  font-family: inherit; font-size: .82rem; font-weight: 600; cursor: pointer;
+  transition: all .2s;
+}
+.call-back-btn:hover { border-color: var(--text-muted); color: var(--text-secondary); }
+
+/* ===== HOW IT WORKS ===== */
+.how-section {
+  max-width: 600px; margin: 0 auto; padding: 80px 24px 0;
+  position: relative; z-index: 1;
+}
+.how-section h2 {
+  font-size: clamp(1.2rem, 3vw, 1.5rem); font-weight: 850;
+  text-align: center; letter-spacing: -.03em; margin-bottom: 40px;
+  color: #fff;
+}
+.how-steps { display: flex; flex-direction: column; gap: 0; }
+.how-step {
+  display: flex; gap: 16px; align-items: flex-start; padding-bottom: 32px;
+  position: relative;
+}
+.how-step:last-child { padding-bottom: 0; }
+.how-step-num {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  background: var(--green-dim); border: 1px solid rgba(0,220,130,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; font-weight: 800; color: var(--green);
+  position: relative; z-index: 1;
+}
+.how-step:not(:last-child) .how-step-num::after {
+  content: ''; position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+  width: 1px; height: calc(100% + 32px - 40px);
+  background: linear-gradient(180deg, rgba(0,220,130,0.2), transparent);
+}
+.how-step-text h3 {
+  font-size: .95rem; font-weight: 750; color: #fff; margin-bottom: 4px;
+}
+.how-step-text p {
+  font-size: .85rem; color: var(--text-muted); line-height: 1.6;
+}
+
+/* ===== STATS BAR ===== */
+.stats-bar {
+  display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+  padding: 60px 24px 0; position: relative; z-index: 1;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 900; color: var(--green);
+  letter-spacing: -.03em;
+}
+.stat-label { font-size: .78rem; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+  margin: 80px 24px 0; max-width: 640px; margin-left: auto; margin-right: auto;
+  text-align: center; padding: 56px 32px;
+  background: linear-gradient(145deg, #111113, #18181b);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  position: relative; z-index: 1; overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,220,130,0.3), transparent);
+}
+.cta-section h2 {
+  font-size: clamp(1.3rem, 3.5vw, 1.7rem); font-weight: 900;
+  letter-spacing: -.03em; margin-bottom: 12px; color: #fff;
+}
+.cta-section p {
+  color: var(--text-muted); font-size: .92rem; margin-bottom: 28px;
+  max-width: 400px; margin-left: auto; margin-right: auto; line-height: 1.7;
+}
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.cta-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 15px 32px; border-radius: var(--radius);
+  background: var(--green); color: #0a0a0a;
+  font-weight: 800; font-size: .95rem;
+  box-shadow: 0 4px 20px rgba(0,220,130,0.25);
+  transition: all .2s;
+}
+.cta-primary:hover { box-shadow: 0 8px 32px rgba(0,220,130,0.35); transform: translateY(-2px); }
+.cta-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 15px 28px; border-radius: var(--radius);
+  border: 1.5px solid rgba(255,255,255,0.12); color: var(--text-secondary);
+  font-weight: 700; font-size: .95rem; transition: all .2s;
+}
+.cta-outline:hover { border-color: rgba(255,255,255,0.25); color: #fff; }
+
+/* ===== FOOTER ===== */
+.site-footer {
+  padding: 48px 24px 32px; text-align: center;
+  border-top: 1px solid var(--border); margin-top: 80px;
+  position: relative; z-index: 1;
+}
+.site-footer p { font-size: .8rem; color: var(--text-muted); }
+.footer-links { margin-top: 12px; }
+.footer-links a {
+  color: var(--text-muted); margin: 0 12px; font-size: .82rem; transition: color .2s;
+}
+.footer-links a:hover { color: var(--green); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .hero { padding: 120px 20px 32px; }
+  .demo-card { padding: 28px 20px 24px; }
+  .call-btn { font-size: 1rem; padding: 16px 20px; }
+  .stats-bar { gap: 24px; }
+  .cta-section { margin: 60px 16px 0; padding: 40px 20px; }
+  .cta-btns { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="ambient"></div>
+<div class="ambient-2"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">The Call<span>Taker</span></a>
+    <nav class="header-nav">
+      <a href="/">Home</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/case-studies/">Case Studies</a>
+      <a href="tel:+16157845747">(615) 784-5747</a>
+      <a href="/pilot/" class="header-cta">Start Free Pilot</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge"><span class="hero-badge-dot"></span> Live AI Demo</div>
+  <h1>Hear Your AI Receptionist Answer&nbsp;As&nbsp;Your&nbsp;Business</h1>
+  <p>Pick your industry, type your business name, and call. The AI answers like it's been working for you for years.</p>
+</section>
+
+<!-- Demo Card -->
+<div class="demo-card-wrap">
+  <div class="demo-card" id="demoCard">
+
+    <!-- Form State -->
+    <div id="formState">
+      <label class="demo-label" for="industrySelect">Your Industry</label>
+      <div class="demo-select-wrap">
+        <select class="demo-select" id="industrySelect">
+          <option value="" disabled selected>Select your industry...</option>
+          <option value="HVAC">HVAC</option>
+          <option value="Plumbing">Plumbing</option>
+          <option value="Roofing">Roofing</option>
+          <option value="Electrical">Electrical</option>
+          <option value="Dental">Dental</option>
+          <option value="Med Spa">Med Spa</option>
+          <option value="Legal">Legal</option>
+          <option value="Property Management">Property Management</option>
+          <option value="Veterinary">Veterinary</option>
+          <option value="Locksmith">Locksmith</option>
+          <option value="Garage Door">Garage Door</option>
+          <option value="Towing">Towing</option>
+          <option value="Funeral">Funeral</option>
+        </select>
+        <svg class="demo-select-arrow" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <label class="demo-label" for="businessName">Your Business Name</label>
+      <div class="demo-input-wrap">
+        <input class="demo-input" id="businessName" type="text" placeholder="e.g. Johnson's Heating & Air" maxlength="80" autocomplete="organization">
+      </div>
+
+      <a href="tel:+16157845747" id="callBtn" class="call-btn" role="button" aria-label="Call the AI demo line">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <span id="callBtnText">Call My Business</span>
+      </a>
+      <p class="call-btn-note">Free &bull; No signup &bull; Takes 60 seconds</p>
+    </div>
+
+    <!-- Calling State -->
+    <div class="call-active-overlay" id="callingState">
+      <div class="call-ring">
+        <span class="call-ring-pulse"></span>
+        <span class="call-ring-pulse"></span>
+        <span class="call-ring-pulse"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <div class="call-active-label">Calling now...</div>
+      <div class="call-active-msg" id="callingMsg">
+        Call <strong>(615) 784-5747</strong> — our AI will answer as <strong id="callingBiz">your business</strong> in the <strong id="callingInd">service</strong> industry
+      </div>
+      <a href="tel:+16157845747" class="call-active-number">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (615) 784-5747
+      </a>
+      <button class="call-back-btn" id="resetBtn">Start over</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- How It Works -->
+<section class="how-section">
+  <h2>What Happens When You Call</h2>
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="how-step-num">1</div>
+      <div class="how-step-text">
+        <h3>The AI picks up in 2 rings</h3>
+        <p>No hold music. No phone tree. A natural voice answers like a real receptionist.</p>
+      </div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">2</div>
+      <div class="how-step-text">
+        <h3>Tell it about your business</h3>
+        <p>Say you're a plumber, dentist, or locksmith. The AI adapts to your industry instantly.</p>
+      </div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">3</div>
+      <div class="how-step-text">
+        <h3>Try to stump it</h3>
+        <p>Ask about pricing, availability, emergencies. It handles every scenario your customers throw at it.</p>
+      </div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">4</div>
+      <div class="how-step-text">
+        <h3>See why businesses switch</h3>
+        <p>After the call, imagine every missed call handled like that — 24/7, even at 2am on a Saturday.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">2,400+</div>
+    <div class="stat-label">Demo calls this month</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">13</div>
+    <div class="stat-label">Industries supported</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">24/7</div>
+    <div class="stat-label">Always answering</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to Set This Up for Your&nbsp;Business?</h2>
+  <p>14-day free pilot. No credit card. No commitment. Your AI receptionist answers your actual business calls within 24 hours.</p>
+  <div class="cta-btns">
+    <a href="/book.html" class="cta-primary">
+      Book a Demo
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="/pilot/" class="cta-outline">Start Free Pilot</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2026 The Call Taker. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/pricing.html">Pricing</a>
+    <a href="/case-studies/">Case Studies</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var select = document.getElementById('industrySelect');
+  var input = document.getElementById('businessName');
+  var callBtn = document.getElementById('callBtn');
+  var callBtnText = document.getElementById('callBtnText');
+  var formState = document.getElementById('formState');
+  var callingState = document.getElementById('callingState');
+  var callingBiz = document.getElementById('callingBiz');
+  var callingInd = document.getElementById('callingInd');
+  var resetBtn = document.getElementById('resetBtn');
+
+  // Update button text as user types
+  function updateBtn() {
+    var biz = input.value.trim();
+    var ind = select.value;
+    if (biz && ind) {
+      callBtnText.textContent = 'Call ' + biz;
+    } else if (biz) {
+      callBtnText.textContent = 'Call ' + biz;
+    } else {
+      callBtnText.textContent = 'Call My Business';
+    }
+  }
+  input.addEventListener('input', updateBtn);
+  select.addEventListener('change', updateBtn);
+
+  // Handle call button click
+  callBtn.addEventListener('click', function(e) {
+    var biz = input.value.trim() || 'your business';
+    var ind = select.value || 'service';
+
+    // Set calling state text
+    callingBiz.textContent = biz;
+    callingInd.textContent = ind.toLowerCase();
+
+    // Switch to calling view
+    formState.style.display = 'none';
+    callingState.classList.add('show');
+
+    // Track event
+    if (typeof gtag === 'function') {
+      gtag('event', 'demo_call_initiated', {
+        event_category: 'demo',
+        event_label: ind + ' - ' + biz,
+        industry: ind,
+        business_name: biz
+      });
+    }
+
+    // tel: link handles the actual call via the <a> href
+    // On desktop where tel: may not work, the calling state shows the number to dial
+  });
+
+  // Reset button
+  resetBtn.addEventListener('click', function() {
+    callingState.classList.remove('show');
+    formState.style.display = 'block';
+    input.value = '';
+    select.selectedIndex = 0;
+    callBtnText.textContent = 'Call My Business';
+  });
+
+  // Pre-fill from URL params: ?industry=HVAC&business=Johnson+Heating
+  var params = new URLSearchParams(window.location.search);
+  var urlInd = params.get('industry');
+  var urlBiz = params.get('business');
+  if (urlInd) {
+    for (var i = 0; i < select.options.length; i++) {
+      if (select.options[i].value.toLowerCase() === urlInd.toLowerCase()) {
+        select.selectedIndex = i;
+        break;
+      }
+    }
+  }
+  if (urlBiz) {
+    input.value = urlBiz;
+  }
+  if (urlInd || urlBiz) updateBtn();
+})();
+</script>
+</body>
+</html>
