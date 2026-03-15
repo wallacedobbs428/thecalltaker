@@ -30,12 +30,15 @@
   <!-- Conversion tracking — fires on page load -->
   <script>
     window.addEventListener('load', function() {
+      // Get plan value from URL param or default to 97
+      var params = new URLSearchParams(window.location.search);
+      var value = parseInt(params.get('value')) || 97;
       if (typeof gtag === 'function') {
         gtag('event', 'conversion', { send_to: 'AW-17970510102/thank_you_page' });
-        gtag('event', 'generate_lead', { value: 97, currency: 'USD' });
+        gtag('event', 'generate_lead', { value: value, currency: 'USD' });
       }
       if (typeof fbq === 'function') {
-        fbq('track', 'Lead');
+        fbq('track', 'Lead', { value: value, currency: 'USD' });
       }
     });
   </script>
