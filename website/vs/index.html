@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>The Call Taker vs Answering Services — Side-by-Side Comparison</title>
+  <meta name="description" content="Compare The Call Taker AI receptionist to Smith.ai, Ruby Receptionist, AnswerConnect, and PATLive. See why businesses are switching to AI.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://thecalltaker.com/vs/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0a0a0a; color: #e5e5e5;
+      -webkit-font-smoothing: antialiased; line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,10,0.92); backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .header-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 20px;
+      display: flex; align-items: center; justify-content: space-between; height: 56px;
+    }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1rem; color: #fff; }
+    .logo-icon { width: 28px; height: 28px; border-radius: 6px; background: #22c55e; display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { width: 16px; height: 16px; }
+    .logo span { color: #22c55e; }
+    .header-cta {
+      padding: 8px 18px; background: #22c55e; color: #0a0a0a;
+      font-size: 0.8125rem; font-weight: 700; border-radius: 6px;
+    }
+    .header-cta:hover { background: #16a34a; }
+
+    /* Hero */
+    .hero { padding: 120px 0 60px; text-align: center; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .hero .green { color: #22c55e; }
+    .hero p { font-size: 1.0625rem; color: #a1a1aa; max-width: 560px; margin: 0 auto 40px; }
+
+    /* Competitor Cards */
+    .vs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 60px; }
+    @media (max-width: 640px) { .vs-grid { grid-template-columns: 1fr; } }
+
+    .vs-card {
+      background: #111; border: 1px solid #1e1e1e; border-radius: 12px;
+      padding: 28px 24px; transition: border-color 0.2s;
+    }
+    .vs-card:hover { border-color: #22c55e; }
+    .vs-card h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 4px; }
+    .vs-card .tagline { font-size: 0.8125rem; color: #52525b; margin-bottom: 16px; }
+    .vs-card .price { font-size: 1.5rem; font-weight: 800; color: #ef4444; margin-bottom: 4px; }
+    .vs-card .price-note { font-size: 0.75rem; color: #71717a; margin-bottom: 16px; }
+    .vs-card .issues { list-style: none; margin-bottom: 20px; }
+    .vs-card .issues li {
+      font-size: 0.8125rem; color: #a1a1aa; padding: 4px 0; padding-left: 20px; position: relative;
+    }
+    .vs-card .issues li::before { content: '✕'; position: absolute; left: 0; color: #ef4444; font-weight: 700; font-size: 0.75rem; }
+    .vs-card .cta-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.875rem; font-weight: 600; color: #22c55e;
+    }
+    .vs-card .cta-link:hover { text-decoration: underline; }
+
+    /* TCT Card */
+    .tct-card {
+      background: rgba(34,197,94,0.04); border: 2px solid #22c55e;
+      border-radius: 16px; padding: 40px 32px; text-align: center; margin-bottom: 60px;
+    }
+    .tct-card .badge {
+      display: inline-block; background: #22c55e; color: #0a0a0a;
+      font-size: 0.6875rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1px; padding: 4px 12px; border-radius: 6px; margin-bottom: 16px;
+    }
+    .tct-card h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: 8px; }
+    .tct-card .price-big { font-size: 2.5rem; font-weight: 800; color: #22c55e; margin: 16px 0 4px; }
+    .tct-card .price-sub { font-size: 0.875rem; color: #71717a; margin-bottom: 24px; }
+    .tct-features { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: left; max-width: 480px; margin: 0 auto 28px; }
+    @media (max-width: 480px) { .tct-features { grid-template-columns: 1fr; } }
+    .tct-features li {
+      list-style: none; font-size: 0.875rem; color: #e5e5e5; padding-left: 22px; position: relative;
+    }
+    .tct-features li::before { content: '✓'; position: absolute; left: 0; color: #22c55e; font-weight: 700; }
+    .tct-card .btn {
+      display: inline-block; padding: 14px 32px;
+      background: #22c55e; color: #0a0a0a;
+      font-size: 1rem; font-weight: 700; border-radius: 8px;
+    }
+    .tct-card .btn:hover { background: #16a34a; }
+
+    /* Demo Strip */
+    .demo-strip {
+      background: #111; border: 1px solid #1e1e1e; border-radius: 12px;
+      padding: 32px; text-align: center; margin-bottom: 60px;
+    }
+    .demo-strip h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 8px; }
+    .demo-strip .phone {
+      font-size: 1.75rem; font-weight: 800; color: #22c55e;
+      margin: 8px 0;
+    }
+    .demo-strip .phone a { color: #22c55e; }
+    .demo-strip p { font-size: 0.875rem; color: #71717a; }
+
+    /* Footer */
+    .footer { padding: 40px 20px; text-align: center; border-top: 1px solid #1a1a1a; }
+    .footer span { font-size: 0.75rem; color: #3f3f46; }
+    .footer a { color: #52525b; }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        The Call <span>Taker</span>
+      </a>
+      <a href="/pilot/" class="header-cta">Start free pilot</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="hero">
+      <h1>The Call Taker vs <span class="green">Everyone Else</span></h1>
+      <p>Traditional answering services charge $200-$500/month for human agents who put you on hold, take bad messages, and work limited hours. We built something better.</p>
+    </section>
+
+    <div class="vs-grid">
+      <a href="/vs/smith-ai.html" class="vs-card">
+        <h3>Smith.ai</h3>
+        <div class="tagline">Human + AI virtual receptionists</div>
+        <div class="price">$292.50/mo</div>
+        <div class="price-note">30 calls included, then $9.75/call</div>
+        <ul class="issues">
+          <li>Per-call pricing adds up fast</li>
+          <li>Complex pricing tiers</li>
+          <li>Human agents can have bad days</li>
+          <li>Setup takes days, not hours</li>
+        </ul>
+        <span class="cta-link">See full comparison →</span>
+      </a>
+
+      <a href="/vs/ruby-receptionist.html" class="vs-card">
+        <h3>Ruby Receptionist</h3>
+        <div class="tagline">Live virtual receptionist service</div>
+        <div class="price">$235/mo</div>
+        <div class="price-note">50 minutes included, then $4.70/min</div>
+        <ul class="issues">
+          <li>Per-minute billing = unpredictable costs</li>
+          <li>Business hours only on base plan</li>
+          <li>No appointment booking on entry tier</li>
+          <li>Overage charges surprise you</li>
+        </ul>
+        <span class="cta-link">See full comparison →</span>
+      </a>
+
+      <a href="/vs/answerconnect.html" class="vs-card">
+        <h3>AnswerConnect</h3>
+        <div class="tagline">24/7 live answering service</div>
+        <div class="price">$325/mo</div>
+        <div class="price-note">200 minutes included, then $1.65/min</div>
+        <ul class="issues">
+          <li>$75 setup fee</li>
+          <li>12-month contract required</li>
+          <li>Per-minute overages add up</li>
+          <li>Generic scripts, not AI-trained</li>
+        </ul>
+        <span class="cta-link">See full comparison →</span>
+      </a>
+
+      <a href="/vs/patlive.html" class="vs-card">
+        <h3>PATLive</h3>
+        <div class="tagline">Professional answering service</div>
+        <div class="price">$235/mo</div>
+        <div class="price-note">75 minutes included, then $2.25/min</div>
+        <ul class="issues">
+          <li>Per-minute billing on all plans</li>
+          <li>14-day free trial (not 14-day money back)</li>
+          <li>Hold times during peak hours</li>
+          <li>No AI intelligence or learning</li>
+        </ul>
+        <span class="cta-link">See full comparison →</span>
+      </a>
+    </div>
+
+    <div class="tct-card">
+      <div class="badge">The better way</div>
+      <h2>The Call Taker</h2>
+      <div class="price-big">$97/mo</div>
+      <div class="price-sub">Unlimited calls. No per-minute fees. No contracts.</div>
+      <ul class="tct-features">
+        <li>24/7/365 coverage</li>
+        <li>Unlimited calls included</li>
+        <li>Answers in under 2 seconds</li>
+        <li>Books appointments automatically</li>
+        <li>Custom-trained on your business</li>
+        <li>Texts you every call detail</li>
+        <li>No contracts, cancel anytime</li>
+        <li>Live in 48 hours</li>
+      </ul>
+      <a href="/pilot/" class="btn">Start your free 14-day pilot</a>
+    </div>
+
+    <div class="demo-strip">
+      <h3>Don't take our word for it — hear it yourself</h3>
+      <div class="phone"><a href="tel:+16157845747">(615) 784-5747</a></div>
+      <p>Call our demo line right now. It picks up instantly, 24/7. Pretend you need a service call.</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>&copy; 2026 The Call Taker. Brentwood, TN. <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></span>
+  </footer>
+
+</body>
+</html>
