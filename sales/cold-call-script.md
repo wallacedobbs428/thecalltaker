@@ -133,3 +133,35 @@
 - [ ] If follow-up agreed: set reminder for the date
 - [ ] If voicemail: leave a 20-second message and add to email sequence
 - [ ] Update the secret shopper log if applicable
+
+---
+
+## LOCAL LEAD VARIANT (Within 1 hour of Brentwood, TN)
+
+**If the business is in Nashville metro / Middle TN, use this version instead. The goal is to book an in-person visit, NOT to sell over the phone.**
+
+### Opening (15 seconds)
+
+> "Hey [Name], this is Wallace — I'm over in Brentwood. Quick question — when someone calls your shop after hours, what happens?"
+
+**Then SHUT UP and listen.** Same as above — let them answer.
+
+### The Pivot to In-Person (30 seconds)
+
+> "Yeah, I hear that a lot from businesses around here. Here's why I'm calling — I built something new that solves that problem and I've been showing it to business owners in [City]. It takes about 10 minutes to see. Would it be worth it for me to stop by your shop and show you how it works?"
+
+**If they push for details:**
+> "It's an AI receptionist that answers every call to your business, 24/7. But honestly, it's the kind of thing you have to see — when I show people in person, they get it in 30 seconds. I'm right here in the area. When works this week?"
+
+### The Ask
+
+> "I could swing by [Day] morning or [Day] afternoon — which works better? I'll be in and out in 10 minutes. If it's not for you, I'll shake your hand and leave. Fair enough?"
+
+### Key Rules for Local Calls
+
+- **DO NOT** pitch pricing, pilot, or signup on the cold call
+- **DO NOT** try to close over the phone
+- **DO** emphasize being local: "I'm right here in Brentwood," "I'm in the area every day"
+- **DO** keep the ask small: "10 minutes," "quick stop by," "just a look"
+- **DO** reference their specific city: "I've been showing this to businesses in [City]"
+- The **ONLY goal** is booking an in-person appointment at their location
