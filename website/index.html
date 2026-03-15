@@ -3792,6 +3792,7 @@ document.addEventListener('DOMContentLoaded', function() {
 #exitPopup .exit-form{display:flex;flex-direction:column;gap:10px}
 #exitPopup .exit-input{width:100%;padding:14px 16px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:.95rem;font-family:inherit;outline:none;transition:border-color .2s;box-sizing:border-box}
 #exitPopup .exit-input::placeholder{color:rgba(255,255,255,0.3)}
+#exitPopup select.exit-input{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
 #exitPopup .exit-input:focus{border-color:rgba(0,220,130,0.4)}
 #exitPopup .exit-submit{width:100%;padding:14px;background:#00dc82;color:#000;font-size:1rem;font-weight:700;border:none;border-radius:12px;cursor:pointer;font-family:inherit;transition:transform .15s,box-shadow .2s}
 #exitPopup .exit-submit:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,220,130,0.35)}
@@ -3817,12 +3818,26 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="exit-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 013.08 4.18 2 2 0 015.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
       </div>
-      <h3>How Many Calls Is Your Business Missing?</h3>
-      <p class="exit-sub">Get a free missed-call estimate for your industry &mdash; takes 10 seconds.</p>
+      <h3>Wait &mdash; How Many Calls Did You Miss This Week?</h3>
+      <p class="exit-sub">Get a free missed-call estimate for your industry. Takes 10 seconds.</p>
       <form class="exit-form" id="exitForm" autocomplete="on">
-        <input class="exit-input" type="text" name="name" placeholder="Your name" required autocomplete="name">
+        <select class="exit-input" name="industry" required>
+          <option value="" disabled selected>Select your industry</option>
+          <option value="hvac">HVAC</option>
+          <option value="plumbing">Plumbing</option>
+          <option value="roofing">Roofing</option>
+          <option value="electrical">Electrical</option>
+          <option value="dental">Dental</option>
+          <option value="locksmith">Locksmith</option>
+          <option value="legal">Legal</option>
+          <option value="medspa">Med Spa</option>
+          <option value="towing">Towing</option>
+          <option value="veterinary">Veterinary</option>
+          <option value="property-management">Property Management</option>
+          <option value="garage-door">Garage Door</option>
+          <option value="other">Other</option>
+        </select>
         <input class="exit-input" type="email" name="email" placeholder="Business email" required autocomplete="email">
-        <input class="exit-input" type="tel" name="phone" placeholder="Phone (optional)" autocomplete="tel">
         <button type="submit" class="exit-submit">Get My Free Estimate &rarr;</button>
       </form>
       <div class="exit-trust">
@@ -3868,29 +3883,25 @@ document.addEventListener('DOMContentLoaded', function() {
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      var name = form.querySelector('[name="name"]').value.trim();
+      var industry = form.querySelector('[name="industry"]').value;
       var email = form.querySelector('[name="email"]').value.trim();
-      var phone = form.querySelector('[name="phone"]').value.trim();
-      if (!name || !email) return;
+      if (!industry || !email) return;
 
       var submitBtn = form.querySelector('.exit-submit');
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
 
       // Attribution tags
-      var tags = ['exit-popup-lead', 'website-visitor'];
+      var tags = ['exit-popup-lead', 'website-visitor', 'industry-' + industry];
       if (typeof getTctAttributionTags === 'function') {
         tags = tags.concat(getTctAttributionTags());
       }
 
       var payload = {
-        name: name,
         email: email,
         tags: tags,
         source: 'exit_popup'
       };
-      if (phone) payload.phone = phone.replace(/[^\d+]/g, '');
-      if (phone && !payload.phone.startsWith('+')) payload.phone = '+1' + payload.phone.replace(/^1/, '');
 
       // Send to GHL
       fetch('https://rest.gohighlevel.com/v1/contacts/', {
