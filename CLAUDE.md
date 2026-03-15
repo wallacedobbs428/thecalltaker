@@ -1,3 +1,10 @@
+## REPO IDENTITY — READ FIRST
+This is the WEBSITE repo. Website work only.
+For agents and ops → ~/thecalltaker-ops/
+Never build daemon scripts or plists here.
+
+---
+
 ## Session Start Protocol
 At the beginning of EVERY session, before doing anything else:
 1. Read `primer.md` in full
