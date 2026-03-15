@@ -11,11 +11,7 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0a0a">
   <title>Checkout — After-Hours Starter $97/mo | The Call Taker</title>
-<meta property="og:image" content="https://thecalltaker.com/assets/images/hero-phone.jpeg">
-<meta property="og:image:width" content="1456">
-<meta property="og:image:height" content="816">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +49,8 @@
     .secure-badge svg { width: 14px; height: 14px; color: var(--text-3); }
   </style>
 <link rel="stylesheet" href="/shared/ui-dark.css">
-<script src="/shared/ab-split.js" defer></script>
+<script src="/shared/ab-split.js"></script>
+<script src="/tct-tracking.js" defer></script>
 </head>
 <body>
 
@@ -179,8 +176,11 @@
 
     function handleCheckout(e) {
       e.preventDefault();
-      // Redirect to main checkout with plan pre-selected
-      window.location.href = '/checkout.html?plan=afterhours';
+      // TODO: Replace with actual Stripe Checkout URL when connected
+      // Example: window.location.href = 'https://checkout.stripe.com/c/pay/cs_live_xxxx';
+
+      // For now, redirect to the try-funnel signup form
+      window.location.href = 'index.html#signup';
     }
   </script>
 <script src="/shared/ui-dark.js" defer></script>
