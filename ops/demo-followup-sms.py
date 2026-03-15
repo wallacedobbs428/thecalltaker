@@ -24,6 +24,14 @@ import time
 import requests
 from datetime import datetime, timedelta
 
+# ─── Local Detection ────────────────────────────────────────────────────────
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from local_detect import is_local, get_lead_city
+except ImportError:
+    def is_local(c): return False
+    def get_lead_city(c): return ""
+
 # ─── Import path for tct_common (if available) ───────────────────────────────
 # Graceful — script still works standalone if tct_common is absent.
 sys.path.insert(0, os.path.expanduser("~/thecalltaker-ops/ops"))
@@ -116,6 +124,27 @@ def build_sms(first_name: str, company: str) -> str:
             f"Want in? Reply YES or call {DEMO_LINE}"
         )
     return line
+
+
+def build_local_sms(first_name: str, company: str, city: str) -> str:
+    """Post-demo follow-up SMS for LOCAL leads — pushes in-person visit, not signup."""
+    name = (first_name or "").strip() or "Hey"
+    company_clean = (company or "").strip()
+    city_clean = (city or "").strip() or "the Nashville area"
+
+    if company_clean:
+        return (
+            f"{name}! That AI you just talked to? That's what your customers at "
+            f"{company_clean} would hear 24/7. I'm right here in {city_clean} — "
+            f"would it be worth 10 minutes for me to stop by and show you the full setup in person?"
+        )
+    else:
+        return (
+            f"{name}! That AI you just talked to? That's what your customers would hear 24/7. "
+            f"I'm right here in {city_clean} — would it be worth 10 minutes "
+            f"for me to stop by and show you the full setup?"
+        )
+
 
 # ─── Logging ──────────────────────────────────────────────────────────────────
 
@@ -445,8 +474,14 @@ def cmd_send(state: dict) -> int:
             first_name = (fresh.get("firstName") or first_name or "").strip() or "there"
             company    = (fresh.get("companyName") or fresh.get("company") or company or "").strip()
 
-        # Build and send SMS
-        message = build_sms(first_name, company)
+        # Build and send SMS — route local leads to in-person CTA
+        contact_for_check = fresh if fresh else {"phone": phone}
+        if is_local(contact_for_check):
+            city = get_lead_city(contact_for_check)
+            message = build_local_sms(first_name, company, city)
+            log(f"LOCAL lead detected: {first_name} @ {company} ({city})")
+        else:
+            message = build_sms(first_name, company)
         log(f"Sending SMS to {cid} ({first_name} @ {company or 'unknown'}) {phone}")
         log(f"  Message ({len(message)} chars): {message[:80]}...")
 

@@ -26,6 +26,14 @@ import time
 import requests
 from datetime import datetime, timedelta
 
+# ─── Local Detection ────────────────────────────────────────────────────────
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from local_detect import is_local, get_lead_city
+except ImportError:
+    def is_local(c): return False
+    def get_lead_city(c): return ""
+
 # ─── Configuration ───────────────────────────────────────────────────────────
 
 GHL_API_KEY = os.environ.get("TCT_GHL_API_KEY", "pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35")
@@ -115,6 +123,37 @@ def sms_touch_3(first_name):
         f"Last text from me {first_name}. No pitch — just this: "
         f"call {DEMO_LINE} and pretend you're a customer. "
         f"Takes 90 seconds. If you're not impressed, I'll never text again. — Wallace"
+    )
+
+
+# ─── LOCAL IN-PERSON SMS VARIANTS ───────────────────────────────────────────
+
+def local_sms_touch_1(first_name, company, city):
+    """Immediate — in-person visit CTA for local leads."""
+    city_part = f"right here in {city}" if city else "local to Nashville"
+    return (
+        f"Hey {first_name}, it's Wallace. I'm {city_part} and I built "
+        f"some new technology for businesses like {company}. "
+        f"Would it be worth 10 minutes for me to stop by and show you how it works?"
+    )
+
+
+def local_sms_touch_2(first_name, company, city):
+    """Day 2 — in-person push with pain angle."""
+    return (
+        f"{first_name} — I called {company} last night at 8pm. Got voicemail. "
+        f"85% of those callers won't leave a message — that's real money walking. "
+        f"I'm in {city or 'the area'} and I'd love to show you what I built to fix that. "
+        f"10 minutes, your location. Interested?"
+    )
+
+
+def local_sms_touch_3(first_name):
+    """Day 5 — breakup for local leads."""
+    return (
+        f"Last text from me {first_name}. I tried to come show you in person "
+        f"because I genuinely think it'd help. The offer stands — "
+        f"whenever you're ready, I'm right here in Brentwood. — Wallace"
     )
 
 
@@ -290,24 +329,36 @@ def cmd_send(state):
         first_name = contact.get("firstName", "there")
         company = contact.get("companyName", "your business")
         job_word, job_value = get_industry_info(tags)
+        local = is_local(contact)
+        city = get_lead_city(contact) if local else ""
 
         for touch_num in range(1, 4):
             if not should_send(enrollment, touch_num):
                 continue
 
-            if touch_num == 1:
-                msg = sms_touch_1(first_name, company, job_word, job_value)
-            elif touch_num == 2:
-                msg = sms_touch_2(first_name, company)
-            elif touch_num == 3:
-                msg = sms_touch_3(first_name)
+            if local:
+                # Local leads: in-person appointment CTA
+                if touch_num == 1:
+                    msg = local_sms_touch_1(first_name, company, city)
+                elif touch_num == 2:
+                    msg = local_sms_touch_2(first_name, company, city)
+                elif touch_num == 3:
+                    msg = local_sms_touch_3(first_name)
+            else:
+                # National leads: standard demo/pilot CTA
+                if touch_num == 1:
+                    msg = sms_touch_1(first_name, company, job_word, job_value)
+                elif touch_num == 2:
+                    msg = sms_touch_2(first_name, company)
+                elif touch_num == 3:
+                    msg = sms_touch_3(first_name)
 
             result = send_sms(cid, msg)
             if result:
                 enrollment["touches_sent"].append(touch_num)
                 state["stats"]["total_sms_sent"] += 1
                 sent_count += 1
-                log(f"  Touch {touch_num} SMS to {first_name} ({company})")
+                log(f"  Touch {touch_num} SMS to {first_name} ({company}){' [LOCAL]' if local else ''}")
             break  # One touch per contact per cycle
 
         time.sleep(DELAY_BETWEEN_SMS)
