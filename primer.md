@@ -61,16 +61,16 @@ ben/, max/, sam/       # Engine state/config mirrors
 
 - On branch `claude/fix-jessica-voice-agent-vt0s0`, 1 commit ahead of remote
 - Working tree is clean — no staged or unstaged changes
-- Recent work: PayPal/Venmo checkout built, 3-touch close sequence for 35 hot leads, Jessica voice v9, mobile fixes, demo page green theme
+- Recent work: Storm Chaser v3 built, PayPal/Venmo checkout, 3-touch close sequence, Jessica v9
 
 ## Recent Work (as of March 15, 2026)
 
+- **Storm Chaser v3** — Complete rewrite of storm email system. File: `ops/storm-chaser-v3.py` (1,095 lines). Replaces v2 + storm-trigger.py. Uses NWS Alerts API (free, no key). Detects tornado/hail/high-wind/severe thunderstorm. Emails roofing+HVAC+general-contractor contacts in hit metros within 5 min. 4 storm-type templates (4 sentences each). Monitor command runs continuous 5-min loop. storm-log.json is separate append-only storm event record.
 - **PayPal/Venmo checkout** — Accept $97/$297/$497 payments today (Stripe blocked)
 - **3-touch close sequence** — Built for 35 hot leads
 - **Jessica voice agent v9** — Anti-squeaky rewrite. Deeper voice, pitch -1, rate 0.95, stability 0.75, similarity 0.85
 - **Demo page colors** — All orange replaced with green (#00C96B)
 - **Deploy script upgraded** — v9 with voice settings, fallback voices
-- **Competitor research** — Pricing/feature comparison for Smith.ai, Ruby, AnswerConnect, PATLive, Numa, Goodcall (in progress this session)
 
 ## Active Priorities
 
