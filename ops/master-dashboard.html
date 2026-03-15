@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Call Taker — Outreach Command Center</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0a0a;
+      --bg-card:   #111111;
+      --bg-row:    #161616;
+      --border:    #222222;
+      --text:      #e4e4e4;
+      --text-dim:  #666666;
+      --text-mid:  #999999;
+      --green:     #22c55e;
+      --yellow:    #eab308;
+      --red:       #ef4444;
+      --orange:    #f97316;
+      --blue:      #3b82f6;
+      --font:      'Courier New', Courier, monospace;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    /* ── Header ── */
+    .header {
+      border: 1px solid var(--border);
+      border-bottom: 2px solid var(--orange);
+      padding: 16px 20px 14px;
+      margin-bottom: 20px;
+      background: var(--bg-card);
+    }
+    .header-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .header h1 {
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      color: var(--orange);
+      text-transform: uppercase;
+    }
+    .header-meta {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    .header-sub {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Overall status badge ── */
+    .overall-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 2px;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+    .overall-badge.green  { background: rgba(34,197,94,0.15);  color: var(--green);  border: 1px solid rgba(34,197,94,0.4); }
+    .overall-badge.yellow { background: rgba(234,179,8,0.15);  color: var(--yellow); border: 1px solid rgba(234,179,8,0.4); }
+    .overall-badge.red    { background: rgba(239,68,68,0.15);  color: var(--red);    border: 1px solid rgba(239,68,68,0.4); }
+
+    /* ── Section labels ── */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      margin-top: 20px;
+    }
+
+    /* ── Component grid ── */
+    .component-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+    }
+    .component-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .component-table tr:last-child {
+      border-bottom: none;
+    }
+    .component-table tr:hover td {
+      background: #1a1a1a;
+    }
+    .component-table td {
+      padding: 10px 14px;
+      vertical-align: middle;
+      background: var(--bg-row);
+    }
+    .component-table th {
+      padding: 7px 14px;
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Status dot ── */
+    .dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-right: 8px;
+      flex-shrink: 0;
+      position: relative;
+      top: 1px;
+    }
+    .dot.green  { background: var(--green);  box-shadow: 0 0 6px var(--green); }
+    .dot.yellow { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
+    .dot.red    { background: var(--red);    box-shadow: 0 0 6px var(--red); animation: pulse-red 1.5s ease-in-out infinite; }
+
+    @keyframes pulse-red {
+      0%, 100% { box-shadow: 0 0 4px var(--red); }
+      50%       { box-shadow: 0 0 12px var(--red); }
+    }
+
+    .component-name {
+      font-weight: bold;
+      font-size: 13px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .component-version {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-left: 5px;
+    }
+    .component-desc {
+      font-size: 10px;
+      color: var(--text-mid);
+      margin-top: 2px;
+    }
+
+    .status-label {
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .status-label.green  { color: var(--green); }
+    .status-label.yellow { color: var(--yellow); }
+    .status-label.red    { color: var(--red); }
+
+    .age-cell {
+      color: var(--text-mid);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .age-cell.stale { color: var(--yellow); }
+    .age-cell.down  { color: var(--red); }
+
+    .critical-badge {
+      display: inline-block;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      padding: 1px 5px;
+      border: 1px solid rgba(239,68,68,0.5);
+      color: var(--red);
+      text-transform: uppercase;
+      margin-left: 6px;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+
+    .message-cell {
+      font-size: 11px;
+      color: var(--text-mid);
+      max-width: 280px;
+    }
+
+    /* ── Stats row ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .stat-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 26px;
+      font-weight: bold;
+      color: var(--orange);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 5px;
+    }
+
+    /* ── Error log ── */
+    .error-list {
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .error-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+    }
+    .error-row:last-child { border-bottom: none; }
+    .error-time {
+      color: var(--text-dim);
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-size: 11px;
+    }
+    .error-service {
+      color: var(--red);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .error-msg {
+      color: var(--text-mid);
+      word-break: break-all;
+    }
+    .no-errors {
+      padding: 14px;
+      color: var(--green);
+      font-size: 12px;
+    }
+
+    /* ── Summary bar ── */
+    .summary-bar {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      flex-wrap: wrap;
+    }
+    .summary-item { display: flex; align-items: center; gap: 6px; }
+    .summary-dot  { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Footer / controls ── */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .refresh-btn {
+      background: transparent;
+      border: 1px solid var(--orange);
+      color: var(--orange);
+      font-family: var(--font);
+      font-size: 12px;
+      padding: 6px 16px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.15s, color 0.15s;
+    }
+    .refresh-btn:hover {
+      background: var(--orange);
+      color: #000;
+    }
+    .refresh-btn:active {
+      opacity: 0.8;
+    }
+    .footer-text {
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+    .countdown {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    .countdown span {
+      color: var(--text-mid);
+    }
+
+    /* ── Loading / error states ── */
+    .load-msg {
+      padding: 40px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 13px;
+    }
+    .load-msg.error { color: var(--red); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .component-table th:nth-child(4),
+      .component-table td:nth-child(4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-top">
+      <h1>The Call Taker &mdash; Outreach Command Center</h1>
+      <div class="header-meta" id="generatedAt">Loading...</div>
+    </div>
+    <div class="header-sub">
+      Component 8 &mdash; System-Wide Master Monitor &mdash; Auto-refresh every 60s
+    </div>
+    <div id="overallBadge"></div>
+  </div>
+
+  <!-- Component status -->
+  <div class="section-label">Component Status</div>
+  <div id="componentSection">
+    <div class="load-msg">Loading system-health.json&hellip;</div>
+  </div>
+
+  <!-- Summary bar -->
+  <div id="summaryBar" style="display:none">
+    <div class="summary-bar">
+      <div class="summary-item">
+        <div class="summary-dot" style="background:var(--green)"></div>
+        <span id="countGreen">0</span> healthy
+      </div>
+      <div class="summary-item">
+        <div class="summary-dot" style="background:var(--yellow)"></div>
+        <span id="countYellow">0</span> degraded
+      </div>
+      <div class="summary-item">
+        <div class="summary-dot" style="background:var(--red)"></div>
+        <span id="countRed">0</span> down
+      </div>
+    </div>
+  </div>
+
+  <!-- Today's stats -->
+  <div class="section-label">Today's Stats</div>
+  <div class="stats-grid" id="statsGrid">
+    <div class="stat-box"><div class="stat-value" id="statEmails">—</div><div class="stat-label">Emails Sent</div></div>
+    <div class="stat-box"><div class="stat-value" id="statSms">—</div><div class="stat-label">SMS Sent</div></div>
+    <div class="stat-box"><div class="stat-value" id="statCalls">—</div><div class="stat-label">Calls Made</div></div>
+    <div class="stat-box"><div class="stat-value" id="statDms">—</div><div class="stat-label">DMs Generated</div></div>
+    <div class="stat-box"><div class="stat-value" id="statLeads">—</div><div class="stat-label">Leads Scored</div></div>
+  </div>
+
+  <!-- Error log -->
+  <div class="section-label">Recent Errors (last 10)</div>
+  <div id="errorSection">
+    <div class="load-msg">Loading&hellip;</div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="refresh-btn" onclick="loadData()">Refresh Now</button>
+    <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+      <div class="countdown">Next refresh in <span id="countdownNum">60</span>s</div>
+      <div class="footer-text">Source: system-health.json &mdash; updated every 30 min by system-health-monitor.py</div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  // ── Configuration ──────────────────────────────────────────────────────────
+  const HEALTH_FILE    = 'system-health.json';
+  const REFRESH_SECS   = 60;
+
+  // ── Countdown state ────────────────────────────────────────────────────────
+  let countdown = REFRESH_SECS;
+  let countdownTimer = null;
+
+  function startCountdown() {
+    if (countdownTimer) clearInterval(countdownTimer);
+    countdown = REFRESH_SECS;
+    document.getElementById('countdownNum').textContent = countdown;
+    countdownTimer = setInterval(() => {
+      countdown--;
+      document.getElementById('countdownNum').textContent = Math.max(0, countdown);
+      if (countdown <= 0) {
+        clearInterval(countdownTimer);
+        loadData();
+      }
+    }, 1000);
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  function fmtAge(minutes) {
+    if (minutes === null || minutes === undefined) return 'no data';
+    if (minutes < 1)   return Math.round(minutes * 60) + 's ago';
+    if (minutes < 60)  return Math.round(minutes) + 'm ago';
+    const h = minutes / 60;
+    if (h < 24)        return h.toFixed(1) + 'h ago';
+    return (h / 24).toFixed(1) + 'd ago';
+  }
+
+  function fmtTimestamp(iso) {
+    if (!iso) return '—';
+    try {
+      const d = new Date(iso);
+      const pad = n => String(n).padStart(2,'0');
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} `
+           + `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    } catch (e) { return iso.slice(0,16); }
+  }
+
+  function fmtErrorTime(iso) {
+    if (!iso) return '??:??';
+    try {
+      const d = new Date(iso);
+      const pad = n => String(n).padStart(2,'0');
+      return `${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    } catch (e) { return iso.slice(11,16); }
+  }
+
+  function esc(str) {
+    const div = document.createElement('div');
+    div.textContent = String(str || '');
+    return div.innerHTML;
+  }
+
+  // ── Render ─────────────────────────────────────────────────────────────────
+  function renderComponents(components) {
+    if (!components || components.length === 0) {
+      document.getElementById('componentSection').innerHTML =
+        '<div class="load-msg error">No component data found.</div>';
+      return;
+    }
+
+    const rows = components.map(c => {
+      const statusClass = c.status || 'red';
+      const labelMap = { green: 'HEALTHY', yellow: 'DEGRADED', red: 'DOWN' };
+      const statusLabel = c.status_label || labelMap[statusClass] || 'UNKNOWN';
+
+      const ageClass = statusClass === 'red' ? 'down' : statusClass === 'yellow' ? 'stale' : '';
+      const critBadge = c.critical
+        ? '<span class="critical-badge">critical</span>'
+        : '';
+
+      const lastRun = c.last_run
+        ? `<div style="font-size:10px;color:#555;margin-top:2px">${fmtTimestamp(c.last_run)}</div>`
+        : '';
+
+      return `
+        <tr>
+          <td>
+            <span class="dot ${statusClass}"></span>
+            <span class="component-name">${esc(c.display_name)}</span>
+            <span class="component-version">${esc(c.version || '')}</span>
+            ${critBadge}
+            <div class="component-desc">${esc(c.description || '')}</div>
+          </td>
+          <td>
+            <span class="status-label ${statusClass}">${esc(statusLabel)}</span>
+          </td>
+          <td class="age-cell ${ageClass}">
+            ${esc(fmtAge(c.age_minutes))}
+            ${lastRun}
+          </td>
+          <td class="message-cell">${esc(c.message || '')}</td>
+        </tr>
+      `;
+    }).join('');
+
+    document.getElementById('componentSection').innerHTML = `
+      <table class="component-table">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Status</th>
+            <th>Last Run</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  function renderSummary(summary) {
+    if (!summary) return;
+    document.getElementById('summaryBar').style.display = '';
+    document.getElementById('countGreen').textContent  = summary.green  || 0;
+    document.getElementById('countYellow').textContent = summary.yellow || 0;
+    document.getElementById('countRed').textContent    = summary.red    || 0;
+
+    const badge    = document.getElementById('overallBadge');
+    const status   = summary.overall_status || 'red';
+    const labelMap = { green: 'All Systems Operational', yellow: 'Degraded Performance', red: 'Outage Detected' };
+    badge.innerHTML = `<span class="overall-badge ${status}">${labelMap[status] || status.toUpperCase()}</span>`;
+  }
+
+  function renderStats(stats) {
+    if (!stats) return;
+    document.getElementById('statEmails').textContent = stats.emails_sent  ?? '0';
+    document.getElementById('statSms').textContent    = stats.sms_sent     ?? '0';
+    document.getElementById('statCalls').textContent  = stats.calls_made   ?? '0';
+    document.getElementById('statDms').textContent    = stats.dms_generated ?? '0';
+    document.getElementById('statLeads').textContent  = stats.leads_scored  ?? '0';
+  }
+
+  function renderErrors(errors) {
+    const el = document.getElementById('errorSection');
+    if (!errors || errors.length === 0) {
+      el.innerHTML = '<div class="error-list"><div class="no-errors">No errors logged. All clear.</div></div>';
+      return;
+    }
+    const shown = [...errors].reverse().slice(0, 10);
+    const rows = shown.map(e => `
+      <div class="error-row">
+        <span class="error-time">[${esc(fmtErrorTime(e.timestamp))}]</span>
+        <span class="error-service">${esc(e.service || '?')}</span>
+        <span class="error-msg">${esc(e.message || '')}</span>
+      </div>
+    `).join('');
+    el.innerHTML = `<div class="error-list">${rows}</div>`;
+  }
+
+  // ── Main fetch ─────────────────────────────────────────────────────────────
+  function loadData() {
+    const cacheBreaker = '?_=' + Date.now();
+    fetch(HEALTH_FILE + cacheBreaker)
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status} — ${r.statusText}`);
+        return r.json();
+      })
+      .then(data => {
+        // Header timestamp
+        document.getElementById('generatedAt').textContent =
+          'Updated: ' + (data.generated_at ? fmtTimestamp(data.generated_at) : 'unknown');
+
+        renderSummary(data.summary);
+        renderComponents(data.components || []);
+        renderStats(data.today_stats || {});
+        renderErrors(data.recent_errors || []);
+        startCountdown();
+      })
+      .catch(err => {
+        document.getElementById('generatedAt').textContent = 'Load failed';
+        document.getElementById('componentSection').innerHTML =
+          `<div class="load-msg error">
+            Failed to load system-health.json<br>
+            <span style="font-size:11px;color:#555;margin-top:8px;display:block">
+              ${esc(err.message)}<br><br>
+              Make sure system-health-monitor.py has run at least once:<br>
+              python3 ops/system-health-monitor.py check
+            </span>
+          </div>`;
+        document.getElementById('errorSection').innerHTML =
+          '<div class="error-list"><div class="no-errors" style="color:var(--text-dim)">Cannot load error log.</div></div>';
+        document.getElementById('overallBadge').innerHTML =
+          '<span class="overall-badge red">Data Unavailable</span>';
+        startCountdown();
+      });
+  }
+
+  // ── Boot ───────────────────────────────────────────────────────────────────
+  loadData();
+</script>
+</body>
+</html>

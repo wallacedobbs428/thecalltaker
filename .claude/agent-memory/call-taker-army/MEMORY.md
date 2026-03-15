@@ -54,3 +54,17 @@ See /home/user/thecalltaker/ops/blast-engine-v2.py INDUSTRY_MAP dict.
 - Prompt: universal demo v5 (~263 words)
 - NEVER overwrite demo line with single-industry prompt
 - Client lines use industry-specific prompts in ops/jessica-voice-prompt-v6/v7.md
+
+## DM Outreach v2 (2026-03-15)
+- Script: /home/user/thecalltaker/ops/dm-outreach-v2.py
+- Replaces dm-tracker.py (manual lists, no sequence logic)
+- State: ops/dm-outreach-state.json | DM log: ops/dm-log.json | Daily list: ops/dm-list-today.json
+- 3-DM sequence: DM1 (compliment+pitch) → DM2 (pain Q, 3d later) → DM3 (proof+demo line, 5d later)
+- Industries: hvac, plumbing, roofing, dental, generic — each has unique copy per step
+- Platforms: instagram, facebook (auto-detected from GHL custom fields or website URL)
+- Commands: generate | log <id> <platform> <step> <status> | advance | candidates | status | export
+- Trigger tags: dm-candidate, pilot-candidate, hot-lead, sms-no-reply, email-no-reply, cold-outreach
+- Exclude tags: customer, active-client, pilot-active, pilot-converted, do-not-contact, unsubscribed, dm-complete, dm-replied
+- GHL tags added per action: dm1-sent, dm2-sent, dm3-sent, dm-{platform}, hot-lead, dm-replied, demo-booked
+- export command prints formatted copy-paste blocks to terminal (Wallace's daily workflow)
+- Max 30 DMs per platform per day (MAX_DAILY_DMS cap)
