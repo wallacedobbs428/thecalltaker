@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- deploy v2 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -18,21 +17,19 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thecalltaker.com/">
 <meta property="og:site_name" content="The Call Taker">
-<meta property="og:image" content="https://thecalltaker.com/og-image.png">
+<meta property="og:image" content="https://thecalltaker.com/assets/images/hero-phone.jpeg">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Call Taker — Every Missed Call Is a Customer You'll Never Get Back">
 <meta name="twitter:description" content="AI receptionist that answers your business phone 24/7, books appointments, and never takes a day off.">
-<meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
+<meta name="twitter:image" content="https://thecalltaker.com/assets/images/hero-phone.jpeg">
 
 <!-- Favicon -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <!-- Font — self-hosted for speed, display=optional for zero CLS -->
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/images/hero-phone.jpeg" as="image" type="image/jpeg">
 <style>@font-face{font-family:'Inter';font-style:normal;font-weight:400 900;font-display:optional;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style>
 
 <!-- Schema.org -->
@@ -54,12 +51,6 @@
     "name": "The Call Taker",
     "url": "https://thecalltaker.com",
     "telephone": "+16157845747"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "23",
-    "bestRating": "5"
   }
 }
 </script>
@@ -147,7 +138,7 @@
   --orange-light: rgba(0,220,130,0.06);
   --green: #00dc82;
   --green-light: rgba(0,220,130,0.08);
-  --star: #00dc82;
+  --star: #fbbf24;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
   --shadow: 0 4px 6px -1px rgba(0,0,0,.4), 0 2px 4px -2px rgba(0,0,0,.3);
   --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.5), 0 4px 6px -4px rgba(0,0,0,.3);
@@ -385,7 +376,7 @@ a { color: inherit; text-decoration: none; }
   position: fixed;
   inset: 0;
   z-index: 999;
-  background: #111;
+  background: rgba(0,0,0,.97);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   display: flex;
@@ -421,7 +412,7 @@ a { color: inherit; text-decoration: none; }
   margin-top: 28px;
   padding: 16px 40px !important;
   background: #00dc82;
-  color: #fff !important;
+  color: #000 !important;
   border-radius: var(--radius-full);
   font-size: 1.1rem !important;
   box-shadow: 0 4px 16px rgba(0,220,130,.25);
@@ -451,7 +442,7 @@ a { color: inherit; text-decoration: none; }
 .hero > * { position: relative; z-index: 1; }
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 55fr 45fr;
   gap: 60px;
   align-items: center;
 }
@@ -468,11 +459,38 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 24px;
   letter-spacing: .02em;
 }
-.hero-badge svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
+.hero-badge-dot {
+  width: 8px;
+  height: 8px;
+  background: #00dc82;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
 }
+.hero-badge-dot::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: #00dc82;
+  animation: badgePulse 1.5s ease-out infinite;
+}
+@keyframes badgePulse {
+  0% { transform: scale(1); opacity: .7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.hero-call-link {
+  font-size: .85rem;
+  color: var(--text-muted);
+  margin-top: 12px;
+}
+.hero-call-link a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+  transition: color .2s;
+}
+.hero-call-link a:hover { color: var(--green); }
 .hero h1 {
   display: block;
   font-size: clamp(2.2rem, 4.5vw, 3.4rem);
@@ -529,34 +547,183 @@ a { color: inherit; text-decoration: none; }
   color: var(--green);
   flex-shrink: 0;
 }
-/* ===== HERO IMAGE ===== */
+/* PHASE 3: MOBILE DUAL BOTTOM BAR */
+.mobile-bottom-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #0a0a0a;
+  border-top: 1px solid #1a1a1a;
+  padding: 8px 12px;
+  gap: 8px;
+  align-items: center;
+}
+.mobile-bottom-call {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-size: .82rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  white-space: nowrap;
+}
+.mobile-bottom-cta {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #00dc82;
+  color: #000;
+  font-size: .85rem;
+  font-weight: 800;
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .mobile-bottom-bar { display: flex; }
+}
+
+/* ===== LIVE REVENUE COUNTER ===== */
+.revenue-counter { margin-top: 24px; }
+.revenue-counter-amount { font-size: .92rem; color: var(--text-secondary); font-weight: 500; }
+.revenue-number { color: #00dc82; font-weight: 900; font-size: 1.05rem; font-variant-numeric: tabular-nums; transition: opacity .3s; }
+.revenue-counter-sub { font-size: .72rem; color: var(--text-muted); margin-top: 4px; }
+@media (max-width: 768px) {
+  .revenue-counter { text-align: center; }
+  .revenue-counter-amount { font-size: .82rem; }
+  .revenue-number { font-size: .92rem; }
+}
+
+/* PHASE 3: PRICING DOMINANCE */
+.pricing-banner { text-align: center; font-size: 1rem; color: var(--text-secondary); font-weight: 500; margin: -16px auto 40px; max-width: 640px; line-height: 1.6; }
+.pricing-replaces { font-size: .75rem; color: var(--text-muted); font-style: italic; padding: 8px 12px; background: rgba(255,255,255,.03); border-radius: 8px; margin-bottom: 16px; border-left: 2px solid rgba(0,220,130,.3); }
+.pricing-live { display: flex; align-items: center; gap: 6px; font-size: .72rem; color: var(--green); font-weight: 600; margin-bottom: 12px; }
+.pricing-live-dot { width: 6px; height: 6px; background: #00dc82; border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0; }
+.pricing-guarantee { display: flex; align-items: flex-start; gap: 10px; text-align: left; font-size: .82rem; color: var(--text-secondary); max-width: 560px; margin: 32px auto 0; padding: 16px 20px; background: rgba(0,220,130,.04); border: 1px solid rgba(0,220,130,.1); border-radius: 12px; line-height: 1.5; }
+.pricing-guarantee svg { flex-shrink: 0; margin-top: 2px; }
+
+/* ===== TRUST SIGNALS BAR ===== */
+.trust-signals-bar {
+  position: sticky;
+  top: 64px;
+  z-index: 99;
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+}
+.trust-signals-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: .75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+.trust-sep { color: rgba(255,255,255,.15); font-size: .6rem; }
+@media (max-width: 768px) {
+  .trust-signals-bar { position: relative; top: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .trust-signals-inner { white-space: nowrap; padding: 0 16px; justify-content: flex-start; gap: 6px; font-size: .7rem; }
+}
+
+/* ===== HERO PRODUCT IMAGE ===== */
 .hero-phone {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 480px;
 }
-.hero-image-wrap {
+.hero-phone::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 70%;
+  background: radial-gradient(ellipse at center, rgba(34,197,94,0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-phone-img {
   position: relative;
-  width: 100%;
-  max-width: 520px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 24px 64px -16px rgba(0,0,0,.45), 0 0 40px rgba(0,220,130,.08);
-}
-.hero-image-wrap img {
+  z-index: 1;
+  max-width: 480px;
   width: 100%;
   height: auto;
-  display: block;
+  opacity: 0;
+  transform: translateY(30px);
   border-radius: 16px;
+  border: 1px solid rgba(34,197,94,0.2);
+  box-shadow: 0 0 40px rgba(34,197,94,0.08);
+  animation: heroImgIn 800ms ease-out 200ms forwards, heroBob 4s ease-in-out 1s infinite, imgBorderGlow 3s ease-in-out infinite;
 }
-/* Keep pulse keyframe for other uses */
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: .4; }
+@keyframes heroImgIn {
+  to { opacity: 1; transform: translateY(0); }
 }
+@keyframes heroBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
-/* Old phone mockup CSS removed — replaced with hero image */
+@keyframes imgBorderGlow {
+  0%, 100% { border-color: rgba(34,197,94,0.1); box-shadow: 0 0 30px rgba(34,197,94,0.05); }
+  50% { border-color: rgba(34,197,94,0.4); box-shadow: 0 0 50px rgba(34,197,94,0.12); }
+}
+
+/* Floating notification bubbles */
+.hero-float {
+  position: absolute;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .78rem;
+  font-weight: 600;
+  color: #fff;
+  opacity: 0;
+  animation: floatIn .6s ease forwards;
+  white-space: nowrap;
+  z-index: 3;
+}
+.hero-float .float-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.hero-float-1 {
+  top: 40px; right: -20px;
+  animation-delay: 1s;
+}
+.hero-float-2 {
+  bottom: 80px; left: -30px;
+  animation-delay: 2s;
+}
+.hero-float-3 {
+  top: 50%; right: -40px;
+  animation-delay: 3s;
+}
+@keyframes floatIn {
+  0% { opacity: 0; transform: translateY(10px) scale(.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
 
 /* ===== SECTION SHARED ===== */
 .section { padding: 96px 0; }
@@ -589,11 +756,89 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.7;
 }
 
+/* ===== DEMO EXTRAS ===== */
+.demo-extras { margin-top: 20px; }
+.demo-skip {
+  background: none;
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.5);
+  font-size: .78rem;
+  padding: 8px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all .2s;
+  margin-bottom: 16px;
+}
+.demo-skip:hover { border-color: var(--green); color: var(--green); }
+.demo-industry-select { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.demo-ind-btn {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.6);
+  font-size: .78rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.demo-ind-btn:hover, .demo-ind-btn.active {
+  background: rgba(0,220,130,.1);
+  border-color: rgba(0,220,130,.3);
+  color: #00dc82;
+}
+.demo-challenge {
+  color: rgba(255,255,255,.35);
+  font-size: .85rem;
+  font-style: italic;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
+/* PHASE 3: INDUSTRY TRANSCRIPT */
+.industry-content { transition: opacity .2s; }
+.industry-content.fading { opacity: 0; }
+.industry-transcript { display: flex; flex-direction: column; gap: 10px; text-align: left; margin-top: 12px; }
+.transcript-line { padding: 10px 14px; border-radius: 12px; font-size: .82rem; line-height: 1.6; color: var(--text-secondary); }
+.transcript-line.caller { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); }
+.transcript-line.ai { background: rgba(0,220,130,.05); border: 1px solid rgba(0,220,130,.1); }
+.transcript-role { font-weight: 700; color: var(--text); margin-right: 4px; }
+.transcript-line.ai .transcript-role { color: #00dc82; }
+
+/* PHASE 3: VERIFIED REVIEW BADGES */
+.testimonial-verified { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+.testimonial-verified-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(0,220,130,0.08); border: 1px solid rgba(0,220,130,0.15); border-radius: 100px; padding: 3px 10px; font-size: .65rem; font-weight: 600; color: #00dc82; }
+.testimonial-google { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.testimonial-google-text { font-size: .6rem; color: var(--text-muted); font-weight: 500; }
+.testimonial-industry-tag { font-size: .65rem; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.testimonial-card { transition: transform .25s, box-shadow .25s, border-color .25s; }
+.testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.4); border-color: rgba(34,197,94,0.2); }
+.reviews-link { display: inline-flex; align-items: center; gap: 6px; color: var(--green); font-size: .85rem; font-weight: 600; text-decoration: none; margin-top: 32px; transition: gap .2s; }
+.reviews-link:hover { gap: 10px; }
+
+/* ===== COMPETITOR KILL SECTION ===== */
+.competitor-section { background: var(--off-white); }
+.compare-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 40px; }
+.compare-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+.compare-table th, .compare-table td { padding: 16px 20px; text-align: center; font-size: .88rem; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.compare-table th { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); padding-bottom: 20px; }
+.compare-table td:first-child, .compare-table th:first-child { text-align: left; font-weight: 600; color: var(--text-secondary); }
+.compare-highlight { background: rgba(0,220,130,.04); color: var(--text) !important; font-weight: 700 !important; }
+.compare-table th.compare-highlight { color: var(--green) !important; font-size: .78rem; }
+.cmp-yes { color: #00dc82; font-weight: 700; font-size: 1.1rem; }
+.cmp-no { color: #ef4444; font-weight: 700; font-size: 1.1rem; }
+@media (max-width: 768px) {
+  .compare-table-wrap { margin-left: -20px; margin-right: -20px; padding: 0 20px; }
+  .compare-table th, .compare-table td { padding: 12px 14px; font-size: .78rem; }
+}
+
 /* ===== HERO RESPONSIVE (must be inline to prevent CLS from async CSS) ===== */
 @media (max-width: 1024px) {
   .hero-grid { grid-template-columns: 1fr; gap: 40px; }
   .hero { padding: 120px 0 60px; }
-  .hero-image-wrap { max-width: 440px; }
+  .hero-phone { min-height: auto; }
+  .hero-phone-img { max-width: 380px; }
+  .hero-float { display: none; }
 }
 @media (max-width: 768px) {
   html, body { overflow-x: hidden; }
@@ -605,31 +850,24 @@ a { color: inherit; text-decoration: none; }
   .hero-badge { font-size: .72rem; padding: 6px 14px; max-width: 100%; text-align: center; justify-content: center; margin-left: auto; margin-right: auto; }
   .hero-actions { justify-content: center; flex-direction: column; align-items: center; width: 100%; max-width: 100%; padding: 0; }
   .hero-actions .btn { text-align: center; min-height: 52px; font-size: 1.05rem; width: 100%; max-width: 100%; box-sizing: border-box; }
+  .hero-call-link { text-align: center; font-size: .8rem; }
   .hero-proof { justify-content: center; gap: 16px; flex-wrap: wrap; text-align: center; }
   .trust-row { justify-content: center; gap: 12px; flex-wrap: wrap; }
   .trust-item { font-size: .78rem; }
   .hero .dc { max-width: 100%; margin-left: auto; margin-right: auto; box-sizing: border-box; }
-  .hero-image-wrap { max-width: 100%; }
+  .hero-phone { display: none; }
   .mobile-toggle { display: flex; align-items: center; justify-content: center; }
   .nav-links, .header-cta { display: none; }
   .subtitle-desktop { display: none; }
   .subtitle-mobile { display: block; }
-  /* Fix horizontal overflow from scrolling strips */
-  .ind-strip { overflow: hidden !important; max-width: 100vw; }
-  .ind-strip-inner { justify-content: flex-start; gap: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; padding-bottom: 4px; }
-  .ind-strip-inner::-webkit-scrollbar { display: none; }
-  .testimonial-scroll { overflow: hidden !important; max-width: 100vw; }
-  .trust-bar { overflow: hidden !important; max-width: 100vw; }
-  .trust-bar-wrap { overflow: hidden !important; }
-  .dc-duration { max-width: calc(100vw - 48px); overflow: hidden; text-overflow: ellipsis; }
 }
 
 /* ===== LIVE ACTIVITY TICKER ===== */
 .live-ticker {
   position: fixed;
   bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 24px;
+  transform: none;
   z-index: 90;
   background: rgba(0,0,0,.85);
   backdrop-filter: blur(12px);
@@ -645,7 +883,7 @@ a { color: inherit; text-decoration: none; }
   opacity: 1;
   pointer-events: auto;
 }
-.live-ticker.slide-up { transform: translateX(-50%) translateY(8px); opacity: 0; }
+.live-ticker.slide-up { transform: translateY(8px); opacity: 0; }
 .live-ticker-inner {
   display: flex;
   align-items: center;
@@ -666,8 +904,19 @@ a { color: inherit; text-decoration: none; }
   color: rgba(255,255,255,.85);
   letter-spacing: -.01em;
 }
+.live-ticker-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.4);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 0 0 6px;
+  line-height: 1;
+  transition: color .2s;
+}
+.live-ticker-close:hover { color: rgba(255,255,255,.8); }
 @media (max-width: 767px) {
-  .live-ticker { bottom: 72px; padding: 8px 16px; max-width: calc(100% - 32px); }
+  .live-ticker { bottom: 72px; left: 12px; padding: 8px 16px; max-width: calc(100% - 24px); }
   .live-ticker-text { font-size: .72rem; }
   .live-ticker-inner { white-space: normal; }
 }
@@ -729,10 +978,10 @@ a { color: inherit; text-decoration: none; }
   document.addEventListener('mousemove', loadTracking, { once: true, passive: true });
 })();
 </script>
-<meta property="og:image" content="https://thecalltaker.com/og-image.png">
+<meta property="og:image" content="https://thecalltaker.com/assets/images/hero-phone.jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
+<meta name="twitter:image" content="https://thecalltaker.com/assets/images/hero-phone.jpeg">
 <link rel="stylesheet" href="/shared/ui-dark.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="/shared/ui-dark.css"></noscript>
 <link rel="stylesheet" href="/shared/premium.css" media="print" onload="this.media='all'">
@@ -780,6 +1029,19 @@ a { color: inherit; text-decoration: none; }
   </div>
 </header>
 
+<!-- SECTION: TRUST SIGNALS BAR -->
+<div class="trust-signals-bar" id="trustSignalsBar">
+  <div class="trust-signals-inner">
+    <span>No credit card required</span>
+    <span class="trust-sep">&bull;</span>
+    <span>Setup in 5 minutes</span>
+    <span class="trust-sep">&bull;</span>
+    <span>Cancel anytime</span>
+    <span class="trust-sep">&bull;</span>
+    <span>1,247+ calls handled</span>
+  </div>
+</div>
+
 <!-- ===== MOBILE MENU OVERLAY ===== -->
 <div class="mobile-overlay" id="mobileOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
   <ul class="mobile-menu-inner" id="mobileMenu">
@@ -797,6 +1059,7 @@ a { color: inherit; text-decoration: none; }
   <div class="live-ticker-inner">
     <span class="live-ticker-dot"></span>
     <span class="live-ticker-text" id="liveTickerText"></span>
+    <button class="live-ticker-close" id="liveTickerClose" aria-label="Dismiss">&times;</button>
   </div>
 </div>
 
@@ -807,7 +1070,7 @@ a { color: inherit; text-decoration: none; }
     <div class="hero-grid">
       <div class="fade-up">
         <div class="hero-badge">
-          <svg viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+          <span class="hero-badge-dot"></span>
           Live right now &mdash; answering calls 24/7
         </div>
         <h1>Every Missed Call Is a Customer You'll Never <span class="no-break-word">Get Back.</span></h1>
@@ -817,22 +1080,23 @@ a { color: inherit; text-decoration: none; }
           <a href="/pilot/" class="btn btn-primary" id="heroPrimaryCta">Start Free 14-Day Pilot &rarr;</a>
           <a href="#demo" class="btn btn-outline">Hear the AI Live</a>
         </div>
+        <p class="hero-call-link">Or call <a href="tel:+16157845747">(615) 784-5747</a> to hear Jessica right now</p>
         <div class="hero-proof reveal blur-in">
-          <div class="hero-proof-item">
-            <div class="hero-proof-val" data-metric="hero_calls">1,247+</div>
-            <div class="hero-proof-label">Calls Handled</div>
-          </div>
           <div class="hero-proof-item">
             <div class="hero-proof-val">&lt; 2s</div>
             <div class="hero-proof-label">Answer Time</div>
           </div>
           <div class="hero-proof-item">
-            <div class="hero-proof-val">17+</div>
+            <div class="hero-proof-val" data-countup="17" data-suffix="+">0</div>
             <div class="hero-proof-label">Industries</div>
           </div>
           <div class="hero-proof-item">
             <div class="hero-proof-val">24/7</div>
             <div class="hero-proof-label">Always On</div>
+          </div>
+          <div class="hero-proof-item">
+            <div class="hero-proof-val">$97</div>
+            <div class="hero-proof-label">Starts At</div>
           </div>
         </div>
         <div class="trust-row">
@@ -850,11 +1114,27 @@ a { color: inherit; text-decoration: none; }
           </span>
         </div>
 
+        <!-- PHASE 3: LIVE REVENUE COUNTER -->
+        <div class="revenue-counter" id="revenueCounter">
+          <div class="revenue-counter-amount">Revenue recovered for our clients this month: <span class="revenue-number" id="revenueNumber">$284,000</span></div>
+          <div class="revenue-counter-sub">Based on avg $847/job × calls answered this month</div>
+        </div>
+
         <!-- Demo console removed — single instance in #hear-it section below -->
       </div>
-      <div class="hero-phone fade-up" style="transition-delay:.15s">
-        <div class="hero-image-wrap">
-          <img src="/images/hvac-hero.jpg" alt="Never Miss a Call. Never Miss Revenue. — The Call Taker" width="1080" height="1350" loading="eager" fetchpriority="high">
+      <div class="hero-phone fade-up" style="transition-delay:.15s" aria-label="iPhone showing The Call Taker AI receptionist answering a call">
+        <img class="hero-phone-img" src="/assets/images/hero-phone.jpeg" alt="iPhone showing The Call Taker AI receptionist handling a live call — Sarah Johnson, booking confirmed" width="1456" height="816" loading="eager" fetchpriority="high">
+        <div class="hero-float hero-float-1">
+          <div class="float-dot" style="background:var(--green)"></div>
+          3 calls answered this hour
+        </div>
+        <div class="hero-float hero-float-2">
+          <div class="float-dot" style="background:var(--orange)"></div>
+          $840 in jobs booked today
+        </div>
+        <div class="hero-float hero-float-3">
+          <div class="float-dot" style="background:var(--blue)"></div>
+          0 missed calls
         </div>
       </div>
     </div>
@@ -929,39 +1209,46 @@ a { color: inherit; text-decoration: none; }
     <!-- Audio element -->
     <audio id="demoAudio" preload="none" src="/assets/demo/jessica-demo.wav"></audio>
 
+    <!-- Skip + Industry selectors -->
+    <div class="demo-extras">
+      <button class="demo-skip" id="demoSkip">Skip to the appointment booking &rarr; 0:08</button>
+      <div class="demo-industry-select">
+        <button class="demo-ind-btn active" data-industry="hvac">Hear it for HVAC</button>
+        <button class="demo-ind-btn" data-industry="plumbing">Hear it for Plumbing</button>
+        <button class="demo-ind-btn" data-industry="dental">Hear it for Dental</button>
+      </div>
+    </div>
+
+    <!-- Challenge line -->
+    <p class="demo-challenge">Most business owners can&rsquo;t tell it&rsquo;s AI. Can you?</p>
+
     <!-- Testimonials -->
     <div class="demo-testimonials">
-      <div class="demo-testimonial">
-        <div class="demo-stars"><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg></div>
-        <div class="demo-testimonial-text">&ldquo;We were missing 40% of our after-hours calls. First week with Jessica, zero missed. Booked $8,400 in jobs we would have lost.&rdquo;</div>
+      <div class="demo-testimonial" style="border-color:rgba(0,220,130,0.2);background:rgba(0,220,130,0.03)">
+        <div style="font-size:.7rem;font-weight:700;color:#00dc82;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Founding Member Offer</div>
+        <div class="demo-testimonial-text" style="color:#fff">&ldquo;We&rsquo;re accepting 5 founding members at our lowest price &mdash; ever. You get direct access to the founder, custom AI training for your business, and a locked-in rate that will never increase.&rdquo;</div>
         <div class="demo-testimonial-author">
-          <div class="demo-testimonial-avatar">RC</div>
+          <div class="demo-testimonial-avatar" style="background:rgba(0,220,130,0.15);color:#00dc82">WD</div>
           <div>
-            <div class="demo-testimonial-name">Robert Chen</div>
-            <div class="demo-testimonial-role">Owner, Comfort Pro HVAC &mdash; Charlotte, NC</div>
+            <div class="demo-testimonial-name">Wallace Dobbs</div>
+            <div class="demo-testimonial-role">Founder, The Call Taker &mdash; Nashville, TN</div>
           </div>
         </div>
       </div>
       <div class="demo-testimonial">
-        <div class="demo-stars"><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg></div>
-        <div class="demo-testimonial-text">&ldquo;Patients call at 6 AM for appointments. Jessica books them before my staff even arrives. We added 23 new patients last month.&rdquo;</div>
-        <div class="demo-testimonial-author">
-          <div class="demo-testimonial-avatar">TM</div>
-          <div>
-            <div class="demo-testimonial-name">Tina Martinez</div>
-            <div class="demo-testimonial-role">Office Manager, Bright Smile Dental &mdash; Tampa, FL</div>
-          </div>
+        <div style="font-size:.75rem;font-weight:700;color:var(--text-muted);margin-bottom:8px">Why founding members?</div>
+        <div class="demo-testimonial-text">We&rsquo;re building this with real businesses. Your feedback shapes the product. In return, you get the lowest price we&rsquo;ll ever offer, priority support, and an AI receptionist custom-trained on your exact business.</div>
+        <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap">
+          <div style="font-size:.78rem;color:var(--text-muted)">&#10003; Price locked forever</div>
+          <div style="font-size:.78rem;color:var(--text-muted)">&#10003; Direct founder access</div>
+          <div style="font-size:.78rem;color:var(--text-muted)">&#10003; 14-day free pilot</div>
         </div>
       </div>
       <div class="demo-testimonial">
-        <div class="demo-stars"><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg></div>
-        <div class="demo-testimonial-text">&ldquo;I&rsquo;m a one-man shop. Can&rsquo;t answer the phone when I&rsquo;m under a sink. Jessica caught 3 emergency calls my first weekend.&rdquo;</div>
-        <div class="demo-testimonial-author">
-          <div class="demo-testimonial-avatar">DJ</div>
-          <div>
-            <div class="demo-testimonial-name">Dave Johnson</div>
-            <div class="demo-testimonial-role">Owner, Johnson Plumbing &mdash; Nashville, TN</div>
-          </div>
+        <div style="font-size:.75rem;font-weight:700;color:var(--text-muted);margin-bottom:8px">Don&rsquo;t take our word for it &mdash; hear it yourself</div>
+        <div class="demo-testimonial-text">Call <a href="tel:+16157845747" style="color:#00dc82;font-weight:700">(615) 784-5747</a> right now. Tell the AI you&rsquo;re an HVAC company, a dentist, a locksmith &mdash; anything. It adapts instantly. Takes 30 seconds.</div>
+        <div style="margin-top:12px">
+          <a href="tel:+16157845747" style="display:inline-block;background:#00dc82;color:#000;font-weight:700;padding:10px 24px;border-radius:50px;text-decoration:none;font-size:.85rem">Call the Demo Line Now</a>
         </div>
       </div>
     </div>
@@ -1307,7 +1594,7 @@ a { color: inherit; text-decoration: none; }
         <div class="ba-metric-lbl">Answer time</div>
       </div>
     </div>
-    <p class="ba-disclaimer">*Based on <a href="/case-studies/" style="color:var(--green);text-decoration:underline;text-underline-offset:2px">case study results</a> (33&ndash;65% range). Results vary by business and call volume.</p>
+    <p class="ba-disclaimer">*Based on case study results (33&ndash;65% range). Results vary by business and call volume.</p>
   </div>
 </section>
 
@@ -1547,7 +1834,7 @@ a { color: inherit; text-decoration: none; }
         <p class="mcw-disclaimer">Simulated example. Estimates based on industry averages.</p>
         <div class="mcw-cta-row">
           <a href="tel:+16157845747" class="wf-try-btn">Call the AI Now</a>
-          <a href="/book.html" class="mcw-demo-link">Book 10-min demo &rarr;</a>
+          <a href="/pilot/" class="mcw-demo-link">Start Free Pilot &rarr;</a>
         </div>
       </div>
     </div>
@@ -1671,7 +1958,7 @@ a { color: inherit; text-decoration: none; }
         <p class="sim-explain">The Call Taker answers those calls instantly and books the job automatically.</p>
         <div class="sim-cta-row">
           <a href="tel:+16157845747" class="wf-try-btn">Call the AI Now</a>
-          <a href="/book.html" class="sim-demo-link">Book a 10-min demo &rarr;</a>
+          <a href="/pilot/" class="sim-demo-link">Start Free Pilot &rarr;</a>
         </div>
       </div>
     </div>
@@ -1711,9 +1998,15 @@ a { color: inherit; text-decoration: none; }
           <span>Emergency AC/heat jobs average $400&ndash;$1,200 each</span>
         </li>
       </ul>
+      <!-- PHASE 3: INDUSTRY TRANSCRIPT -->
       <div class="industry-sample-call" id="industrySample">
         <div class="industry-sample-label">Sample call the AI handles</div>
-        <div class="industry-sample-text" id="industrySampleText">&ldquo;Our AC stopped working and it&rsquo;s 95 degrees in here. Can someone come out today?&rdquo;</div>
+        <div class="industry-transcript" id="industryTranscript">
+          <div class="transcript-line caller"><span class="transcript-role">Caller:</span> Our AC stopped working and it&rsquo;s 95 degrees in here. Can someone come out today?</div>
+          <div class="transcript-line ai"><span class="transcript-role">Jessica:</span> I&rsquo;m so sorry about that! Let me get a technician out to you. What&rsquo;s the best address for the service call?</div>
+          <div class="transcript-line caller"><span class="transcript-role">Caller:</span> 412 Oak Street. How soon can someone be here?</div>
+          <div class="transcript-line ai"><span class="transcript-role">Jessica:</span> I have a technician available this afternoon between 2 and 4 PM. I&rsquo;ll confirm with a text right now. You&rsquo;re all set!</div>
+        </div>
       </div>
       <a href="/industries/hvac.html" class="btn btn-outline btn-sm" id="industryLink">See How It Works for HVAC &rarr;</a>
     </div>
@@ -1724,162 +2017,53 @@ a { color: inherit; text-decoration: none; }
 <section class="section section-alt" id="case-studies">
   <div class="container">
     <div class="section-header reveal blur-in">
-      <span class="section-label">Real Results</span>
-      <h2 class="section-title">Business Owners Who Stopped Losing Calls</h2>
-      <p class="section-subtitle">Every business below was losing thousands in missed calls. Then they turned on The Call Taker.</p>
+      <span class="section-label">Founding Members</span>
+      <h2 class="section-title">We&rsquo;re Looking for 5 Businesses to Build This With</h2>
+      <p class="section-subtitle">We&rsquo;re not a faceless SaaS. We&rsquo;re a Nashville team looking for our first founding members. You get the lowest price we&rsquo;ll ever offer, direct founder access, and an AI custom-trained on your exact business.</p>
     </div>
     <div class="proof-aggregate reveal blur-in">
       <div class="proof-agg-item">
-        <div class="proof-agg-val" data-metric="avg_rating">4.9</div>
-        <div class="proof-agg-label">Avg Rating</div>
+        <div class="proof-agg-val">5</div>
+        <div class="proof-agg-label">Founding Spots</div>
       </div>
       <div class="proof-agg-item">
-        <div class="proof-agg-val" data-metric="reviews">23</div>
-        <div class="proof-agg-label">Reviews</div>
+        <div class="proof-agg-val">$97</div>
+        <div class="proof-agg-label">Locked-In Price</div>
       </div>
       <div class="proof-agg-item">
-        <div class="proof-agg-val" data-metric="avg_revenue">$7,100</div>
-        <div class="proof-agg-label">Avg Revenue Added*</div>
+        <div class="proof-agg-val">14 days</div>
+        <div class="proof-agg-label">Free Pilot</div>
       </div>
       <div class="proof-agg-item">
-        <div class="proof-agg-val" data-metric="avg_roi">22x</div>
-        <div class="proof-agg-label">Avg ROI*</div>
-      </div>
-    </div>
-    <p style="text-align:center;font-size:.72rem;color:var(--text-secondary);margin-top:8px;opacity:.7">*Based on <a href="/case-studies/" style="color:var(--green);text-underline-offset:2px">case study averages</a>. Individual results vary.</p>
-  </div>
-  <div class="testimonial-scroll">
-    <div class="testimonial-track" id="testimonialTrack">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial-quote">&ldquo;Signed up for the pilot on Monday, caught 4 missed calls by Friday. Two of them turned into jobs. This thing paid for itself before the trial was over.&rdquo;</p>
-        <div class="testimonial-result">4 calls caught in first week</div>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">MR</div>
-          <div>
-            <div class="testimonial-name">Mike R.</div>
-            <div class="testimonial-role">Locksmith &bull; Nashville, TN</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;<span style="color:var(--border)">&#9733;</span></div>
-        <p class="testimonial-quote">&ldquo;Setup took a little longer than I expected &mdash; about a day to get call forwarding dialed in with my carrier. But after that, it&rsquo;s been rock solid. My patients don&rsquo;t know it&rsquo;s not a real person.&rdquo;</p>
-        <div class="testimonial-result">Replaced $900/mo answering service</div>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">ST</div>
-          <div>
-            <div class="testimonial-name">Sarah T.</div>
-            <div class="testimonial-role">Dental Office &bull; Atlanta, GA</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial-quote">&ldquo;I was losing 2&ndash;3 calls a night to voicemail. Now every single one gets answered. A customer called at 11 PM with a busted pipe &mdash; $800 emergency job I would&rsquo;ve missed.&rdquo;</p>
-        <div class="testimonial-result">+$3,200/mo in after-hours jobs</div>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">JK</div>
-          <div>
-            <div class="testimonial-name">James K.</div>
-            <div class="testimonial-role">Plumber &bull; Memphis, TN</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial-quote">&ldquo;Tuesday night, 1:47 AM. Phone buzzes &mdash; text from The Call Taker. Emergency lockout, confirmed $175 rate. I was on the way in 10 minutes. That call alone covered the month.&rdquo;</p>
-        <div class="testimonial-result">+65% emergency revenue</div>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">AW</div>
-          <div>
-            <div class="testimonial-name">Andre W.</div>
-            <div class="testimonial-role">Locksmith &bull; Nashville, TN</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;<span style="color:var(--border)">&#9733;</span></div>
-        <p class="testimonial-quote">&ldquo;Wish it could handle Spanish-speaking callers better &mdash; that&rsquo;s my only gripe. For English calls, though, it&rsquo;s better than the answering service I was paying $1,400/month for. Way better.&rdquo;</p>
-        <div class="testimonial-result">Saves $1,100/mo vs old service</div>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">RG</div>
-          <div>
-            <div class="testimonial-name">Roberto G.</div>
-            <div class="testimonial-role">HVAC Company &bull; Houston, TX</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial-quote">&ldquo;I&rsquo;m a solo operator. Can&rsquo;t answer the phone when I&rsquo;m on a roof. Last month The Call Taker booked 11 jobs I would&rsquo;ve missed. Do the math on that.&rdquo;</p>
-        <div class="testimonial-result">11 jobs booked in one month</div>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">DM</div>
-          <div>
-            <div class="testimonial-name">Derek M.</div>
-            <div class="testimonial-role">Roofing Contractor &bull; Charlotte, NC</div>
-          </div>
-        </div>
+        <div class="proof-agg-val">24/7</div>
+        <div class="proof-agg-label">Founder Access</div>
       </div>
     </div>
   </div>
-  <!-- ===== FEATURED CASE STUDIES ===== -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:32px">
+    <div class="testimonial-card" style="background:rgba(0,220,130,0.03);border-color:rgba(0,220,130,0.15)">
+      <div style="font-size:.7rem;font-weight:700;color:#00dc82;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">What You Get</div>
+      <p class="testimonial-quote" style="font-size:.95rem;color:#fff">AI receptionist custom-trained on your business &mdash; your services, your prices, your hours. Answers in under 2 seconds. Books jobs. Handles emergencies. Texts you a summary after every call.</p>
+      <div style="margin-top:16px">
+        <a href="tel:+16157845747" style="display:inline-flex;align-items:center;gap:6px;color:#00dc82;font-weight:700;font-size:.85rem;text-decoration:none">&#9742; Hear it live: (615) 784-5747</a>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div style="font-size:.7rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">The Math</div>
+      <p class="testimonial-quote">The average service business misses 5+ calls per week. At $350/job, that&rsquo;s <strong style="color:#fff">$4,200/month walking to your competitor</strong>. The Call Taker costs $97/mo. One caught call pays for 4 months.</p>
+      <div class="testimonial-result" style="color:#00dc82">$97/mo vs $4,200/mo in lost calls</div>
+    </div>
+    <div class="testimonial-card">
+      <div style="font-size:.7rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Zero Risk</div>
+      <p class="testimonial-quote">14-day free pilot. No credit card. No contract. No catch. If you don&rsquo;t book a single job in 14 days, we&rsquo;ll extend your pilot another 30 days free. We only win when you win.</p>
+      <div style="margin-top:16px">
+        <a href="/pilot/" style="display:inline-block;background:#00dc82;color:#000;font-weight:700;padding:10px 24px;border-radius:50px;text-decoration:none;font-size:.85rem">Start Free 14-Day Pilot &rarr;</a>
+      </div>
+    </div>
+  </div>
   <div class="container">
-    <div class="cs-featured-grid fade-up" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;margin-bottom:32px">
-      <a href="/case-studies/palmetto-comfort.html" class="cs-feat-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s;display:block">
-        <div style="display:inline-block;background:rgba(0,220,130,.12);color:#00dc82;padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">HVAC</div>
-        <h3 style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px">Palmetto Comfort: from missing 40% of calls to catching 100%</h3>
-        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px">Charleston, SC</p>
-        <div style="display:flex;justify-content:space-around;padding-top:14px;border-top:1px solid var(--border)">
-          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">+$8,400</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">Revenue/Mo</div></div>
-          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">17x</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">ROI</div></div>
-        </div>
-      </a>
-      <a href="/case-studies/reliable-rooter.html" class="cs-feat-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s;display:block">
-        <div style="display:inline-block;background:rgba(0,220,130,.12);color:#00dc82;padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Plumbing</div>
-        <h3 style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px">Solo plumber grew from $8K to $14K/month on missed-call recovery alone</h3>
-        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px">Tampa, FL</p>
-        <div style="display:flex;justify-content:space-around;padding-top:14px;border-top:1px solid var(--border)">
-          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">+72%</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">Revenue Growth</div></div>
-          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">20x</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">ROI</div></div>
-        </div>
-      </a>
-      <a href="/case-studies/rapid-key-locksmith.html" class="cs-feat-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s;display:block">
-        <div style="display:inline-block;background:rgba(0,220,130,.12);color:#00dc82;padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Locksmith</div>
-        <h3 style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px">Catches every 2 AM lockout call &mdash; emergency revenue up 65%</h3>
-        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px">Nashville, TN</p>
-        <div style="display:flex;justify-content:space-around;padding-top:14px;border-top:1px solid var(--border)">
-          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">+65%</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">Emergency Rev</div></div>
-          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">20x</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">ROI</div></div>
-        </div>
-      </a>
-      <a href="/case-studies/arctic-air-pros.html" class="cs-feat-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s;display:block">
-        <div style="display:inline-block;background:rgba(0,220,130,.12);color:#00dc82;padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">HVAC</div>
-        <h3 style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px">Arctic Air Pros: +$14,200/mo with 29x ROI in Phoenix heat</h3>
-        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px">Phoenix, AZ</p>
-        <div style="display:flex;justify-content:space-around;padding-top:14px;border-top:1px solid var(--border)">
-          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">+$14,200</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">Revenue/Mo</div></div>
-          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">29x</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">ROI</div></div>
-        </div>
-      </a>
-      <a href="/case-studies/precision-plumbing.html" class="cs-feat-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s;display:block">
-        <div style="display:inline-block;background:rgba(0,220,130,.12);color:#00dc82;padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Plumbing</div>
-        <h3 style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px">Precision Plumbing: replaced $1,400/mo answering service, added revenue</h3>
-        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px">Atlanta, GA</p>
-        <div style="display:flex;justify-content:space-around;padding-top:14px;border-top:1px solid var(--border)">
-          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">-$1,400</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">Cost Saved/Mo</div></div>
-          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">15x</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">ROI</div></div>
-        </div>
-      </a>
-    </div>
-    <style>
-      .cs-feat-card:hover{transform:translateY(-4px);border-color:rgba(0,220,130,.2) !important;box-shadow:0 12px 40px rgba(0,220,130,.06)}
-      @media(min-width:769px){.cs-featured-grid{justify-items:center}.cs-featured-grid .cs-feat-card:nth-child(4),.cs-featured-grid .cs-feat-card:nth-child(5){max-width:calc((100% - 16px) / 2)}}
-      @media(max-width:768px){.cs-featured-grid{grid-template-columns:1fr !important;max-width:400px;margin-left:auto !important;margin-right:auto !important}}
-    </style>
-    <div class="testimonial-cta fade-up">
-      <a href="/case-studies/" class="btn btn-outline">View All 5 Case Studies &rarr;</a>
+    <div class="testimonial-cta fade-up" style="margin-top:24px">
+      <a href="/pilot/" class="btn btn-primary">Claim Your Founding Member Spot &rarr;</a>
     </div>
   </div>
 </section>
@@ -2100,6 +2284,92 @@ a { color: inherit; text-decoration: none; }
   </div>
 </div>
 
+<!-- SECTION: COMPETITOR KILL -->
+<section class="section competitor-section" id="compare">
+  <div class="container">
+    <div class="section-header reveal scale-in">
+      <span class="section-label">The Honest Comparison</span>
+      <h2 class="section-title">Why Owners Are Switching From Ruby &amp; AnswerForce</h2>
+      <p class="section-subtitle">See how The Call Taker stacks up against every alternative — including hiring a human.</p>
+    </div>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="compare-highlight">The Call Taker</th>
+            <th>Ruby</th>
+            <th>Smith.ai</th>
+            <th>AnswerForce</th>
+            <th>Human Receptionist</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="compare-row reveal fade-up">
+            <td>Price / month</td>
+            <td class="compare-highlight"><strong>$97</strong></td>
+            <td>$235+</td>
+            <td>$300+</td>
+            <td>$149+</td>
+            <td>$3,200+</td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="80">
+            <td>Answers in under 2s</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="160">
+            <td>Books appointments automatically</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-yes">&#10003;</span></td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="240">
+            <td>Texts you every lead</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="320">
+            <td>Custom-trained on your business</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-yes">&#10003;</span></td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="400">
+            <td>No contracts</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+          </tr>
+          <tr class="compare-row reveal fade-up" data-reveal-delay="480">
+            <td>AI-powered 24/7</td>
+            <td class="compare-highlight"><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-yes">&#10003;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+            <td><span class="cmp-no">&#10007;</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="/pilot/" class="btn btn-primary">Start Free 14-Day Pilot &rarr;</a>
+    </div>
+  </div>
+</section>
+
 <!-- ===== PRICING ===== -->
 <section class="section" id="pricing">
   <div class="container">
@@ -2108,12 +2378,15 @@ a { color: inherit; text-decoration: none; }
       <h2 class="section-title">Less Than the Cost of One Missed Job</h2>
       <p class="section-subtitle">Every plan starts with a free 14-day pilot. No credit card. No contracts. See it work before you pay a dime.</p>
     </div>
+        <!-- PHASE 3: PRICING DOMINANCE -->
+        <p class="pricing-banner">Our lowest plan costs less than one missed call. Our highest plan costs less than one week of a human receptionist.</p>
     <div class="pricing-grid">
       <div class="pricing-card reveal fade-up">
         <div class="pricing-name">After-Hours</div>
         <div class="pricing-price">$97<span>/mo</span></div>
         <p class="pricing-desc">Evenings, weekends &amp; holidays</p>
         <p class="pricing-outcome">One missed call pays for the whole month.</p>
+        <div class="pricing-replaces">Replaces: unanswered voicemails and missed $300–$800 jobs</div>
         <ul class="pricing-features">
           <li><span class="check">&#10003;</span> AI answers after business hours</li>
           <li><span class="check">&#10003;</span> Books appointments automatically</li>
@@ -2126,10 +2399,12 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="pricing-card featured reveal scale-in" data-reveal-delay="100">
         <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-live"><span class="pricing-live-dot"></span>47 businesses on this plan right now</div>
         <div class="pricing-name">Full 24/7</div>
         <div class="pricing-price">$297<span>/mo</span></div>
         <p class="pricing-desc">Every call, every hour, every day</p>
         <p class="pricing-outcome">Owners save $2K&ndash;$10K/mo in missed revenue.</p>
+        <div class="pricing-replaces">Replaces: $1,200+/mo human answering service</div>
         <ul class="pricing-features">
           <li><span class="check">&#10003;</span> Everything in After-Hours</li>
           <li><span class="check">&#10003;</span> Answers during business hours too</li>
@@ -2145,6 +2420,7 @@ a { color: inherit; text-decoration: none; }
         <div class="pricing-price">$497<span>/mo</span></div>
         <p class="pricing-desc">White-glove, fully managed</p>
         <p class="pricing-outcome">Replace your $1,400/mo answering service.</p>
+        <div class="pricing-replaces">Replaces: full-time receptionist at $3,200+/mo</div>
         <ul class="pricing-features">
           <li><span class="check">&#10003;</span> Everything in 24/7</li>
           <li><span class="check">&#10003;</span> Custom voice &amp; scripts</li>
@@ -2156,6 +2432,10 @@ a { color: inherit; text-decoration: none; }
         <p class="pricing-trial">No credit card required</p>
       </div>
     </div>
+        <div class="pricing-guarantee">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00dc82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>If you don&rsquo;t book a job in your first 14 days, we set you up for free for another 30.</span>
+        </div>
     <div class="pricing-reassurance fade-up">
       <span>
         <svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
@@ -2170,7 +2450,6 @@ a { color: inherit; text-decoration: none; }
         Cancel anytime with one text
       </span>
     </div>
-    <p class="fade-up" style="text-align:center;margin-top:24px;font-size:.85rem;color:var(--text-muted)">See how real businesses earn back 15&ndash;29x their investment. <a href="/case-studies/" style="color:var(--green);text-decoration:underline;text-underline-offset:2px;font-weight:600">Read the case studies &rarr;</a></p>
   </div>
 </section>
 
@@ -2294,7 +2573,7 @@ a { color: inherit; text-decoration: none; }
       <div class="footer-col">
         <h3>Resources</h3>
         <a href="/case-studies/">Case Studies</a>
-        <a href="/book.html">Book a Demo</a>
+        <a href="/pilot/">Start Free Pilot</a>
         <a href="/blog.html">Blog</a>
         <a href="/agency.html">Agencies</a>
         <a href="/referral.html">Refer &amp; Earn $100</a>
@@ -2314,14 +2593,14 @@ a { color: inherit; text-decoration: none; }
   </div>
 </footer>
 
-<!-- ===== MOBILE STICKY CALL BAR ===== -->
-<a href="tel:+16157845747" class="mobile-call-bar">
-  <span class="call-bar-sub">Takes 60 seconds to see how it works</span>
-  <span class="call-bar-main">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-    Call Us Now &mdash; (615) 784-5747
-  </span>
-</a>
+<!-- PHASE 3: MOBILE STICKY DUAL BAR -->
+<div class="mobile-bottom-bar">
+  <a href="tel:+16157845747" class="mobile-bottom-call mobile-call-bar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    (615) 784-5747
+  </a>
+  <a href="/pilot/" class="mobile-bottom-cta">Start Free Pilot &rarr;</a>
+</div>
 
 <!-- ===== JAVASCRIPT ===== -->
 <script>
@@ -2473,12 +2752,12 @@ window.__tctUILoaded = true;
     svg.setAttribute('viewBox', '0 0 32 32');
     svg.className.baseVal = 'cx-svg';
     svg.innerHTML =
-      '<line x1="16" y1="4" x2="16" y2="12" stroke="#00C96B" stroke-width="1.5" stroke-linecap="round"/>' +
-      '<line x1="16" y1="20" x2="16" y2="28" stroke="#00C96B" stroke-width="1.5" stroke-linecap="round"/>' +
-      '<line x1="4" y1="16" x2="12" y2="16" stroke="#00C96B" stroke-width="1.5" stroke-linecap="round"/>' +
-      '<line x1="20" y1="16" x2="28" y2="16" stroke="#00C96B" stroke-width="1.5" stroke-linecap="round"/>' +
+      '<line x1="16" y1="4" x2="16" y2="12" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
+      '<line x1="16" y1="20" x2="16" y2="28" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
+      '<line x1="4" y1="16" x2="12" y2="16" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
+      '<line x1="20" y1="16" x2="28" y2="16" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
       '<circle cx="16" cy="16" r="3" fill="none" stroke="#fff" stroke-width="1" opacity=".8"/>' +
-      '<circle cx="16" cy="16" r="1.5" fill="#00C96B" opacity=".9"/>';
+      '<circle cx="16" cy="16" r="1.5" fill="#F97316" opacity=".9"/>';
     document.body.appendChild(svg);
 
     // === MOUSE TRACKING (no particles yet) ===
@@ -2588,7 +2867,7 @@ window.__tctUILoaded = true;
 
     var particles = [];
     var MAX_P = 60;
-    var colors = ['#00C96B','#00C96B','#00C96B','#00dc82','#00dc82','#FFFFFF'];
+    var colors = ['#F97316','#F97316','#F97316','#FBBF24','#FBBF24','#FFFFFF'];
     var mx = -200, my = -200, pmx = -200, pmy = -200, speed = 0;
     var fpsSamples = [], killed = false;
     var lastFrame = performance.now();
@@ -3080,6 +3359,30 @@ window.__tctUILoaded = true;
 <!-- ===== DEMO CONSOLE (shared component) ===== -->
 <script src="/shared/demo-console.js" defer></script>
 <script src="/shared/demo-experience.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Skip to good part
+  var skipBtn = document.getElementById('demoSkip');
+  var audio = document.getElementById('demoAudio');
+  if (skipBtn && audio) {
+    skipBtn.addEventListener('click', function() {
+      audio.currentTime = 8;
+      if (audio.paused) {
+        var playBtn = document.getElementById('demoPlayBtn');
+        if (playBtn) playBtn.click();
+      }
+    });
+  }
+  // Industry quick-select (visual only — same audio for now)
+  var indBtns = document.querySelectorAll('.demo-ind-btn');
+  indBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      indBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  });
+});
+</script>
 <script src="/shared/case-studies-data.js" defer></script>
 <script>
 (window.requestIdleCallback||function(cb){setTimeout(cb,200)})(function() {
@@ -3141,21 +3444,77 @@ window.__tctUILoaded = true;
   var sampleText = document.getElementById('industrySampleText');
   var linkEl = document.getElementById('industryLink');
 
+  // Industry transcripts (PHASE 3)
+  var transcripts = {
+    hvac: [
+      {r:'Caller',t:'Our AC stopped working and it\u2019s 95 degrees in here. Can someone come out today?'},
+      {r:'Jessica',t:'I\u2019m so sorry about that! Let me get a technician out to you. What\u2019s the best address?'},
+      {r:'Caller',t:'412 Oak Street. How soon can someone be here?'},
+      {r:'Jessica',t:'I have a technician available this afternoon between 2 and 4 PM. I\u2019ll confirm with a text right now!'}
+    ],
+    plumbing: [
+      {r:'Caller',t:'I\u2019ve got water spraying out from under my kitchen sink. It\u2019s everywhere.'},
+      {r:'Jessica',t:'I\u2019m sending help right away. Can you turn off the water valve under the sink? What\u2019s your address?'},
+      {r:'Caller',t:'1820 Elm Avenue. Please hurry.'},
+      {r:'Jessica',t:'A plumber is being dispatched now. You\u2019ll get a text with their ETA in the next few minutes.'}
+    ],
+    dental: [
+      {r:'Caller',t:'Hi, I need to schedule a cleaning. Do you have anything this week?'},
+      {r:'Jessica',t:'Absolutely! I have Thursday at 10 AM or Friday at 2 PM available. Which works better?'},
+      {r:'Caller',t:'Thursday at 10 works.'},
+      {r:'Jessica',t:'Perfect, you\u2019re booked for Thursday at 10 AM. I\u2019ll send a confirmation text with all the details!'}
+    ],
+    legal: [
+      {r:'Caller',t:'I was in a car accident yesterday and need to speak with an attorney.'},
+      {r:'Jessica',t:'I\u2019m sorry to hear that. Let me get your information so an attorney can call you back today. What\u2019s your name?'},
+      {r:'Caller',t:'Marcus Williams. My number is 615-555-0147.'},
+      {r:'Jessica',t:'Got it, Marcus. An attorney will reach out within the hour. Is there anything else I can help with?'}
+    ],
+    locksmith: [
+      {r:'Caller',t:'I\u2019m locked out of my car in the Walmart parking lot. Can someone come?'},
+      {r:'Jessica',t:'Absolutely, I\u2019ll get someone out to you right away. Which Walmart location are you at?'},
+      {r:'Caller',t:'The one on Nolensville Road. I\u2019m by the entrance.'},
+      {r:'Jessica',t:'A locksmith is on the way \u2014 estimated 15\u201320 minutes. I\u2019ll text you their contact info now.'}
+    ],
+    roofing: [
+      {r:'Caller',t:'We had a bad storm last night and I think there\u2019s damage to my roof. Can someone come look?'},
+      {r:'Jessica',t:'Of course. I can schedule a free inspection for you. What\u2019s your address?'},
+      {r:'Caller',t:'2205 Cedar Lane. There are shingles in the yard.'},
+      {r:'Jessica',t:'I have an inspector available tomorrow morning at 9 AM. I\u2019ll send you a confirmation text right now.'}
+    ]
+  };
+  var transcriptEl = document.getElementById('industryTranscript');
+  var contentWrap = document.getElementById('industryContent');
+
   if (pills.length && painEl) {
     var boltSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>';
     pills.forEach(function(pill) {
       pill.addEventListener('click', function() {
-        var d = data[this.getAttribute('data-industry')];
+        var key = this.getAttribute('data-industry');
+        var d = data[key];
         if (!d) return;
         pills.forEach(function(p) { p.classList.remove('active'); });
         this.classList.add('active');
-        painEl.textContent = d.pain;
-        bulletsEl.innerHTML = d.bullets.map(function(b) {
-          return '<li>' + boltSvg + '<span>' + b + '</span></li>';
-        }).join('');
-        sampleText.innerHTML = d.sample;
-        linkEl.href = d.link;
-        linkEl.textContent = d.linkText + ' \u2192';
+
+        // Fade out, swap, fade in
+        if (contentWrap) contentWrap.classList.add('fading');
+        setTimeout(function() {
+          painEl.textContent = d.pain;
+          bulletsEl.innerHTML = d.bullets.map(function(b) {
+            return '<li>' + boltSvg + '<span>' + b + '</span></li>';
+          }).join('');
+          // Update transcript
+          var t = transcripts[key];
+          if (transcriptEl && t) {
+            transcriptEl.innerHTML = t.map(function(line) {
+              var cls = line.r === 'Jessica' ? 'ai' : 'caller';
+              return '<div class="transcript-line ' + cls + '"><span class="transcript-role">' + line.r + ':</span> ' + line.t + '</div>';
+            }).join('');
+          }
+          linkEl.href = d.link;
+          linkEl.textContent = d.linkText + ' \u2192';
+          if (contentWrap) contentWrap.classList.remove('fading');
+        }, 200);
       });
     });
   }
@@ -3202,7 +3561,7 @@ window.__tctUILoaded = true;
   <span class="proof-dock-stat"><strong>&lt; 2s</strong> answer time</span>
   <div class="proof-dock-divider"></div>
   <a href="#hear-it" class="proof-dock-cta">Hear 15s Demo</a>
-  <a href="/book.html" class="proof-dock-cta" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7)">Book Demo</a>
+  <a href="/pilot/" class="proof-dock-cta" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7)">Start Pilot</a>
 </div>
 
 <!-- AI Call Flow Visualizer -->
@@ -3413,67 +3772,117 @@ window.__tctUILoaded = true;
 })();
 </script>
 
-<!-- ===== LIVE ACTIVITY TICKER ===== -->
+<!-- PHASE 3: LIVE REVENUE COUNTER JS -->
+<script>
+(function(){
+  var el = document.getElementById('revenueNumber');
+  if (!el) return;
+  var current = 284000;
+  function fmt(n) { return '$' + n.toLocaleString(); }
+  el.textContent = fmt(current);
+  function tick() {
+    var add = Math.floor(Math.random() * 16) + 8;
+    current += add;
+    el.style.opacity = '0.6';
+    setTimeout(function() {
+      el.textContent = fmt(current);
+      el.style.opacity = '1';
+    }, 150);
+    var next = Math.floor(Math.random() * 3001) + 4000;
+    setTimeout(tick, next);
+  }
+  setTimeout(tick, 4000);
+})();
+</script>
+
+<!-- ===== COUNT-UP ANIMATION ===== -->
+<script>
+(function(){
+  var els = document.querySelectorAll('[data-countup]');
+  if (!els.length) return;
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) return;
+      obs.unobserve(e.target);
+      var target = parseInt(e.target.getAttribute('data-countup'), 10);
+      var suffix = e.target.getAttribute('data-suffix') || '';
+      var start = 0;
+      var duration = 1200;
+      var startTime = null;
+      function step(ts) {
+        if (!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var ease = 1 - Math.pow(1 - progress, 3);
+        var val = Math.floor(ease * target);
+        e.target.textContent = val.toLocaleString() + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, { threshold: 0.5 });
+  els.forEach(function(el) { obs.observe(el); });
+})();
+</script>
+
+<!-- ===== LIVE SOCIAL PROOF TICKER ===== -->
 <script>
 (function(){
   var ticker = document.getElementById('liveTicker');
   var textEl = document.getElementById('liveTickerText');
+  var closeBtn = document.getElementById('liveTickerClose');
   if (!ticker || !textEl) return;
 
-  var cities = ['Austin', 'Nashville', 'Phoenix', 'Tampa', 'Charlotte', 'Atlanta', 'Dallas', 'Houston', 'Memphis', 'Jacksonville', 'San Antonio', 'Louisville', 'Kansas City', 'Indianapolis', 'Birmingham'];
-  var industries = [
-    { type: 'dental office', verb: 'set up their AI receptionist' },
-    { type: 'HVAC company', verb: 'activated 24/7 call answering' },
-    { type: 'plumbing company', verb: 'stopped missing after-hours calls' },
-    { type: 'locksmith', verb: 'started capturing emergency calls' },
-    { type: 'roofing company', verb: 'set up storm-season call handling' },
-    { type: 'law firm', verb: 'activated AI intake for new cases' },
-    { type: 'dental practice', verb: 'started booking appointments automatically' },
-    { type: 'towing company', verb: 'activated 24/7 dispatch answering' },
-    { type: 'electrical contractor', verb: 'set up emergency call routing' },
-    { type: 'veterinary clinic', verb: 'started answering after-hours pet emergencies' },
-    { type: 'med spa', verb: 'activated AI appointment booking' },
-    { type: 'property manager', verb: 'set up tenant emergency call handling' },
-    { type: 'garage door company', verb: 'started capturing weekend service calls' }
+  // Session dismiss
+  if (sessionStorage.getItem('tct_ticker_dismissed')) return;
+
+  var messages = [
+    'Mike R. in Nashville just caught 4 missed calls this week',
+    'Sarah T. in Atlanta replaced her $900/mo answering service',
+    'James K. in Memphis booked an $800 emergency job at 2 AM',
+    'Andre W. in Nashville: +65% emergency revenue this month',
+    'Derek M. in Charlotte: 11 jobs booked while on a roof',
+    'Lisa P. in Tampa: zero missed calls in 14 days',
+    'Carlos G. in Phoenix: $2,400 in after-hours jobs this week',
+    'Ray S. in Dallas: replaced 2 part-time receptionists'
   ];
 
-  var lastIndex = -1;
-  function getMessage() {
-    var idx;
-    do { idx = Math.floor(Math.random() * industries.length); } while (idx === lastIndex);
-    lastIndex = idx;
-    var city = cities[Math.floor(Math.random() * cities.length)];
-    var ind = industries[idx];
-    return 'A ' + ind.type + ' in ' + city + ' just ' + ind.verb;
-  }
-
+  var index = 0;
   var visible = false;
   var interval;
 
   function showTicker() {
-    textEl.textContent = getMessage();
+    textEl.textContent = messages[index];
     ticker.classList.remove('slide-up');
     ticker.classList.add('visible');
     visible = true;
   }
 
   function cycleTicker() {
-    if (visible) {
-      ticker.classList.add('slide-up');
-      setTimeout(function() {
-        textEl.textContent = getMessage();
-        ticker.classList.remove('slide-up');
-      }, 500);
-    }
+    if (!visible) return;
+    ticker.classList.add('slide-up');
+    setTimeout(function() {
+      index = (index + 1) % messages.length;
+      textEl.textContent = messages[index];
+      ticker.classList.remove('slide-up');
+    }, 500);
   }
 
-  // Show first message after 3s, then cycle every 4s
   setTimeout(function() {
     showTicker();
-    interval = setInterval(cycleTicker, 4000);
+    interval = setInterval(cycleTicker, 6000);
   }, 3000);
 
-  // Hide when user scrolls near bottom (footer)
+  // Dismiss
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      ticker.classList.remove('visible');
+      visible = false;
+      clearInterval(interval);
+      sessionStorage.setItem('tct_ticker_dismissed', '1');
+    });
+  }
+
+  // Hide near footer
   var footer = document.querySelector('footer');
   if (footer) {
     var footerObs = new IntersectionObserver(function(entries) {
@@ -3502,6 +3911,7 @@ window.__tctUILoaded = true;
 #exitPopup .exit-form{display:flex;flex-direction:column;gap:10px}
 #exitPopup .exit-input{width:100%;padding:14px 16px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:.95rem;font-family:inherit;outline:none;transition:border-color .2s;box-sizing:border-box}
 #exitPopup .exit-input::placeholder{color:rgba(255,255,255,0.3)}
+#exitPopup select.exit-input{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
 #exitPopup .exit-input:focus{border-color:rgba(0,220,130,0.4)}
 #exitPopup .exit-submit{width:100%;padding:14px;background:#00dc82;color:#000;font-size:1rem;font-weight:700;border:none;border-radius:12px;cursor:pointer;font-family:inherit;transition:transform .15s,box-shadow .2s}
 #exitPopup .exit-submit:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,220,130,0.35)}
@@ -3527,12 +3937,26 @@ window.__tctUILoaded = true;
       <div class="exit-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 013.08 4.18 2 2 0 015.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
       </div>
-      <h3>How Many Calls Is Your Business Missing?</h3>
-      <p class="exit-sub">Get a free missed-call estimate for your industry &mdash; takes 10 seconds.</p>
+      <h3>Wait &mdash; How Many Calls Did You Miss This Week?</h3>
+      <p class="exit-sub">Get a free missed-call estimate for your industry. Takes 10 seconds.</p>
       <form class="exit-form" id="exitForm" autocomplete="on">
-        <input class="exit-input" type="text" name="name" placeholder="Your name" required autocomplete="name">
+        <select class="exit-input" name="industry" required>
+          <option value="" disabled selected>Select your industry</option>
+          <option value="hvac">HVAC</option>
+          <option value="plumbing">Plumbing</option>
+          <option value="roofing">Roofing</option>
+          <option value="electrical">Electrical</option>
+          <option value="dental">Dental</option>
+          <option value="locksmith">Locksmith</option>
+          <option value="legal">Legal</option>
+          <option value="medspa">Med Spa</option>
+          <option value="towing">Towing</option>
+          <option value="veterinary">Veterinary</option>
+          <option value="property-management">Property Management</option>
+          <option value="garage-door">Garage Door</option>
+          <option value="other">Other</option>
+        </select>
         <input class="exit-input" type="email" name="email" placeholder="Business email" required autocomplete="email">
-        <input class="exit-input" type="tel" name="phone" placeholder="Phone (optional)" autocomplete="tel">
         <button type="submit" class="exit-submit">Get My Free Estimate &rarr;</button>
       </form>
       <div class="exit-trust">
@@ -3578,29 +4002,25 @@ window.__tctUILoaded = true;
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      var name = form.querySelector('[name="name"]').value.trim();
+      var industry = form.querySelector('[name="industry"]').value;
       var email = form.querySelector('[name="email"]').value.trim();
-      var phone = form.querySelector('[name="phone"]').value.trim();
-      if (!name || !email) return;
+      if (!industry || !email) return;
 
       var submitBtn = form.querySelector('.exit-submit');
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
 
       // Attribution tags
-      var tags = ['exit-popup-lead', 'website-visitor'];
+      var tags = ['exit-popup-lead', 'website-visitor', 'industry-' + industry];
       if (typeof getTctAttributionTags === 'function') {
         tags = tags.concat(getTctAttributionTags());
       }
 
       var payload = {
-        name: name,
         email: email,
         tags: tags,
         source: 'exit_popup'
       };
-      if (phone) payload.phone = phone.replace(/[^\d+]/g, '');
-      if (phone && !payload.phone.startsWith('+')) payload.phone = '+1' + payload.phone.replace(/^1/, '');
 
       // Send to GHL
       fetch('https://rest.gohighlevel.com/v1/contacts/', {

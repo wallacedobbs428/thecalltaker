@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<title>The Call Taker — Your AI Receptionist Demo</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --green: #00dc82;
+    --green-dim: rgba(0,220,130,0.12);
+    --green-glow: rgba(0,220,130,0.25);
+    --bg: #000;
+    --surface: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.08);
+    --text: #fff;
+    --text-2: #a1a1aa;
+    --text-3: #71717a;
+  }
+  html { background: var(--bg); }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== PRINT STYLES ===== */
+  @media print {
+    body { background: #fff; color: #000; }
+    .walkin-card { border-color: #000 !important; box-shadow: none !important; background: #fff !important; }
+    .walkin-header { background: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .walkin-qr { filter: none !important; }
+    .cta-call { background: #000 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .walkin-footer { color: #666 !important; }
+    .pain-stat { color: #000 !important; }
+    .no-print { display: none !important; }
+  }
+
+  .walkin-page {
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .walkin-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,220,130,0.06);
+  }
+
+  /* HEADER */
+  .walkin-header {
+    background: linear-gradient(135deg, #0a0a0a 0%, rgba(0,220,130,0.06) 100%);
+    padding: 32px 28px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .walkin-logo {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .walkin-logo span { color: var(--green); }
+
+  .walkin-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-dim);
+    border: 1px solid rgba(0,220,130,0.2);
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .walkin-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .walkin-headline {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .walkin-sub {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+
+  /* BODY */
+  .walkin-body {
+    padding: 28px;
+  }
+
+  /* PAIN POINTS */
+  .pain-section {
+    margin-bottom: 24px;
+  }
+  .pain-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .pain-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .pain-num {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--green);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .pain-text {
+    font-size: 0.85rem;
+    color: var(--text-2);
+    line-height: 1.4;
+  }
+
+  /* WHAT YOU GET */
+  .features {
+    margin-bottom: 24px;
+  }
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .feature-check {
+    color: var(--green);
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .feature-text {
+    font-size: 0.88rem;
+    color: var(--text-2);
+    line-height: 1.4;
+  }
+  .feature-text strong { color: var(--text); }
+
+  /* QR CODE */
+  .walkin-qr-section {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 20px;
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+  }
+  .walkin-qr-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .walkin-qr {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 12px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .walkin-qr svg { width: 100%; height: 100%; }
+  .qr-hint {
+    font-size: 0.8rem;
+    color: var(--text-3);
+  }
+
+  /* CTA */
+  .cta-call {
+    display: block;
+    width: 100%;
+    background: var(--green);
+    color: #000;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    padding: 16px;
+    border-radius: 14px;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    transition: transform 0.15s, box-shadow 0.2s;
+  }
+  .cta-call:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px var(--green-glow);
+  }
+  .cta-call .cta-sub {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+
+  .cta-text {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: 2px solid var(--green);
+    color: var(--green);
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 14px;
+    border-radius: 14px;
+    text-decoration: none;
+    margin-bottom: 16px;
+    transition: background 0.2s;
+  }
+  .cta-text:hover {
+    background: var(--green-dim);
+  }
+
+  /* PRICING */
+  .walkin-pricing {
+    text-align: center;
+    padding: 16px;
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .walkin-price {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--text);
+    letter-spacing: -0.03em;
+  }
+  .walkin-price span { color: var(--text-3); font-size: 1rem; font-weight: 600; }
+  .walkin-price-sub {
+    font-size: 0.8rem;
+    color: var(--text-3);
+    margin-top: 2px;
+  }
+
+  /* FOOTER */
+  .walkin-footer {
+    text-align: center;
+    padding: 16px 28px 20px;
+    font-size: 0.75rem;
+    color: var(--text-3);
+    border-top: 1px solid var(--border);
+  }
+  .walkin-footer a { color: var(--green); text-decoration: none; }
+
+  /* TOOLBAR */
+  .walkin-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    justify-content: center;
+  }
+  .walkin-toolbar button {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .walkin-toolbar button:hover {
+    background: var(--green-dim);
+    border-color: rgba(0,220,130,0.2);
+    color: var(--green);
+  }
+
+  @media (max-width: 480px) {
+    .walkin-page { padding: 12px 8px; }
+    .walkin-header { padding: 24px 20px 20px; }
+    .walkin-body { padding: 20px; }
+    .walkin-headline { font-size: 1.3rem; }
+    .pain-num { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="walkin-page">
+  <div class="walkin-card">
+
+    <!-- HEADER -->
+    <div class="walkin-header">
+      <div class="walkin-logo">The Call<span>Taker</span></div>
+      <div class="walkin-badge">AI Live Now</div>
+      <h1 class="walkin-headline">Your Phone Is Losing You Money Right Now</h1>
+      <p class="walkin-sub">Call our demo line. Hear an AI receptionist answer as YOUR type of business. Takes 30 seconds.</p>
+    </div>
+
+    <!-- BODY -->
+    <div class="walkin-body">
+
+      <!-- PAIN STATS -->
+      <div class="pain-section">
+        <div class="pain-label">The Problem</div>
+        <div class="pain-stat">
+          <div class="pain-num">85%</div>
+          <div class="pain-text">of callers who hit voicemail <strong>never call back</strong></div>
+        </div>
+        <div class="pain-stat">
+          <div class="pain-num">62%</div>
+          <div class="pain-text">of calls to service businesses <strong>go unanswered</strong></div>
+        </div>
+        <div class="pain-stat">
+          <div class="pain-num">$4,200</div>
+          <div class="pain-text">lost per month from <strong>missed calls alone</strong></div>
+        </div>
+      </div>
+
+      <!-- WHAT YOU GET -->
+      <div class="features">
+        <div class="pain-label">What You Get</div>
+        <div class="feature-item">
+          <span class="feature-check">&#10003;</span>
+          <span class="feature-text"><strong>AI answers every call</strong> — 24/7, in 0.5 seconds</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-check">&#10003;</span>
+          <span class="feature-text"><strong>Trained on YOUR business</strong> — knows your services, hours, prices</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-check">&#10003;</span>
+          <span class="feature-text"><strong>Books the job</strong> — schedules appointments, handles emergencies</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-check">&#10003;</span>
+          <span class="feature-text"><strong>Texts you a summary</strong> — caller name, issue, urgency, all details</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-check">&#10003;</span>
+          <span class="feature-text"><strong>14-day free pilot</strong> — no card, no contract, no risk</span>
+        </div>
+      </div>
+
+      <!-- QR CODE — links to demo line -->
+      <div class="walkin-qr-section">
+        <div class="walkin-qr-label">Hear It Live — Scan to Call</div>
+        <div class="walkin-qr">
+          <!-- QR code for tel:+16157845747 -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33" shape-rendering="crispEdges">
+            <rect width="33" height="33" fill="#fff"/>
+            <path d="M0,0h7v1h-7zM8,0h2v1h-2zM11,0h1v1h-1zM13,0h1v1h-1zM15,0h1v1h-1zM17,0h2v1h-2zM20,0h2v1h-2zM23,0h1v1h-1zM26,0h7v1h-7zM0,1h1v1h-1zM6,1h1v1h-1zM8,1h1v1h-1zM11,1h2v1h-2zM14,1h1v1h-1zM17,1h1v1h-1zM20,1h1v1h-1zM22,1h1v1h-1zM24,1h1v1h-1zM26,1h1v1h-1zM32,1h1v1h-1zM0,2h1v1h-1zM2,2h3v1h-3zM6,2h1v1h-1zM9,2h3v1h-3zM13,2h1v1h-1zM16,2h1v1h-1zM18,2h4v1h-4zM26,2h1v1h-1zM28,2h3v1h-3zM32,2h1v1h-1zM0,3h1v1h-1zM2,3h3v1h-3zM6,3h1v1h-1zM8,3h3v1h-3zM12,3h2v1h-2zM15,3h3v1h-3zM19,3h1v1h-1zM21,3h2v1h-2zM24,3h1v1h-1zM26,3h1v1h-1zM28,3h3v1h-3zM32,3h1v1h-1zM0,4h1v1h-1zM2,4h3v1h-3zM6,4h1v1h-1zM9,4h1v1h-1zM11,4h1v1h-1zM14,4h3v1h-3zM18,4h1v1h-1zM22,4h1v1h-1zM24,4h1v1h-1zM26,4h1v1h-1zM28,4h3v1h-3zM32,4h1v1h-1zM0,5h1v1h-1zM6,5h1v1h-1zM10,5h2v1h-2zM13,5h1v1h-1zM16,5h3v1h-3zM20,5h3v1h-3zM26,5h1v1h-1zM32,5h1v1h-1zM0,6h7v1h-7zM8,6h1v1h-1zM10,6h1v1h-1zM12,6h1v1h-1zM14,6h1v1h-1zM16,6h1v1h-1zM18,6h1v1h-1zM20,6h1v1h-1zM22,6h1v1h-1zM24,6h1v1h-1zM26,6h7v1h-7zM8,7h1v1h-1zM10,7h1v1h-1zM13,7h3v1h-3zM17,7h2v1h-2zM20,7h2v1h-2zM24,7h1v1h-1zM0,8h2v1h-2zM3,8h2v1h-2zM6,8h1v1h-1zM9,8h2v1h-2zM14,8h2v1h-2zM17,8h3v1h-3zM21,8h1v1h-1zM24,8h4v1h-4zM29,8h2v1h-2zM32,8h1v1h-1z" fill="#000"/>
+            <path d="M1,9h2v1h-2zM5,9h1v1h-1zM8,9h1v1h-1zM10,9h1v1h-1zM12,9h2v1h-2zM15,9h1v1h-1zM18,9h1v1h-1zM20,9h2v1h-2zM23,9h1v1h-1zM25,9h2v1h-2zM28,9h3v1h-3zM32,9h1v1h-1zM0,10h2v1h-2zM4,10h1v1h-1zM6,10h2v1h-2zM10,10h3v1h-3zM14,10h2v1h-2zM17,10h1v1h-1zM21,10h2v1h-2zM24,10h2v1h-2zM28,10h1v1h-1zM31,10h2v1h-2zM0,11h1v1h-1zM2,11h1v1h-1zM5,11h3v1h-3zM10,11h1v1h-1zM13,11h1v1h-1zM17,11h1v1h-1zM19,11h3v1h-3zM24,11h1v1h-1zM26,11h1v1h-1zM28,11h4v1h-4zM0,12h4v1h-4zM5,12h2v1h-2zM8,12h1v1h-1zM10,12h2v1h-2zM15,12h1v1h-1zM17,12h5v1h-5zM23,12h2v1h-2zM26,12h3v1h-3zM30,12h1v1h-1zM0,13h1v1h-1zM2,13h2v1h-2zM5,13h2v1h-2zM8,13h1v1h-1zM11,13h4v1h-4zM16,13h2v1h-2zM19,13h1v1h-1zM23,13h3v1h-3zM28,13h1v1h-1zM30,13h2v1h-2zM2,14h2v1h-2zM5,14h3v1h-3zM9,14h2v1h-2zM12,14h2v1h-2zM16,14h4v1h-4zM21,14h1v1h-1zM23,14h2v1h-2zM26,14h1v1h-1zM28,14h1v1h-1zM30,14h1v1h-1zM32,14h1v1h-1z" fill="#000"/>
+            <path d="M0,15h1v1h-1zM2,15h3v1h-3zM7,15h1v1h-1zM9,15h1v1h-1zM12,15h1v1h-1zM14,15h1v1h-1zM17,15h2v1h-2zM20,15h3v1h-3zM24,15h1v1h-1zM27,15h3v1h-3zM32,15h1v1h-1zM2,16h1v1h-1zM4,16h1v1h-1zM6,16h2v1h-2zM9,16h3v1h-3zM14,16h1v1h-1zM16,16h3v1h-3zM20,16h2v1h-2zM23,16h1v1h-1zM25,16h2v1h-2zM29,16h2v1h-2zM32,16h1v1h-1zM0,17h1v1h-1zM2,17h1v1h-1zM5,17h2v1h-2zM8,17h1v1h-1zM12,17h1v1h-1zM14,17h4v1h-4zM20,17h2v1h-2zM24,17h1v1h-1zM28,17h1v1h-1zM30,17h3v1h-3zM0,18h3v1h-3zM4,18h1v1h-1zM6,18h1v1h-1zM10,18h1v1h-1zM12,18h2v1h-2zM17,18h1v1h-1zM19,18h3v1h-3zM23,18h5v1h-5zM29,18h1v1h-1zM32,18h1v1h-1zM0,19h2v1h-2zM5,19h1v1h-1zM8,19h1v1h-1zM10,19h1v1h-1zM12,19h2v1h-2zM15,19h2v1h-2zM18,19h1v1h-1zM20,19h1v1h-1zM22,19h1v1h-1zM26,19h1v1h-1zM29,19h2v1h-2zM32,19h1v1h-1zM0,20h1v1h-1zM2,20h1v1h-1zM4,20h1v1h-1zM6,20h2v1h-2zM9,20h2v1h-2zM12,20h1v1h-1zM16,20h2v1h-2zM19,20h2v1h-2zM22,20h2v1h-2zM25,20h3v1h-3zM29,20h1v1h-1zM31,20h2v1h-2z" fill="#000"/>
+            <path d="M0,21h1v1h-1zM2,21h1v1h-1zM4,21h2v1h-2zM8,21h2v1h-2zM13,21h1v1h-1zM16,21h1v1h-1zM18,21h1v1h-1zM21,21h1v1h-1zM24,21h2v1h-2zM27,21h1v1h-1zM29,21h1v1h-1zM31,21h1v1h-1zM1,22h2v1h-2zM5,22h3v1h-3zM9,22h1v1h-1zM12,22h1v1h-1zM14,22h2v1h-2zM17,22h1v1h-1zM20,22h2v1h-2zM25,22h2v1h-2zM28,22h1v1h-1zM30,22h2v1h-2zM0,23h2v1h-2zM3,23h3v1h-3zM7,23h2v1h-2zM12,23h2v1h-2zM15,23h2v1h-2zM19,23h3v1h-3zM23,23h1v1h-1zM26,23h1v1h-1zM28,23h2v1h-2zM31,23h2v1h-2zM0,24h1v1h-1zM3,24h1v1h-1zM5,24h2v1h-2zM8,24h1v1h-1zM10,24h2v1h-2zM14,24h1v1h-1zM16,24h5v1h-5zM22,24h1v1h-1zM25,24h2v1h-2zM29,24h1v1h-1zM32,24h1v1h-1zM8,25h2v1h-2zM11,25h1v1h-1zM13,25h1v1h-1zM15,25h1v1h-1zM18,25h1v1h-1zM20,25h2v1h-2zM24,25h1v1h-1zM26,25h3v1h-3zM30,25h1v1h-1zM0,26h7v1h-7zM9,26h1v1h-1zM11,26h1v1h-1zM16,26h3v1h-3zM21,26h2v1h-2zM24,26h1v1h-1zM26,26h2v1h-2zM30,26h1v1h-1zM0,27h1v1h-1zM6,27h1v1h-1zM8,27h1v1h-1zM10,27h2v1h-2zM13,27h3v1h-3zM19,27h2v1h-2zM22,27h3v1h-3zM26,27h4v1h-4zM31,27h2v1h-2zM0,28h1v1h-1zM2,28h3v1h-3zM6,28h1v1h-1zM8,28h1v1h-1zM11,28h1v1h-1zM14,28h3v1h-3zM18,28h3v1h-3zM22,28h1v1h-1zM24,28h3v1h-3zM29,28h1v1h-1zM31,28h2v1h-2z" fill="#000"/>
+            <path d="M0,29h1v1h-1zM2,29h3v1h-3zM6,29h1v1h-1zM8,29h2v1h-2zM14,29h3v1h-3zM18,29h3v1h-3zM22,29h2v1h-2zM27,29h1v1h-1zM29,29h1v1h-1zM31,29h2v1h-2zM0,30h1v1h-1zM2,30h3v1h-3zM6,30h1v1h-1zM9,30h2v1h-2zM12,30h1v1h-1zM15,30h2v1h-2zM18,30h2v1h-2zM22,30h1v1h-1zM24,30h1v1h-1zM26,30h2v1h-2zM29,30h2v1h-2zM32,30h1v1h-1zM0,31h1v1h-1zM6,31h1v1h-1zM8,31h1v1h-1zM10,31h2v1h-2zM13,31h2v1h-2zM16,31h1v1h-1zM18,31h1v1h-1zM21,31h1v1h-1zM24,31h2v1h-2zM27,31h3v1h-3zM31,31h2v1h-2zM0,32h7v1h-7zM11,32h1v1h-1zM13,32h1v1h-1zM15,32h1v1h-1zM17,32h2v1h-2zM21,32h2v1h-2zM25,32h2v1h-2zM29,32h1v1h-1zM31,32h2v1h-2z" fill="#000"/>
+          </svg>
+        </div>
+        <div class="qr-hint">Scan to call the AI demo line</div>
+      </div>
+
+      <!-- CALL CTA -->
+      <a href="tel:+16157845747" class="cta-call">
+        Call Now: (615) 784-5747
+        <span class="cta-sub">Hear the AI answer as your type of business</span>
+      </a>
+
+      <!-- TEXT CTA -->
+      <a href="sms:+16157845747?body=PILOT" class="cta-text">
+        Text PILOT to Start Free
+      </a>
+
+      <!-- PRICING -->
+      <div class="walkin-pricing">
+        <div class="walkin-price">$97<span>/mo</span></div>
+        <div class="walkin-price-sub">After-hours plan &middot; 14 days free &middot; Cancel anytime</div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="walkin-footer">
+      <a href="https://thecalltaker.com">thecalltaker.com</a> &middot; Nashville, TN<br>
+      AI receptionist for any business with a phone line
+    </div>
+
+  </div>
+
+  <!-- TOOLBAR (screen only) -->
+  <div class="walkin-toolbar no-print">
+    <button onclick="window.print()">Print This</button>
+    <button onclick="navigator.share ? navigator.share({title:'The Call Taker',url:window.location.href}) : navigator.clipboard.writeText(window.location.href).then(()=>this.textContent='Copied!')">Share</button>
+  </div>
+
+</div>
+
+<script src="/tct-tracking.js" defer></script>
+</body>
+</html>

@@ -19,13 +19,15 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thecalltaker.com/industries/hvac">
 <meta property="og:site_name" content="The Call Taker">
-<meta property="og:image" content="https://thecalltaker.com/og-image.png">
+<meta property="og:image" content="https://thecalltaker.com/assets/images/hero-phone.jpeg">
+<meta property="og:image:width" content="1456">
+<meta property="og:image:height" content="816">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="HVAC Virtual Receptionist | The Call Taker - Never Miss an After-Hours HVAC Call">
 <meta name="twitter:description" content="Stop losing after-hours HVAC calls to voicemail. The Call Taker answers furnace emergencies, AC breakdowns, and weekend calls 24/7. Starting at $297/mo.">
-<meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
+<meta name="twitter:image" content="https://thecalltaker.com/assets/images/hero-phone.jpeg">
 
 <!-- Schema.org Structured Data -->
 <script type="application/ld+json">
@@ -159,16 +161,30 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── HERO ── */
-  .hero{padding-top: 140px;background: linear-gradient(135deg, var(--white) 0%, rgba(5,150,105,.03) 100%);padding:5rem 1.5rem 4rem;text-align:center;position:relative;overflow:hidden}
-  .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background: radial-gradient(circle, rgba(5,150,105,.02) 0%, transparent 50%);animation:heroGlow 8s ease infinite}
-  
-  .hero-badge{display:inline-block;background:rgba(0,220,130,.1);border:1px solid #00dc82;color:#00dc82;font-size:.8rem;font-weight:700;padding:.35rem 1.2rem;border-radius:20px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.25rem;position:relative;z-index:1}
-  .hero h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:800;margin-bottom:1rem;letter-spacing:-.02em;line-height:1.15;max-width:850px;margin-left:auto;margin-right:auto;position:relative;z-index:1}
-  .hero .subtitle{font-size:clamp(1rem,2.5vw,1.25rem);color:var(--text-2);max-width:680px;margin:0 auto 2rem;position:relative;z-index:1}
-  .hero-cta{display:inline-block;background: #00dc82; color: #000;font-size:1.4rem;font-weight:800;padding:.85rem 2.5rem;border-radius:50px;text-decoration:none;letter-spacing:.02em;transition:all .2s;box-shadow:0 4px 15px rgba(0,220,130,.3);position:relative;z-index:1}
-  .hero-cta:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(0,220,130,.35);background: #00c974;text-decoration:none}
-  
-  .hero-cta-sub{color:var(--text-3);font-size:.85rem;margin-top:.75rem;position:relative;z-index:1}
+  .hero{padding:160px 1.5rem 80px;background:var(--white);position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(5,150,105,.02) 0%,transparent 50%);animation:heroGlow 8s ease infinite}
+  .hero-grid{display:grid;grid-template-columns:55fr 45fr;gap:48px;align-items:center;max-width:1100px;margin:0 auto}
+  .hero-content{position:relative;z-index:1}
+  .hero-badge{display:inline-block;background:rgba(0,220,130,.1);border:1px solid #00dc82;color:#00dc82;font-size:.8rem;font-weight:700;padding:.35rem 1.2rem;border-radius:20px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.25rem}
+  .hero h1{font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:900;margin-bottom:1rem;letter-spacing:-.03em;line-height:1.08}
+  .hero .subtitle{font-size:clamp(1rem,2.5vw,1.15rem);color:var(--text-2);max-width:540px;margin:0 0 1.5rem;line-height:1.7}
+  .hero-stat-callout{font-size:.92rem;color:var(--green);font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:8px}
+  .hero-stat-callout::before{content:'';width:8px;height:8px;background:#00dc82;border-radius:50%;flex-shrink:0}
+  .hero-cta{display:inline-block;background:#00dc82;color:#000;font-size:1.1rem;font-weight:800;padding:.85rem 2.2rem;border-radius:50px;text-decoration:none;letter-spacing:.02em;transition:all .2s;box-shadow:0 4px 15px rgba(0,220,130,.3)}
+  .hero-cta:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(0,220,130,.35);background:#00c974;text-decoration:none}
+  .hero-cta-sub{color:var(--text-3);font-size:.85rem;margin-top:.75rem}
+  .hero-image-wrap{position:relative;display:flex;justify-content:center;align-items:center}
+  .hero-image-wrap::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;height:70%;background:radial-gradient(ellipse at center,rgba(34,197,94,0.12) 0%,transparent 70%);pointer-events:none}
+  .hero-image{max-width:100%;height:auto;border-radius:16px;opacity:0;transform:translateY(24px);animation:hvacImgIn .8s ease-out .2s forwards,hvacBob 4s ease-in-out 1s infinite}
+  @keyframes hvacImgIn{to{opacity:1;transform:translateY(0)}}
+  @keyframes hvacBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @media(max-width:768px){
+    .hero{padding:120px 1.5rem 60px;text-align:center}
+    .hero-grid{grid-template-columns:1fr;gap:32px}
+    .hero .subtitle{margin-left:auto;margin-right:auto}
+    .hero-stat-callout{justify-content:center}
+    .hero-image-wrap{display:none}
+  }
 
   /* ── CONTAINER ── */
   .container{max-width:960px;margin:0 auto;padding:0 1.5rem}
@@ -332,11 +348,19 @@ a { color: inherit; text-decoration: none; }
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-badge">HVAC Industry</div>
-  <h1>Stop Losing After-Hours Furnace and AC Emergencies to Voicemail</h1>
-  <p class="subtitle">42% of HVAC calls come after hours -- when a furnace dies at midnight or AC breaks in July. Every call that hits voicemail is a $350 job going to the company that picks up first.</p>
-  <a href="tel:+16157845747" class="hero-cta">(615) 784-5747</a>
-  <div class="hero-cta-sub">Call our demo line right now -- hear what your customers would hear</div>
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-badge">HVAC Industry</div>
+      <h1>HVAC Businesses Are Losing $800 Every Time They Miss a Call</h1>
+      <p class="subtitle">The Call Taker answers every call while you're under a unit, on a roof, or off the clock. Custom-trained for HVAC &mdash; books appointments, handles emergencies, texts you every lead.</p>
+      <p class="hero-stat-callout">62% of HVAC calls come after hours &mdash; we answer every single one</p>
+      <a href="/pilot/" class="hero-cta">Start Free 14-Day Pilot &rarr;</a>
+      <div class="hero-cta-sub">No credit card required &bull; Setup in 5 minutes</div>
+    </div>
+    <div class="hero-image-wrap">
+      <img class="hero-image" src="/assets/images/hvac-hero.jpeg" alt="HVAC contractor using The Call Taker AI receptionist on their phone" width="1080" height="1350" loading="eager" fetchpriority="high">
+    </div>
+  </div>
 </div>
 
 <!-- STATS BAR -->
