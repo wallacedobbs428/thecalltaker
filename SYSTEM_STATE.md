@@ -1,6 +1,6 @@
 # SYSTEM STATE — The Call Taker
 
-> Shared state file read and written by all daemons (ATLAS, VECTOR, FORGE, BLUEPRINT).
+> Shared state file read and written by all daemons (ATLAS, VECTOR, FORGE, BLUEPRINT, PRISM, ORACLE).
 > Updated automatically every daemon run. Manual edits welcome.
 > Canonical location: ~/thecalltaker-ops/SYSTEM_STATE.md (also mirrored in repo)
 
@@ -51,6 +51,14 @@
 - Next Bottleneck: GHL workflow limits (~50-100 clients est.)
 - Critical SPOFs: Wallace's MacBook (single server), Stripe not connected
 
+## Market Intelligence
+- Status: Active
+- Last ORACLE Run: pending first daemon run
+- Verticals Researched: (rotates 2 per run across all 13)
+- Competitors Tracked: Smith.ai, Ruby, AnswerForce, PATLive, Abby, Conversational, CallRail
+- Handoff Files: 10 files in ~/thecalltaker-ops/oracle_*.md
+- Intel Distribution: VECTOR, ATLAS, BLUEPRINT, PRISM, FORGE receive targeted intel each run
+
 ## Active Blockers
 1. **Stripe not connected** — Wallace is 16, needs parent/guardian. BLOCKS ALL REVENUE.
 2. **Retell.ai blocked** — needs payment card for phone number ($2/mo)
@@ -66,7 +74,7 @@
 | GoHighLevel | CRM, voice AI, workflows | Active | ~$297/mo |
 | Bland.ai | Outbound calls, secret shopper | Active | Usage-based |
 | ntfy.sh | Push notifications (5 topics) | Active | Free |
-| Anthropic API | AI daemons (ATLAS/VECTOR/FORGE/BLUEPRINT) | Active | ~$1-2/day |
+| Anthropic API | AI daemons (ATLAS/VECTOR/FORGE/BLUEPRINT/PRISM/ORACLE) | Active | ~$3-5/day |
 | n8n | Workflow automation | Unknown | Self-hosted |
 | Lemlist | Email campaigns | Active | ~$59/mo |
 | Gmail SMTP | Email sending (4 accounts) | Partial (63% fail) | Free |
@@ -79,6 +87,7 @@
 | VECTOR | 2026-03-15 (manual) | completed | 6-touch hot lead sequence built, competitor intel gathered |
 | FORGE | — | pending | — |
 | PRISM | — | pending | — |
+| ORACLE | — | pending | — |
 | BLUEPRINT | — | pending | — |
 
 ## Dependency Chain
