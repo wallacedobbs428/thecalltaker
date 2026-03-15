@@ -23,6 +23,9 @@
 <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -933,6 +936,13 @@ a{color:inherit;text-decoration:none}
   var AGENT_ID = '695947c64b9ed67d8f1077ad';
   var COUNTDOWN_SECONDS = 30;
   var FEEDBACK_DELAY_MS = 90000; // 90 seconds after call triggered
+  var GHL_HEADERS = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + GHL_API_KEY,
+    'Version': '2021-07-28',
+    'Accept': 'application/json',
+    'User-Agent': 'TheCallTaker/1.0'
+  };
 
   /* ===================================================
      DOM REFS
@@ -1092,12 +1102,7 @@ a{color:inherit;text-decoration:none}
 
     fetch(GHL_API_BASE + '/contacts/', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + GHL_API_KEY,
-        'Version':        '2021-07-28',
-        'Accept':         'application/json'
-      },
+      headers: GHL_HEADERS,
       body: JSON.stringify(contactPayload)
     })
     .then(function(r){ return r.json(); })
@@ -1118,12 +1123,7 @@ a{color:inherit;text-decoration:none}
 
     fetch(GHL_API_BASE + '/voice-ai/calls', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + GHL_API_KEY,
-        'Version':        '2021-07-28',
-        'Accept':         'application/json'
-      },
+      headers: GHL_HEADERS,
       body: JSON.stringify(callPayload)
     })
     .then(function(r){
@@ -1267,23 +1267,13 @@ a{color:inherit;text-decoration:none}
         // Add tag
         fetch(GHL_API_BASE + '/contacts/' + currentContactId + '/tags', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + GHL_API_KEY,
-            'Version':       '2021-07-28',
-            'Accept':        'application/json'
-          },
+          headers: GHL_HEADERS,
           body: JSON.stringify({ tags: ['demo-feedback'] })
         }).catch(function(){}),
         // Add note
         fetch(GHL_API_BASE + '/contacts/' + currentContactId + '/notes', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + GHL_API_KEY,
-            'Version':       '2021-07-28',
-            'Accept':        'application/json'
-          },
+          headers: GHL_HEADERS,
           body: JSON.stringify({ body: noteText, userId: null })
         }).catch(function(){})
       ]).then(function() {
