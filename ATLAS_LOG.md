@@ -49,6 +49,12 @@ All pre-audit fixes were applied to root files only. The live production site ha
 - **Files modified:** 6 (4 in website/, 2 root)
 - **Current site health:** From RED to YELLOW (duplicate file confusion remains)
 
+### Session 1 Continued — GHL API Hardening
+
+| Timestamp | Action | File | Issue | Fix | Result |
+|-----------|--------|------|-------|-----|--------|
+| 05:10 | FIX | `website/try-live.html` | 4 GHL fetch calls missing User-Agent header (Cloudflare 403 risk) | Created GHL_HEADERS constant with User-Agent, replaced all 4 inline header objects | Deployed |
+
 ### Next Session Priorities
 
 1. Audit all 49 blog posts for consistent template/CTA pattern
