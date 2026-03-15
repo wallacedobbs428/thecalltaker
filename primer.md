@@ -33,6 +33,7 @@ Full 7-component outreach system rebuild. All scripts in `ops/`.
 | C4 | Lead Quality | `lead-quality-engine.py` | Dedup + quality score 1-10. Only 5+ leads pass to blast. |
 | C5 | Speed-to-Lead v2 | `speed-to-lead-v2.py` | 15s hot signal checks. SMS 60s, call 5min, email 10min. Dead lead resurrection. |
 | C7 | DM Outreach v2 | `dm-outreach-v2.py` | 3-DM sequence per industry. Copy-paste export for Wallace. |
+| NEW | Hot Lead 5-Step | `hot-lead-sequence.py` | 5-step SMS/email/voicemail sequence (Day 0/1/2/4/7). Pain-first + scarcity. |
 | Sys | Health Monitor | `system-health-monitor.py` | Green/yellow/red for all components. SMS alert on red. |
 | Sys | Dashboard | `master-dashboard.html` | Visual command center. Auto-refreshes 60s. |
 
@@ -40,23 +41,36 @@ Full 7-component outreach system rebuild. All scripts in `ops/`.
 
 - **Branch:** `claude/rebuild-outreach-stack-DYwVo`
 - **Homepage has unstaged changes** — Trust Layer added (see below)
-- **Latest session (March 15):** Added 5 new SEO blog posts targeting high-intent keywords (water damage answering service, after-hours answering service, missed call statistics, virtual receptionist cost, best AI answering service)
+- **Latest session (March 15):** Created `hot-lead-sequence.py` — 5-step automated follow-up for hot-lead tagged contacts. Also previously added 5 SEO blog posts.
+
+## Hot Lead Sequence (March 15, 2026)
+
+New 5-step follow-up script at `ops/hot-lead-sequence.py`:
+- Step 1 (Day 0): SMS pain hook + pilot offer
+- Step 2 (Day 1): Email with missed call costs, competitor angle, case studies
+- Step 3 (Day 2): Bland.ai voicemail drop
+- Step 4 (Day 4): SMS social proof + scarcity countdown
+- Step 5 (Day 7): Breakup email
+- Commands: scan, send, status, run, test (dry run)
+- State: `ops/hot-lead-sequence-state.json`
+- Rate limits: 20 SMS/day, 30 emails/day
+- Contact registry integration for cross-engine coordination
+- 19 industries with pain hooks in INDUSTRY_HOOKS dict
+- launchd templates in docstring (scan every 2hrs, send 3x daily)
 
 ## Homepage Trust Layer (March 15, 2026)
 
 Added 4 trust elements to `website/index.html`:
 
-1. **Trust Logo Bar** — Infinite-scroll bar with 6 logos (ACCA, PHCC, Nashville Chamber, BBB, Google Verified, Inc. 5000). Duplicated set for seamless CSS animation loop. Gray/muted on dark bg, hover brightens. Positioned between hero and demo sections.
-2. **Live Call Counter** — Fixed floating badge: "Jessica has answered X calls this month". Starts at 2,847, increments every 45-90s (random), persists in localStorage, resets monthly. Green pulse on increment. Shows after 300px scroll.
-3. **Uptime Badge** — Pill badge in hero: "99.9% Uptime - 24/7/365 - Answers in Under 2 Rings". Shield icon.
-4. **Response Time Claim** — Hero proof stat updated from "< 2s Answer Time" to "< 2 Rings Answer Speed".
-5. **Live Demo Nav Link** — Added `/try-live.html` link to both desktop nav (after Demo) and mobile menu.
-
-All CSS was already staged in the diff. HTML + JS added via surgical edits.
+1. **Trust Logo Bar** — Infinite-scroll bar with 6 logos. Positioned between hero and demo sections.
+2. **Live Call Counter** — Fixed floating badge: "Jessica has answered X calls this month".
+3. **Uptime Badge** — Pill badge in hero: "99.9% Uptime - 24/7/365 - Answers in Under 2 Rings".
+4. **Response Time Claim** — Hero proof stat updated to "< 2 Rings Answer Speed".
+5. **Live Demo Nav Link** — Added `/try-live.html` link to both desktop nav and mobile menu.
 
 ## Blog Posts (82+ pages total, 49+ blog posts)
 
-All in `website/blog/`. Green/black design system. Inter font. Schema.org Article markup. OG/Twitter meta. Mid-article and bottom CTAs. Related posts section. Mobile responsive. Standard header/footer.
+All in `website/blog/`. Green/black design system. Inter font. Schema.org Article markup. OG/Twitter meta. Mid-article and bottom CTAs. Related posts section. Mobile responsive.
 
 ### New Posts Added (March 15, 2026)
 - `answering-service-water-damage.html` — Water damage answering service
@@ -68,7 +82,7 @@ All in `website/blog/`. Green/black design system. Inter font. Schema.org Articl
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal
-- **Outreach stack**: ALL 7 components rebuilt — deploy to Mac
+- **Outreach stack**: ALL 7 components rebuilt + new hot-lead-sequence — deploy to Mac
 - **Stripe**: NOT connected (Wallace is 16). PayPal/Venmo workaround live
 - **Bland.ai balance**: Cold caller + voicemails require funded account
 - **GHL aliases**: Blast v3 needs 5 aliases verified (wallace@, hello@, support@, info@, team@)
