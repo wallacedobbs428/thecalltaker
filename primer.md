@@ -26,11 +26,12 @@ AI Receptionist SaaS for service businesses. $97/$297/$497/mo plans. 14-day free
 CLAUDE.md              # 44K system doc — the bible. Read before touching anything
 primer.md              # THIS FILE — session context primer
 index.html             # Homepage (glassmorphism nav, cursor effects, phone mockup)
-website/               # All deployed pages (82 pages, GitHub Pages via Actions)
+website/               # All deployed pages (93 pages, GitHub Pages via Actions)
   industries/          # 13 industry landing pages
-  blog/                # 39 blog articles
-  case-studies/        # 5 case studies
-  pilot/               # Pilot signup flow
+  blog/                # 49 blog articles (upgraded with SEO machine)
+  case-studies/        # 5 case studies (NOTE: these are fabricated — no real customers yet)
+  pilot/               # Pilot signup flow — PRIMARY CONVERSION PATH
+  walkin.html          # Walk-in closer kit (NEW — print-ready leave-behind for Nashville)
   try-funnel/          # $97 starter funnel
   agency-program/      # White-label partner program
   toolkit/             # Sales toolkit (password-gated)
@@ -59,27 +60,48 @@ ben/, max/, sam/       # Engine state/config mirrors
 
 ## Current Session Context (March 15, 2026)
 
-- On branch `claude/fix-jessica-voice-agent-vt0s0`, 1 commit ahead of remote
-- Working tree is clean — no staged or unstaged changes
-- Recent work: PayPal/Venmo checkout built, 3-touch close sequence for 35 hot leads, Jessica voice v9, mobile fixes, demo page green theme
+- On branch `claude/fix-jessica-voice-agent-vt0s0`, synced with remote
+- **CRITICAL BUSINESS STATE**: 4,787 GHL contacts, 35 hot leads, 0 paying customers, $0 MRR, 0 demos booked
+- Fake social proof REMOVED this session — replaced with honest "founding member" positioning
+- All homepage CTAs consolidated to `/pilot/` (single conversion path)
+- Walk-in closer kit built at `/walkin.html` for Nashville in-person sales
 
 ## Recent Work (as of March 15, 2026)
 
-- **PayPal/Venmo checkout** — Accept $97/$297/$497 payments today (Stripe blocked)
-- **3-touch close sequence** — Built for 35 hot leads
-- **Jessica voice agent v9** — Anti-squeaky rewrite. Deeper voice, pitch -1, rate 0.95, stability 0.75, similarity 0.85
-- **Demo page colors** — All orange replaced with green (#00C96B)
-- **Deploy script upgraded** — v9 with voice settings, fallback voices
-- **Competitor research** — Pricing/feature comparison for Smith.ai, Ruby, AnswerConnect, PATLive, Numa, Goodcall (in progress this session)
+### This Session — Revenue-Critical Changes
+- **Walk-in closer kit** (`/walkin.html`) — print-ready page for Nashville walk-ins with QR code to demo line
+- **Fake social proof removed** — 6 fabricated testimonials, Google Review badges, fake 4.9/23 rating all deleted
+- **Founding member positioning** — 5 spots, locked price, founder access, honest "hear it yourself" cards
+- **Single conversion path** — all book.html links on homepage redirected to /pilot/
+- **Schema.org aggregateRating removed** — was fake (0 real reviews exist)
+
+### Previous Sessions
+- **Conversion tracking** — scroll depth, click heatmap, session metrics in tct-tracking.js
+- **Blog SEO machine** — all 49 blog posts upgraded (author, title format, cover images, mid-article CTAs)
+- **Mobile overhaul** — dual sticky bottom bar with call + pilot CTA
+- **Phase 3 full build** — revenue counter, industry selector, pricing dominance, case studies rebuild
+- **Phase 2 full build** — competitor kill section, trust signals, demo upgrade, OG tags
+- **Phase 1** — hero split layout with product image
 
 ## Active Priorities
 
-- **Revenue**: Get to first paid customer. $20K MRR goal. 72-hour strike plan exists
-- **Stripe**: NOT connected (Wallace is 16, needs parent/guardian). PayPal/Venmo checkout built as workaround
-- **Voice quality**: v9 prompt deployed. Test by calling (615) 784-5747
-- **Pilot program**: 5 concurrent slots, 14-day free trial. Funnel is live
-- **Outreach**: 17 industries, 20 metros. Blast engine, funnel engine, cold caller all running
-- **Competitor comparison pages**: Research in progress for website content
+1. **GET FIRST CUSTOMER** — Nothing else matters. Wallace should walk into Nashville businesses TODAY with walkin.html on his phone
+2. **Call the 35 hot leads** — Every single one, today. Not email. Phone calls.
+3. **Stripe still blocked** — Wallace is 16, needs parent/guardian. PayPal/Venmo workaround exists
+4. **Case studies are fabricated** — Need to be replaced with real customer stories once first customer signs
+5. **Pilot page testimonials** — Still have fake quotes, should be updated to match homepage founding member angle
+
+## Audit Findings (This Session)
+
+### Why 0 Customers Despite 35 Hot Leads:
+1. No human follow-up — automation runs but nobody calls leads back
+2. Fake social proof was destroying trust (now fixed)
+3. Too many conversion paths was causing confusion (now fixed)
+
+### Competitor Gaps:
+1. Competitors have established trust (Smith.ai: 5K+ businesses, Ruby: 14K+, BBB ratings)
+2. Competitors offer instant self-serve onboarding (Goodcall: 5-min setup)
+3. Competitors have deep CRM integrations (Smith.ai: 30+ integrations)
 
 ## Known Blockers
 
@@ -89,6 +111,7 @@ ben/, max/, sam/       # Engine state/config mirrors
 4. **Meta Ads** — needs API token from developers.facebook.com
 5. **reply-monitor** — has exit code 1, may need restart
 6. **Gmail SMTP passwords** — plaintext in gmail-sender.py
+7. **Cold caller dead** — Bland.ai cold calling hasn't run since Feb 24
 
 ## Voice Agent Quick Reference
 
@@ -110,3 +133,5 @@ ben/, max/, sam/       # Engine state/config mirrors
 - **Hero H1**: NEVER set to `display: inline`. "Receptionist" has `no-break-word` span
 - **Demo page colors**: Green (#00C96B), NOT orange
 - **Public email**: `thecalltakerai@gmail.com` (website), `wallace@mail.thecalltaker.com` (agency ops)
+- **Single conversion path**: ALL CTAs should go to `/pilot/`. Do NOT add book.html links.
+- **No fake social proof**: Do NOT add fabricated testimonials, fake review badges, or invented customer names
