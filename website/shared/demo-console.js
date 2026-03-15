@@ -10,11 +10,7 @@
 
   var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // === TTS VOICE SETTINGS ===
-  var TTS_VOICES = {
-    jessica: { pitch: -0.1, rate: 0.85 },
-    caller:  { pitch: 0, rate: 1.0 }
-  };
+  // TTS removed — was causing robotic voice playback
 
   // === INDUSTRY DATASETS ===
   var INDUSTRIES = {
@@ -276,7 +272,7 @@
             // Placeholder file — too short to be a real demo recording
             hasRealAudio = false;
             if (simLabel) {
-              simLabel.textContent = 'Simulated demo (real recording coming soon)';
+              simLabel.textContent = 'Interactive demo';
               simLabel.classList.remove('dc-audio-loaded');
             }
           } else {
@@ -299,7 +295,7 @@
       audioEl.addEventListener('error', function() {
         var simLabel = root.querySelector('.dc-sim-label');
         if (simLabel) {
-          simLabel.textContent = simLabel.getAttribute('data-sim');
+          simLabel.textContent = 'Interactive demo';
           simLabel.classList.remove('dc-audio-loaded');
         }
       });
@@ -390,45 +386,9 @@
       setPlayIcon('play');
       if (hasRealAudio) audioEl.pause();
       if (simInterval) { clearInterval(simInterval); simInterval = null; }
-      // Stop any TTS speech
-      if ('speechSynthesis' in window) {
-        try { speechSynthesis.cancel(); } catch(e) {}
-      }
-    }
-
-    // === TTS for simulated playback ===
-    var ttsSpoken = {};
-    var ttsAvailable = 'speechSynthesis' in window;
-
-    function speakLine(text, speaker) {
-      if (!ttsAvailable) return;
-      try {
-        var utter = new SpeechSynthesisUtterance(text);
-        var voices = speechSynthesis.getVoices();
-        if (speaker === 'AI') {
-          // Try to find a female voice for AI
-          var femaleVoice = voices.find(function(v) { return /samantha|karen|victoria|zira|female/i.test(v.name); });
-          if (femaleVoice) utter.voice = femaleVoice;
-          utter.pitch = 1.05;
-          utter.rate = 0.9;
-        } else {
-          // Try to find a male voice for callers
-          var maleVoice = voices.find(function(v) { return /daniel|alex|david|mark|male/i.test(v.name) && !/female/i.test(v.name); });
-          if (maleVoice) utter.voice = maleVoice;
-          utter.pitch = 0.95;
-          utter.rate = 1.0;
-        }
-        utter.volume = 0.8;
-        speechSynthesis.speak(utter);
-      } catch(e) {}
     }
 
     function startSimulated() {
-      ttsSpoken = {};
-      // Pre-load voices
-      if (ttsAvailable) {
-        try { speechSynthesis.getVoices(); } catch(e) {}
-      }
       var startMs = Date.now() - (currentTime * 1000);
       simInterval = setInterval(function() {
         currentTime = (Date.now() - startMs) / 1000;
@@ -440,19 +400,6 @@
           return;
         }
         tick(currentTime / audioDuration);
-        // Speak transcript lines via TTS
-        if (ttsAvailable) {
-          var data = INDUSTRIES[currentIndustry];
-          if (data && data.transcript) {
-            data.transcript.forEach(function(line) {
-              var key = line.start + ':' + line.speaker;
-              if (currentTime >= line.start && !ttsSpoken[key]) {
-                ttsSpoken[key] = true;
-                speakLine(line.text, line.speaker);
-              }
-            });
-          }
-        }
       }, 80);
     }
 
@@ -507,10 +454,8 @@
       root.querySelector('.dc-booking') && root.querySelector('.dc-booking').classList.remove('locked');
       var typeEl = root.querySelector('.dc-text-type');
       if (typeEl) typeEl.classList.remove('revealed');
-      // Reset transcript + TTS
+      // Reset transcript
       root.querySelectorAll('.dc-line').forEach(function(l) { l.classList.remove('highlight', 'spoken'); });
-      ttsSpoken = {};
-      if (ttsAvailable) { try { speechSynthesis.cancel(); } catch(e) {} }
       if (hasRealAudio) audioEl.currentTime = 0;
     }
 
@@ -588,7 +533,7 @@
     // Header
     html += '<div class="dc-header">';
     html += '<span class="dc-badge"><span class="dc-live-dot"></span>Call Session Viewer</span>';
-    html += '<span class="dc-sim-label" data-loaded="Demo audio loaded" data-sim="Using simulated demo">Using simulated demo</span>';
+    html += '<span class="dc-sim-label" data-loaded="Demo audio loaded" data-sim="Interactive demo">Interactive demo</span>';
     html += '<span class="dc-time">Real call \u2014 11:47 PM</span>';
     html += '</div>';
     // Industry pills
