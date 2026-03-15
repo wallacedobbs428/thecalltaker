@@ -685,8 +685,8 @@ a { color: inherit; text-decoration: none; }
 .live-ticker {
   position: fixed;
   bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 24px;
+  transform: none;
   z-index: 90;
   background: rgba(0,0,0,.85);
   backdrop-filter: blur(12px);
@@ -702,7 +702,7 @@ a { color: inherit; text-decoration: none; }
   opacity: 1;
   pointer-events: auto;
 }
-.live-ticker.slide-up { transform: translateX(-50%) translateY(8px); opacity: 0; }
+.live-ticker.slide-up { transform: translateY(8px); opacity: 0; }
 .live-ticker-inner {
   display: flex;
   align-items: center;
@@ -723,8 +723,19 @@ a { color: inherit; text-decoration: none; }
   color: rgba(255,255,255,.85);
   letter-spacing: -.01em;
 }
+.live-ticker-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.4);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 0 0 6px;
+  line-height: 1;
+  transition: color .2s;
+}
+.live-ticker-close:hover { color: rgba(255,255,255,.8); }
 @media (max-width: 767px) {
-  .live-ticker { bottom: 72px; padding: 8px 16px; max-width: calc(100% - 32px); }
+  .live-ticker { bottom: 72px; left: 12px; padding: 8px 16px; max-width: calc(100% - 24px); }
   .live-ticker-text { font-size: .72rem; }
   .live-ticker-inner { white-space: normal; }
 }
@@ -854,6 +865,7 @@ a { color: inherit; text-decoration: none; }
   <div class="live-ticker-inner">
     <span class="live-ticker-dot"></span>
     <span class="live-ticker-text" id="liveTickerText"></span>
+    <button class="live-ticker-close" id="liveTickerClose" aria-label="Dismiss">&times;</button>
   </div>
 </div>
 
@@ -3512,67 +3524,65 @@ window.__tctUILoaded = true;
 })();
 </script>
 
-<!-- ===== LIVE ACTIVITY TICKER ===== -->
+<!-- ===== LIVE SOCIAL PROOF TICKER ===== -->
 <script>
 (function(){
   var ticker = document.getElementById('liveTicker');
   var textEl = document.getElementById('liveTickerText');
+  var closeBtn = document.getElementById('liveTickerClose');
   if (!ticker || !textEl) return;
 
-  var cities = ['Austin', 'Nashville', 'Phoenix', 'Tampa', 'Charlotte', 'Atlanta', 'Dallas', 'Houston', 'Memphis', 'Jacksonville', 'San Antonio', 'Louisville', 'Kansas City', 'Indianapolis', 'Birmingham'];
-  var industries = [
-    { type: 'dental office', verb: 'set up their AI receptionist' },
-    { type: 'HVAC company', verb: 'activated 24/7 call answering' },
-    { type: 'plumbing company', verb: 'stopped missing after-hours calls' },
-    { type: 'locksmith', verb: 'started capturing emergency calls' },
-    { type: 'roofing company', verb: 'set up storm-season call handling' },
-    { type: 'law firm', verb: 'activated AI intake for new cases' },
-    { type: 'dental practice', verb: 'started booking appointments automatically' },
-    { type: 'towing company', verb: 'activated 24/7 dispatch answering' },
-    { type: 'electrical contractor', verb: 'set up emergency call routing' },
-    { type: 'veterinary clinic', verb: 'started answering after-hours pet emergencies' },
-    { type: 'med spa', verb: 'activated AI appointment booking' },
-    { type: 'property manager', verb: 'set up tenant emergency call handling' },
-    { type: 'garage door company', verb: 'started capturing weekend service calls' }
+  // Session dismiss
+  if (sessionStorage.getItem('tct_ticker_dismissed')) return;
+
+  var messages = [
+    'Mike R. in Nashville just caught 4 missed calls this week',
+    'Sarah T. in Atlanta replaced her $900/mo answering service',
+    'James K. in Memphis booked an $800 emergency job at 2 AM',
+    'Andre W. in Nashville: +65% emergency revenue this month',
+    'Derek M. in Charlotte: 11 jobs booked while on a roof',
+    'Lisa P. in Tampa: zero missed calls in 14 days',
+    'Carlos G. in Phoenix: $2,400 in after-hours jobs this week',
+    'Ray S. in Dallas: replaced 2 part-time receptionists'
   ];
 
-  var lastIndex = -1;
-  function getMessage() {
-    var idx;
-    do { idx = Math.floor(Math.random() * industries.length); } while (idx === lastIndex);
-    lastIndex = idx;
-    var city = cities[Math.floor(Math.random() * cities.length)];
-    var ind = industries[idx];
-    return 'A ' + ind.type + ' in ' + city + ' just ' + ind.verb;
-  }
-
+  var index = 0;
   var visible = false;
   var interval;
 
   function showTicker() {
-    textEl.textContent = getMessage();
+    textEl.textContent = messages[index];
     ticker.classList.remove('slide-up');
     ticker.classList.add('visible');
     visible = true;
   }
 
   function cycleTicker() {
-    if (visible) {
-      ticker.classList.add('slide-up');
-      setTimeout(function() {
-        textEl.textContent = getMessage();
-        ticker.classList.remove('slide-up');
-      }, 500);
-    }
+    if (!visible) return;
+    ticker.classList.add('slide-up');
+    setTimeout(function() {
+      index = (index + 1) % messages.length;
+      textEl.textContent = messages[index];
+      ticker.classList.remove('slide-up');
+    }, 500);
   }
 
-  // Show first message after 3s, then cycle every 4s
   setTimeout(function() {
     showTicker();
-    interval = setInterval(cycleTicker, 4000);
+    interval = setInterval(cycleTicker, 6000);
   }, 3000);
 
-  // Hide when user scrolls near bottom (footer)
+  // Dismiss
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      ticker.classList.remove('visible');
+      visible = false;
+      clearInterval(interval);
+      sessionStorage.setItem('tct_ticker_dismissed', '1');
+    });
+  }
+
+  // Hide near footer
   var footer = document.querySelector('footer');
   if (footer) {
     var footerObs = new IntersectionObserver(function(entries) {
