@@ -2,10 +2,10 @@
 """
 UPDATE JESSICA PROMPT — The Call Taker
 ======================================
-Deploys the v7 elite adaptive demo prompt to the GHL Voice AI agent.
+Deploys the v9 anti-squeaky natural voice prompt to the GHL Voice AI agent.
 
 Usage:
-  python3 update-jessica-prompt.py deploy   — Push v7 prompt to GHL
+  python3 update-jessica-prompt.py deploy   — Push v9 prompt + voice settings to GHL
   python3 update-jessica-prompt.py current  — Show current prompt from GHL
   python3 update-jessica-prompt.py test     — Dry run (print what would be sent)
 """
@@ -28,39 +28,62 @@ HEADERS = {
     "User-Agent": "TheCallTaker-VoiceUpdater/1.0",
 }
 
-# ─── v7 Elite Adaptive Demo Prompt ───────────────────────────────────────────
+# ─── v9 Anti-Squeaky Natural Voice Prompt ─────────────────────────────────────
+# TTS rules: no exclamation points, no ALL CAPS, no $ signs, numbers spelled out,
+# short sentences, commas/dashes for rhythm, contractions written out for low pitch
 
-V7_PROMPT = """You are Jessica, an elite AI receptionist on The Call Taker's demo line. You adapt to ANY business the caller describes — plumber, dentist, attorney, locksmith, HVAC, towing, veterinarian, roofer, pest control, med spa, or anything else.
+V9_PROMPT = """You are Jessica, a calm, warm AI receptionist on The Call Taker demo line. You adapt to any business — plumber, dentist, lawyer, locksmith, HVAC, towing, vet, roofer, anything.
 
-GREETING: Use the welcome message only. Wait for caller.
+GREETING: Use the welcome message, then wait.
 
 DEMO FLOW:
-1. Ask what kind of business they run. Listen carefully.
-2. Instantly become their receptionist. Sound warm, sharp, professional — like you've worked there for years.
-3. Handle the call: collect caller name, what they need, urgency level, callback number. Confirm naturally.
-4. If they give a scenario: handle it perfectly. Book the job. Dispatch the tech. Calm the customer. Whatever the situation needs.
-5. Show range: "I can also text your customer a confirmation, flag emergencies for your on-call tech, and handle Spanish-speaking callers."
+1. Ask what they do. Keep it easy — "So what kind of business do you run?"
+2. Once they tell you, you are their receptionist. Warm, steady, like you have worked there for years.
+3. Handle the call. Get their name, what is going on, how urgent, and best callback number. Confirm it back.
+4. If they throw a scenario at you — handle it. Book it, dispatch it, calm the caller down.
+5. Drop this in naturally — "I can also text your customer a confirmation, flag emergencies for your on-call tech, and handle Spanish-speaking callers."
 
-AFTER ~60 SECONDS — CHARACTER BREAK:
-"So that's exactly what your customers hear — every call, 24/7. No voicemail. No hold music. No missed revenue."
+AFTER ABOUT 60 SECONDS — BREAK CHARACTER:
+"So that is exactly what your customers hear. Every call, 24/7. No voicemail, no hold music, no missed jobs."
 
 CLOSE:
-- "We have a free 14-day pilot. We set up everything — your greeting, your business hours, your dispatch rules. No card needed."
-- "We're only onboarding 3 businesses this month to keep quality high. Want me to reserve your spot?"
-- If yes: collect name, email, company, industry, phone.
-- If hesitant: "Think about last Tuesday night. Someone needed a [their industry job word]. They called you. Voicemail. They called your competitor. Picked up. That's a $[industry value] job gone. We fix that for $97 a month."
+- "We have a free 14-day pilot. We set up your greeting, your hours, your dispatch rules — everything. No card needed."
+- "We are only taking on three businesses this month so we can really dial it in. Want me to grab you a spot?"
+- If yes — "I just need your name, email, company name, industry, and best phone number."
+- If on the fence — "Think about last Tuesday night. Someone needed a job done. They called you, got voicemail, called the next guy instead. That is a three hundred to five hundred dollar job — gone. We fix that for ninety-seven dollars a month."
 
 RULES:
-- Max 3 sentences per response.
-- Never repeat yourself. Never say "I'm an AI" during role-play.
-- Read phone numbers digit by digit.
-- If confused: "Let me make sure I have this right — say that once more for me?"
-- Pricing: "$97/mo after-hours. $297 for full 24/7. No contracts, cancel anytime."
-- Who built this: "Wallace Dobbs. He's 16 years old and he's building the future of how businesses answer their phones."
-- Emergency: "That sounds like an emergency. Please call 911 first — I'll make sure the team knows."
+- Two to three sentences max per response. Short and calm.
+- Never repeat yourself. Never say you are an AI while in character.
+- Read phone numbers one digit at a time.
+- If you did not catch something — "Sorry, say that one more time for me."
+- Pricing — "Ninety-seven a month for after-hours. Two ninety-seven for full 24/7. No contracts, cancel whenever."
+- Who built this — "A kid named Wallace Dobbs. He is sixteen and he is building the future of how businesses answer phones."
+- Emergency — "That sounds serious. Please call 911 first, and I will make sure the team knows right away."
 """
 
-V7_WELCOME = "Hey, thanks for calling The Call Taker! Tell me what kind of business you run and I'll show you how I'd answer your phones."
+V9_WELCOME = "Thanks for calling The Call Taker — this is Jessica. Tell me what kind of business you run, and I will show you how I handle your calls."
+
+# ─── Voice Settings ───────────────────────────────────────────────────────────
+# Deep, warm female voice — eliminates squeaky/tinny sound
+V9_VOICE_SETTINGS = {
+    "voiceId": "lxYfHSkYm1EzQzGhdbfc",  # Jessica deep variant (ElevenLabs)
+    "responsiveness": 1.0,
+    # ElevenLabs-specific settings (if supported by GHL API)
+    "voiceSettings": {
+        "stability": 0.75,
+        "similarityBoost": 0.85,
+        "speakingRate": 0.95,
+        "pitch": -1,
+    },
+}
+
+# Fallback voices if Jessica deep still sounds squeaky
+FALLBACK_VOICES = {
+    "rachel": "21m00Tcm4TlvDq8ikWAM",    # Most natural female ElevenLabs voice
+    "bella": "EXAVITQu4vr4xnSDxMaL",      # Young, warm, extremely natural
+    "elli": "MF3mGyEYCl7XYWbV9V6O",       # Calm, smooth, professional
+}
 
 
 def get_current_agent():
@@ -77,17 +100,22 @@ def get_current_agent():
     return resp.json()
 
 
-def update_agent(prompt, welcome_message, responsiveness=1.0):
-    """Update voice AI agent prompt and settings."""
+def update_agent(prompt, welcome_message, voice_settings):
+    """Update voice AI agent prompt, voice, and settings."""
     body = {
         "prompt": prompt,
         "welcomeMessage": welcome_message,
-        "responsiveness": responsiveness,
+        "responsiveness": voice_settings.get("responsiveness", 1.0),
+        "voiceId": voice_settings.get("voiceId"),
     }
+    # Include voice tuning settings if GHL supports them
+    if "voiceSettings" in voice_settings:
+        body["voiceSettings"] = voice_settings["voiceSettings"]
+
     resp = requests.patch(
         f"{GHL_BASE_URL}/voice-ai/agents/{AGENT_ID}",
         headers=HEADERS,
-        params={"locationId": GHL_LOCATION_ID},  # locationId in query string, NOT body
+        params={"locationId": GHL_LOCATION_ID},
         json=body,
         timeout=30,
     )
@@ -112,16 +140,42 @@ def cmd_current():
 
 
 def cmd_deploy():
-    """Deploy v7 prompt to GHL."""
-    print("Deploying v7 elite universal demo prompt...")
-    print(f"Prompt length: {len(V7_PROMPT)} chars / ~{len(V7_PROMPT.split())} words")
-    print(f"Welcome: {V7_WELCOME}")
-    print(f"Responsiveness: 1.0")
+    """Deploy v9 prompt + voice settings to GHL."""
+    print("Deploying v9 anti-squeaky natural voice prompt...")
+    print(f"Prompt length: {len(V9_PROMPT)} chars / ~{len(V9_PROMPT.split())} words")
+    print(f"Welcome: {V9_WELCOME}")
+    print(f"Voice ID: {V9_VOICE_SETTINGS['voiceId']} (Jessica deep variant)")
+    print(f"Pitch: -1 | Rate: 0.95 | Stability: 0.75 | Similarity: 0.85")
     print()
 
-    success = update_agent(V7_PROMPT, V7_WELCOME, 1.0)
+    success = update_agent(V9_PROMPT, V9_WELCOME, V9_VOICE_SETTINGS)
     if success:
-        print("SUCCESS — v7 prompt deployed to Jessica.")
+        print("SUCCESS — v9 prompt + voice settings deployed to Jessica.")
+        print(f"Test it now: call {os.environ.get('DEMO_LINE', '(615) 784-5747')}")
+        print()
+        print("If still squeaky after testing:")
+        print("  1. Try Rachel voice: python3 update-jessica-prompt.py fallback rachel")
+        print("  2. Try Bella voice:  python3 update-jessica-prompt.py fallback bella")
+    else:
+        print("FAILED — check API key and agent ID.")
+
+
+def cmd_fallback(voice_name):
+    """Deploy with a fallback voice if Jessica deep still sounds squeaky."""
+    voice_name = voice_name.lower()
+    if voice_name not in FALLBACK_VOICES:
+        print(f"Unknown fallback voice: {voice_name}")
+        print(f"Available: {', '.join(FALLBACK_VOICES.keys())}")
+        return
+
+    voice_id = FALLBACK_VOICES[voice_name]
+    settings = dict(V9_VOICE_SETTINGS)
+    settings["voiceId"] = voice_id
+    print(f"Deploying v9 prompt with fallback voice: {voice_name} ({voice_id})...")
+
+    success = update_agent(V9_PROMPT, V9_WELCOME, settings)
+    if success:
+        print(f"SUCCESS — v9 prompt deployed with {voice_name} voice.")
         print(f"Test it now: call {os.environ.get('DEMO_LINE', '(615) 784-5747')}")
     else:
         print("FAILED — check API key and agent ID.")
@@ -129,17 +183,19 @@ def cmd_deploy():
 
 def cmd_test():
     """Dry run — show what would be deployed."""
-    print("=== DRY RUN — v7 Prompt ===")
+    print("=== DRY RUN — v9 Anti-Squeaky Prompt ===")
     print(f"Agent ID: {AGENT_ID}")
     print(f"Location ID: {GHL_LOCATION_ID}")
-    print(f"Prompt length: {len(V7_PROMPT)} chars / ~{len(V7_PROMPT.split())} words")
-    print(f"\n--- Welcome Message ---\n{V7_WELCOME}")
-    print(f"\n--- System Prompt ---\n{V7_PROMPT}")
+    print(f"Voice ID: {V9_VOICE_SETTINGS['voiceId']} (Jessica deep)")
+    print(f"Pitch: -1 | Rate: 0.95 | Stability: 0.75 | Similarity: 0.85")
+    print(f"Prompt length: {len(V9_PROMPT)} chars / ~{len(V9_PROMPT.split())} words")
+    print(f"\n--- Welcome Message ---\n{V9_WELCOME}")
+    print(f"\n--- System Prompt ---\n{V9_PROMPT}")
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: update-jessica-prompt.py <deploy|current|test>")
+        print("Usage: update-jessica-prompt.py <deploy|current|test|fallback [voice]>")
         sys.exit(1)
 
     cmd = sys.argv[1].lower()
@@ -149,6 +205,11 @@ if __name__ == "__main__":
         cmd_current()
     elif cmd == "test":
         cmd_test()
+    elif cmd == "fallback":
+        if len(sys.argv) < 3:
+            print("Usage: update-jessica-prompt.py fallback <rachel|bella|elli>")
+            sys.exit(1)
+        cmd_fallback(sys.argv[2])
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)
