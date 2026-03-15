@@ -137,7 +137,9 @@
       '  display: none;' +
       '  position: fixed;' +
       '  top: 0; left: 0; width: 100%; height: 100%;' +
-      '  background: rgba(0,0,0,0.5);' +
+      '  background: rgba(0,0,0,0.8);' +
+      '  backdrop-filter: blur(8px);' +
+      '  -webkit-backdrop-filter: blur(8px);' +
       '  z-index: 999999;' +
       '  justify-content: center;' +
       '  align-items: center;' +
@@ -152,14 +154,14 @@
       '  display: flex;' +
       '}' +
       '#tct-popup-modal {' +
-      '  background: #ffffff;' +
-      '  border-radius: 16px;' +
-      '  padding: 40px 36px;' +
-      '  max-width: 520px;' +
-      '  width: 90%;' +
+      '  background: linear-gradient(145deg, #111827 0%, #0f172a 100%);' +
+      '  border-radius: 20px;' +
+      '  padding: 44px 36px;' +
+      '  max-width: 480px;' +
+      '  width: 92%;' +
       '  position: relative;' +
-      '  box-shadow: 0 25px 60px rgba(0,0,0,0.15);' +
-      '  border: 1px solid rgba(0,0,0,0.08);' +
+      '  box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 80px rgba(0,220,130,0.06);' +
+      '  border: 1px solid rgba(0,220,130,0.12);' +
       '  transform: translateY(20px);' +
       '  transition: transform 0.4s ease;' +
       '  max-height: 90vh;' +
@@ -172,34 +174,36 @@
       '  position: absolute;' +
       '  top: 14px; right: 18px;' +
       '  background: none; border: none;' +
-      '  color: #9ca3af; font-size: 28px;' +
+      '  color: rgba(255,255,255,0.4); font-size: 28px;' +
       '  cursor: pointer; line-height: 1;' +
       '  padding: 4px 8px;' +
       '  transition: color 0.2s;' +
       '}' +
-      '#tct-popup-close:hover { color: #111827; }' +
+      '#tct-popup-close:hover { color: #fff; }' +
       '#tct-popup-modal h2 {' +
-      '  color: #111827;' +
-      '  font-size: 24px;' +
-      '  margin: 0 0 12px 0;' +
+      '  color: #fff;' +
+      '  font-size: 22px;' +
+      '  margin: 0 0 10px 0;' +
       '  line-height: 1.3;' +
       '  font-family: inherit;' +
+      '  font-weight: 800;' +
+      '  letter-spacing: -0.02em;' +
       '}' +
       '#tct-popup-modal p.tct-subhead {' +
-      '  color: #4b5563;' +
-      '  font-size: 15px;' +
+      '  color: rgba(255,255,255,0.5);' +
+      '  font-size: 14px;' +
       '  margin: 0 0 24px 0;' +
       '  line-height: 1.6;' +
       '}' +
       '#tct-popup-form input,' +
       '#tct-popup-form select {' +
       '  width: 100%;' +
-      '  padding: 12px 16px;' +
-      '  margin-bottom: 14px;' +
-      '  background: #f9fafb;' +
-      '  border: 1px solid rgba(0,0,0,0.08);' +
-      '  border-radius: 8px;' +
-      '  color: #111827;' +
+      '  padding: 13px 16px;' +
+      '  margin-bottom: 12px;' +
+      '  background: rgba(255,255,255,0.06);' +
+      '  border: 1.5px solid rgba(255,255,255,0.1);' +
+      '  border-radius: 12px;' +
+      '  color: #fff;' +
       '  font-size: 15px;' +
       '  outline: none;' +
       '  box-sizing: border-box;' +
@@ -208,38 +212,39 @@
       '  -webkit-appearance: none;' +
       '  appearance: none;' +
       '}' +
-      '#tct-popup-form input::placeholder { color: #9ca3af; }' +
+      '#tct-popup-form input::placeholder { color: rgba(255,255,255,0.3); }' +
       '#tct-popup-form input:focus,' +
       '#tct-popup-form select:focus {' +
-      '  border-color: #ea580c;' +
+      '  border-color: rgba(0,220,130,0.4);' +
       '}' +
       '#tct-popup-form select {' +
-      '  color: #9ca3af;' +
+      '  color: rgba(255,255,255,0.3);' +
       '  cursor: pointer;' +
-      '  background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'8\' viewBox=\'0 0 12 8\'%3E%3Cpath d=\'M1 1l5 5 5-5\' stroke=\'%239ca3af\' stroke-width=\'2\' fill=\'none\'/%3E%3C/svg%3E");' +
+      '  background-image: url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'8\' viewBox=\'0 0 12 8\'%3E%3Cpath d=\'M1 1l5 5 5-5\' stroke=\'%23666\' stroke-width=\'2\' fill=\'none\'/%3E%3C/svg%3E");' +
       '  background-repeat: no-repeat;' +
       '  background-position: right 16px center;' +
       '  padding-right: 40px;' +
       '}' +
-      '#tct-popup-form select.tct-selected { color: #111827; }' +
+      '#tct-popup-form select.tct-selected { color: #fff; }' +
       '#tct-popup-submit {' +
       '  width: 100%;' +
       '  padding: 14px 24px;' +
-      '  background: #ea580c;' +
-      '  color: #fff;' +
+      '  background: #00dc82;' +
+      '  color: #000;' +
       '  border: none;' +
-      '  border-radius: 8px;' +
-      '  font-size: 17px;' +
+      '  border-radius: 12px;' +
+      '  font-size: 16px;' +
       '  font-weight: 700;' +
       '  cursor: pointer;' +
-      '  transition: background 0.2s, transform 0.1s;' +
+      '  transition: transform 0.15s, box-shadow 0.2s;' +
       '  font-family: inherit;' +
       '  margin-top: 4px;' +
       '}' +
-      '#tct-popup-submit:hover { background: #c2410c; }' +
+      '#tct-popup-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,220,130,0.35); }' +
       '#tct-popup-submit:active { transform: scale(0.98); }' +
       '#tct-popup-submit:disabled {' +
-      '  background: #d1d5db;' +
+      '  background: rgba(255,255,255,0.1);' +
+      '  color: rgba(255,255,255,0.3);' +
       '  cursor: not-allowed;' +
       '}' +
       '#tct-popup-success {' +
@@ -249,16 +254,16 @@
       '}' +
       '#tct-popup-success .tct-check {' +
       '  font-size: 48px;' +
-      '  color: #059669;' +
+      '  color: #00dc82;' +
       '  margin-bottom: 16px;' +
       '}' +
       '#tct-popup-success h3 {' +
-      '  color: #111827;' +
+      '  color: #fff;' +
       '  font-size: 20px;' +
       '  margin: 0 0 8px 0;' +
       '}' +
       '#tct-popup-success p {' +
-      '  color: #4b5563;' +
+      '  color: rgba(255,255,255,0.55);' +
       '  font-size: 15px;' +
       '  margin: 0;' +
       '}' +
@@ -270,12 +275,12 @@
       '}' +
       '@media (max-width: 600px) {' +
       '  #tct-popup-modal {' +
-      '    padding: 28px 20px;' +
+      '    padding: 32px 24px;' +
       '    margin: 10px;' +
       '    width: calc(100% - 20px);' +
       '  }' +
-      '  #tct-popup-modal h2 { font-size: 20px; }' +
-      '  #tct-popup-modal p.tct-subhead { font-size: 14px; }' +
+      '  #tct-popup-modal h2 { font-size: 19px; }' +
+      '  #tct-popup-modal p.tct-subhead { font-size: 13px; }' +
       '}';
     document.head.appendChild(style);
 
