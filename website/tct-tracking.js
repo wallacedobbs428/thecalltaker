@@ -540,6 +540,118 @@
   });
 
   // =========================================================================
+  // E. Scroll Depth Tracking — fires GA4 events at 25/50/75/90% thresholds
+  // =========================================================================
+  (function initScrollDepth() {
+    var thresholds = [25, 50, 75, 90];
+    var fired = {};
+    function getScrollPct() {
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      if (docH <= 0) return 100;
+      return Math.round((window.scrollY / docH) * 100);
+    }
+    var scrollTimer = null;
+    window.addEventListener('scroll', function() {
+      if (scrollTimer) return;
+      scrollTimer = setTimeout(function() {
+        scrollTimer = null;
+        var pct = getScrollPct();
+        for (var i = 0; i < thresholds.length; i++) {
+          var t = thresholds[i];
+          if (pct >= t && !fired[t]) {
+            fired[t] = true;
+            if (typeof gtag === 'function') {
+              gtag('event', 'scroll_depth', {
+                event_category: 'engagement',
+                event_label: t + '%',
+                page_path: window.location.pathname,
+                value: t
+              });
+            }
+          }
+        }
+      }, 200);
+    }, { passive: true });
+  })();
+
+  // =========================================================================
+  // F. Heatmap-Style Click Logger — stores click positions in localStorage
+  // =========================================================================
+  (function initClickHeatmap() {
+    var STORAGE_KEY = 'tct_clicks';
+    var MAX_ENTRIES = 500;
+
+    document.addEventListener('click', function(e) {
+      try {
+        var existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        var tag = e.target.tagName.toLowerCase();
+        var cls = (e.target.className && typeof e.target.className === 'string')
+          ? e.target.className.split(' ').slice(0, 2).join('.') : '';
+        var href = e.target.closest('a') ? e.target.closest('a').getAttribute('href') : '';
+        var entry = {
+          x: Math.round((e.clientX / window.innerWidth) * 100),
+          y: Math.round(e.pageY),
+          vw: window.innerWidth,
+          p: window.location.pathname,
+          el: tag + (cls ? '.' + cls : ''),
+          hr: href ? href.substring(0, 80) : '',
+          t: Date.now()
+        };
+        existing.push(entry);
+        // Keep only last MAX_ENTRIES
+        if (existing.length > MAX_ENTRIES) {
+          existing = existing.slice(-MAX_ENTRIES);
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+      } catch(err) {}
+    });
+
+    // Expose getter for dashboards
+    window.getTctClickData = function() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+      catch(e) { return []; }
+    };
+
+    // Expose clear function
+    window.clearTctClickData = function() {
+      localStorage.removeItem(STORAGE_KEY);
+    };
+  })();
+
+  // =========================================================================
+  // G. Session Engagement Metrics — time on page, pages/session
+  // =========================================================================
+  (function initSessionMetrics() {
+    var SESSION_KEY = 'tct_session';
+    var session;
+    try {
+      session = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
+    } catch(e) { session = null; }
+    if (!session) {
+      session = { pages: 0, start: Date.now(), entries: [] };
+    }
+    session.pages++;
+    session.entries.push({
+      path: window.location.pathname,
+      ts: Date.now()
+    });
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
+
+    // On page unload, fire engagement event if user spent >30s
+    window.addEventListener('beforeunload', function() {
+      var elapsed = Math.round((Date.now() - session.start) / 1000);
+      if (elapsed >= 30 && typeof gtag === 'function') {
+        gtag('event', 'session_engagement', {
+          event_category: 'engagement',
+          session_duration: elapsed,
+          pages_viewed: session.pages,
+          landing_page: session.entries[0] ? session.entries[0].path : '/'
+        });
+      }
+    });
+  })();
+
+  // =========================================================================
   // Initialize popup when DOM is ready
   // =========================================================================
   if (document.readyState === 'loading') {
