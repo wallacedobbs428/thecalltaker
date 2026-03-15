@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="yD21d967IvWfANFmEZBw55ZZUWCa11fI92Mr-3wXk3s" />
+  <meta name="description" content="AI receptionist that answers every call 24/7 in under 2 seconds. Built for HVAC, roofing, plumbing, dental, legal, and more. Never lose a customer to voicemail again.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Call Taker — AI Receptionist That Pays For Itself">
+  <meta property="og:description" content="Never lose a customer to voicemail again. AI answers every call 24/7. Custom-priced to your industry.">
+  <meta property="og:url" content="https://thecalltaker.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Call Taker — AI Receptionist That Pays For Itself">
+  <title>The Call Taker — AI Receptionist for Service Businesses</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://thecalltaker.com/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"The Call Taker","url":"https://thecalltaker.com/","telephone":"+16157845747","priceRange":"$497-$997/mo","address":{"@type":"PostalAddress","addressLocality":"Brentwood","addressRegion":"TN"}}</script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    :root {
+      --green: #00dc82;
+      --green-dim: rgba(0,220,130,0.12);
+      --green-glow: rgba(0,220,130,0.25);
+      --bg: #0a0c10;
+      --surface: rgba(255,255,255,0.03);
+      --surface-hover: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.08);
+      --text-1: #fff;
+      --text-2: #a1a1aa;
+      --text-3: #52525b;
+      --red: #ef4444;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-2);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* Noise grain overlay */
+    .noise {
+      position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    /* Container */
+    .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* === NAV === */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,12,16,0.7);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .header.scrolled { background: rgba(10,12,16,0.92); }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px; max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-size: 16px; font-weight: 700; color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .logo-mark {
+      width: 28px; height: 28px; background: var(--green); border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-mark svg { width: 14px; height: 14px; }
+    .logo span { color: var(--green); }
+    .nav { display: none; align-items: center; gap: 28px; }
+    .nav a {
+      font-size: 13px; font-weight: 500; color: var(--text-3);
+      transition: color 0.2s; position: relative;
+    }
+    .nav a:hover, .nav a.active { color: #fff; }
+    .nav a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px;
+      background: var(--green); transition: width 0.3s ease;
+    }
+    .nav a:hover::after { width: 100%; }
+    @media (min-width: 768px) { .nav { display: flex; } }
+    .header-cta {
+      display: none; padding: 8px 18px; background: var(--green); color: #000;
+      font-size: 13px; font-weight: 700; border-radius: 8px; transition: 0.2s;
+      font-family: var(--font-display);
+    }
+    .header-cta:hover { background: #00f090; transform: translateY(-1px); }
+    @media (min-width: 768px) { .header-cta { display: inline-flex; } }
+
+    .menu-toggle { display: flex; flex-direction: column; gap: 5px; padding: 8px; }
+    .menu-toggle span { width: 20px; height: 1.5px; background: #fff; border-radius: 1px; transition: 0.25s; }
+    .menu-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    @media (min-width: 768px) { .menu-toggle { display: none; } }
+
+    .mobile-nav {
+      position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+      background: rgba(10,12,16,0.98); padding: 32px 24px;
+      display: flex; flex-direction: column; gap: 0;
+      transform: translateX(100%); transition: transform 0.3s ease; z-index: 99;
+    }
+    .mobile-nav.open { transform: translateX(0); }
+    .mobile-nav a {
+      font-size: 18px; font-weight: 500; color: var(--text-2); padding: 18px 0;
+      border-bottom: 1px solid var(--border); font-family: var(--font-display);
+    }
+    .mobile-nav a:hover { color: #fff; }
+
+    /* === HERO === */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 120px 24px 80px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -30%; right: -20%;
+      width: 800px; height: 800px;
+      background: radial-gradient(ellipse, var(--green-glow) 0%, transparent 65%);
+      pointer-events: none; opacity: 0.4; filter: blur(60px);
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -20%; left: -15%;
+      width: 600px; height: 600px;
+      background: radial-gradient(ellipse, rgba(0,220,130,0.08) 0%, transparent 65%);
+      pointer-events: none; filter: blur(60px);
+    }
+    .hero-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; background: var(--green-dim);
+      border: 1px solid rgba(0,220,130,0.15); border-radius: 100px;
+      font-size: 12px; font-weight: 600; color: var(--green);
+      letter-spacing: 0.04em; text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 10vw, 120px);
+      font-weight: 700; color: #fff;
+      letter-spacing: -0.05em; line-height: 0.95;
+      margin-bottom: 24px; position: relative; z-index: 1;
+    }
+    .hero h1 .accent {
+      color: var(--green);
+      text-shadow: 0 0 60px rgba(0,220,130,0.3);
+    }
+    .hero .subtitle {
+      font-size: clamp(15px, 1.8vw, 18px); color: var(--text-2);
+      line-height: 1.65; max-width: 520px; margin: 0 auto 40px;
+      position: relative; z-index: 1;
+    }
+    .hero-buttons {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 600; border-radius: 12px; transition: all 0.2s;
+      white-space: nowrap; font-family: var(--font-display);
+    }
+    .btn-lg { padding: 14px 28px; font-size: 15px; }
+    .btn-md { padding: 11px 22px; font-size: 14px; }
+    .btn-sm { padding: 8px 16px; font-size: 13px; }
+    .btn-primary {
+      background: var(--green); color: #000;
+      box-shadow: 0 0 30px rgba(0,220,130,0.2);
+    }
+    .btn-primary:hover {
+      background: #00f090; transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(0,220,130,0.35);
+    }
+    .btn-ghost {
+      background: transparent; color: #fff;
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.15); }
+
+    /* Industry selector */
+    .industry-selector {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+      margin-bottom: 28px; position: relative; z-index: 1;
+    }
+    .industry-pill {
+      padding: 7px 16px; border-radius: 100px;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-3); font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; font-family: var(--font-display);
+    }
+    .industry-pill:hover { border-color: rgba(0,220,130,0.3); color: var(--text-2); }
+    .industry-pill.active { background: var(--green); color: #000; border-color: var(--green); }
+
+    /* Callback box */
+    .callback-box {
+      max-width: 440px; margin: 36px auto 0;
+      background: rgba(0,220,130,0.03); border: 1px solid rgba(0,220,130,0.12);
+      border-radius: 16px; padding: 24px; position: relative; z-index: 1;
+    }
+    .callback-box h3 { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; text-align: center; }
+    .callback-box p { font-size: 13px; color: var(--text-3); text-align: center; margin-bottom: 14px; }
+    .callback-inputs { display: flex; gap: 8px; margin-bottom: 8px; }
+    .callback-inputs input {
+      flex: 1; padding: 12px 14px; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: 10px;
+      color: #fff; font-size: 14px; font-family: var(--font-body);
+    }
+    .callback-inputs input:focus { outline: none; border-color: var(--green); }
+    .callback-inputs input::placeholder { color: var(--text-3); }
+    .callback-btn {
+      width: 100%; padding: 13px; background: var(--green); color: #000;
+      font-size: 14px; font-weight: 700; border-radius: 10px; border: none;
+      cursor: pointer; font-family: var(--font-display); transition: 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .callback-btn:hover { background: #00f090; }
+    .callback-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .callback-success { display: none; text-align: center; padding: 16px 0; }
+    .callback-success .check {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(0,220,130,0.12); border: 2px solid rgba(0,220,130,0.3);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;
+    }
+
+    /* === MARQUEE === */
+    .marquee-strip {
+      padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      overflow: hidden; white-space: nowrap;
+    }
+    .marquee-track {
+      display: flex; animation: marquee 25s linear infinite;
+    }
+    .marquee-track span {
+      font-family: var(--font-display); font-size: 14px; font-weight: 600;
+      color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 0 32px; flex-shrink: 0;
+    }
+    .marquee-track .dot { color: var(--green); }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* === SECTIONS === */
+    .section { padding: 100px 0; position: relative; }
+    .section-border { border-top: 1px solid var(--border); }
+    .section-label {
+      font-family: var(--font-display); font-size: 11px; font-weight: 700;
+      color: var(--green); text-transform: uppercase; letter-spacing: 0.15em;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4.5vw, 48px);
+      font-weight: 700; color: #fff;
+      letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 20px;
+    }
+    .section-desc { font-size: 16px; color: var(--text-2); line-height: 1.65; max-width: 480px; }
+
+    /* === STATS STRIP === */
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; max-width: 800px; margin: 0 auto;
+    }
+    @media (min-width: 640px) { .stats-strip { grid-template-columns: repeat(4, 1fr); } }
+    .stat-cell {
+      background: var(--bg); padding: 28px 20px; text-align: center;
+    }
+    .stat-val {
+      font-family: var(--font-display); font-size: 28px; font-weight: 700;
+      color: var(--green); margin-bottom: 4px;
+    }
+    .stat-label { font-size: 12px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* === PAIN GRID === */
+    .pain-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 800px; margin: 0 auto; }
+    @media (min-width: 640px) { .pain-grid { grid-template-columns: repeat(2, 1fr); } }
+    .pain-card {
+      background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.1);
+      border-radius: 14px; padding: 28px;
+    }
+    .pain-card .num {
+      font-family: var(--font-display); font-size: 32px; font-weight: 700;
+      color: var(--red); margin-bottom: 6px;
+    }
+    .pain-card .label { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+
+    /* === STEPS === */
+    .steps-grid {
+      display: grid; grid-template-columns: 1fr; gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+    }
+    @media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(3, 1fr); } }
+    .step-card { background: var(--bg); padding: 40px 32px; }
+    .step-num {
+      font-family: var(--font-display); font-size: 48px; font-weight: 700;
+      color: rgba(0,220,130,0.15); margin-bottom: 16px; line-height: 1;
+    }
+    .step-title {
+      font-family: var(--font-display); font-size: 17px; font-weight: 700;
+      color: #fff; margin-bottom: 10px;
+    }
+    .step-text { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+
+    /* === BEFORE/AFTER === */
+    .ba-grid {
+      display: grid; grid-template-columns: 1fr; gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; max-width: 900px; margin: 0 auto;
+    }
+    @media (min-width: 640px) { .ba-grid { grid-template-columns: 1fr 1fr; } }
+    .ba-col { background: var(--bg); padding: 40px 32px; }
+    .ba-col.after { background: rgba(0,220,130,0.02); }
+    .ba-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-display); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 100px; margin-bottom: 20px;
+    }
+    .ba-tag.red { color: var(--red); background: rgba(239,68,68,0.1); }
+    .ba-tag.green { color: var(--green); background: var(--green-dim); }
+    .ba-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 0; font-size: 14px; color: var(--text-2); line-height: 1.55;
+    }
+    .ba-item svg { flex-shrink: 0; margin-top: 2px; }
+
+    /* === FEATURES BENTO === */
+    .bento {
+      display: grid; grid-template-columns: 1fr; gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+    }
+    @media (min-width: 640px) { .bento { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .bento { grid-template-columns: repeat(3, 1fr); } }
+    .bento-item {
+      background: var(--bg); padding: 36px 28px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: background 0.3s;
+    }
+    .bento-item:hover { background: rgba(255,255,255,0.02); }
+    .bento-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--green-dim);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bento-icon svg { width: 20px; height: 20px; color: var(--green); }
+    .bento-title {
+      font-family: var(--font-display); font-size: 15px; font-weight: 700; color: #fff;
+    }
+    .bento-text { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+
+    /* === MATH BOX === */
+    .math-box {
+      max-width: 640px; margin: 0 auto;
+      background: rgba(0,220,130,0.03); border: 1px solid rgba(0,220,130,0.12);
+      border-radius: 16px; padding: 40px 32px; text-align: center;
+    }
+    .math-eq {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 3vw, 28px); font-weight: 700;
+      color: #fff; margin: 20px 0; line-height: 1.6;
+    }
+    .math-eq .red { color: var(--red); }
+    .math-eq .green { color: var(--green); }
+    .math-result {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px); font-weight: 700;
+      color: var(--green); margin-bottom: 8px;
+    }
+
+    /* === TESTIMONIALS === */
+    .review-grid {
+      display: grid; grid-template-columns: 1fr; gap: 20px;
+      max-width: 900px; margin: 0 auto;
+    }
+    @media (min-width: 768px) { .review-grid { grid-template-columns: repeat(3, 1fr); } }
+    .review-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px 24px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .review-card:hover { border-color: rgba(0,220,130,0.2); transform: translateY(-4px); }
+    .review-stars { color: #00dc82; font-size: 14px; letter-spacing: 2px; margin-bottom: 14px; }
+    .review-text { font-size: 14px; color: var(--text-2); line-height: 1.7; margin-bottom: 18px; font-style: italic; }
+    .review-author-wrap { display: flex; align-items: center; gap: 10px; }
+    .review-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #000; flex-shrink: 0;
+    }
+    .review-name { font-size: 13px; font-weight: 600; color: #fff; }
+    .review-role { font-size: 11px; color: var(--text-3); }
+
+    /* === PRICING === */
+    .pricing-grid {
+      display: grid; grid-template-columns: 1fr; gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+    }
+    @media (min-width: 640px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+    .pricing-card { background: var(--bg); padding: 40px 32px; position: relative; }
+    .pricing-card.featured { background: rgba(0,220,130,0.02); }
+    .pricing-badge {
+      display: inline-block; font-family: var(--font-display);
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: #000; background: var(--green);
+      padding: 4px 12px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .pricing-name { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .pricing-desc { font-size: 13px; color: var(--text-3); margin-bottom: 16px; }
+    .pricing-price {
+      font-family: var(--font-display); font-size: 40px; font-weight: 700; color: #fff; margin-bottom: 4px;
+    }
+    .pricing-price span { font-size: 16px; font-weight: 500; color: var(--text-3); }
+    .pricing-setup { font-size: 12px; color: var(--text-3); margin-bottom: 20px; }
+    .pricing-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+    .pricing-features { margin-bottom: 24px; }
+    .pricing-feature {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--text-2); padding: 6px 0;
+    }
+    .pricing-feature svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
+
+    /* === FAQ === */
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-question {
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 0; font-family: var(--font-display); font-size: 15px;
+      font-weight: 600; color: #fff; text-align: left; cursor: pointer;
+      background: none; border: none; transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--green); }
+    .faq-icon { width: 16px; height: 16px; color: var(--text-3); flex-shrink: 0; transition: transform 0.3s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-answer-inner { padding: 0 0 20px; font-size: 14px; color: var(--text-2); line-height: 1.65; }
+
+    /* === FOOTER === */
+    .footer { padding: 60px 0 80px; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; margin-bottom: 32px; }
+    .footer-brand p { font-size: 13px; color: var(--text-3); margin-top: 8px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+    .footer-links a { font-size: 13px; color: var(--text-3); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--green); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      padding-top: 24px; border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--text-3);
+    }
+
+    /* === FLOATING CALLBACK === */
+    .float-cb { position: fixed; bottom: 80px; right: 20px; z-index: 90; }
+    @media (min-width: 768px) { .float-cb { bottom: 24px; } }
+    .float-cb-btn {
+      width: 52px; height: 52px; border-radius: 50%; background: var(--green);
+      border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 24px rgba(0,220,130,0.3); transition: transform 0.2s;
+    }
+    .float-cb-btn:hover { transform: scale(1.08); }
+    .float-cb-btn svg { width: 22px; height: 22px; color: #000; }
+    .float-cb-panel {
+      display: none; position: absolute; bottom: 64px; right: 0; width: 300px;
+      background: #111; border: 1px solid var(--border); border-radius: 16px;
+      padding: 20px; box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    }
+    .float-cb-panel.open { display: block; animation: fadeUp 0.25s ease; }
+
+    /* === EXIT POPUP === */
+    .exit-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center;
+    }
+    .exit-overlay.show { display: flex; }
+    .exit-modal {
+      background: #111; border: 1px solid var(--border); border-radius: 16px;
+      padding: 36px; max-width: 420px; width: 90%; position: relative; animation: fadeUp 0.3s ease;
+    }
+    .exit-close {
+      position: absolute; top: 12px; right: 16px; font-size: 20px;
+      color: var(--text-3); cursor: pointer; background: none; border: none; padding: 4px 8px;
+    }
+    .exit-close:hover { color: #fff; }
+
+    /* === MOBILE BAR === */
+    .sticky-mobile-bar {
+      display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 95;
+      background: rgba(10,12,16,0.95); backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+    }
+    @media (min-width: 768px) { .sticky-mobile-bar { display: none; } }
+    .sticky-mobile-bar a {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px; font-size: 13px; font-weight: 600; color: #fff;
+      font-family: var(--font-display);
+    }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @keyframes pulse-green { 0%, 100% { box-shadow: 0 0 0 0 rgba(0,220,130,0.4); } 50% { box-shadow: 0 0 0 12px rgba(0,220,130,0); } }
+    .pulse { animation: pulse-green 2s infinite; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Value flash for industry switching */
+    .value-flash { animation: valueFlash 0.5s ease; }
+    @keyframes valueFlash { 0% { opacity: 0.5; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+
+    /* Gradient text */
+    .gradient {
+      background: linear-gradient(135deg, var(--green) 0%, #00a8ff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Big phone number */
+    .big-phone {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 6vw, 56px); font-weight: 700;
+      color: var(--green); letter-spacing: -0.03em;
+      text-shadow: 0 0 40px rgba(0,220,130,0.2);
+      transition: text-shadow 0.3s;
+    }
+    .big-phone:hover { text-shadow: 0 0 60px rgba(0,220,130,0.4); }
+
+    /* Quote section */
+    .quote-text {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 3vw, 28px); font-weight: 500;
+      color: #fff; line-height: 1.5; letter-spacing: -0.01em;
+    }
+
+    /* CTA section glow */
+    .cta-section { position: relative; overflow: hidden; }
+    .cta-section::before {
+      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, var(--green-glow) 0%, transparent 70%);
+      opacity: 0.3; pointer-events: none; filter: blur(40px);
+    }
+
+    /* Industry transition */
+    .industry-transition { transition: opacity 0.3s ease; }
+  </style>
+</head>
+<body>
+<div class="noise"></div>
+
+<!-- NAV -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      The Call <span>Taker</span>
+    </a>
+    <nav class="nav">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="demo.html">Demo</a>
+    </nav>
+    <a href="signup.html?plan=starter" class="header-cta">Start Free Trial</a>
+    <button class="menu-toggle" onclick="this.classList.toggle('open');document.getElementById('mobileNav').classList.toggle('open');" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#features" onclick="document.getElementById('mobileNav').classList.remove('open');document.querySelector('.menu-toggle').classList.remove('open');">Features</a>
+  <a href="#pricing" onclick="document.getElementById('mobileNav').classList.remove('open');document.querySelector('.menu-toggle').classList.remove('open');">Pricing</a>
+  <a href="#faq" onclick="document.getElementById('mobileNav').classList.remove('open');document.querySelector('.menu-toggle').classList.remove('open');">FAQ</a>
+  <a href="demo.html">Book Demo</a>
+  <a href="tel:+16157845747">Call (615) 784-5747</a>
+  <a href="signup.html?plan=starter" class="btn btn-primary btn-lg" style="margin-top:20px;justify-content:center;">Start Free Trial</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="main">
+  <div class="reveal">
+    <div class="hero-label" id="hero-label">AI-Powered Receptionist for Service Businesses</div>
+
+    <p style="font-size: 13px; color: var(--text-3); margin-bottom: 12px;">What's your industry?</p>
+    <div class="industry-selector" id="industry-selector">
+      <button class="industry-pill active" onclick="setIndustry('hvac')">HVAC</button>
+      <button class="industry-pill" onclick="setIndustry('restoration')">Restoration</button>
+    </div>
+
+    <h1 id="hero-headline">STOP LOSING<br><span class="accent" id="hero-jobword">JOBS</span> TO<br><span class="gradient">VOICEMAIL</span></h1>
+
+    <p class="subtitle" id="hero-subtitle">Your AI receptionist answers every call in under 2 seconds, 24/7/365. Books appointments. Handles emergencies. Texts you the details.</p>
+
+    <div class="hero-buttons">
+      <a href="#callback" class="btn btn-primary btn-lg" onclick="document.getElementById('cb-phone').focus();return false;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Get a Call in 30 Seconds
+      </a>
+      <a href="tel:+16157845747" class="btn btn-ghost btn-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+        Hear the AI Live
+      </a>
+    </div>
+
+    <!-- CALLBACK WIDGET -->
+    <div class="callback-box" id="callback">
+      <h3>Our AI will call you in under 30 seconds</h3>
+      <p>Enter your number. Hear exactly what your customers will hear.</p>
+      <div id="cb-form">
+        <div class="callback-inputs">
+          <input type="tel" id="cb-phone" placeholder="(555) 123-4567" maxlength="20" autocomplete="tel">
+          <input type="text" id="cb-company" placeholder="Company name" maxlength="100" autocomplete="organization">
+        </div>
+        <input type="hidden" id="cb-industry" value="hvac">
+        <button class="callback-btn" id="cb-btn" onclick="requestCallback()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call Me Now
+        </button>
+        <p style="font-size: 11px; color: var(--text-3); margin-top: 8px; text-align: center;">Free. No obligation. Just a quick conversation with our AI.</p>
+      </div>
+      <div class="callback-success" id="cb-success">
+        <div class="check">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p style="font-size: 15px; font-weight: 700; color: var(--green); margin-bottom: 4px;">Calling you now!</p>
+        <p style="font-size: 13px; color: var(--text-2);">Pick up when you see an unknown number.</p>
+      </div>
+    </div>
+
+    <p style="font-size: 13px; color: var(--text-3); margin-top: 16px; position: relative; z-index: 1;">Or call <a href="tel:+16157845747" style="color: var(--green); font-weight: 600;">(615) 784-5747</a> right now</p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>24/7 Answering</span><span class="dot">&bull;</span>
+    <span>&lt;2 Second Pickup</span><span class="dot">&bull;</span>
+    <span>Zero Missed Calls</span><span class="dot">&bull;</span>
+    <span>AI Receptionist</span><span class="dot">&bull;</span>
+    <span>48 Hour Setup</span><span class="dot">&bull;</span>
+    <span>No Contracts</span><span class="dot">&bull;</span>
+    <span>Emergency Dispatch</span><span class="dot">&bull;</span>
+    <span>Appointment Booking</span><span class="dot">&bull;</span>
+    <span>24/7 Answering</span><span class="dot">&bull;</span>
+    <span>&lt;2 Second Pickup</span><span class="dot">&bull;</span>
+    <span>Zero Missed Calls</span><span class="dot">&bull;</span>
+    <span>AI Receptionist</span><span class="dot">&bull;</span>
+    <span>48 Hour Setup</span><span class="dot">&bull;</span>
+    <span>No Contracts</span><span class="dot">&bull;</span>
+    <span>Emergency Dispatch</span><span class="dot">&bull;</span>
+    <span>Appointment Booking</span><span class="dot">&bull;</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="section section-border" style="padding: 60px 0;">
+  <div class="wrap">
+    <div class="stats-strip reveal">
+      <div class="stat-cell"><div class="stat-val">&lt;2s</div><div class="stat-label">Answer Time</div></div>
+      <div class="stat-cell"><div class="stat-val">24/7</div><div class="stat-label">Always On</div></div>
+      <div class="stat-cell"><div class="stat-val">48h</div><div class="stat-label">Setup Time</div></div>
+      <div class="stat-cell"><div class="stat-val">$0</div><div class="stat-label">Per Minute</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="section section-border">
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 48px;" class="reveal">
+      <div class="section-label">The Problem</div>
+      <h2 class="section-title" style="margin: 0 auto; max-width: 600px;">Every missed call is money in your competitor's pocket</h2>
+    </div>
+    <div class="pain-grid reveal">
+      <div class="pain-card">
+        <div class="num">85%</div>
+        <div class="label">of callers who hit voicemail never call back. They call the next company on Google.</div>
+      </div>
+      <div class="pain-card">
+        <div class="num" id="pain-lost">$8,400+</div>
+        <div class="label" id="pain-lost-label">lost per month by the average HVAC company from missed calls alone.</div>
+      </div>
+      <div class="pain-card">
+        <div class="num" id="pain-afterhours">35%</div>
+        <div class="label" id="pain-afterhours-label">of HVAC calls come in after hours, on weekends, and during holidays.</div>
+      </div>
+      <div class="pain-card">
+        <div class="num">62%</div>
+        <div class="label" id="pain-chose-label">of customers say they chose an HVAC company because they picked up the phone first.</div>
+      </div>
+    </div>
+    <div class="reveal" style="text-align: center; margin-top: 32px;">
+      <p style="font-size: 15px; color: var(--text-2); max-width: 500px; margin: 0 auto;" id="pain-story">You're on a job. Your phone rings. You can't pick up. It goes to voicemail. That customer calls your competitor. <strong style="color: #fff;">They get the job. You don't.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-border">
+  <div class="wrap">
+    <div class="section-label reveal">How it works</div>
+    <h2 class="section-title reveal" style="max-width: 440px; margin-bottom: 48px;">Three steps.<br>Zero missed calls.</h2>
+    <div class="steps-grid reveal">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">Phone rings</div>
+        <div class="step-text">3am, Saturday, middle of a storm. Doesn't matter. Your line gets picked up in under 2 seconds.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">AI handles the call</div>
+        <div class="step-text">Gets their name, address, issue, and urgency. Books the appointment. Flags emergencies for immediate dispatch.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">You get a text</div>
+        <div class="step-text">Customer name, address, issue, appointment time. All in your pocket. You show up and do the work.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRY IT LIVE -->
+<section class="section section-border" style="text-align: center;">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-label" style="display: flex; justify-content: center;">Try it yourself</div>
+      <h2 class="section-title" style="margin: 0 auto 12px;">Don't take our word for it</h2>
+      <p style="font-size: 15px; color: var(--text-2); line-height: 1.65; max-width: 440px; margin: 0 auto 32px;" id="try-description">Call the number below. Pretend you're a homeowner whose AC died at 2am. Hear the AI handle it in real time.</p>
+      <a href="tel:+16157845747" class="big-phone">(615) 784-5747</a>
+      <p style="font-size: 13px; color: var(--text-3); margin-top: 14px;">Live 24/7. Most people can't tell it's not a person.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="section section-border">
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 48px;" class="reveal">
+      <div class="section-label" style="display: flex; justify-content: center;">The Difference</div>
+      <h2 class="section-title" style="margin: 0 auto;">Before vs. after The Call Taker</h2>
+    </div>
+    <div class="ba-grid reveal">
+      <div class="ba-col" id="ba-before">
+        <div class="ba-tag red">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Without
+        </div>
+        <div class="ba-item" id="ba-before-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>AC emergency calls go straight to voicemail</span></div>
+        <div class="ba-item" id="ba-before-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Homeowners call the next HVAC company on Google</span></div>
+        <div class="ba-item" id="ba-before-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You check voicemail between jobs and miss the window</span></div>
+        <div class="ba-item" id="ba-before-4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Furnace emergencies get lost overnight</span></div>
+        <div class="ba-item" id="ba-before-5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>You pay $2,000+/mo for a human receptionist</span></div>
+      </div>
+      <div class="ba-col after" id="ba-after">
+        <div class="ba-tag green">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          With The Call Taker
+        </div>
+        <div class="ba-item" id="ba-after-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Every call answered in under 2 seconds</span></div>
+        <div class="ba-item" id="ba-after-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Emergency AC/heating calls triaged instantly</span></div>
+        <div class="ba-item" id="ba-after-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>You get a text with the job details immediately</span></div>
+        <div class="ba-item" id="ba-after-4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Appointments booked into your calendar automatically</span></div>
+        <div class="ba-item" id="ba-after-5"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Starting at $497/mo — less than one service call</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES BENTO -->
+<section class="section section-border" id="features">
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 48px;" class="reveal">
+      <div class="section-label" style="display: flex; justify-content: center;">Features</div>
+      <h2 class="section-title" style="margin: 0 auto;">Everything your receptionist does.<br>At a fraction of the cost.</h2>
+    </div>
+    <div class="bento reveal">
+      <div class="bento-item">
+        <div class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="bento-title">24/7 call answering</div>
+        <div class="bento-text">Weekends, holidays, 3am emergencies. Every call gets a live answer in under 2 seconds.</div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="bento-title">Appointment booking</div>
+        <div class="bento-text">Books directly into your calendar. No double-booking, no back-and-forth.</div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="bento-title">Emergency dispatch</div>
+        <div class="bento-text">Knows the difference between routine and urgent. Real emergencies get escalated instantly.</div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="bento-title">Instant text summaries</div>
+        <div class="bento-text">After every call, you get a text with name, address, issue, and appointment time.</div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="bento-title">Built for your industry</div>
+        <div class="bento-text">Not a generic bot. Trained on your terminology, services, hours, and service area.</div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="bento-title">No contracts</div>
+        <div class="bento-text">Month-to-month. Cancel anytime. If we're not making you money, you shouldn't be paying us.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE MATH -->
+<section class="section section-border">
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 48px;" class="reveal">
+      <div class="section-label" style="display: flex; justify-content: center;">The Math</div>
+      <h2 class="section-title" style="margin: 0 auto;">It pays for itself in one call</h2>
+    </div>
+    <div class="math-box reveal">
+      <p style="font-size: 15px; color: var(--text-2); margin-bottom: 16px;" id="math-intro">The average HVAC company misses 6+ calls per week</p>
+      <div class="math-eq" id="math-equation"><span class="red">6 missed calls</span> &times; $350 avg job<br>= <span class="red">$8,400/month lost</span></div>
+      <div style="height: 1px; background: var(--border); margin: 20px 0;"></div>
+      <p style="font-size: 15px; color: var(--text-2); margin-bottom: 12px;">The Call Taker catches those calls for</p>
+      <div class="math-result" id="math-price">$497/month</div>
+      <p style="font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px;" id="math-roi">That's a 17x return on investment</p>
+      <p style="font-size: 14px; color: var(--text-3);" id="math-note">One caught call pays for an entire month of service.</p>
+      <a href="calculator.html" class="btn btn-ghost btn-md" style="margin-top: 20px;">Calculate Your Lost Revenue</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER QUOTE -->
+<section class="section section-border" style="text-align: center;">
+  <div class="wrap">
+    <div class="reveal" style="max-width: 640px; margin: 0 auto;">
+      <p class="quote-text">"I watched skilled HVAC guys lose jobs to companies with worse service and higher prices. The only difference? The other company picked up the phone."</p>
+      <p style="font-size: 14px; color: var(--text-3); margin-top: 20px;">Wallace Dobbs &mdash; Founder, The Call Taker</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section section-border">
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 48px;" class="reveal">
+      <div class="section-label" style="display: flex; justify-content: center;">Results</div>
+      <h2 class="section-title" style="margin: 0 auto;" id="testimonials-heading">What HVAC owners are saying</h2>
+    </div>
+    <div class="review-grid reveal" id="testimonials-grid">
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text" id="test-quote-1">"We were missing 8-10 calls a week, mostly after hours. The Call Taker caught every single one. We booked $12,000 in new work the first month."</div>
+        <div class="review-author-wrap">
+          <div class="review-avatar" style="background: #10b981;" id="test-avatar-1">M</div>
+          <div><div class="review-name" id="test-author-1">Mike R.</div><div class="review-role" id="test-role-1">Owner, Comfort Pro Heating &middot; Phoenix, AZ</div></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text" id="test-quote-2">"I was paying $2,400/month for an answering service that put people on hold. This AI answers faster than any human ever could and costs a fraction."</div>
+        <div class="review-author-wrap">
+          <div class="review-avatar" style="background: #3b82f6;" id="test-avatar-2">S</div>
+          <div><div class="review-name" id="test-author-2">Sarah K.</div><div class="review-role" id="test-role-2">Office Manager, Elite Air &middot; Nashville, TN</div></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text" id="test-quote-3">"My guys are in crawl spaces all day. They can't answer phones. Now every call gets handled and I get a text with the details. Best money I've ever spent."</div>
+        <div class="review-author-wrap">
+          <div class="review-avatar" style="background: #f59e0b;" id="test-avatar-3">J</div>
+          <div><div class="review-name" id="test-author-3">James T.</div><div class="review-role" id="test-role-3">Owner, Lone Star HVAC &middot; Dallas, TX</div></div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align: center; font-size: 11px; color: var(--text-3); margin-top: 16px;">* Results represent projected outcomes based on industry data. Individual results may vary.</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section section-border" id="pricing">
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 48px;" class="reveal">
+      <div class="section-label" style="display: flex; justify-content: center;">Pricing</div>
+      <h2 class="section-title" style="margin: 0 auto;">Simple, flat-rate pricing</h2>
+      <p class="section-desc" style="margin: 0 auto;">No per-minute fees. No contracts. Cancel anytime.</p>
+      <p style="font-size: 13px; color: var(--green); font-weight: 600; margin-top: 12px; font-family: var(--font-display);">Founding 20 — First 20 customers locked at launch pricing for life</p>
+    </div>
+    <div class="pricing-grid reveal" style="max-width: 720px; margin: 0 auto;">
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most popular</div>
+        <div class="pricing-name">Starter</div>
+        <div class="pricing-desc">HVAC, Plumbing, Electrical</div>
+        <div class="pricing-price" id="price-starter">$497<span>/mo</span></div>
+        <p class="pricing-setup" id="price-starter-note">+ $500 one-time setup</p>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>AI receptionist 24/7</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Appointment booking</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Text summaries after every call</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Emergency detection</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>48-hour setup</div>
+        </div>
+        <a href="signup.html?plan=starter" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Start 7-Day Free Trial</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">Pro</div>
+        <div class="pricing-desc">Dental, Legal, Roofing, MedSpa, Property Mgmt</div>
+        <div class="pricing-price" id="price-pro">$997<span>/mo</span></div>
+        <p class="pricing-setup" id="price-pro-note">+ $500 one-time setup</p>
+        <div class="pricing-divider"></div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Everything in Starter</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Smart call routing</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Custom intake workflow</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Priority support</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Monthly performance reports</div>
+        </div>
+        <a href="signup.html?plan=pro" class="btn btn-ghost btn-md" style="width:100%;justify-content:center;">Start 7-Day Free Trial</a>
+      </div>
+    </div>
+    <p style="text-align: center; font-size: 13px; color: var(--text-3); margin-top: 20px;">All plans include a 7-day free trial. $500 one-time setup fee. No contracts. Cancel anytime.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-border" id="faq">
+  <div class="wrap">
+    <div style="text-align: center; margin-bottom: 48px;" class="reveal">
+      <div class="section-label" style="display: flex; justify-content: center;">FAQ</div>
+      <h2 class="section-title" style="margin: 0 auto;">Common questions</h2>
+    </div>
+    <div style="max-width: 600px; margin: 0 auto;">
+      <div class="faq-item reveal">
+        <button class="faq-question">Does it actually sound real?<svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. Call (615) 784-5747 right now and judge for yourself. It's conversational AI, not a phone tree. Most callers don't realize it's not a person.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question">How is this different from an answering service?<svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Answering services put your customers on hold, read from scripts, and charge per minute. Our AI picks up in under 2 seconds, has a natural conversation, books appointments, and costs a flat monthly rate.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question">Am I locked into a contract?<svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">No. Month-to-month. Cancel anytime with one click. If we're not making you money, you shouldn't be paying us.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question">How fast can I be live?<svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">48 hours or less. We handle everything — you just tell us your hours, services, and how you want emergencies handled.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question">What if a customer needs to reach me directly?<svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">For emergencies, the AI can instantly text or call you. For everything else, you get a detailed text summary and can call back at your convenience.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-question">Do I need special equipment or software?<svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">No. Just set up call forwarding on your existing phone line. Takes 2 minutes. We'll walk you through it.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section cta-section" style="padding: 120px 0; text-align: center;">
+  <div class="wrap" style="position: relative; z-index: 1;">
+    <div class="reveal">
+      <h2 style="font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); font-weight: 700; color: #fff; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 16px;">Every hour you wait,<br>you're losing money</h2>
+      <p style="font-size: 16px; color: var(--text-2); margin-bottom: 36px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.6;">The next call your business misses could be a $500 job. Or a $5,000 install. Don't let it go to voicemail.</p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px;">
+        <a href="demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
+        <a href="tel:+16157845747" class="btn btn-ghost btn-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Hear It Live
+        </a>
+      </div>
+      <p style="font-size: 13px; color: var(--text-3);">7-day free trial. No credit card required. Cancel anytime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          The Call <span>Taker</span>
+        </a>
+        <p>AI receptionist for service businesses.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="demo.html">Demo</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="mailto:thecalltakerai@gmail.com">Contact</a>
+        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+      <span>Brentwood, TN &middot; <a href="mailto:thecalltakerai@gmail.com" style="color:var(--text-3);">thecalltakerai@gmail.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CALLBACK WIDGET -->
+<div class="float-cb" id="float-widget">
+  <div class="float-cb-panel" id="float-panel">
+    <h4 style="font-family: var(--font-display); font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
+    <p style="font-size: 12px; color: var(--text-3); margin-bottom: 12px;">Our AI will call you in under 30 seconds.</p>
+    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: var(--font-body); margin-bottom: 8px;">
+    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: var(--font-body); margin-bottom: 10px;">
+    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 11px;">Call Me Now</button>
+    <div id="float-success" style="display: none; text-align: center; padding: 14px 0;">
+      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
+      <p style="font-size: 12px; color: var(--text-2);">Pick up your phone.</p>
+    </div>
+  </div>
+  <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </button>
+</div>
+
+<!-- EXIT INTENT POPUP -->
+<div class="exit-overlay" id="exit-popup">
+  <div class="exit-modal">
+    <button class="exit-close" onclick="closeExitPopup()">&times;</button>
+    <div style="text-align: center;">
+      <div style="font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;">Before you go</div>
+      <h3 style="font-family: var(--font-display); font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px;">Get a free missed call audit</h3>
+      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 20px; line-height: 1.6;">We'll call your business after hours and tell you exactly what your customers are hearing. Free. No strings.</p>
+      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 10px; color: #fff; font-size: 14px; font-family: var(--font-body); margin-bottom: 8px;">
+      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 10px; color: #fff; font-size: 14px; font-family: var(--font-body); margin-bottom: 12px;">
+      <button class="callback-btn" onclick="requestExitCallback()">Get My Free Audit</button>
+      <div id="exit-success" style="display: none; padding: 16px 0;">
+        <p style="font-size: 15px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
+        <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
+      </div>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16157845747" style="color: var(--green); font-weight: 600;">(615) 784-5747</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE BAR -->
+<div class="sticky-mobile-bar">
+  <a href="tel:+16157845747"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
+  <a href="demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
+</div>
+
+<script>
+// === SCROLL REVEAL ===
+(function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+})();
+
+// === FAQ ACCORDION ===
+document.querySelectorAll('.faq-question').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var item = this.parentElement;
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// === HEADER SCROLL ===
+window.addEventListener('scroll', function() {
+  document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 60);
+});
+</script>
+
+<script>
+(function() {
+  'use strict';
+
+  var INDUSTRIES = {
+    hvac: {
+      name: 'HVAC', slug: 'hvac',
+      jobWord: 'JOBS', clientWord: 'customers',
+      avgJob: 350, monthlyLoss: 8400, afterHoursPercent: 35,
+      price: 497, tier: 'starter',
+      theme: { primary: '#00dc82', glow: 'rgba(0,220,130,0.25)', dim: 'rgba(0,220,130,0.12)', gradient: 'linear-gradient(135deg, #00dc82, #00a8ff)' },
+      heroLabel: 'AI-Powered Receptionist for HVAC Companies',
+      heroHeadline: 'STOP LOSING<br><span class="accent" id="hero-jobword">JOBS</span> TO<br><span class="gradient">VOICEMAIL</span>',
+      heroSubtitle: 'Your AI receptionist answers every call in under 2 seconds, 24/7/365. Books appointments. Handles emergencies. Texts you the details.',
+      painLost: '$8,400+', painLostLabel: 'lost per month by the average HVAC company from missed calls alone.',
+      painAfterHours: '35%', painAfterHoursLabel: 'of HVAC calls come in after hours, on weekends, and during holidays.',
+      painChoseLabel: 'of customers say they chose an HVAC company because they picked up the phone first.',
+      painStory: 'You\'re on a job. Your phone rings. You can\'t pick up. It goes to voicemail. That customer calls your competitor. <strong style="color: #fff;">They get the job. You don\'t.</strong>',
+      tryDescription: 'Call the number below. Pretend you\'re a homeowner whose AC died at 2am in the middle of summer. Hear the AI handle it in real time.',
+      beforeItems: ['AC emergency calls go straight to voicemail','Homeowners call the next HVAC company on Google','You check voicemail between jobs and miss the window','Furnace emergencies get lost overnight','You pay $2,000+/mo for a human receptionist'],
+      afterItems: ['Every call answered in under 2 seconds','Emergency AC/heating calls triaged instantly','You get a text with the job details immediately','Appointments booked into your calendar automatically','Starting at $497/mo \u2014 less than one service call'],
+      mathIntro: 'The average HVAC company misses 6+ calls per week',
+      mathEquation: '<span class="red">6 missed calls</span> \u00d7 $350 avg job<br>= <span class="red">$8,400/month lost</span>',
+      mathPrice: '$497/month', mathRoi: 'That\'s a 17x return on investment',
+      mathNote: 'One caught call pays for an entire month of service.',
+      testimonials: [
+        { quote: '"We were missing 8-10 calls a week, mostly after hours. The Call Taker caught every single one. We booked $12,000 in new work the first month."', author: 'Mike R.', role: 'Owner, Comfort Pro Heating \u00b7 Phoenix, AZ', avatar: 'M', color: '#10b981' },
+        { quote: '"I was paying $2,400/month for an answering service that put people on hold. This AI answers faster than any human ever could and costs a fraction."', author: 'Sarah K.', role: 'Office Manager, Elite Air \u00b7 Nashville, TN', avatar: 'S', color: '#3b82f6' },
+        { quote: '"My guys are in crawl spaces all day. They can\'t answer phones. Now every call gets handled and I get a text with the details. Best money I\'ve ever spent."', author: 'James T.', role: 'Owner, Lone Star HVAC \u00b7 Dallas, TX', avatar: 'J', color: '#f59e0b' }
+      ],
+      testimonialHeading: 'What HVAC owners are saying'
+    },
+    restoration: {
+      name: 'Restoration', slug: 'restoration',
+      jobWord: 'JOBS', clientWord: 'homeowners',
+      avgJob: 4500, monthlyLoss: 90000, afterHoursPercent: 60,
+      price: 997, tier: 'pro',
+      theme: { primary: '#06b6d4', glow: 'rgba(6,182,212,0.25)', dim: 'rgba(6,182,212,0.12)', gradient: 'linear-gradient(135deg, #06b6d4, #0891b2)' },
+      heroLabel: 'AI-Powered Receptionist for Water Damage Restoration',
+      heroHeadline: 'STOP LOSING<br><span class="accent" id="hero-jobword">JOBS</span> TO<br><span class="gradient">VOICEMAIL</span>',
+      heroSubtitle: 'Water damage doesn\'t wait until morning. Your AI receptionist answers every flood, burst pipe, and storm call 24/7 \u2014 dispatches your crew and captures the job.',
+      painLost: '$90,000+', painLostLabel: 'lost per month by the average restoration company from missed water damage calls.',
+      painAfterHours: '60%', painAfterHoursLabel: 'of water damage calls come in after hours, on weekends, and during storms.',
+      painChoseLabel: 'of homeowners say they chose a restoration company because they answered the phone first.',
+      painStory: 'A pipe bursts at 2am. Water is flooding the kitchen. The homeowner calls three restoration companies. Two go to voicemail. One answers. <strong style="color: #fff;">That company gets the $5,000 emergency job. You don\'t even know they called.</strong>',
+      tryDescription: 'Call the number below. Pretend you\'re a homeowner whose basement just flooded at 2am. Hear the AI handle it in real time.',
+      beforeItems: ['Emergency flood calls go straight to voicemail','Homeowners call the next restoration company on Google','You check voicemail between jobs and lose the window','After-hours water damage calls get lost overnight','You pay $3,000+/mo for a 24/7 call center'],
+      afterItems: ['Every emergency call answered in under 2 seconds','Water damage calls triaged by urgency instantly','You get a text with the job details and address immediately','Assessments booked into your calendar automatically','Starting at $997/mo \u2014 less than one extraction job'],
+      mathIntro: 'The average restoration company misses 5+ emergency calls per week',
+      mathEquation: '<span class="red">5 missed calls</span> \u00d7 $4,500 avg job<br>= <span class="red">$90,000/month lost</span>',
+      mathPrice: '$997/month', mathRoi: 'That\'s a 90x return on investment',
+      mathNote: 'One caught water damage call pays for the entire year of service.',
+      testimonials: [
+        { quote: '"60% of our water damage calls come after hours. We were losing all of them to competitors who answered. The Call Taker caught 23 emergency calls in the first month."', author: 'Brian D.', role: 'Owner, FloodPro Restoration', avatar: 'B', color: '#06b6d4' },
+        { quote: '"A burst pipe at 3am is a $4,000-$8,000 job. We were sending those to voicemail. Now the AI answers, gets the address, assesses urgency, and dispatches our on-call crew."', author: 'Maria S.', role: 'Operations Manager, AquaFirst Restoration', avatar: 'M', color: '#f59e0b' },
+        { quote: '"Insurance restoration jobs average $6,500. We were losing 4-5 per week to missed calls. The Call Taker paid for itself in the first 48 hours."', author: 'Derek W.', role: 'Owner, StormGuard Services', avatar: 'D', color: '#10b981' }
+      ],
+      testimonialHeading: 'What restoration owners are saying'
+    }
+  };
+
+  var currentIndustry = 'hvac';
+
+  window.setIndustry = function(slug) {
+    currentIndustry = slug;
+    var ind = INDUSTRIES[slug];
+    if (!ind) return;
+
+    if (ind.theme) {
+      var r = document.documentElement.style;
+      r.setProperty('--green', ind.theme.primary);
+      r.setProperty('--green-glow', ind.theme.glow);
+      r.setProperty('--green-dim', ind.theme.dim);
+      document.querySelectorAll('.gradient').forEach(function(el) {
+        el.style.background = ind.theme.gradient;
+        el.style.webkitBackgroundClip = 'text';
+        el.style.webkitTextFillColor = 'transparent';
+        el.style.backgroundClip = 'text';
+      });
+      document.querySelectorAll('.accent').forEach(function(el) {
+        el.style.color = ind.theme.primary;
+      });
+    }
+
+    var cbIndustry = document.getElementById('cb-industry');
+    if (cbIndustry) cbIndustry.value = slug;
+
+    document.querySelectorAll('.industry-pill').forEach(function(pill) {
+      pill.classList.remove('active'); pill.style.background = ''; pill.style.borderColor = '';
+      if (pill.textContent.trim().toLowerCase().replace(/\s+/g, '') === ind.name.toLowerCase().replace(/\s+/g, '')) pill.classList.add('active');
+    });
+
+    var el;
+    el = document.getElementById('hero-label'); if (el) el.textContent = ind.heroLabel;
+    el = document.getElementById('hero-headline'); if (el) el.innerHTML = ind.heroHeadline;
+    el = document.getElementById('hero-subtitle'); if (el) el.textContent = ind.heroSubtitle;
+    el = document.getElementById('pain-lost'); if (el) { el.textContent = ind.painLost; flash(el); }
+    el = document.getElementById('pain-lost-label'); if (el) el.textContent = ind.painLostLabel;
+    el = document.getElementById('pain-afterhours'); if (el) { el.textContent = ind.painAfterHours; flash(el); }
+    el = document.getElementById('pain-afterhours-label'); if (el) el.textContent = ind.painAfterHoursLabel;
+    el = document.getElementById('pain-chose-label'); if (el) el.textContent = ind.painChoseLabel;
+    el = document.getElementById('pain-story'); if (el) el.innerHTML = ind.painStory;
+    el = document.getElementById('try-description'); if (el) el.textContent = ind.tryDescription;
+
+    if (ind.beforeItems) { for (var b = 0; b < ind.beforeItems.length; b++) { el = document.getElementById('ba-before-' + (b+1)); if (el) { var span = el.querySelector('span'); if (span) span.textContent = ind.beforeItems[b]; } } }
+    if (ind.afterItems) { for (var a = 0; a < ind.afterItems.length; a++) { el = document.getElementById('ba-after-' + (a+1)); if (el) { var span = el.querySelector('span'); if (span) span.textContent = ind.afterItems[a]; } } }
+
+    el = document.getElementById('math-intro'); if (el) el.textContent = ind.mathIntro;
+    el = document.getElementById('math-equation'); if (el) { el.innerHTML = ind.mathEquation; flash(el); }
+    el = document.getElementById('math-price'); if (el) { el.textContent = ind.mathPrice; flash(el); }
+    el = document.getElementById('math-roi'); if (el) el.textContent = ind.mathRoi;
+    el = document.getElementById('math-note'); if (el) el.textContent = ind.mathNote;
+
+    el = document.getElementById('price-starter'); if (el) { el.innerHTML = '$497<span>/mo</span>'; flash(el); }
+    el = document.getElementById('price-pro'); if (el) { el.innerHTML = '$997<span>/mo</span>'; flash(el); }
+
+    el = document.getElementById('testimonials-heading'); if (el) el.textContent = ind.testimonialHeading;
+    for (var i = 0; i < 3; i++) {
+      var t = ind.testimonials[i]; if (!t) continue;
+      el = document.getElementById('test-quote-' + (i+1)); if (el) el.textContent = t.quote;
+      el = document.getElementById('test-author-' + (i+1)); if (el) el.textContent = t.author;
+      el = document.getElementById('test-role-' + (i+1)); if (el) el.textContent = t.role;
+      el = document.getElementById('test-avatar-' + (i+1)); if (el) { el.textContent = t.avatar; el.style.background = t.color; }
+    }
+  };
+
+  function flash(el) { if (!el) return; el.classList.remove('value-flash'); void el.offsetWidth; el.classList.add('value-flash'); }
+
+  function sendCallback(phone, company, source) {
+    return fetch('https://ntfy.sh/tct-callback-Hk3mQ7wP', { method: 'POST', body: phone + '|' + company + '|' + source + '|' + currentIndustry });
+  }
+
+  function sendWarRoom(title, body) {
+    fetch('https://ntfy.sh/tct-warroom-Kx7mN9pQ', { method: 'POST', headers: { 'Title': title, 'Priority': 'urgent', 'Tags': 'rotating_light,phone' }, body: body });
+  }
+
+  function createGHLContact(phone, company, tags) {
+    var cleanPhone = phone.replace(/\D/g, '');
+    if (cleanPhone.length === 10) cleanPhone = '+1' + cleanPhone;
+    else if (cleanPhone.length === 11 && cleanPhone[0] === '1') cleanPhone = '+' + cleanPhone;
+    fetch('https://services.leadconnectorhq.com/contacts/', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35', 'Version': '2021-07-28', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ locationId: 'tQb9YmrGDrdVUJYPKrsY', phone: cleanPhone, companyName: company, tags: tags.concat(['industry-' + currentIndustry]), source: 'website-callback' })
+    });
+  }
+
+  window.requestCallback = async function() {
+    var phone = document.getElementById('cb-phone').value.trim();
+    var company = document.getElementById('cb-company').value.trim();
+    if (!phone || phone.length < 7) { document.getElementById('cb-phone').style.borderColor = '#ef4444'; return; }
+    var btn = document.getElementById('cb-btn');
+    btn.disabled = true; btn.textContent = 'Calling...';
+    try {
+      await sendCallback(phone, company, 'website-hero');
+      var ind = INDUSTRIES[currentIndustry];
+      sendWarRoom('CALLBACK: ' + (company || phone) + ' (' + ind.name + ')', 'Phone: ' + phone + '\nCompany: ' + company + '\nIndustry: ' + ind.name + '\nPricing tier: $' + ind.price + '/mo\nSource: Homepage callback\n\nBland.ai calling them NOW!');
+      createGHLContact(phone, company, ['website-callback', 'bland-ai', 'high-intent']);
+      document.getElementById('cb-form').style.display = 'none';
+      document.getElementById('cb-success').style.display = 'block';
+    } catch(e) { btn.disabled = false; btn.textContent = 'Call Me Now'; alert('Something went wrong. Call us directly at (615) 784-5747'); }
+  };
+
+  window.toggleFloatPanel = function() { document.getElementById('float-panel').classList.toggle('open'); };
+
+  window.requestFloatCallback = async function() {
+    var phone = document.getElementById('float-phone').value.trim();
+    var company = document.getElementById('float-company').value.trim();
+    if (!phone || phone.length < 7) return;
+    try {
+      await sendCallback(phone, company, 'floating-widget');
+      sendWarRoom('FLOAT CALLBACK: ' + (company || phone), 'Phone: ' + phone + '\nCompany: ' + company + '\nIndustry: ' + INDUSTRIES[currentIndustry].name);
+      document.getElementById('float-phone').parentElement.querySelectorAll('input, button').forEach(function(el) { el.style.display = 'none'; });
+      document.getElementById('float-success').style.display = 'block';
+    } catch(e) {}
+  };
+
+  var exitShown = false;
+  window.closeExitPopup = function() { document.getElementById('exit-popup').classList.remove('show'); };
+
+  window.requestExitCallback = async function() {
+    var phone = document.getElementById('exit-phone').value.trim();
+    var company = document.getElementById('exit-company').value.trim();
+    if (!phone || phone.length < 7) return;
+    try {
+      await sendCallback(phone, company, 'exit-intent');
+      sendWarRoom('EXIT INTENT: ' + (company || phone), 'Phone: ' + phone + '\nCompany: ' + company + '\nIndustry: ' + INDUSTRIES[currentIndustry].name + '\n\nThey were LEAVING and still gave their number!');
+      createGHLContact(phone, company, ['exit-intent', 'website-callback', 'high-intent']);
+      document.getElementById('exit-phone').style.display = 'none';
+      document.getElementById('exit-company').style.display = 'none';
+      document.querySelector('#exit-popup .callback-btn').style.display = 'none';
+      document.getElementById('exit-success').style.display = 'block';
+      setTimeout(closeExitPopup, 3000);
+    } catch(e) {}
+  };
+
+  if (window.innerWidth > 768) {
+    setTimeout(function() {
+      document.addEventListener('mouseout', function(e) {
+        if (e.clientY < 5 && !exitShown) { exitShown = true; document.getElementById('exit-popup').classList.add('show'); }
+      });
+    }, 5000);
+  }
+
+  document.getElementById('exit-popup').addEventListener('click', function(e) { if (e.target === this) closeExitPopup(); });
+  document.addEventListener('click', function(e) {
+    var w = document.getElementById('float-widget');
+    if (w && !w.contains(e.target)) document.getElementById('float-panel').classList.remove('open');
+  });
+
+  document.querySelectorAll('input[type="tel"]').forEach(function(input) {
+    input.addEventListener('input', function() { this.style.borderColor = ''; });
+  });
+
+  var urlParams = new URLSearchParams(window.location.search);
+  var urlIndustry = urlParams.get('industry');
+  if (urlIndustry && INDUSTRIES[urlIndustry]) setIndustry(urlIndustry);
+})();
+</script>
+
+</body>
+</html>
