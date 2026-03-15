@@ -26,7 +26,7 @@ AI Receptionist SaaS for service businesses. $97/$297/$497/mo plans. 14-day free
 CLAUDE.md              # 44K system doc — the bible. Read before touching anything
 primer.md              # THIS FILE — session context primer
 index.html             # Homepage (glassmorphism nav, cursor effects, phone mockup)
-website/               # All deployed pages (82 pages, GitHub Pages via Actions)
+website/               # All deployed pages (82+ pages, GitHub Pages via Actions)
   industries/          # 13 industry landing pages
   blog/                # 39 blog articles
   case-studies/        # 5 case studies
@@ -35,6 +35,7 @@ website/               # All deployed pages (82 pages, GitHub Pages via Actions)
   agency-program/      # White-label partner program
   toolkit/             # Sales toolkit (password-gated)
   shared/              # Shared CSS/JS (demo-console.css, demo-experience.css, ui.css)
+  review.html          # Business review prompt page (noindex)
   dashboard/           # Internal dashboards (not deployed)
   tests/               # Hero regression tests
 agents/                # 10 specialized agent configs (01-10)
@@ -59,18 +60,20 @@ ben/, max/, sam/       # Engine state/config mirrors
 
 ## Current Session Context (March 15, 2026)
 
-- On branch `claude/fix-jessica-voice-agent-vt0s0`, 1 commit ahead of remote
-- Working tree is clean — no staged or unstaged changes
-- Recent work: PayPal/Venmo checkout built, 3-touch close sequence for 35 hot leads, Jessica voice v9, mobile fixes, demo page green theme
+- On branch `claude/business-review-prompt-bjbDl`
+- Working tree is clean
+- Just added: `website/review.html` — business review prompt page (dark theme, copy-to-clipboard, noindex)
+- Recent work: PayPal/Venmo checkout built, 3-touch close sequence for 35 hot leads, Jessica voice v9, mobile fixes, demo page green theme, competitor comparison pages
 
 ## Recent Work (as of March 15, 2026)
 
+- **Business review prompt page** — `/review.html` with copy-to-clipboard prompt for auditing the business
 - **PayPal/Venmo checkout** — Accept $97/$297/$497 payments today (Stripe blocked)
 - **3-touch close sequence** — Built for 35 hot leads
 - **Jessica voice agent v9** — Anti-squeaky rewrite. Deeper voice, pitch -1, rate 0.95, stability 0.75, similarity 0.85
 - **Demo page colors** — All orange replaced with green (#00C96B)
 - **Deploy script upgraded** — v9 with voice settings, fallback voices
-- **Competitor research** — Pricing/feature comparison for Smith.ai, Ruby, AnswerConnect, PATLive, Numa, Goodcall (in progress this session)
+- **Competitor comparison pages** — Pricing/feature comparison for Smith.ai, Ruby, AnswerConnect, PATLive, Numa, Goodcall
 
 ## Active Priorities
 
@@ -79,7 +82,6 @@ ben/, max/, sam/       # Engine state/config mirrors
 - **Voice quality**: v9 prompt deployed. Test by calling (615) 784-5747
 - **Pilot program**: 5 concurrent slots, 14-day free trial. Funnel is live
 - **Outreach**: 17 industries, 20 metros. Blast engine, funnel engine, cold caller all running
-- **Competitor comparison pages**: Research in progress for website content
 
 ## Known Blockers
 
