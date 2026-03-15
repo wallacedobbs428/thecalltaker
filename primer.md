@@ -1,3 +1,9 @@
+## ALWAYS CONFIRM REPO AT SESSION START
+Run: bash ~/whereami.sh
+Confirm you are in the correct repo before touching any files. Wrong repo = wasted hours.
+
+---
+
 # Primer — The Call Taker
 
 > Last updated: 2026-03-15 | Rewrite this file at the start of every session.
