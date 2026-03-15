@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Client Intake Form &mdash; The Call Taker</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ============================================
+       CLIENT INTAKE FORM — Page Styles
+       ============================================ */
+
+    body {
+      background: #000;
+    }
+
+    /* Progress Bar */
+    .progress-bar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+    .progress-bar-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 16px 24px 12px;
+    }
+    .progress-bar-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .progress-bar-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .progress-bar-logo .logo-icon {
+      width: 24px;
+      height: 24px;
+      background: var(--green);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .progress-bar-logo .logo-icon svg {
+      width: 13px;
+      height: 13px;
+    }
+    .progress-bar-logo span {
+      color: var(--green);
+    }
+    .progress-bar-step-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-3);
+    }
+    .progress-bar-step-text .current {
+      color: var(--green);
+    }
+    .progress-steps-row {
+      display: flex;
+      gap: 4px;
+    }
+    .progress-step-pip {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.08);
+      transition: background 0.3s ease;
+    }
+    .progress-step-pip.active {
+      background: var(--green);
+    }
+    .progress-step-pip.complete {
+      background: var(--green);
+      opacity: 0.6;
+    }
+
+    /* Step Labels (below pips on desktop) */
+    .progress-labels {
+      display: none;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+    @media (min-width: 768px) {
+      .progress-labels {
+        display: flex;
+      }
+    }
+    .progress-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-align: center;
+      flex: 1;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+    .progress-label.active {
+      color: var(--green);
+    }
+    .progress-label:hover {
+      color: #fff;
+    }
+
+    /* Page Layout */
+    .intake-page {
+      padding: 130px 0 80px;
+      min-height: 100vh;
+    }
+    @media (min-width: 768px) {
+      .intake-page {
+        padding-top: 140px;
+      }
+    }
+
+    /* Page Header */
+    .intake-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .intake-header .intake-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--green-dim);
+      border: 1px solid rgba(0,220,130,0.15);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+    .intake-header h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+    .intake-header p {
+      font-size: 16px;
+      color: var(--text-2);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Form Sections */
+    .form-section {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+      display: none;
+    }
+    .form-section.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
+    .form-section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-section-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--green-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .form-section-icon svg {
+      width: 22px;
+      height: 22px;
+      color: var(--green);
+    }
+    .form-section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .form-section-subtitle {
+      font-size: 0.8125rem;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+
+    /* Form Grid */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 0;
+    }
+    @media (min-width: 640px) {
+      .form-row-2 { grid-template-columns: repeat(2, 1fr); }
+      .form-row-3 { grid-template-columns: repeat(3, 1fr); }
+      .form-row-4 { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* Form Group Spacing */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    /* Required */
+    .required {
+      color: #ef4444;
+      margin-left: 2px;
+    }
+
+    /* Help text */
+    .form-help {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* Checkbox Grid */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    @media (min-width: 480px) {
+      .checkbox-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 768px) {
+      .checkbox-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .checkbox-item:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .checkbox-item input[type="checkbox"] {
+      display: none;
+    }
+    .checkbox-item .checkmark {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      border: 2px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .checkbox-item .checkmark svg {
+      width: 12px;
+      height: 12px;
+      color: #fff;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .checkbox-item input[type="checkbox"]:checked + .checkmark {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .checkbox-item input[type="checkbox"]:checked + .checkmark svg {
+      opacity: 1;
+    }
+    .checkbox-item .checkbox-label {
+      font-size: 14px;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+
+    /* Radio Items (same style as checkbox) */
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .radio-item:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .radio-item input[type="radio"] {
+      display: none;
+    }
+    .radio-item .radiomark {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+    .radio-item .radiomark::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .radio-item input[type="radio"]:checked + .radiomark {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .radio-item input[type="radio"]:checked + .radiomark::after {
+      opacity: 1;
+    }
+    .radio-item .radio-label {
+      font-size: 14px;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+
+    /* Hours Grid */
+    .hours-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .hours-row {
+      display: grid;
+      grid-template-columns: 100px 1fr 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+    @media (max-width: 639px) {
+      .hours-row {
+        grid-template-columns: 80px 1fr 1fr auto;
+      }
+    }
+    .hours-day {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+    .hours-closed-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-3);
+      cursor: pointer;
+      user-select: none;
+    }
+    .hours-closed-label input {
+      accent-color: var(--green);
+    }
+
+    /* FAQ Answer Table */
+    .faq-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .faq-table-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 639px) {
+      .faq-table-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    .faq-table-row .form-input,
+    .faq-table-row .form-textarea {
+      font-size: 13px;
+    }
+
+    /* Notification Recipient Row */
+    .recipient-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: start;
+    }
+    @media (max-width: 639px) {
+      .recipient-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .btn-nav {
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-nav-prev {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+    }
+    .btn-nav-prev:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+    .btn-nav-next {
+      background: var(--green);
+      color: #000;
+    }
+    .btn-nav-next:hover {
+      background: #00f090;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,220,130,0.3);
+    }
+    .btn-nav-submit {
+      background: var(--green);
+      color: #000;
+      padding: 16px 36px;
+      font-size: 16px;
+    }
+    .btn-nav-submit:hover {
+      background: #00f090;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,220,130,0.3);
+    }
+    .btn-nav:disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* Validation */
+    .form-input.invalid,
+    .form-select.invalid,
+    .form-textarea.invalid {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
+    }
+
+    /* Submitting Overlay */
+    .submit-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    .submit-overlay.visible {
+      display: flex;
+    }
+    .submit-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 40px;
+      text-align: center;
+      max-width: 440px;
+      width: 90%;
+    }
+    .submit-spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(0,220,130,0.2);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .submit-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .submit-subtitle {
+      font-size: 0.9375rem;
+      color: var(--text-3);
+    }
+
+    /* Success Screen */
+    .success-screen {
+      display: none;
+      min-height: 100vh;
+      padding: 120px 0 80px;
+    }
+    .success-screen.visible {
+      display: block;
+    }
+    .success-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(0,220,130,0.2);
+      border-radius: 20px;
+      padding: 56px 40px;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .success-icon {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: rgba(0,220,130,0.1);
+      border: 2px solid rgba(0,220,130,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      animation: successPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes successPop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-icon svg {
+      width: 44px;
+      height: 44px;
+      color: var(--green);
+    }
+    .success-title {
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .success-subtitle {
+      font-size: 16px;
+      color: var(--text-2);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .success-detail {
+      font-size: 14px;
+      color: var(--text-3);
+      line-height: 1.7;
+      max-width: 420px;
+      margin: 0 auto 32px;
+    }
+    .success-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      color: var(--text-2);
+    }
+    .success-contact a {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 639px) {
+      .form-section {
+        padding: 24px 18px;
+        border-radius: 12px;
+      }
+      .success-card {
+        padding: 36px 20px;
+      }
+      .nav-buttons {
+        gap: 12px;
+      }
+      .btn-nav {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+    }
+
+    /* Add Recipient Button */
+    .btn-add-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px dashed rgba(255,255,255,0.15);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-3);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-add-row:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border-color: rgba(255,255,255,0.25);
+    }
+    .btn-remove-row {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .btn-remove-row:hover {
+      background: rgba(239,68,68,0.15);
+    }
+    .btn-remove-row svg {
+      width: 14px;
+      height: 14px;
+      color: #ef4444;
+    }
+
+    /* Section divider within a section */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    /* Sub-label */
+    .sub-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== PROGRESS BAR ========== -->
+  <div class="progress-bar-container">
+    <div class="progress-bar-inner">
+      <div class="progress-bar-top">
+        <div class="progress-bar-logo">
+          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          The Call <span>Taker</span>
+        </div>
+        <div class="progress-bar-step-text">
+          Step <span class="current" id="stepCurrent">1</span> of 5
+        </div>
+      </div>
+      <div class="progress-steps-row">
+        <div class="progress-step-pip active" data-step="1"></div>
+        <div class="progress-step-pip" data-step="2"></div>
+        <div class="progress-step-pip" data-step="3"></div>
+        <div class="progress-step-pip" data-step="4"></div>
+        <div class="progress-step-pip" data-step="5"></div>
+      </div>
+      <div class="progress-labels">
+        <div class="progress-label active" data-step="1" onclick="goToStep(1)">Business Info</div>
+        <div class="progress-label" data-step="2" onclick="goToStep(2)">Services</div>
+        <div class="progress-label" data-step="3" onclick="goToStep(3)">Scheduling</div>
+        <div class="progress-label" data-step="4" onclick="goToStep(4)">AI Preferences</div>
+        <div class="progress-label" data-step="5" onclick="goToStep(5)">Notifications</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== INTAKE FORM PAGE ========== -->
+  <div id="intakePage" class="intake-page">
+    <div class="container" style="max-width: 800px;">
+
+      <!-- Header -->
+      <div class="intake-header">
+        <div class="intake-badge">Welcome aboard</div>
+        <h1>New Client Intake Form</h1>
+        <p>Tell us about your business so we can configure your AI receptionist perfectly. This takes about 10 minutes.</p>
+      </div>
+
+      <!-- ========== SECTION 1: BUSINESS INFO ========== -->
+      <div class="form-section active" id="section1" data-step="1">
+        <div class="form-section-header">
+          <div class="form-section-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/></svg>
+          </div>
+          <div>
+            <div class="form-section-title">Business Information</div>
+            <div class="form-section-subtitle">Your company details and contact info</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="businessName">Legal Business Name <span class="required">*</span></label>
+          <input type="text" id="businessName" class="form-input" placeholder="Nashville Comfort HVAC" required>
+        </div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="dba">DBA / Trade Name</label>
+            <input type="text" id="dba" class="form-input" placeholder="If different from legal name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="yearsInBusiness">Years in Business</label>
+            <input type="text" id="yearsInBusiness" class="form-input" placeholder="e.g., 12">
+          </div>
+        </div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="ownerName">Owner Name <span class="required">*</span></label>
+            <input type="text" id="ownerName" class="form-input" placeholder="John Smith" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ownerCell">Owner Cell Phone <span class="required">*</span></label>
+            <input type="tel" id="ownerCell" class="form-input" placeholder="(615) 555-0123" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="businessEmail">Business Email <span class="required">*</span></label>
+          <input type="email" id="businessEmail" class="form-input" placeholder="john@nashvillecomfort.com" required>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-label">Business Phone Numbers</div>
+        <div class="form-help" style="margin-bottom: 12px; margin-top: -4px;">Which phone number(s) should the AI answer?</div>
+
+        <div id="phoneRows">
+          <div class="recipient-row phone-row">
+            <div class="form-group" style="margin-bottom: 0;">
+              <input type="tel" class="form-input phone-number" placeholder="(615) 555-0123">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <input type="text" class="form-input phone-label-input" placeholder="Main line, Google, etc.">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <select class="form-select phone-answer">
+                <option value="yes">Answer this line</option>
+                <option value="no">Do not answer</option>
+              </select>
+            </div>
+            <div style="width: 32px;"></div>
+          </div>
+        </div>
+        <button type="button" class="btn-add-row" onclick="addPhoneRow()" style="margin-top: 8px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          Add Phone Number
+        </button>
+
+        <div class="section-divider"></div>
+
+        <div class="form-group">
+          <label class="form-label" for="businessAddress">Business Address</label>
+          <input type="text" id="businessAddress" class="form-input" placeholder="123 Main St, Nashville, TN 37201">
+        </div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="serviceArea">Service Area <span class="required">*</span></label>
+            <textarea id="serviceArea" class="form-textarea" rows="2" placeholder="Nashville and surrounding areas within 30 miles" required></textarea>
+            <div class="form-help">Cities, counties, or zip codes you serve</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="website">Website URL</label>
+            <input type="url" id="website" class="form-input" placeholder="https://nashvillecomfort.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="licenseNumber">State Contractor License #</label>
+          <input type="text" id="licenseNumber" class="form-input" placeholder="If applicable">
+        </div>
+
+        <div class="nav-buttons">
+          <div></div>
+          <button type="button" class="btn-nav btn-nav-next" onclick="nextStep()">
+            Next: Services
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ========== SECTION 2: SERVICES & OPERATIONS ========== -->
+      <div class="form-section" id="section2" data-step="2">
+        <div class="form-section-header">
+          <div class="form-section-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.08 3.49a.75.75 0 01-1.15-.66V5.42a.75.75 0 01.37-.65l5.08-3.49a.75.75 0 01.78 0l5.08 3.49a.75.75 0 01.37.65v12.58a.75.75 0 01-1.15.66l-5.08-3.49a.75.75 0 00-.78 0z"/></svg>
+          </div>
+          <div>
+            <div class="form-section-title">Services & Operations</div>
+            <div class="form-section-subtitle">What you do and how your business runs</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Services Offered <span class="required">*</span></label>
+          <div class="checkbox-grid checkbox-grid-3">
+            <label class="checkbox-item"><input type="checkbox" name="services" value="AC Repair"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">AC Repair</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="AC Installation"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">AC Installation</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="Heating/Furnace Repair"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Heating/Furnace Repair</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="Heating Installation"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Heating Installation</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="Heat Pump Service"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Heat Pump Service</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="Maintenance/Tune-Ups"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Maintenance/Tune-Ups</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="Duct Work"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Duct Work</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="Indoor Air Quality"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Indoor Air Quality</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="Thermostat Install"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Thermostat Install</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="Emergency 24/7"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Emergency 24/7</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="Commercial HVAC"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Commercial HVAC</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="New Construction"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">New Construction</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="services" value="Mini-Split/Ductless"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Mini-Split/Ductless</span></label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="otherServices">Other Services</label>
+          <input type="text" id="otherServices" class="form-input" placeholder="Any services not listed above">
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-label">Business Hours</div>
+
+        <div class="hours-grid" id="hoursGrid">
+          <!-- Generated by JS -->
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-group">
+          <label class="form-label">After-Hours Call Handling Policy <span class="required">*</span></label>
+          <div class="checkbox-grid" style="grid-template-columns: 1fr;">
+            <label class="radio-item"><input type="radio" name="afterHoursPolicy" value="all-calls" checked><span class="radiomark"></span><span class="radio-label">AI answers ALL calls (during and after hours)</span></label>
+            <label class="radio-item"><input type="radio" name="afterHoursPolicy" value="after-hours-only"><span class="radiomark"></span><span class="radio-label">AI answers ONLY after-hours calls</span></label>
+            <label class="radio-item"><input type="radio" name="afterHoursPolicy" value="overflow"><span class="radiomark"></span><span class="radio-label">AI answers overflow only (rings office first)</span></label>
+            <label class="radio-item"><input type="radio" name="afterHoursPolicy" value="other"><span class="radiomark"></span><span class="radio-label">Other (describe below)</span></label>
+          </div>
+        </div>
+
+        <div class="form-group" id="afterHoursPolicyOtherGroup" style="display: none;">
+          <label class="form-label" for="afterHoursPolicyOther">Describe your after-hours policy</label>
+          <input type="text" id="afterHoursPolicyOther" class="form-input" placeholder="e.g., AI picks up after 4 rings during business hours">
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-row form-row-3">
+          <div class="form-group">
+            <label class="form-label" for="avgJobValue">Avg. Job Value</label>
+            <input type="text" id="avgJobValue" class="form-input" placeholder="$350">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="numTrucks">Trucks / Technicians</label>
+            <input type="text" id="numTrucks" class="form-input" placeholder="e.g., 4">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="hasOnCall">On-Call Tech?</label>
+            <select id="hasOnCall" class="form-select">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="onCallDetails">
+          <div class="form-row form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="onCallName">On-Call Tech Name</label>
+              <input type="text" id="onCallName" class="form-input" placeholder="Mike Johnson">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="onCallPhone">On-Call Tech Phone</label>
+              <input type="tel" id="onCallPhone" class="form-input" placeholder="(615) 555-0456">
+            </div>
+          </div>
+          <div class="form-row form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="onCallBackupName">Backup Tech Name</label>
+              <input type="text" id="onCallBackupName" class="form-input" placeholder="Optional">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="onCallBackupPhone">Backup Tech Phone</label>
+              <input type="tel" id="onCallBackupPhone" class="form-input" placeholder="Optional">
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-group">
+          <label class="form-label">Emergency Protocol</label>
+          <div class="form-help" style="margin-bottom: 12px; margin-top: -2px;">What should the AI do when a caller reports an emergency?</div>
+          <div class="checkbox-grid" style="grid-template-columns: 1fr;">
+            <label class="radio-item"><input type="radio" name="emergencyProtocol" value="transfer" checked><span class="radiomark"></span><span class="radio-label">Immediately transfer to on-call technician</span></label>
+            <label class="radio-item"><input type="radio" name="emergencyProtocol" value="text-tech"><span class="radiomark"></span><span class="radio-label">Collect info and text on-call tech for callback</span></label>
+            <label class="radio-item"><input type="radio" name="emergencyProtocol" value="text-owner"><span class="radiomark"></span><span class="radio-label">Collect info and text owner to decide</span></label>
+            <label class="radio-item"><input type="radio" name="emergencyProtocol" value="other-emergency"><span class="radiomark"></span><span class="radio-label">Other (describe in notes)</span></label>
+          </div>
+        </div>
+
+        <div class="nav-buttons">
+          <button type="button" class="btn-nav btn-nav-prev" onclick="prevStep()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+            Back
+          </button>
+          <button type="button" class="btn-nav btn-nav-next" onclick="nextStep()">
+            Next: Scheduling
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ========== SECTION 3: SCHEDULING & CALENDAR ========== -->
+      <div class="form-section" id="section3" data-step="3">
+        <div class="form-section-header">
+          <div class="form-section-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+          </div>
+          <div>
+            <div class="form-section-title">Scheduling & Calendar</div>
+            <div class="form-section-subtitle">How you manage appointments</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="calendarSystem">Calendar / Scheduling System <span class="required">*</span></label>
+          <select id="calendarSystem" class="form-select" required>
+            <option value="" disabled selected>Select your system</option>
+            <option value="Google Calendar">Google Calendar</option>
+            <option value="Apple iCal">Apple iCal</option>
+            <option value="GoHighLevel">GoHighLevel (GHL)</option>
+            <option value="Jobber">Jobber</option>
+            <option value="ServiceTitan">ServiceTitan</option>
+            <option value="Housecall Pro">Housecall Pro</option>
+            <option value="FieldEdge">FieldEdge</option>
+            <option value="None">None -- set one up for me</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="calendarOtherGroup" style="display: none;">
+          <label class="form-label" for="calendarOther">Which system?</label>
+          <input type="text" id="calendarOther" class="form-input" placeholder="e.g., Workiz, FieldPulse, etc.">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="calendarEmail">Calendar Access Email</label>
+          <input type="email" id="calendarEmail" class="form-input" placeholder="Email to share calendar with">
+          <div class="form-help">We may need calendar access to connect scheduling</div>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-label">Appointment Durations</div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="durationDiagnostic">Diagnostic / Service Call</label>
+            <input type="text" id="durationDiagnostic" class="form-input" placeholder="e.g., 60 minutes">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="durationRepair">Repair</label>
+            <input type="text" id="durationRepair" class="form-input" placeholder="e.g., 90 minutes">
+          </div>
+        </div>
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="durationInstall">Installation / Replacement</label>
+            <input type="text" id="durationInstall" class="form-input" placeholder="e.g., 4 hours">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="durationMaintenance">Maintenance / Tune-Up</label>
+            <input type="text" id="durationMaintenance" class="form-input" placeholder="e.g., 45 minutes">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="durationEstimate">Free Estimate / Consultation</label>
+          <input type="text" id="durationEstimate" class="form-input" placeholder="e.g., 30 minutes">
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-label">Scheduling Rules</div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="sameDayBooking">Can AI book same-day?</label>
+            <select id="sameDayBooking" class="form-select">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="nextDayBooking">Can AI book next-day?</label>
+            <select id="nextDayBooking" class="form-select">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row form-row-3">
+          <div class="form-group">
+            <label class="form-label" for="advanceWindow">How far out can AI schedule?</label>
+            <input type="text" id="advanceWindow" class="form-input" placeholder="e.g., 2 weeks">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="minNotice">Minimum notice</label>
+            <input type="text" id="minNotice" class="form-input" placeholder="e.g., 2 hours">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="maxPerDay">Max appointments/day</label>
+            <input type="text" id="maxPerDay" class="form-input" placeholder="e.g., 8">
+          </div>
+        </div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="bufferTime">Buffer between appointments?</label>
+            <input type="text" id="bufferTime" class="form-input" placeholder="e.g., 15 minutes (or None)">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="blockedTimes">Blocked / unavailable times</label>
+            <input type="text" id="blockedTimes" class="form-input" placeholder="e.g., Lunch 12-1pm daily">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="schedulingNotes">Scheduling Notes</label>
+          <textarea id="schedulingNotes" class="form-textarea" rows="3" placeholder="Any special scheduling instructions..."></textarea>
+        </div>
+
+        <div class="nav-buttons">
+          <button type="button" class="btn-nav btn-nav-prev" onclick="prevStep()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+            Back
+          </button>
+          <button type="button" class="btn-nav btn-nav-next" onclick="nextStep()">
+            Next: AI Preferences
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ========== SECTION 4: AI PREFERENCES ========== -->
+      <div class="form-section" id="section4" data-step="4">
+        <div class="form-section-header">
+          <div class="form-section-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg>
+          </div>
+          <div>
+            <div class="form-section-title">AI Receptionist Preferences</div>
+            <div class="form-section-subtitle">Customize how your AI answers the phone</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="greetingScript">Greeting Script <span class="required">*</span></label>
+          <textarea id="greetingScript" class="form-textarea" rows="3" placeholder='e.g., "Thank you for calling Nashville Comfort HVAC, this is Sarah, how can I help you today?"' required></textarea>
+          <div class="form-help">Exactly how the AI should answer the phone</div>
+        </div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="aiName">AI Receptionist Name</label>
+            <input type="text" id="aiName" class="form-input" placeholder="e.g., Sarah, Jessica, or leave blank">
+            <div class="form-help">Leave blank to use "virtual assistant"</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="aiTone">Tone / Personality</label>
+            <select id="aiTone" class="form-select">
+              <option value="friendly">Friendly and warm</option>
+              <option value="professional">Professional and polished</option>
+              <option value="casual">Casual and conversational</option>
+              <option value="southern">Southern hospitality</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-label">Common Questions & Answers</div>
+        <div class="form-help" style="margin-top: -4px; margin-bottom: 16px;">Fill in the answers the AI should give to these common questions. Leave blank if not applicable.</div>
+
+        <div class="form-group">
+          <label class="form-label" for="faqServiceFee">Service call / diagnostic fee?</label>
+          <input type="text" id="faqServiceFee" class="form-input" placeholder="e.g., $89 diagnostic fee">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="faqEstimates">Do you offer free estimates?</label>
+          <input type="text" id="faqEstimates" class="form-input" placeholder="e.g., Free estimates on installations">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="faqFinancing">Do you offer financing?</label>
+          <input type="text" id="faqFinancing" class="form-input" placeholder="e.g., Yes, we offer 0% financing through GreenSky">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="faqBrands">What brands do you work on / install?</label>
+          <input type="text" id="faqBrands" class="form-input" placeholder="e.g., All major brands, we install Carrier and Lennox">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="faqMaintenance">Maintenance plans?</label>
+          <input type="text" id="faqMaintenance" class="form-input" placeholder="e.g., Yes, $199/year includes 2 tune-ups">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="faqLicensed">Licensed and insured?</label>
+          <input type="text" id="faqLicensed" class="form-input" placeholder="e.g., Yes, fully licensed, bonded, and insured">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="faqResponseTime">How quickly can you come out?</label>
+          <input type="text" id="faqResponseTime" class="form-input" placeholder="e.g., Usually same-day or next-day service">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="faqAdditional">Any other questions the AI should answer?</label>
+          <textarea id="faqAdditional" class="form-textarea" rows="3" placeholder="List any other questions and answers..."></textarea>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-group">
+          <label class="form-label">Things the AI Should NEVER Say</label>
+          <div class="checkbox-grid" style="grid-template-columns: 1fr;">
+            <label class="checkbox-item"><input type="checkbox" name="neverSay" value="no-exact-pricing" checked><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Never quote exact job pricing</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="neverSay" value="no-same-day-promise"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Never promise same-day service</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="neverSay" value="no-specific-tech"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Never guarantee a specific technician</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="neverSay" value="no-competitor-talk"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Never discuss competitor pricing</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="neverSay" value="no-warranty-promises"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Never make warranty promises</span></label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="neverSayOther">Other things the AI should never say</label>
+          <input type="text" id="neverSayOther" class="form-input" placeholder="e.g., Never mention our prices are negotiable">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="specialInstructions">Special Instructions</label>
+          <textarea id="specialInstructions" class="form-textarea" rows="3" placeholder="Seasonal offers, promotions, or anything else the AI should know..."></textarea>
+        </div>
+
+        <div class="nav-buttons">
+          <button type="button" class="btn-nav btn-nav-prev" onclick="prevStep()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+            Back
+          </button>
+          <button type="button" class="btn-nav btn-nav-next" onclick="nextStep()">
+            Next: Notifications
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ========== SECTION 5: NOTIFICATIONS ========== -->
+      <div class="form-section" id="section5" data-step="5">
+        <div class="form-section-header">
+          <div class="form-section-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
+          </div>
+          <div>
+            <div class="form-section-title">Notification Preferences</div>
+            <div class="form-section-subtitle">How you want to receive updates about calls</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Notification Method <span class="required">*</span></label>
+          <div class="checkbox-grid" style="grid-template-columns: 1fr;">
+            <label class="radio-item"><input type="radio" name="notifMethod" value="both" checked><span class="radiomark"></span><span class="radio-label">Both text and email</span></label>
+            <label class="radio-item"><input type="radio" name="notifMethod" value="text"><span class="radiomark"></span><span class="radio-label">Text message only</span></label>
+            <label class="radio-item"><input type="radio" name="notifMethod" value="email"><span class="radiomark"></span><span class="radio-label">Email only</span></label>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-label">Primary Notification Recipient</div>
+
+        <div class="form-row form-row-3">
+          <div class="form-group">
+            <label class="form-label" for="primaryNotifName">Name</label>
+            <input type="text" id="primaryNotifName" class="form-input" placeholder="John Smith">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="primaryNotifPhone">Phone</label>
+            <input type="tel" id="primaryNotifPhone" class="form-input" placeholder="(615) 555-0123">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="primaryNotifEmail">Email</label>
+            <input type="email" id="primaryNotifEmail" class="form-input" placeholder="john@company.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="primaryNotifRole">Role</label>
+          <select id="primaryNotifRole" class="form-select">
+            <option value="Owner">Owner</option>
+            <option value="Office Manager">Office Manager</option>
+            <option value="Dispatcher">Dispatcher</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="section-divider"></div>
+        <div class="sub-label">Additional Recipients</div>
+        <div class="form-help" style="margin-top: -4px; margin-bottom: 12px;">Add anyone else who should receive notifications.</div>
+
+        <div id="recipientRows"></div>
+        <button type="button" class="btn-add-row" onclick="addRecipientRow()" style="margin-bottom: 24px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          Add Recipient
+        </button>
+
+        <div class="section-divider"></div>
+
+        <div class="form-group">
+          <label class="form-label">Notification Triggers</label>
+          <div class="form-help" style="margin-bottom: 12px; margin-top: -2px;">Which events should trigger a notification?</div>
+          <div class="checkbox-grid" style="grid-template-columns: 1fr;">
+            <label class="checkbox-item"><input type="checkbox" name="notifTriggers" value="every-call" checked><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Every call answered (call summary)</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="notifTriggers" value="new-appointment" checked><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">New appointment booked</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="notifTriggers" value="emergency" checked><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Emergency call received</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="notifTriggers" value="callback-requested"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">Callback requested</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="notifTriggers" value="needs-followup"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">AI could not help -- needs human follow-up</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="notifTriggers" value="after-hours"><span class="checkmark"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></span><span class="checkbox-label">After-hours call received</span></label>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="form-group">
+          <label class="form-label" for="additionalNotes">Anything else we should know?</label>
+          <textarea id="additionalNotes" class="form-textarea" rows="4" placeholder="Additional notes about your business, customers, or how you want calls handled..."></textarea>
+        </div>
+
+        <div class="nav-buttons">
+          <button type="button" class="btn-nav btn-nav-prev" onclick="prevStep()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+            Back
+          </button>
+          <button type="button" id="submitBtn" class="btn-nav btn-nav-submit" onclick="submitForm()">
+            Submit Intake Form
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========== SUBMIT OVERLAY ========== -->
+  <div id="submitOverlay" class="submit-overlay">
+    <div class="submit-card">
+      <div class="submit-spinner"></div>
+      <div class="submit-title">Submitting your information...</div>
+      <div class="submit-subtitle">Setting things up, just a moment.</div>
+    </div>
+  </div>
+
+  <!-- ========== SUCCESS SCREEN ========== -->
+  <div id="successScreen" class="success-screen">
+    <div class="container" style="max-width: 800px;">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+        </div>
+        <h2 class="success-title">You're All Set!</h2>
+        <p class="success-subtitle">Thanks for completing the intake form.</p>
+        <p class="success-detail">
+          We'll have your AI receptionist configured within <strong style="color:#fff;">48 hours</strong>. You'll receive an email when everything is ready to test. We'll walk you through a test call before anything goes live.
+        </p>
+        <div class="success-contact">
+          Questions? Email us at <a href="mailto:wallacemdobbs@icloud.com" style="margin-left: 4px;">wallacemdobbs@icloud.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    /* ========================================
+       CONFIG
+       ======================================== */
+    const CONFIG = {
+      baseUrl: 'https://services.leadconnectorhq.com',
+      apiKey: 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+      version: '2021-07-28',
+      locationId: 'tQb9YmrGDrdVUJYPKrsY',
+      ntfyTopic: 'tct-xK9mW4vR7pLd'
+    };
+
+    const TOTAL_STEPS = 5;
+    let currentStep = 1;
+
+    /* ========================================
+       INIT
+       ======================================== */
+    document.addEventListener('DOMContentLoaded', function() {
+      buildHoursGrid();
+      setupConditionalFields();
+      autofillNotificationRecipient();
+    });
+
+    /* ========================================
+       HOURS GRID BUILDER
+       ======================================== */
+    function buildHoursGrid() {
+      const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+      const defaults = {
+        Monday: { open: '7:00 AM', close: '6:00 PM' },
+        Tuesday: { open: '7:00 AM', close: '6:00 PM' },
+        Wednesday: { open: '7:00 AM', close: '6:00 PM' },
+        Thursday: { open: '7:00 AM', close: '6:00 PM' },
+        Friday: { open: '7:00 AM', close: '6:00 PM' },
+        Saturday: { open: '8:00 AM', close: '2:00 PM' },
+        Sunday: { open: '', close: '' }
+      };
+      const grid = document.getElementById('hoursGrid');
+      grid.innerHTML = '';
+
+      days.forEach(day => {
+        const isSunday = day === 'Sunday';
+        const row = document.createElement('div');
+        row.className = 'hours-row';
+        row.innerHTML = `
+          <div class="hours-day">${day}</div>
+          <input type="text" class="form-input hours-open" data-day="${day}" placeholder="Open" value="${defaults[day].open}" style="font-size:13px;padding:10px 12px;" ${isSunday ? 'disabled' : ''}>
+          <input type="text" class="form-input hours-close" data-day="${day}" placeholder="Close" value="${defaults[day].close}" style="font-size:13px;padding:10px 12px;" ${isSunday ? 'disabled' : ''}>
+          <label class="hours-closed-label">
+            <input type="checkbox" class="hours-closed-cb" data-day="${day}" ${isSunday ? 'checked' : ''}>
+            Closed
+          </label>
+        `;
+        grid.appendChild(row);
+      });
+
+      // Hook up closed checkboxes
+      grid.querySelectorAll('.hours-closed-cb').forEach(cb => {
+        cb.addEventListener('change', function() {
+          const row = this.closest('.hours-row');
+          const inputs = row.querySelectorAll('.hours-open, .hours-close');
+          inputs.forEach(input => {
+            input.disabled = this.checked;
+            if (this.checked) input.value = '';
+          });
+        });
+      });
+    }
+
+    /* ========================================
+       CONDITIONAL FIELDS
+       ======================================== */
+    function setupConditionalFields() {
+      // After-hours policy "other"
+      document.querySelectorAll('input[name="afterHoursPolicy"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+          document.getElementById('afterHoursPolicyOtherGroup').style.display =
+            this.value === 'other' ? 'block' : 'none';
+        });
+      });
+
+      // On-call toggle
+      document.getElementById('hasOnCall').addEventListener('change', function() {
+        document.getElementById('onCallDetails').style.display =
+          this.value === 'yes' ? 'block' : 'none';
+      });
+
+      // Calendar "other"
+      document.getElementById('calendarSystem').addEventListener('change', function() {
+        document.getElementById('calendarOtherGroup').style.display =
+          this.value === 'Other' ? 'block' : 'none';
+      });
+    }
+
+    /* ========================================
+       AUTOFILL NOTIFICATION FROM OWNER
+       ======================================== */
+    function autofillNotificationRecipient() {
+      const ownerName = document.getElementById('ownerName');
+      const ownerCell = document.getElementById('ownerCell');
+      const email = document.getElementById('businessEmail');
+
+      ownerName.addEventListener('blur', function() {
+        const target = document.getElementById('primaryNotifName');
+        if (!target.value) target.value = this.value;
+      });
+      ownerCell.addEventListener('blur', function() {
+        const target = document.getElementById('primaryNotifPhone');
+        if (!target.value) target.value = this.value;
+      });
+      email.addEventListener('blur', function() {
+        const target = document.getElementById('primaryNotifEmail');
+        if (!target.value) target.value = this.value;
+      });
+    }
+
+    /* ========================================
+       PHONE ROW MANAGEMENT
+       ======================================== */
+    function addPhoneRow() {
+      const container = document.getElementById('phoneRows');
+      const row = document.createElement('div');
+      row.className = 'recipient-row phone-row';
+      row.innerHTML = `
+        <div class="form-group" style="margin-bottom:0;">
+          <input type="tel" class="form-input phone-number" placeholder="(615) 555-0123">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <input type="text" class="form-input phone-label-input" placeholder="Label">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <select class="form-select phone-answer">
+            <option value="yes">Answer this line</option>
+            <option value="no">Do not answer</option>
+          </select>
+        </div>
+        <button type="button" class="btn-remove-row" onclick="this.closest('.phone-row').remove()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      `;
+      container.appendChild(row);
+    }
+
+    /* ========================================
+       RECIPIENT ROW MANAGEMENT
+       ======================================== */
+    function addRecipientRow() {
+      const container = document.getElementById('recipientRows');
+      const row = document.createElement('div');
+      row.className = 'recipient-row extra-recipient';
+      row.innerHTML = `
+        <div class="form-group" style="margin-bottom:0;">
+          <input type="text" class="form-input recip-name" placeholder="Name">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <input type="tel" class="form-input recip-phone" placeholder="Phone">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <input type="email" class="form-input recip-email" placeholder="Email">
+        </div>
+        <button type="button" class="btn-remove-row" onclick="this.closest('.extra-recipient').remove()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      `;
+      container.appendChild(row);
+    }
+
+    /* ========================================
+       STEP NAVIGATION
+       ======================================== */
+    function goToStep(step) {
+      if (step < 1 || step > TOTAL_STEPS) return;
+
+      // Hide all sections
+      document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+
+      // Show target section
+      document.getElementById('section' + step).classList.add('active');
+      currentStep = step;
+      updateProgressBar();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function nextStep() {
+      if (currentStep < TOTAL_STEPS) {
+        goToStep(currentStep + 1);
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        goToStep(currentStep - 1);
+      }
+    }
+
+    function updateProgressBar() {
+      // Update step counter
+      document.getElementById('stepCurrent').textContent = currentStep;
+
+      // Update pips
+      document.querySelectorAll('.progress-step-pip').forEach(pip => {
+        const step = parseInt(pip.dataset.step);
+        pip.classList.remove('active', 'complete');
+        if (step === currentStep) pip.classList.add('active');
+        else if (step < currentStep) pip.classList.add('complete');
+      });
+
+      // Update labels
+      document.querySelectorAll('.progress-label').forEach(label => {
+        const step = parseInt(label.dataset.step);
+        label.classList.toggle('active', step === currentStep);
+      });
+    }
+
+    /* ========================================
+       COLLECT ALL FORM DATA
+       ======================================== */
+    function collectAllData() {
+      // Services
+      const services = [];
+      document.querySelectorAll('input[name="services"]:checked').forEach(cb => services.push(cb.value));
+      const otherServices = document.getElementById('otherServices').value.trim();
+      if (otherServices) services.push(otherServices);
+
+      // Hours
+      const hours = {};
+      const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+      days.forEach(day => {
+        const closedCb = document.querySelector(`.hours-closed-cb[data-day="${day}"]`);
+        if (closedCb && closedCb.checked) {
+          hours[day] = 'Closed';
+        } else {
+          const open = document.querySelector(`.hours-open[data-day="${day}"]`).value.trim();
+          const close = document.querySelector(`.hours-close[data-day="${day}"]`).value.trim();
+          hours[day] = open && close ? open + ' - ' + close : 'Not set';
+        }
+      });
+
+      // Phone numbers
+      const phones = [];
+      document.querySelectorAll('.phone-row').forEach(row => {
+        const num = row.querySelector('.phone-number').value.trim();
+        const label = row.querySelector('.phone-label-input').value.trim();
+        const answer = row.querySelector('.phone-answer').value;
+        if (num) phones.push({ number: num, label: label, answer: answer });
+      });
+
+      // After-hours policy
+      const afterHoursPolicy = document.querySelector('input[name="afterHoursPolicy"]:checked').value;
+      const afterHoursPolicyOther = document.getElementById('afterHoursPolicyOther').value.trim();
+
+      // Emergency protocol
+      const emergencyProtocol = document.querySelector('input[name="emergencyProtocol"]:checked').value;
+
+      // Never say
+      const neverSay = [];
+      document.querySelectorAll('input[name="neverSay"]:checked').forEach(cb => neverSay.push(cb.value));
+      const neverSayOther = document.getElementById('neverSayOther').value.trim();
+      if (neverSayOther) neverSay.push(neverSayOther);
+
+      // Notification triggers
+      const notifTriggers = [];
+      document.querySelectorAll('input[name="notifTriggers"]:checked').forEach(cb => notifTriggers.push(cb.value));
+
+      // Extra recipients
+      const extraRecipients = [];
+      document.querySelectorAll('.extra-recipient').forEach(row => {
+        const name = row.querySelector('.recip-name').value.trim();
+        const phone = row.querySelector('.recip-phone').value.trim();
+        const email = row.querySelector('.recip-email').value.trim();
+        if (name || phone || email) extraRecipients.push({ name, phone, email });
+      });
+
+      // Notification method
+      const notifMethod = document.querySelector('input[name="notifMethod"]:checked').value;
+
+      return {
+        // Business
+        businessName: document.getElementById('businessName').value.trim(),
+        dba: document.getElementById('dba').value.trim(),
+        yearsInBusiness: document.getElementById('yearsInBusiness').value.trim(),
+        ownerName: document.getElementById('ownerName').value.trim(),
+        ownerCell: document.getElementById('ownerCell').value.trim(),
+        businessEmail: document.getElementById('businessEmail').value.trim(),
+        phones: phones,
+        businessAddress: document.getElementById('businessAddress').value.trim(),
+        serviceArea: document.getElementById('serviceArea').value.trim(),
+        website: document.getElementById('website').value.trim(),
+        licenseNumber: document.getElementById('licenseNumber').value.trim(),
+
+        // Services & Ops
+        services: services,
+        hours: hours,
+        afterHoursPolicy: afterHoursPolicy === 'other' ? afterHoursPolicyOther : afterHoursPolicy,
+        avgJobValue: document.getElementById('avgJobValue').value.trim(),
+        numTrucks: document.getElementById('numTrucks').value.trim(),
+        hasOnCall: document.getElementById('hasOnCall').value,
+        onCallName: document.getElementById('onCallName').value.trim(),
+        onCallPhone: document.getElementById('onCallPhone').value.trim(),
+        onCallBackupName: document.getElementById('onCallBackupName').value.trim(),
+        onCallBackupPhone: document.getElementById('onCallBackupPhone').value.trim(),
+        emergencyProtocol: emergencyProtocol,
+
+        // Scheduling
+        calendarSystem: document.getElementById('calendarSystem').value,
+        calendarOther: document.getElementById('calendarOther').value.trim(),
+        calendarEmail: document.getElementById('calendarEmail').value.trim(),
+        durationDiagnostic: document.getElementById('durationDiagnostic').value.trim(),
+        durationRepair: document.getElementById('durationRepair').value.trim(),
+        durationInstall: document.getElementById('durationInstall').value.trim(),
+        durationMaintenance: document.getElementById('durationMaintenance').value.trim(),
+        durationEstimate: document.getElementById('durationEstimate').value.trim(),
+        sameDayBooking: document.getElementById('sameDayBooking').value,
+        nextDayBooking: document.getElementById('nextDayBooking').value,
+        advanceWindow: document.getElementById('advanceWindow').value.trim(),
+        minNotice: document.getElementById('minNotice').value.trim(),
+        maxPerDay: document.getElementById('maxPerDay').value.trim(),
+        bufferTime: document.getElementById('bufferTime').value.trim(),
+        blockedTimes: document.getElementById('blockedTimes').value.trim(),
+        schedulingNotes: document.getElementById('schedulingNotes').value.trim(),
+
+        // AI Preferences
+        greetingScript: document.getElementById('greetingScript').value.trim(),
+        aiName: document.getElementById('aiName').value.trim(),
+        aiTone: document.getElementById('aiTone').value,
+        faqServiceFee: document.getElementById('faqServiceFee').value.trim(),
+        faqEstimates: document.getElementById('faqEstimates').value.trim(),
+        faqFinancing: document.getElementById('faqFinancing').value.trim(),
+        faqBrands: document.getElementById('faqBrands').value.trim(),
+        faqMaintenance: document.getElementById('faqMaintenance').value.trim(),
+        faqLicensed: document.getElementById('faqLicensed').value.trim(),
+        faqResponseTime: document.getElementById('faqResponseTime').value.trim(),
+        faqAdditional: document.getElementById('faqAdditional').value.trim(),
+        neverSay: neverSay,
+        specialInstructions: document.getElementById('specialInstructions').value.trim(),
+
+        // Notifications
+        notifMethod: notifMethod,
+        primaryNotifName: document.getElementById('primaryNotifName').value.trim(),
+        primaryNotifPhone: document.getElementById('primaryNotifPhone').value.trim(),
+        primaryNotifEmail: document.getElementById('primaryNotifEmail').value.trim(),
+        primaryNotifRole: document.getElementById('primaryNotifRole').value,
+        extraRecipients: extraRecipients,
+        notifTriggers: notifTriggers,
+        additionalNotes: document.getElementById('additionalNotes').value.trim()
+      };
+    }
+
+    /* ========================================
+       BUILD NOTES FIELD (everything GHL doesn't have a field for)
+       ======================================== */
+    function buildNotesField(data) {
+      const lines = [];
+      lines.push('=== INTAKE FORM SUBMISSION ===');
+      lines.push('Submitted: ' + new Date().toLocaleString());
+      lines.push('');
+
+      lines.push('--- BUSINESS ---');
+      if (data.dba) lines.push('DBA: ' + data.dba);
+      if (data.yearsInBusiness) lines.push('Years in Business: ' + data.yearsInBusiness);
+      if (data.licenseNumber) lines.push('License #: ' + data.licenseNumber);
+      if (data.website) lines.push('Website: ' + data.website);
+      if (data.serviceArea) lines.push('Service Area: ' + data.serviceArea);
+      if (data.phones.length) {
+        lines.push('Phone Lines:');
+        data.phones.forEach(p => lines.push('  ' + p.number + ' (' + p.label + ') - ' + (p.answer === 'yes' ? 'ANSWER' : 'DO NOT ANSWER')));
+      }
+      lines.push('');
+
+      lines.push('--- SERVICES ---');
+      lines.push('Services: ' + data.services.join(', '));
+      lines.push('After-Hours Policy: ' + data.afterHoursPolicy);
+      if (data.avgJobValue) lines.push('Avg Job Value: ' + data.avgJobValue);
+      if (data.numTrucks) lines.push('Trucks/Techs: ' + data.numTrucks);
+      lines.push('Emergency Protocol: ' + data.emergencyProtocol);
+      if (data.hasOnCall === 'yes') {
+        lines.push('On-Call: ' + data.onCallName + ' ' + data.onCallPhone);
+        if (data.onCallBackupName) lines.push('Backup: ' + data.onCallBackupName + ' ' + data.onCallBackupPhone);
+      }
+      lines.push('');
+
+      lines.push('--- HOURS ---');
+      Object.entries(data.hours).forEach(([day, hrs]) => lines.push(day + ': ' + hrs));
+      lines.push('');
+
+      lines.push('--- SCHEDULING ---');
+      const cal = data.calendarSystem === 'Other' ? data.calendarOther : data.calendarSystem;
+      lines.push('Calendar System: ' + cal);
+      if (data.calendarEmail) lines.push('Calendar Email: ' + data.calendarEmail);
+      if (data.durationDiagnostic) lines.push('Diagnostic Duration: ' + data.durationDiagnostic);
+      if (data.durationRepair) lines.push('Repair Duration: ' + data.durationRepair);
+      if (data.durationInstall) lines.push('Install Duration: ' + data.durationInstall);
+      if (data.durationMaintenance) lines.push('Maintenance Duration: ' + data.durationMaintenance);
+      if (data.durationEstimate) lines.push('Estimate Duration: ' + data.durationEstimate);
+      lines.push('Same-Day Booking: ' + data.sameDayBooking);
+      lines.push('Next-Day Booking: ' + data.nextDayBooking);
+      if (data.advanceWindow) lines.push('Advance Window: ' + data.advanceWindow);
+      if (data.minNotice) lines.push('Min Notice: ' + data.minNotice);
+      if (data.maxPerDay) lines.push('Max Per Day: ' + data.maxPerDay);
+      if (data.bufferTime) lines.push('Buffer Time: ' + data.bufferTime);
+      if (data.blockedTimes) lines.push('Blocked Times: ' + data.blockedTimes);
+      if (data.schedulingNotes) lines.push('Scheduling Notes: ' + data.schedulingNotes);
+      lines.push('');
+
+      lines.push('--- AI PREFERENCES ---');
+      lines.push('Greeting: ' + data.greetingScript);
+      if (data.aiName) lines.push('AI Name: ' + data.aiName);
+      lines.push('Tone: ' + data.aiTone);
+      if (data.faqServiceFee) lines.push('Service Fee: ' + data.faqServiceFee);
+      if (data.faqEstimates) lines.push('Free Estimates: ' + data.faqEstimates);
+      if (data.faqFinancing) lines.push('Financing: ' + data.faqFinancing);
+      if (data.faqBrands) lines.push('Brands: ' + data.faqBrands);
+      if (data.faqMaintenance) lines.push('Maintenance Plans: ' + data.faqMaintenance);
+      if (data.faqLicensed) lines.push('Licensed/Insured: ' + data.faqLicensed);
+      if (data.faqResponseTime) lines.push('Response Time: ' + data.faqResponseTime);
+      if (data.faqAdditional) lines.push('Additional FAQ: ' + data.faqAdditional);
+      lines.push('Never Say: ' + data.neverSay.join(', '));
+      if (data.specialInstructions) lines.push('Special Instructions: ' + data.specialInstructions);
+      lines.push('');
+
+      lines.push('--- NOTIFICATIONS ---');
+      lines.push('Method: ' + data.notifMethod);
+      lines.push('Primary: ' + data.primaryNotifName + ' | ' + data.primaryNotifPhone + ' | ' + data.primaryNotifEmail + ' (' + data.primaryNotifRole + ')');
+      if (data.extraRecipients.length) {
+        lines.push('Additional Recipients:');
+        data.extraRecipients.forEach(r => lines.push('  ' + r.name + ' | ' + r.phone + ' | ' + r.email));
+      }
+      lines.push('Triggers: ' + data.notifTriggers.join(', '));
+      if (data.additionalNotes) {
+        lines.push('');
+        lines.push('--- ADDITIONAL NOTES ---');
+        lines.push(data.additionalNotes);
+      }
+
+      return lines.join('\n');
+    }
+
+    /* ========================================
+       VALIDATION
+       ======================================== */
+    function validateRequired() {
+      // Check key required fields
+      const required = [
+        { id: 'businessName', step: 1, label: 'Business Name' },
+        { id: 'ownerName', step: 1, label: 'Owner Name' },
+        { id: 'ownerCell', step: 1, label: 'Owner Cell' },
+        { id: 'businessEmail', step: 1, label: 'Business Email' },
+        { id: 'serviceArea', step: 1, label: 'Service Area' },
+        { id: 'greetingScript', step: 4, label: 'Greeting Script' }
+      ];
+
+      // Clear previous
+      document.querySelectorAll('.form-input.invalid, .form-textarea.invalid').forEach(el => el.classList.remove('invalid'));
+
+      for (const field of required) {
+        const el = document.getElementById(field.id);
+        if (!el.value.trim()) {
+          goToStep(field.step);
+          setTimeout(() => {
+            el.classList.add('invalid');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.focus();
+          }, 350);
+          return false;
+        }
+      }
+
+      // At least one service
+      const services = document.querySelectorAll('input[name="services"]:checked');
+      if (services.length === 0) {
+        goToStep(2);
+        return false;
+      }
+
+      // Calendar system
+      const cal = document.getElementById('calendarSystem');
+      if (!cal.value) {
+        goToStep(3);
+        setTimeout(() => {
+          cal.classList.add('invalid');
+          cal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 350);
+        return false;
+      }
+
+      return true;
+    }
+
+    /* ========================================
+       GHL API: CREATE/UPDATE CONTACT
+       ======================================== */
+    async function createGHLContact(data) {
+      const nameParts = data.ownerName.split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+
+      const headers = {
+        'Authorization': 'Bearer ' + CONFIG.apiKey,
+        'Version': CONFIG.version,
+        'Content-Type': 'application/json'
+      };
+
+      // Step 1: Create the contact
+      const contactBody = {
+        firstName: firstName,
+        lastName: lastName,
+        email: data.businessEmail,
+        phone: data.ownerCell,
+        companyName: data.businessName,
+        address1: data.businessAddress,
+        website: data.website,
+        source: 'client-intake-form',
+        tags: ['intake-complete', 'onboarding-day-0', 'hvac', 'active-client'],
+        locationId: CONFIG.locationId
+      };
+
+      const response = await fetch(CONFIG.baseUrl + '/contacts/', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(contactBody)
+      });
+
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error('GHL contact creation failed (' + response.status + '): ' + text);
+      }
+
+      const contactResult = await response.json();
+      const contactId = contactResult.contact?.id || contactResult.id;
+
+      // Step 2: Add detailed intake data as a note on the contact
+      if (contactId) {
+        try {
+          await fetch(CONFIG.baseUrl + '/contacts/' + contactId + '/notes', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({
+              body: buildNotesField(data),
+              userId: null
+            })
+          });
+        } catch (noteErr) {
+          // Note creation is non-critical; contact was still created
+          console.warn('Note creation failed (contact still created):', noteErr);
+        }
+      }
+
+      return contactResult;
+    }
+
+    /* ========================================
+       NTFY NOTIFICATION
+       ======================================== */
+    async function sendNtfyNotification(data) {
+      try {
+        await fetch('https://ntfy.sh/' + CONFIG.ntfyTopic, {
+          method: 'POST',
+          headers: {
+            'Title': 'New Intake Form Submitted!',
+            'Priority': 'high',
+            'Tags': 'clipboard,green_circle'
+          },
+          body: 'New intake form submitted by ' + data.businessName + '\nOwner: ' + data.ownerName + '\nPhone: ' + data.ownerCell + '\nEmail: ' + data.businessEmail + '\nServices: ' + data.services.join(', ')
+        });
+      } catch (e) {
+        // Non-critical, don't block submission
+        console.warn('ntfy notification failed:', e);
+      }
+    }
+
+    /* ========================================
+       SUBMIT FORM
+       ======================================== */
+    async function submitForm() {
+      if (!validateRequired()) return;
+
+      const data = collectAllData();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+
+      // Show overlay
+      document.getElementById('submitOverlay').classList.add('visible');
+
+      try {
+        // Create GHL contact
+        await createGHLContact(data);
+
+        // Send ntfy notification
+        await sendNtfyNotification(data);
+
+        // Small delay for polish
+        await new Promise(r => setTimeout(r, 800));
+
+        // Show success
+        document.getElementById('submitOverlay').classList.remove('visible');
+        document.getElementById('intakePage').style.display = 'none';
+        document.querySelector('.progress-bar-container').style.display = 'none';
+        document.getElementById('successScreen').classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      } catch (error) {
+        document.getElementById('submitOverlay').classList.remove('visible');
+        submitBtn.disabled = false;
+        console.error('Submission error:', error);
+        alert('Something went wrong submitting the form. Please try again, or email us at wallacemdobbs@icloud.com with your information.');
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -87,7 +87,7 @@
     .test-grid { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
     @media (min-width: 768px) { .test-grid { grid-template-columns: repeat(3, 1fr); } }
     .test-card { background: #000; padding: 32px 28px; }
-    .test-stars { color: #fbbf24; font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
+    .test-stars { color: #00dc82; font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
     .test-quote { font-size: 14px; color: var(--text-2); line-height: 1.65; margin-bottom: 16px; font-style: italic; }
     .test-author { font-size: 13px; font-weight: 600; color: #fff; }
     .test-role { font-size: 12px; color: var(--text-3); }
@@ -264,7 +264,7 @@
       background: rgba(0,220,130,0.02);
     }
     .review-stars {
-      color: #fbbf24;
+      color: #00dc82;
       font-size: 16px;
       letter-spacing: 2px;
       margin-bottom: 16px;
@@ -376,6 +376,37 @@
     .industry-fade-out {
       opacity: 0;
       transform: translateY(4px);
+    }
+
+    /* ---- MOBILE RESPONSIVE FIXES (390px audit) ---- */
+    @media (max-width: 767px) {
+      /* Hamburger menu — minimum 44x44 touch target */
+      .menu-toggle { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+
+      /* Math box — reduce padding on mobile */
+      .math-box { padding: 28px 20px; }
+
+      /* Before/After columns — reduce padding on mobile */
+      .ba-col { padding: 28px 20px; }
+
+      /* Bento items — reduce padding on mobile */
+      .bento-item { padding: 28px 20px; }
+
+      /* Exit popup modal — tighter padding on mobile */
+      .exit-modal { padding: 24px 20px; }
+
+      /* Diamond wrap — override inline 280px on mobile */
+      .diamond-wrap { width: 200px !important; height: 200px !important; }
+      .diamond-wrap .diamond-frame { width: 150px !important; height: 150px !important; }
+
+      /* Pricing card — slightly tighter padding */
+      .pricing-card { padding: 32px 20px; }
+
+      /* Steps grid items — tighter padding */
+      .steps-g > div { padding: 28px 20px !important; }
+
+      /* How-it-works steps — stack vertically with tighter layout */
+      .steps-g { grid-template-columns: 1fr !important; }
     }
   </style>
 </head>
@@ -833,6 +864,7 @@
       </div>
     </div>
     <p style="text-align: center; font-size: 11px; color: var(--text-3); margin-top: 16px;">* Results represent projected outcomes based on industry data. Individual results may vary.</p>
+    <p style="text-align: center; margin-top: 20px;"><a href="/case-studies/" style="font-size: 14px; color: var(--green); font-weight: 600; text-decoration: underline; text-underline-offset: 2px;">Read all 5 case studies &rarr;</a></p>
   </div>
 </section>
 
@@ -885,6 +917,7 @@
     </div>
 
     <p style="text-align: center; font-size: 13px; color: var(--text-3); margin-top: 20px;">All plans include a 7-day free trial. $500 one-time setup fee. No contracts. Cancel anytime.</p>
+    <p style="text-align: center; margin-top: 16px; font-size: 13px; color: var(--text-3);">See real ROI from businesses like yours. <a href="/case-studies/" style="color: var(--green); text-decoration: underline; text-underline-offset: 2px; font-weight: 600;">Read the case studies &rarr;</a></p>
   </div>
 </section>
 
@@ -1161,7 +1194,7 @@
       jobWord: 'roof jobs', clientWord: 'homeowners',
       avgJob: 8500, monthlyLoss: 42500, afterHoursPercent: 40,
       price: 997, tier: 'pro',
-      theme: { primary: '#f97316', glow: 'rgba(249,115,22,0.15)', dim: 'rgba(249,115,22,0.08)', gradient: 'linear-gradient(135deg, #f97316, #ea580c)', bg: 'radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.08) 0%, transparent 60%)' },
+      theme: { primary: '#00C96B', glow: 'rgba(0,201,107,0.15)', dim: 'rgba(0,201,107,0.08)', gradient: 'linear-gradient(135deg, #00C96B, #00b35e)', bg: 'radial-gradient(ellipse at 50% 0%, rgba(0,201,107,0.08) 0%, transparent 60%)' },
       heroLabel: 'AI-Powered Receptionist for Roofing Companies',
       heroHeadline: 'Stop losing <span id="hero-jobword">roof jobs</span><br>to <span class="gradient">voicemail</span>',
       heroSubtitle: 'Storm damage calls come in waves. When 4 roofers get called, whoever answers first wins the $8,500 job. Your AI receptionist makes sure that\'s always you.',

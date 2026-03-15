@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Onboarding Tracker &mdash; The Call Taker</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ============================================
+       ONBOARDING TRACKER — Internal Tool Styles
+       ============================================ */
+
+    body {
+      background: #000;
+    }
+
+    /* Password Gate */
+    .password-gate {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .password-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 36px;
+      text-align: center;
+    }
+    .password-card .lock-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--green-dim);
+      border: 1px solid rgba(0,220,130,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .password-card .lock-icon svg {
+      width: 28px;
+      height: 28px;
+      color: var(--green);
+    }
+    .password-card h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .password-card p {
+      font-size: 0.9375rem;
+      color: var(--text-3);
+      margin-bottom: 28px;
+    }
+    .password-error {
+      display: none;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.875rem;
+      color: #ef4444;
+      margin-bottom: 16px;
+    }
+    .password-error.visible {
+      display: block;
+    }
+
+    /* Tracker Layout */
+    .tracker-page {
+      display: none;
+      min-height: 100vh;
+      padding: 32px 0 80px;
+    }
+    .tracker-page.visible {
+      display: block;
+    }
+
+    /* Header */
+    .tracker-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .tracker-header h1 {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 800;
+      color: #fff;
+    }
+    .tracker-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: var(--green-dim);
+      border: 1px solid rgba(0,220,130,0.2);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .tracker-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    /* Client Search */
+    .search-section {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .search-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+    @media (max-width: 639px) {
+      .search-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+    .search-row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+    .btn-search {
+      padding: 12px 24px;
+      background: var(--green);
+      color: #000;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 44px;
+    }
+    .btn-search:hover {
+      background: #00f090;
+    }
+    .btn-search:disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .search-results {
+      margin-top: 16px;
+      display: none;
+    }
+    .search-results.visible {
+      display: block;
+    }
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .search-result-item:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(0,220,130,0.3);
+    }
+    .search-result-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .search-result-detail {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+    .search-result-btn {
+      padding: 6px 14px;
+      background: var(--green-dim);
+      border: 1px solid rgba(0,220,130,0.2);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .search-result-btn:hover {
+      background: rgba(0,220,130,0.2);
+    }
+    .search-empty {
+      font-size: 13px;
+      color: var(--text-3);
+      padding: 12px 0;
+    }
+
+    /* Client Selector (saved clients) */
+    .saved-clients {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .saved-client-chip {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .saved-client-chip:hover {
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+    }
+    .saved-client-chip.active {
+      background: var(--green-dim);
+      border-color: rgba(0,220,130,0.3);
+      color: var(--green);
+    }
+    .saved-client-remove {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--text-3);
+      cursor: pointer;
+      line-height: 1;
+    }
+    .saved-client-remove:hover {
+      background: rgba(239,68,68,0.2);
+      color: #ef4444;
+    }
+
+    /* Status Summary */
+    .status-summary {
+      display: none;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .status-summary.visible {
+      display: block;
+    }
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .status-client-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .status-meta {
+      font-size: 13px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+    .status-progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .status-progress-bar {
+      width: 120px;
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .status-progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: var(--green);
+      transition: width 0.3s;
+    }
+    .status-progress-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    /* Checklist Sections */
+    .checklist-container {
+      display: none;
+    }
+    .checklist-container.visible {
+      display: block;
+    }
+    .checklist-section {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .checklist-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .checklist-section-header:hover {
+      background: rgba(255,255,255,0.02);
+    }
+    .checklist-section-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .checklist-section-day {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--green);
+      padding: 4px 10px;
+      background: var(--green-dim);
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .checklist-section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .checklist-section-count {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-3);
+    }
+    .checklist-section-body {
+      display: none;
+      padding: 0 20px 16px;
+      border-top: 1px solid var(--border);
+    }
+    .checklist-section.open .checklist-section-body {
+      display: block;
+    }
+    .checklist-section.open .checklist-section-header {
+      border-bottom: none;
+    }
+
+    /* Checklist Items */
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .check-item:last-child {
+      border-bottom: none;
+    }
+    .check-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
+      margin-top: 2px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .check-item-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .check-item-text {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    .check-item.completed .check-item-text {
+      color: var(--text-3);
+      text-decoration: line-through;
+    }
+    .check-item-timestamp {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+    .check-item-note {
+      margin-top: 8px;
+    }
+    .check-item-note input {
+      width: 100%;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 12px;
+      font-family: inherit;
+    }
+    .check-item-note input:focus {
+      outline: none;
+      border-color: var(--green);
+    }
+    .check-item-note input::placeholder {
+      color: var(--text-3);
+    }
+
+    /* QA Test Results */
+    .qa-results {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .qa-btn {
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .qa-btn-pass {
+      background: rgba(0,220,130,0.1);
+      color: var(--green);
+      border-color: rgba(0,220,130,0.2);
+    }
+    .qa-btn-pass.active {
+      background: var(--green);
+      color: #000;
+    }
+    .qa-btn-fail {
+      background: rgba(239,68,68,0.1);
+      color: #ef4444;
+      border-color: rgba(239,68,68,0.2);
+    }
+    .qa-btn-fail.active {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    /* Monitoring Log */
+    .monitoring-log {
+      margin-top: 12px;
+    }
+    .log-entry {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .log-entry input[type="text"] {
+      flex: 1;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 12px;
+      font-family: inherit;
+    }
+    .log-entry input:focus {
+      outline: none;
+      border-color: var(--green);
+    }
+    .log-entry input::placeholder {
+      color: var(--text-3);
+    }
+    .log-date {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      white-space: nowrap;
+      padding-top: 10px;
+      min-width: 60px;
+    }
+
+    /* Action Buttons */
+    .action-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .btn-action {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+    }
+    .btn-action-green {
+      background: var(--green);
+      color: #000;
+    }
+    .btn-action-green:hover {
+      background: #00f090;
+    }
+    .btn-action-ghost {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+    }
+    .btn-action-ghost:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+
+    /* Tag Creation Section */
+    .tag-section {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .tag-section h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .tag-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+    .tag-name {
+      color: var(--text-2);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      background: rgba(255,255,255,0.05);
+      padding: 4px 10px;
+      border-radius: 4px;
+      flex: 1;
+    }
+    .tag-status {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+    .tag-status.pending {
+      background: rgba(255,255,255,0.05);
+      color: var(--text-3);
+    }
+    .tag-status.created {
+      background: var(--green-dim);
+      color: var(--green);
+    }
+    .tag-status.error {
+      background: rgba(239,68,68,0.1);
+      color: #ef4444;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 14px 24px;
+      background: rgba(0,220,130,0.15);
+      border: 1px solid rgba(0,220,130,0.3);
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green);
+      z-index: 9999;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+    }
+    .toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Manual client input */
+    .manual-client-section {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .manual-client-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+    @media (max-width: 639px) {
+      .manual-client-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== PASSWORD GATE ========== -->
+  <div id="passwordGate" class="password-gate">
+    <div class="password-card">
+      <div class="lock-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+        </svg>
+      </div>
+      <h1>Onboarding Tracker</h1>
+      <p>Internal tool. Enter the password to continue.</p>
+      <div id="passwordError" class="password-error">Incorrect password. Try again.</div>
+      <form onsubmit="return handlePassword(event)">
+        <div class="form-group" style="margin-bottom: 20px;">
+          <input type="password" id="passwordInput" class="form-input" placeholder="Enter password" autocomplete="off" autofocus>
+        </div>
+        <button type="submit" class="btn btn-green btn-lg" style="width: 100%; justify-content: center;">
+          Unlock
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== TRACKER PAGE ========== -->
+  <div id="trackerPage" class="tracker-page">
+    <div class="container" style="max-width: 900px;">
+
+      <!-- Header -->
+      <div class="tracker-header">
+        <div>
+          <div class="tracker-badge"><span class="dot"></span> Internal Tool</div>
+          <h1 style="margin-top: 10px;">Client Onboarding Tracker</h1>
+          <p style="color: var(--text-3); font-size: 13px; margin-top: 4px;">Track onboarding progress for each client from signup to live.</p>
+        </div>
+      </div>
+
+      <!-- GHL Search -->
+      <div class="search-section">
+        <div class="search-row">
+          <div class="form-group">
+            <label class="form-label">Search GHL Contacts</label>
+            <input type="text" id="searchInput" class="form-input" placeholder="Search by name, phone, or email..." onkeydown="if(event.key==='Enter'){searchGHL();}">
+          </div>
+          <button class="btn-search" onclick="searchGHL()" id="searchBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+            Search
+          </button>
+        </div>
+        <div id="searchResults" class="search-results"></div>
+
+        <!-- Manual client add -->
+        <div class="manual-client-section">
+          <div class="form-label" style="margin-bottom: 8px;">Or add a client manually:</div>
+          <div class="manual-client-row">
+            <div class="form-group" style="flex:1;">
+              <input type="text" id="manualName" class="form-input" placeholder="Business name">
+            </div>
+            <div class="form-group" style="flex:1;">
+              <input type="text" id="manualPhone" class="form-input" placeholder="Phone (optional)">
+            </div>
+            <button class="btn-search" onclick="addManualClient()">Add Client</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saved Clients -->
+      <div id="savedClientsContainer" class="saved-clients" style="display: none;"></div>
+
+      <!-- Status Summary -->
+      <div id="statusSummary" class="status-summary">
+        <div class="status-row">
+          <div>
+            <div class="status-client-name" id="statusClientName">--</div>
+            <div class="status-meta" id="statusMeta">--</div>
+          </div>
+          <div class="status-progress">
+            <div class="status-progress-bar">
+              <div class="status-progress-fill" id="statusProgressFill" style="width:0%"></div>
+            </div>
+            <div class="status-progress-text" id="statusProgressText">0/0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Bar -->
+      <div id="actionBar" class="action-bar" style="display: none;">
+        <button class="btn-action btn-action-green" onclick="sendNtfyUpdate()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>
+          Send Notification
+        </button>
+        <button class="btn-action btn-action-ghost" onclick="updateGHLTag()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"/></svg>
+          Update GHL Tag
+        </button>
+        <button class="btn-action btn-action-ghost" onclick="exportChecklist()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+          Export
+        </button>
+      </div>
+
+      <!-- Checklist -->
+      <div id="checklistContainer" class="checklist-container"></div>
+
+      <!-- GHL Tag Creator -->
+      <div class="tag-section" id="tagSection" style="display: none;">
+        <h3>GHL Onboarding Tags</h3>
+        <p style="font-size: 12px; color: var(--text-3); margin-bottom: 16px;">Create onboarding stage tags in GoHighLevel. Click the button to create all tags.</p>
+        <div id="tagList"></div>
+        <button class="btn-action btn-action-green" onclick="createAllTags()" style="margin-top: 12px;" id="createTagsBtn">
+          Create All Tags in GHL
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    /* ========================================
+       CONFIG
+       ======================================== */
+    const CONFIG = {
+      baseUrl: 'https://services.leadconnectorhq.com',
+      apiKey: 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+      version: '2021-07-28',
+      locationId: 'tQb9YmrGDrdVUJYPKrsY',
+      password: 'calltaker2026',
+      ntfyTopic: 'tct-xK9mW4vR7pLd'
+    };
+
+    const ONBOARDING_TAGS = [
+      'intake-complete', 'onboarding-day-0', 'onboarding-day-1', 'onboarding-day-2',
+      'onboarding-live', 'onboarding-week-1', 'onboarding-week-2', 'onboarding-month-1'
+    ];
+
+    /* ========================================
+       CHECKLIST DEFINITION
+       ======================================== */
+    const CHECKLIST = [
+      {
+        id: 'day0',
+        day: 'Day 0',
+        title: 'Signup & Intake',
+        items: [
+          { id: 'd0_payment', text: 'Payment confirmed (Stripe)' },
+          { id: 'd0_welcome_email', text: 'Welcome email sent' },
+          { id: 'd0_contact_tagged', text: 'Contact created and tagged in GHL' },
+          { id: 'd0_internal_notif', text: 'Internal notification sent (ntfy)' },
+          { id: 'd0_intake_review', text: 'Intake form reviewed for completeness' },
+          { id: 'd0_assigned', text: 'Onboarding owner assigned' }
+        ]
+      },
+      {
+        id: 'day1',
+        day: 'Day 1',
+        title: 'Setup & Configuration',
+        items: [
+          { id: 'd1_ai_configured', text: 'AI receptionist configured (greeting, prompt, FAQ)' },
+          { id: 'd1_phone_forwarding', text: 'Phone forwarding set up' },
+          { id: 'd1_calendar_connected', text: 'Calendar connected' },
+          { id: 'd1_notifications', text: 'Notifications configured (text/email recipients)' },
+          { id: 'd1_auto_sequences', text: 'Automated sequences set up (confirmations, reminders)' },
+          { id: 'd1_qa_test1', text: 'QA Test 1: Standard service call', qa: true },
+          { id: 'd1_qa_test2', text: 'QA Test 2: Emergency call', qa: true },
+          { id: 'd1_qa_test3', text: 'QA Test 3: FAQ questions', qa: true },
+          { id: 'd1_qa_test4', text: 'QA Test 4: After-hours call', qa: true }
+        ]
+      },
+      {
+        id: 'day2',
+        day: 'Day 2',
+        title: 'Testing & Go-Live',
+        items: [
+          { id: 'd2_client_test_scheduled', text: 'Client test call scheduled' },
+          { id: 'd2_client_tested', text: 'Client completed test call' },
+          { id: 'd2_client_approved', text: 'Client approved configuration' },
+          { id: 'd2_adjustments', text: 'Any adjustments implemented' },
+          { id: 'd2_flipped_live', text: 'System flipped LIVE' }
+        ]
+      },
+      {
+        id: 'monitoring',
+        day: 'Day 3-6',
+        title: 'Monitoring Period',
+        items: [
+          { id: 'mon_day3', text: 'Day 3: Call logs reviewed', log: true },
+          { id: 'mon_day4', text: 'Day 4: Call logs reviewed', log: true },
+          { id: 'mon_day5', text: 'Day 5: Call logs reviewed', log: true },
+          { id: 'mon_day6', text: 'Day 6: Call logs reviewed', log: true }
+        ]
+      },
+      {
+        id: 'week1',
+        day: 'Day 7',
+        title: 'First Week Check-In',
+        items: [
+          { id: 'w1_report_sent', text: 'First week performance email sent' },
+          { id: 'w1_checkin', text: 'Personal check-in call/text completed' },
+          { id: 'w1_feedback', text: 'Feedback documented and implemented' }
+        ]
+      },
+      {
+        id: 'week2',
+        day: 'Day 14',
+        title: 'Two-Week Follow-Up',
+        items: [
+          { id: 'w2_report', text: 'Two-week performance summary shared' },
+          { id: 'w2_testimonial', text: 'Testimonial/review requested' },
+          { id: 'w2_referral', text: 'Referral program introduced' }
+        ]
+      },
+      {
+        id: 'month1',
+        day: 'Day 30',
+        title: 'First Month Review',
+        items: [
+          { id: 'm1_report', text: 'Monthly performance report sent' },
+          { id: 'm1_review_call', text: 'Review call completed with client' },
+          { id: 'm1_seasonal_update', text: 'Seasonal adjustments discussed' },
+          { id: 'm1_pipeline_active', text: 'Client moved to Active in pipeline' }
+        ]
+      }
+    ];
+
+    /* ========================================
+       STATE
+       ======================================== */
+    let activeClient = null; // { id, name, phone, email, startDate }
+    let clientData = {}; // keyed by client ID
+
+    /* ========================================
+       PASSWORD GATE
+       ======================================== */
+    function handlePassword(e) {
+      e.preventDefault();
+      const input = document.getElementById('passwordInput');
+      const error = document.getElementById('passwordError');
+      if (input.value === CONFIG.password) {
+        document.getElementById('passwordGate').style.display = 'none';
+        document.getElementById('trackerPage').classList.add('visible');
+        initTracker();
+      } else {
+        error.classList.add('visible');
+        input.value = '';
+        input.focus();
+      }
+      return false;
+    }
+
+    /* ========================================
+       INIT
+       ======================================== */
+    function initTracker() {
+      loadSavedClients();
+      renderSavedClients();
+      initTagSection();
+    }
+
+    /* ========================================
+       GHL SEARCH
+       ======================================== */
+    async function searchGHL() {
+      const query = document.getElementById('searchInput').value.trim();
+      if (!query) return;
+
+      const btn = document.getElementById('searchBtn');
+      btn.disabled = true;
+      btn.textContent = 'Searching...';
+
+      try {
+        const url = CONFIG.baseUrl + '/contacts/?locationId=' + CONFIG.locationId + '&query=' + encodeURIComponent(query) + '&limit=10';
+        const res = await fetch(url, {
+          headers: {
+            'Authorization': 'Bearer ' + CONFIG.apiKey,
+            'Version': CONFIG.version
+          }
+        });
+
+        if (!res.ok) throw new Error('Search failed');
+
+        const data = await res.json();
+        const contacts = data.contacts || [];
+        renderSearchResults(contacts);
+      } catch (err) {
+        console.error('Search error:', err);
+        const resultsDiv = document.getElementById('searchResults');
+        resultsDiv.innerHTML = '<div class="search-empty">Search failed. Try again.</div>';
+        resultsDiv.classList.add('visible');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg> Search';
+      }
+    }
+
+    function renderSearchResults(contacts) {
+      const container = document.getElementById('searchResults');
+      container.classList.add('visible');
+
+      if (contacts.length === 0) {
+        container.innerHTML = '<div class="search-empty">No contacts found. Try a different search or add manually below.</div>';
+        return;
+      }
+
+      container.innerHTML = contacts.map(c => {
+        const name = (c.firstName || '') + ' ' + (c.lastName || '');
+        const company = c.companyName || '';
+        const display = company ? company + ' (' + name.trim() + ')' : name.trim();
+        return `
+          <div class="search-result-item" onclick="selectClient('${c.id}', '${escapeAttr(company || name.trim())}', '${escapeAttr(c.phone || '')}', '${escapeAttr(c.email || '')}')">
+            <div>
+              <div class="search-result-name">${escapeHtml(display)}</div>
+              <div class="search-result-detail">${escapeHtml(c.phone || '')} ${c.email ? ' | ' + escapeHtml(c.email) : ''}</div>
+            </div>
+            <button class="search-result-btn">Load</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ========================================
+       SELECT / ADD CLIENT
+       ======================================== */
+    function selectClient(id, name, phone, email) {
+      activeClient = { id, name, phone, email, startDate: null };
+
+      // Load existing data or create new
+      const saved = getSavedClientData(id);
+      if (saved) {
+        activeClient = saved.client;
+      } else {
+        activeClient.startDate = new Date().toISOString().split('T')[0];
+      }
+
+      // Save to list
+      saveClientToList(activeClient);
+      renderSavedClients();
+      loadClientChecklist();
+
+      // Hide search results
+      document.getElementById('searchResults').classList.remove('visible');
+      document.getElementById('searchInput').value = '';
+    }
+
+    function addManualClient() {
+      const name = document.getElementById('manualName').value.trim();
+      const phone = document.getElementById('manualPhone').value.trim();
+      if (!name) return;
+
+      const id = 'manual_' + Date.now();
+      selectClient(id, name, phone, '');
+      document.getElementById('manualName').value = '';
+      document.getElementById('manualPhone').value = '';
+    }
+
+    /* ========================================
+       SAVED CLIENTS (localStorage)
+       ======================================== */
+    function loadSavedClients() {
+      try {
+        const raw = localStorage.getItem('tct_onboarding_clients');
+        return raw ? JSON.parse(raw) : [];
+      } catch { return []; }
+    }
+
+    function saveClientToList(client) {
+      const clients = loadSavedClients();
+      const idx = clients.findIndex(c => c.id === client.id);
+      if (idx >= 0) {
+        clients[idx] = client;
+      } else {
+        clients.push(client);
+      }
+      localStorage.setItem('tct_onboarding_clients', JSON.stringify(clients));
+    }
+
+    function removeClientFromList(clientId) {
+      let clients = loadSavedClients();
+      clients = clients.filter(c => c.id !== clientId);
+      localStorage.setItem('tct_onboarding_clients', JSON.stringify(clients));
+
+      // Remove data
+      localStorage.removeItem('tct_onboarding_' + clientId);
+
+      if (activeClient && activeClient.id === clientId) {
+        activeClient = null;
+        document.getElementById('statusSummary').classList.remove('visible');
+        document.getElementById('checklistContainer').classList.remove('visible');
+        document.getElementById('checklistContainer').innerHTML = '';
+        document.getElementById('actionBar').style.display = 'none';
+      }
+      renderSavedClients();
+    }
+
+    function renderSavedClients() {
+      const clients = loadSavedClients();
+      const container = document.getElementById('savedClientsContainer');
+
+      if (clients.length === 0) {
+        container.style.display = 'none';
+        return;
+      }
+
+      container.style.display = 'flex';
+      container.innerHTML = clients.map(c => `
+        <div class="saved-client-chip ${activeClient && activeClient.id === c.id ? 'active' : ''}" onclick="selectClient('${c.id}', '${escapeAttr(c.name)}', '${escapeAttr(c.phone || '')}', '${escapeAttr(c.email || '')}')">
+          ${escapeHtml(c.name)}
+          <span class="saved-client-remove" onclick="event.stopPropagation(); removeClientFromList('${c.id}');">x</span>
+        </div>
+      `).join('');
+    }
+
+    /* ========================================
+       CLIENT CHECKLIST DATA
+       ======================================== */
+    function getSavedClientData(clientId) {
+      try {
+        const raw = localStorage.getItem('tct_onboarding_' + clientId);
+        return raw ? JSON.parse(raw) : null;
+      } catch { return null; }
+    }
+
+    function saveClientData() {
+      if (!activeClient) return;
+      const data = {
+        client: activeClient,
+        checks: {},
+        notes: {},
+        qa: {},
+        logs: {}
+      };
+
+      // Collect all checkbox states
+      document.querySelectorAll('.check-item input[type="checkbox"]').forEach(cb => {
+        data.checks[cb.dataset.itemId] = cb.checked;
+        if (cb.checked && !cb.dataset.timestamp) {
+          cb.dataset.timestamp = new Date().toLocaleString();
+        }
+        if (cb.dataset.timestamp) {
+          data.notes[cb.dataset.itemId + '_ts'] = cb.dataset.timestamp;
+        }
+      });
+
+      // Collect notes
+      document.querySelectorAll('.check-item-note input').forEach(input => {
+        if (input.value.trim()) {
+          data.notes[input.dataset.itemId + '_note'] = input.value.trim();
+        }
+      });
+
+      // Collect QA results
+      document.querySelectorAll('.qa-btn.active').forEach(btn => {
+        data.qa[btn.dataset.itemId] = btn.dataset.result;
+      });
+
+      // Collect monitoring logs
+      document.querySelectorAll('.log-entry input[type="text"]').forEach(input => {
+        if (input.value.trim()) {
+          data.logs[input.dataset.logId] = input.value.trim();
+        }
+      });
+
+      localStorage.setItem('tct_onboarding_' + activeClient.id, JSON.stringify(data));
+      updateStatusSummary();
+    }
+
+    /* ========================================
+       BUILD CHECKLIST UI
+       ======================================== */
+    function loadClientChecklist() {
+      if (!activeClient) return;
+
+      const container = document.getElementById('checklistContainer');
+      container.innerHTML = '';
+      container.classList.add('visible');
+      document.getElementById('actionBar').style.display = 'flex';
+
+      const saved = getSavedClientData(activeClient.id);
+
+      CHECKLIST.forEach((section, idx) => {
+        const sectionEl = document.createElement('div');
+        sectionEl.className = 'checklist-section' + (idx === 0 ? ' open' : '');
+
+        let itemsHtml = '';
+        section.items.forEach(item => {
+          const checked = saved && saved.checks && saved.checks[item.id] ? 'checked' : '';
+          const timestamp = saved && saved.notes && saved.notes[item.id + '_ts'] ? saved.notes[item.id + '_ts'] : '';
+          const note = saved && saved.notes && saved.notes[item.id + '_note'] ? saved.notes[item.id + '_note'] : '';
+          const qaResult = saved && saved.qa && saved.qa[item.id] ? saved.qa[item.id] : '';
+          const logValue = saved && saved.logs && saved.logs[item.id] ? saved.logs[item.id] : '';
+
+          let extra = '';
+          if (item.qa) {
+            extra = `
+              <div class="qa-results">
+                <button class="qa-btn qa-btn-pass ${qaResult === 'pass' ? 'active' : ''}" data-item-id="${item.id}" data-result="pass" onclick="setQA(this)">PASS</button>
+                <button class="qa-btn qa-btn-fail ${qaResult === 'fail' ? 'active' : ''}" data-item-id="${item.id}" data-result="fail" onclick="setQA(this)">FAIL</button>
+              </div>
+            `;
+          }
+          if (item.log) {
+            extra += `
+              <div class="monitoring-log">
+                <div class="log-entry">
+                  <input type="text" data-log-id="${item.id}" value="${escapeAttr(logValue)}" placeholder="Notes for this day..." oninput="saveClientData()">
+                </div>
+              </div>
+            `;
+          }
+
+          itemsHtml += `
+            <div class="check-item ${checked ? 'completed' : ''}" id="item_${item.id}">
+              <input type="checkbox" data-item-id="${item.id}" ${checked} data-timestamp="${escapeAttr(timestamp)}" onchange="handleCheckChange(this)">
+              <div class="check-item-content">
+                <div class="check-item-text">${escapeHtml(item.text)}</div>
+                ${timestamp ? '<div class="check-item-timestamp">Completed: ' + escapeHtml(timestamp) + '</div>' : ''}
+                ${extra}
+                <div class="check-item-note">
+                  <input type="text" data-item-id="${item.id}" value="${escapeAttr(note)}" placeholder="Add a note..." oninput="saveClientData()">
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        const completedCount = section.items.filter(item => saved && saved.checks && saved.checks[item.id]).length;
+
+        sectionEl.innerHTML = `
+          <div class="checklist-section-header" onclick="toggleSection(this)">
+            <div class="checklist-section-left">
+              <span class="checklist-section-day">${section.day}</span>
+              <span class="checklist-section-title">${section.title}</span>
+            </div>
+            <span class="checklist-section-count">${completedCount}/${section.items.length}</span>
+          </div>
+          <div class="checklist-section-body">${itemsHtml}</div>
+        `;
+
+        container.appendChild(sectionEl);
+      });
+
+      updateStatusSummary();
+    }
+
+    /* ========================================
+       CHECKLIST INTERACTIONS
+       ======================================== */
+    function handleCheckChange(cb) {
+      const item = cb.closest('.check-item');
+      if (cb.checked) {
+        item.classList.add('completed');
+        cb.dataset.timestamp = new Date().toLocaleString();
+        // Add timestamp display
+        let tsEl = item.querySelector('.check-item-timestamp');
+        if (!tsEl) {
+          tsEl = document.createElement('div');
+          tsEl.className = 'check-item-timestamp';
+          item.querySelector('.check-item-text').after(tsEl);
+        }
+        tsEl.textContent = 'Completed: ' + cb.dataset.timestamp;
+      } else {
+        item.classList.remove('completed');
+        cb.dataset.timestamp = '';
+        const tsEl = item.querySelector('.check-item-timestamp');
+        if (tsEl) tsEl.remove();
+      }
+      saveClientData();
+
+      // Update section count
+      const section = cb.closest('.checklist-section');
+      const total = section.querySelectorAll('.check-item input[type="checkbox"]').length;
+      const done = section.querySelectorAll('.check-item input[type="checkbox"]:checked').length;
+      section.querySelector('.checklist-section-count').textContent = done + '/' + total;
+    }
+
+    function setQA(btn) {
+      const siblings = btn.parentElement.querySelectorAll('.qa-btn');
+      siblings.forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      saveClientData();
+    }
+
+    function toggleSection(header) {
+      const section = header.closest('.checklist-section');
+      section.classList.toggle('open');
+    }
+
+    /* ========================================
+       STATUS SUMMARY
+       ======================================== */
+    function updateStatusSummary() {
+      if (!activeClient) return;
+
+      const summary = document.getElementById('statusSummary');
+      summary.classList.add('visible');
+
+      document.getElementById('statusClientName').textContent = activeClient.name;
+
+      // Calculate days
+      const start = activeClient.startDate ? new Date(activeClient.startDate) : new Date();
+      const now = new Date();
+      const dayNum = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+
+      // Count checks
+      const allChecks = document.querySelectorAll('.check-item input[type="checkbox"]');
+      const doneChecks = document.querySelectorAll('.check-item input[type="checkbox"]:checked');
+      const total = allChecks.length;
+      const done = doneChecks.length;
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+      document.getElementById('statusMeta').textContent = 'Day ' + dayNum + ' of onboarding | Started: ' + (activeClient.startDate || 'Today');
+      document.getElementById('statusProgressFill').style.width = pct + '%';
+      document.getElementById('statusProgressText').textContent = done + '/' + total + ' (' + pct + '%)';
+    }
+
+    /* ========================================
+       SEND NTFY UPDATE
+       ======================================== */
+    async function sendNtfyUpdate() {
+      if (!activeClient) return;
+
+      const allChecks = document.querySelectorAll('.check-item input[type="checkbox"]');
+      const doneChecks = document.querySelectorAll('.check-item input[type="checkbox"]:checked');
+
+      // Find the most recently completed item
+      let latestItem = 'Progress updated';
+      doneChecks.forEach(cb => {
+        if (cb.dataset.timestamp) {
+          latestItem = cb.closest('.check-item').querySelector('.check-item-text').textContent;
+        }
+      });
+
+      try {
+        await fetch('https://ntfy.sh/' + CONFIG.ntfyTopic, {
+          method: 'POST',
+          headers: {
+            'Title': activeClient.name + ' - Onboarding Update',
+            'Priority': 'default',
+            'Tags': 'clipboard'
+          },
+          body: activeClient.name + ' - ' + doneChecks.length + '/' + allChecks.length + ' steps complete\nLatest: ' + latestItem
+        });
+        showToast('Notification sent!');
+      } catch (err) {
+        showToast('Failed to send notification');
+      }
+    }
+
+    /* ========================================
+       UPDATE GHL TAG
+       ======================================== */
+    async function updateGHLTag() {
+      if (!activeClient || activeClient.id.startsWith('manual_')) {
+        showToast('Cannot update tags for manually-added clients');
+        return;
+      }
+
+      // Determine current stage based on progress
+      const checks = {};
+      document.querySelectorAll('.check-item input[type="checkbox"]').forEach(cb => {
+        checks[cb.dataset.itemId] = cb.checked;
+      });
+
+      let tag = 'onboarding-day-0';
+      if (checks.d2_flipped_live) tag = 'onboarding-live';
+      else if (checks.d2_client_test_scheduled) tag = 'onboarding-day-2';
+      else if (checks.d1_ai_configured) tag = 'onboarding-day-1';
+
+      if (checks.m1_pipeline_active) tag = 'onboarding-month-1';
+      else if (checks.w2_report) tag = 'onboarding-week-2';
+      else if (checks.w1_checkin) tag = 'onboarding-week-1';
+
+      try {
+        const res = await fetch(CONFIG.baseUrl + '/contacts/' + activeClient.id, {
+          method: 'PUT',
+          headers: {
+            'Authorization': 'Bearer ' + CONFIG.apiKey,
+            'Version': CONFIG.version,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            tags: [tag]
+          })
+        });
+
+        if (res.ok) {
+          showToast('GHL tag updated to: ' + tag);
+        } else {
+          showToast('Failed to update GHL tag');
+        }
+      } catch (err) {
+        showToast('Error updating tag: ' + err.message);
+      }
+    }
+
+    /* ========================================
+       EXPORT CHECKLIST
+       ======================================== */
+    function exportChecklist() {
+      if (!activeClient) return;
+
+      let text = 'ONBOARDING CHECKLIST: ' + activeClient.name + '\n';
+      text += 'Started: ' + (activeClient.startDate || 'Unknown') + '\n';
+      text += '='.repeat(50) + '\n\n';
+
+      CHECKLIST.forEach(section => {
+        text += '--- ' + section.day + ': ' + section.title + ' ---\n';
+        section.items.forEach(item => {
+          const cb = document.querySelector(`input[data-item-id="${item.id}"]`);
+          const checked = cb && cb.checked;
+          const noteInput = document.querySelector(`.check-item-note input[data-item-id="${item.id}"]`);
+          const note = noteInput ? noteInput.value.trim() : '';
+          text += (checked ? '[x]' : '[ ]') + ' ' + item.text;
+          if (cb && cb.dataset.timestamp) text += ' (' + cb.dataset.timestamp + ')';
+          if (note) text += '\n    Note: ' + note;
+          text += '\n';
+        });
+        text += '\n';
+      });
+
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = activeClient.name.replace(/[^a-zA-Z0-9]/g, '-') + '-onboarding.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Checklist exported!');
+    }
+
+    /* ========================================
+       GHL TAG CREATION
+       ======================================== */
+    function initTagSection() {
+      const section = document.getElementById('tagSection');
+      section.style.display = 'block';
+
+      const list = document.getElementById('tagList');
+      list.innerHTML = ONBOARDING_TAGS.map(tag => `
+        <div class="tag-row" id="tag_${tag.replace(/-/g, '_')}">
+          <span class="tag-name">${tag}</span>
+          <span class="tag-status pending" id="tagStatus_${tag.replace(/-/g, '_')}">Pending</span>
+        </div>
+      `).join('');
+    }
+
+    async function createAllTags() {
+      const btn = document.getElementById('createTagsBtn');
+      btn.disabled = true;
+      btn.textContent = 'Creating...';
+
+      for (const tag of ONBOARDING_TAGS) {
+        const statusId = 'tagStatus_' + tag.replace(/-/g, '_');
+        const statusEl = document.getElementById(statusId);
+
+        try {
+          const res = await fetch(CONFIG.baseUrl + '/locations/' + CONFIG.locationId + '/tags', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + CONFIG.apiKey,
+              'Version': CONFIG.version,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: tag })
+          });
+
+          if (res.ok || res.status === 409) {
+            statusEl.className = 'tag-status created';
+            statusEl.textContent = 'Created';
+          } else {
+            statusEl.className = 'tag-status error';
+            statusEl.textContent = 'Error (' + res.status + ')';
+          }
+        } catch (err) {
+          statusEl.className = 'tag-status error';
+          statusEl.textContent = 'Failed';
+        }
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Create All Tags in GHL';
+      showToast('Tag creation complete!');
+    }
+
+    /* ========================================
+       UTILITY
+       ======================================== */
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+
+    function escapeAttr(str) {
+      return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 3000);
+    }
+
+    /* ========================================
+       INIT
+       ======================================== */
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('passwordInput').focus();
+    });
+  </script>
+
+</body>
+</html>

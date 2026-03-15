@@ -147,7 +147,7 @@
   --orange-light: rgba(0,220,130,0.06);
   --green: #00dc82;
   --green-light: rgba(0,220,130,0.08);
-  --star: #fbbf24;
+  --star: #00dc82;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
   --shadow: 0 4px 6px -1px rgba(0,0,0,.4), 0 2px 4px -2px rgba(0,0,0,.3);
   --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.5), 0 4px 6px -4px rgba(0,0,0,.3);
@@ -742,6 +742,14 @@ a { color: inherit; text-decoration: none; }
   .nav-links, .header-cta { display: none; }
   .subtitle-desktop { display: none; }
   .subtitle-mobile { display: block; }
+  /* Fix horizontal overflow from scrolling strips */
+  .ind-strip { overflow: hidden !important; max-width: 100vw; }
+  .ind-strip-inner { justify-content: flex-start; gap: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; padding-bottom: 4px; }
+  .ind-strip-inner::-webkit-scrollbar { display: none; }
+  .testimonial-scroll { overflow: hidden !important; max-width: 100vw; }
+  .trust-bar { overflow: hidden !important; max-width: 100vw; }
+  .trust-bar-wrap { overflow: hidden !important; }
+  .dc-duration { max-width: calc(100vw - 48px); overflow: hidden; text-overflow: ellipsis; }
 }
 
 /* ===== LIVE ACTIVITY TICKER ===== */
@@ -1496,7 +1504,7 @@ a { color: inherit; text-decoration: none; }
         <div class="ba-metric-lbl">Answer time</div>
       </div>
     </div>
-    <p class="ba-disclaimer">*Based on case study results (33&ndash;65% range). Results vary by business and call volume.</p>
+    <p class="ba-disclaimer">*Based on <a href="/case-studies/" style="color:var(--green);text-decoration:underline;text-underline-offset:2px">case study results</a> (33&ndash;65% range). Results vary by business and call volume.</p>
   </div>
 </section>
 
@@ -1935,7 +1943,7 @@ a { color: inherit; text-decoration: none; }
         <div class="proof-agg-label">Avg ROI*</div>
       </div>
     </div>
-    <p style="text-align:center;font-size:.72rem;color:var(--text-secondary);margin-top:8px;opacity:.7">*Based on case study averages. Individual results vary.</p>
+    <p style="text-align:center;font-size:.72rem;color:var(--text-secondary);margin-top:8px;opacity:.7">*Based on <a href="/case-studies/" style="color:var(--green);text-underline-offset:2px">case study averages</a>. Individual results vary.</p>
   </div>
   <div class="testimonial-scroll">
     <div class="testimonial-track" id="testimonialTrack">
@@ -2013,9 +2021,62 @@ a { color: inherit; text-decoration: none; }
       </div>
     </div>
   </div>
+  <!-- ===== FEATURED CASE STUDIES ===== -->
   <div class="container">
+    <div class="cs-featured-grid fade-up" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;margin-bottom:32px">
+      <a href="/case-studies/palmetto-comfort.html" class="cs-feat-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s;display:block">
+        <div style="display:inline-block;background:rgba(0,220,130,.12);color:#00dc82;padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">HVAC</div>
+        <h3 style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px">Palmetto Comfort: from missing 40% of calls to catching 100%</h3>
+        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px">Charleston, SC</p>
+        <div style="display:flex;justify-content:space-around;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">+$8,400</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">Revenue/Mo</div></div>
+          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">17x</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">ROI</div></div>
+        </div>
+      </a>
+      <a href="/case-studies/reliable-rooter.html" class="cs-feat-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s;display:block">
+        <div style="display:inline-block;background:rgba(0,220,130,.12);color:#00dc82;padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Plumbing</div>
+        <h3 style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px">Solo plumber grew from $8K to $14K/month on missed-call recovery alone</h3>
+        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px">Tampa, FL</p>
+        <div style="display:flex;justify-content:space-around;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">+72%</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">Revenue Growth</div></div>
+          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">20x</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">ROI</div></div>
+        </div>
+      </a>
+      <a href="/case-studies/rapid-key-locksmith.html" class="cs-feat-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s;display:block">
+        <div style="display:inline-block;background:rgba(0,220,130,.12);color:#00dc82;padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Locksmith</div>
+        <h3 style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px">Catches every 2 AM lockout call &mdash; emergency revenue up 65%</h3>
+        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px">Nashville, TN</p>
+        <div style="display:flex;justify-content:space-around;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">+65%</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">Emergency Rev</div></div>
+          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">20x</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">ROI</div></div>
+        </div>
+      </a>
+      <a href="/case-studies/arctic-air-pros.html" class="cs-feat-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s;display:block">
+        <div style="display:inline-block;background:rgba(0,220,130,.12);color:#00dc82;padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">HVAC</div>
+        <h3 style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px">Arctic Air Pros: +$14,200/mo with 29x ROI in Phoenix heat</h3>
+        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px">Phoenix, AZ</p>
+        <div style="display:flex;justify-content:space-around;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">+$14,200</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">Revenue/Mo</div></div>
+          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">29x</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">ROI</div></div>
+        </div>
+      </a>
+      <a href="/case-studies/precision-plumbing.html" class="cs-feat-card" style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 20px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s;display:block">
+        <div style="display:inline-block;background:rgba(0,220,130,.12);color:#00dc82;padding:3px 10px;border-radius:12px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Plumbing</div>
+        <h3 style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px">Precision Plumbing: replaced $1,400/mo answering service, added revenue</h3>
+        <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px">Atlanta, GA</p>
+        <div style="display:flex;justify-content:space-around;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">-$1,400</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">Cost Saved/Mo</div></div>
+          <div style="text-align:center"><div style="font-size:1.15rem;font-weight:800;color:#fff">15x</div><div style="font-size:.65rem;color:var(--text-muted);text-transform:uppercase">ROI</div></div>
+        </div>
+      </a>
+    </div>
+    <style>
+      .cs-feat-card:hover{transform:translateY(-4px);border-color:rgba(0,220,130,.2) !important;box-shadow:0 12px 40px rgba(0,220,130,.06)}
+      @media(min-width:769px){.cs-featured-grid{justify-items:center}.cs-featured-grid .cs-feat-card:nth-child(4),.cs-featured-grid .cs-feat-card:nth-child(5){max-width:calc((100% - 16px) / 2)}}
+      @media(max-width:768px){.cs-featured-grid{grid-template-columns:1fr !important;max-width:400px;margin-left:auto !important;margin-right:auto !important}}
+    </style>
     <div class="testimonial-cta fade-up">
-      <a href="/case-studies/" class="btn btn-outline">Read All Case Studies &rarr;</a>
+      <a href="/case-studies/" class="btn btn-outline">View All 5 Case Studies &rarr;</a>
     </div>
   </div>
 </section>
@@ -2306,6 +2367,7 @@ a { color: inherit; text-decoration: none; }
         Cancel anytime with one text
       </span>
     </div>
+    <p class="fade-up" style="text-align:center;margin-top:24px;font-size:.85rem;color:var(--text-muted)">See how real businesses earn back 15&ndash;29x their investment. <a href="/case-studies/" style="color:var(--green);text-decoration:underline;text-underline-offset:2px;font-weight:600">Read the case studies &rarr;</a></p>
   </div>
 </section>
 
@@ -2608,12 +2670,12 @@ window.__tctUILoaded = true;
     svg.setAttribute('viewBox', '0 0 32 32');
     svg.className.baseVal = 'cx-svg';
     svg.innerHTML =
-      '<line x1="16" y1="4" x2="16" y2="12" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
-      '<line x1="16" y1="20" x2="16" y2="28" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
-      '<line x1="4" y1="16" x2="12" y2="16" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
-      '<line x1="20" y1="16" x2="28" y2="16" stroke="#F97316" stroke-width="1.5" stroke-linecap="round"/>' +
+      '<line x1="16" y1="4" x2="16" y2="12" stroke="#00C96B" stroke-width="1.5" stroke-linecap="round"/>' +
+      '<line x1="16" y1="20" x2="16" y2="28" stroke="#00C96B" stroke-width="1.5" stroke-linecap="round"/>' +
+      '<line x1="4" y1="16" x2="12" y2="16" stroke="#00C96B" stroke-width="1.5" stroke-linecap="round"/>' +
+      '<line x1="20" y1="16" x2="28" y2="16" stroke="#00C96B" stroke-width="1.5" stroke-linecap="round"/>' +
       '<circle cx="16" cy="16" r="3" fill="none" stroke="#fff" stroke-width="1" opacity=".8"/>' +
-      '<circle cx="16" cy="16" r="1.5" fill="#F97316" opacity=".9"/>';
+      '<circle cx="16" cy="16" r="1.5" fill="#00C96B" opacity=".9"/>';
     document.body.appendChild(svg);
 
     // === MOUSE TRACKING (no particles yet) ===
@@ -2723,7 +2785,7 @@ window.__tctUILoaded = true;
 
     var particles = [];
     var MAX_P = 60;
-    var colors = ['#F97316','#F97316','#F97316','#FBBF24','#FBBF24','#FFFFFF'];
+    var colors = ['#00C96B','#00C96B','#00C96B','#00dc82','#00dc82','#FFFFFF'];
     var mx = -200, my = -200, pmx = -200, pmy = -200, speed = 0;
     var fpsSamples = [], killed = false;
     var lastFrame = performance.now();
