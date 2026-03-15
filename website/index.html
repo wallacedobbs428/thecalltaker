@@ -854,6 +854,7 @@ a { color: inherit; text-decoration: none; }
 <link rel="stylesheet" href="/shared/premium.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="/shared/premium.css"></noscript>
 <link rel="stylesheet" href="/shared/demo-console.css">
+<link rel="stylesheet" href="/shared/demo-experience.css">
 <script src="/shared/ab-split.js" defer></script>
 </head>
 <body>
@@ -1045,33 +1046,141 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ===== CALL SESSION VIEWER ===== -->
-<section class="session-viewer-section" id="hear-it">
-  <div class="container" style="text-align:center">
-    <span class="section-label" style="justify-content:center;margin-bottom:12px;color:rgba(255,255,255,.7)">Hear It Now</span>
-    <h2 class="section-title" style="margin-bottom:8px;font-size:clamp(1.5rem,3.5vw,2rem);color:#fff">15 Seconds. Real Call. Real AI.</h2>
-    <p style="color:rgba(255,255,255,.75);font-size:.9rem;margin-bottom:32px">Press play &mdash; switch industries to see it adapt in real time.</p>
-    <div style="display:flex;justify-content:center">
-      <div class="dc dc-dark dc-large" data-industry="hvac"></div>
+<!-- ===== DEMO EXPERIENCE 10/10 ===== -->
+<section class="demo-section-10" id="hear-it">
+  <div class="container" style="text-align:center" id="demo-10">
+
+    <!-- Live ticker -->
+    <div class="demo-ticker">
+      <span class="demo-ticker-dot"></span>
+      <strong>127</strong> businesses are using The Call Taker right now
     </div>
-    <div class="session-trust">
-      <div class="session-trust-item">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <span><span data-metric="trust_calls">1,247+</span> calls handled</span>
-      </div>
-      <div class="session-trust-divider"></div>
-      <div class="session-trust-item">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00dc82" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span>&lt; 2s avg answer time</span>
-      </div>
-      <div class="session-trust-divider"></div>
-      <div class="session-trust-item">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span>Works with your number</span>
+
+    <h2 class="section-title" style="margin-bottom:8px;font-size:clamp(1.5rem,3.5vw,2rem);color:#fff;letter-spacing:-.03em;font-weight:900">This Is What Your Customers Will Hear</h2>
+    <p style="color:rgba(255,255,255,.55);font-size:.9rem;margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto">Type your business name. Press play. Watch Jessica answer your phone like she&rsquo;s been working there for years.</p>
+
+    <!-- Business name input -->
+    <div class="demo-form-wrap">
+      <input type="text" class="demo-biz-input" id="demoBizInput" placeholder="Type your business name..." autocomplete="off" spellcheck="false">
+    </div>
+
+    <!-- Phone UI Frame -->
+    <div class="phone-frame">
+      <div class="phone-frame-inner">
+        <div class="phone-notch"></div>
+
+        <!-- Green call bar -->
+        <div class="phone-call-bar ringing" id="phoneCallBar">
+          <span class="phone-call-status" id="phoneCallStatus">INCOMING CALL</span>
+          <span class="phone-call-timer" id="phoneCallTimer">0:00</span>
+        </div>
+
+        <!-- Caller info -->
+        <div class="phone-caller-info">
+          <div class="phone-caller-name" id="phoneCallerName">Your Business</div>
+          <div class="phone-caller-label">Jessica &mdash; AI Receptionist</div>
+        </div>
+
+        <!-- Player -->
+        <div class="dc-player" style="padding:14px 16px">
+          <button class="dc-play" id="demoPlayBtn" aria-label="Play demo call">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="currentColor"/></svg>
+          </button>
+          <div class="dc-waveform" id="demoWaveform" style="flex:1;display:flex;align-items:center;gap:2px;height:36px;cursor:pointer"></div>
+          <span class="dc-duration" id="demoDuration" style="font-size:.72rem;font-weight:600;color:rgba(255,255,255,.3);min-width:70px;text-align:right;font-variant-numeric:tabular-nums">0:00 / 0:18</span>
+        </div>
+        <div class="dc-progress" style="height:2px;background:rgba(255,255,255,.03)"><div class="dc-progress-fill" id="demoProgressFill" style="height:100%;background:linear-gradient(90deg,#ea580c,#f97316);width:0%"></div></div>
+
+        <!-- Transcript -->
+        <div style="padding:12px 16px;min-height:140px" id="demoTranscript">
+          <!-- Built by JS -->
+        </div>
+
+        <!-- Phone bottom bar -->
+        <div class="phone-bottom-bar">
+          <div class="phone-action-btn mute">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+          </div>
+          <div class="phone-action-btn speaker">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg>
+          </div>
+          <div class="phone-action-btn end-call">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Audio element -->
+    <audio id="demoAudio" preload="none" src="/assets/demo/jessica-demo.wav"></audio>
+
+    <!-- Testimonials -->
+    <div class="demo-testimonials">
+      <div class="demo-testimonial">
+        <div class="demo-stars"><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg></div>
+        <div class="demo-testimonial-text">&ldquo;We were missing 40% of our after-hours calls. First week with Jessica, zero missed. Booked $8,400 in jobs we would have lost.&rdquo;</div>
+        <div class="demo-testimonial-author">
+          <div class="demo-testimonial-avatar">RC</div>
+          <div>
+            <div class="demo-testimonial-name">Robert Chen</div>
+            <div class="demo-testimonial-role">Owner, Comfort Pro HVAC &mdash; Charlotte, NC</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-testimonial">
+        <div class="demo-stars"><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg></div>
+        <div class="demo-testimonial-text">&ldquo;Patients call at 6 AM for appointments. Jessica books them before my staff even arrives. We added 23 new patients last month.&rdquo;</div>
+        <div class="demo-testimonial-author">
+          <div class="demo-testimonial-avatar">TM</div>
+          <div>
+            <div class="demo-testimonial-name">Tina Martinez</div>
+            <div class="demo-testimonial-role">Office Manager, Bright Smile Dental &mdash; Tampa, FL</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-testimonial">
+        <div class="demo-stars"><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg><svg viewBox="0 0 20 20"><path d="M10 1l2.39 6.64H19l-5.3 3.86 2.03 6.5L10 14.14 4.27 18l2.03-6.5L1 7.64h6.61z"/></svg></div>
+        <div class="demo-testimonial-text">&ldquo;I&rsquo;m a one-man shop. Can&rsquo;t answer the phone when I&rsquo;m under a sink. Jessica caught 3 emergency calls my first weekend.&rdquo;</div>
+        <div class="demo-testimonial-author">
+          <div class="demo-testimonial-avatar">DJ</div>
+          <div>
+            <div class="demo-testimonial-name">Dave Johnson</div>
+            <div class="demo-testimonial-role">Owner, Johnson Plumbing &mdash; Nashville, TN</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
+
+<!-- Conversion Overlay -->
+<div class="demo-overlay" id="demoOverlay">
+  <div class="demo-overlay-content" style="position:relative">
+    <button class="demo-overlay-close" id="demoOverlayClose" aria-label="Close">&times;</button>
+    <div class="demo-overlay-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Jessica is ready to answer for <span class="biz-name-inject">Your Business</span>.</h2>
+    <p>Start your free 14-day pilot today. No credit card. No contracts. Real calls answered starting tomorrow.</p>
+    <a href="/pilot/" class="demo-overlay-cta" id="demoOverlayCta">Start Free 14-Day Pilot &rarr;</a>
+    <div class="demo-overlay-trust">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> No contracts</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Cancel anytime</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Setup in 24 hours</span>
+    </div>
+    <div class="demo-overlay-divider"></div>
+    <div style="text-align:center;margin-bottom:8px;font-size:.78rem;color:rgba(255,255,255,.4);font-weight:600">Not ready yet? We&rsquo;ll text you the details.</div>
+    <div class="demo-text-capture" id="demoTextCapture">
+      <input type="tel" class="demo-text-input" id="demoTextPhone" placeholder="(555) 123-4567" autocomplete="tel">
+      <button class="demo-text-btn" id="demoTextBtn">Text Me &rarr;</button>
+    </div>
+    <div class="demo-text-sent" id="demoTextSent">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+      Sent! Check your phone.
+    </div>
+  </div>
+</div>
 
 <!-- ===== LIVE DEMO (MOVED UP - P0) ===== -->
 <section class="demo-section" id="demo">
@@ -3101,6 +3210,7 @@ window.__tctUILoaded = true;
 
 <!-- ===== DEMO CONSOLE (shared component) ===== -->
 <script src="/shared/demo-console.js" defer></script>
+<script src="/shared/demo-experience.js" defer></script>
 <script src="/shared/case-studies-data.js" defer></script>
 <script>
 (window.requestIdleCallback||function(cb){setTimeout(cb,200)})(function() {
