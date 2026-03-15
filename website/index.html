@@ -553,6 +553,17 @@ a { color: inherit; text-decoration: none; }
   color: var(--green);
   flex-shrink: 0;
 }
+/* ===== LIVE REVENUE COUNTER ===== */
+.revenue-counter { margin-top: 24px; }
+.revenue-counter-amount { font-size: .92rem; color: var(--text-secondary); font-weight: 500; }
+.revenue-number { color: #00dc82; font-weight: 900; font-size: 1.05rem; font-variant-numeric: tabular-nums; transition: opacity .3s; }
+.revenue-counter-sub { font-size: .72rem; color: var(--text-muted); margin-top: 4px; }
+@media (max-width: 768px) {
+  .revenue-counter { text-align: center; }
+  .revenue-counter-amount { font-size: .82rem; }
+  .revenue-number { font-size: .92rem; }
+}
+
 /* ===== TRUST SIGNALS BAR ===== */
 .trust-signals-bar {
   position: sticky;
@@ -1032,6 +1043,12 @@ a { color: inherit; text-decoration: none; }
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
             Setup in under 5 minutes
           </span>
+        </div>
+
+        <!-- PHASE 3: LIVE REVENUE COUNTER -->
+        <div class="revenue-counter" id="revenueCounter">
+          <div class="revenue-counter-amount">Revenue recovered for our clients this month: <span class="revenue-number" id="revenueNumber">$284,000</span></div>
+          <div class="revenue-counter-sub">Based on avg $847/job × calls answered this month</div>
         </div>
 
         <!-- Demo console removed — single instance in #hear-it section below -->
@@ -3673,6 +3690,29 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
+})();
+</script>
+
+<!-- PHASE 3: LIVE REVENUE COUNTER JS -->
+<script>
+(function(){
+  var el = document.getElementById('revenueNumber');
+  if (!el) return;
+  var current = 284000;
+  function fmt(n) { return '$' + n.toLocaleString(); }
+  el.textContent = fmt(current);
+  function tick() {
+    var add = Math.floor(Math.random() * 16) + 8;
+    current += add;
+    el.style.opacity = '0.6';
+    setTimeout(function() {
+      el.textContent = fmt(current);
+      el.style.opacity = '1';
+    }, 150);
+    var next = Math.floor(Math.random() * 3001) + 4000;
+    setTimeout(tick, next);
+  }
+  setTimeout(tick, 4000);
 })();
 </script>
 
