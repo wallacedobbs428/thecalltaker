@@ -57,28 +57,33 @@ ben/, max/, sam/       # Engine state/config mirrors
 | **Sam** | Customer success | `sam/sam-engine.py` (2,037 lines) |
 | **Donny** | Conversion closer | `donny/donny-engine.py` (2,952 lines) |
 
+## Current Session Context (March 15, 2026)
+
+- On branch `claude/fix-jessica-voice-agent-vt0s0`, 1 commit ahead of remote
+- Working tree is clean — no staged or unstaged changes
+- Recent work: PayPal/Venmo checkout built, 3-touch close sequence for 35 hot leads, Jessica voice v9, mobile fixes, demo page green theme
+
 ## Recent Work (as of March 15, 2026)
 
-- **Jessica voice agent v9** — Anti-squeaky rewrite. Deeper voice (lxYfHSkYm1EzQzGhdbfc), pitch -1, rate 0.95, stability 0.75, similarity 0.85. All script lines rewritten for TTS: no exclamation points, no caps, numbers spelled out, short sentences, comma/dash rhythm
-- **Demo page colors updated** — All orange (#ea580c/#f97316) replaced with green (#00C96B) in demo-console.css, demo-experience.css, and index.html inline styles
-- **Deploy script upgraded** — `ops/update-jessica-prompt.py` now v9 with voice settings, fallback voices (rachel/bella/elli), and `fallback` command
-- Local vs national outreach strategy implemented across all engines/templates
-- 10/10 demo experience built: phone UI, Web Audio, personalization, conversion overlay
-- Robotic TTS voice removed, demo consolidated to single page
-- Text contrast boosted site-wide for readability
-- Mobile hero centering fixed
+- **PayPal/Venmo checkout** — Accept $97/$297/$497 payments today (Stripe blocked)
+- **3-touch close sequence** — Built for 35 hot leads
+- **Jessica voice agent v9** — Anti-squeaky rewrite. Deeper voice, pitch -1, rate 0.95, stability 0.75, similarity 0.85
+- **Demo page colors** — All orange replaced with green (#00C96B)
+- **Deploy script upgraded** — v9 with voice settings, fallback voices
+- **Competitor research** — Pricing/feature comparison for Smith.ai, Ruby, AnswerConnect, PATLive, Numa, Goodcall (in progress this session)
 
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal. 72-hour strike plan exists
-- **Stripe**: NOT connected (Wallace is 16, needs parent/guardian). Biggest blocker to revenue
-- **Voice quality**: v9 prompt deployed. Run `python3 ops/update-jessica-prompt.py deploy` on Mac to push to GHL. Test by calling (615) 784-5747. If still squeaky, run `python3 ops/update-jessica-prompt.py fallback rachel`
+- **Stripe**: NOT connected (Wallace is 16, needs parent/guardian). PayPal/Venmo checkout built as workaround
+- **Voice quality**: v9 prompt deployed. Test by calling (615) 784-5747
 - **Pilot program**: 5 concurrent slots, 14-day free trial. Funnel is live
 - **Outreach**: 17 industries, 20 metros. Blast engine, funnel engine, cold caller all running
+- **Competitor comparison pages**: Research in progress for website content
 
 ## Known Blockers
 
-1. **Stripe not connected** — can't take payments. Setup guide sent via ntfy
+1. **Stripe not connected** — can't take card payments. PayPal/Venmo workaround live
 2. **GHL API unreachable from CI** — voice agent settings must be deployed from Mac
 3. **Retell.ai blocked** — needs payment card for phone number ($2/mo)
 4. **Meta Ads** — needs API token from developers.facebook.com
@@ -91,37 +96,17 @@ ben/, max/, sam/       # Engine state/config mirrors
 |------|-------|
 | Agent ID | `695947c64b9ed67d8f1077ad` |
 | Voice ID (v9) | `lxYfHSkYm1EzQzGhdbfc` (Jessica deep) |
-| Voice ID (old) | `w9rPM8AIZle60Nbpw7nl` |
 | Prompt version | v9 (`ops/jessica-voice-prompt-v9.md`) |
 | Deploy script | `ops/update-jessica-prompt.py` |
 | Fallback voices | Rachel, Bella, Elli |
-| Pitch | -1 |
-| Rate | 0.95 |
-| Stability | 0.75 |
-| Similarity | 0.85 |
 
 ## Key Conventions
 
 - **State files**: Atomic writes (tempfile + os.replace). JSON format
 - **Contact registry**: File-locked cross-engine coordination. 3-day gap between same-type touches
 - **GHL API**: Must set User-Agent header. Email = `html` field, SMS = `message` field. Phone: `+1XXXXXXXXXX`
-- **ntfy**: 5 standardized topics. Typed API via `tct_common.py`. 30-min dedupe. War room context in every alert
+- **ntfy**: 5 standardized topics. Typed API via `tct_common.py`. 30-min dedupe
 - **Deployment**: Only `website/` dir deploys via GitHub Actions. Push to `main` triggers deploy
-- **Hero H1**: NEVER set to `display: inline`. "Receptionist" has `no-break-word` span. Regression test exists
-- **Demo page colors**: Green (#00C96B), NOT orange. Updated March 15, 2026
+- **Hero H1**: NEVER set to `display: inline`. "Receptionist" has `no-break-word` span
+- **Demo page colors**: Green (#00C96B), NOT orange
 - **Public email**: `thecalltakerai@gmail.com` (website), `wallace@mail.thecalltaker.com` (agency ops)
-
-## Key Files to Know
-
-| File | Why |
-|------|-----|
-| `CLAUDE.md` | Complete system documentation. 44K words. Read first |
-| `ops/jessica-voice-prompt-v9.md` | Current voice prompt + settings + before/after comparison |
-| `ops/update-jessica-prompt.py` | Deploy voice changes to GHL |
-| `website/shared/demo-console.css` | Demo player UI styles (green theme) |
-| `website/shared/demo-experience.css` | Demo page overlay/phone frame styles (green theme) |
-| `website/index.html` | Homepage with embedded demo player |
-| `.github/workflows/deploy.yml` | GitHub Pages deployment |
-| `agents/` | 10 agent role configs |
-| `website/tct-tracking.js` | Attribution tracking (UTM, gclid, fbclid) |
-| `website/tests/hero-regression.py` | 11 assertions on hero H1 layout |
