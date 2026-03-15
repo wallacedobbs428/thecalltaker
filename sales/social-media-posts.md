@@ -1,6 +1,10 @@
 # The Call Taker -- Social Media Content Calendar
 ## 20 Posts for Instagram & Facebook
 
+**HVAC Hero Image — ATTACH TO ALL HVAC-RELATED POSTS:**
+`https://thecalltaker.com/images/hvac-hero.jpg`
+Save to phone and use as the primary image for any HVAC-themed post. Branded, professional, shows product in action.
+
 ---
 
 ## EDUCATIONAL POSTS (5)

@@ -5,6 +5,9 @@
 # Channels: SMS + Email + Voicemail drop — all three, every touch
 # Rules: Industry-personalized, pain-first, one CTA per message, 6th grade reading level
 # CTA: Call (615) 784-5747 or book at thecalltaker.com/book
+# HVAC Hero Image: Embed in ALL email touches for HVAC leads (below opening, above CTA)
+# HTML: <img src="https://thecalltaker.com/images/hvac-hero.jpg" alt="Never Miss a Call. Never Miss Revenue. — The Call Taker" style="width:100%;max-width:600px;height:auto;border-radius:8px;margin:16px 0;" />
+# MMS: Attach https://thecalltaker.com/images/hvac-hero.jpg to all HVAC SMS touches
 
 ---
 

@@ -48,6 +48,9 @@ LOG_FILE = os.path.expanduser("~/thecalltaker/ops/outbound-sms.log")
 MAX_SMS_PER_RUN = 30
 DELAY_BETWEEN_SMS = 5  # seconds
 
+# HVAC hero image — attach as MMS to all HVAC SMS outreach
+HVAC_HERO_IMAGE_URL = "https://thecalltaker.com/images/hvac-hero.jpg"
+
 CONVERSATIONS_HEADERS = {
     "Authorization": f"Bearer {GHL_API_KEY}",
     "Version": "2021-04-15",
@@ -212,10 +215,11 @@ def ghl_request(method, path, headers=None, params=None, json_body=None):
     return None
 
 
-def send_sms(contact_id, message):
-    return ghl_request("POST", "/conversations/messages", headers=CONVERSATIONS_HEADERS, json_body={
-        "type": "SMS", "contactId": contact_id, "message": message,
-    })
+def send_sms(contact_id, message, attach_image=False):
+    body = {"type": "SMS", "contactId": contact_id, "message": message}
+    if attach_image:
+        body["attachments"] = [HVAC_HERO_IMAGE_URL]
+    return ghl_request("POST", "/conversations/messages", headers=CONVERSATIONS_HEADERS, json_body=body)
 
 
 def add_tag(contact_id, tags):
@@ -353,12 +357,14 @@ def cmd_send(state):
                 elif touch_num == 3:
                     msg = sms_touch_3(first_name)
 
-            result = send_sms(cid, msg)
+            # Attach HVAC hero image as MMS for HVAC contacts
+            is_hvac = "hvac" in contact_tags_lower
+            result = send_sms(cid, msg, attach_image=is_hvac)
             if result:
                 enrollment["touches_sent"].append(touch_num)
                 state["stats"]["total_sms_sent"] += 1
                 sent_count += 1
-                log(f"  Touch {touch_num} SMS to {first_name} ({company}){' [LOCAL]' if local else ''}")
+                log(f"  Touch {touch_num} {'MMS' if is_hvac else 'SMS'} to {first_name} ({company}){' [LOCAL]' if local else ''}")
             break  # One touch per contact per cycle
 
         time.sleep(DELAY_BETWEEN_SMS)

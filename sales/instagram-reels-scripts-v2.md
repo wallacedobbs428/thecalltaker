@@ -1,5 +1,10 @@
 # Instagram Reels / TikTok Scripts - Volume 2
 
+## HVAC Hero Image — USE AS THUMBNAIL / COVER
+For any HVAC-related Reel, use this as the cover image or first frame:
+`https://thecalltaker.com/images/hvac-hero.jpg`
+Download and add as a custom thumbnail in Instagram.
+
 ## Production Notes
 
 - **Shoot vertical (9:16)** -- always.

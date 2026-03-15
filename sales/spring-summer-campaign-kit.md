@@ -6,6 +6,12 @@
 **Website:** thecalltaker.com
 **Owner:** Wallace Dobbs | Brentwood, TN
 
+**HVAC Hero Image — EMBED IN ALL CAMPAIGN EMAILS & ADS:**
+- **Email HTML:** `<img src="https://thecalltaker.com/images/hvac-hero.jpg" alt="Never Miss a Call. Never Miss Revenue. — The Call Taker" style="width:100%;max-width:600px;height:auto;border-radius:8px;margin:16px 0;" />`
+- **Facebook/Instagram Ads:** Use as primary creative
+- **SMS (MMS):** Attach `https://thecalltaker.com/images/hvac-hero.jpg`
+- **Social Posts:** Attach to all HVAC posts
+
 ---
 
 ## 1. URGENCY POSITIONING

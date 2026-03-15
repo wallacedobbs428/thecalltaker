@@ -3,6 +3,10 @@
 **From:** Wallace Dobbs
 **Phone:** (615) 784-5747
 **Website:** thecalltaker.com
+
+**IMPORTANT:** After every voicemail drop, send a follow-up SMS with the HVAC hero image attached (MMS):
+`https://thecalltaker.com/images/hvac-hero.jpg`
+The voicemail + text + image combo dramatically increases response rates.
 **Free Audit:** thecalltaker.com/audit.html
 **Product:** The Call Taker -- AI Receptionist for HVAC Companies ($297/mo)
 

@@ -59,6 +59,11 @@ Hey {{firstName}}, not sure my last text got through. I reached out about The Ca
 | Leads 121-160 | Template 4 |
 | Leads 161-198 | Template 5 |
 
+## MMS IMAGE ATTACHMENT
+Attach this image to ALL re-blast SMS (converts to MMS):
+`https://thecalltaker.com/images/hvac-hero.jpg`
+Alt text: "Never Miss a Call. Never Miss Revenue. — The Call Taker"
+
 ## RULES
 - Send Tue-Thu, 9am-11am CST
 - Batch 50-60 per day (don't blast all 198 at once)
