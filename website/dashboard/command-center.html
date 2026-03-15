@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>The Call Taker — Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* =============================================
+       COMMAND CENTER — THE CALL TAKER
+       Internal use only. noindex.
+       Data source: ./dashboard-data.json
+       Auto-refreshes every 60 seconds.
+    ============================================= */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0a0a0a;
+      --bg-card:      #111111;
+      --bg-card-2:    #161616;
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --green:        #00dc82;
+      --green-dim:    rgba(0,220,130,0.12);
+      --green-glow:   rgba(0,220,130,0.25);
+      --orange:       #f97316;
+      --orange-dim:   rgba(249,115,22,0.12);
+      --red:          #ff4444;
+      --red-dim:      rgba(255,68,68,0.12);
+      --yellow:       #fbbf24;
+      --yellow-dim:   rgba(251,191,36,0.12);
+      --blue:         #3b82f6;
+      --blue-dim:     rgba(59,130,246,0.12);
+      --text:         #ffffff;
+      --text-2:       rgba(255,255,255,0.55);
+      --text-3:       rgba(255,255,255,0.30);
+      --radius:       14px;
+      --radius-sm:    8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Top noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Ambient background glow ── */
+    .ambient {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .ambient-1 {
+      width: 600px; height: 600px;
+      top: -200px; left: -100px;
+      background: rgba(0,220,130,0.04);
+    }
+    .ambient-2 {
+      width: 500px; height: 500px;
+      bottom: -100px; right: -100px;
+      background: rgba(249,115,22,0.03);
+    }
+
+    /* ── Page wrapper ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+
+    /* ─────────────────────────────
+       TOP BAR
+    ───────────────────────────── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0 28px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--text);
+    }
+
+    .brand span {
+      color: var(--green);
+    }
+
+    .divider-v {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--green);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse-ring 2s infinite;
+      flex-shrink: 0;
+    }
+
+    .pulse-dot.red {
+      background: var(--red);
+      box-shadow: 0 0 6px var(--red);
+    }
+
+    .pulse-dot.yellow {
+      background: var(--yellow);
+      box-shadow: 0 0 6px var(--yellow);
+    }
+
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(0,220,130,0.5); }
+      70%  { box-shadow: 0 0 0 6px rgba(0,220,130,0); }
+      100% { box-shadow: 0 0 0 0 rgba(0,220,130,0); }
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .live-clock {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .updated-label {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .updated-label span {
+      color: var(--text-2);
+    }
+
+    .refresh-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      font-size: 12px;
+      font-family: inherit;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .refresh-btn:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+    }
+
+    /* ─────────────────────────────
+       SECTION LABELS
+    ───────────────────────────── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─────────────────────────────
+       CARD BASE
+    ───────────────────────────── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .card-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+
+    .card-value {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      color: var(--text);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.4s;
+    }
+
+    .card-value.green  { color: var(--green); }
+    .card-value.orange { color: var(--orange); }
+    .card-value.blue   { color: var(--blue); }
+
+    .card-sub {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 6px;
+    }
+
+    .card-sub .up   { color: var(--green); }
+    .card-sub .down { color: var(--red); }
+
+    /* Corner accent glow */
+    .card-glow {
+      position: absolute;
+      top: 0; right: 0;
+      width: 80px; height: 80px;
+      border-radius: 0 var(--radius) 0 80px;
+      pointer-events: none;
+    }
+    .card-glow.green  { background: radial-gradient(ellipse at top right, rgba(0,220,130,0.08), transparent 70%); }
+    .card-glow.orange { background: radial-gradient(ellipse at top right, rgba(249,115,22,0.08), transparent 70%); }
+    .card-glow.blue   { background: radial-gradient(ellipse at top right, rgba(59,130,246,0.08), transparent 70%); }
+
+    /* ─────────────────────────────
+       GRIDS
+    ───────────────────────────── */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    /* ─────────────────────────────
+       MRR HERO CARD
+    ───────────────────────────── */
+    .mrr-card {
+      grid-column: span 2;
+      background: linear-gradient(135deg, #0d1a14 0%, var(--bg-card) 60%);
+      border-color: rgba(0,220,130,0.2);
+    }
+
+    .mrr-card:hover {
+      border-color: rgba(0,220,130,0.35);
+      box-shadow: 0 8px 40px rgba(0,220,130,0.08);
+    }
+
+    .mrr-value {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -3px;
+      color: var(--green);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .mrr-target-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    .progress-bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 0 12px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), #00ff9d);
+      border-radius: 99px;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 0 10px rgba(0,220,130,0.5);
+    }
+
+    .progress-label {
+      font-size: 12px;
+      color: var(--text-3);
+      white-space: nowrap;
+    }
+
+    .progress-label strong {
+      color: var(--text-2);
+    }
+
+    /* ─────────────────────────────
+       SPARKLINE (CSS-only bars)
+    ───────────────────────────── */
+    .sparkline {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 32px;
+      margin-top: 10px;
+    }
+
+    .spark-bar {
+      flex: 1;
+      border-radius: 3px 3px 0 0;
+      min-height: 4px;
+      transition: height 0.6s ease;
+    }
+
+    .spark-bar.green  { background: rgba(0,220,130,0.5); }
+    .spark-bar.orange { background: rgba(249,115,22,0.5); }
+
+    .spark-bar.active.green  { background: var(--green); box-shadow: 0 0 6px rgba(0,220,130,0.5); }
+    .spark-bar.active.orange { background: var(--orange); box-shadow: 0 0 6px rgba(249,115,22,0.5); }
+
+    /* ─────────────────────────────
+       RATE CARD (email / conversion)
+    ───────────────────────────── */
+    .rate-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .rate-row:last-child { margin-bottom: 0; }
+
+    .rate-label {
+      font-size: 12px;
+      color: var(--text-2);
+      min-width: 90px;
+    }
+
+    .rate-bar-wrap {
+      flex: 1;
+      height: 5px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 0 10px;
+    }
+
+    .rate-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .rate-val {
+      font-size: 13px;
+      font-weight: 700;
+      min-width: 36px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ─────────────────────────────
+       PIPELINE CARD
+    ───────────────────────────── */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .pipe-item {
+      background: var(--bg-card-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+
+    .pipe-item-label {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .pipe-item-value {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pipe-item-value.hot    { color: var(--red); }
+    .pipe-item-value.warm   { color: var(--orange); }
+    .pipe-item-value.cold   { color: var(--blue); }
+    .pipe-item-value.total  { color: var(--text-2); }
+
+    /* ─────────────────────────────
+       SYSTEM HEALTH
+    ───────────────────────────── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.25s;
+    }
+
+    .service-card.running { border-color: rgba(0,220,130,0.15); }
+    .service-card.down    { border-color: rgba(255,68,68,0.25); background: rgba(255,68,68,0.04); }
+    .service-card.warning { border-color: rgba(251,191,36,0.2); }
+
+    .service-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .service-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .status-dot.running { background: var(--green); box-shadow: 0 0 5px rgba(0,220,130,0.7); animation: pulse-ring 2.5s infinite; }
+    .status-dot.down    { background: var(--red);   box-shadow: 0 0 5px rgba(255,68,68,0.6); }
+    .status-dot.warning { background: var(--yellow); }
+
+    .service-hb {
+      font-size: 10px;
+      color: var(--text-3);
+    }
+
+    /* ─────────────────────────────
+       CHARTS (CSS-only)
+    ───────────────────────────── */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+    }
+
+    .chart-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 4px;
+    }
+
+    .chart-subtitle {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+
+    /* Bar chart */
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 100px;
+    }
+
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      height: 100%;
+    }
+
+    .bar-fill-wrap {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .bar-fill {
+      width: 100%;
+      border-radius: 4px 4px 0 0;
+      min-height: 4px;
+      transition: height 0.8s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+    }
+
+    .bar-fill.green  { background: linear-gradient(180deg, var(--green) 0%, rgba(0,220,130,0.4) 100%); }
+    .bar-fill.orange { background: linear-gradient(180deg, var(--orange) 0%, rgba(249,115,22,0.4) 100%); }
+    .bar-fill.active-bar::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: white;
+      border-radius: 4px;
+      opacity: 0.4;
+    }
+
+    .bar-label {
+      font-size: 10px;
+      color: var(--text-3);
+      white-space: nowrap;
+    }
+
+    /* Line chart — SVG-based, no libs */
+    .line-chart-svg {
+      width: 100%;
+      height: 100px;
+      overflow: visible;
+    }
+
+    /* Day labels row under charts */
+    .chart-days {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+
+    .chart-day {
+      flex: 1;
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-3);
+    }
+
+    /* ─────────────────────────────
+       CONVERSION RATE DISPLAY
+    ───────────────────────────── */
+    .big-rate {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: var(--orange);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ─────────────────────────────
+       NUMBER FLASH ANIMATION
+    ───────────────────────────── */
+    @keyframes number-flash {
+      0%   { opacity: 0.4; transform: scale(0.95); }
+      50%  { opacity: 1;   transform: scale(1.02); }
+      100% { opacity: 1;   transform: scale(1); }
+    }
+
+    .flash { animation: number-flash 0.5s ease; }
+
+    /* ─────────────────────────────
+       FOOTER
+    ───────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .footer-left {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .footer-left strong {
+      color: var(--text-2);
+    }
+
+    .footer-right {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* ─────────────────────────────
+       LOADING STATE
+    ───────────────────────────── */
+    .skeleton {
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+
+    /* ─────────────────────────────
+       RESPONSIVE
+    ───────────────────────────── */
+    @media (max-width: 1100px) {
+      .grid-4    { grid-template-columns: repeat(2, 1fr); }
+      .grid-3    { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+      .mrr-card  { grid-column: span 2; }
+    }
+
+    @media (max-width: 768px) {
+      .page { padding: 0 14px 32px; }
+      .topbar { padding: 14px 0 20px; }
+      .live-clock { font-size: 20px; }
+      .brand { font-size: 15px; }
+      .grid-4    { grid-template-columns: 1fr 1fr; }
+      .grid-3    { grid-template-columns: 1fr 1fr; }
+      .grid-2    { grid-template-columns: 1fr; }
+      .mrr-card  { grid-column: span 2; }
+      .mrr-value { font-size: 44px; }
+      .charts-grid   { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .topbar-right  { gap: 12px; }
+      .card-value    { font-size: 28px; }
+    }
+
+    @media (max-width: 480px) {
+      .grid-4 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .mrr-card { grid-column: span 1; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .pipeline-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─────────────────────────────
+       MISC UTILITY
+    ───────────────────────────── */
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .tag.green  { background: var(--green-dim);  color: var(--green); }
+    .tag.orange { background: var(--orange-dim); color: var(--orange); }
+    .tag.red    { background: var(--red-dim);    color: var(--red); }
+
+    .icon {
+      display: inline-block;
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .icon.green  { background: var(--green-dim); }
+    .icon.orange { background: var(--orange-dim); }
+    .icon.blue   { background: var(--blue-dim); }
+    .icon.red    { background: var(--red-dim); }
+
+  </style>
+</head>
+<body>
+
+<!-- Ambient glows -->
+<div class="ambient ambient-1"></div>
+<div class="ambient ambient-2"></div>
+
+<div class="page">
+
+  <!-- ══════════════════════════════
+       TOP BAR
+  ═══════════════════════════════ -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand">The Call Taker <span>—</span> Command Center</div>
+      <div class="divider-v"></div>
+      <div class="status-badge" id="systemStatus">
+        <div class="pulse-dot" id="statusDot"></div>
+        <span id="statusText">All Systems Operational</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div>
+        <div class="live-clock" id="liveClock">--:--:--</div>
+        <div class="updated-label">Updated <span id="lastUpdated">--</span></div>
+      </div>
+      <button class="refresh-btn" onclick="loadData()">Refresh</button>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════
+       REVENUE ROW
+  ═══════════════════════════════ -->
+  <div class="section-label">Revenue</div>
+  <div class="grid-4" style="margin-bottom: 28px;">
+
+    <!-- MRR hero card -->
+    <div class="card mrr-card" id="mrrCard">
+      <div class="card-glow green"></div>
+      <div class="card-label">Monthly Recurring Revenue</div>
+      <div class="mrr-value" id="mrrValue">$0</div>
+      <div class="mrr-target-row" style="margin-top:14px;">
+        <div class="progress-label"><strong id="mrrPct">0%</strong> to goal</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="mrrProgress" style="width:0%"></div>
+        </div>
+        <div class="progress-label">Target: <strong>$20K</strong></div>
+      </div>
+    </div>
+
+    <!-- Active customers -->
+    <div class="card">
+      <div class="card-glow green"></div>
+      <div class="card-label">Active Customers</div>
+      <div class="card-value green" id="activeCustomers">0</div>
+      <div class="card-sub">@ $497/mo avg</div>
+    </div>
+
+    <!-- Pilot users -->
+    <div class="card">
+      <div class="card-glow orange"></div>
+      <div class="card-label">Pilot Users (Free Trial)</div>
+      <div class="card-value orange" id="pilotUsers">0</div>
+      <div class="card-sub">14-day trial · max 5 slots</div>
+    </div>
+
+    <!-- Total revenue -->
+    <div class="card" style="grid-column: span 2;">
+      <div class="card-glow blue"></div>
+      <div class="card-label">Total Revenue (Lifetime)</div>
+      <div class="card-value blue" id="totalRevenue">$0</div>
+      <div class="card-sub">All-time collected</div>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════
+       ACTIVITY ROW
+  ═══════════════════════════════ -->
+  <div class="section-label">Activity</div>
+  <div class="grid-4" style="margin-bottom: 28px;">
+
+    <div class="card">
+      <div class="card-label">Leads Generated Today</div>
+      <div class="card-value" id="leadsToday">0</div>
+      <div class="sparkline" id="leadsSpark"></div>
+      <div class="card-sub" style="margin-top:4px;">7-day trend</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Demo Page Visits Today</div>
+      <div class="card-value" id="demoVisits">0</div>
+      <div class="card-sub">thecalltaker.com/book</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Demo Calls Triggered</div>
+      <div class="card-value" id="demoCalls">0</div>
+      <div class="card-sub">via try-live.html today</div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Conversion Rate</div>
+      <div class="big-rate" id="convRate">0%</div>
+      <div class="card-sub">demos <span style="color:var(--text-3);">→</span> pilots</div>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════
+       EMAIL + PIPELINE (2 col)
+  ═══════════════════════════════ -->
+  <div class="grid-2" style="margin-bottom: 28px;">
+
+    <!-- Email performance -->
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div class="card-label" style="margin:0">Email Performance</div>
+        <div class="tag green" id="emailsLabel">0 sent today</div>
+      </div>
+      <div class="rate-row">
+        <div class="rate-label">Delivery</div>
+        <div class="rate-bar-wrap">
+          <div class="rate-bar-fill" id="deliveryBar" style="background:var(--green);width:0%"></div>
+        </div>
+        <div class="rate-val green" id="deliveryRate">0%</div>
+      </div>
+      <div class="rate-row">
+        <div class="rate-label">Open Rate</div>
+        <div class="rate-bar-wrap">
+          <div class="rate-bar-fill" id="openBar" style="background:var(--blue);width:0%"></div>
+        </div>
+        <div class="rate-val" style="color:var(--blue)" id="openRate">0%</div>
+      </div>
+      <div class="rate-row">
+        <div class="rate-label">Reply Rate</div>
+        <div class="rate-bar-wrap">
+          <div class="rate-bar-fill" id="replyBar" style="background:var(--orange);width:0%"></div>
+        </div>
+        <div class="rate-val" style="color:var(--orange)" id="replyRate">0%</div>
+      </div>
+    </div>
+
+    <!-- Pipeline -->
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div class="card-label" style="margin:0">Pipeline — GHL Contacts</div>
+        <div class="tag orange" id="totalContactsTag">0 total</div>
+      </div>
+      <div class="pipeline-grid">
+        <div class="pipe-item">
+          <div class="pipe-item-label">Hot Leads</div>
+          <div class="pipe-item-value hot" id="hotLeads">0</div>
+        </div>
+        <div class="pipe-item">
+          <div class="pipe-item-label">Warm Leads</div>
+          <div class="pipe-item-value warm" id="warmLeads">0</div>
+        </div>
+        <div class="pipe-item">
+          <div class="pipe-item-label">Cold Leads</div>
+          <div class="pipe-item-value cold" id="coldLeads">0</div>
+        </div>
+        <div class="pipe-item">
+          <div class="pipe-item-label">Total Contacts</div>
+          <div class="pipe-item-value total" id="totalContacts">0</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════
+       SYSTEM HEALTH
+  ═══════════════════════════════ -->
+  <div class="section-label">System Health</div>
+  <div class="services-grid" id="servicesGrid">
+    <!-- Populated by JS -->
+  </div>
+
+
+  <!-- ══════════════════════════════
+       CHARTS
+  ═══════════════════════════════ -->
+  <div class="section-label">7-Day Performance</div>
+  <div class="charts-grid">
+
+    <!-- Leads bar chart -->
+    <div class="chart-card">
+      <div class="chart-title">Leads Generated</div>
+      <div class="chart-subtitle">Daily count — last 7 days</div>
+      <div class="bar-chart" id="leadsBarChart"></div>
+      <div class="chart-days" id="leadsChartDays"></div>
+    </div>
+
+    <!-- Revenue line chart -->
+    <div class="chart-card">
+      <div class="chart-title">Revenue Collected</div>
+      <div class="chart-subtitle">Daily USD — last 7 days</div>
+      <svg class="line-chart-svg" id="revenueLineChart" viewBox="0 0 400 100" preserveAspectRatio="none"></svg>
+      <div class="chart-days" id="revenueChartDays"></div>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════
+       FOOTER
+  ═══════════════════════════════ -->
+  <div class="footer">
+    <div class="footer-left">
+      <strong>The Call Taker</strong> — Command Center v1.0 &nbsp;·&nbsp; Internal use only
+    </div>
+    <div class="footer-right" id="footerRefresh">Auto-refreshes every 60s</div>
+  </div>
+
+</div><!-- /page -->
+
+
+<script>
+/*
+ * THE CALL TAKER — COMMAND CENTER
+ * Data source: ./dashboard-data.json (relative fetch)
+ *
+ * Expected JSON shape:
+ * {
+ *   "mrr": 0,                            // Monthly Recurring Revenue in USD
+ *   "total_revenue": 0,                  // Lifetime revenue in USD
+ *   "active_customers": 0,               // Paying customers count
+ *   "pilot_users": 0,                    // Active free-trial users
+ *   "mrr_target": 20000,                 // Revenue goal
+ *   "leads_today": 12,                   // New leads generated today
+ *   "leads_7day": [8,15,12,20,11,14,12], // Daily leads — oldest to newest
+ *   "demo_visits_today": 5,              // Demo page visits today
+ *   "demo_calls_today": 3,               // Demo calls triggered today
+ *   "conversion_rate": 0.15,             // Decimal: demos → pilots
+ *   "emails_sent_today": 45,             // Outbound emails sent today
+ *   "delivery_rate": 0.98,               // Decimal
+ *   "open_rate": 0.42,                   // Decimal
+ *   "reply_rate": 0.08,                  // Decimal
+ *   "hot_leads": 35,                     // GHL hot-lead tagged
+ *   "warm_leads": 120,                   // Warm leads
+ *   "cold_leads": 4632,                  // Cold leads
+ *   "total_contacts": 4787,              // All GHL contacts
+ *   "services": {
+ *     "max-engine":   { "status": "running", "last_heartbeat": "2026-03-14T10:30:00" },
+ *     "ben-engine":   { "status": "running", "last_heartbeat": "2026-03-14T10:28:00" },
+ *     "sam-engine":   { "status": "running", "last_heartbeat": "2026-03-14T10:29:00" },
+ *     "donny-engine": { "status": "running", "last_heartbeat": "2026-03-14T10:31:00" },
+ *     "blast-engine": { "status": "running", "last_heartbeat": "2026-03-14T09:50:00" },
+ *     "funnel-engine":{ "status": "running", "last_heartbeat": "2026-03-14T10:25:00" },
+ *     "demo-monitor": { "status": "running", "last_heartbeat": "2026-03-14T10:32:00" },
+ *     "crash-monitor":{ "status": "running", "last_heartbeat": "2026-03-14T10:32:00" },
+ *     "speed-alert":  { "status": "running", "last_heartbeat": "2026-03-14T10:30:00" },
+ *     "storm-chaser": { "status": "running", "last_heartbeat": "2026-03-14T10:28:00" }
+ *   },
+ *   "revenue_7day": [0,0,0,0,0,0,0],    // Daily revenue — oldest to newest
+ *   "updated_at": "2026-03-14T10:32:00" // ISO timestamp of last data update
+ * }
+ */
+
+/* ─────────────────────────────────────────
+   SAMPLE DATA — renders when JSON is absent
+───────────────────────────────────────── */
+const SAMPLE = {
+  mrr: 0,
+  total_revenue: 0,
+  active_customers: 0,
+  pilot_users: 0,
+  mrr_target: 20000,
+  leads_today: 12,
+  leads_7day: [8, 15, 12, 20, 11, 14, 12],
+  demo_visits_today: 5,
+  demo_calls_today: 3,
+  conversion_rate: 0.15,
+  emails_sent_today: 45,
+  delivery_rate: 0.98,
+  open_rate: 0.42,
+  reply_rate: 0.08,
+  hot_leads: 35,
+  warm_leads: 120,
+  cold_leads: 4632,
+  total_contacts: 4787,
+  services: {
+    "max-engine":    { status: "running", last_heartbeat: new Date().toISOString() },
+    "ben-engine":    { status: "running", last_heartbeat: new Date().toISOString() },
+    "sam-engine":    { status: "running", last_heartbeat: new Date().toISOString() },
+    "donny-engine":  { status: "running", last_heartbeat: new Date().toISOString() },
+    "blast-engine":  { status: "running", last_heartbeat: new Date().toISOString() },
+    "funnel-engine": { status: "running", last_heartbeat: new Date().toISOString() },
+    "demo-monitor":  { status: "running", last_heartbeat: new Date().toISOString() },
+    "crash-monitor": { status: "running", last_heartbeat: new Date().toISOString() },
+    "speed-alert":   { status: "running", last_heartbeat: new Date().toISOString() },
+    "storm-chaser":  { status: "running", last_heartbeat: new Date().toISOString() }
+  },
+  revenue_7day: [0, 0, 0, 0, 0, 0, 0],
+  updated_at: new Date().toISOString()
+};
+
+/* Service display names */
+const SERVICE_NAMES = {
+  "max-engine":    "Max Engine",
+  "ben-engine":    "Ben Engine",
+  "sam-engine":    "Sam Engine",
+  "donny-engine":  "Donny Engine",
+  "blast-engine":  "Blast Engine",
+  "funnel-engine": "Funnel Engine",
+  "demo-monitor":  "Demo Monitor",
+  "crash-monitor": "Crash Monitor",
+  "speed-alert":   "Speed Alert",
+  "storm-chaser":  "Storm Chaser"
+};
+
+/* ─────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────── */
+function fmt$(n) {
+  if (n >= 1000) return '$' + (n / 1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'K';
+  return '$' + n.toLocaleString();
+}
+
+function fmtPct(v) {
+  return (v * 100).toFixed(1) + '%';
+}
+
+function fmtNum(n) {
+  return n.toLocaleString();
+}
+
+function relativeTime(isoStr) {
+  if (!isoStr) return 'never';
+  const diff = Date.now() - new Date(isoStr).getTime();
+  const m = Math.floor(diff / 60000);
+  if (m < 1)  return 'just now';
+  if (m < 60) return m + 'm ago';
+  const h = Math.floor(m / 60);
+  if (h < 24) return h + 'h ago';
+  return Math.floor(h / 24) + 'd ago';
+}
+
+function flash(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove('flash');
+  void el.offsetWidth; // reflow
+  el.classList.add('flash');
+}
+
+/* Smooth counter animation */
+function animateTo(el, target, prefix = '', suffix = '') {
+  if (!el) return;
+  const start = parseFloat(el.dataset.current || 0) || 0;
+  if (start === target) return;
+  el.dataset.current = target;
+  const dur = 900;
+  const t0 = performance.now();
+  function step(now) {
+    const p = Math.min(1, (now - t0) / dur);
+    const ease = 1 - Math.pow(1 - p, 3); // ease-out-cubic
+    const val = start + (target - start) * ease;
+    el.textContent = prefix + Math.round(val).toLocaleString() + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ─────────────────────────────────────────
+   LIVE CLOCK
+───────────────────────────────────────── */
+function startClock() {
+  function tick() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const s = String(now.getSeconds()).padStart(2,'0');
+    const el = document.getElementById('liveClock');
+    if (el) el.textContent = h + ':' + m + ':' + s;
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+/* ─────────────────────────────────────────
+   SPARKLINE (7-bar mini chart)
+───────────────────────────────────────── */
+function buildSparkline(containerId, data, color) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = '';
+  const max = Math.max(...data, 1);
+  data.forEach((v, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'spark-bar ' + color + (i === data.length - 1 ? ' active' : '');
+    bar.style.height = Math.max(4, (v / max) * 100) + '%';
+    el.appendChild(bar);
+  });
+}
+
+/* ─────────────────────────────────────────
+   BAR CHART
+───────────────────────────────────────── */
+function buildBarChart(chartId, daysId, data, color) {
+  const chart = document.getElementById(chartId);
+  const daysEl = document.getElementById(daysId);
+  if (!chart || !daysEl) return;
+  chart.innerHTML = '';
+  daysEl.innerHTML = '';
+
+  const max = Math.max(...data, 1);
+  const today = new Date();
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  data.forEach((v, i) => {
+    const pct = Math.max(4, (v / max) * 100);
+    const isToday = (i === data.length - 1);
+
+    // Column
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'bar-fill-wrap';
+
+    const fill = document.createElement('div');
+    fill.className = 'bar-fill ' + color + (isToday ? ' active-bar' : '');
+    fill.style.height = pct + '%';
+
+    // Tooltip value
+    const val = document.createElement('div');
+    val.className = 'bar-label';
+    val.textContent = v;
+
+    wrap.appendChild(fill);
+    col.appendChild(wrap);
+    col.appendChild(val);
+    chart.appendChild(col);
+
+    // Day label
+    const d = new Date(today);
+    d.setDate(d.getDate() - (data.length - 1 - i));
+    const dayEl = document.createElement('div');
+    dayEl.className = 'chart-day';
+    dayEl.textContent = isToday ? 'Today' : days[d.getDay()];
+    daysEl.appendChild(dayEl);
+  });
+}
+
+/* ─────────────────────────────────────────
+   LINE CHART (SVG, no libraries)
+───────────────────────────────────────── */
+function buildLineChart(svgId, daysId, data) {
+  const svg = document.getElementById(svgId);
+  const daysEl = document.getElementById(daysId);
+  if (!svg || !daysEl) return;
+  svg.innerHTML = '';
+  daysEl.innerHTML = '';
+
+  const W = 400, H = 100, PAD = 12;
+  const max = Math.max(...data, 1);
+  const today = new Date();
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const n = data.length;
+
+  const pts = data.map((v, i) => {
+    const x = PAD + (i / (n - 1)) * (W - PAD * 2);
+    const y = H - PAD - ((v / max) * (H - PAD * 2));
+    return [x, y];
+  });
+
+  /* Area fill */
+  const areaPath = `M ${pts[0][0]},${H - PAD} ` +
+    pts.map(([x,y]) => `L ${x},${y}`).join(' ') +
+    ` L ${pts[n-1][0]},${H - PAD} Z`;
+
+  const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  defs.innerHTML = `
+    <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#00dc82" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#00dc82" stop-opacity="0.02"/>
+    </linearGradient>
+  `;
+  svg.appendChild(defs);
+
+  const area = document.createElementNS('http://www.w3.org/2000/svg','path');
+  area.setAttribute('d', areaPath);
+  area.setAttribute('fill', 'url(#lineGrad)');
+  svg.appendChild(area);
+
+  /* Grid lines */
+  [0.25, 0.5, 0.75, 1].forEach(frac => {
+    const y = H - PAD - frac * (H - PAD * 2);
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1', PAD); line.setAttribute('x2', W - PAD);
+    line.setAttribute('y1', y);   line.setAttribute('y2', y);
+    line.setAttribute('stroke', 'rgba(255,255,255,0.04)');
+    line.setAttribute('stroke-width', '1');
+    svg.appendChild(line);
+  });
+
+  /* Line */
+  const pathD = pts.map(([x,y],i) => `${i===0?'M':'L'} ${x},${y}`).join(' ');
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d', pathD);
+  path.setAttribute('fill', 'none');
+  path.setAttribute('stroke', '#00dc82');
+  path.setAttribute('stroke-width', '2');
+  path.setAttribute('stroke-linejoin', 'round');
+  path.setAttribute('stroke-linecap', 'round');
+  svg.appendChild(path);
+
+  /* Dots */
+  pts.forEach(([x,y], i) => {
+    const isLast = i === n - 1;
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx', x); c.setAttribute('cy', y);
+    c.setAttribute('r', isLast ? 4 : 3);
+    c.setAttribute('fill', isLast ? '#00dc82' : 'rgba(0,220,130,0.5)');
+    if (isLast) c.setAttribute('filter', 'drop-shadow(0 0 4px rgba(0,220,130,0.8))');
+    svg.appendChild(c);
+
+    /* Value label above dot */
+    const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+    label.setAttribute('x', x);
+    label.setAttribute('y', y - 8);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('font-size', '9');
+    label.setAttribute('fill', isLast ? '#00dc82' : 'rgba(255,255,255,0.25)');
+    label.textContent = data[i] > 0 ? '$' + data[i] : '';
+    svg.appendChild(label);
+  });
+
+  /* Day labels */
+  data.forEach((_, i) => {
+    const d = new Date(today);
+    d.setDate(d.getDate() - (n - 1 - i));
+    const isToday = i === n - 1;
+    const dayEl = document.createElement('div');
+    dayEl.className = 'chart-day';
+    dayEl.textContent = isToday ? 'Today' : days[d.getDay()];
+    daysEl.appendChild(dayEl);
+  });
+}
+
+/* ─────────────────────────────────────────
+   SERVICES GRID
+───────────────────────────────────────── */
+function buildServicesGrid(services) {
+  const grid = document.getElementById('servicesGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  let anyDown = false, anyWarn = false;
+
+  Object.entries(services).forEach(([key, svc]) => {
+    const name = SERVICE_NAMES[key] || key;
+    const { status, last_heartbeat } = svc;
+    const hbAge = last_heartbeat
+      ? (Date.now() - new Date(last_heartbeat).getTime()) / 60000
+      : 9999;
+
+    // Auto-classify: heartbeat > 15 min = warning, > 60 min = down
+    let realStatus = status;
+    if (status === 'running' && hbAge > 60)  realStatus = 'down';
+    else if (status === 'running' && hbAge > 15) realStatus = 'warning';
+
+    if (realStatus === 'down')    anyDown = true;
+    if (realStatus === 'warning') anyWarn = true;
+
+    const card = document.createElement('div');
+    card.className = `service-card ${realStatus}`;
+    card.innerHTML = `
+      <div class="service-header">
+        <div class="service-name">${name}</div>
+        <div class="status-dot ${realStatus}"></div>
+      </div>
+      <div class="service-hb">${
+        realStatus === 'running' ? 'Heartbeat: ' + relativeTime(last_heartbeat)
+        : realStatus === 'warning' ? 'Stale — ' + relativeTime(last_heartbeat)
+        : 'DOWN — last seen ' + relativeTime(last_heartbeat)
+      }</div>
+    `;
+    grid.appendChild(card);
+  });
+
+  /* Update top bar status */
+  const dot  = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  if (anyDown) {
+    dot.className  = 'pulse-dot red';
+    text.textContent = 'Service Outage Detected';
+    text.style.color = 'var(--red)';
+  } else if (anyWarn) {
+    dot.className  = 'pulse-dot yellow';
+    text.textContent = 'Warning — Check Logs';
+    text.style.color = 'var(--yellow)';
+  } else {
+    dot.className  = 'pulse-dot';
+    text.textContent = 'All Systems Operational';
+    text.style.color = 'var(--green)';
+  }
+}
+
+/* ─────────────────────────────────────────
+   RENDER DATA
+───────────────────────────────────────── */
+function render(d) {
+  /* Revenue */
+  const mrrEl = document.getElementById('mrrValue');
+  if (mrrEl) {
+    mrrEl.textContent = fmt$(d.mrr);
+    mrrEl.dataset.current = d.mrr;
+  }
+
+  const pct = Math.min(100, (d.mrr / d.mrr_target) * 100);
+  const progEl = document.getElementById('mrrProgress');
+  if (progEl) progEl.style.width = pct + '%';
+  const pctEl = document.getElementById('mrrPct');
+  if (pctEl) pctEl.textContent = pct.toFixed(1) + '%';
+
+  animateTo(document.getElementById('activeCustomers'), d.active_customers);
+  animateTo(document.getElementById('pilotUsers'),      d.pilot_users);
+
+  const trEl = document.getElementById('totalRevenue');
+  if (trEl) { trEl.textContent = fmt$(d.total_revenue); trEl.dataset.current = d.total_revenue; }
+
+  /* Activity */
+  animateTo(document.getElementById('leadsToday'),  d.leads_today);
+  animateTo(document.getElementById('demoVisits'),  d.demo_visits_today);
+  animateTo(document.getElementById('demoCalls'),   d.demo_calls_today);
+  const crEl = document.getElementById('convRate');
+  if (crEl) crEl.textContent = fmtPct(d.conversion_rate);
+
+  /* Email */
+  const emailsLabel = document.getElementById('emailsLabel');
+  if (emailsLabel) emailsLabel.textContent = fmtNum(d.emails_sent_today) + ' sent today';
+
+  const delivEl = document.getElementById('deliveryRate');
+  if (delivEl) delivEl.textContent = fmtPct(d.delivery_rate);
+  const delivBar = document.getElementById('deliveryBar');
+  if (delivBar) delivBar.style.width = (d.delivery_rate * 100) + '%';
+
+  const openEl = document.getElementById('openRate');
+  if (openEl) openEl.textContent = fmtPct(d.open_rate);
+  const openBar = document.getElementById('openBar');
+  if (openBar) openBar.style.width = (d.open_rate * 100) + '%';
+
+  const replyEl = document.getElementById('replyRate');
+  if (replyEl) replyEl.textContent = fmtPct(d.reply_rate);
+  const replyBar = document.getElementById('replyBar');
+  if (replyBar) replyBar.style.width = (d.reply_rate * 100 * 4) + '%'; // scale up for visibility
+
+  /* Pipeline */
+  animateTo(document.getElementById('hotLeads'),    d.hot_leads);
+  animateTo(document.getElementById('warmLeads'),   d.warm_leads);
+  animateTo(document.getElementById('coldLeads'),   d.cold_leads);
+  animateTo(document.getElementById('totalContacts'), d.total_contacts);
+  const tcTag = document.getElementById('totalContactsTag');
+  if (tcTag) tcTag.textContent = fmtNum(d.total_contacts) + ' total';
+
+  /* Services */
+  buildServicesGrid(d.services || {});
+
+  /* Charts */
+  buildSparkline('leadsSpark', d.leads_7day, 'green');
+  buildBarChart('leadsBarChart', 'leadsChartDays', d.leads_7day, 'green');
+  buildLineChart('revenueLineChart', 'revenueChartDays', d.revenue_7day);
+
+  /* Last updated */
+  const upEl = document.getElementById('lastUpdated');
+  if (upEl && d.updated_at) {
+    const dt = new Date(d.updated_at);
+    upEl.textContent = dt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  }
+}
+
+/* ─────────────────────────────────────────
+   LOAD DATA
+───────────────────────────────────────── */
+async function loadData() {
+  try {
+    const res = await fetch('./dashboard-data.json?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    render(data);
+  } catch (e) {
+    // JSON not available yet — render sample data so page looks complete
+    render(SAMPLE);
+    const upEl = document.getElementById('lastUpdated');
+    if (upEl) upEl.textContent = 'sample data';
+  }
+}
+
+/* ─────────────────────────────────────────
+   INIT
+───────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  startClock();
+  loadData();
+
+  // Auto-refresh every 60s
+  let countdown = 60;
+  setInterval(() => {
+    countdown--;
+    const el = document.getElementById('footerRefresh');
+    if (countdown <= 0) {
+      countdown = 60;
+      loadData();
+      if (el) el.textContent = 'Auto-refreshes every 60s';
+    } else {
+      if (el) el.textContent = 'Next refresh in ' + countdown + 's';
+    }
+  }, 1000);
+});
+</script>
+</body>
+</html>

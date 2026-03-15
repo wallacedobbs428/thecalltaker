@@ -44,7 +44,7 @@ DEMO_LINE = "(615) 784-5747"
 DEMO_LINE_NUMBER = "+16157845747"
 DEMO_URL = "https://thecalltaker.com/demo.html"
 CALENDAR_URL = "https://thecalltaker.com/demo.html"
-FROM_EMAIL = "wallacemdobbs@icloud.com"
+FROM_EMAIL = "thecalltakerai@gmail.com"
 FROM_NAME = "Wallace Dobbs"
 
 MAX_DIR = os.path.dirname(os.path.abspath(__file__))
