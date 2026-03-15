@@ -4,6 +4,14 @@
 
 Send these 3 emails spaced 3-4 days apart. Personalize the [bracketed] fields for each prospect. Send from Wallace's personal email, not a generic company address.
 
+## HVAC Hero Image
+
+**Embed this image in every HVAC cold email.** Place BELOW the opening line, ABOVE the CTA.
+
+```html
+<img src="https://thecalltaker.com/images/hvac-hero.jpg" alt="Never Miss a Call. Never Miss Revenue. — The Call Taker" style="width:100%;max-width:600px;height:auto;border-radius:8px;margin:16px 0;" />
+```
+
 ---
 
 ## Email 1: Pain
@@ -17,6 +25,8 @@ Hey [First Name],
 I called [Company Name] at 7pm last night. Got your voicemail.
 
 No offense — I'm not a customer. But here's the thing: real customers are doing the exact same thing right now. Their AC goes out at 6:30pm, they Google "HVAC near me," and they start calling. First company that picks up gets the job.
+
+![Never Miss a Call. Never Miss Revenue. — The Call Taker](https://thecalltaker.com/images/hvac-hero.jpg)
 
 If that's not you, it's your competitor down the road.
 
@@ -45,6 +55,8 @@ P.S. I came from the trades. I've seen this problem kill good businesses. That's
 Hey [First Name],
 
 Wanted to follow up on my last email.
+
+![Never Miss a Call. Never Miss Revenue. — The Call Taker](https://thecalltaker.com/images/hvac-hero.jpg)
 
 Here's what happens when a customer calls your business with The Call Taker set up:
 
@@ -77,6 +89,8 @@ Wallace
 Hey [First Name],
 
 I'll keep this short.
+
+![Never Miss a Call. Never Miss Revenue. — The Call Taker](https://thecalltaker.com/images/hvac-hero.jpg)
 
 While you're sending after-hours calls to voicemail, one of your competitors just set up The Call Taker. Starting tonight, every call to their business gets answered. Every emergency gets dispatched. Every appointment gets booked.
 
@@ -122,6 +136,8 @@ Hey [First Name],
 
 I called [Company Name] after hours last week. Got your voicemail.
 
+![Never Miss a Call. Never Miss Revenue. — The Call Taker](https://thecalltaker.com/images/hvac-hero.jpg)
+
 No judgment — I hear it from a lot of businesses around here. But at $350 a service call, those missed calls add up fast.
 
 I'm Wallace — I'm right here in Brentwood and I built something called The Call Taker that fixes this. It's an AI receptionist that answers every call to your business 24/7. No voicemail. No missed jobs.
@@ -148,6 +164,8 @@ Hey [First Name],
 
 I reached out last week about stopping by [Company Name]. Wanted to follow up with something quick.
 
+![Never Miss a Call. Never Miss Revenue. — The Call Taker](https://thecalltaker.com/images/hvac-hero.jpg)
+
 A [industry] company about 20 minutes from you just started using The Call Taker. First weekend, their AI answered 9 calls that would've gone to voicemail. Three of those turned into booked jobs.
 
 I could tell you more, but honestly it's the kind of thing you have to see. When I show it to people in person, they get it in about 30 seconds.
@@ -169,6 +187,8 @@ Just reply with a time.
 Hey [First Name],
 
 I'll keep this short — last email from me.
+
+![Never Miss a Call. Never Miss Revenue. — The Call Taker](https://thecalltaker.com/images/hvac-hero.jpg)
 
 I've been trying to get 10 minutes with you because I genuinely think what I built would help [Company Name]. But I get it, you're busy running a business.
 

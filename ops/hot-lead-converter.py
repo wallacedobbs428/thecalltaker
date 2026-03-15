@@ -47,6 +47,14 @@ GHL_BASE_URL = "https://services.leadconnectorhq.com"
 CALENDAR_ID = "h4IlzccZ1m3JprEQqpMJ"
 BOOKING_URL = "https://thecalltaker.com/book.html"
 DEMO_LINE = "(615) 784-5747"
+
+# HVAC hero image — embed in all email touches (below opening, above CTA)
+HVAC_HERO_IMAGE_URL = "https://thecalltaker.com/images/hvac-hero.jpg"
+HVAC_HERO_IMAGE_HTML = (
+    '<img src="https://thecalltaker.com/images/hvac-hero.jpg" '
+    'alt="Never Miss a Call. Never Miss Revenue. — The Call Taker" '
+    'style="width:100%;max-width:600px;height:auto;border-radius:8px;margin:16px 0;" />'
+)
 WALLACE_PHONE = "+16156539004"
 WALLACE_GHL_ID = "DtKLG28VzgUb6q3brILD"
 BUSINESS_EMAIL = "thecalltakerai@gmail.com"
@@ -102,6 +110,8 @@ def get_email_touch_2(first_name, company_name, industry_word, job_value):
 
 <p>I called {company_name} after hours last week. Got voicemail.</p>
 
+{HVAC_HERO_IMAGE_HTML}
+
 <p>No judgment — but your customers are doing the same thing right now. Their {industry_word.lower()} hits at 6pm, they Google your type of business, and they start calling. <strong>First company that picks up gets the job.</strong></p>
 
 <p>Here's what that's costing you:</p>
@@ -153,6 +163,8 @@ def get_email_touch_4(first_name, company_name, industry_word):
 <p>Hey {first_name},</p>
 
 <p>Quick update — we just filled another pilot spot.</p>
+
+{HVAC_HERO_IMAGE_HTML}
 
 <p><strong>There's 1 spot left this month.</strong> After that, new businesses go on a waitlist and it's $97/month to start.</p>
 
@@ -217,6 +229,8 @@ def get_local_email_touch_2(first_name, company_name, industry_word, job_value, 
 
 <p>I called {company_name} after hours last week. Got voicemail.</p>
 
+{HVAC_HERO_IMAGE_HTML}
+
 <p>No judgment — 85% of callers won't leave a message. At {job_value} per {industry_word.lower()}, those missed calls add up fast.</p>
 
 <p>I built something called <strong>The Call Taker</strong> — an AI receptionist that answers every call to your business 24/7. Books appointments. Texts you the details. Sounds like a real person.</p>
@@ -254,6 +268,8 @@ def get_local_email_touch_4(first_name, company_name, city):
 <p>Hey {first_name},</p>
 
 <p>I know you're busy running {company_name}. I'll keep this short.</p>
+
+{HVAC_HERO_IMAGE_HTML}
 
 <p>I've been reaching out because I genuinely think this would help your business. Since we're both in {city_display}, I wanted to show you face-to-face instead of over a screen.</p>
 
