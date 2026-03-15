@@ -1,3 +1,11 @@
+## Session Start Protocol
+At the beginning of EVERY session, before doing anything else:
+1. Read `primer.md` in full
+2. Rewrite `primer.md` completely based on what you now know about the current state of the project — including recent changes, active priorities, known blockers, file structure, and any context that would help you hit the ground running next session
+3. Confirm to the user: "Primer updated." then proceed normally
+
+---
+
 # The Call Taker — System Documentation
 
 > AI Receptionist SaaS for service businesses. $97/$297/$497/mo. Demo line: (615) 784-5747
