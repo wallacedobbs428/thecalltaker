@@ -31,6 +31,14 @@ import hashlib
 from datetime import datetime, timedelta
 from pathlib import Path
 
+# ─── Local Detection ────────────────────────────────────────────────────────
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from local_detect import is_local, get_lead_city
+except ImportError:
+    def is_local(c): return False
+    def get_lead_city(c): return ""
+
 # ─── Configuration ───────────────────────────────────────────────────────────
 
 GHL_API_KEY = os.environ.get("TCT_GHL_API_KEY", "pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35")
@@ -183,6 +191,94 @@ def get_sms_touch_5(first_name):
         f"If you ever want to hear what it sounds like when EVERY call to your business gets answered, "
         f"dial {DEMO_LINE}. Pretend you're a customer. Takes 90 seconds. "
         f"When you're ready, I'm here. — Wallace"
+    )
+
+
+# ─── LOCAL IN-PERSON TOUCH VARIANTS ─────────────────────────────────────────
+
+def get_local_sms_touch_1(first_name, company_name, city):
+    """Immediate SMS — in-person visit CTA for local leads."""
+    city_part = f"I'm right here in {city}" if city else "I'm local to Nashville"
+    return (
+        f"Hey {first_name}, it's Wallace from The Call Taker. "
+        f"{city_part} — I built something new for businesses like {company_name} "
+        f"and I'd love to show you in person. Takes 10 minutes. "
+        f"Would it be worth a quick stop by this week?"
+    )
+
+
+def get_local_email_touch_2(first_name, company_name, industry_word, job_value, city):
+    """10-minute email — in-person demo offer for local leads."""
+    city_display = city if city else "the Nashville area"
+    subject = f"Can I stop by {company_name} for 10 minutes?"
+    html = f"""<div style="font-family: Inter, -apple-system, sans-serif; color: #111; max-width: 600px; line-height: 1.6;">
+
+<p>Hey {first_name},</p>
+
+<p>I called {company_name} after hours last week. Got voicemail.</p>
+
+<p>No judgment — 85% of callers won't leave a message. At {job_value} per {industry_word.lower()}, those missed calls add up fast.</p>
+
+<p>I built something called <strong>The Call Taker</strong> — an AI receptionist that answers every call to your business 24/7. Books appointments. Texts you the details. Sounds like a real person.</p>
+
+<p>Since we're both in {city_display}, I'd love to come by and show you in person. <strong>Takes 10 minutes.</strong> I'll pull it up live — you'll hear the AI answer a call to your business. If you're not impressed, I'll be out of your hair in 5.</p>
+
+<p><strong>What day works this week for a quick stop by?</strong></p>
+
+<p>Just reply with a time and I'll be there.</p>
+
+<p>— Wallace Dobbs<br>
+<span style="color: #666;">Founder, The Call Taker | Brentwood, TN</span><br>
+<span style="color: #666;">{DEMO_LINE}</span></p>
+
+</div>"""
+    return subject, html
+
+
+def get_local_sms_touch_3(first_name, city):
+    """24-hour SMS — in-person push for local leads."""
+    city_part = city if city else "your area"
+    return (
+        f"{first_name} — I'm literally in {city_part} today. "
+        f"Would it be worth 10 minutes for me to stop by and show you this new technology? "
+        f"No pitch, no pressure — I just want you to see it. Reply with a time."
+    )
+
+
+def get_local_email_touch_4(first_name, company_name, city):
+    """Day 3 email — last in-person push for local leads."""
+    city_display = city if city else "the Nashville area"
+    subject = f"Last chance for an in-person demo, {first_name}"
+    html = f"""<div style="font-family: Inter, -apple-system, sans-serif; color: #111; max-width: 600px; line-height: 1.6;">
+
+<p>Hey {first_name},</p>
+
+<p>I know you're busy running {company_name}. I'll keep this short.</p>
+
+<p>I've been reaching out because I genuinely think this would help your business. Since we're both in {city_display}, I wanted to show you face-to-face instead of over a screen.</p>
+
+<p>Here's what other business owners said after seeing it in person:</p>
+
+<blockquote style="border-left: 3px solid #00dc82; padding-left: 16px; margin: 16px 0; color: #333;">
+"I was skeptical until Wallace showed up and demo'd it live. Signed up on the spot."
+</blockquote>
+
+<p><strong>10 minutes. Your location. This week.</strong> If it's not for you, I'll shake your hand and leave.</p>
+
+<p>Just reply with a day/time.</p>
+
+<p>— Wallace</p>
+
+</div>"""
+    return subject, html
+
+
+def get_local_sms_touch_5(first_name):
+    """Day 7 SMS — breakup for local leads."""
+    return (
+        f"Hey {first_name} — last text from me. I tried to come show you in person "
+        f"because I think it'd genuinely help your business. The offer stands — "
+        f"whenever you're ready, I'm right here in Brentwood. — Wallace"
     )
 
 
@@ -445,53 +541,73 @@ def should_send_touch(enrollment, touch_num):
 
 
 def execute_touch(contact_id, contact_data, enrollment, touch_num, state):
-    """Execute a specific touch for a contact."""
+    """Execute a specific touch for a contact. Routes local vs national."""
     first_name = contact_data.get("firstName", "there")
     company_name = contact_data.get("companyName", "your business")
     tags = contact_data.get("tags", [])
     industry_word, job_value = get_industry_info(tags)
+    local = is_local(contact_data)
+    city = get_lead_city(contact_data) if local else ""
+
+    if local:
+        log(f"  LOCAL lead detected: {first_name} at {company_name} ({city})")
 
     success = False
 
     if touch_num == 1:
-        msg = get_sms_touch_1(first_name, company_name, industry_word)
+        if local:
+            msg = get_local_sms_touch_1(first_name, company_name, city)
+        else:
+            msg = get_sms_touch_1(first_name, company_name, industry_word)
         result = send_sms(contact_id, msg)
         success = result is not None
         if success:
             state["stats"]["total_sms_sent"] += 1
-            log(f"Touch 1 SMS sent to {first_name} ({contact_id})")
+            log(f"Touch 1 SMS sent to {first_name} ({contact_id}){' [LOCAL]' if local else ''}")
 
     elif touch_num == 2:
-        subject, html = get_email_touch_2(first_name, company_name, industry_word, job_value)
+        if local:
+            subject, html = get_local_email_touch_2(first_name, company_name, industry_word, job_value, city)
+        else:
+            subject, html = get_email_touch_2(first_name, company_name, industry_word, job_value)
         result = send_email(contact_id, subject, html)
         success = result is not None
         if success:
             state["stats"]["total_emails_sent"] += 1
-            log(f"Touch 2 Email sent to {first_name} ({contact_id})")
+            log(f"Touch 2 Email sent to {first_name} ({contact_id}){' [LOCAL]' if local else ''}")
 
     elif touch_num == 3:
-        msg = get_sms_touch_3(first_name, industry_word, job_value)
+        if local:
+            msg = get_local_sms_touch_3(first_name, city)
+        else:
+            msg = get_sms_touch_3(first_name, industry_word, job_value)
         result = send_sms(contact_id, msg)
         success = result is not None
         if success:
             state["stats"]["total_sms_sent"] += 1
-            log(f"Touch 3 SMS sent to {first_name} ({contact_id})")
+            log(f"Touch 3 SMS sent to {first_name} ({contact_id}){' [LOCAL]' if local else ''}")
 
     elif touch_num == 4:
-        subject, html = get_email_touch_4(first_name, company_name, industry_word)
+        if local:
+            subject, html = get_local_email_touch_4(first_name, company_name, city)
+        else:
+            subject, html = get_email_touch_4(first_name, company_name, industry_word)
         result = send_email(contact_id, subject, html)
         success = result is not None
         if success:
             state["stats"]["total_emails_sent"] += 1
-            log(f"Touch 4 Email sent to {first_name} ({contact_id})")
+            log(f"Touch 4 Email sent to {first_name} ({contact_id}){' [LOCAL]' if local else ''}")
 
     elif touch_num == 5:
-        msg = get_sms_touch_5(first_name)
+        if local:
+            msg = get_local_sms_touch_5(first_name)
+        else:
+            msg = get_sms_touch_5(first_name)
         result = send_sms(contact_id, msg)
         success = result is not None
         if success:
             state["stats"]["total_sms_sent"] += 1
-            log(f"Touch 5 SMS (breakup) sent to {first_name} ({contact_id})")
+            log(f"Touch 5 SMS (breakup) sent to {first_name} ({contact_id}){' [LOCAL]' if local else ''}")
 
     if success:
         enrollment["touches_sent"].append(touch_num)

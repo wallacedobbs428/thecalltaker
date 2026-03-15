@@ -141,3 +141,40 @@ This is your absolute last attempt. Send it and move on. Sometimes the breakup i
 - **If they say "stop" or "unsubscribe,"** immediately remove them. Respond with "Done. You're removed. Sorry for the bother." Never try to squeeze in a last pitch.
 - **Save their responses.** The words they use tell you what they care about. Mirror that language back in your next message.
 - **Track response rates.** After 50+ texts you'll know which angle pulls the best. Double down on what works.
+
+---
+
+## LOCAL LEAD SMS VARIANTS (Within 1 hour of Brentwood, TN)
+
+**For Nashville-area businesses, use these instead. Goal: book an in-person stop-by, NOT sell over text.**
+
+### Local Text A: The Neighbor
+> Hey [Name], it's Wallace — I'm right here in Brentwood. I built some new technology for businesses like [Company] and I'd love to show you in person. Worth 10 minutes of your time this week?
+
+**Characters:** 186
+
+### Local Text B: The Drive-By
+> Hey this is Wallace over in Brentwood. I drove past [Company] today and thought you'd want to see something I built for businesses like yours. Can I stop by for 10 min?
+
+**Characters:** 172
+
+### Local Text C: The Quick Hit
+> [Name] — I'm Wallace, local to Nashville. Quick question: would it be worth 10 minutes for me to stop by [Company] and show you a new way to handle your after-hours calls?
+
+**Characters:** 169
+
+### Local Follow-Up 1 (Day 4)
+> Hey just following up. I'm in [City] every day — happy to swing by [Company] whenever works. 10 minutes, your location. Just name a time. -Wallace
+
+**Characters:** 142
+
+### Local Follow-Up 2 (Day 8)
+> Last text from me [Name]. I tried to come show you in person because I think it'd genuinely help [Company]. The offer stands — text me whenever. -Wallace (Brentwood)
+
+**Characters:** 170
+
+### Local Sending Rules
+- **NEVER mention pricing, pilot, free trial, or signup in local SMS**
+- **NEVER send a link** — the CTA is always "can I stop by"
+- **ALWAYS reference being local** — city name, "right here," "in the area"
+- **Keep the ask tiny:** "10 minutes," "quick stop by"

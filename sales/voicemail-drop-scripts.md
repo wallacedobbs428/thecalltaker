@@ -89,3 +89,44 @@ All scripts designed to come in under 30 seconds. Read at a natural, unhurried p
 | 5       | Day 16    | Follow-Up (#5)  | Final attempt, leave the door open       |
 
 If no response after all five, wait 30 days and restart the cycle. Seasons change, and so do their pain points. The owner who ignored you in February might be drowning in missed calls by June.
+
+---
+
+## LOCAL LEAD VOICEMAIL VARIANTS (Within 1 hour of Brentwood, TN)
+
+**For Nashville-area / Middle TN businesses, use these versions. Goal: book an in-person visit, NOT sell on voicemail.**
+
+### Local Script 1: The Neighbor
+
+> Hey [Name], this is Wallace. I'm right here in Brentwood — I built some new technology for businesses like yours and I've been showing it to owners in [City]. Takes about 10 minutes to see. I'd love to swing by your shop and show you. Give me a call back — 615-784-5747.
+
+**Time:** ~20 seconds
+**Tone:** Like a neighbor who has something cool to show you.
+
+---
+
+### Local Script 2: The Drive-By
+
+> Hey this is Wallace, I'm local — over in Brentwood. I drove past your shop today and thought you'd want to see something I built for businesses like yours. It's about how your phones are being handled after hours. Can I stop by for 10 minutes this week? 615-784-5747.
+
+**Time:** ~22 seconds
+**Tone:** Casual, conversational, zero sales pressure.
+
+---
+
+### Local Script 3: The Follow-Up
+
+> Hey [Name], it's Wallace again — the guy from Brentwood. I know you're slammed so I'll keep this short. I just want 10 minutes to show you something in person. If it's not for you, I'll be out of your hair in five. Call or text me — 615-784-5747.
+
+**Time:** ~18 seconds
+**Tone:** Respectful of their time, small ask.
+
+---
+
+### Local Voicemail Rules
+
+- **NEVER mention pricing** on a local voicemail
+- **NEVER ask them to visit a website** or book online
+- **ALWAYS reference being local:** "right here in Brentwood," "in [City]," "I drove past"
+- **ALWAYS keep the ask to "10 minutes" and "stop by your location"**
+- **The only goal is a callback that leads to an in-person appointment**

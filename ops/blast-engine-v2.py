@@ -36,6 +36,14 @@ import requests
 from datetime import datetime, timedelta
 from pathlib import Path
 
+# ─── Local Detection ────────────────────────────────────────────────────────
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from local_detect import is_local, get_lead_city
+except ImportError:
+    def is_local(c): return False
+    def get_lead_city(c): return ""
+
 # ─── Configuration ───────────────────────────────────────────────────────────
 
 GHL_API_KEY = os.environ.get("TCT_GHL_API_KEY", "pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35")
@@ -208,6 +216,36 @@ def build_email_html(first_name, company_name, industry, city="your area"):
 
 <p>— Wallace Dobbs<br>
 <span style="color: #666;">Founder, The Call Taker</span></p>
+
+</div>"""
+
+
+def build_local_email_html(first_name, company_name, industry, city="your area"):
+    """Build local in-person CTA email for Middle TN leads."""
+    scenario = industry["scenario"]
+    value = industry["value"]
+    word = industry["word"]
+    city_display = city if city and city != "your area" else "the Nashville area"
+
+    return f"""<div style="font-family: Inter, -apple-system, sans-serif; color: #111; max-width: 600px; line-height: 1.6;">
+
+<p>Hey {first_name},</p>
+
+<p>I called {company_name} after hours last week. Got your voicemail.</p>
+
+<p>No judgment — I hear it all the time. When {scenario}, they Google your type of business and start calling. <strong>First company that picks up gets the job.</strong> At {value} per {word}, those missed calls add up fast.</p>
+
+<p>I'm Wallace — I'm right here in Brentwood and I built something called <strong>The Call Taker</strong> that fixes this. It's an AI receptionist that answers every call to {company_name}, 24/7. No voicemail. No missed jobs.</p>
+
+<p>Since we're both in {city_display}, I'd love to come by and show you in person. Takes 10 minutes. I'll pull it up on my phone, you'll hear the AI answer a call live, and you can decide if it's worth a longer conversation.</p>
+
+<p><strong>Would it be worth 10 minutes for me to stop by this week?</strong></p>
+
+<p>Just reply with a day/time that works and I'll be there.</p>
+
+<p>— Wallace Dobbs<br>
+<span style="color: #666;">Founder, The Call Taker | Brentwood, TN</span><br>
+<span style="color: #666;">{DEMO_LINE}</span></p>
 
 </div>"""
 
@@ -412,7 +450,15 @@ def cmd_blast(state, csv_path):
             subject = SUBJECT_B.format(company=company, value="4,500")
             variant = "B"
 
-        html = build_email_html(first_name, company, industry, lead.get("city", "your area"))
+        # Route: local leads get in-person CTA, national leads get standard
+        city = lead.get("city", "your area")
+        lead_contact = {"phone": lead.get("phone", ""), "city": city, "postalCode": lead.get("zip", "")}
+        if is_local(lead_contact):
+            html = build_local_email_html(first_name, company, industry, city)
+            subject = f"I'm in {city or 'your area'} — can I show you something, {first_name}?"
+            log(f"  LOCAL lead detected: {company} ({city})")
+        else:
+            html = build_email_html(first_name, company, industry, city)
 
         # Send
         result = send_email(contact_id, subject, html)
