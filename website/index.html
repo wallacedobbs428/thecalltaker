@@ -747,6 +747,16 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 32px;
 }
 
+/* PHASE 3: INDUSTRY TRANSCRIPT */
+.industry-content { transition: opacity .2s; }
+.industry-content.fading { opacity: 0; }
+.industry-transcript { display: flex; flex-direction: column; gap: 10px; text-align: left; margin-top: 12px; }
+.transcript-line { padding: 10px 14px; border-radius: 12px; font-size: .82rem; line-height: 1.6; color: var(--text-secondary); }
+.transcript-line.caller { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); }
+.transcript-line.ai { background: rgba(0,220,130,.05); border: 1px solid rgba(0,220,130,.1); }
+.transcript-role { font-weight: 700; color: var(--text); margin-right: 4px; }
+.transcript-line.ai .transcript-role { color: #00dc82; }
+
 /* PHASE 3: VERIFIED REVIEW BADGES */
 .testimonial-verified { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
 .testimonial-verified-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(0,220,130,0.08); border: 1px solid rgba(0,220,130,0.15); border-radius: 100px; padding: 3px 10px; font-size: .65rem; font-weight: 600; color: #00dc82; }
@@ -1946,9 +1956,15 @@ a { color: inherit; text-decoration: none; }
           <span>Emergency AC/heat jobs average $400&ndash;$1,200 each</span>
         </li>
       </ul>
+      <!-- PHASE 3: INDUSTRY TRANSCRIPT -->
       <div class="industry-sample-call" id="industrySample">
         <div class="industry-sample-label">Sample call the AI handles</div>
-        <div class="industry-sample-text" id="industrySampleText">&ldquo;Our AC stopped working and it&rsquo;s 95 degrees in here. Can someone come out today?&rdquo;</div>
+        <div class="industry-transcript" id="industryTranscript">
+          <div class="transcript-line caller"><span class="transcript-role">Caller:</span> Our AC stopped working and it&rsquo;s 95 degrees in here. Can someone come out today?</div>
+          <div class="transcript-line ai"><span class="transcript-role">Jessica:</span> I&rsquo;m so sorry about that! Let me get a technician out to you. What&rsquo;s the best address for the service call?</div>
+          <div class="transcript-line caller"><span class="transcript-role">Caller:</span> 412 Oak Street. How soon can someone be here?</div>
+          <div class="transcript-line ai"><span class="transcript-role">Jessica:</span> I have a technician available this afternoon between 2 and 4 PM. I&rsquo;ll confirm with a text right now. You&rsquo;re all set!</div>
+        </div>
       </div>
       <a href="/industries/hvac.html" class="btn btn-outline btn-sm" id="industryLink">See How It Works for HVAC &rarr;</a>
     </div>
@@ -3477,21 +3493,77 @@ document.addEventListener('DOMContentLoaded', function() {
   var sampleText = document.getElementById('industrySampleText');
   var linkEl = document.getElementById('industryLink');
 
+  // Industry transcripts (PHASE 3)
+  var transcripts = {
+    hvac: [
+      {r:'Caller',t:'Our AC stopped working and it\u2019s 95 degrees in here. Can someone come out today?'},
+      {r:'Jessica',t:'I\u2019m so sorry about that! Let me get a technician out to you. What\u2019s the best address?'},
+      {r:'Caller',t:'412 Oak Street. How soon can someone be here?'},
+      {r:'Jessica',t:'I have a technician available this afternoon between 2 and 4 PM. I\u2019ll confirm with a text right now!'}
+    ],
+    plumbing: [
+      {r:'Caller',t:'I\u2019ve got water spraying out from under my kitchen sink. It\u2019s everywhere.'},
+      {r:'Jessica',t:'I\u2019m sending help right away. Can you turn off the water valve under the sink? What\u2019s your address?'},
+      {r:'Caller',t:'1820 Elm Avenue. Please hurry.'},
+      {r:'Jessica',t:'A plumber is being dispatched now. You\u2019ll get a text with their ETA in the next few minutes.'}
+    ],
+    dental: [
+      {r:'Caller',t:'Hi, I need to schedule a cleaning. Do you have anything this week?'},
+      {r:'Jessica',t:'Absolutely! I have Thursday at 10 AM or Friday at 2 PM available. Which works better?'},
+      {r:'Caller',t:'Thursday at 10 works.'},
+      {r:'Jessica',t:'Perfect, you\u2019re booked for Thursday at 10 AM. I\u2019ll send a confirmation text with all the details!'}
+    ],
+    legal: [
+      {r:'Caller',t:'I was in a car accident yesterday and need to speak with an attorney.'},
+      {r:'Jessica',t:'I\u2019m sorry to hear that. Let me get your information so an attorney can call you back today. What\u2019s your name?'},
+      {r:'Caller',t:'Marcus Williams. My number is 615-555-0147.'},
+      {r:'Jessica',t:'Got it, Marcus. An attorney will reach out within the hour. Is there anything else I can help with?'}
+    ],
+    locksmith: [
+      {r:'Caller',t:'I\u2019m locked out of my car in the Walmart parking lot. Can someone come?'},
+      {r:'Jessica',t:'Absolutely, I\u2019ll get someone out to you right away. Which Walmart location are you at?'},
+      {r:'Caller',t:'The one on Nolensville Road. I\u2019m by the entrance.'},
+      {r:'Jessica',t:'A locksmith is on the way \u2014 estimated 15\u201320 minutes. I\u2019ll text you their contact info now.'}
+    ],
+    roofing: [
+      {r:'Caller',t:'We had a bad storm last night and I think there\u2019s damage to my roof. Can someone come look?'},
+      {r:'Jessica',t:'Of course. I can schedule a free inspection for you. What\u2019s your address?'},
+      {r:'Caller',t:'2205 Cedar Lane. There are shingles in the yard.'},
+      {r:'Jessica',t:'I have an inspector available tomorrow morning at 9 AM. I\u2019ll send you a confirmation text right now.'}
+    ]
+  };
+  var transcriptEl = document.getElementById('industryTranscript');
+  var contentWrap = document.getElementById('industryContent');
+
   if (pills.length && painEl) {
     var boltSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>';
     pills.forEach(function(pill) {
       pill.addEventListener('click', function() {
-        var d = data[this.getAttribute('data-industry')];
+        var key = this.getAttribute('data-industry');
+        var d = data[key];
         if (!d) return;
         pills.forEach(function(p) { p.classList.remove('active'); });
         this.classList.add('active');
-        painEl.textContent = d.pain;
-        bulletsEl.innerHTML = d.bullets.map(function(b) {
-          return '<li>' + boltSvg + '<span>' + b + '</span></li>';
-        }).join('');
-        sampleText.innerHTML = d.sample;
-        linkEl.href = d.link;
-        linkEl.textContent = d.linkText + ' \u2192';
+
+        // Fade out, swap, fade in
+        if (contentWrap) contentWrap.classList.add('fading');
+        setTimeout(function() {
+          painEl.textContent = d.pain;
+          bulletsEl.innerHTML = d.bullets.map(function(b) {
+            return '<li>' + boltSvg + '<span>' + b + '</span></li>';
+          }).join('');
+          // Update transcript
+          var t = transcripts[key];
+          if (transcriptEl && t) {
+            transcriptEl.innerHTML = t.map(function(line) {
+              var cls = line.r === 'Jessica' ? 'ai' : 'caller';
+              return '<div class="transcript-line ' + cls + '"><span class="transcript-role">' + line.r + ':</span> ' + line.t + '</div>';
+            }).join('');
+          }
+          linkEl.href = d.link;
+          linkEl.textContent = d.linkText + ' \u2192';
+          if (contentWrap) contentWrap.classList.remove('fading');
+        }, 200);
       });
     });
   }
