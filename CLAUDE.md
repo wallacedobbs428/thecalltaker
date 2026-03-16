@@ -8,6 +8,15 @@ Never build daemon scripts or plists here.
 ## Response Format Rules
 When Wallace asks for a copyable summary or output block, put ALL content inside a single fenced code block (triple backticks). Never split it across multiple blocks or add prose between sections. One block = one copy button.
 
+After EVERY response, add a copy block at the TOP and BOTTOM of your answer. Each copy block must:
+1. Be inside a single fenced code block (triple backticks) so Wallace can one-click copy it
+2. Include a label at the top: `→ PASTE INTO: Claude` or `→ PASTE INTO: Perplexity` (whichever is appropriate)
+3. If the output is context/status/handoff info → label it for Perplexity
+4. If the output is a task, code change, or build instruction → label it for Claude
+5. If it's useful for both, include both labels: `→ PASTE INTO: Claude OR Perplexity`
+
+Wallace coordinates between Claude and Perplexity. Every response must be ready to copy-paste between them.
+
 ---
 
 ## Session Start Protocol
