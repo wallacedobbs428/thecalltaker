@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Choose Your Plan - The Call Taker</title>
-<meta name="description" content="AI receptionist pricing for service businesses. Never miss a call again.">
+<title>Jessica Starts Answering Your Calls Tomorrow - The Call Taker</title>
+<meta name="description" content="AI receptionist setup in 24 hours. 14-day free pilot, no card required. Only 3 spots left this week.">
 <link rel="icon" type="image/png" href="favicon.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -63,9 +63,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <body>
 <div class="container">
 <div class="header">
-<div class="badge">14-Day Free Pilot &mdash; No Card Required</div>
-<h1>Stop Missing Calls.<br><span>Start Making Money.</span></h1>
-<p>AI receptionist that answers every call, books appointments, and texts customers back. Pick your plan below.</p>
+<div class="badge">Only 3 Pilot Spots Left This Week</div>
+<h1>Jessica Starts Answering<br>Your Calls <span>Tomorrow.</span></h1>
+<p>14-day free pilot. Setup in 24 hours. No credit card, no contract. She never misses a call, never takes a day off.</p>
 </div>
 
 <div class="demo-strip">
@@ -89,7 +89,7 @@ Try it right now &mdash; call our demo line: <a href="tel:+16157845747">(615) 78
 <li>Call summaries & transcripts</li>
 <li>Setup in 24 hours</li>
 </ul>
-<a href="#" class="cta cta-secondary" id="link-97" onclick="trackCheckout('after-hours')">Start Free 14-Day Pilot</a>
+<a href="/pilot/" class="cta cta-secondary" id="link-97" onclick="trackCheckout('after-hours')">Start Free Pilot — $97/mo After Trial</a>
 </div>
 
 <!-- Full 24/7 $497/mo -->
@@ -110,7 +110,7 @@ Try it right now &mdash; call our demo line: <a href="tel:+16157845747">(615) 78
 <li>Priority setup in 12 hours</li>
 <li>Weekly performance reports</li>
 </ul>
-<a href="#" class="cta cta-primary" id="link-297" onclick="trackCheckout('full-247')">Start Free 14-Day Pilot</a>
+<a href="/pilot/" class="cta cta-primary" id="link-297" onclick="trackCheckout('full-247')">Start Free Pilot — $297/mo After Trial</a>
 </div>
 
 <!-- Pro $997/mo -->
@@ -131,13 +131,20 @@ Try it right now &mdash; call our demo line: <a href="tel:+16157845747">(615) 78
 <li>Custom AI training on your business</li>
 <li>Same-day setup</li>
 </ul>
-<a href="#" class="cta cta-premium" id="link-997" onclick="trackCheckout('premium')">Start Free 14-Day Pilot</a>
+<a href="/pilot/" class="cta cta-premium" id="link-997" onclick="trackCheckout('premium')">Start Free Pilot — $497/mo After Trial</a>
 </div>
 </div>
 
 <div class="guarantee">
 <h3>Risk-Free Guarantee</h3>
 <p>Start with a free 14-day pilot. No credit card, no contract, no risk. Watch it work on your real business calls. Only pay if you love it.</p>
+</div>
+
+<div style="text-align:center;margin-top:24px;padding:20px;background:linear-gradient(135deg,#1e3a5f,#1e293b);border-radius:16px;border:1px solid #334155">
+<p style="font-size:16px;color:#f8fafc;font-weight:700;margin-bottom:8px">Want to reserve your spot right now?</p>
+<p style="font-size:14px;color:#94a3b8;margin-bottom:16px">Text Wallace directly — he'll get you set up today.</p>
+<a href="sms:+16156539004&body=Hey%20Wallace%20-%20I%20want%20to%20start%20my%20free%20pilot" style="display:inline-block;padding:14px 32px;background:#22c55e;color:#0f172a;border-radius:12px;font-size:16px;font-weight:700;text-decoration:none">Text Wallace Now</a>
+<p style="font-size:13px;color:#64748b;margin-top:12px">Or call: <a href="tel:+16157845747" style="color:#60a5fa">(615) 784-5747</a></p>
 </div>
 
 <div class="trust">
@@ -178,54 +185,16 @@ Try it right now &mdash; call our demo line: <a href="tel:+16157845747">(615) 78
 </div>
 
 <script>
-// Payment link configuration — UPDATE THESE when Stripe products are created
-const PAYMENT_LINKS = {
-  'after-hours': '', // Stripe Payment Link URL for $97/mo
-  'full-247': '',    // Stripe Payment Link URL for $997/mo
-  'premium': '',     // Stripe Payment Link URL for $997/mo
-};
-
-// Try to load Stripe links from stored config
-try {
-  fetch('file:///Users/moneymaker99/thecalltaker-ops/ops/stripe-products.json')
-    .then(r => r.json())
-    .then(data => {
-      if (data.links) {
-        Object.entries(data.links).forEach(([name, url]) => {
-          if (name.includes('After-Hours') && url) {
-            document.getElementById('link-97').href = url;
-            PAYMENT_LINKS['after-hours'] = url;
-          }
-          if (name.includes('Full 24/7') && url) {
-            document.getElementById('link-497').href = url;
-            PAYMENT_LINKS['full-247'] = url;
-          }
-          if (name.includes('Premium') && url) {
-            document.getElementById('link-997').href = url;
-            PAYMENT_LINKS['premium'] = url;
-          }
-        });
-      }
-    }).catch(() => {});
-} catch(e) {}
-
 function trackCheckout(plan) {
-  // Google Ads conversion tracking
   if (typeof gtag !== 'undefined') {
     gtag('event', 'conversion', {
       'send_to': 'AW-17970510102/checkout_click',
-      'value': plan === 'premium' ? 997 : plan === 'full-247' ? 497 : 97,
+      'value': plan === 'premium' ? 497 : plan === 'full-247' ? 297 : 97,
       'currency': 'USD'
     });
   }
-
-  const link = PAYMENT_LINKS[plan];
-  if (link) {
-    window.location.href = link;
-  } else {
-    // Fallback: book a demo call
-    window.location.href = 'https://thecalltaker.com/book';
-  }
+  // Route to pilot signup — Stripe checkout comes later
+  window.location.href = '/pilot/';
 }
 </script>
 </body>
