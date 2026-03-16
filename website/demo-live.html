@@ -234,6 +234,15 @@ a { color: inherit; text-decoration: none; }
 }
 .replay-btn:hover { border-color: var(--green); color: var(--green); }
 
+/* Shake animation for empty input */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.demo-input.shake { animation: shake .4s ease; border-color: #ef4444; }
+.demo-input.shake::placeholder { color: #ef4444; }
+
 /* ERROR STATE */
 .error-state {
   display: none; text-align: center; padding: 24px 0;
@@ -429,7 +438,7 @@ a { color: inherit; text-decoration: none; }
   <!-- Error State -->
   <div class="error-state" id="errorState">
     <div class="error-msg" id="errorMsg">Something went wrong</div>
-    <div class="error-sub">Call <a href="tel:+16157845747">(615) 784-5747</a> to hear Jessica live</div>
+    <div class="error-sub" id="errorSub">Call <a href="tel:+16157845747">(615) 784-5747</a> to hear Jessica live</div>
     <div style="text-align:center; margin-top:16px">
       <button class="replay-btn" id="retryBtn">Try Again</button>
     </div>
@@ -555,6 +564,7 @@ a { color: inherit; text-decoration: none; }
   var ctaBtn = document.getElementById('ctaBtn');
 
   var audio = null;
+  var lastBlobUrl = null;
   var waveformBars = [];
   var waveformInterval = null;
 
@@ -581,7 +591,12 @@ a { color: inherit; text-decoration: none; }
   // === MAIN FLOW ===
   callBtn.addEventListener('click', function() {
     var biz = input.value.trim();
-    if (!biz) { input.focus(); return; }
+    if (!biz) {
+      input.classList.add('shake');
+      input.focus();
+      setTimeout(function() { input.classList.remove('shake'); }, 500);
+      return;
+    }
 
     // Show loading
     formState.style.display = 'none';
@@ -595,57 +610,66 @@ a { color: inherit; text-decoration: none; }
     if (typeof gtag === 'function') gtag('event', 'demo_generated', { event_category: 'demo', business_name: biz });
 
     // Fetch audio from Cloudflare Worker
-    fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ businessName: biz })
-    })
-    .then(function(res) {
-      if (!res.ok) {
-        return res.json().then(function(data) { throw new Error(data.error || 'Request failed'); });
+    // Using async IIFE inside click handler to preserve iOS gesture context
+    (async function() {
+      try {
+        var res = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ businessName: biz })
+        });
+
+        if (!res.ok) {
+          var errData = {};
+          try { errData = await res.json(); } catch(e) {}
+          if (res.status === 429) {
+            throw { rate_limited: true, message: errData.error || 'Rate limit exceeded' };
+          }
+          throw new Error(errData.error || 'Request failed');
+        }
+
+        var blob = await res.blob();
+        lastBlobUrl = URL.createObjectURL(blob);
+        if (audio) { audio.pause(); URL.revokeObjectURL(audio.src); }
+        audio = new Audio(lastBlobUrl);
+
+        playerName.textContent = 'Jessica — ' + biz;
+        loadingState.classList.remove('show');
+        playerState.classList.add('show');
+
+        // Play in same gesture call stack (iOS Safari requires this)
+        audio.play().catch(function() { showPlayIcon(); });
+        showPauseIcon();
+        startWaveform();
+
+        audio.addEventListener('ended', function() {
+          stopWaveform();
+          showPlayIcon();
+          ctaReveal.classList.add('show');
+          replayAudioBtn.style.display = '';
+        });
+
+        audio.addEventListener('pause', function() {
+          if (!audio.ended) { stopWaveform(); showPlayIcon(); }
+        });
+
+        audio.addEventListener('play', function() {
+          showPauseIcon(); startWaveform();
+        });
+      } catch(err) {
+        loadingState.classList.remove('show');
+        if (err && err.rate_limited) {
+          errorMsg.textContent = "You've used your 3 free demos.";
+          document.getElementById('errorSub').innerHTML = 'Call <a href="tel:+16157845747">(615) 784-5747</a> to hear Jessica on your actual line';
+        } else {
+          errorMsg.textContent = err.message || 'Something went wrong';
+          document.getElementById('errorSub').innerHTML = 'Call <a href="tel:+16157845747">(615) 784-5747</a> to hear Jessica live';
+        }
+        errorState.classList.add('show');
+      } finally {
+        callBtn.disabled = false;
       }
-      return res.blob();
-    })
-    .then(function(blob) {
-      var url = URL.createObjectURL(blob);
-      if (audio) { audio.pause(); URL.revokeObjectURL(audio.src); }
-      audio = new Audio(url);
-
-      playerName.textContent = 'Jessica — ' + biz;
-      loadingState.classList.remove('show');
-      playerState.classList.add('show');
-
-      // Auto-play
-      audio.play().catch(function() {
-        // Auto-play blocked — user will click play
-        showPlayIcon();
-      });
-      showPauseIcon();
-      startWaveform();
-
-      audio.addEventListener('ended', function() {
-        stopWaveform();
-        showPlayIcon();
-        // Reveal CTA
-        ctaReveal.classList.add('show');
-      });
-
-      audio.addEventListener('pause', function() {
-        if (!audio.ended) { stopWaveform(); showPlayIcon(); }
-      });
-
-      audio.addEventListener('play', function() {
-        showPauseIcon(); startWaveform();
-      });
-    })
-    .catch(function(err) {
-      loadingState.classList.remove('show');
-      errorMsg.textContent = err.message || 'Something went wrong';
-      errorState.classList.add('show');
-    })
-    .finally(function() {
-      callBtn.disabled = false;
-    });
+    })();
   });
 
   // Play/Pause toggle
@@ -676,12 +700,34 @@ a { color: inherit; text-decoration: none; }
     }
   }
 
-  // Replay / Try another
+  // Replay same audio
+  var replayAudioBtn = document.createElement('button');
+  replayAudioBtn.className = 'replay-btn';
+  replayAudioBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> Replay';
+  replayAudioBtn.style.display = 'none';
+  replayBtn.parentNode.insertBefore(replayAudioBtn, replayBtn);
+  replayAudioBtn.addEventListener('click', function() {
+    if (audio && lastBlobUrl) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  });
+
+  // Show replay button after first play
+  var origEnded = null;
+  function onFirstEnd() {
+    replayAudioBtn.style.display = '';
+  }
+
+  // Try another business
   replayBtn.addEventListener('click', function() {
-    if (audio) { audio.pause(); URL.revokeObjectURL(audio.src); audio = null; }
+    if (audio) { audio.pause(); }
+    if (lastBlobUrl) { URL.revokeObjectURL(lastBlobUrl); lastBlobUrl = null; }
+    audio = null;
     stopWaveform();
     playerState.classList.remove('show');
     ctaReveal.classList.remove('show');
+    replayAudioBtn.style.display = 'none';
     formState.style.display = 'block';
     input.value = '';
     input.focus();
