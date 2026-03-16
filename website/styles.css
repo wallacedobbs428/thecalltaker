@@ -26,7 +26,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
 /* ---- NAV ---- */
-.header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(0,0,0,0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+.header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(0,0,0,0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transform: translateZ(0); }
 .header.scrolled { background: rgba(0,0,0,0.85); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; height: 52px; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 .logo { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
@@ -212,7 +212,7 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20p
 /* ---- MOBILE OVERFLOW FIX (390px safe) ---- */
 @media (max-width: 767px) {
   /* Contain all sections */
-  section, .hero, .footer, .urgency-strip { max-width: 100vw; overflow-x: hidden; }
+  section, .hero, .footer, .urgency-strip { max-width: 100%; overflow-x: hidden; }
 
   /* Hero children containment */
   .hero h1 { word-break: normal; overflow-wrap: anywhere; }
@@ -227,10 +227,10 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20p
   .footer-links { flex-wrap: wrap; justify-content: center; gap: 12px 20px; }
 
   /* Float callback panel stays in viewport */
-  .float-cb-panel { width: calc(100vw - 40px); right: -10px; }
+  .float-cb-panel { width: calc(100% - 40px); right: -10px; }
 
   /* Exit popup modal */
-  .exit-modal { max-width: calc(100vw - 32px); }
+  .exit-modal { max-width: calc(100% - 32px); }
 
   /* Pricing grid single column */
   .pricing-grid { grid-template-columns: 1fr; }
