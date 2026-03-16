@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>White-Label AI Receptionist for Agencies | The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="description" content="Your clients are losing thousands from missed calls. Add an AI receptionist to your service stack — we build it, you brand it, you keep the markup. $197/client wholesale.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="White-Label AI Receptionist for Agencies | The Call Taker">
+  <meta property="og:description" content="We build it, you brand it, you keep the markup. $197 wholesale, sell for $497-$997.">
+  <meta property="og:url" content="https://thecalltaker.com/agency">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="White-Label AI Receptionist for Agencies | The Call Taker">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Revenue Calculator */
+    .calc-box { max-width: 700px; margin: 0 auto; background: rgba(0,220,130,0.03); border: 1px solid rgba(0,220,130,0.12); border-radius: 16px; padding: 48px 40px; }
+    @media (max-width: 640px) { .calc-box { padding: 32px 20px; } }
+    .calc-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+    .calc-row label { font-size: 14px; font-weight: 600; color: var(--text-2); }
+    .calc-slider-wrap { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 12px; }
+    .calc-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); outline: none; }
+    .calc-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--green); cursor: pointer; border: 2px solid #000; box-shadow: 0 0 10px rgba(0,220,130,0.3); }
+    .calc-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--green); cursor: pointer; border: 2px solid #000; }
+    .calc-val { font-size: 18px; font-weight: 700; color: #fff; min-width: 40px; text-align: right; font-variant-numeric: tabular-nums; }
+    .calc-input { width: 120px; padding: 10px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 16px; font-weight: 600; font-family: inherit; text-align: right; }
+    .calc-input:focus { outline: none; border-color: var(--green); }
+    .calc-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 32px; }
+    @media (max-width: 640px) { .calc-results { grid-template-columns: 1fr; } }
+    .calc-result { background: #000; padding: 28px 20px; text-align: center; }
+    .calc-result-label { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); margin-bottom: 8px; }
+    .calc-result-value { font-size: 28px; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+    .calc-result-value.green { color: var(--green); }
+
+    /* Scaling Tiers */
+    .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: 800px; margin: 0 auto; }
+    @media (max-width: 640px) { .tier-grid { grid-template-columns: 1fr; } }
+    .tier-card { background: #000; padding: 40px 28px; text-align: center; }
+    .tier-card:hover { background: rgba(255,255,255,0.02); }
+    .tier-clients { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 12px; }
+    .tier-amount { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -0.03em; }
+    .tier-label { font-size: 13px; color: var(--text-3); margin-top: 4px; }
+
+    /* Steps */
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: 900px; margin: 0 auto; }
+    @media (max-width: 768px) { .steps-grid { grid-template-columns: 1fr; } }
+    .step-card { background: #000; padding: 40px 32px; text-align: center; }
+    .step-card:hover { background: rgba(255,255,255,0.02); }
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--green-dim); border: 1px solid rgba(0,220,130,0.15); font-size: 20px; font-weight: 800; color: var(--green); margin-bottom: 20px; }
+    .step-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .step-text { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+
+    /* Who For */
+    .who-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 700px; margin: 0 auto; }
+    .who-pill { padding: 10px 20px; border-radius: 100px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--text-2); font-size: 14px; font-weight: 500; transition: all 0.2s; }
+    .who-pill:hover { border-color: rgba(0,220,130,0.3); color: #fff; background: var(--green-dim); }
+
+    /* Pain Points */
+    .pain-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: 800px; margin: 0 auto; }
+    @media (max-width: 640px) { .pain-grid { grid-template-columns: 1fr; } }
+    .pain-card { background: #000; padding: 32px 28px; }
+    .pain-card:hover { background: rgba(255,255,255,0.02); }
+    .pain-stat { font-size: 32px; font-weight: 800; color: var(--green); margin-bottom: 8px; }
+    .pain-text { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+
+    /* Application form */
+    .app-form { max-width: 600px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 40px; }
+    @media (max-width: 640px) { .app-form { padding: 28px 20px; } }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .checkbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    @media (max-width: 480px) { .checkbox-grid { grid-template-columns: 1fr; } }
+    .checkbox-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-2); cursor: pointer; }
+    .checkbox-item input[type="checkbox"] { accent-color: var(--green); width: 16px; height: 16px; cursor: pointer; }
+    .form-success { display: none; text-align: center; padding: 40px 20px; }
+    .form-success .check-circle { width: 64px; height: 64px; border-radius: 50%; background: rgba(0,220,130,0.1); border: 2px solid rgba(0,220,130,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .form-success h3 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .form-success p { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+    .form-error { display: none; padding: 12px 16px; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); border-radius: 8px; color: #ef4444; font-size: 13px; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+<script>window.location.href='https://thecalltaker.com';</script>
+<noscript><p>This page has moved. <a href="https://thecalltaker.com">Go to The Call Taker</a></p></noscript>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- NAV -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      The Call <span>Taker</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="industries.html">Industries</a>
+      <a href="calculator.html">Calculator</a>
+      <a href="partners.html">Partners</a>
+      <a href="agency.html" class="active">Agency Program</a>
+    </nav>
+    <a href="#apply" class="header-cta">Apply Now</a>
+    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<nav class="mobile-nav">
+  <a href="index.html">Home</a>
+  <a href="industries.html">Industries</a>
+  <a href="calculator.html">Calculator</a>
+  <a href="partners.html">Partners</a>
+  <a href="agency.html" class="active">Agency Program</a>
+  <a href="#apply" class="btn btn-green btn-lg">Apply Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="main">
+  <div class="wrap">
+    <div class="hero-label">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Agency White-Label Program
+    </div>
+    <h1>Your Clients Are Losing Thousands From <span class="gradient">Missed Calls</span></h1>
+    <p>Add an AI receptionist to your service stack — we build it, you brand it, you keep the markup. $197/client wholesale, sell for $497-$997. Pure recurring revenue for your agency.</p>
+    <div class="hero-buttons">
+      <a href="#apply" class="btn btn-lg btn-green">Apply as Agency Partner</a>
+      <a href="#calculator" class="btn btn-lg btn-primary">Calculate Your Revenue</a>
+    </div>
+    <p class="hero-sub">No minimum clients &middot; No tech work &middot; We stay invisible behind your brand</p>
+  </div>
+</section>
+
+<!-- THE PROBLEM YOUR CLIENTS HAVE -->
+<section class="section" style="border-top: 1px solid var(--border);">
+  <div class="wrap" style="text-align: center;">
+    <p class="section-label">The Problem</p>
+    <h2 class="section-title">Your Clients Are Bleeding Revenue Right Now</h2>
+    <p class="section-desc" style="margin: 0 auto 48px;">Every home service business you manage is losing money to missed calls. They just don't know how much.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-stat">85%</div>
+        <div class="pain-text">of callers who hit voicemail <strong>never call back</strong>. They call the next company on Google.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-stat">$3K-$15K</div>
+        <div class="pain-text">lost per month per client from missed calls — that's revenue YOUR clients are leaving on the table.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-stat">62%</div>
+        <div class="pain-text">of calls to service businesses go unanswered after hours, weekends, and during jobs.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-stat">$0</div>
+        <div class="pain-text">is what most agencies earn from solving this problem. Until now. You fix it, you get paid recurring.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVENUE CALCULATOR -->
+<section class="section" id="calculator" style="border-top: 1px solid var(--border);">
+  <div class="wrap" style="text-align: center;">
+    <p class="section-label">Revenue Calculator</p>
+    <h2 class="section-title">See Your Monthly Passive Income</h2>
+    <p class="section-desc" style="margin: 0 auto 48px;">You pay $197/client wholesale. You set your price. Drag the slider and watch.</p>
+
+    <div class="calc-box">
+      <div class="calc-row">
+        <label>Number of Clients</label>
+        <div class="calc-slider-wrap">
+          <input type="range" class="calc-slider" id="clientSlider" min="1" max="100" value="10">
+          <span class="calc-val" id="clientCount">10</span>
+        </div>
+      </div>
+      <div class="calc-row">
+        <label>Your Sell Price (per client/mo)</label>
+        <div style="display: flex; align-items: center; gap: 4px;">
+          <span style="font-size: 18px; font-weight: 700; color: var(--text-3);">$</span>
+          <input type="number" class="calc-input" id="sellPrice" value="497" min="197" step="1">
+        </div>
+      </div>
+
+      <div class="calc-results">
+        <div class="calc-result">
+          <div class="calc-result-label">Monthly Revenue</div>
+          <div class="calc-result-value" id="calcRevenue">$4,970</div>
+        </div>
+        <div class="calc-result">
+          <div class="calc-result-label">Your Cost ($197/ea)</div>
+          <div class="calc-result-value" id="calcCost">$1,970</div>
+        </div>
+        <div class="calc-result">
+          <div class="calc-result-label">Your Profit</div>
+          <div class="calc-result-value green" id="calcProfit">$3,000</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW: After-Hours Starter Tier -->
+    <div style="margin-top: 48px; padding: 32px; background: rgba(0,220,130,0.03); border: 1px solid rgba(0,220,130,0.1); border-radius: 16px;">
+      <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: var(--green); color: #000; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; border-radius: 100px; margin-bottom: 16px;">NEW</div>
+      <h3 style="font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px;">After-Hours Starter — $47/client wholesale</h3>
+      <p style="font-size: 14px; color: var(--text-2); line-height: 1.6; max-width: 600px; margin: 0 auto 16px;">Lower entry point for price-sensitive clients. AI answers after-hours calls only (evenings, weekends, holidays). Your clients pay $97-$197/mo — you keep the markup. Perfect for upselling to 24/7 later.</p>
+      <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
+        <div style="text-align: center;"><div style="font-size: 24px; font-weight: 800; color: var(--green);">$47</div><div style="font-size: 12px; color: var(--text-3);">your cost/client</div></div>
+        <div style="text-align: center;"><div style="font-size: 24px; font-weight: 800; color: #fff;">$97-197</div><div style="font-size: 12px; color: var(--text-3);">suggested retail</div></div>
+        <div style="text-align: center;"><div style="font-size: 24px; font-weight: 800; color: var(--green);">$50-150</div><div style="font-size: 12px; color: var(--text-3);">your profit/client</div></div>
+      </div>
+    </div>
+
+    <!-- Scaling tiers -->
+    <div style="margin-top: 48px;">
+      <p style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: 20px;">What Scaling Looks Like</p>
+      <div class="tier-grid">
+        <div class="tier-card">
+          <div class="tier-clients">25 Clients</div>
+          <div class="tier-amount">$7,500</div>
+          <div class="tier-label">profit/month at $497</div>
+        </div>
+        <div class="tier-card">
+          <div class="tier-clients">50 Clients</div>
+          <div class="tier-amount">$15,000</div>
+          <div class="tier-label">profit/month at $497</div>
+        </div>
+        <div class="tier-card">
+          <div class="tier-clients">100 Clients</div>
+          <div class="tier-amount">$30,000</div>
+          <div class="tier-label">profit/month at $497</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" style="border-top: 1px solid var(--border);">
+  <div class="wrap" style="text-align: center;">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title">Three Steps. Zero Tech Work.</h2>
+    <p class="section-desc" style="margin: 0 auto 48px;">We handle the build and the support. You handle the relationship and the invoice.</p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Apply &amp; Get Approved</div>
+        <div class="step-text">Fill out the form below. Get your wholesale rate of $197/client. No setup fees, no minimums, no contracts.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">We Build It, You Brand It</div>
+        <div class="step-text">Send us your client's info. We set up the AI receptionist with their business details, custom voice, and scripts — all white-labeled under your agency.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">You Invoice, You Keep the Markup</div>
+        <div class="step-text">Charge your clients $497, $697, $997 — whatever you want. You collect directly. We stay invisible. 100% of the markup is yours.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="section" style="border-top: 1px solid var(--border);">
+  <div class="wrap" style="text-align: center;">
+    <p class="section-label">What You Get</p>
+    <h2 class="section-title">Everything Your Agency Needs to Resell</h2>
+    <p class="section-desc" style="margin: 0 auto 48px;">We handle the tech and support. You focus on selling and growing.</p>
+
+    <div class="bento">
+      <div class="bento-item">
+        <div class="bento-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <div class="bento-title">White-Label Dashboard</div>
+        <div class="bento-text">Your clients see your brand, not ours. Full analytics with your logo and colors. We don't exist to them.</div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </div>
+        <div class="bento-title">Custom Voice Per Client</div>
+        <div class="bento-text">Every client gets their own AI voice, greeting, call script, and business-specific responses. No two sound the same.</div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="bento-title">We Handle Onboarding</div>
+        <div class="bento-text">Send us the business details. We build it — voice training, call routing, appointment booking, everything. Live in 24-48 hours.</div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="bento-title">We Handle Support</div>
+        <div class="bento-text">Your clients contact you. You contact us through your priority channel. We respond within hours. Your brand stays intact.</div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="bento-title">Call Analytics Per Client</div>
+        <div class="bento-text">Track calls answered, missed call recovery, appointment bookings, and duration for every client individually.</div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="bento-title">No Minimums, No Contracts</div>
+        <div class="bento-text">Start with 1 client. Scale to 100. Month-to-month. Cancel any client anytime. Add new ones whenever you want.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO THIS IS FOR -->
+<section class="section" style="border-top: 1px solid var(--border);">
+  <div class="wrap" style="text-align: center;">
+    <p class="section-label">Who This Is For</p>
+    <h2 class="section-title">Built for Agencies That Serve Home Service Businesses</h2>
+    <p class="section-desc" style="margin: 0 auto 48px;">If your clients get phone calls, this is the easiest recurring revenue you'll ever add.</p>
+
+    <div class="who-grid">
+      <div class="who-pill">Digital Marketing Agencies</div>
+      <div class="who-pill">SEO Agencies</div>
+      <div class="who-pill">PPC / Google Ads Agencies</div>
+      <div class="who-pill">Web Design Firms</div>
+      <div class="who-pill">IT / MSP Companies</div>
+      <div class="who-pill">CRM / Automation Agencies</div>
+      <div class="who-pill">Lead Gen Companies</div>
+      <div class="who-pill">Business Consultants</div>
+      <div class="who-pill">Fractional CMOs</div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION FORM -->
+<section class="section" id="apply" style="border-top: 1px solid var(--border);">
+  <div class="wrap" style="text-align: center;">
+    <p class="section-label">Apply Now</p>
+    <h2 class="section-title">Join the Agency Program</h2>
+    <p class="section-desc" style="margin: 0 auto 48px;">Fill out the application. We respond within 24 hours with everything you need to start reselling.</p>
+
+    <div class="app-form" id="appForm">
+      <div class="form-error" id="formError"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="companyName">Agency Name *</label>
+          <input type="text" class="form-input" id="companyName" placeholder="Your agency name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="website">Website</label>
+          <input type="url" class="form-input" id="website" placeholder="https://youragency.com">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="contactFirst">First Name *</label>
+          <input type="text" class="form-input" id="contactFirst" placeholder="First name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="contactLast">Last Name *</label>
+          <input type="text" class="form-input" id="contactLast" placeholder="Last name" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="email">Email *</label>
+          <input type="email" class="form-input" id="email" placeholder="you@agency.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="phone">Phone *</label>
+          <input type="tel" class="form-input" id="phone" placeholder="(555) 123-4567" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="numClients">How many clients do you plan to onboard?</label>
+        <select class="form-select" id="numClients">
+          <option value="">Select...</option>
+          <option value="1-5">1 - 5 clients</option>
+          <option value="6-10">6 - 10 clients</option>
+          <option value="11-25">11 - 25 clients</option>
+          <option value="26-50">26 - 50 clients</option>
+          <option value="50+">50+ clients</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Which industries do your clients cover?</label>
+        <div class="checkbox-grid">
+          <label class="checkbox-item"><input type="checkbox" value="HVAC"> HVAC</label>
+          <label class="checkbox-item"><input type="checkbox" value="Roofing"> Roofing</label>
+          <label class="checkbox-item"><input type="checkbox" value="Plumbing"> Plumbing</label>
+          <label class="checkbox-item"><input type="checkbox" value="Electrical"> Electrical</label>
+          <label class="checkbox-item"><input type="checkbox" value="Dental"> Dental</label>
+          <label class="checkbox-item"><input type="checkbox" value="Med Spa"> Med Spa</label>
+          <label class="checkbox-item"><input type="checkbox" value="Legal"> Legal</label>
+          <label class="checkbox-item"><input type="checkbox" value="Property Management"> Property Mgmt</label>
+          <label class="checkbox-item"><input type="checkbox" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-lg btn-green" style="width: 100%; justify-content: center; margin-top: 8px;" id="submitBtn" onclick="submitApplication()">
+        Submit Application
+      </button>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px; text-align: center;">We respond within 24 hours. No spam, ever.</p>
+    </div>
+
+    <div class="form-success" id="formSuccess">
+      <div class="check-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00dc82" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>Application Received</h3>
+      <p>We'll review your application and reach out within 24 hours. In the meantime, call our demo line at <strong>(615) 784-5747</strong> to hear the AI receptionist in action.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq" style="border-top: 1px solid var(--border);">
+  <div class="wrap" style="max-width: 700px;">
+    <div style="text-align: center;">
+      <p class="section-label">FAQ</p>
+      <h2 class="section-title">Common Questions</h2>
+    </div>
+    <div style="margin-top: 48px;">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What does "white-label" mean exactly?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Your clients never see our brand. The AI receptionist, dashboard, and all communications appear to come from your agency. We stay completely behind the scenes. Your clients think you built it.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Do I need any technical skills?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Zero. We handle every piece of tech — voice training, call routing, appointment booking, analytics. You just send us your client's business info and we build it. That's literally it.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How long does it take to set up a new client?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">24-48 hours. You send us the business details (name, phone, services, hours, preferences) and we handle the rest — voice training, call routing, and testing. Your client is live within 2 days.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is there a minimum number of clients?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">No. Start with one. There are no minimums, no contracts, no lock-in periods. Add or remove clients whenever you want.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How does billing work?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">We bill you $197 per active client per month. You bill your clients whatever you choose — $497, $697, $997. You collect from your clients directly and keep the entire margin. We never contact your clients.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What industries does this work for?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Any service business that gets phone calls. We have pre-built scripts for HVAC, roofing, plumbing, electrical, dental, med spa, legal, and property management. We can customize for other industries too.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Can I hear a demo right now?
+          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. Call <strong>(615) 784-5747</strong> right now. You'll hear exactly what your clients' customers would hear. Takes 30 seconds.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section" style="border-top: 1px solid var(--border); text-align: center;">
+  <div class="wrap">
+    <p class="section-label">Ready to Start?</p>
+    <h2 class="section-title">Add Recurring Revenue to Your Agency</h2>
+    <p class="section-desc" style="margin: 0 auto 36px;">10 clients = $3,000/mo profit. 25 clients = $7,500. Zero tech work. Zero support burden. We build it, you brand it.</p>
+    <div class="hero-buttons">
+      <a href="#apply" class="btn btn-lg btn-green">Apply as Agency Partner</a>
+      <a href="tel:+16157845747" class="btn btn-lg btn-primary">Call Demo: (615) 784-5747</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          The Call <span>Taker</span>
+        </a>
+        <p>AI receptionist for service businesses.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="industries.html">Industries</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="agency.html">Agency Program</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
+        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== REVENUE CALCULATOR =====
+const clientSlider = document.getElementById('clientSlider');
+const clientCount = document.getElementById('clientCount');
+const sellPrice = document.getElementById('sellPrice');
+const calcRevenue = document.getElementById('calcRevenue');
+const calcCost = document.getElementById('calcCost');
+const calcProfit = document.getElementById('calcProfit');
+
+function formatMoney(n) {
+  return '$' + n.toLocaleString('en-US');
+}
+
+function updateCalc() {
+  const clients = parseInt(clientSlider.value) || 1;
+  const price = parseInt(sellPrice.value) || 497;
+  const wholesale = 197;
+
+  clientCount.textContent = clients;
+
+  const revenue = clients * price;
+  const cost = clients * wholesale;
+  const profit = revenue - cost;
+
+  calcRevenue.textContent = formatMoney(revenue);
+  calcCost.textContent = formatMoney(cost);
+  calcProfit.textContent = formatMoney(profit);
+
+  [calcRevenue, calcCost, calcProfit].forEach(el => {
+    el.style.transition = 'none';
+    el.style.opacity = '0.6';
+    el.style.transform = 'scale(0.96)';
+    requestAnimationFrame(() => {
+      el.style.transition = 'all 0.25s ease';
+      el.style.opacity = '1';
+      el.style.transform = 'scale(1)';
+    });
+  });
+}
+
+clientSlider.addEventListener('input', updateCalc);
+sellPrice.addEventListener('input', updateCalc);
+
+// ===== FAQ TOGGLE =====
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ===== MOBILE NAV =====
+const menuToggle = document.querySelector('.menu-toggle');
+const mobileNav = document.querySelector('.mobile-nav');
+if (menuToggle && mobileNav) {
+  menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menuToggle.classList.remove('open');
+      mobileNav.classList.remove('open');
+    });
+  });
+}
+
+// ===== HEADER SCROLL =====
+window.addEventListener('scroll', () => {
+  document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ===== FORMAT PHONE =====
+const phoneInput = document.getElementById('phone');
+phoneInput.addEventListener('input', function() {
+  let v = this.value.replace(/\D/g, '');
+  if (v.length > 10) v = v.slice(0, 10);
+  if (v.length >= 7) {
+    this.value = '(' + v.slice(0,3) + ') ' + v.slice(3,6) + '-' + v.slice(6);
+  } else if (v.length >= 4) {
+    this.value = '(' + v.slice(0,3) + ') ' + v.slice(3);
+  } else if (v.length > 0) {
+    this.value = '(' + v;
+  }
+});
+
+// ===== FORM SUBMISSION =====
+async function submitApplication() {
+  const btn = document.getElementById('submitBtn');
+  const errorDiv = document.getElementById('formError');
+  errorDiv.style.display = 'none';
+
+  const companyName = document.getElementById('companyName').value.trim();
+  const firstName = document.getElementById('contactFirst').value.trim();
+  const lastName = document.getElementById('contactLast').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const website = document.getElementById('website').value.trim();
+  const numClients = document.getElementById('numClients').value;
+
+  const industries = [];
+  document.querySelectorAll('.checkbox-grid input[type="checkbox"]:checked').forEach(cb => {
+    industries.push(cb.value);
+  });
+
+  if (!companyName || !firstName || !lastName || !email || !phone) {
+    errorDiv.textContent = 'Please fill in all required fields.';
+    errorDiv.style.display = 'block';
+    return;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errorDiv.textContent = 'Please enter a valid email address.';
+    errorDiv.style.display = 'block';
+    return;
+  }
+
+  const phoneDigits = phone.replace(/\D/g, '');
+  if (phoneDigits.length < 10) {
+    errorDiv.textContent = 'Please enter a valid 10-digit phone number.';
+    errorDiv.style.display = 'block';
+    return;
+  }
+  const ghlPhone = '+1' + phoneDigits.slice(-10);
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  const GHL_KEY = 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35';
+  const LOCATION_ID = 'tQb9YmrGDrdVUJYPKrsY';
+
+  try {
+    const ghlBody = {
+      locationId: LOCATION_ID,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: ghlPhone,
+      companyName: companyName,
+      website: website || undefined,
+      tags: ['agency-target', 'agency-lead', 'white-label', 'partner-inquiry'],
+      customFields: [
+        { key: 'company_name', field_value: companyName },
+        { key: 'num_clients', field_value: numClients || 'Not specified' },
+        { key: 'industries_served', field_value: industries.join(', ') || 'Not specified' },
+        { key: 'lead_source', field_value: 'Agency Landing Page' }
+      ]
+    };
+
+    const ghlResp = await fetch('https://services.leadconnectorhq.com/contacts/', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + GHL_KEY,
+        'Version': '2021-07-28',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(ghlBody)
+    });
+
+    if (!ghlResp.ok) {
+      const errText = await ghlResp.text();
+      console.error('GHL error:', errText);
+    }
+
+    // War room alert
+    const alertBody = [
+      'Agency: ' + companyName,
+      'Contact: ' + firstName + ' ' + lastName,
+      'Email: ' + email,
+      'Phone: ' + phone,
+      website ? 'Website: ' + website : '',
+      numClients ? 'Planned Clients: ' + numClients : '',
+      industries.length ? 'Industries: ' + industries.join(', ') : ''
+    ].filter(Boolean).join('\n');
+
+    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+      method: 'POST',
+      headers: {
+        'Title': 'NEW AGENCY APPLICATION',
+        'Priority': '5',
+        'Tags': 'briefcase,fire'
+      },
+      body: alertBody
+    }).catch(e => console.error('ntfy error:', e));
+
+    // Google Ads conversion
+    if (typeof gtag === 'function') {
+      gtag('event', 'conversion', {
+        'send_to': 'AW-17970510102/agency_application',
+        'value': 197.0,
+        'currency': 'USD'
+      });
+    }
+
+    document.getElementById('appForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+
+  } catch (err) {
+    console.error('Submission error:', err);
+    errorDiv.textContent = 'Something went wrong. Please try again or email wallacemdobbs@icloud.com directly.';
+    errorDiv.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Submit Application';
+  }
+}
+</script>
+
+</body>
+</html>
