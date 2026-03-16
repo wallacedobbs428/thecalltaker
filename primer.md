@@ -6,7 +6,7 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 # Primer — The Call Taker
 
-> Last updated: 2026-03-15 | Rewrite this file at the start of every session.
+> Last updated: 2026-03-16 | Rewrite this file at the start of every session.
 
 ## What This Is
 
@@ -39,9 +39,18 @@ Full 7-component outreach system rebuild. All scripts in `ops/`.
 
 ## Current Branch & Recent Work
 
-- **Branch:** `claude/rebuild-outreach-stack-DYwVo`
-- **Homepage has unstaged changes** — Trust Layer added (see below)
-- **Latest session (March 15):** Created `hot-lead-sequence.py` — 5-step automated follow-up for hot-lead tagged contacts. Also previously added 5 SEO blog posts.
+- **Branch:** `claude/fix-mobile-centering-gn0lP`
+- **Latest session (March 16):** Upgraded hero CTA on all 18 industry pages to dual mobile/desktop pattern. Mobile gets `tel:` link, desktop gets `/demo` link. CSS media query at 769px toggles visibility. Also: closer war room v2, mobile centering fixes, pay page updates from earlier commits.
+- **Previous session (March 15):** Created `hot-lead-sequence.py`, added 10 SEO blog posts, homepage trust layer.
+
+## Industry Page Hero CTA Upgrade (March 16, 2026)
+
+All 18 industry pages in `website/industries/` (excluding index.html hub) now have:
+- **Mobile CTA** (`hero-cta-mobile`): `tel:+16157845747` link — "Hear Jessica Answer Your Calls Now"
+- **Desktop CTA** (`hero-cta-desktop`): `../demo` link — "Hear Jessica Answer Your Calls Now"
+- **Sub-text**: "Live demo line — call now or try it online"
+- **CSS**: `.hero-cta-desktop{display:none}` default, `@media(min-width:769px)` swaps visibility
+- **Second CTA** (Try Demo section ~line 520) left untouched — still original phone number link
 
 ## Hot Lead Sequence (March 15, 2026)
 
