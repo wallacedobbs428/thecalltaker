@@ -35,13 +35,14 @@ Full 7-component outreach system rebuild. All scripts in `ops/`.
 | C7 | DM Outreach v2 | `dm-outreach-v2.py` | 3-DM sequence per industry. Copy-paste export for Wallace. |
 | NEW | Hot Lead 5-Step | `hot-lead-sequence.py` | 5-step SMS/email/voicemail sequence (Day 0/1/2/4/7). Pain-first + scarcity. |
 | NEW | GHL Reactivation | `ghl-reactivation-workflow.py` | 5-message "Founding 10" reactivation targeting 35 hot leads. Reply detection, industry personalization. |
+| NEW | FB Lead Ads Engine | `fb-lead-ads-engine.py` | Facebook Lead Ads follow-up: instant SMS, 2hr variant email, 24hr escalation, YES reply detection. |
 | Sys | Health Monitor | `system-health-monitor.py` | Green/yellow/red for all components. SMS alert on red. |
 | Sys | Dashboard | `master-dashboard.html` | Visual command center. Auto-refreshes 60s. |
 
 ## Current Branch & Recent Work
 
 - **Branch:** `claude/ghl-reactivation-workflow-dCWZZ`
-- **Latest session (March 16):** Building GHL reactivation workflow — 5-message "Founding 10" sequence for 35 hot leads. Python automation + GHL workflow builder guide.
+- **Latest session (March 16):** Built GHL reactivation workflow + Facebook Lead Ads campaign (setup checklist, GHL automation script, Day 1-7 playbook, tracking CSV).
 - **Previous session (March 15):** Created `hot-lead-sequence.py`, 5 SEO blog posts batch 1 & 2, homepage trust layer.
 
 ## GHL Reactivation Workflow — Founding 10 (March 16, 2026)
@@ -58,9 +59,22 @@ New reactivation engine at `ops/ghl-reactivation-workflow.py`:
 - State: `ops/ghl-reactivation-state.json`
 - Enrolls all 35 contacts currently tagged `hot-lead`
 
+## Facebook Lead Ads Campaign (March 16, 2026)
+
+Full campaign setup for Meta Lead Ads: $30/day CBO, 3 verticals (HVAC/Plumbing/Dental), 3 ad variants each.
+- Campaign checklist: `docs/fb-lead-ads-campaign-setup.md`
+- GHL automation: `ops/fb-lead-ads-engine.py` — scan (15min), followup (30min)
+- Day 1-7 playbook: `docs/fb-lead-ads-playbook.md`
+- Tracking CSV: `ops/fb-lead-tracking-template.csv`
+- State writes to `~/thecalltaker-ops/fb-lead-ads-state.json`
+- Logs to `~/thecalltaker-ops/logs/fb-lead-ads-engine.log`
+- Tags: `fb-lead-enrolled`, `fb-missed-revenue`, `fb-after-hours`, `fb-hiring-headache`, `fb-lead-interested`, `fb-lead-no-response`
+- Integrates with existing `facebook-lead-webhook.py` (port 5091) or GHL native Facebook integration
+
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal
+- **Facebook Ads**: Deploy Lead Ads campaign — needs Meta API token from developers.facebook.com
 - **Reactivation**: Deploy Founding 10 sequence to 35 hot leads
 - **Outreach stack**: ALL 7 components rebuilt + new hot-lead-sequence — deploy to Mac
 - **Stripe**: NOT connected (Wallace is 16). PayPal/Venmo workaround live
