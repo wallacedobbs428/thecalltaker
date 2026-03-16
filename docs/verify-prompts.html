@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify Prompts</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, system-ui, sans-serif; background: #111; color: #fff; padding: 32px 20px; max-width: 700px; margin: 0 auto; }
+h1 { font-size: 1.1rem; color: rgba(255,255,255,.5); margin-bottom: 32px; text-align: center; letter-spacing: .05em; text-transform: uppercase; }
+.block { margin-bottom: 40px; }
+h2 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: #f97316; }
+.prompt { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 16px; font-size: .88rem; line-height: 1.6; color: rgba(255,255,255,.85); white-space: pre-wrap; word-wrap: break-word; }
+.copy-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 8px 18px; background: #f97316; color: #fff; border: none; border-radius: 8px; font-size: .85rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: background .15s; }
+.copy-btn:hover { background: #ea580c; }
+.copy-btn.copied { background: #22c55e; }
+</style>
+</head>
+<body>
+
+<h1>Mobile Fix Verification Prompts</h1>
+
+<div class="block">
+  <h2>Claude</h2>
+  <div class="prompt" id="claude-prompt">Audit thecalltaker.com for iOS Safari mobile centering issues. Check if:
+
+1. Any element uses 100vw (causes ~15-30px horizontal overflow on iOS because 100vw includes the scrollbar width)
+2. Any position:fixed element is missing transform:translateZ(0) (iOS Safari displaces fixed elements without a GPU compositing hint)
+3. html and body both have overflow-x:hidden
+4. The #pricing section has overflow:hidden (it has an 800px-wide ::before pseudo-element that overflows on 375px screens)
+5. No broken CSS declarations like dangling "-webkit-" that would cause the parser to skip rules
+
+Load the page source and check index.html inline styles, styles.css, shared/below-fold.css, and shared/premium.css. Report any remaining overflow culprits.</div>
+  <button class="copy-btn" onclick="copyText('claude-prompt', this)">Copy</button>
+</div>
+
+<div class="block">
+  <h2>Perplexity</h2>
+  <div class="prompt" id="perplexity-prompt">I just deployed CSS fixes for horizontal overflow / content shifting right ~30px on iPhone Safari for my site thecalltaker.com. The fixes I applied:
+
+- overflow-x:hidden on html and body
+- Replaced all 100vw with 100% (100vw includes scrollbar on iOS)
+- Added transform:translateZ(0) to all position:fixed elements (header, mobile call bar, exit toast)
+- Added overflow:hidden to sections with wide pseudo-elements
+- Fixed broken CSS declarations with dangling -webkit- properties
+
+Can you check thecalltaker.com on mobile and tell me:
+1. Does the page still shift right or have horizontal scroll?
+2. Is the navbar centered and full-width?
+3. Are the hero section, industry tabs, and orange CTA buttons centered?
+4. Any other CSS overflow issues you can spot in the source?</div>
+  <button class="copy-btn" onclick="copyText('perplexity-prompt', this)">Copy</button>
+</div>
+
+<script>
+function copyText(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
