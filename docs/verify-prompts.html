@@ -8,21 +8,26 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, system-ui, sans-serif; background: #111; color: #fff; padding: 32px 20px; max-width: 700px; margin: 0 auto; }
 h1 { font-size: 1.1rem; color: rgba(255,255,255,.5); margin-bottom: 32px; text-align: center; letter-spacing: .05em; text-transform: uppercase; }
-.block { margin-bottom: 40px; }
-h2 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: #f97316; }
+.section-title { font-size: .85rem; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .1em; margin: 48px 0 20px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1); }
+.section-title:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+.block { margin-bottom: 32px; }
+h2 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: #00dc82; }
 .prompt { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 16px; font-size: .88rem; line-height: 1.6; color: rgba(255,255,255,.85); white-space: pre-wrap; word-wrap: break-word; }
-.copy-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 8px 18px; background: #f97316; color: #fff; border: none; border-radius: 8px; font-size: .85rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: background .15s; }
-.copy-btn:hover { background: #ea580c; }
-.copy-btn.copied { background: #22c55e; }
+.copy-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 8px 18px; background: #00dc82; color: #000; border: none; border-radius: 8px; font-size: .85rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: background .15s; }
+.copy-btn:hover { background: #00c974; }
+.copy-btn.copied { background: #22c55e; color: #fff; }
 </style>
 </head>
 <body>
 
-<h1>Mobile Fix Verification Prompts</h1>
+<h1>The Call Taker — Verify Prompts</h1>
+
+<!-- ==================== MOBILE FIX ==================== -->
+<div class="section-title">Mobile Centering Fix</div>
 
 <div class="block">
   <h2>Claude</h2>
-  <div class="prompt" id="claude-prompt">Audit thecalltaker.com for iOS Safari mobile centering issues. Check if:
+  <div class="prompt" id="mobile-claude">Audit thecalltaker.com for iOS Safari mobile centering issues. Check if:
 
 1. Any element uses 100vw (causes ~15-30px horizontal overflow on iOS because 100vw includes the scrollbar width)
 2. Any position:fixed element is missing transform:translateZ(0) (iOS Safari displaces fixed elements without a GPU compositing hint)
@@ -31,12 +36,12 @@ h2 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: #f97316; }
 5. No broken CSS declarations like dangling "-webkit-" that would cause the parser to skip rules
 
 Load the page source and check index.html inline styles, styles.css, shared/below-fold.css, and shared/premium.css. Report any remaining overflow culprits.</div>
-  <button class="copy-btn" onclick="copyText('claude-prompt', this)">Copy</button>
+  <button class="copy-btn" onclick="copyText('mobile-claude', this)">Copy</button>
 </div>
 
 <div class="block">
   <h2>Perplexity</h2>
-  <div class="prompt" id="perplexity-prompt">I just deployed CSS fixes for horizontal overflow / content shifting right ~30px on iPhone Safari for my site thecalltaker.com. The fixes I applied:
+  <div class="prompt" id="mobile-perplexity">I just deployed CSS fixes for horizontal overflow / content shifting right ~30px on iPhone Safari for my site thecalltaker.com. The fixes I applied:
 
 - overflow-x:hidden on html and body
 - Replaced all 100vw with 100% (100vw includes scrollbar on iOS)
@@ -49,7 +54,64 @@ Can you check thecalltaker.com on mobile and tell me:
 2. Is the navbar centered and full-width?
 3. Are the hero section, industry tabs, and orange CTA buttons centered?
 4. Any other CSS overflow issues you can spot in the source?</div>
-  <button class="copy-btn" onclick="copyText('perplexity-prompt', this)">Copy</button>
+  <button class="copy-btn" onclick="copyText('mobile-perplexity', this)">Copy</button>
+</div>
+
+<!-- ==================== SEO CONTENT MACHINE ==================== -->
+<div class="section-title">SEO Content Machine</div>
+
+<div class="block">
+  <h2>Claude</h2>
+  <div class="prompt" id="seo-claude">Audit the SEO setup on thecalltaker.com. Check these specific things:
+
+1. Do all 13 industry vertical pages (thecalltaker.com/industries/hvac, /plumbing, /roofing, /dental, /electrical, /locksmith, /pest-control, /medspa, /legal, /towing, /veterinary, /auto-repair, /property-management) have H1 tags that match exact target keywords like "AI Receptionist for HVAC Companies"?
+2. Does each vertical page have JSON-LD schema with @type "Service" (NOT "SoftwareApplication") and price "497" (NOT "297")?
+3. Do the 30 state+vertical location pages exist at /pages/locations/ (e.g. texas-hvac-ai-receptionist.html)?
+4. Does each location page have both Service schema and FAQPage schema?
+5. Do vertical pages have internal links back to homepage, blog posts, and /pilot/?
+
+Check the source of at least 3 vertical pages and 2 location pages. Report any missing schema, wrong H1s, or broken internal links.</div>
+  <button class="copy-btn" onclick="copyText('seo-claude', this)">Copy</button>
+</div>
+
+<div class="block">
+  <h2>Perplexity</h2>
+  <div class="prompt" id="seo-perplexity">I just deployed a major SEO update to thecalltaker.com — an AI receptionist for service businesses. Can you check:
+
+1. Visit thecalltaker.com/industries/hvac — does the page have proper Service schema markup in the source? Is the H1 keyword-optimized (should be "AI Receptionist for HVAC Companies")?
+2. Visit thecalltaker.com/pages/locations/texas-hvac-ai-receptionist — does this state+vertical page exist and have both Service and FAQPage schema?
+3. Check thecalltaker.com/industries/plumbing and /dental — do they have Service schema with price $497?
+4. Are there any obvious SEO issues on the vertical pages (missing meta descriptions, duplicate titles, no canonical tags)?
+5. Does the site have a proper internal linking structure between verticals, blog, and homepage?</div>
+  <button class="copy-btn" onclick="copyText('seo-perplexity', this)">Copy</button>
+</div>
+
+<!-- ==================== FB LEAD ADS ==================== -->
+<div class="section-title">Facebook Lead Ads Launch</div>
+
+<div class="block">
+  <h2>Claude</h2>
+  <div class="prompt" id="fb-claude">Verify the Facebook Lead Ads setup on thecalltaker.com. Check:
+
+1. Is the Meta Pixel (fbevents.js) present in the &lt;head&gt; of the homepage (thecalltaker.com)?
+2. Is there a fbq('track', 'Lead') event on the thank-you page (thecalltaker.com/thank-you)?
+3. Check the source of at least 5 random pages across the site (homepage, a blog post, an industry page, a case study, a location page) — does every one have the Meta Pixel code?
+4. Does the privacy page exist at thecalltaker.com/privacy (required for Lead Form)?
+5. Does the booking page exist at thecalltaker.com/book (used as thank-you CTA)?
+
+Also check if the Pixel ID is still a placeholder (YOUR_PIXEL_ID) or if it's been replaced with a real numeric ID.</div>
+  <button class="copy-btn" onclick="copyText('fb-claude', this)">Copy</button>
+</div>
+
+<div class="block">
+  <h2>Perplexity</h2>
+  <div class="prompt" id="fb-perplexity">I'm launching Facebook Lead Ads for thecalltaker.com tomorrow morning. I just added the Meta Pixel to all 218 pages on the site. Can you verify:
+
+1. Visit thecalltaker.com and check the page source — is the Facebook Pixel (fbevents.js) present in the head?
+2. Are there any Meta Ads policy issues with these ad copy phrases: "smart receptionist answers your business calls 24/7", "$497/month, no contract", "free 14-day pilot"?
+3. For a Lead Ads campaign targeting US small business owners (HVAC, plumbing, roofing interests), what's a reasonable CPL to expect at $50/day budget?
+4. Is there anything on thecalltaker.com that would cause Meta to reject the ads (misleading claims, missing privacy policy, etc.)?</div>
+  <button class="copy-btn" onclick="copyText('fb-perplexity', this)">Copy</button>
 </div>
 
 <script>
