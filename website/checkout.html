@@ -266,13 +266,43 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ── Green Banner ── */
+    .top-banner {
+      background: linear-gradient(135deg, #166534, #14532d);
+      text-align: center; padding: 10px 16px;
+      font-size: 0.8125rem; font-weight: 700; color: #fff;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    }
+    .header { top: 38px !important; }
+    .progress { padding-top: 118px; }
+
+    /* ── Pilot Note ── */
+    .pilot-note {
+      text-align: center; font-size: 0.8125rem; color: #22c55e;
+      font-weight: 600; margin-top: 8px; margin-bottom: 0;
+    }
+    .scarcity-note {
+      text-align: center; font-size: 0.75rem; color: #fbbf24;
+      font-weight: 600; margin-top: 6px;
+    }
+
+    /* ── Talk Fallback ── */
+    .talk-fallback {
+      text-align: center; margin-top: 12px; font-size: 0.8125rem; color: #71717a;
+    }
+    .talk-fallback a { color: #22c55e; font-weight: 600; }
+
     /* ── Mobile ── */
     @media (max-width: 480px) {
       .field-row { grid-template-columns: 1fr; }
+      .btn-primary { padding: 16px; font-size: 1.0625rem; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Green Banner -->
+  <div class="top-banner">Setup in 24 hours. Jessica answers your first call tomorrow.</div>
 
   <!-- Header -->
   <header class="header">
@@ -341,6 +371,8 @@
           <div class="plan-price">$497<span>/mo</span></div>
         </div>
       </div>
+      <p class="pilot-note">No credit card to start. Free for 14 days.</p>
+      <p class="scarcity-note">3 pilot spots remaining this week.</p>
 
       <!-- Business Info -->
       <div class="card">
@@ -402,6 +434,7 @@
         Continue to payment
       </button>
       <div class="btn-sub">No card required for 14-day money-back guarantee</div>
+      <div class="talk-fallback">Prefer to talk? Text Wallace: <a href="sms:+16157845747">(615) 784-5747</a></div>
 
     </div>
 
@@ -475,6 +508,7 @@
       <div class="btn-sub">
         <a href="#" onclick="goBack(1); return false;" style="color: #52525b; text-decoration: underline;">Back to business info</a>
       </div>
+      <div class="talk-fallback">Prefer to talk? Text Wallace: <a href="sms:+16157845747">(615) 784-5747</a></div>
 
       <div class="security">
         <div class="sec-badge">
