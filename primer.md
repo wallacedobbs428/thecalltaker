@@ -6,7 +6,7 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 # Primer — The Call Taker
 
-> Last updated: 2026-03-15 | Rewrite this file at the start of every session.
+> Last updated: 2026-03-16 | Rewrite this file at the start of every session.
 
 ## What This Is
 
@@ -34,65 +34,38 @@ Full 7-component outreach system rebuild. All scripts in `ops/`.
 | C5 | Speed-to-Lead v2 | `speed-to-lead-v2.py` | 15s hot signal checks. SMS 60s, call 5min, email 10min. Dead lead resurrection. |
 | C7 | DM Outreach v2 | `dm-outreach-v2.py` | 3-DM sequence per industry. Copy-paste export for Wallace. |
 | NEW | Hot Lead 5-Step | `hot-lead-sequence.py` | 5-step SMS/email/voicemail sequence (Day 0/1/2/4/7). Pain-first + scarcity. |
+| NEW | GHL Reactivation | `ghl-reactivation-workflow.py` | 5-message "Founding 10" reactivation targeting 35 hot leads. Reply detection, industry personalization. |
 | Sys | Health Monitor | `system-health-monitor.py` | Green/yellow/red for all components. SMS alert on red. |
 | Sys | Dashboard | `master-dashboard.html` | Visual command center. Auto-refreshes 60s. |
 
 ## Current Branch & Recent Work
 
-- **Branch:** `claude/rebuild-outreach-stack-DYwVo`
-- **Homepage has unstaged changes** — Trust Layer added (see below)
-- **Latest session (March 15):** Created `hot-lead-sequence.py` — 5-step automated follow-up for hot-lead tagged contacts. Also previously added 5 SEO blog posts.
+- **Branch:** `claude/ghl-reactivation-workflow-dCWZZ`
+- **Latest session (March 16):** Building GHL reactivation workflow — 5-message "Founding 10" sequence for 35 hot leads. Python automation + GHL workflow builder guide.
+- **Previous session (March 15):** Created `hot-lead-sequence.py`, 5 SEO blog posts batch 1 & 2, homepage trust layer.
 
-## Hot Lead Sequence (March 15, 2026)
+## GHL Reactivation Workflow — Founding 10 (March 16, 2026)
 
-New 5-step follow-up script at `ops/hot-lead-sequence.py`:
-- Step 1 (Day 0): SMS pain hook + pilot offer
-- Step 2 (Day 1): Email with missed call costs, competitor angle, case studies
-- Step 3 (Day 2): Bland.ai voicemail drop
-- Step 4 (Day 4): SMS social proof + scarcity countdown
-- Step 5 (Day 7): Breakup email
-- Commands: scan, send, status, run, test (dry run)
-- State: `ops/hot-lead-sequence-state.json`
-- Rate limits: 20 SMS/day, 30 emails/day
-- Contact registry integration for cross-engine coordination
-- 19 industries with pain hooks in INDUSTRY_HOOKS dict
-- launchd templates in docstring (scan every 2hrs, send 3x daily)
-
-## Homepage Trust Layer (March 15, 2026)
-
-Added 4 trust elements to `website/index.html`:
-
-1. **Trust Logo Bar** — Infinite-scroll bar with 6 logos. Positioned between hero and demo sections.
-2. **Live Call Counter** — Fixed floating badge: "Jessica has answered X calls this month".
-3. **Uptime Badge** — Pill badge in hero: "99.9% Uptime - 24/7/365 - Answers in Under 2 Rings".
-4. **Response Time Claim** — Hero proof stat updated to "< 2 Rings Answer Speed".
-5. **Live Demo Nav Link** — Added `/try-live.html` link to both desktop nav and mobile menu.
-
-## Blog Posts (82+ pages total, 54+ blog posts)
-
-All in `website/blog/`. Green/black design system. Inter font. Schema.org Article markup. OG/Twitter meta. Mid-article and bottom CTAs. Related posts section. Mobile responsive.
-
-### New Posts Added (March 15, 2026) — Batch 1
-- `answering-service-water-damage.html` — Water damage answering service
-- `after-hours-answering-service-small-business.html` — After-hours answering for small business
-- `how-many-calls-small-business-miss.html` — Missed call statistics
-- `virtual-receptionist-cost-2026.html` — Virtual receptionist pricing guide
-- `best-ai-phone-answering-service.html` — Best AI answering services ranked
-
-### New Posts Added (March 15, 2026) — Batch 2
-- `answering-service-pest-control.html` — Best pest control answering service (emergency routing, seasonal surges, termite/bed bug/rodent)
-- `answering-service-auto-repair.html` — Auto repair shops losing $8K/mo in missed calls (hands-on work problem, Monday rush)
-- `answering-service-cleaning-companies.html` — Best cleaning company answering service (residential/commercial, Airbnb turnovers, recurring revenue)
-- `missed-calls-cost-contractors.html` — Data-driven missed call cost analysis by trade (roofing, plumbing, HVAC, electrical, GC, painting, landscaping, concrete)
-- `ai-receptionist-vs-voicemail.html` — AI receptionist vs voicemail deep dive (80% hang-up stat, psychology, revenue math, comparison table)
+New reactivation engine at `ops/ghl-reactivation-workflow.py`:
+- Trigger: Contact tagged `hot-lead-reactivation`
+- 5-message sequence: Day 0 SMS, Day 3 SMS, Day 5 value pitch SMS, Day 10 breakup SMS
+- Message 4 (price-hesitation) is reply-triggered only — activated by `price-hesitation` tag
+- Reply handler: pauses sequence, tags `replied-reactivation`, alerts Wallace, creates 2hr follow-up task
+- Industry personalization: 19 industries with custom missed-call hooks
+- Exhaustion: after Message 5 with no reply → `reactivation-exhausted` tag, removes trigger tag
+- GHL workflow builder guide at `docs/ghl-reactivation-workflow-guide.md`
+- Commands: scan, send, enroll, status, run, preview
+- State: `ops/ghl-reactivation-state.json`
+- Enrolls all 35 contacts currently tagged `hot-lead`
 
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal
+- **Reactivation**: Deploy Founding 10 sequence to 35 hot leads
 - **Outreach stack**: ALL 7 components rebuilt + new hot-lead-sequence — deploy to Mac
 - **Stripe**: NOT connected (Wallace is 16). PayPal/Venmo workaround live
 - **Bland.ai balance**: Cold caller + voicemails require funded account
-- **GHL aliases**: Blast v3 needs 5 aliases verified (wallace@, hello@, support@, info@, team@)
+- **GHL aliases**: Blast v3 needs 5 aliases verified
 - **Unsubscribe page**: Blast v3 links to thecalltaker.com/unsubscribe — needs building
 - **SEO content**: Continue expanding blog with high-intent keyword posts
 
