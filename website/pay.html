@@ -91,13 +91,13 @@ Try it right now &mdash; call our demo line: <a href="tel:+16157845747">(615) 78
 <a href="#" class="cta cta-secondary" id="link-97" onclick="trackCheckout('after-hours')">Start Free 14-Day Pilot</a>
 </div>
 
-<!-- Full 24/7 $297/mo -->
+<!-- Full 24/7 $497/mo -->
 <div class="card popular">
 <div class="popular-tag">Most Popular</div>
 <div class="plan-name">Full 24/7</div>
 <div class="plan-desc">Never miss a single call, ever</div>
 <div class="price">
-<span class="amount">$297</span><span class="period">/month</span>
+<span class="amount">$497</span><span class="period">/month</span>
 <div class="save">Pays for itself in the first week</div>
 </div>
 <ul class="features">
@@ -180,7 +180,7 @@ Try it right now &mdash; call our demo line: <a href="tel:+16157845747">(615) 78
 // Payment link configuration — UPDATE THESE when Stripe products are created
 const PAYMENT_LINKS = {
   'after-hours': '', // Stripe Payment Link URL for $97/mo
-  'full-247': '',    // Stripe Payment Link URL for $297/mo
+  'full-247': '',    // Stripe Payment Link URL for $497/mo
   'premium': '',     // Stripe Payment Link URL for $497/mo
 };
 
@@ -213,7 +213,7 @@ function trackCheckout(plan) {
   if (typeof gtag !== 'undefined') {
     gtag('event', 'conversion', {
       'send_to': 'AW-17970510102/checkout_click',
-      'value': plan === 'premium' ? 497 : plan === 'full-247' ? 297 : 97,
+      'value': plan === 'premium' ? 497 : plan === 'full-247' ? 497 : 97,
       'currency': 'USD'
     });
   }
