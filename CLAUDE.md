@@ -5,6 +5,11 @@ Never build daemon scripts or plists here.
 
 ---
 
+## Response Format Rules
+When Wallace asks for a copyable summary or output block, put ALL content inside a single fenced code block (triple backticks). Never split it across multiple blocks or add prose between sections. One block = one copy button.
+
+---
+
 ## Session Start Protocol
 At the beginning of EVERY session, before doing anything else:
 1. Read `primer.md` in full
