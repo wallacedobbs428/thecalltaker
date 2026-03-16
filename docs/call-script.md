@@ -96,15 +96,29 @@
 
 **"So [First Name] — after hearing Jessica, makes sense to test her on your real calls for 14 days free? Which plan feels right: Starter at $497 to catch after-hours jobs, or Pro at $997 with full 24/7 booking and dispatch?"**
 
-### → PATH 1: Strong Yes
+### → PATH 1: Strong Yes → COLLECT PAYMENT
 
-"Great — I'm going to get you set up by end of day. What email should I send the welcome kit to? And do you use Google Calendar or something else for scheduling?"
+**"Perfect. Texting you the payment link now — PayPal or card both work, takes 45 seconds."**
 
-*[Get email + calendar tool → send onboarding immediately]*
+*[Open Messages → type `pps` (Starter) or `ppp` (Pro) → send]*
+
+*[Stay on the phone while they complete it:]*
+"Got it? Just tap the link and put in your card. No charge for 14 days — first billing is [date 14 days out]."
+
+*[Wait for confirmation:]*
+"See the confirmation? Perfect — you're locked in."
+
+**Immediately pivot to setup:**
+"Now let's get Jessica on your phones. What's your main business number?"
+
+*[Run through onboarding checklist: business name, hours, service area, services, booking tool, forwarding setup]*
 
 ### → PATH 2: Maybe / Leaning Yes
 
 "No pressure — want to just start the trial tomorrow morning? Takes 2 minutes to set up and you don't need a card. Worst case, you turn it off in 14 days."
+
+*[If they agree → send payment link anyway:]*
+"Let me text you the link so it's ready when you are. No charge until Day 15."
 
 ### → PATH 3: Need to Think About It
 
@@ -120,14 +134,33 @@
 
 ---
 
+## TRIAL FRAMING LINE (use anytime during the call)
+
+**"Test Jessica free for 14 days. If she doesn't catch at least 2 jobs you were missing, it costs you nothing."**
+
+---
+
+## PAYMENT QUICK REFERENCE
+
+| Shortcut | What it sends | Plan |
+|----------|--------------|------|
+| Type `pps` | Starter PayPal link ($497/mo) | 14-day trial at $0 |
+| Type `ppp` | Pro PayPal link ($997/mo) | 14-day trial at $0 |
+
+**If they don't have PayPal:** "No problem — there's a 'Pay with Card' button right below the PayPal option."
+
+**If they want to "do it later":** "We can only onboard 3 businesses this week and Jessica takes about an hour to configure. If I send the link now, she's live on your phones tonight."
+
+---
+
 ## CALL ENDER (every call)
 
 **"So we're good — [restate their specific next step]. Sound right?"**
 
 Examples:
-- "So we're good — I'm sending you the setup link tonight and Jessica goes live on your after-hours line tomorrow morning. Sound right?"
+- "So we're good — payment's in, I'm configuring Jessica tonight, and she goes live on your after-hours line by morning. Sound right?"
 - "So we're good — I'm calling you back at 3 PM and you'll have your calendar open. Sound right?"
-- "So we're good — you're texting me TRIAL when you're ready and I'll have you live in 2 minutes. Sound right?"
+- "So we're good — I texted you the trial link. Tap it when you're ready and I'll have Jessica live in under an hour. Sound right?"
 
 ---
 
