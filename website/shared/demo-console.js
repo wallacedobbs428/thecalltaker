@@ -10,240 +10,187 @@
 
   var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // === TTS VOICE SETTINGS ===
-  var TTS_VOICES = {
-    AI:     { pitch: 1.1, rate: 0.92 },   // Higher pitch, slightly slower — "AI receptionist" feel
-    Caller: { pitch: 0.85, rate: 1.0 }    // Lower pitch, normal speed — caller
-  };
-
-  // === TTS ENGINE (Web Speech API) ===
-  var ttsSupported = 'speechSynthesis' in window;
-  var ttsQueue = [];
-  var ttsSpeaking = false;
-  var ttsActive = false;
-
-  function ttsSpeak(text, speaker, onDone) {
-    if (!ttsSupported || REDUCED) { if (onDone) onDone(); return; }
-    var utt = new SpeechSynthesisUtterance(text);
-    var voice = TTS_VOICES[speaker] || TTS_VOICES.Caller;
-    utt.pitch = voice.pitch;
-    utt.rate = voice.rate;
-    utt.volume = 1;
-    // Try to pick a female English voice for AI, male for Caller
-    var voices = speechSynthesis.getVoices();
-    if (voices.length > 0) {
-      var preferred = speaker === 'AI'
-        ? voices.find(function(v) { return v.lang.indexOf('en') === 0 && /female|samantha|karen|victoria|zira|hazel/i.test(v.name); })
-        : voices.find(function(v) { return v.lang.indexOf('en') === 0 && /male|daniel|david|james|tom|george/i.test(v.name); });
-      if (preferred) utt.voice = preferred;
-      else {
-        var english = voices.find(function(v) { return v.lang.indexOf('en') === 0; });
-        if (english) utt.voice = english;
-      }
-    }
-    utt.onend = function() { ttsSpeaking = false; if (onDone) onDone(); };
-    utt.onerror = function() { ttsSpeaking = false; if (onDone) onDone(); };
-    ttsSpeaking = true;
-    speechSynthesis.speak(utt);
-  }
-
-  function ttsStop() {
-    if (ttsSupported) {
-      speechSynthesis.cancel();
-      ttsSpeaking = false;
-      ttsActive = false;
-    }
-  }
-
-  // Preload voices (some browsers load async)
-  if (ttsSupported && speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = function() { speechSynthesis.getVoices(); };
-  }
-  if (ttsSupported) speechSynthesis.getVoices();
-
   // === INDUSTRY DATASETS ===
   var INDUSTRIES = {
     hvac: {
       label: 'HVAC',
       transcript: [
-        { speaker: 'Caller', text: 'Hey, my AC just quit on me and it\u2019s gotta be close to a hundred degrees in the house. I\u2019ve got two little kids here.', start: 0, end: 4 },
-        { speaker: 'AI', text: 'Oh no, I\u2019m so sorry. Let\u2019s get someone out to you right away. Can I grab your address?', start: 4, end: 7 },
-        { speaker: 'Caller', text: 'Yeah, it\u2019s 142 Oak Street in Nashville. It\u2019s a Trane unit, probably about eight years old.', start: 7, end: 10.5 },
-        { speaker: 'AI', text: 'Got it \u2014 142 Oak Street, Trane system. I have a certified tech available this afternoon between 2 and 4. He\u2019ll check your refrigerant levels and the compressor. Sound good?', start: 10.5, end: 15 },
-        { speaker: 'Caller', text: 'Yes, please. We\u2019re dying in here. Thank you so much.', start: 15, end: 17 }
+        { speaker: 'Caller', text: 'My AC stopped working and it\u2019s 95 degrees in here. Can someone come out today?', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'I\u2019m sorry to hear that \u2014 I can get a technician out to you right away. What\u2019s your address?', start: 3.5, end: 7 },
+        { speaker: 'Caller', text: '142 Oak Street, Nashville.', start: 7, end: 9 },
+        { speaker: 'AI', text: 'Got it. I have a tech available this afternoon between 2 and 4 PM. I\u2019ll text you a confirmation with all the details.', start: 9, end: 13 },
+        { speaker: 'Caller', text: 'That\u2019s perfect, thank you.', start: 13, end: 15 }
       ],
-      summary: { name: 'Sarah M.', issue: 'AC not cooling \u2014 Trane unit, 8 yrs old', location: '142 Oak St, Nashville', urgency: 'High \u2014 emergency, kids at home' },
-      booking: { service: 'AC Diagnostic + Repair', time: 'Today 2\u20134 PM', tech: 'Certified HVAC tech', address: '142 Oak St, Nashville' },
-      textMsg: 'New lead from The Call Taker:\nSarah M. \u2014 AC out, Trane unit ~8 yrs.\n142 Oak St, Nashville. Kids at home.\nBooked today 2\u20134 PM.\nCall back: (615) 555-0142',
+      summary: { name: 'Sarah M.', issue: 'AC not cooling \u2014 95\u00b0 inside', location: '142 Oak St, Nashville', urgency: 'High \u2014 emergency' },
+      booking: { service: 'AC Repair', time: 'Today 2\u20134 PM', tech: 'Next available', address: '142 Oak St, Nashville' },
+      textMsg: 'New lead from The Call Taker:\nSarah M. needs AC repair ASAP.\n142 Oak St, Nashville.\nBooked today 2\u20134 PM.\nCall back: (615) 555-0142',
       result: 'Job booked. Text sent. $800 saved.'
     },
     plumbing: {
       label: 'Plumbing',
       transcript: [
-        { speaker: 'Caller', text: 'I\u2019ve got water spraying out from under my kitchen sink \u2014 it looks like the supply line burst. There\u2019s water everywhere!', start: 0, end: 4 },
-        { speaker: 'AI', text: 'Okay, first thing \u2014 can you reach the shut-off valve under the sink? Turn it clockwise to stop the flow. I\u2019m getting a plumber headed your way right now.', start: 4, end: 8.5 },
-        { speaker: 'Caller', text: 'Yeah, I got it turned off. I\u2019m at 88 Elm Drive, apartment 4B. It\u2019s soaking through the floor already.', start: 8.5, end: 12 },
-        { speaker: 'AI', text: 'Good, you stopped it. I\u2019m dispatching our nearest plumber \u2014 he\u2019ll be there within 45 minutes with a replacement supply line. I\u2019ll text you his name and ETA.', start: 12, end: 16 },
-        { speaker: 'Caller', text: 'Thank you. I\u2019ll start getting towels down. Please hurry.', start: 16, end: 18 }
+        { speaker: 'Caller', text: 'I have a burst pipe flooding my kitchen! I need someone now!', start: 0, end: 3 },
+        { speaker: 'AI', text: 'I\u2019m dispatching an emergency plumber right away. What\u2019s your address so I can send the closest tech?', start: 3, end: 6.5 },
+        { speaker: 'Caller', text: '88 Elm Drive, apartment 4B.', start: 6.5, end: 8.5 },
+        { speaker: 'AI', text: 'Got it. Turn off the main water valve under your sink if you can. A plumber will be there within 45 minutes.', start: 8.5, end: 12.5 },
+        { speaker: 'Caller', text: 'Okay, I\u2019ll do that. Thank you so much.', start: 12.5, end: 15 }
       ],
-      summary: { name: 'Mike R.', issue: 'Burst supply line \u2014 kitchen flooding', location: '88 Elm Dr, Apt 4B', urgency: 'Critical \u2014 active water damage' },
+      summary: { name: 'Mike R.', issue: 'Burst pipe \u2014 kitchen flooding', location: '88 Elm Dr, Apt 4B', urgency: 'Critical \u2014 water damage' },
       booking: { service: 'Emergency Pipe Repair', time: 'Within 45 min', tech: 'Nearest available', address: '88 Elm Dr, Apt 4B' },
-      textMsg: 'URGENT lead from The Call Taker:\nMike R. \u2014 burst supply line, kitchen flooding.\n88 Elm Dr, Apt 4B. Shut-off closed.\nDispatched within 45 min.\nCall back: (615) 555-0288',
+      textMsg: 'URGENT lead from The Call Taker:\nMike R. \u2014 burst pipe flooding kitchen.\n88 Elm Dr, Apt 4B.\nDispatched within 45 min.\nCall back: (615) 555-0288',
       result: 'Emergency dispatch. $1,200 job saved.'
     },
     dental: {
       label: 'Dental',
       transcript: [
-        { speaker: 'Caller', text: 'Hi, I\u2019m a new patient and I need to schedule a cleaning and a checkup. Do you accept Delta Dental insurance?', start: 0, end: 4 },
-        { speaker: 'AI', text: 'Welcome! Yes, we do accept Delta Dental. Let me find you a time. Are mornings or afternoons better for you?', start: 4, end: 8 },
-        { speaker: 'Caller', text: 'Mornings work best. I\u2019d love something this week if you have it. I haven\u2019t been to a dentist in about two years.', start: 8, end: 12 },
-        { speaker: 'AI', text: 'No worries at all. I have Thursday at 9 AM open with Dr. Williams. Since it\u2019s been a while, we\u2019ll do full X-rays along with the cleaning. I\u2019ll text you the new patient forms to fill out ahead of time.', start: 12, end: 17 },
-        { speaker: 'Caller', text: 'Thursday at 9 is perfect. Thank you so much!', start: 17, end: 19 }
+        { speaker: 'Caller', text: 'I need to reschedule my cleaning appointment. I can\u2019t make it Thursday.', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'No problem at all. Let me check available times. How does next Tuesday at 10 AM work?', start: 3.5, end: 7 },
+        { speaker: 'Caller', text: 'Tuesday works great.', start: 7, end: 9 },
+        { speaker: 'AI', text: 'Perfect. I\u2019ve rescheduled you for Tuesday at 10 AM. You\u2019ll get a text confirmation shortly. Anything else?', start: 9, end: 13 },
+        { speaker: 'Caller', text: 'That\u2019s it, thank you!', start: 13, end: 15 }
       ],
-      summary: { name: 'Lisa K.', issue: 'New patient cleaning + checkup', location: 'New patient \u2014 Delta Dental', urgency: 'Normal \u2014 routine' },
-      booking: { service: 'Cleaning + Full X-rays', time: 'Thursday 9:00 AM', tech: 'Dr. Williams', address: 'New patient \u2014 forms sent' },
-      textMsg: 'New patient from The Call Taker:\nLisa K. \u2014 cleaning + checkup, new patient.\nInsurance: Delta Dental.\nThursday 9 AM w/ Dr. Williams.\nForms link sent.\nCall back: (615) 555-0311',
-      result: 'New patient booked. Forms sent. Revenue captured.'
+      summary: { name: 'Lisa K.', issue: 'Reschedule cleaning', location: 'Existing patient', urgency: 'Low \u2014 routine' },
+      booking: { service: 'Dental Cleaning', time: 'Tuesday 10:00 AM', tech: 'Dr. Williams', address: 'On file' },
+      textMsg: 'Appointment update:\nLisa K. rescheduled cleaning.\nOld: Thursday \u2192 New: Tuesday 10 AM.\nDr. Williams.\nCall back: (615) 555-0311',
+      result: 'Rescheduled. No missed appointment.'
     },
     legal: {
       label: 'Legal',
       transcript: [
-        { speaker: 'Caller', text: 'I was rear-ended on I-65 about an hour ago. The other driver\u2019s insurance is already calling me. Do I need a lawyer?', start: 0, end: 4 },
-        { speaker: 'AI', text: 'I\u2019m glad you\u2019re safe. Yes, I\u2019d strongly recommend speaking with an attorney before talking to their insurance. Can I get your name so I can have someone call you back right away?', start: 4, end: 9 },
-        { speaker: 'Caller', text: 'It\u2019s James Torres. My neck is really sore and the bumper is completely smashed in. I took photos at the scene.', start: 9, end: 13 },
-        { speaker: 'AI', text: 'Thank you, James. Keep those photos safe \u2014 they\u2019re important evidence. An attorney will call you within the hour for a free consultation. Don\u2019t give any recorded statements to the other driver\u2019s insurance until then.', start: 13, end: 18 },
-        { speaker: 'Caller', text: 'Okay, I won\u2019t talk to them. Thank you.', start: 18, end: 20 }
+        { speaker: 'Caller', text: 'I was just in a car accident and I need to talk to an attorney.', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'I\u2019m sorry to hear that. Are you safe right now? Let me get your information so an attorney can call you back as soon as possible.', start: 3.5, end: 7.5 },
+        { speaker: 'Caller', text: 'Yes, I\u2019m okay. My name is James and the accident happened on I-65.', start: 7.5, end: 10.5 },
+        { speaker: 'AI', text: 'Thank you, James. I have your number. An attorney will call you within the hour. Don\u2019t speak to any insurance adjusters until then.', start: 10.5, end: 15 }
       ],
-      summary: { name: 'James T.', issue: 'Rear-end collision \u2014 I-65, neck pain', location: 'Nashville area', urgency: 'High \u2014 insurance already contacting' },
-      booking: { service: 'Free Consultation', time: 'Callback within 1 hour', tech: 'Personal injury attorney', address: 'Phone consultation' },
-      textMsg: 'HOT LEAD from The Call Taker:\nJames T. \u2014 rear-end collision on I-65.\nNeck pain, has photos. Insurance calling.\nCallback within 1 hour.\nCall back: (615) 555-0477',
+      summary: { name: 'James T.', issue: 'Car accident \u2014 I-65', location: 'Nashville area', urgency: 'High \u2014 time-sensitive' },
+      booking: { service: 'Free Consultation', time: 'Callback within 1 hour', tech: 'Next available attorney', address: 'Phone consultation' },
+      textMsg: 'HOT LEAD from The Call Taker:\nJames T. \u2014 car accident on I-65.\nNeeds attorney ASAP.\nCallback within 1 hour.\nCall back: (615) 555-0477',
       result: 'Client intake captured. Case secured.'
     },
     medspa: {
       label: 'Med Spa',
       transcript: [
-        { speaker: 'Caller', text: 'Hi, I\u2019m interested in getting Botox for the first time. How many units do most people need for the forehead?', start: 0, end: 4 },
-        { speaker: 'AI', text: 'Great question! Most patients use between 10 and 20 units for the forehead, but our injector will customize it during your consultation. Would you like to schedule one?', start: 4, end: 9 },
-        { speaker: 'Caller', text: 'Yeah, do you have anything this week? Also, what\u2019s the cost per unit?', start: 9, end: 12 },
-        { speaker: 'AI', text: 'We\u2019re running $12 per unit this month. I have Wednesday at 2 PM or Friday at 11. We\u2019ll send you intake paperwork and pre-treatment instructions ahead of time.', start: 12, end: 16.5 },
-        { speaker: 'Caller', text: 'Wednesday at 2 sounds great. I\u2019m excited!', start: 16.5, end: 18 }
+        { speaker: 'Caller', text: 'Hi, I\u2019d like to book a Botox appointment. Do you have anything this week?', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'Absolutely! We have openings on Wednesday at 2 PM and Friday at 11 AM. Which works better for you?', start: 3.5, end: 7.5 },
+        { speaker: 'Caller', text: 'Wednesday at 2 sounds great.', start: 7.5, end: 9.5 },
+        { speaker: 'AI', text: 'You\u2019re all set for Wednesday at 2 PM. Is this your first visit? I\u2019ll text you a link to fill out your intake form.', start: 9.5, end: 13.5 },
+        { speaker: 'Caller', text: 'Yes, first time. Thanks!', start: 13.5, end: 15 }
       ],
-      summary: { name: 'Amanda P.', issue: 'First-time Botox \u2014 forehead', location: 'New patient', urgency: 'Normal' },
-      booking: { service: 'Botox Consultation + Treatment', time: 'Wednesday 2:00 PM', tech: 'Licensed injector', address: 'New patient \u2014 intake sent' },
-      textMsg: 'New booking from The Call Taker:\nAmanda P. \u2014 first-time Botox, forehead.\nWednesday 2:00 PM.\nIntake + pre-treatment info sent.\nCall back: (615) 555-0533',
+      summary: { name: 'Amanda P.', issue: 'Botox appointment', location: 'New patient', urgency: 'Normal' },
+      booking: { service: 'Botox Treatment', time: 'Wednesday 2:00 PM', tech: 'First available', address: 'New patient \u2014 intake sent' },
+      textMsg: 'New booking from The Call Taker:\nAmanda P. \u2014 Botox, new patient.\nWednesday 2:00 PM.\nIntake form link sent.\nCall back: (615) 555-0533',
       result: 'Appointment booked. Intake sent.'
-    },
-    roofing: {
-      label: 'Roofing',
-      transcript: [
-        { speaker: 'Caller', text: 'We had that bad storm last night and now I\u2019ve got water coming through the ceiling in my living room. I can see shingles in the yard.', start: 0, end: 4.5 },
-        { speaker: 'AI', text: 'That sounds like storm damage. Let me get an inspector out to you as soon as possible. Are you seeing active dripping right now?', start: 4.5, end: 8.5 },
-        { speaker: 'Caller', text: 'Yeah, I\u2019ve got a bucket under it. We\u2019re at 305 Maple Lane in Murfreesboro. The roof is about 15 years old.', start: 8.5, end: 12.5 },
-        { speaker: 'AI', text: 'Got it. I\u2019m scheduling a free storm damage inspection for tomorrow morning. We\u2019ll document everything for your insurance claim and tarp the affected area. Do you have your homeowner\u2019s policy number handy?', start: 12.5, end: 17 },
-        { speaker: 'Caller', text: 'I can grab it. Tomorrow morning works. Thank you.', start: 17, end: 19 }
-      ],
-      summary: { name: 'Kevin B.', issue: 'Storm damage \u2014 ceiling leak, missing shingles', location: '305 Maple Ln, Murfreesboro', urgency: 'High \u2014 active leak' },
-      booking: { service: 'Storm Damage Inspection', time: 'Tomorrow AM', tech: 'Roof inspector', address: '305 Maple Ln, Murfreesboro' },
-      textMsg: 'URGENT lead from The Call Taker:\nKevin B. \u2014 storm damage, ceiling leak.\n305 Maple Ln, Murfreesboro. Roof ~15 yrs.\nInspection booked tomorrow AM.\nCall back: (615) 555-0305',
-      result: 'Inspection booked. Insurance claim started. $8,500 job.'
-    },
-    electrical: {
-      label: 'Electrical',
-      transcript: [
-        { speaker: 'Caller', text: 'Half the outlets in my kitchen stopped working and the breaker keeps tripping every time I reset it. I\u2019m worried something\u2019s wrong with the wiring.', start: 0, end: 4.5 },
-        { speaker: 'AI', text: 'That does sound like it could be a short or an overloaded circuit. I\u2019d recommend not forcing the breaker back on. Let me get a licensed electrician out to diagnose it. What\u2019s your address?', start: 4.5, end: 9.5 },
-        { speaker: 'Caller', text: '712 Cedar Court in Franklin. The house was built in the \u201970s so the wiring might be original.', start: 9.5, end: 13 },
-        { speaker: 'AI', text: 'Good to know \u2014 older wiring is definitely something we\u2019ll want to check. I have an electrician available tomorrow between 8 and 10 AM. He\u2019ll inspect the panel and trace the circuit. I\u2019ll text you the confirmation.', start: 13, end: 18 },
-        { speaker: 'Caller', text: 'That works. I just want to make sure it\u2019s safe. Thank you.', start: 18, end: 20 }
-      ],
-      summary: { name: 'Tom H.', issue: 'Tripping breaker \u2014 kitchen outlets dead', location: '712 Cedar Ct, Franklin', urgency: 'High \u2014 possible wiring fault' },
-      booking: { service: 'Electrical Diagnostic', time: 'Tomorrow 8\u201310 AM', tech: 'Licensed electrician', address: '712 Cedar Ct, Franklin' },
-      textMsg: 'New lead from The Call Taker:\nTom H. \u2014 breaker tripping, kitchen outlets out.\n712 Cedar Ct, Franklin. 1970s wiring.\nBooked tomorrow 8\u201310 AM.\nCall back: (615) 555-0712',
-      result: 'Diagnostic booked. Text sent. $650 job saved.'
     },
     locksmith: {
       label: 'Locksmith',
       transcript: [
-        { speaker: 'Caller', text: 'I\u2019m locked out of my car at the Kroger parking lot on West End. My keys are sitting right on the seat. Can someone come pop the lock?', start: 0, end: 4.5 },
-        { speaker: 'AI', text: 'Absolutely, I can get a locksmith to you fast. What\u2019s the year, make, and model of the vehicle?', start: 4.5, end: 8 },
-        { speaker: 'Caller', text: 'It\u2019s a 2019 Honda Civic. I\u2019m standing right next to it in the parking lot.', start: 8, end: 11 },
-        { speaker: 'AI', text: 'Got it \u2014 2019 Civic at the West End Kroger. I\u2019m sending our nearest tech now, he should be there in about 20 minutes. I\u2019ll text you his name and ETA so you know who to look for.', start: 11, end: 16 },
-        { speaker: 'Caller', text: 'Twenty minutes? That\u2019s great. I was worried it\u2019d be an hour. Thanks!', start: 16, end: 18 }
+        { speaker: 'Caller', text: 'I\u2019m locked out of my house and my kids are inside. Can someone come right now?', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'I understand the urgency. I\u2019m dispatching a locksmith to you immediately. What\u2019s your address?', start: 3.5, end: 7 },
+        { speaker: 'Caller', text: '305 Maple Lane, right off Highway 70.', start: 7, end: 9.5 },
+        { speaker: 'AI', text: 'Got it. A locksmith will be there in about 20 minutes. Stay by the door and they\u2019ll call when they arrive.', start: 9.5, end: 13.5 },
+        { speaker: 'Caller', text: 'Thank you so much, please hurry.', start: 13.5, end: 15 }
       ],
-      summary: { name: 'Rachel S.', issue: 'Car lockout \u2014 keys on seat', location: 'Kroger, West End Ave', urgency: 'Medium \u2014 stranded' },
-      booking: { service: 'Car Lockout', time: 'Within 20 min', tech: 'Nearest mobile locksmith', address: 'Kroger, West End Ave' },
-      textMsg: 'New lead from The Call Taker:\nRachel S. \u2014 locked out, 2019 Honda Civic.\nKroger parking lot, West End Ave.\nETA 20 min.\nCall back: (615) 555-0199',
-      result: 'Locksmith dispatched. $150 job saved.'
+      summary: { name: 'Rachel D.', issue: 'Locked out \u2014 kids inside', location: '305 Maple Ln', urgency: 'Critical \u2014 emergency' },
+      booking: { service: 'Emergency Lockout', time: 'ETA 20 minutes', tech: 'Nearest available', address: '305 Maple Ln' },
+      textMsg: 'URGENT lead from The Call Taker:\nRachel D. \u2014 locked out, kids inside.\n305 Maple Ln off Hwy 70.\nDispatched, ETA 20 min.\nCall back: (615) 555-0305',
+      result: 'Emergency dispatch. $185 job saved.'
+    },
+    roofing: {
+      label: 'Roofing',
+      transcript: [
+        { speaker: 'Caller', text: 'We had a bad storm last night and I think my roof is leaking. There\u2019s water coming through the ceiling.', start: 0, end: 4 },
+        { speaker: 'AI', text: 'I\u2019m sorry to hear that. Let me get an inspector out to assess the damage. What\u2019s your address?', start: 4, end: 7.5 },
+        { speaker: 'Caller', text: '1220 Pine Ridge Drive.', start: 7.5, end: 9.5 },
+        { speaker: 'AI', text: 'We can have someone there tomorrow morning between 8 and 10 for a free inspection. I\u2019ll send you a confirmation text.', start: 9.5, end: 14 },
+        { speaker: 'Caller', text: 'That would be great.', start: 14, end: 15 }
+      ],
+      summary: { name: 'Tom H.', issue: 'Storm damage \u2014 roof leak', location: '1220 Pine Ridge Dr', urgency: 'High \u2014 active leak' },
+      booking: { service: 'Roof Inspection (Free)', time: 'Tomorrow 8\u201310 AM', tech: 'Inspector', address: '1220 Pine Ridge Dr' },
+      textMsg: 'New lead from The Call Taker:\nTom H. \u2014 storm damage, active roof leak.\n1220 Pine Ridge Dr.\nFree inspection tomorrow 8\u201310 AM.\nCall back: (615) 555-1220',
+      result: 'Inspection booked. $4,500 potential job.'
+    },
+    electrical: {
+      label: 'Electrical',
+      transcript: [
+        { speaker: 'Caller', text: 'Half the outlets in my kitchen stopped working and I smell something burning.', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'That could be a wiring issue. For safety, don\u2019t use those outlets. I\u2019m sending an electrician out today. What\u2019s your address?', start: 3.5, end: 7.5 },
+        { speaker: 'Caller', text: '78 Birch Street, unit 2.', start: 7.5, end: 9.5 },
+        { speaker: 'AI', text: 'An electrician will be there between 1 and 3 PM today. I\u2019ll text you the confirmation and their contact info.', start: 9.5, end: 13.5 },
+        { speaker: 'Caller', text: 'Okay, thank you.', start: 13.5, end: 15 }
+      ],
+      summary: { name: 'Karen L.', issue: 'Dead outlets + burning smell', location: '78 Birch St, Unit 2', urgency: 'High \u2014 safety hazard' },
+      booking: { service: 'Electrical Diagnostic', time: 'Today 1\u20133 PM', tech: 'Licensed electrician', address: '78 Birch St, Unit 2' },
+      textMsg: 'URGENT lead from The Call Taker:\nKaren L. \u2014 dead outlets, burning smell.\n78 Birch St, Unit 2.\nToday 1\u20133 PM.\nCall back: (615) 555-0078',
+      result: 'Safety call booked. $600 job saved.'
     },
     towing: {
       label: 'Towing',
       transcript: [
-        { speaker: 'Caller', text: 'My car broke down on the shoulder of I-24 near exit 57. The engine overheated and it won\u2019t start back up. I need a tow.', start: 0, end: 4.5 },
-        { speaker: 'AI', text: 'I\u2019m sorry to hear that. Are you in a safe spot off the road? Let me get a tow truck headed to you right away. What kind of vehicle is it?', start: 4.5, end: 9 },
-        { speaker: 'Caller', text: 'Yeah, I\u2019m on the shoulder with my hazards on. It\u2019s a 2017 Ford F-150. I need it towed to my mechanic on Nolensville Pike.', start: 9, end: 13 },
-        { speaker: 'AI', text: 'Got it \u2014 F-150 on I-24 at exit 57, towing to Nolensville Pike. Our nearest driver can be there in about 30 minutes. I\u2019ll text you his info and a live ETA tracker.', start: 13, end: 17.5 },
-        { speaker: 'Caller', text: 'Perfect, 30 minutes is fine. I appreciate the fast response.', start: 17.5, end: 19 }
+        { speaker: 'Caller', text: 'My car broke down on the side of I-24. I need a tow truck as fast as possible.', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'I\u2019ll get a truck to you right away. Can you tell me your exact location or the nearest exit?', start: 3.5, end: 7 },
+        { speaker: 'Caller', text: 'I\u2019m about a mile past exit 62, southbound.', start: 7, end: 9.5 },
+        { speaker: 'AI', text: 'Got it. A tow truck is on the way, ETA about 25 minutes. Stay in your vehicle with hazards on. Where do you want the car towed?', start: 9.5, end: 14 },
+        { speaker: 'Caller', text: 'Take it to Midtown Auto on 5th Avenue.', start: 14, end: 15 }
       ],
-      summary: { name: 'Marcus J.', issue: 'Breakdown \u2014 engine overheated, I-24', location: 'I-24 shoulder, exit 57', urgency: 'High \u2014 roadside' },
-      booking: { service: 'Flatbed Tow', time: 'Within 30 min', tech: 'Nearest tow driver', address: 'I-24 exit 57 \u2192 Nolensville Pike' },
-      textMsg: 'URGENT lead from The Call Taker:\nMarcus J. \u2014 breakdown, 2017 F-150.\nI-24 shoulder at exit 57.\nTow to Nolensville Pike mechanic.\nETA 30 min.\nCall back: (615) 555-0824',
-      result: 'Tow dispatched. $250 job saved.'
+      summary: { name: 'Chris B.', issue: 'Breakdown \u2014 I-24 southbound', location: 'Mile past exit 62', urgency: 'High \u2014 roadside' },
+      booking: { service: 'Emergency Tow', time: 'ETA 25 minutes', tech: 'Nearest truck', address: 'I-24 SB past exit 62 \u2192 Midtown Auto' },
+      textMsg: 'URGENT lead from The Call Taker:\nChris B. \u2014 breakdown I-24 SB past exit 62.\nTow to Midtown Auto, 5th Ave.\nTruck dispatched, ETA 25 min.\nCall back: (615) 555-0624',
+      result: 'Tow dispatched. $150 job saved.'
+    },
+    pest_control: {
+      label: 'Pest Control',
+      transcript: [
+        { speaker: 'Caller', text: 'I found termite damage in my basement. Can someone come do an inspection?', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'Absolutely. Termite damage can spread quickly so let\u2019s get someone out soon. What\u2019s your address?', start: 3.5, end: 7 },
+        { speaker: 'Caller', text: '410 Walnut Court.', start: 7, end: 9 },
+        { speaker: 'AI', text: 'We have an opening tomorrow at 9 AM for a free termite inspection. I\u2019ll text you the details and what to expect.', start: 9, end: 13 },
+        { speaker: 'Caller', text: 'Perfect, book it.', start: 13, end: 15 }
+      ],
+      summary: { name: 'Dan F.', issue: 'Termite damage \u2014 basement', location: '410 Walnut Ct', urgency: 'High \u2014 structural' },
+      booking: { service: 'Termite Inspection (Free)', time: 'Tomorrow 9:00 AM', tech: 'Pest inspector', address: '410 Walnut Ct' },
+      textMsg: 'New lead from The Call Taker:\nDan F. \u2014 termite damage in basement.\n410 Walnut Ct.\nFree inspection tomorrow 9 AM.\nCall back: (615) 555-0410',
+      result: 'Inspection booked. $2,800 treatment potential.'
     },
     veterinary: {
       label: 'Veterinary',
       transcript: [
-        { speaker: 'Caller', text: 'My dog just ate a whole bar of dark chocolate. He\u2019s a 30-pound beagle and he\u2019s already starting to shake. What should I do?', start: 0, end: 4.5 },
-        { speaker: 'AI', text: 'Dark chocolate is toxic for dogs, especially at that size. Don\u2019t try to induce vomiting at home. How long ago did he eat it?', start: 4.5, end: 9 },
-        { speaker: 'Caller', text: 'Maybe 20 minutes ago. He got into my purse while I was in the other room. I\u2019m at 460 Belmont Avenue.', start: 9, end: 13 },
-        { speaker: 'AI', text: 'Okay, bring him in right away. I\u2019m flagging the vet team now so they\u2019ll be ready when you arrive. Drive safely \u2014 we\u2019re expecting you in the next 15 minutes.', start: 13, end: 17.5 },
-        { speaker: 'Caller', text: 'We\u2019re leaving right now. Thank you so much.', start: 17.5, end: 19 }
+        { speaker: 'Caller', text: 'My dog ate something and he\u2019s been vomiting for the last hour. Can I bring him in?', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'I\u2019m sorry to hear that. Yes, bring him in right away. Do you know what he ate?', start: 3.5, end: 7 },
+        { speaker: 'Caller', text: 'I think it was chocolate from the counter. He\u2019s a 30-pound Lab mix.', start: 7, end: 10 },
+        { speaker: 'AI', text: 'Chocolate can be serious for dogs. Come in now and we\u2019ll have a vet ready. I\u2019m noting the details for the doctor.', start: 10, end: 14 },
+        { speaker: 'Caller', text: 'We\u2019re on our way, thank you.', start: 14, end: 15 }
       ],
-      summary: { name: 'Nicole D.', issue: 'Chocolate toxicity \u2014 30lb beagle', location: '460 Belmont Ave', urgency: 'Critical \u2014 emergency' },
-      booking: { service: 'Emergency Exam', time: 'Arriving in 15 min', tech: 'Vet team on standby', address: '460 Belmont Ave' },
-      textMsg: 'EMERGENCY from The Call Taker:\nNicole D. \u2014 dog ate dark chocolate.\n30lb beagle, shaking, 20 min ago.\nArriving in 15 min.\nCall back: (615) 555-0460',
-      result: 'Emergency flagged. Vet team ready. Life saved.'
+      summary: { name: 'Jen M.', issue: 'Dog ingested chocolate \u2014 vomiting', location: 'En route', urgency: 'Critical \u2014 toxicity risk' },
+      booking: { service: 'Emergency Visit', time: 'Walk-in ASAP', tech: 'On-call vet', address: 'Coming in now' },
+      textMsg: 'URGENT from The Call Taker:\nJen M. \u2014 30lb Lab mix ate chocolate, vomiting.\nEn route now.\nVet notified, room prepped.\nCall back: (615) 555-0730',
+      result: 'Emergency intake ready. Pet saved.'
     },
-    property: {
+    property_management: {
       label: 'Property Mgmt',
       transcript: [
-        { speaker: 'Caller', text: 'This is the tenant in unit 12B at Riverside Commons. My hot water heater is leaking all over the utility closet and the carpet is soaked.', start: 0, end: 4.5 },
-        { speaker: 'AI', text: 'I\u2019m sorry about that. Can you see where the leak is coming from \u2014 is it the tank itself or one of the pipes at the top?', start: 4.5, end: 8.5 },
-        { speaker: 'Caller', text: 'It looks like it\u2019s coming from the bottom of the tank. There\u2019s a puddle forming pretty fast.', start: 8.5, end: 12 },
-        { speaker: 'AI', text: 'That\u2019s likely a tank failure. I\u2019m sending a maintenance request to the property manager right now and dispatching a plumber for tomorrow morning. In the meantime, turn the water supply valve above the heater to the off position.', start: 12, end: 17.5 },
-        { speaker: 'Caller', text: 'Okay, I\u2019ll do that. Thanks for taking care of this so fast.', start: 17.5, end: 19 }
+        { speaker: 'Caller', text: 'This is unit 312. My heater isn\u2019t working and it\u2019s freezing in here.', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'I\u2019m sorry about that. Let me create a maintenance request right away. Can I confirm your name and the property address?', start: 3.5, end: 7.5 },
+        { speaker: 'Caller', text: 'Mark Stevens, Riverside Apartments, unit 312.', start: 7.5, end: 10 },
+        { speaker: 'AI', text: 'Got it, Mark. I\u2019ve submitted a priority maintenance request. Someone from maintenance will contact you within 2 hours.', start: 10, end: 14 },
+        { speaker: 'Caller', text: 'Thank you, I appreciate it.', start: 14, end: 15 }
       ],
-      summary: { name: 'Tenant 12B', issue: 'Water heater leak \u2014 tank failure', location: 'Riverside Commons, Unit 12B', urgency: 'High \u2014 active leak' },
-      booking: { service: 'Water Heater Replacement', time: 'Tomorrow AM', tech: 'Maintenance + plumber', address: 'Riverside Commons, 12B' },
-      textMsg: 'Maintenance request from The Call Taker:\nTenant 12B \u2014 water heater leaking from tank.\nRiverside Commons. Carpet soaked.\nPlumber booked tomorrow AM.\nCall back: (615) 555-0912',
-      result: 'Work order filed. Plumber booked. Tenant handled.'
+      summary: { name: 'Mark S.', issue: 'Heater not working \u2014 unit 312', location: 'Riverside Apartments', urgency: 'High \u2014 no heat' },
+      booking: { service: 'Priority Maintenance', time: 'Response within 2 hours', tech: 'Maintenance team', address: 'Riverside Apts, Unit 312' },
+      textMsg: 'Maintenance request from The Call Taker:\nMark S. \u2014 heater out, unit 312.\nRiverside Apartments.\nPriority ticket created.\nCall back: (615) 555-0312',
+      result: 'Maintenance ticket created. Tenant satisfied.'
     },
-    garage: {
-      label: 'Garage Door',
+    other: {
+      label: 'Other',
       transcript: [
-        { speaker: 'Caller', text: 'My garage door went off the track this morning and it\u2019s stuck about two feet up. I can\u2019t close it and my car is inside.', start: 0, end: 4 },
-        { speaker: 'AI', text: 'That sounds like a cable or roller issue. Don\u2019t try to force it \u2014 the spring tension can be dangerous. What\u2019s your address so I can send a technician?', start: 4, end: 8.5 },
-        { speaker: 'Caller', text: '215 Bridle Path in Brentwood. It\u2019s a two-car garage, and the left side is the one that\u2019s stuck.', start: 8.5, end: 12 },
-        { speaker: 'AI', text: 'Got it \u2014 215 Bridle Path, left bay off-track. I have a tech available this afternoon between 1 and 3 PM. He\u2019ll re-track the door and inspect the cables, rollers, and springs. I\u2019ll text you confirmation.', start: 12, end: 17 },
-        { speaker: 'Caller', text: 'This afternoon is great. I just need to get my car out. Thanks.', start: 17, end: 19 }
+        { speaker: 'Caller', text: 'I need someone to come look at my garage door. It won\u2019t close all the way.', start: 0, end: 3.5 },
+        { speaker: 'AI', text: 'I can help with that. Is the door stuck open right now, or does it go partway down and come back up?', start: 3.5, end: 7.5 },
+        { speaker: 'Caller', text: 'It goes about halfway and then reverses.', start: 7.5, end: 10 },
+        { speaker: 'AI', text: 'That\u2019s usually a sensor or spring issue. I have a tech available tomorrow morning between 9 and 11. Should I book that?', start: 10, end: 15 }
       ],
-      summary: { name: 'David W.', issue: 'Door off track \u2014 stuck open 2 ft', location: '215 Bridle Path, Brentwood', urgency: 'Medium \u2014 car trapped' },
-      booking: { service: 'Off-Track Repair + Inspection', time: 'Today 1\u20133 PM', tech: 'Garage door tech', address: '215 Bridle Path, Brentwood' },
-      textMsg: 'New lead from The Call Taker:\nDavid W. \u2014 garage door off track, left bay.\n215 Bridle Path, Brentwood. Car inside.\nBooked today 1\u20133 PM.\nCall back: (615) 555-0215',
+      summary: { name: 'David W.', issue: 'Garage door won\u2019t close', location: 'Residential', urgency: 'Medium' },
+      booking: { service: 'Garage Door Repair', time: 'Tomorrow 9\u201311 AM', tech: 'Next available', address: 'Pending address' },
+      textMsg: 'New lead from The Call Taker:\nDavid W. \u2014 garage door issue.\nDoor reverses halfway.\nBooked tomorrow 9\u201311 AM.\nCall back: (615) 555-0621',
       result: 'Service call booked. $350 job saved.'
-    },
-    funeral: {
-      label: 'Funeral',
-      transcript: [
-        { speaker: 'Caller', text: 'My mother passed away this morning at Vanderbilt hospital. We need to make arrangements. I don\u2019t really know where to start.', start: 0, end: 4.5 },
-        { speaker: 'AI', text: 'I\u2019m so sorry for your loss. Please take your time. We\u2019re here to walk you through everything. Can I get your name and the best number to reach you?', start: 4.5, end: 9.5 },
-        { speaker: 'Caller', text: 'It\u2019s Patricia Collins. You can reach me at this number. She\u2019s still at the hospital right now.', start: 9.5, end: 13 },
-        { speaker: 'AI', text: 'Thank you, Patricia. I\u2019ll have our funeral director call you within the next 30 minutes. We\u2019ll coordinate the transfer from Vanderbilt and help you plan everything at your pace. You don\u2019t need to worry about the details right now.', start: 13, end: 18 },
-        { speaker: 'Caller', text: 'Thank you. That means a lot right now.', start: 18, end: 20 }
-      ],
-      summary: { name: 'Patricia C.', issue: 'Arrangements needed \u2014 mother passed', location: 'Vanderbilt Hospital', urgency: 'High \u2014 immediate coordination' },
-      booking: { service: 'Funeral Arrangement Consultation', time: 'Callback within 30 min', tech: 'Funeral director', address: 'Transfer from Vanderbilt' },
-      textMsg: 'Sensitive lead from The Call Taker:\nPatricia C. \u2014 mother passed at Vanderbilt.\nNeeds arrangements + hospital transfer.\nCallback within 30 min.\nCall back: (615) 555-0741',
-      result: 'Family contacted. Transfer arranged. Compassionate care.'
     }
   };
 
@@ -313,6 +260,7 @@
     }
 
     // Audio detection
+    var timeLabel = root.querySelector('.dc-time-label');
     if (audioEl) {
       audioEl.addEventListener('loadedmetadata', function() {
         if (audioEl.duration > 0 && isFinite(audioEl.duration)) {
@@ -321,9 +269,10 @@
             // Placeholder file — too short to be a real demo recording
             hasRealAudio = false;
             if (simLabel) {
-              simLabel.textContent = 'Simulated demo (real recording coming soon)';
+              simLabel.textContent = 'Simulated demo';
               simLabel.classList.remove('dc-audio-loaded');
             }
+            if (timeLabel) timeLabel.textContent = 'Press play to preview';
           } else {
             audioDuration = audioEl.duration;
             hasRealAudio = true;
@@ -332,6 +281,7 @@
               simLabel.textContent = simLabel.getAttribute('data-loaded');
               simLabel.classList.add('dc-audio-loaded');
             }
+            if (timeLabel) timeLabel.textContent = 'Real call recording';
           }
         }
       });
@@ -342,11 +292,13 @@
       });
       audioEl.addEventListener('ended', onComplete);
       audioEl.addEventListener('error', function() {
+        hasRealAudio = false;
         var simLabel = root.querySelector('.dc-sim-label');
         if (simLabel) {
           simLabel.textContent = simLabel.getAttribute('data-sim');
           simLabel.classList.remove('dc-audio-loaded');
         }
+        if (timeLabel) timeLabel.textContent = 'Press play to preview';
       });
     }
 
@@ -411,20 +363,32 @@
       if (hasRealAudio && audioEl.readyState >= 1) {
         audioEl.currentTime = pct * audioDuration;
         if (!playing) togglePlay();
+      } else {
+        // Simulated mode: scrub to position and start if not playing
+        currentTime = pct * audioDuration;
+        tick(pct);
+        if (!playing) togglePlay();
       }
     });
 
     function togglePlay() {
       if (playing) {
         stopPlayback();
+        if (!hasRealAudio && timeLabel) timeLabel.textContent = 'Press play to preview';
       } else {
         playing = true;
         setPlayIcon('pause');
         track('audio_play', { section: 'demo_console', industry: currentIndustry });
         try { document.dispatchEvent(new CustomEvent('tct:console-play')); } catch(e) {}
         if (hasRealAudio) {
-          audioEl.play().catch(function() { startSimulated(); });
+          audioEl.play().catch(function() {
+            hasRealAudio = false;
+            if (timeLabel) timeLabel.textContent = 'Playing demo preview';
+            startSimulated();
+          });
+          if (timeLabel) timeLabel.textContent = 'Playing call recording';
         } else {
+          if (timeLabel) timeLabel.textContent = 'Playing demo preview';
           startSimulated();
         }
       }
@@ -435,50 +399,21 @@
       setPlayIcon('play');
       if (hasRealAudio) audioEl.pause();
       if (simInterval) { clearInterval(simInterval); simInterval = null; }
-      ttsStop();
-      clearTTSTimeouts();
     }
 
     function startSimulated() {
       var startMs = Date.now() - (currentTime * 1000);
-      // Start TTS for transcript lines
-      if (ttsSupported && !REDUCED) {
-        ttsActive = true;
-        scheduleTTS(currentTime);
-      }
       simInterval = setInterval(function() {
         currentTime = (Date.now() - startMs) / 1000;
         if (currentTime >= audioDuration) {
           clearInterval(simInterval);
           simInterval = null;
           currentTime = audioDuration;
-          ttsStop();
           onComplete();
           return;
         }
         tick(currentTime / audioDuration);
       }, 80);
-    }
-
-    // Schedule TTS for each transcript line
-    var ttsTimeouts = [];
-    function scheduleTTS(fromTime) {
-      clearTTSTimeouts();
-      var data = INDUSTRIES[currentIndustry];
-      if (!data || !data.transcript) return;
-      data.transcript.forEach(function(line) {
-        if (line.start < fromTime) return;
-        var delay = (line.start - fromTime) * 1000;
-        var t = setTimeout(function() {
-          if (!ttsActive || !playing) return;
-          ttsSpeak(line.text, line.speaker);
-        }, delay);
-        ttsTimeouts.push(t);
-      });
-    }
-    function clearTTSTimeouts() {
-      ttsTimeouts.forEach(function(t) { clearTimeout(t); });
-      ttsTimeouts = [];
     }
 
     function tick(pct) {
@@ -513,6 +448,7 @@
       bars.forEach(function(b) { b.className = 'dc-bar played'; });
       if (progressFill) progressFill.style.width = '100%';
       if (completeEl) completeEl.classList.add('show');
+      if (timeLabel) timeLabel.textContent = hasRealAudio ? 'Call complete' : 'Demo complete';
       revealAllOutputs();
       track('audio_complete', { section: 'demo_console', industry: currentIndustry });
     }
@@ -521,13 +457,12 @@
       root.classList.remove('dc-done');
       playBtn.classList.remove('dc-done');
       setPlayIcon('play');
-      ttsStop();
-      clearTTSTimeouts();
       currentTime = 0;
       bars.forEach(function(b) { b.className = 'dc-bar'; });
       if (progressFill) progressFill.style.width = '0%';
       if (durationEl) durationEl.textContent = '0:00 / ' + fmt(audioDuration);
       if (completeEl) completeEl.classList.remove('show');
+      if (timeLabel) timeLabel.textContent = hasRealAudio ? 'Real call recording' : 'Press play to preview';
       // Reset field fills
       root.querySelectorAll('.dc-field').forEach(function(f) { f.classList.remove('filled'); });
       root.querySelectorAll('.dc-field-value').forEach(function(v) { v.textContent = ''; });
@@ -613,8 +548,8 @@
     // Header
     html += '<div class="dc-header">';
     html += '<span class="dc-badge"><span class="dc-live-dot"></span>Call Session Viewer</span>';
-    html += '<span class="dc-sim-label" data-loaded="Demo audio loaded" data-sim="' + (ttsSupported ? 'Demo with AI voice' : 'Simulated demo') + '">' + (ttsSupported ? 'Demo with AI voice' : 'Simulated demo') + '</span>';
-    html += '<span class="dc-time">Real call \u2014 11:47 PM</span>';
+    html += '<span class="dc-sim-label" data-loaded="Real call audio" data-sim="Simulated demo">Simulated demo</span>';
+    html += '<span class="dc-time dc-time-label">Press play to preview</span>';
     html += '</div>';
     // Industry pills
     if (showIndustries) {
@@ -697,12 +632,26 @@
     return '<div class="dc-text-preview"><div class="dc-text-type"><strong>New lead from The Call Taker:</strong><br>' + escaped + '</div></div>';
   }
 
+  // === URL param reader ===
+  function getUrlIndustry() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var ind = params.get('industry');
+      if (ind && INDUSTRIES[ind]) return ind;
+      // Map slug variants
+      var slugMap = { 'pest-control': 'pest_control', 'pestcontrol': 'pest_control', 'vet': 'veterinary', 'property-management': 'property_management', 'propertymgmt': 'property_management', 'garage-door': 'other', 'med-spa': 'medspa' };
+      if (ind && slugMap[ind] && INDUSTRIES[slugMap[ind]]) return slugMap[ind];
+    } catch(e) {}
+    return null;
+  }
+
   // === Auto-init all .dc elements on page ===
+  var urlIndustry = getUrlIndustry();
   document.querySelectorAll('.dc').forEach(function(el) {
     var opts = {
       dark: el.classList.contains('dc-dark'),
       large: el.classList.contains('dc-large'),
-      industry: el.getAttribute('data-industry') || 'hvac',
+      industry: urlIndustry || el.getAttribute('data-industry') || 'hvac',
       industries: el.getAttribute('data-industries') !== 'false',
       audioSrc: el.getAttribute('data-audio') || '/assets/demo/demo-call-15s.mp3'
     };
@@ -724,8 +673,14 @@
     }
   }
 
+  // === Track demo page view with industry ===
+  if (urlIndustry) {
+    track('demo_page_view', { industry: urlIndustry, source: 'demo_link' });
+  }
+
   // Export for manual init + command palette
   window.initDemoConsole = initDemoConsole;
+  window.TCT_INDUSTRIES = INDUSTRIES;
   window.TCT_Console = {
     play: function() {
       var btn = document.querySelector('.dc .dc-play');
