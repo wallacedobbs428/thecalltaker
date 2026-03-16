@@ -112,7 +112,7 @@ Try it right now &mdash; call our demo line: <a href="tel:+16157845747">(615) 78
 <a href="#" class="cta cta-primary" id="link-297" onclick="trackCheckout('full-247')">Start Free 14-Day Pilot</a>
 </div>
 
-<!-- Premium $497/mo -->
+<!-- Pro $997/mo -->
 <div class="card">
 <div class="plan-name">Premium</div>
 <div class="plan-desc">White-glove service for growing companies</div>
@@ -130,7 +130,7 @@ Try it right now &mdash; call our demo line: <a href="tel:+16157845747">(615) 78
 <li>Custom AI training on your business</li>
 <li>Same-day setup</li>
 </ul>
-<a href="#" class="cta cta-premium" id="link-497" onclick="trackCheckout('premium')">Start Free 14-Day Pilot</a>
+<a href="#" class="cta cta-premium" id="link-997" onclick="trackCheckout('premium')">Start Free 14-Day Pilot</a>
 </div>
 </div>
 
@@ -180,8 +180,8 @@ Try it right now &mdash; call our demo line: <a href="tel:+16157845747">(615) 78
 // Payment link configuration — UPDATE THESE when Stripe products are created
 const PAYMENT_LINKS = {
   'after-hours': '', // Stripe Payment Link URL for $97/mo
-  'full-247': '',    // Stripe Payment Link URL for $497/mo
-  'premium': '',     // Stripe Payment Link URL for $497/mo
+  'full-247': '',    // Stripe Payment Link URL for $997/mo
+  'premium': '',     // Stripe Payment Link URL for $997/mo
 };
 
 // Try to load Stripe links from stored config
@@ -213,7 +213,7 @@ function trackCheckout(plan) {
   if (typeof gtag !== 'undefined') {
     gtag('event', 'conversion', {
       'send_to': 'AW-17970510102/checkout_click',
-      'value': plan === 'premium' ? 497 : plan === 'full-247' ? 497 : 97,
+      'value': plan === 'premium' ? 997 : plan === 'full-247' ? 497 : 97,
       'currency': 'USD'
     });
   }

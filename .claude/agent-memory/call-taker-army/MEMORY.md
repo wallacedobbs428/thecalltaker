@@ -15,7 +15,7 @@
 - ntfy topics (standardized March 2 2026):
   URGENT=tct-urgent-Hk9UOEZR, SALES=tct-sales-63uYsIT9,
   SYSTEM=tct-system-vRsfXQRQ, ACTIVITY=tct-activity-cn1Aqa85,
-  William=tct-william-Qm8nR3vK
+  Team=tct-william-Qm8nR3vK  # Wallace & Mills
 
 ## GHL API constants (confirmed from code)
 - API key: pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35
