@@ -26,22 +26,36 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .war-room{max-width:440px;margin:0 auto;padding:12px 16px 100px}
 
 /* Header */
-.wr-header{display:flex;align-items:center;justify-content:space-between;padding:8px 0 16px}
+.wr-header{display:flex;align-items:center;justify-content:space-between;padding:8px 0 12px}
 .wr-header h1{font-size:18px;font-weight:800;color:var(--text);letter-spacing:-0.02em}
 .wr-header h1 span{color:var(--green)}
 .wr-time{font-size:11px;color:var(--text3);font-variant-numeric:tabular-nums}
 .pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-right:6px;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 var(--green-glow)}50%{opacity:.7;box-shadow:0 0 0 6px transparent}}
 
+/* Daily Goal Tracker */
+.daily-goal{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:14px}
+.daily-goal-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text3);margin-bottom:8px}
+.goal-checks{display:flex;gap:6px}
+.goal-item{flex:1;display:flex;align-items:center;gap:6px;padding:8px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color 0.2s,background 0.2s}
+.goal-item.done{border-color:rgba(0,220,130,0.3);background:var(--green-dim)}
+.goal-check{width:18px;height:18px;border-radius:5px;border:2px solid var(--text3);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s}
+.goal-item.done .goal-check{border-color:var(--green);background:var(--green)}
+.goal-item.done .goal-check svg{display:block}
+.goal-check svg{display:none;width:12px;height:12px}
+.goal-label{font-size:10px;font-weight:600;color:var(--text3);line-height:1.2}
+.goal-item.done .goal-label{color:var(--green)}
+
 /* Reply Alert Banner */
-.reply-banner{border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.reply-banner{border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;text-decoration:none}
 .reply-banner.has-replies{background:var(--red-dim);border:1px solid rgba(239,68,68,0.3);color:var(--red);animation:urgentPulse 2s infinite}
-.reply-banner.no-replies{background:var(--green-dim);border:1px solid rgba(0,220,130,0.15);color:var(--green)}
+.reply-banner.no-replies{background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);color:#60a5fa}
 @keyframes urgentPulse{0%,100%{box-shadow:0 0 0 0 var(--red-glow)}50%{box-shadow:0 0 0 8px transparent}}
 .reply-banner svg{flex-shrink:0}
+.reply-sub{font-size:11px;font-weight:500;opacity:0.8;margin-top:2px}
 
 /* Section Headers */
-.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);margin:18px 0 10px;display:flex;align-items:center;gap:8px}
 .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 
 /* Lead Cards */
@@ -59,7 +73,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .badge-dental{background:rgba(236,72,153,0.15);color:#f472b6}
 .badge-legal{background:rgba(139,92,246,0.15);color:#a78bfa}
 .badge-towing{background:rgba(220,38,38,0.15);color:#f87171}
-.badge-default{background:rgba(0,220,130,0.12);color:#00dc82}
+.badge-default,.badge-general{background:rgba(0,220,130,0.12);color:#00dc82}
 
 /* Score Bar */
 .score-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
@@ -77,16 +91,27 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .btn:active{transform:scale(0.96);opacity:0.8}
 .btn-call{background:var(--green);color:#000;grid-column:1/-1}
 .btn-copy{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
-.btn-pay{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(251,191,36,0.2)}
+.btn-yes{background:var(--green-dim);color:var(--green);border:1px solid rgba(0,220,130,0.2)}
+.btn-no{background:var(--surface2);color:var(--text3);border:1px solid var(--border)}
+.btn-vm{background:rgba(139,92,246,0.1);color:#a78bfa;border:1px solid rgba(139,92,246,0.2)}
 .btn svg{width:16px;height:16px;flex-shrink:0}
 
 /* Closing Script (expandable) */
 .lead-script{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .lead-card.expanded .lead-script{display:block}
 .script-text{background:var(--surface2);border-radius:8px;padding:12px;font-size:13px;line-height:1.5;color:var(--text);margin-bottom:8px;white-space:pre-wrap}
+.script-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text3);margin:10px 0 4px}
 .expand-btn{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;padding:8px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text3);font-size:12px;font-weight:600;cursor:pointer;margin-top:10px;font-family:inherit;-webkit-tap-highlight-color:transparent}
 .expand-btn svg{transition:transform 0.2s}
 .lead-card.expanded .expand-btn svg{transform:rotate(180deg)}
+
+/* Lunch Scripts */
+.lunch-scripts{display:grid;gap:8px;margin-bottom:8px}
+.lunch-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color 0.2s}
+.lunch-btn:active{border-color:var(--green)}
+.lunch-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.lunch-preview{font-size:12px;color:var(--text3);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lunch-copied .lunch-title{color:var(--green)}
 
 /* Quick Scripts Section */
 .quick-scripts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
@@ -116,19 +141,12 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--green);color:#000;padding:10px 20px;border-radius:var(--radius);font-size:13px;font-weight:700;z-index:200;transition:transform 0.3s ease;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
-/* Loading State */
-.loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--text3);font-size:14px}
-.loading::before{content:'';width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;margin-right:10px;animation:spin .6s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* Empty State */
-.empty-state{text-align:center;padding:32px 16px;color:var(--text3)}
-.empty-state p{font-size:14px;line-height:1.6}
-
 @media(max-width:374px){
   .war-room{padding:10px 12px 100px}
   .lead-name{font-size:15px}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .goal-checks{flex-wrap:wrap}
+  .goal-item{flex:none;width:calc(50% - 3px)}
 }
 </style>
 </head>
@@ -142,21 +160,53 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     <div class="wr-time" id="lastUpdate">Loading...</div>
   </div>
 
-  <!-- Reply Alert Banner -->
-  <div class="reply-banner no-replies" id="replyBanner" onclick="openReplies()">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-    <span id="replyText">No replies yet — keep pushing</span>
+  <!-- Daily Goal Tracker -->
+  <div class="daily-goal">
+    <div class="daily-goal-title">Today: 1 reply &rarr; 1 demo &rarr; 1 pilot</div>
+    <div class="goal-checks">
+      <div class="goal-item" onclick="toggleGoal(this,'goal-reply')" id="goal-reply">
+        <div class="goal-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+        <div class="goal-label">Got a reply</div>
+      </div>
+      <div class="goal-item" onclick="toggleGoal(this,'goal-demo')" id="goal-demo">
+        <div class="goal-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+        <div class="goal-label">Booked a demo</div>
+      </div>
+      <div class="goal-item" onclick="toggleGoal(this,'goal-pilot')" id="goal-pilot">
+        <div class="goal-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+        <div class="goal-label">Started a pilot</div>
+      </div>
+    </div>
   </div>
 
+  <!-- Reply Alert Banner -->
+  <a class="reply-banner has-replies" id="replyBanner" href="https://app.gohighlevel.com" target="_blank" rel="noopener">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+    <div>
+      <span id="replyText">CHECK GHL FOR REPLIES — Did anyone respond?</span>
+      <div class="reply-sub">Tap to open GoHighLevel</div>
+    </div>
+  </a>
+
   <!-- Section: Top Closes -->
-  <div class="section-label">Top Closes — Tap to Call</div>
-  <div id="leadCards">
-    <!-- Lead Card Template (populated by JS) -->
-    <div class="loading" id="loadingState">Loading war room data...</div>
+  <div class="section-label">Top Closes &mdash; Tap to Call</div>
+  <div id="leadCards"></div>
+
+  <!-- Section: Lunch Scripts -->
+  <div class="section-label">Lunch Scripts &mdash; Send Right Now</div>
+  <div class="lunch-scripts">
+    <div class="lunch-btn" onclick="copyLunch(this,'cold')">
+      <div class="lunch-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg> Cold Text (never contacted)</div>
+      <div class="lunch-preview">Hey [name] — Wallace here from The Call Taker. Your business came up in my research on missed calls in [industry]...</div>
+    </div>
+    <div class="lunch-btn" onclick="copyLunch(this,'warm')">
+      <div class="lunch-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Warm Follow-Up (already contacted)</div>
+      <div class="lunch-preview">Hey — Wallace from The Call Taker again. Just wanted to follow up personally. Free 2-week trial, setup today...</div>
+    </div>
   </div>
 
   <!-- Section: Quick Scripts -->
-  <div class="section-label">Quick Scripts — Tap to Copy</div>
+  <div class="section-label">Quick Scripts &mdash; Tap to Copy</div>
   <div class="quick-scripts">
     <div class="qs-btn" onclick="copyScript('opener',this)">
       <div class="qs-title">Cold Opener</div>
@@ -201,68 +251,73 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
 <script>
 // =============================================
-// CLOSER WAR ROOM — Mobile Sales Dashboard
+// CLOSER WAR ROOM v2 — Mobile Sales Dashboard
 // =============================================
-
-// === STATIC DATA (updated by closer engine / CI) ===
-// When ops engines run, they write closing-data.json to website/closer-data.json
-// For now, use hardcoded data from the known leads
 
 const LEADS = [
   {
-    name: "Greg", company: "Greg's Locksmith", phone: "+19196083694",
+    name: "Greg", company: "Carolina Locksmith", phone: "+19196083694",
     industry: "locksmith", score: 8, reason: "Replied to outreach, engaged demo caller",
-    touches: 4, lastTouch: "SMS — yesterday",
+    touches: 4, lastTouch: "SMS — last night",
     text: "Hey Greg — quick question. How many after-hours lockout calls did you miss last month? We've got 3 pilot spots left for locksmith shops. 14 days free, no card needed.",
+    voicemail: "Hey Greg, Wallace from The Call Taker — called about the demo you tried. Free 14-day trial, Jessica can answer as Carolina Locksmith within an hour. Call me back or go to thecalltaker.com/pay. Talk soon.",
     script: "Greg, this is Wallace with The Call Taker. I know you're busy so I'll be quick — we built an AI that answers lockout calls for shops like yours 24/7. You literally never miss a call again. We're running free 14-day pilots for 3 more locksmith shops this month. No card, no contract. Want me to set yours up tomorrow?"
   },
   {
-    name: "Pamela", company: "Pamela's Service Co", phone: "+17133677985",
+    name: "Pamela", company: "Houston HVAC", phone: "+17133677985",
     industry: "hvac", score: 7, reason: "Multiple touches, high-value HVAC market",
-    touches: 3, lastTouch: "Email — yesterday",
+    touches: 3, lastTouch: "Email — last night",
     text: "Hey Pamela — real quick. How many calls does your shop miss after 5pm? We set up AI receptionists for HVAC companies. 14 days free, takes 24hrs to set up.",
+    voicemail: "Hey Pamela, Wallace from The Call Taker. Called because I know HVAC shops lose thousands to missed calls after hours. We built an AI receptionist — free 14-day trial, setup in 24 hours. Check it out at thecalltaker.com/pay or call me back. Thanks!",
     script: "Pamela, Wallace here with The Call Taker. Quick question — when someone calls your shop at 7pm with a broken AC, what happens? If it goes to voicemail, that's a $300-500 job gone. We built an AI receptionist that answers those calls, books the job, and texts you the details. We're giving 3 HVAC companies a free 14-day pilot this month. Want to be one of them?"
   },
   {
-    name: "Paul", company: "Paul's Services", phone: "+12568367950",
+    name: "Paul", company: "Huntsville HVAC", phone: "+12568367950",
     industry: "hvac", score: 6, reason: "Received 3+ touches, HVAC market",
-    touches: 3, lastTouch: "Email — 2 days ago",
+    touches: 3, lastTouch: "Email — last night",
     text: "Paul — imagine this: customer calls at 10pm, AC is out, your phone goes to voicemail. That's $400 gone. Our AI answers that call in 2 seconds. Free 14-day trial — interested?",
+    voicemail: "Hey Paul, Wallace from The Call Taker. Just reaching out about your after-hours calls. When customers call at night and get voicemail, that's $300-500 gone. We fix that with AI. Free 14-day trial. thecalltaker.com/pay or call me back.",
     script: "Paul, this is Wallace with The Call Taker. Let me ask you something — how many calls go to voicemail after hours at your shop? Each one of those is $300-500 walking to your competitor. We built an AI that picks up every single call, 24/7. Books the job, texts you the details. We have 3 pilot spots left — 14 days free, no card. Should I set you up?"
   },
   {
-    name: "Jim", company: "Jim's Business", phone: "+14042612280",
-    industry: "default", score: 5, reason: "Atlanta market, multiple touches sent",
-    touches: 3, lastTouch: "SMS — 2 days ago",
+    name: "Jim", company: "Atlanta AC", phone: "+14042612280",
+    industry: "hvac", score: 5, reason: "Atlanta market, multiple touches sent",
+    touches: 3, lastTouch: "SMS — last night",
     text: "Jim — real quick. We built an AI receptionist that answers your business calls 24/7. Never miss another customer. Running free 14-day pilots for 3 more businesses. Interested?",
+    voicemail: "Hey Jim, Wallace from The Call Taker. Called about your after-hours calls in Atlanta. We built an AI that answers 24/7, books the job, texts you details. Free 14-day trial. thecalltaker.com/pay. Talk soon.",
     script: "Jim, this is Wallace from The Call Taker. I'll keep it short — we built an AI receptionist that answers your business phone 24/7. No more missed calls, no more voicemail. It books the appointment, texts you the summary. We're running free pilots for 3 more businesses this month. Completely free, 14 days, no credit card. Want to try it?"
   },
   {
-    name: "Tony", company: "Tony's Services", phone: "+12292462539",
-    industry: "default", score: 5, reason: "In sequence, active lead",
-    touches: 2, lastTouch: "SMS — yesterday",
+    name: "Tony", company: "Coopers", phone: "+12292462539",
+    industry: "general", score: 5, reason: "In sequence, active lead",
+    touches: 2, lastTouch: "SMS — last night",
     text: "Tony — every missed call is a customer you'll never get back. Our AI answers 24/7, books jobs, texts you details. Free 14-day pilot, 3 spots left. Want in?",
+    voicemail: "Hey Tony, Wallace from The Call Taker. Quick call about your business phone. We built an AI that answers every call 24/7 so you never miss a customer. Free 14-day trial. thecalltaker.com/pay or call me back.",
     script: "Tony, Wallace here with The Call Taker. Quick question — when a customer calls and nobody picks up, where do they go? Your competitor. We built an AI that answers every call, day or night. Books the job, texts you the details. We're giving 3 businesses a free 14-day pilot. No card, no contract. Want me to set yours up?"
   }
 ];
 
 const QUICK_SCRIPTS = {
-  opener: "Hey [NAME], this is Wallace with The Call Taker. I'll be quick — we built an AI receptionist that answers your business calls 24/7. It picks up in 2 seconds, books the job, and texts you the details. We're running free 14-day pilots for 3 more businesses this month. No card, no contract. Want to try it?",
+  opener: "Hey, this is Wallace with The Call Taker. I'll be quick — we built an AI receptionist that answers your business calls 24/7. It picks up in 2 seconds, books the job, and texts you the details. We're running free 14-day pilots for 3 more businesses this month. No card, no contract. Want to try it?",
   price: "Great question. It's $97/month for after-hours coverage, or $297 for full 24/7. But here's the thing — you can try it completely free for 14 days first. No card needed. If it doesn't pay for itself, you walk away. Most of our customers make back the cost in the first week from calls they would've missed.",
   busy: "Totally get it. Here's what I'll do — I'll shoot you a quick text with the details. When you get a minute, you can call our demo line at (615) 784-5747 and hear the AI in action. Takes 60 seconds. Then if you're interested, we'll set up your free pilot whenever works for you.",
-  info: "Hey [NAME] — here's the quick version: The Call Taker is an AI receptionist built for your business. It answers 24/7, books appointments, handles emergencies, and texts you the summary. Try the demo: (615) 784-5747. We have 3 free pilot spots left this month — thecalltaker.com/pilot"
+  info: "Here's the quick version: The Call Taker is an AI receptionist built for your business. It answers 24/7, books appointments, handles emergencies, and texts you the summary. Try the demo: (615) 784-5747. We have 3 free pilot spots left this month — thecalltaker.com/pilot"
 };
 
-const REPLIES = []; // Populated when ops engine detects replies
+const LUNCH_SCRIPTS = {
+  cold: "Hey [name] — Wallace here from The Call Taker. Your business came up in my research on missed calls in [industry]. I built an AI that answers 24/7. Takes 30 sec to hear — call (615) 784-5747. Free trial if you like it.",
+  warm: "Hey — Wallace from The Call Taker again. Just wanted to follow up personally. Free 2-week trial, setup today. Worth a quick call? (615) 784-5747"
+};
 
-// === RENDER FUNCTIONS ===
+const YES_RESPONSE = "Awesome! Go to thecalltaker.com/pay — takes 2 min. Free for 14 days, I'll have Jessica live for you within 24 hours.";
+const NO_RESPONSE = "No worries at all. If call volume picks up, I'll be here. Demo stays live: (615) 784-5747";
+
+let REPLIES = [];
+
+// === RENDER ===
 
 function renderLeads() {
   const container = document.getElementById('leadCards');
-  if (!LEADS.length) {
-    container.innerHTML = '<div class="empty-state"><p>No leads loaded yet.<br>Run the closer engine to populate.</p></div>';
-    return;
-  }
   container.innerHTML = LEADS.map((lead, i) => {
     const badgeClass = 'badge-' + (lead.industry || 'default');
     const fillClass = lead.score >= 7 ? 'high' : lead.score >= 5 ? 'med' : 'low';
@@ -272,10 +327,10 @@ function renderLeads() {
     <div class="lead-card" id="card-${i}">
       <div class="lead-top">
         <div>
-          <div class="lead-name">${lead.name}</div>
-          <div class="lead-company">${lead.company}</div>
+          <div class="lead-name">${esc(lead.name)}</div>
+          <div class="lead-company">${esc(lead.company)}</div>
         </div>
-        <span class="lead-badge ${badgeClass}">${lead.industry}</span>
+        <span class="lead-badge ${badgeClass}">${esc(lead.industry)}</span>
       </div>
       <div class="score-row">
         <span class="score-label">${lead.touches} touch${lead.touches !== 1 ? 'es' : ''}</span>
@@ -287,24 +342,31 @@ function renderLeads() {
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>
           TAP TO CALL ${phoneDisplay}
         </a>
-        <button class="btn btn-copy" onclick="event.stopPropagation();copyText('${escapeJS(lead.text)}')">
+        <button class="btn btn-copy" onclick="event.stopPropagation();copyText(\`${escTpl(lead.text)}\`)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           Copy Text
         </button>
-        <button class="btn btn-pay" onclick="event.stopPropagation();copyText('Start your free pilot here: https://thecalltaker.com/pilot/')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-          Send Pilot Link
+        <button class="btn btn-yes" onclick="event.stopPropagation();copyText(\`${escTpl(YES_RESPONSE)}\`)">
+          THEY SAID YES
+        </button>
+        <button class="btn btn-no" onclick="event.stopPropagation();copyText(\`${escTpl(NO_RESPONSE)}\`)">
+          THEY SAID NO
         </button>
       </div>
       <button class="expand-btn" onclick="event.stopPropagation();toggleScript(${i})">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
-        Full call script
+        Scripts &amp; voicemail
       </button>
       <div class="lead-script">
-        <div class="script-text">${lead.script}</div>
-        <button class="btn btn-copy" style="grid-column:1/-1" onclick="event.stopPropagation();copyText('${escapeJS(lead.script)}')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          Copy Full Script
+        <div class="script-label">Call Script</div>
+        <div class="script-text">${esc(lead.script)}</div>
+        <button class="btn btn-copy" style="grid-column:1/-1;margin-bottom:8px" onclick="event.stopPropagation();copyText(\`${escTpl(lead.script)}\`)">
+          Copy Call Script
+        </button>
+        <div class="script-label">Voicemail (if no answer)</div>
+        <div class="script-text">${esc(lead.voicemail)}</div>
+        <button class="btn btn-vm" style="grid-column:1/-1" onclick="event.stopPropagation();copyText(\`${escTpl(lead.voicemail)}\`)">
+          Copy Voicemail
         </button>
       </div>
     </div>`;
@@ -314,15 +376,13 @@ function renderLeads() {
 function renderReplies() {
   const banner = document.getElementById('replyBanner');
   const bannerText = document.getElementById('replyText');
-  const bannerIcon = banner.querySelector('svg');
 
   if (REPLIES.length > 0) {
     banner.className = 'reply-banner has-replies';
+    banner.href = '#';
+    banner.onclick = function(e) { e.preventDefault(); openReplies(); };
     bannerText.textContent = REPLIES[0].name.toUpperCase() + ' REPLIED — TAP TO SEE';
-    bannerIcon.innerHTML = '<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>';
-  } else {
-    banner.className = 'reply-banner no-replies';
-    bannerText.textContent = 'No replies yet — keep pushing';
+    banner.querySelector('.reply-sub').textContent = 'Tap to see what they said';
   }
 }
 
@@ -341,7 +401,6 @@ function toggleScript(i) {
 
 function copyText(text) {
   navigator.clipboard.writeText(text).then(() => showToast('Copied!')).catch(() => {
-    // Fallback for older browsers
     const ta = document.createElement('textarea');
     ta.value = text;
     ta.style.cssText = 'position:fixed;left:-9999px';
@@ -354,8 +413,7 @@ function copyText(text) {
 }
 
 function copyScript(type, el) {
-  const text = QUICK_SCRIPTS[type] || '';
-  copyText(text);
+  copyText(QUICK_SCRIPTS[type] || '');
   const title = el.querySelector('.qs-title');
   const orig = title.textContent;
   title.textContent = 'Copied!';
@@ -363,16 +421,37 @@ function copyScript(type, el) {
   setTimeout(() => { title.textContent = orig; title.classList.remove('qs-copied'); }, 1500);
 }
 
+function copyLunch(el, type) {
+  copyText(LUNCH_SCRIPTS[type] || '');
+  el.classList.add('lunch-copied');
+  setTimeout(() => el.classList.remove('lunch-copied'), 1500);
+}
+
+function toggleGoal(el, key) {
+  el.classList.toggle('done');
+  const goals = JSON.parse(localStorage.getItem('wr-goals-' + todayKey()) || '{}');
+  goals[key] = el.classList.contains('done');
+  localStorage.setItem('wr-goals-' + todayKey(), JSON.stringify(goals));
+}
+
+function loadGoals() {
+  const goals = JSON.parse(localStorage.getItem('wr-goals-' + todayKey()) || '{}');
+  ['goal-reply','goal-demo','goal-pilot'].forEach(k => {
+    if (goals[k]) document.getElementById(k).classList.add('done');
+  });
+}
+
+function todayKey() {
+  return new Date().toISOString().split('T')[0];
+}
+
 function openReplies() {
   if (!REPLIES.length) return;
   const list = document.getElementById('replyList');
   list.innerHTML = REPLIES.map(r => `
-    <div class="reply-from">${r.name} — ${r.company} — ${formatPhone(r.phone)}</div>
-    <div class="reply-msg">${r.message}</div>
-    <a href="tel:${r.phone}" class="btn btn-call" style="margin-bottom:12px">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>
-      Call ${r.name} Now
-    </a>
+    <div class="reply-from">${esc(r.name)} — ${esc(r.company)} — ${formatPhone(r.phone)}</div>
+    <div class="reply-msg">${esc(r.message)}</div>
+    <a href="tel:${r.phone}" class="btn btn-call" style="margin-bottom:12px">Call ${esc(r.name)} Now</a>
   `).join('');
   document.getElementById('replyModal').classList.add('active');
 }
@@ -397,16 +476,21 @@ function formatPhone(p) {
   return p;
 }
 
-function escapeJS(s) {
-  return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n');
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function escTpl(s) {
+  return s.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$');
 }
 
 function updateTime() {
-  const now = new Date();
-  document.getElementById('lastUpdate').textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 }
 
-// === TRY LOADING LIVE DATA ===
+// === LIVE DATA ===
 function loadLiveData() {
   fetch('/closer-data.json?' + Date.now())
     .then(r => { if (!r.ok) throw new Error(); return r.json(); })
@@ -416,8 +500,7 @@ function loadLiveData() {
         data.leads.forEach(l => LEADS.push(l));
       }
       if (data.replies && data.replies.length) {
-        REPLIES.length = 0;
-        data.replies.forEach(r => REPLIES.push(r));
+        REPLIES = data.replies;
       }
       if (data.stats) {
         if (data.stats.inSequence != null) document.getElementById('statLeads').textContent = data.stats.inSequence;
@@ -428,7 +511,7 @@ function loadLiveData() {
       renderLeads();
       renderReplies();
     })
-    .catch(() => {}); // Silently use hardcoded data
+    .catch(() => {});
 }
 
 // === INIT ===
@@ -436,9 +519,9 @@ renderLeads();
 renderReplies();
 renderStats();
 updateTime();
+loadGoals();
 loadLiveData();
 
-// Auto-refresh every 5 minutes
 setInterval(() => { loadLiveData(); updateTime(); }, 300000);
 setInterval(updateTime, 60000);
 </script>
