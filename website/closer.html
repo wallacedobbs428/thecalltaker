@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<title>Closer War Room - The Call Taker</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 900;font-display:optional;src:url(/fonts/inter-latin.woff2) format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;--surface:#111;--surface2:#1a1a1a;--border:rgba(255,255,255,0.08);
+  --green:#00dc82;--green-dim:rgba(0,220,130,0.12);--green-glow:rgba(0,220,130,0.25);
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.12);--red-glow:rgba(239,68,68,0.25);
+  --amber:#fbbf24;--amber-dim:rgba(251,191,36,0.12);
+  --text:#fff;--text2:#a1a1aa;--text3:#71717a;
+  --radius:12px
+}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text2);min-height:100vh;min-height:100dvh;padding:0 0 env(safe-area-inset-bottom)}
+.war-room{max-width:440px;margin:0 auto;padding:12px 16px 100px}
+
+/* Header */
+.wr-header{display:flex;align-items:center;justify-content:space-between;padding:8px 0 16px}
+.wr-header h1{font-size:18px;font-weight:800;color:var(--text);letter-spacing:-0.02em}
+.wr-header h1 span{color:var(--green)}
+.wr-time{font-size:11px;color:var(--text3);font-variant-numeric:tabular-nums}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-right:6px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 var(--green-glow)}50%{opacity:.7;box-shadow:0 0 0 6px transparent}}
+
+/* Reply Alert Banner */
+.reply-banner{border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.reply-banner.has-replies{background:var(--red-dim);border:1px solid rgba(239,68,68,0.3);color:var(--red);animation:urgentPulse 2s infinite}
+.reply-banner.no-replies{background:var(--green-dim);border:1px solid rgba(0,220,130,0.15);color:var(--green)}
+@keyframes urgentPulse{0%,100%{box-shadow:0 0 0 0 var(--red-glow)}50%{box-shadow:0 0 0 8px transparent}}
+.reply-banner svg{flex-shrink:0}
+
+/* Section Headers */
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Lead Cards */
+.lead-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;transition:border-color 0.2s}
+.lead-card:active{border-color:var(--green)}
+.lead-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.lead-name{font-size:16px;font-weight:700;color:var(--text)}
+.lead-company{font-size:13px;color:var(--text2);margin-top:2px}
+.lead-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:0.05em;white-space:nowrap}
+.badge-hvac{background:rgba(59,130,246,0.15);color:#60a5fa}
+.badge-locksmith{background:rgba(168,85,247,0.15);color:#c084fc}
+.badge-plumbing{background:rgba(6,182,212,0.15);color:#22d3ee}
+.badge-electrical{background:rgba(251,191,36,0.15);color:#fbbf24}
+.badge-roofing{background:rgba(249,115,22,0.15);color:#fb923c}
+.badge-dental{background:rgba(236,72,153,0.15);color:#f472b6}
+.badge-legal{background:rgba(139,92,246,0.15);color:#a78bfa}
+.badge-towing{background:rgba(220,38,38,0.15);color:#f87171}
+.badge-default{background:rgba(0,220,130,0.12);color:#00dc82}
+
+/* Score Bar */
+.score-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.score-label{font-size:11px;color:var(--text3);min-width:38px}
+.score-bar{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.score-fill{height:100%;border-radius:3px;transition:width 0.5s ease}
+.score-fill.high{background:var(--green)}
+.score-fill.med{background:var(--amber)}
+.score-fill.low{background:var(--text3)}
+.score-val{font-size:13px;font-weight:700;color:var(--text);min-width:28px;text-align:right}
+
+/* Action Buttons */
+.lead-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border-radius:10px;border:none;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform 0.1s,opacity 0.1s;text-decoration:none}
+.btn:active{transform:scale(0.96);opacity:0.8}
+.btn-call{background:var(--green);color:#000;grid-column:1/-1}
+.btn-copy{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-pay{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(251,191,36,0.2)}
+.btn svg{width:16px;height:16px;flex-shrink:0}
+
+/* Closing Script (expandable) */
+.lead-script{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.lead-card.expanded .lead-script{display:block}
+.script-text{background:var(--surface2);border-radius:8px;padding:12px;font-size:13px;line-height:1.5;color:var(--text);margin-bottom:8px;white-space:pre-wrap}
+.expand-btn{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;padding:8px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text3);font-size:12px;font-weight:600;cursor:pointer;margin-top:10px;font-family:inherit;-webkit-tap-highlight-color:transparent}
+.expand-btn svg{transition:transform 0.2s}
+.lead-card.expanded .expand-btn svg{transform:rotate(180deg)}
+
+/* Quick Scripts Section */
+.quick-scripts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.qs-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color 0.2s}
+.qs-btn:active{border-color:var(--green)}
+.qs-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px}
+.qs-sub{font-size:10px;color:var(--text3)}
+.qs-copied{color:var(--green) !important}
+
+/* Stats Bar */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;margin-top:8px}
+.stat{background:var(--surface);padding:14px 8px;text-align:center}
+.stat-val{font-size:20px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums}
+.stat-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-top:2px}
+.stat-val.money{color:var(--green)}
+
+/* Reply Detail Modal */
+.reply-modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.85);padding:20px;align-items:flex-end}
+.reply-modal.active{display:flex}
+.reply-sheet{background:var(--surface);border-radius:16px 16px 0 0;padding:20px;width:100%;max-width:440px;margin:0 auto;max-height:80vh;overflow-y:auto}
+.reply-sheet h3{font-size:16px;color:var(--text);margin-bottom:12px}
+.reply-msg{background:var(--surface2);border-radius:10px;padding:12px;font-size:14px;color:var(--text);margin-bottom:12px;line-height:1.5}
+.reply-from{font-size:12px;color:var(--text3);margin-bottom:4px}
+.reply-close{width:100%;padding:14px;background:var(--surface2);border:none;border-radius:10px;color:var(--text);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--green);color:#000;padding:10px 20px;border-radius:var(--radius);font-size:13px;font-weight:700;z-index:200;transition:transform 0.3s ease;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Loading State */
+.loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--text3);font-size:14px}
+.loading::before{content:'';width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;margin-right:10px;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Empty State */
+.empty-state{text-align:center;padding:32px 16px;color:var(--text3)}
+.empty-state p{font-size:14px;line-height:1.6}
+
+@media(max-width:374px){
+  .war-room{padding:10px 12px 100px}
+  .lead-name{font-size:15px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="war-room" id="warRoom">
+
+  <!-- Header -->
+  <div class="wr-header">
+    <h1><span class="pulse-dot"></span>Closer <span>War Room</span></h1>
+    <div class="wr-time" id="lastUpdate">Loading...</div>
+  </div>
+
+  <!-- Reply Alert Banner -->
+  <div class="reply-banner no-replies" id="replyBanner" onclick="openReplies()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+    <span id="replyText">No replies yet — keep pushing</span>
+  </div>
+
+  <!-- Section: Top Closes -->
+  <div class="section-label">Top Closes — Tap to Call</div>
+  <div id="leadCards">
+    <!-- Lead Card Template (populated by JS) -->
+    <div class="loading" id="loadingState">Loading war room data...</div>
+  </div>
+
+  <!-- Section: Quick Scripts -->
+  <div class="section-label">Quick Scripts — Tap to Copy</div>
+  <div class="quick-scripts">
+    <div class="qs-btn" onclick="copyScript('opener',this)">
+      <div class="qs-title">Cold Opener</div>
+      <div class="qs-sub">25-sec phone script</div>
+    </div>
+    <div class="qs-btn" onclick="copyScript('price',this)">
+      <div class="qs-title">They Ask Price</div>
+      <div class="qs-sub">Exact response</div>
+    </div>
+    <div class="qs-btn" onclick="copyScript('busy',this)">
+      <div class="qs-title">They Said Busy</div>
+      <div class="qs-sub">Callback script</div>
+    </div>
+    <div class="qs-btn" onclick="copyScript('info',this)">
+      <div class="qs-title">Send Info</div>
+      <div class="qs-sub">Follow-up text</div>
+    </div>
+  </div>
+
+  <!-- Section: Live Stats -->
+  <div class="section-label">Live Stats</div>
+  <div class="stats-grid">
+    <div class="stat"><div class="stat-val" id="statLeads">—</div><div class="stat-label">In Sequence</div></div>
+    <div class="stat"><div class="stat-val" id="statTexts">—</div><div class="stat-label">Texts Sent</div></div>
+    <div class="stat"><div class="stat-val" id="statReplies">—</div><div class="stat-label">Replies</div></div>
+    <div class="stat"><div class="stat-val money" id="statMRR">$0</div><div class="stat-label">MRR</div></div>
+  </div>
+
+</div>
+
+<!-- Reply Detail Modal -->
+<div class="reply-modal" id="replyModal">
+  <div class="reply-sheet">
+    <h3>Recent Replies</h3>
+    <div id="replyList"></div>
+    <button class="reply-close" onclick="closeReplies()">Close</button>
+  </div>
+</div>
+
+<!-- Copied Toast -->
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+// =============================================
+// CLOSER WAR ROOM — Mobile Sales Dashboard
+// =============================================
+
+// === STATIC DATA (updated by closer engine / CI) ===
+// When ops engines run, they write closing-data.json to website/closer-data.json
+// For now, use hardcoded data from the known leads
+
+const LEADS = [
+  {
+    name: "Greg", company: "Greg's Locksmith", phone: "+19196083694",
+    industry: "locksmith", score: 8, reason: "Replied to outreach, engaged demo caller",
+    touches: 4, lastTouch: "SMS — yesterday",
+    text: "Hey Greg — quick question. How many after-hours lockout calls did you miss last month? We've got 3 pilot spots left for locksmith shops. 14 days free, no card needed.",
+    script: "Greg, this is Wallace with The Call Taker. I know you're busy so I'll be quick — we built an AI that answers lockout calls for shops like yours 24/7. You literally never miss a call again. We're running free 14-day pilots for 3 more locksmith shops this month. No card, no contract. Want me to set yours up tomorrow?"
+  },
+  {
+    name: "Pamela", company: "Pamela's Service Co", phone: "+17133677985",
+    industry: "hvac", score: 7, reason: "Multiple touches, high-value HVAC market",
+    touches: 3, lastTouch: "Email — yesterday",
+    text: "Hey Pamela — real quick. How many calls does your shop miss after 5pm? We set up AI receptionists for HVAC companies. 14 days free, takes 24hrs to set up.",
+    script: "Pamela, Wallace here with The Call Taker. Quick question — when someone calls your shop at 7pm with a broken AC, what happens? If it goes to voicemail, that's a $300-500 job gone. We built an AI receptionist that answers those calls, books the job, and texts you the details. We're giving 3 HVAC companies a free 14-day pilot this month. Want to be one of them?"
+  },
+  {
+    name: "Paul", company: "Paul's Services", phone: "+12568367950",
+    industry: "hvac", score: 6, reason: "Received 3+ touches, HVAC market",
+    touches: 3, lastTouch: "Email — 2 days ago",
+    text: "Paul — imagine this: customer calls at 10pm, AC is out, your phone goes to voicemail. That's $400 gone. Our AI answers that call in 2 seconds. Free 14-day trial — interested?",
+    script: "Paul, this is Wallace with The Call Taker. Let me ask you something — how many calls go to voicemail after hours at your shop? Each one of those is $300-500 walking to your competitor. We built an AI that picks up every single call, 24/7. Books the job, texts you the details. We have 3 pilot spots left — 14 days free, no card. Should I set you up?"
+  },
+  {
+    name: "Jim", company: "Jim's Business", phone: "+14042612280",
+    industry: "default", score: 5, reason: "Atlanta market, multiple touches sent",
+    touches: 3, lastTouch: "SMS — 2 days ago",
+    text: "Jim — real quick. We built an AI receptionist that answers your business calls 24/7. Never miss another customer. Running free 14-day pilots for 3 more businesses. Interested?",
+    script: "Jim, this is Wallace from The Call Taker. I'll keep it short — we built an AI receptionist that answers your business phone 24/7. No more missed calls, no more voicemail. It books the appointment, texts you the summary. We're running free pilots for 3 more businesses this month. Completely free, 14 days, no credit card. Want to try it?"
+  },
+  {
+    name: "Tony", company: "Tony's Services", phone: "+12292462539",
+    industry: "default", score: 5, reason: "In sequence, active lead",
+    touches: 2, lastTouch: "SMS — yesterday",
+    text: "Tony — every missed call is a customer you'll never get back. Our AI answers 24/7, books jobs, texts you details. Free 14-day pilot, 3 spots left. Want in?",
+    script: "Tony, Wallace here with The Call Taker. Quick question — when a customer calls and nobody picks up, where do they go? Your competitor. We built an AI that answers every call, day or night. Books the job, texts you the details. We're giving 3 businesses a free 14-day pilot. No card, no contract. Want me to set yours up?"
+  }
+];
+
+const QUICK_SCRIPTS = {
+  opener: "Hey [NAME], this is Wallace with The Call Taker. I'll be quick — we built an AI receptionist that answers your business calls 24/7. It picks up in 2 seconds, books the job, and texts you the details. We're running free 14-day pilots for 3 more businesses this month. No card, no contract. Want to try it?",
+  price: "Great question. It's $97/month for after-hours coverage, or $297 for full 24/7. But here's the thing — you can try it completely free for 14 days first. No card needed. If it doesn't pay for itself, you walk away. Most of our customers make back the cost in the first week from calls they would've missed.",
+  busy: "Totally get it. Here's what I'll do — I'll shoot you a quick text with the details. When you get a minute, you can call our demo line at (615) 784-5747 and hear the AI in action. Takes 60 seconds. Then if you're interested, we'll set up your free pilot whenever works for you.",
+  info: "Hey [NAME] — here's the quick version: The Call Taker is an AI receptionist built for your business. It answers 24/7, books appointments, handles emergencies, and texts you the summary. Try the demo: (615) 784-5747. We have 3 free pilot spots left this month — thecalltaker.com/pilot"
+};
+
+const REPLIES = []; // Populated when ops engine detects replies
+
+// === RENDER FUNCTIONS ===
+
+function renderLeads() {
+  const container = document.getElementById('leadCards');
+  if (!LEADS.length) {
+    container.innerHTML = '<div class="empty-state"><p>No leads loaded yet.<br>Run the closer engine to populate.</p></div>';
+    return;
+  }
+  container.innerHTML = LEADS.map((lead, i) => {
+    const badgeClass = 'badge-' + (lead.industry || 'default');
+    const fillClass = lead.score >= 7 ? 'high' : lead.score >= 5 ? 'med' : 'low';
+    const fillWidth = (lead.score / 10) * 100;
+    const phoneDisplay = formatPhone(lead.phone);
+    return `
+    <div class="lead-card" id="card-${i}">
+      <div class="lead-top">
+        <div>
+          <div class="lead-name">${lead.name}</div>
+          <div class="lead-company">${lead.company}</div>
+        </div>
+        <span class="lead-badge ${badgeClass}">${lead.industry}</span>
+      </div>
+      <div class="score-row">
+        <span class="score-label">${lead.touches} touch${lead.touches !== 1 ? 'es' : ''}</span>
+        <div class="score-bar"><div class="score-fill ${fillClass}" style="width:${fillWidth}%"></div></div>
+        <span class="score-val">${lead.score}/10</span>
+      </div>
+      <div class="lead-actions">
+        <a href="tel:${lead.phone}" class="btn btn-call">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>
+          TAP TO CALL ${phoneDisplay}
+        </a>
+        <button class="btn btn-copy" onclick="event.stopPropagation();copyText('${escapeJS(lead.text)}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy Text
+        </button>
+        <button class="btn btn-pay" onclick="event.stopPropagation();copyText('Start your free pilot here: https://thecalltaker.com/pilot/')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          Send Pilot Link
+        </button>
+      </div>
+      <button class="expand-btn" onclick="event.stopPropagation();toggleScript(${i})">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        Full call script
+      </button>
+      <div class="lead-script">
+        <div class="script-text">${lead.script}</div>
+        <button class="btn btn-copy" style="grid-column:1/-1" onclick="event.stopPropagation();copyText('${escapeJS(lead.script)}')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy Full Script
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderReplies() {
+  const banner = document.getElementById('replyBanner');
+  const bannerText = document.getElementById('replyText');
+  const bannerIcon = banner.querySelector('svg');
+
+  if (REPLIES.length > 0) {
+    banner.className = 'reply-banner has-replies';
+    bannerText.textContent = REPLIES[0].name.toUpperCase() + ' REPLIED — TAP TO SEE';
+    bannerIcon.innerHTML = '<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>';
+  } else {
+    banner.className = 'reply-banner no-replies';
+    bannerText.textContent = 'No replies yet — keep pushing';
+  }
+}
+
+function renderStats() {
+  document.getElementById('statLeads').textContent = LEADS.length;
+  document.getElementById('statTexts').textContent = '—';
+  document.getElementById('statReplies').textContent = REPLIES.length;
+  document.getElementById('statMRR').textContent = '$0';
+}
+
+// === ACTIONS ===
+
+function toggleScript(i) {
+  document.getElementById('card-' + i).classList.toggle('expanded');
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => showToast('Copied!')).catch(() => {
+    // Fallback for older browsers
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('Copied!');
+  });
+}
+
+function copyScript(type, el) {
+  const text = QUICK_SCRIPTS[type] || '';
+  copyText(text);
+  const title = el.querySelector('.qs-title');
+  const orig = title.textContent;
+  title.textContent = 'Copied!';
+  title.classList.add('qs-copied');
+  setTimeout(() => { title.textContent = orig; title.classList.remove('qs-copied'); }, 1500);
+}
+
+function openReplies() {
+  if (!REPLIES.length) return;
+  const list = document.getElementById('replyList');
+  list.innerHTML = REPLIES.map(r => `
+    <div class="reply-from">${r.name} — ${r.company} — ${formatPhone(r.phone)}</div>
+    <div class="reply-msg">${r.message}</div>
+    <a href="tel:${r.phone}" class="btn btn-call" style="margin-bottom:12px">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>
+      Call ${r.name} Now
+    </a>
+  `).join('');
+  document.getElementById('replyModal').classList.add('active');
+}
+
+function closeReplies() {
+  document.getElementById('replyModal').classList.remove('active');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1500);
+}
+
+// === UTILS ===
+
+function formatPhone(p) {
+  const d = (p || '').replace(/\D/g, '');
+  if (d.length === 11 && d[0] === '1') return `(${d.slice(1,4)}) ${d.slice(4,7)}-${d.slice(7)}`;
+  if (d.length === 10) return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+  return p;
+}
+
+function escapeJS(s) {
+  return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, '\\n');
+}
+
+function updateTime() {
+  const now = new Date();
+  document.getElementById('lastUpdate').textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+}
+
+// === TRY LOADING LIVE DATA ===
+function loadLiveData() {
+  fetch('/closer-data.json?' + Date.now())
+    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+    .then(data => {
+      if (data.leads && data.leads.length) {
+        LEADS.length = 0;
+        data.leads.forEach(l => LEADS.push(l));
+      }
+      if (data.replies && data.replies.length) {
+        REPLIES.length = 0;
+        data.replies.forEach(r => REPLIES.push(r));
+      }
+      if (data.stats) {
+        if (data.stats.inSequence != null) document.getElementById('statLeads').textContent = data.stats.inSequence;
+        if (data.stats.textsSent != null) document.getElementById('statTexts').textContent = data.stats.textsSent;
+        if (data.stats.replies != null) document.getElementById('statReplies').textContent = data.stats.replies;
+        if (data.stats.mrr != null) document.getElementById('statMRR').textContent = '$' + data.stats.mrr;
+      }
+      renderLeads();
+      renderReplies();
+    })
+    .catch(() => {}); // Silently use hardcoded data
+}
+
+// === INIT ===
+renderLeads();
+renderReplies();
+renderStats();
+updateTime();
+loadLiveData();
+
+// Auto-refresh every 5 minutes
+setInterval(() => { loadLiveData(); updateTime(); }, 300000);
+setInterval(updateTime, 60000);
+</script>
+</body>
+</html>
