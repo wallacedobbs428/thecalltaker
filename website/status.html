@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<title>System Status - The Call Taker</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 900;font-display:optional;src:url(/fonts/inter-latin.woff2) format('woff2')}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;--surface:#111;--surface2:#1a1a1a;--border:rgba(255,255,255,0.08);
+  --green:#00dc82;--green-dim:rgba(0,220,130,0.12);
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.12);
+  --amber:#fbbf24;
+  --text:#fff;--text2:#a1a1aa;--text3:#71717a;
+  --radius:12px
+}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text2);min-height:100vh;min-height:100dvh}
+.status-page{max-width:440px;margin:0 auto;padding:16px 16px 80px}
+
+.s-header{text-align:center;padding:16px 0 20px}
+.s-header h1{font-size:16px;font-weight:800;color:var(--text);letter-spacing:-0.02em}
+.s-header h1 span{color:var(--green)}
+.s-update{font-size:11px;color:var(--text3);margin-top:4px;font-variant-numeric:tabular-nums}
+
+/* Status Banner */
+.status-banner{border-radius:var(--radius);padding:20px;text-align:center;margin-bottom:20px;font-weight:800;font-size:16px}
+.status-banner.ok{background:var(--green-dim);border:1px solid rgba(0,220,130,0.2);color:var(--green)}
+.status-banner.warn{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2);color:var(--amber)}
+.status-banner.down{background:var(--red-dim);border:1px solid rgba(239,68,68,0.2);color:var(--red);animation:alertPulse 2s infinite}
+@keyframes alertPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.2)}50%{box-shadow:0 0 0 8px transparent}}
+.status-sub{font-size:12px;font-weight:500;margin-top:4px;opacity:0.8}
+.pulse-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:8px;animation:pulse 2s infinite}
+.pulse-dot.green{background:var(--green)}
+.pulse-dot.red{background:var(--red)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 currentColor}50%{box-shadow:0 0 0 6px transparent}}
+
+/* Stats Grid */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px}
+.stat{background:var(--surface);padding:20px 16px;text-align:center}
+.stat-val{font-size:28px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums}
+.stat-val.green{color:var(--green)}
+.stat-val.red{color:var(--red)}
+.stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px}
+
+/* Quick Links */
+.links{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.link-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:13px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.link-btn:active{opacity:0.7}
+.link-btn svg{width:16px;height:16px;flex-shrink:0}
+
+/* Footer */
+.s-footer{text-align:center;margin-top:24px;font-size:11px;color:var(--text3)}
+</style>
+</head>
+<body>
+
+<div class="status-page">
+  <div class="s-header">
+    <h1>The Call <span>Taker</span> &mdash; System Status</h1>
+    <div class="s-update" id="lastUpdate">Loading...</div>
+  </div>
+
+  <div class="status-banner ok" id="statusBanner">
+    <span class="pulse-dot green"></span>MACHINES RUNNING
+    <div class="status-sub" id="statusSub">All systems operational</div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat">
+      <div class="stat-val" id="statSequence">—</div>
+      <div class="stat-label">Sequence Enrolled</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" id="statSMS">—</div>
+      <div class="stat-label">SMS Sent Today</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" id="statReplies">0</div>
+      <div class="stat-label">Replies Detected</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" id="statDemos">0</div>
+      <div class="stat-label">Demos Booked</div>
+    </div>
+    <div class="stat" style="grid-column:1/-1">
+      <div class="stat-val green" id="statMRR">$0</div>
+      <div class="stat-label">Monthly Recurring Revenue</div>
+    </div>
+  </div>
+
+  <div class="links">
+    <a href="/closer" class="link-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      War Room
+    </a>
+    <a href="https://app.gohighlevel.com" target="_blank" class="link-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Open GHL
+    </a>
+    <a href="/pay" class="link-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Pay Page
+    </a>
+    <a href="tel:+16157845747" class="link-btn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1.02l-2.2 2.2z"/></svg>
+      Demo Line
+    </a>
+  </div>
+
+  <div class="s-footer">Auto-refreshes every 60 seconds</div>
+</div>
+
+<script>
+function loadStatus() {
+  fetch('/closer-data.json?' + Date.now())
+    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+    .then(data => {
+      // Update timestamp
+      const updated = new Date(data.last_updated);
+      const now = new Date();
+      const diffMin = Math.round((now - updated) / 60000);
+      document.getElementById('lastUpdate').textContent = 'Last updated: ' + (diffMin < 1 ? 'just now' : diffMin + ' min ago');
+
+      // Check staleness
+      const banner = document.getElementById('statusBanner');
+      const sub = document.getElementById('statusSub');
+      const dot = banner.querySelector('.pulse-dot');
+
+      if (diffMin > 120) {
+        banner.className = 'status-banner down';
+        dot.className = 'pulse-dot red';
+        banner.innerHTML = '<span class="pulse-dot red"></span>CHECK YOUR MAC — engines may be down<div class="status-sub">Data is ' + Math.round(diffMin / 60) + ' hours stale</div>';
+      } else if (diffMin > 30) {
+        banner.className = 'status-banner warn';
+        banner.innerHTML = '<span class="pulse-dot green"></span>DATA AGING — last update ' + diffMin + 'min ago<div class="status-sub">Check if engines are running</div>';
+      } else {
+        banner.className = 'status-banner ok';
+        banner.innerHTML = '<span class="pulse-dot green"></span>MACHINES RUNNING<div class="status-sub">All systems operational</div>';
+      }
+
+      // Stats
+      if (data.stats) {
+        document.getElementById('statSequence').textContent = data.stats.inSequence || 0;
+        document.getElementById('statSMS').textContent = data.stats.textsSent || 0;
+
+        const replies = data.stats.replies || 0;
+        const repliesEl = document.getElementById('statReplies');
+        repliesEl.textContent = replies;
+        repliesEl.className = replies > 0 ? 'stat-val red' : 'stat-val';
+
+        document.getElementById('statDemos').textContent = data.stats.demosBooked || 0;
+        document.getElementById('statMRR').textContent = '$' + (data.stats.mrr || 0);
+      }
+    })
+    .catch(() => {
+      document.getElementById('lastUpdate').textContent = 'Could not load data';
+      const banner = document.getElementById('statusBanner');
+      banner.className = 'status-banner down';
+      banner.innerHTML = '<span class="pulse-dot red"></span>NO DATA — closer-data.json missing<div class="status-sub">Run ops engines to generate data</div>';
+    });
+}
+
+loadStatus();
+setInterval(loadStatus, 60000);
+</script>
+</body>
+</html>
