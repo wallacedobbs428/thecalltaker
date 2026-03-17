@@ -256,11 +256,15 @@ a{text-decoration:none;color:inherit}
   Not sure yet? Call the demo line and hear it yourself: <a href="tel:+16157845747">(615) 784-5747</a>
 </div>
 
-<!-- Payment Confirmation (PayPal mobile redirect fix) -->
+<!-- Payment Confirmation (PayPal mobile redirect fix — per-tier dynamic values) -->
 <div id="confirm-section" style="max-width:480px;margin:0 auto 48px;padding:28px 24px;border:1px solid #222;border-radius:12px;text-align:center;">
-  <p style="color:#888;font-size:14px;margin-bottom:16px;">Just completed your payment?</p>
-  <button id="confirmBtn" onclick="confirmPayment()" style="background:var(--green);color:#0a0a0a;border:none;border-radius:8px;padding:16px 28px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:'Inter',sans-serif;min-height:56px;transition:opacity 0.2s;">&#10003; Yes, I Paid &mdash; Activate My Account</button>
-  <p style="color:#555;font-size:11px;margin-top:8px;">This sends Wallace your info instantly</p>
+  <p style="color:#888;font-size:14px;margin-bottom:12px;">Just completed your payment?</p>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <button onclick="confirmPayment(this)" data-price="264" data-tier="after-hours" style="background:var(--green);color:#0a0a0a;border:none;border-radius:8px;padding:14px 20px;font-size:15px;font-weight:700;cursor:pointer;width:100%;font-family:'Inter',sans-serif;min-height:52px;">&#10003; I'm Ready to Start &mdash; $97/mo Plan</button>
+    <button onclick="confirmPayment(this)" data-price="664" data-tier="starter" style="background:#fff;color:#0a0a0a;border:none;border-radius:8px;padding:14px 20px;font-size:15px;font-weight:700;cursor:pointer;width:100%;font-family:'Inter',sans-serif;min-height:52px;">&#10003; I'm Ready to Start &mdash; $497/mo Plan</button>
+    <button onclick="confirmPayment(this)" data-price="1164" data-tier="pro" style="background:var(--amber);color:#0a0a0a;border:none;border-radius:8px;padding:14px 20px;font-size:15px;font-weight:700;cursor:pointer;width:100%;font-family:'Inter',sans-serif;min-height:52px;">&#10003; I'm Ready to Start &mdash; $997/mo Plan</button>
+  </div>
+  <p style="color:#555;font-size:11px;margin-top:10px;">Tap your plan &mdash; sends Wallace your info instantly</p>
 </div>
 
 <!-- Questions -->
@@ -306,37 +310,48 @@ document.querySelectorAll('.cta[href]').forEach(function(btn){
   });
 });
 
-// Payment confirmation (PayPal mobile redirect fix)
-function confirmPayment() {
-  var btn = document.getElementById('confirmBtn');
+// Payment confirmation — dynamic per-tier values
+function confirmPayment(btn) {
+  var price = parseFloat(btn.getAttribute('data-price') || '264');
+  var tier = btn.getAttribute('data-tier') || 'after-hours';
   btn.disabled = true;
   btn.textContent = 'Sending...';
 
-  // Fire ntfy URGENT
+  // Dynamic Google Ads conversion with correct value
+  if (typeof gtag === 'function') {
+    gtag('event', 'purchase', {
+      transaction_id: 'TCT-' + Date.now(),
+      value: price,
+      currency: 'USD',
+      items: [{
+        item_id: 'thecalltaker-' + tier,
+        item_name: 'The Call Taker - ' + tier,
+        price: price,
+        quantity: 1
+      }]
+    });
+    gtag('event', 'conversion', { send_to: 'AW-17970510102/payment_confirmed', value: price, currency: 'USD' });
+  }
+
+  // Fire ntfy URGENT with correct amount + tier
   fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
     method: 'POST',
-    body: 'SELF-CONFIRMED PAYMENT\nCustomer tapped confirm on /pay\nCHECK PAYPAL NOW\nTag payment-received in GHL\nTimestamp: ' + new Date().toLocaleString(),
+    body: 'PAYMENT CONFIRMED: $' + price + ' | Plan: ' + tier + '\nTAG payment-received IN GHL NOW\nTimestamp: ' + new Date().toLocaleString(),
     headers: {
-      'Title': 'PAYMENT CONFIRMED on /pay',
+      'Title': 'PAYMENT: $' + price + ' ' + tier,
       'Priority': 'urgent',
       'Tags': 'moneybag,rotating_light'
     }
   }).catch(function(){});
 
-  // Google Ads conversion
-  if (typeof gtag === 'function') {
-    gtag('event', 'conversion', { send_to: 'AW-17970510102/payment_confirmed' });
-    gtag('event', 'purchase', { currency: 'USD' });
-  }
-
   // Show confirmation state
   document.getElementById('confirm-section').innerHTML =
-    '<div style="color:var(--green);font-size:48px">&#10003;</div>' +
-    '<p style="color:#fff;font-weight:700;margin-top:8px">Got it. Wallace will text you within the hour.</p>' +
-    '<p style="color:#888;font-size:13px;margin-top:4px">Demo line: <a href="tel:+16157845747" style="color:var(--green)">(615) 784-5747</a></p>';
+    '<div style="color:var(--green);font-size:56px;animation:pop 0.3s ease">&#10003;</div>' +
+    '<p style="color:#fff;font-weight:700;font-size:18px;margin-top:12px">You\'re in. Wallace will text you within the hour.</p>' +
+    '<p style="color:#888;font-size:13px;margin-top:6px">Demo line: <a href="tel:+16157845747" style="color:var(--green)">(615) 784-5747</a></p>';
 
-  // Redirect to thank-you after 2 seconds
-  setTimeout(function() { window.location.href = '/thank-you.html'; }, 2000);
+  // Redirect to thank-you with value param
+  setTimeout(function() { window.location.href = '/thank-you.html?value=' + price; }, 2000);
 }
 </script>
 </body>
