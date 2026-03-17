@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>After-Hours Report — {company}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { overflow-x: hidden !important; }
+
+:root {
+  --bg: #09090b;
+  --bg-card: #111113;
+  --bg-elevated: #18181b;
+  --border: rgba(255,255,255,0.06);
+  --border-subtle: rgba(255,255,255,0.04);
+  --text: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #52525b;
+  --orange: #F97316;
+  --orange-dim: rgba(249,115,22,0.10);
+  --orange-glow: rgba(249,115,22,0.20);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.08);
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,0.08);
+  --radius: 12px;
+  --radius-lg: 16px;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ===== LAYOUT ===== */
+.report {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 48px 20px 64px;
+}
+
+/* ===== CONFIDENTIAL STRIP ===== */
+.confidential {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+.confidential-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--orange-dim), transparent);
+}
+.confidential-label {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ===== BRAND MARK ===== */
+.brand {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 32px;
+}
+
+/* ===== HERO ===== */
+.hero-company {
+  font-size: clamp(1.5rem, 7vw, 2rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: 1.1;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.hero-meta {
+  font-size: .85rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+.hero-meta span {
+  color: var(--text-muted);
+}
+
+/* ===== RESULT BADGE ===== */
+.result-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: .82rem;
+  font-weight: 750;
+  letter-spacing: .02em;
+  margin-bottom: 48px;
+}
+.result-badge.missed {
+  background: var(--red-dim);
+  border: 1px solid rgba(239,68,68,0.15);
+  color: var(--red);
+}
+.result-badge.answered {
+  background: var(--green-dim);
+  border: 1px solid rgba(34,197,94,0.15);
+  color: var(--green);
+}
+.result-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: blink 2s ease infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 48px 0;
+}
+
+/* ===== SECTION ===== */
+.section-label {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* ===== TIMELINE ===== */
+.timeline {
+  position: relative;
+  padding-left: 28px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--border);
+}
+.tl-item {
+  position: relative;
+  padding-bottom: 28px;
+}
+.tl-item:last-child { padding-bottom: 0; }
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -26px;
+  top: 7px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+  background: var(--bg);
+}
+.tl-item.fail::before {
+  border-color: var(--red);
+  background: var(--red-dim);
+}
+.tl-item.pass::before {
+  border-color: var(--green);
+  background: var(--green-dim);
+}
+.tl-time {
+  font-size: .72rem;
+  font-weight: 650;
+  color: var(--text-muted);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.tl-desc {
+  font-size: .9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.tl-desc strong {
+  color: #fff;
+  font-weight: 700;
+}
+.tl-desc .fail-text {
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* ===== COMPARISON ===== */
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.comp-card {
+  border-radius: var(--radius);
+  padding: 24px 16px;
+  text-align: center;
+}
+.comp-card.current {
+  background: var(--red-dim);
+  border: 1px solid rgba(239,68,68,0.10);
+}
+.comp-card.jessica {
+  background: var(--green-dim);
+  border: 1px solid rgba(34,197,94,0.10);
+}
+.comp-icon {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  opacity: .8;
+}
+.comp-label {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.comp-card.current .comp-label { color: var(--red); }
+.comp-card.jessica .comp-label { color: var(--green); }
+.comp-detail {
+  font-size: .78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+.comp-detail:last-child { margin-bottom: 0; }
+.comp-detail strong { color: #fff; }
+
+/* ===== COST STRIP ===== */
+.cost-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.cost-block {
+  flex: 1;
+  text-align: center;
+  padding: 20px 8px;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+}
+.cost-period {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.cost-value {
+  font-size: clamp(1.1rem, 5vw, 1.4rem);
+  font-weight: 900;
+  letter-spacing: -.02em;
+  color: var(--red);
+}
+
+/* ===== DEMO CTA ===== */
+.demo-cta {
+  text-align: center;
+  padding: 40px 24px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.demo-cta::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--orange-glow), transparent);
+}
+.demo-cta-label {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+}
+.demo-cta h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.demo-cta p {
+  font-size: .85rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+.demo-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  background: var(--orange-dim);
+  border: 1px solid rgba(249,115,22,0.20);
+  color: var(--orange);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: .01em;
+  text-decoration: none;
+  transition: all .2s;
+  margin-bottom: 16px;
+}
+.demo-phone:hover {
+  background: rgba(249,115,22,0.18);
+  border-color: rgba(249,115,22,0.35);
+  transform: translateY(-1px);
+}
+.demo-phone svg {
+  width: 18px;
+  height: 18px;
+}
+.demo-subtext {
+  font-size: .75rem;
+  color: var(--text-muted);
+}
+
+/* ===== PILOT CTA ===== */
+.pilot-cta {
+  display: block;
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: var(--radius);
+  background: var(--orange);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+  box-shadow: 0 4px 24px rgba(249,115,22,0.25);
+}
+.pilot-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(249,115,22,0.35);
+}
+.pilot-sub {
+  text-align: center;
+  font-size: .75rem;
+  color: var(--text-muted);
+  margin-top: 12px;
+}
+
+/* ===== FOOTER ===== */
+.report-footer {
+  text-align: center;
+  padding-top: 48px;
+  margin-top: 48px;
+  border-top: 1px solid var(--border-subtle);
+}
+.footer-brand {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.footer-brand span { color: var(--orange); }
+.footer-copy {
+  font-size: .65rem;
+  color: var(--text-muted);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 420px) {
+  .report { padding: 32px 16px 48px; }
+  .comparison { grid-template-columns: 1fr; }
+  .cost-strip { flex-direction: column; }
+  .demo-phone { font-size: 1rem; padding: 12px 24px; }
+}
+</style>
+</head>
+<body>
+<div class="report">
+
+  <!-- Confidential Strip -->
+  <div class="confidential">
+    <span class="confidential-line"></span>
+    <span class="confidential-label">Prepared for {company}</span>
+    <span class="confidential-line"></span>
+  </div>
+
+  <!-- Brand -->
+  <div class="brand">The Call Taker</div>
+
+  <!-- Hero -->
+  <h1 class="hero-company">{company}</h1>
+  <p class="hero-meta">
+    {day_of_week}, {friendly_date} <span>&bull;</span> {friendly_time} <span>&bull;</span> {location}
+  </p>
+
+  <!-- Result Badge -->
+  <div class="result-badge {result_class}">
+    <span class="result-dot"></span>
+    {result_text}
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 1: What Happened -->
+  <div class="section-label">What happened</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-time">{friendly_time}</div>
+      <div class="tl-desc">We called <strong>{company}</strong> as a customer needing {industry_label} service after hours.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">Waiting</div>
+      <div class="tl-desc">{ring_text}The phone rang. No answer system. No routing.</div>
+    </div>
+    <div class="tl-item fail">
+      <div class="tl-time">Result</div>
+      <div class="tl-desc"><span class="fail-text">{outcome_text}</span> &mdash; the caller moved on.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 2: Side-by-Side -->
+  <div class="section-label">What your callers experience</div>
+  <div class="comparison">
+    <div class="comp-card current">
+      <div class="comp-label">Today</div>
+      <div class="comp-detail">Phone rings {rings}+ times</div>
+      <div class="comp-detail"><strong>Voicemail or nothing</strong></div>
+      <div class="comp-detail">Caller hangs up</div>
+      <div class="comp-detail">Calls your competitor</div>
+    </div>
+    <div class="comp-card jessica">
+      <div class="comp-label">With Jessica</div>
+      <div class="comp-detail">Picks up in 2 rings</div>
+      <div class="comp-detail"><strong>Natural conversation</strong></div>
+      <div class="comp-detail">Books the appointment</div>
+      <div class="comp-detail">Texts you the details</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 3: The Cost -->
+  <div class="section-label">What missed calls cost {company}</div>
+  <p style="font-size:.85rem;color:var(--text-secondary);margin-bottom:20px;line-height:1.6;">
+    The average {industry_label} job is <strong style="color:#fff">${job_value:,}</strong>.
+    At just 3 missed after-hours calls per week:
+  </p>
+  <div class="cost-strip">
+    <div class="cost-block">
+      <div class="cost-period">Weekly</div>
+      <div class="cost-value">${weekly_loss:,}</div>
+    </div>
+    <div class="cost-block">
+      <div class="cost-period">Monthly</div>
+      <div class="cost-value">${monthly_loss:,}</div>
+    </div>
+    <div class="cost-block">
+      <div class="cost-period">Yearly</div>
+      <div class="cost-value">${yearly_loss:,}</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 4: Hear Jessica -->
+  <div class="demo-cta">
+    <div class="demo-cta-label">Hear the difference</div>
+    <h3>Call right now and hear Jessica answer</h3>
+    <p>Same scenario. Same after-hours call. Completely different experience.</p>
+    <a href="tel:+16157845747" class="demo-phone">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+      (615) 784-5747
+    </a>
+    <div class="demo-subtext">Free. Takes 30 seconds. Try to stump her.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Section 5: Pilot CTA -->
+  <a href="https://thecalltaker.com/pilot/" class="pilot-cta">Start Your Free 14-Day Pilot</a>
+  <p class="pilot-sub">No credit card. No commitment. Live in 24 hours.</p>
+
+  <!-- Footer -->
+  <div class="report-footer">
+    <div class="footer-brand">The Call<span>Taker</span></div>
+    <div class="footer-copy">&copy; {year} The Call Taker &bull; AI Receptionist for Service Businesses</div>
+  </div>
+
+</div>
+</body>
+</html>
