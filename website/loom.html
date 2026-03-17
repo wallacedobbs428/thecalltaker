@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>See Jessica In Action - The Call Taker</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#fff;font-family:'Inter',system-ui,sans-serif;padding:24px 16px 48px;-webkit-font-smoothing:antialiased}
+.header{text-align:center;margin-bottom:40px;padding-top:24px}
+.header h1{font-size:28px;font-weight:800;letter-spacing:-0.5px}
+.header p{color:#888;font-size:15px;margin-top:8px}
+.video-card{background:#111;border-radius:16px;padding:24px;margin-bottom:24px;border:1px solid #1a1a1a;max-width:640px;margin-left:auto;margin-right:auto}
+.video-label{font-size:11px;font-weight:700;color:#00dc82;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.video-title{font-size:18px;font-weight:700;margin-bottom:4px}
+.video-desc{font-size:13px;color:#888;margin-bottom:16px}
+.loom-embed{position:relative;padding-bottom:56.25%;height:0;border-radius:10px;overflow:hidden;background:#1a1a1a}
+.loom-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.placeholder{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+.placeholder span{font-size:40px}
+.placeholder p{color:#555;font-size:13px}
+.cta-section{text-align:center;margin-top:40px;padding:32px 24px;background:#111;border-radius:16px;border:1px solid #00dc82;max-width:640px;margin-left:auto;margin-right:auto}
+.cta-section h2{font-size:22px;font-weight:800;margin-bottom:8px}
+.cta-section p{color:#888;font-size:14px;margin-bottom:24px}
+.cta-btn{display:block;background:#00dc82;color:#000;text-decoration:none;border-radius:10px;padding:16px;font-size:17px;font-weight:700;text-align:center}
+.cta-btn:hover{background:#00c574}
+.urgency{background:#1a0a00;border:1px solid #f59e0b;border-radius:8px;padding:10px 16px;text-align:center;font-size:12px;color:#f59e0b;margin-bottom:24px;max-width:640px;margin-left:auto;margin-right:auto}
+</style>
+</head>
+<body>
+
+<script>
+// ═══════════════════════════════════
+// WALLACE: PASTE YOUR LOOM URLs HERE
+// ═══════════════════════════════════
+var LOOM_1 = ""; // Video 1: Your After-Hours Problem
+var LOOM_2 = ""; // Video 2: Live Jessica Demo
+var LOOM_3 = ""; // Video 3: It's Working
+// ═══════════════════════════════════
+
+function getLoomId(url){
+  var m=url.match(/loom\.com\/share\/([a-zA-Z0-9]+)/);
+  return m?m[1]:null;
+}
+function renderVideo(id,url,title){
+  var el=document.getElementById(id);
+  var lid=getLoomId(url);
+  if(lid){el.innerHTML='<iframe src="https://www.loom.com/embed/'+lid+'" allowfullscreen></iframe>';}
+  else{el.innerHTML='<div class="placeholder"><span>&#9654;</span><p>'+title+' -- Coming Soon</p></div>';}
+}
+document.addEventListener('DOMContentLoaded',function(){
+  renderVideo('video1',LOOM_1,'Your After-Hours Problem');
+  renderVideo('video2',LOOM_2,'Live Jessica Demo');
+  renderVideo('video3',LOOM_3,"It's Working");
+});
+</script>
+
+<div class="header">
+  <h1>See Jessica In Action</h1>
+  <p>45 seconds that could change how your phones work forever</p>
+</div>
+
+<div class="urgency">Founding Customer Rate -- Closes Friday Midnight -- 7 spots remaining</div>
+
+<div class="video-card">
+  <div class="video-label">Watch First</div>
+  <div class="video-title">Your After-Hours Problem</div>
+  <div class="video-desc">What your customers hear when they call after hours -- and what they'd hear instead.</div>
+  <div class="loom-embed" id="video1"></div>
+</div>
+
+<div class="video-card">
+  <div class="video-label">The Demo</div>
+  <div class="video-title">Jessica Handles a Real Call</div>
+  <div class="video-desc">Watch Jessica answer, ask the right questions, and book an appointment in under 2 minutes.</div>
+  <div class="loom-embed" id="video2"></div>
+</div>
+
+<div class="video-card">
+  <div class="video-label">Proof</div>
+  <div class="video-title">It's Already Working</div>
+  <div class="video-desc">Real results from the first businesses to go live with Jessica.</div>
+  <div class="loom-embed" id="video3"></div>
+</div>
+
+<div class="cta-section">
+  <h2>Ready to Get Jessica Live?</h2>
+  <p>14-day free pilot. Setup in 5 minutes. No card required.</p>
+  <a href="pay.html" class="cta-btn">Start Free 14-Day Pilot &rarr;</a>
+  <p style="margin-top:12px;color:#555;font-size:12px">Or call the demo line: <a href="tel:6157845747" style="color:#00dc82">(615) 784-5747</a></p>
+</div>
+
+</body>
+</html>
