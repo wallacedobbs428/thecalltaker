@@ -256,6 +256,13 @@ a{text-decoration:none;color:inherit}
   Not sure yet? Call the demo line and hear it yourself: <a href="tel:+16157845747">(615) 784-5747</a>
 </div>
 
+<!-- Payment Confirmation (PayPal mobile redirect fix) -->
+<div id="confirm-section" style="max-width:480px;margin:0 auto 48px;padding:28px 24px;border:1px solid #222;border-radius:12px;text-align:center;">
+  <p style="color:#888;font-size:14px;margin-bottom:16px;">Just completed your payment?</p>
+  <button id="confirmBtn" onclick="confirmPayment()" style="background:var(--green);color:#0a0a0a;border:none;border-radius:8px;padding:16px 28px;font-size:16px;font-weight:700;cursor:pointer;width:100%;font-family:'Inter',sans-serif;min-height:56px;transition:opacity 0.2s;">&#10003; Yes, I Paid &mdash; Activate My Account</button>
+  <p style="color:#555;font-size:11px;margin-top:8px;">This sends Wallace your info instantly</p>
+</div>
+
 <!-- Questions -->
 <div class="questions">
   <p>Questions? Text Wallace directly: <a href="sms:+16156539004">(615) 653-9004</a></p>
@@ -298,6 +305,39 @@ document.querySelectorAll('.cta[href]').forEach(function(btn){
     }
   });
 });
+
+// Payment confirmation (PayPal mobile redirect fix)
+function confirmPayment() {
+  var btn = document.getElementById('confirmBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  // Fire ntfy URGENT
+  fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+    method: 'POST',
+    body: 'SELF-CONFIRMED PAYMENT\nCustomer tapped confirm on /pay\nCHECK PAYPAL NOW\nTag payment-received in GHL\nTimestamp: ' + new Date().toLocaleString(),
+    headers: {
+      'Title': 'PAYMENT CONFIRMED on /pay',
+      'Priority': 'urgent',
+      'Tags': 'moneybag,rotating_light'
+    }
+  }).catch(function(){});
+
+  // Google Ads conversion
+  if (typeof gtag === 'function') {
+    gtag('event', 'conversion', { send_to: 'AW-17970510102/payment_confirmed' });
+    gtag('event', 'purchase', { currency: 'USD' });
+  }
+
+  // Show confirmation state
+  document.getElementById('confirm-section').innerHTML =
+    '<div style="color:var(--green);font-size:48px">&#10003;</div>' +
+    '<p style="color:#fff;font-weight:700;margin-top:8px">Got it. Wallace will text you within the hour.</p>' +
+    '<p style="color:#888;font-size:13px;margin-top:4px">Demo line: <a href="tel:+16157845747" style="color:var(--green)">(615) 784-5747</a></p>';
+
+  // Redirect to thank-you after 2 seconds
+  setTimeout(function() { window.location.href = '/thank-you.html'; }, 2000);
+}
 </script>
 </body>
 </html>
