@@ -3,7 +3,7 @@
 
 var GHL = (function() {
   var BASE = 'https://services.leadconnectorhq.com';
-  var KEY = 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35';
+  var KEY = 'GHL_KEY_REMOVED_USE_SERVER_PROXY';
   var LOCATION = 'tQb9YmrGDrdVUJYPKrsY';
   var V_CONTACTS = '2021-07-28';
   var V_CONVERSATIONS = '2021-04-15';

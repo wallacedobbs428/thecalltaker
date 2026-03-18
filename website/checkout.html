@@ -7,15 +7,18 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="robots" content="noindex, nofollow">
 <script src="/shared/tct-tracking.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <title>Get Started — The Call Taker</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
   body {
-    background: #0d1117;
-    color: #e6edf3;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #0a0a0a;
+    color: #e5e5e5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -28,32 +31,32 @@
   .header {
     text-align: center;
     padding: 36px 20px 24px;
-    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+    background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
   }
   .logo { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
-  .logo span { color: #f85149; }
-  .tagline { color: #8b949e; font-size: 14px; margin-top: 4px; }
+  .logo span { color: #00dc82; }
+  .tagline { color: #71717a; font-size: 14px; margin-top: 4px; }
 
   /* Trust badges */
   .trust {
     display: flex; justify-content: center; gap: 16px;
-    padding: 12px; font-size: 12px; color: #8b949e;
-    border-bottom: 1px solid #21262d;
+    padding: 12px; font-size: 12px; color: #71717a;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
   .trust span { display: flex; align-items: center; gap: 4px; }
-  .trust .dot { width: 6px; height: 6px; background: #3fb950; border-radius: 50%; }
+  .trust .dot { width: 6px; height: 6px; background: #00dc82; border-radius: 50%; }
 
   /* Plan selector */
   .plans { padding: 24px 0; }
   .plan-label {
     text-align: center; font-size: 13px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1px; color: #8b949e;
+    text-transform: uppercase; letter-spacing: 1px; color: #71717a;
     margin-bottom: 14px;
   }
 
   .plan-card {
-    background: #161b22;
-    border: 2px solid #21262d;
+    background: rgba(255,255,255,0.03);
+    border: 2px solid rgba(255,255,255,0.08);
     border-radius: 16px;
     padding: 24px 20px;
     margin: 12px 0;
@@ -62,12 +65,12 @@
     position: relative;
   }
   .plan-card:active, .plan-card.selected {
-    border-color: #3fb950;
-    box-shadow: 0 0 0 1px #3fb950, 0 0 20px rgba(63,185,80,0.1);
+    border-color: #00dc82;
+    box-shadow: 0 0 0 1px #00dc82, 0 0 20px rgba(0,220,130,0.1);
   }
   .plan-card .badge {
     position: absolute; top: -10px; right: 16px;
-    background: #3fb950; color: #0d1117;
+    background: #00dc82; color: #0a0a0a;
     font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
     padding: 3px 10px; border-radius: 10px;
   }
@@ -75,122 +78,127 @@
   .plan-top { display: flex; justify-content: space-between; align-items: center; }
   .plan-name { font-weight: 700; color: #fff; font-size: 17px; }
   .plan-price { font-size: 28px; font-weight: 800; color: #fff; }
-  .plan-price span { font-size: 14px; color: #8b949e; font-weight: 400; }
-  .plan-desc { color: #8b949e; font-size: 13px; margin-top: 8px; line-height: 1.5; }
+  .plan-price span { font-size: 14px; color: #71717a; font-weight: 400; }
+  .plan-desc { color: #a1a1aa; font-size: 13px; margin-top: 8px; line-height: 1.5; }
 
   .plan-features {
     list-style: none; margin-top: 14px;
     display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
   }
   .plan-features li {
-    font-size: 13px; color: #c9d1d9;
+    font-size: 13px; color: #d4d4d4;
     padding-left: 18px; position: relative;
   }
   .plan-features li::before {
     content: "\2713"; position: absolute; left: 0;
-    color: #3fb950; font-weight: 700; font-size: 12px;
+    color: #00dc82; font-weight: 700; font-size: 12px;
   }
 
   /* Radio indicator */
   .radio-dot {
-    width: 22px; height: 22px; border: 2px solid #30363d;
+    width: 22px; height: 22px; border: 2px solid rgba(255,255,255,0.15);
     border-radius: 50%; display: flex; align-items: center;
     justify-content: center; flex-shrink: 0;
     transition: all 0.2s;
   }
   .plan-card.selected .radio-dot {
-    border-color: #3fb950;
+    border-color: #00dc82;
   }
   .plan-card.selected .radio-dot::after {
     content: ''; width: 10px; height: 10px;
-    background: #3fb950; border-radius: 50%;
+    background: #00dc82; border-radius: 50%;
   }
 
   /* CTA Button */
   .cta-area { padding: 0 0 20px; }
   .cta-btn {
     display: block; width: 100%;
-    background: linear-gradient(135deg, #3fb950, #2ea043);
-    color: #fff; border: none; border-radius: 14px;
+    background: #00dc82;
+    color: #0a0a0a; border: none; border-radius: 14px;
     padding: 18px; font-size: 18px; font-weight: 800;
     text-align: center; cursor: pointer;
     text-decoration: none;
     transition: all 0.15s;
     -webkit-appearance: none;
   }
+  .cta-btn:hover {
+    background: #00c974;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,220,130,0.3);
+  }
   .cta-btn:active {
     transform: scale(0.98);
     opacity: 0.9;
   }
   .cta-sub {
-    text-align: center; font-size: 12px; color: #8b949e;
+    text-align: center; font-size: 12px; color: #71717a;
     margin-top: 8px;
   }
 
   /* ROI callout */
   .roi-callout {
-    background: rgba(248,81,73,0.08);
-    border: 1px solid rgba(248,81,73,0.2);
+    background: rgba(0,220,130,0.04);
+    border: 1px solid rgba(0,220,130,0.15);
     border-radius: 12px;
     padding: 16px; margin: 20px 0;
     text-align: center;
   }
   .roi-callout .big {
-    font-size: 32px; font-weight: 800; color: #f85149;
+    font-size: 32px; font-weight: 800; color: #00dc82;
   }
-  .roi-callout .sub { font-size: 13px; color: #8b949e; margin-top: 2px; }
+  .roi-callout .sub { font-size: 13px; color: #71717a; margin-top: 2px; }
 
   /* What you get */
   .features-section { padding: 20px 0; }
   .features-title {
     font-size: 13px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: #8b949e; margin-bottom: 14px;
+    letter-spacing: 1px; color: #71717a; margin-bottom: 14px;
   }
   .feature-item {
     display: flex; gap: 12px; align-items: flex-start;
-    padding: 12px 0; border-bottom: 1px solid #21262d;
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
   }
   .feature-item:last-child { border-bottom: none; }
   .feature-icon {
-    width: 36px; height: 36px; background: #161b22;
+    width: 36px; height: 36px; background: rgba(255,255,255,0.03);
     border-radius: 10px; display: flex; align-items: center;
     justify-content: center; font-size: 18px; flex-shrink: 0;
   }
   .feature-name { font-weight: 700; color: #fff; font-size: 15px; }
-  .feature-desc { font-size: 13px; color: #8b949e; margin-top: 2px; }
+  .feature-desc { font-size: 13px; color: #a1a1aa; margin-top: 2px; }
 
   /* Guarantee */
   .guarantee {
-    background: #161b22;
-    border: 1px solid #21262d;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
     border-radius: 12px;
     padding: 20px; margin: 20px 0;
     text-align: center;
   }
   .guarantee .icon { font-size: 28px; margin-bottom: 8px; }
   .guarantee .title { font-weight: 700; color: #fff; font-size: 16px; }
-  .guarantee .desc { font-size: 13px; color: #8b949e; margin-top: 6px; line-height: 1.5; }
+  .guarantee .desc { font-size: 13px; color: #a1a1aa; margin-top: 6px; line-height: 1.5; }
 
   /* Demo CTA */
   .demo-strip {
-    background: linear-gradient(135deg, #f85149, #da3633);
+    background: linear-gradient(135deg, #00dc82, #059669);
     border-radius: 12px; padding: 16px;
     text-align: center; margin: 16px 0;
   }
-  .demo-strip .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.7); }
+  .demo-strip .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(0,0,0,0.6); }
   .demo-strip a {
     display: block; font-size: 24px; font-weight: 800;
-    color: #fff; text-decoration: none; margin: 4px 0;
+    color: #0a0a0a; text-decoration: none; margin: 4px 0;
   }
-  .demo-strip .sub { font-size: 12px; color: rgba(255,255,255,0.75); }
+  .demo-strip .sub { font-size: 12px; color: rgba(0,0,0,0.5); }
 
   /* Footer */
   .footer {
     padding: 30px 16px;
-    text-align: center; font-size: 12px; color: #484f58;
-    border-top: 1px solid #21262d;
+    text-align: center; font-size: 12px; color: #52525b;
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
-  .footer a { color: #58a6ff; text-decoration: none; }
+  .footer a { color: #00dc82; text-decoration: none; }
 
   /* Payment option buttons */
   .payment-options { margin: 20px 0; }
@@ -208,16 +216,15 @@
 
   /* Urgency bar */
   .urgency-bar {
-    background: rgba(248,81,73,0.12);
-    border: 1px solid rgba(248,81,73,0.25);
+    background: rgba(0,220,130,0.06);
+    border: 1px solid rgba(0,220,130,0.15);
     border-radius: 10px;
     padding: 12px 16px; margin: 16px 0;
-    text-align: center; font-size: 13px; color: #f85149;
+    text-align: center; font-size: 13px; color: #00dc82;
     font-weight: 600;
   }
 </style>
 <script src="/shared/ab-split.js"></script>
-<script src="/tct-tracking.js" defer></script>
 </head>
 <body>
 
@@ -284,7 +291,7 @@
           <div class="radio-dot"></div>
           <div class="plan-name">Premium</div>
         </div>
-        <div class="plan-price">$497<span>/mo</span></div>
+        <div class="plan-price">$997<span>/mo</span></div>
       </div>
       <div class="plan-desc">White-glove — custom voice, CRM integration, dedicated manager</div>
       <ul class="plan-features">
@@ -314,15 +321,15 @@
 
   <!-- PAYMENT OPTIONS -->
   <div class="payment-options" id="payment-options" style="display:none;">
-    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:14px;text-align:center;">Ready to Pay? Choose How</div>
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#71717a;margin-bottom:14px;text-align:center;">Ready to Pay? Choose How</div>
     <a class="pay-btn paypal-btn" id="paypal-btn" href="#" onclick="payWithPayPal(event)">
       Pay with PayPal — <span id="paypal-price">$97/mo</span>
     </a>
     <a class="pay-btn venmo-btn" href="https://venmo.com/u/Wallace-Dobbs" target="_blank">
       Pay with Venmo — @Wallace-Dobbs
     </a>
-    <div style="text-align:center;font-size:12px;color:#8b949e;margin-top:8px;">
-      Or text "READY" to <a href="sms:+16157845747" style="color:#58a6ff;">(615) 784-5747</a> and we'll send you an invoice
+    <div style="text-align:center;font-size:12px;color:#71717a;margin-top:8px;">
+      Or text "READY" to <a href="sms:+16157845747" style="color:#00dc82;">(615) 784-5747</a> and we'll send you an invoice
     </div>
   </div>
 
@@ -413,7 +420,7 @@
   var PLANS = {
     afterhours: { name: 'After-Hours', price: 97, roi: '$97 < 1 missed call', paypal: 'https://paypal.me/wallacedobbs/97' },
     full247:    { name: 'Full 24/7',    price: 497, roi: '$497 < 1 service call', paypal: 'https://paypal.me/wallacedobbs/497' },
-    premium:    { name: 'Pro',      price: 997, roi: '$497 < 2 service calls', paypal: 'https://paypal.me/wallacedobbs/997' }
+    premium:    { name: 'Pro',      price: 997, roi: '$997 < 2 service calls', paypal: 'https://paypal.me/wallacedobbs/997' }
   };
 
   // Stripe payment links — REPLACE THESE when Stripe is connected
