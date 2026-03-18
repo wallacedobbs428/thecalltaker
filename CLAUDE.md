@@ -54,7 +54,7 @@ Two repos, 60+ Python scripts, 105+ launchd services running 24/7 on a single Ma
 - **Commands:** monitor, followup, pipeline, report, status, all, indeed, opens, stale, william, escalate, referral, reactivate, seasonal, winback, digest, sentiment, attribution, cleanup, competitor
 - **Schedule:** 8 launchd services (monitor every 30min, followup 9am, pipeline midnight, report 8pm, seasonal 11am, digest 7:30am, reactivate 2pm, winback Mon 10am)
 - **APIs:** GHL (contacts, conversations, messages), wttr.in (weather), ntfy.sh
-- **What it does:** Catches replies, classifies sentiment (positive/negative/objection/question), follows up with warm leads, detects demo line callers, sends weather-triggered urgency emails, generates William's call sheet, sends breakup emails to cold leads, asks for referrals, reactivates old leads with Google reviews angle
+- **What it does:** Catches replies, classifies sentiment (positive/negative/objection/question), follows up with warm leads, detects demo line callers, sends weather-triggered urgency emails, generates Wallace & Mills call sheet, sends breakup emails to cold leads, asks for referrals, reactivates old leads with Google reviews angle
 
 ### Ben — Intelligence + Conversion Engine
 - **File:** `~/thecalltaker-ops/ben/ben-engine.py` (2,847 lines)
@@ -78,7 +78,7 @@ Two repos, 60+ Python scripts, 105+ launchd services running 24/7 on a single Ma
 - **Commands:** score, speed, objection, hotlist, close, trial, urgency, recover, funnel, win, revenue, report, status, all
 - **Schedule:** 8 launchd services (speed+objection every 10min, score every 2hr, etc.)
 - **APIs:** GHL, ntfy.sh
-- **What it does:** Unified 0-100 closing score combining ALL engine signals, speed-to-lead (detects hot signals every 10min, responds immediately), objection handling, William's priority call list, multi-step closing sequences for 70+ scored leads, free trial offers, limited-time urgency pressure, dead lead recovery, conversion funnel analysis, win pattern analysis, revenue countdown to $20K MRR
+- **What it does:** Unified 0-100 closing score combining ALL engine signals, speed-to-lead (detects hot signals every 10min, responds immediately), objection handling, Wallace & Mills priority call list, multi-step closing sequences for 70+ scored leads, free trial offers, limited-time urgency pressure, dead lead recovery, conversion funnel analysis, win pattern analysis, revenue countdown to $20K MRR
 
 ## Key Ops Scripts
 
@@ -153,7 +153,7 @@ All in `ops/config.py` with environment variable fallbacks:
 - **SALES:** `tct-sales-63uYsIT9` — daily/weekly reports, pipeline updates, A/B results, tool cost alerts, morning briefings. Checked 1-2x/day.
 - **SYSTEM:** `tct-system-vRsfXQRQ` — engine crashes, service restarts, API errors, health checks. Only checked when something seems broken.
 - **ACTIVITY:** `tct-activity-cn1Aqa85` — every email/SMS/call sent, leads enriched, contacts tagged, auto-responders, scrapers. High volume, rarely checked.
-- **William:** `tct-william-Qm8nR3vK` — William's call sheets, hot leads only (unchanged)
+- **Team:** `tct-william-Qm8nR3vK` — Wallace & Mills call sheets, hot leads only
 
 ### Ntfy Hub v2 — Unified Notification Engine (March 2, 2026)
 - **Script:** `ops/ntfy-hub.py` — 6 commands: prime, nopilot, milestone, summary, status, test
@@ -513,7 +513,7 @@ HVAC, Roofing, Plumbing, Electrical, Dental, MedSpa, Legal, Property Mgmt, Veter
 ## Pilot Program (14-Day Free Trial)
 - **Directory:** `~/thecalltaker-ops/pilot/` (moved from Desktop Feb 27 — macOS TCC fix)
 - **Max Slots:** 5 concurrent pilots
-- **Onboarding Engine:** `pilot-onboarding-engine.py` — scans for `pilot-signup` tag, auto-onboards (welcome email/SMS, forwarding instructions, GHL tags, war room + William alerts)
+- **Onboarding Engine:** `pilot-onboarding-engine.py` — scans for `pilot-signup` tag, auto-onboards (welcome email/SMS, forwarding instructions, GHL tags, war room + Wallace & Mills alerts)
 - **Conversion Engine:** `pilot-conversion-engine.py` — Day 7 check-in, Day 10 ROI, Day 12 urgency, post-expiry Day 15/17/21
 - **State:** `~/thecalltaker-ops/pilot/pilot-state.json` (shared by both engines, atomic writes)
 - **Heartbeats:** `pilot-onboarding.heartbeat`, `pilot-conversion.heartbeat` (written each run)
@@ -633,14 +633,14 @@ max-engine.py catches replies → donny-engine.py closes
 - **Task Board:** `~/Desktop/thecalltaker/war-room/task-board.md` — live task tracker with WALLACE/MILLS/SHARED columns
 - **Handoff Log:** `~/Desktop/thecalltaker/war-room/handoff-log.md` — session-by-session changelog (what was done, what changed, what's next, blockers)
 - **Rules:** `~/Desktop/thecalltaker/war-room/rules.md` — lane ownership, shared decisions, conflict resolution
-- **Lane ownership:** Wallace = sales/outreach/content/ads/pricing. Mills = code/repos/voice agent/GHL/integrations. William = demos/Zoom calls.
+- **Lane ownership:** Wallace = sales/outreach/content/ads/pricing. Mills = code/repos/voice agent/GHL/integrations. Mills = demos/Zoom calls (shared with Wallace).
 - **Cross-lane work:** Log it on the task board FIRST. Emergency exceptions must be logged after.
 - **Shared decisions:** Goes in SHARED section — no one moves forward until both agree.
 - **Engine changes:** Log which file, what changed, and whether launchd was restarted.
 
 ## Team
 - **Wallace Dobbs** — founder/CEO, builds everything, funds everything
-- **William** (Wallace's brother) — demo closer, face on Zoom calls
+- **Mills** — co-founder, handles demos and closing alongside Wallace
 - **Mills** — co-founder/partner, strategy, has GitHub access
 - **Max** — 24/7 AI reply catcher + follow-up machine
 - **Ben** — 24/7 AI intelligence engine

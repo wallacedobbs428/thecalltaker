@@ -62,8 +62,8 @@ Afternoon (1-3pm):
 - 20 Instagram comments
 
 Evening:
-- Wallace + William sync: who's closest to converting? Who needs a Zoom demo?
-- If anyone booked a demo, prep William with the lead's info + industry
+- Wallace + Mills sync: who's closest to converting? Who needs a Zoom demo?
+- If anyone booked a demo, prep Wallace or Mills with the lead's info + industry
 
 ## Thursday — Call Day
 
