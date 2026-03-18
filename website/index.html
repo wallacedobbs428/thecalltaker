@@ -28,7 +28,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="canonical" href="https://thecalltaker.com/">
   <link rel="stylesheet" href="styles.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"The Call Taker","url":"https://thecalltaker.com/","telephone":"+16157845747","priceRange":"$497-$997/mo","address":{"@type":"PostalAddress","addressLocality":"Brentwood","addressRegion":"TN"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"The Call Taker","url":"https://thecalltaker.com/","telephone":"+16157845747","priceRange":"$97-$997/mo","address":{"@type":"PostalAddress","addressLocality":"Brentwood","addressRegion":"TN"}}</script>
   <style>
     /* === ENHANCED HOMEPAGE STYLES === */
 
@@ -407,6 +407,25 @@
 
       /* How-it-works steps — stack vertically with tighter layout */
       .steps-g { grid-template-columns: 1fr !important; }
+    }
+
+    /* Pricing grid responsive — 4-col desktop → 2-col tablet → 1-col mobile */
+    @media (max-width: 1024px) {
+      .pricing-grid-4 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .pricing-grid-4 .pricing-card[style*="scale(1.03)"] {
+        transform: none !important;
+      }
+    }
+    @media (max-width: 640px) {
+      .pricing-grid-4 {
+        grid-template-columns: 1fr !important;
+        max-width: 400px;
+      }
     }
   </style>
 </head>
@@ -878,7 +897,7 @@
       <p class="section-desc" style="margin: 0 auto;">No per-minute fees. No contracts. Cancel anytime.</p>
     </div>
 
-    <div class="reveal" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 1060px; margin: 0 auto;">
+    <div class="reveal pricing-grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 1060px; margin: 0 auto;">
 
       <!-- DECOY: Starter Saver $19 -->
       <div class="pricing-card" style="opacity: 0.6;">
@@ -1010,7 +1029,7 @@
           Hear It Live
         </a>
       </div>
-      <p style="font-size: 13px; color: var(--text-3);">7-day free trial. No credit card required. Cancel anytime.</p>
+      <p style="font-size: 13px; color: var(--text-3);">14-day free pilot. No credit card required. Cancel anytime.</p>
     </div>
   </div>
 </section>
@@ -1033,13 +1052,13 @@
         <a href="calculator.html">Calculator</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Service</a>
-        <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
+        <a href="mailto:thecalltakerai@gmail.com">Contact</a>
         <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
       </div>
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
+      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:thecalltakerai@gmail.com" style="color:var(--text-3);">thecalltakerai@gmail.com</a></span>
     </div>
   </div>
 </footer>

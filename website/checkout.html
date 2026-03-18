@@ -278,13 +278,13 @@
       </ul>
     </div>
 
-    <div class="plan-card" id="plan-premium" onclick="selectPlan('premium')">
+    <div class="plan-card" id="plan-pro" onclick="selectPlan('pro')">
       <div class="plan-top" style="margin-bottom: 4px;">
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="radio-dot"></div>
-          <div class="plan-name">Premium</div>
+          <div class="plan-name">Pro</div>
         </div>
-        <div class="plan-price">$497<span>/mo</span></div>
+        <div class="plan-price">$997<span>/mo</span></div>
       </div>
       <div class="plan-desc">White-glove — custom voice, CRM integration, dedicated manager</div>
       <ul class="plan-features">
@@ -413,18 +413,18 @@
   var PLANS = {
     afterhours: { name: 'After-Hours', price: 97, roi: '$97 < 1 missed call', paypal: 'https://paypal.me/wallacedobbs/97' },
     full247:    { name: 'Full 24/7',    price: 497, roi: '$497 < 1 service call', paypal: 'https://paypal.me/wallacedobbs/497' },
-    premium:    { name: 'Pro',      price: 997, roi: '$497 < 2 service calls', paypal: 'https://paypal.me/wallacedobbs/997' }
+    pro:        { name: 'Pro',          price: 997, roi: '$997 < 2 service calls', paypal: 'https://paypal.me/wallacedobbs/997' }
   };
 
   // Stripe payment links — REPLACE THESE when Stripe is connected
-  var STRIPE_LINKS = { afterhours: '', full247: '', premium: '' };
+  var STRIPE_LINKS = { afterhours: '', full247: '', pro: '' };
 
   function selectPlan(plan) {
     selectedPlan = plan;
     var p = PLANS[plan];
     document.getElementById('plan-afterhours').classList.toggle('selected', plan === 'afterhours');
     document.getElementById('plan-full247').classList.toggle('selected', plan === 'full247');
-    document.getElementById('plan-premium').classList.toggle('selected', plan === 'premium');
+    document.getElementById('plan-pro').classList.toggle('selected', plan === 'pro');
     document.getElementById('roi-text').textContent = p.roi;
     document.getElementById('cta-price-2').textContent = '$' + p.price + '/mo';
     document.getElementById('paypal-price').textContent = '$' + p.price + '/mo';
