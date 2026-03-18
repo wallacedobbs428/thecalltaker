@@ -6,7 +6,7 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 # Primer — The Call Taker
 
-> Last updated: 2026-03-15 | Rewrite this file at the start of every session.
+> Last updated: 2026-03-18 | Rewrite this file at the start of every session.
 
 ## What This Is
 
@@ -20,87 +20,90 @@ AI Receptionist SaaS for service businesses. $97/$297/$497/mo plans. 14-day free
 - **CRM**: GoHighLevel (GHL). All contacts, conversations, pipelines
 - **Notifications**: ntfy.sh (5 topics: urgent, sales, system, activity, william)
 
-## Outreach Stack v2 (Rebuilt March 15, 2026)
+## Current Branch & Recent Work
 
-Full 7-component outreach system rebuild. All scripts in `ops/`.
+- **Branch:** `claude/build-ads-skill-system-Y1JSa`
+- **Latest session (March 18):** Built complete ads skill system — 6 slash commands replacing a full ad agency. Roofing campaign structured with 3 complete Facebook Lead Ads.
+
+## Ad System (Built March 18, 2026)
+
+### 6 Slash Command Skills (in `.claude/skills/`)
+
+| Skill | What It Does |
+|-------|-------------|
+| `/ads-research` | Scrapes competitor ads from Facebook Ad Library by vertical |
+| `/ads-scrape` | Deep-analyzes competitor ad creative: hooks, structure, CTAs |
+| `/ads-brief` | Generates strategic brief: angles, targeting, compliance, testing framework |
+| `/ads-write` | Writes 3 complete Facebook Lead Ads per vertical, Meta-compliant |
+| `/ads-launch` | Builds Meta campaign via API — ALL PAUSED, requires explicit launch confirmation |
+| `/ads-report` | Pulls live performance, compares against CPL benchmarks, recommends kill/scale/hold |
+
+### Pipeline Flow
+```
+/ads-research → /ads-scrape → /ads-brief → /ads-write → /ads-launch → /ads-report
+     ↓              ↓             ↓            ↓             ↓            ↓
+  intelligence.json ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←← (feeds back)
+```
+
+### Roofing Campaign (Ready to Launch)
+
+**10 competitors analyzed.** Top: AnswerConnect (365 days), Smith.ai (180 days), My AI Front Desk (150 days).
+
+**3 Ads (ALL PAUSED):**
+1. "Storm Season. Missed Calls. Lost Jobs." — storm urgency angle (zero competition)
+2. "$97/Mo Beats Your $800 Receptionist" — price disruption angle
+3. "That 2AM Call Was a $15,000 Roof Job" — emotional story angle
+
+**Lead Form:** 5 questions → Thank You → Call Demo Line (615) 784-5747
+
+**CPL Benchmarks:** Roofing $22 target / $44 kill. Testing at $5/day per ad ($15/day total).
+
+### Ad System Files (in `~/thecalltaker-ops/ads/`)
+- `research/roofing-competitors.json` — 10 competitors with angles + weaknesses
+- `scrape/roofing-ad-analysis.json` — top 3 ad deconstructions
+- `briefs/roofing-brief.md` — complete strategic brief
+- `copy/roofing-ad-copy.md` — 3 complete ads ready to paste
+- `active/roofing-campaign.json` — full campaign config + API commands
+- `intelligence.json` — shared state across all 6 skills
+- `reports/roofing-2026-03-18.json` — baseline report
+
+### Ad System Scripts (in `~/thecalltaker-ops/ops/`)
+- `meta-setup-wizard.py` — interactive wizard to set META_ACCESS_TOKEN + META_AD_ACCOUNT_ID
+- `ads-health-check.py` — full system health check (credentials, skills, files, API)
+- `ads-daily-report.py` — daily performance report with kill/scale logic + ntfy
+- `com.thecalltaker.ads-daily-report.plist` — launchd template for 9AM daily report
+
+### BLOCKER: Meta API Credentials
+- META_ACCESS_TOKEN: NOT SET
+- META_AD_ACCOUNT_ID: Known from config: `25895456013410801`
+- FIX: `python3 ~/thecalltaker-ops/ops/meta-setup-wizard.py`
+- Once set → run `/ads-launch roofing` to build campaign via API
+
+## Outreach Stack v2 (Rebuilt March 15, 2026)
 
 | # | Component | Script | What It Does |
 |---|-----------|--------|-------------|
-| C6 | Hot Lead 7-Touch | `hot-lead-converter.py` | 7-touch SMS/email/call sequence. Bland.ai voicemail Day 1. Per-touch GHL tagging. |
-| C1 | Cold Caller v2 | `cold-caller-v2.py` | Bland.ai outbound calls. Hot leads first. 2x retry with 4hr gaps. |
-| C2 | Storm Chaser v3 | `storm-chaser-v3.py` | NWS API storm detection. Emails within 5 min of hail/tornado/wind. |
-| C3 | Blast Engine v3 | `blast-engine-v3.py` | 40/day/address, 90s gaps, 5-address rotation, A/B auto-promote. |
-| C4 | Lead Quality | `lead-quality-engine.py` | Dedup + quality score 1-10. Only 5+ leads pass to blast. |
-| C5 | Speed-to-Lead v2 | `speed-to-lead-v2.py` | 15s hot signal checks. SMS 60s, call 5min, email 10min. Dead lead resurrection. |
-| C7 | DM Outreach v2 | `dm-outreach-v2.py` | 3-DM sequence per industry. Copy-paste export for Wallace. |
-| NEW | Hot Lead 5-Step | `hot-lead-sequence.py` | 5-step SMS/email/voicemail sequence (Day 0/1/2/4/7). Pain-first + scarcity. |
-| Sys | Health Monitor | `system-health-monitor.py` | Green/yellow/red for all components. SMS alert on red. |
-| Sys | Dashboard | `master-dashboard.html` | Visual command center. Auto-refreshes 60s. |
-
-## Current Branch & Recent Work
-
-- **Branch:** `claude/rebuild-outreach-stack-DYwVo`
-- **Homepage has unstaged changes** — Trust Layer added (see below)
-- **Latest session (March 15):** Created `hot-lead-sequence.py` — 5-step automated follow-up for hot-lead tagged contacts. Also previously added 5 SEO blog posts.
-
-## Hot Lead Sequence (March 15, 2026)
-
-New 5-step follow-up script at `ops/hot-lead-sequence.py`:
-- Step 1 (Day 0): SMS pain hook + pilot offer
-- Step 2 (Day 1): Email with missed call costs, competitor angle, case studies
-- Step 3 (Day 2): Bland.ai voicemail drop
-- Step 4 (Day 4): SMS social proof + scarcity countdown
-- Step 5 (Day 7): Breakup email
-- Commands: scan, send, status, run, test (dry run)
-- State: `ops/hot-lead-sequence-state.json`
-- Rate limits: 20 SMS/day, 30 emails/day
-- Contact registry integration for cross-engine coordination
-- 19 industries with pain hooks in INDUSTRY_HOOKS dict
-- launchd templates in docstring (scan every 2hrs, send 3x daily)
-
-## Homepage Trust Layer (March 15, 2026)
-
-Added 4 trust elements to `website/index.html`:
-
-1. **Trust Logo Bar** — Infinite-scroll bar with 6 logos. Positioned between hero and demo sections.
-2. **Live Call Counter** — Fixed floating badge: "Jessica has answered X calls this month".
-3. **Uptime Badge** — Pill badge in hero: "99.9% Uptime - 24/7/365 - Answers in Under 2 Rings".
-4. **Response Time Claim** — Hero proof stat updated to "< 2 Rings Answer Speed".
-5. **Live Demo Nav Link** — Added `/try-live.html` link to both desktop nav and mobile menu.
-
-## Blog Posts (82+ pages total, 54+ blog posts)
-
-All in `website/blog/`. Green/black design system. Inter font. Schema.org Article markup. OG/Twitter meta. Mid-article and bottom CTAs. Related posts section. Mobile responsive.
-
-### New Posts Added (March 15, 2026) — Batch 1
-- `answering-service-water-damage.html` — Water damage answering service
-- `after-hours-answering-service-small-business.html` — After-hours answering for small business
-- `how-many-calls-small-business-miss.html` — Missed call statistics
-- `virtual-receptionist-cost-2026.html` — Virtual receptionist pricing guide
-- `best-ai-phone-answering-service.html` — Best AI answering services ranked
-
-### New Posts Added (March 15, 2026) — Batch 2
-- `answering-service-pest-control.html` — Best pest control answering service (emergency routing, seasonal surges, termite/bed bug/rodent)
-- `answering-service-auto-repair.html` — Auto repair shops losing $8K/mo in missed calls (hands-on work problem, Monday rush)
-- `answering-service-cleaning-companies.html` — Best cleaning company answering service (residential/commercial, Airbnb turnovers, recurring revenue)
-- `missed-calls-cost-contractors.html` — Data-driven missed call cost analysis by trade (roofing, plumbing, HVAC, electrical, GC, painting, landscaping, concrete)
-- `ai-receptionist-vs-voicemail.html` — AI receptionist vs voicemail deep dive (80% hang-up stat, psychology, revenue math, comparison table)
+| C6 | Hot Lead 7-Touch | `hot-lead-converter.py` | 7-touch SMS/email/call sequence |
+| C1 | Cold Caller v2 | `cold-caller-v2.py` | Bland.ai outbound calls |
+| C2 | Storm Chaser v3 | `storm-chaser-v3.py` | NWS storm detection emails |
+| C3 | Blast Engine v3 | `blast-engine-v3.py` | 40/day/address, A/B auto-promote |
+| C4 | Lead Quality | `lead-quality-engine.py` | Dedup + quality score |
+| C5 | Speed-to-Lead v2 | `speed-to-lead-v2.py` | 15s hot signal checks |
+| C7 | DM Outreach v2 | `dm-outreach-v2.py` | 3-DM sequence per industry |
+| NEW | Hot Lead 5-Step | `hot-lead-sequence.py` | 5-step follow-up (Day 0/1/2/4/7) |
 
 ## Active Priorities
 
-- **Revenue**: Get to first paid customer. $20K MRR goal
-- **Outreach stack**: ALL 7 components rebuilt + new hot-lead-sequence — deploy to Mac
-- **Stripe**: NOT connected (Wallace is 16). PayPal/Venmo workaround live
-- **Bland.ai balance**: Cold caller + voicemails require funded account
-- **GHL aliases**: Blast v3 needs 5 aliases verified (wallace@, hello@, support@, info@, team@)
-- **Unsubscribe page**: Blast v3 links to thecalltaker.com/unsubscribe — needs building
-- **SEO content**: Continue expanding blog with high-intent keyword posts
+1. **Meta Ads:** Set credentials → launch roofing campaign → get first ad leads
+2. **Revenue:** Get to first paid customer. $20K MRR goal
+3. **Outreach stack:** Deploy all 7 components to Mac
+4. **Stripe:** NOT connected (Wallace is 16). PayPal/Venmo workaround live
+5. **SEO content:** Continue expanding blog
 
 ## Known Blockers
 
-1. Stripe not connected — PayPal/Venmo workaround live
-2. GHL API unreachable from CI — deploy from Mac only
-3. Retell.ai blocked — needs payment card
-4. Bland.ai balance — must be funded before cold caller goes live
-5. 5 GHL email aliases need verification
-6. Unsubscribe page needs to be built
+1. Meta API credentials not set — run meta-setup-wizard.py
+2. Stripe not connected — PayPal/Venmo workaround live
+3. GHL API unreachable from CI — deploy from Mac only
+4. Retell.ai blocked — needs payment card
+5. Bland.ai balance — must be funded before cold caller goes live
