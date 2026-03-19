@@ -1,0 +1,83 @@
+/* ============================================
+   THE CALL TAKER — Mobile Centering Guard
+   Prevents ANY page from having horizontal
+   overflow or off-center content on mobile.
+   Import this on every page. It's safe to
+   double-include — all rules are idempotent.
+   ============================================ */
+
+/* Global overflow prevention */
+html, body {
+  overflow-x: hidden;
+}
+body {
+  position: relative;
+  width: 100%;
+}
+
+/* Universal box-sizing (most pages already have this, safe to re-declare) */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Mobile-specific guards */
+@media (max-width: 768px) {
+  /* Force all sections to clip overflow */
+  section, main, article, aside, footer, header, .section {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Containers must never exceed viewport */
+  .container, .container-narrow, [class*="container"] {
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Prevent any child from blowing out the layout */
+  img, video, iframe, canvas, svg, table, pre, code {
+    max-width: 100%;
+  }
+
+  /* Buttons must wrap, never overflow */
+  a, button, .btn, [class*="btn-"], .cta, [class*="cta"] {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Grids collapse to single column by default */
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Flex containers wrap by default on mobile */
+  .flex, [style*="display: flex"], [style*="display:flex"] {
+    flex-wrap: wrap;
+  }
+
+  /* Text never overflows */
+  h1, h2, h3, h4, h5, h6, p, li, td, th, span, a, label {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  /* Forms stay within bounds */
+  input, textarea, select {
+    max-width: 100%;
+  }
+
+  /* Prevent absolutely positioned elements from causing scroll */
+  .hero, [class*="hero"] {
+    overflow: hidden;
+  }
+}
+
+/* Tablet guard */
+@media (max-width: 1024px) {
+  img, video, iframe {
+    max-width: 100%;
+    height: auto;
+  }
+}

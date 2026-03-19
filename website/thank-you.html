@@ -1,322 +1,537 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>You're In — The Call Taker</title>
-<meta name="description" content="Jessica goes live today. Check your phone.">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..900&display=swap" rel="stylesheet">
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17970510102');</script>
-<style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { overflow-x: hidden !important; }
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
 
-:root {
-  --bg: #0a0a0a;
-  --green: #00dc82;
-  --green-dim: rgba(0,220,130,0.08);
-  --green-border: rgba(0,220,130,0.15);
-  --text: #fafafa;
-  --text2: #a1a1aa;
-  --text3: #71717a;
-  --border: rgba(255,255,255,0.06);
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>Thank You &mdash; The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="description" content="Wallace will text you within the hour.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:title" content="You're In — The Call Taker">
+  <meta property="og:description" content="Wallace will text you within the hour.">
+  <meta property="og:image" content="https://thecalltaker.com/assets/images/hero-phone.jpeg">
+<meta property="og:image:width" content="1456">
+<meta property="og:image:height" content="816">
 
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-}
-a { color: inherit; text-decoration: none; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/ui-dark.css">
 
-.page {
-  max-width: 540px;
-  margin: 0 auto;
-  padding: 0 20px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+  <!-- Conversion tracking — fires on page load -->
+  <script>
+    window.addEventListener('load', function() {
+      // Get plan value from URL param or default to 97
+      var params = new URLSearchParams(window.location.search);
+      var value = parseInt(params.get('value')) || 97;
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', { send_to: 'AW-17970510102/thank_you_page' });
+        gtag('event', 'generate_lead', { value: value, currency: 'USD' });
+      }
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', { value: value, currency: 'USD' });
+      }
+    });
+  </script>
 
-/* ===== CHECKMARK ===== */
-.check-wrap {
-  text-align: center;
-  padding-top: 80px;
-}
-.check-icon {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 28px;
-  border-radius: 50%;
-  background: var(--green-dim);
-  border: 2px solid var(--green-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: checkPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  opacity: 0;
-}
-@keyframes checkPop {
-  0% { opacity: 0; transform: scale(0.5); }
-  100% { opacity: 1; transform: scale(1); }
-}
-.check-icon svg {
-  width: 40px;
-  height: 40px;
-  stroke: var(--green);
-  stroke-width: 3;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 30;
-  stroke-dashoffset: 30;
-  animation: checkDraw 0.5s 0.4s ease forwards;
-}
-@keyframes checkDraw {
-  to { stroke-dashoffset: 0; }
-}
+  <style>
+    :root {
+      --green: #00dc82;
+      --green-hover: #00c974;
+      --border: rgba(255,255,255,0.08);
+      --text: #fff;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+    }
 
-h1 {
-  font-size: clamp(1.6rem, 6vw, 2.2rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-  text-align: center;
-  margin-bottom: 12px;
-}
-.subhead {
-  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
-  color: var(--text2);
-  text-align: center;
-  margin-bottom: 48px;
-  line-height: 1.6;
-}
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* ===== STEPS ===== */
-.steps {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-bottom: 48px;
-}
-.step {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  padding-bottom: 28px;
-  position: relative;
-}
-.step:last-child { padding-bottom: 0; }
-.step-num {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: var(--green-dim);
-  border: 1px solid var(--green-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: .8rem;
-  font-weight: 800;
-  color: var(--green);
-  position: relative;
-  z-index: 1;
-}
-.step:not(:last-child) .step-num::after {
-  content: '';
-  position: absolute;
-  top: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: calc(100% + 28px - 36px);
-  background: var(--border);
-}
-.step-text h3 {
-  font-size: .9rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 2px;
-}
-.step-text p {
-  font-size: .82rem;
-  color: var(--text3);
-  line-height: 1.5;
-}
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000;
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-/* ===== PERSONAL NOTE ===== */
-.note {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 40px;
-}
-.note p {
-  font-size: .88rem;
-  color: var(--text2);
-  line-height: 1.7;
-}
-.note .sig {
-  margin-top: 16px;
-  font-size: .82rem;
-  color: var(--text3);
-  font-style: italic;
-}
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-/* ===== DEMO CTA ===== */
-.demo-cta {
-  text-align: center;
-  margin-bottom: 48px;
-}
-.demo-cta-label {
-  font-size: .65rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 12px;
-}
-.demo-phone {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 32px;
-  border-radius: 100px;
-  background: var(--green-dim);
-  border: 1px solid var(--green-border);
-  color: var(--green);
-  font-size: 1.25rem;
-  font-weight: 800;
-  transition: all .2s;
-}
-.demo-phone:hover {
-  background: rgba(0,220,130,0.15);
-  border-color: rgba(0,220,130,0.3);
-  transform: translateY(-1px);
-}
-.demo-phone svg {
-  width: 20px;
-  height: 20px;
-}
-.demo-sub {
-  margin-top: 8px;
-  font-size: .75rem;
-  color: var(--text3);
-}
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-/* ===== FOOTER ===== */
-.ty-footer {
-  text-align: center;
-  padding: 40px 0;
-  border-top: 1px solid var(--border);
-  margin-top: auto;
-}
-.ty-footer p {
-  font-size: .72rem;
-  color: var(--text3);
-}
+    /* ── Header ── */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
 
-@media (max-width: 480px) {
-  .page { padding: 0 16px; }
-  .check-wrap { padding-top: 60px; }
-  .demo-phone { font-size: 1.05rem; padding: 14px 24px; }
-}
-</style>
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--text);
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 20px;
+      background: var(--green);
+      color: #000;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .header-cta:hover {
+      background: var(--green-hover);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 20px;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 99;
+    }
+
+    .mobile-nav a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .mobile-nav .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      background: var(--green);
+      color: #000;
+      font-weight: 600;
+      border-radius: 8px;
+      font-size: 0.9375rem;
+    }
+
+    /* ── Hero Section ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 20px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,220,130,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .checkmark-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(0,220,130,0.08);
+      border: 2px solid rgba(0,220,130,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+    }
+
+    .checkmark-circle svg {
+      width: 36px;
+      height: 36px;
+      stroke: var(--green);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.1875rem);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ── Demo Card ── */
+    .demo-card {
+      background: rgba(0,220,130,0.03);
+      border: 1px solid rgba(0,220,130,0.12);
+      border-radius: 16px;
+      padding: 40px 32px;
+      margin-bottom: 32px;
+    }
+
+    .demo-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(0,220,130,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .demo-card-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--green);
+    }
+
+    .demo-card h2 {
+      font-size: 1.375rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .demo-card p {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: 24px;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .phone-link {
+      display: block;
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+
+    .phone-link:hover {
+      color: var(--green-hover);
+    }
+
+    .phone-hint {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .demo-showcase-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: 1px solid rgba(0,220,130,0.2);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--green);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .demo-showcase-link:hover {
+      background: rgba(0,220,130,0.05);
+      border-color: rgba(0,220,130,0.35);
+    }
+
+    .demo-showcase-link svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--green);
+    }
+
+    /* ── Contact line ── */
+    .contact-line {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+
+    .contact-line a {
+      color: var(--green);
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .contact-line a:hover {
+      color: var(--green-hover);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-copyright {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .nav,
+      .header-cta {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .mobile-nav.open {
+        display: flex;
+      }
+
+      .hero {
+        padding: 100px 20px 60px;
+        min-height: auto;
+      }
+
+      .demo-card {
+        padding: 28px 20px;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+    <link rel="stylesheet" href="/shared/mobile-guard.css">
 </head>
 <body>
-<div class="page">
 
-  <!-- Animated Checkmark -->
-  <div class="check-wrap">
-    <div class="check-icon">
-      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        The Call <span>Taker</span>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="demo-showcase.html">Demo</a>
+        <a href="case-studies/">Case Studies</a>
+      </nav>
+
+      <a href="/pilot/" class="header-cta">Start Free Pilot</a>
+
+      <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.mobile-nav').classList.toggle('open')">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
-    <h1>You're In. Jessica Goes Live&nbsp;Today.</h1>
-    <p class="subhead">You just made the best decision for your business this year.</p>
-  </div>
+  </header>
 
-  <!-- What Happens Next -->
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-text">
-        <h3>Check your phone</h3>
-        <p>Setup instructions arriving within the hour.</p>
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="demo-showcase.html">Demo</a>
+    <a href="case-studies/">Case Studies</a>
+    <a href="/pilot/" class="btn">Start Free Pilot</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="checkmark-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
       </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-text">
-        <h3>Forward your after-hours number to Jessica</h3>
-        <p>Takes 2 minutes. We'll walk you through it.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-text">
-        <h3>Tonight, every call gets answered</h3>
-        <p>Every job gets booked. Every lead gets captured.</p>
-      </div>
-    </div>
-  </div>
 
-  <!-- Personal Note -->
-  <div class="note">
-    <p>I'm setting this up personally. My number is <a href="tel:+16157845747" style="color:var(--green);font-weight:600;">(615) 784-5747</a> &mdash; same line Jessica answers. If you have any questions before we go live, reply to the text I just sent you.</p>
-    <p class="sig">-Wallace</p>
-  </div>
+      <h1>You're On The List &mdash; Wallace Will Text You Within The Hour</h1>
 
-  <!-- Demo CTA -->
-  <div class="demo-cta">
-    <div class="demo-cta-label">Call the demo line one more time</div>
-    <a href="tel:+16157845747" class="demo-phone">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
-      (615) 784-5747
-    </a>
-    <p class="demo-sub">Hear Jessica answer as YOUR business &mdash; it's already configured.</p>
-  </div>
+      <p class="subtitle">Check your phone. We're a two-man team in Nashville, not a corporation. Wallace is probably texting you right now.</p>
+
+      <!-- Demo Card -->
+      <div class="demo-card">
+        <div class="demo-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        <h2>While You Wait &mdash; Hear the AI Live</h2>
+        <p>Call our demo line right now and talk to the AI yourself. It picks up instantly, 24/7.</p>
+        <a href="tel:+16157845747" class="phone-link">(615) 784-5747</a>
+        <span class="phone-hint">Go ahead &mdash; it answers every time.</span>
+
+        <a href="demo-showcase.html" class="demo-showcase-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          See the demo showcase
+        </a>
+      </div>
+
+      <p class="contact-line">
+        Questions? Email <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a> or text <a href="sms:+16156539004">(615) 653-9004</a>
+      </p>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <div class="ty-footer">
-    <p>&copy; 2026 The Call Taker. All rights reserved.</p>
-  </div>
+  <footer class="footer">
+    <p class="footer-copyright">&copy; 2026 The Call Taker. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </footer>
 
-</div>
-
-<!-- Conversion tracking + ntfy alert on page load -->
-<script>
-(function() {
-  // Google Ads conversion
-  var params = new URLSearchParams(window.location.search);
-  var value = parseInt(params.get('value')) || 97;
-  if (typeof gtag === 'function') {
-    gtag('event', 'conversion', { send_to: 'AW-17970510102/thank_you_page', value: value, currency: 'USD' });
-    gtag('event', 'purchase', { value: value, currency: 'USD' });
-  }
-
-  // ntfy alert to Wallace
-  fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-    method: 'POST',
-    headers: {
-      'Title': 'PAYMENT PAGE: thank-you.html loaded',
-      'Priority': 'urgent',
-      'Tags': 'moneybag,rotating_light'
-    },
-    body: 'thank-you.html loaded — customer just paid.\nValue: $' + value + '\nCheck GHL for new payment-received tag.\nTimestamp: ' + new Date().toLocaleString()
-  }).catch(function(){});
-})();
-</script>
-<script src="/tct-tracking.js" defer></script>
+  <script src="tct-tracking.js" defer></script>
 </body>
 </html>

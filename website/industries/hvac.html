@@ -292,12 +292,15 @@ a { color: inherit; text-decoration: none; }
   @media(max-width:480px){
     .hero-cta{font-size:1.15rem;padding:.7rem 1.8rem}
   }
+.hero-cta-desktop{display:none}
+@media(min-width:769px){.hero-cta-mobile{display:none}.hero-cta-desktop{display:inline-flex}}
 </style>
 
 <!-- Tracking -->
 
 <script src="../tct-tracking.js"></script>
 <link rel="stylesheet" href="/shared/ui-dark.css">
+    <link rel="stylesheet" href="/shared/mobile-guard.css">
 </head>
 <body>
 
@@ -322,8 +325,9 @@ a { color: inherit; text-decoration: none; }
   <div class="hero-badge">HVAC Industry</div>
   <h1>Stop Losing After-Hours Furnace and AC Emergencies to Voicemail</h1>
   <p class="subtitle">42% of HVAC calls come after hours -- when a furnace dies at midnight or AC breaks in July. Every call that hits voicemail is a $350 job going to the company that picks up first.</p>
-  <a href="tel:+16157845747" class="hero-cta">(615) 784-5747</a>
-  <div class="hero-cta-sub">Call our demo line right now -- hear what your customers would hear</div>
+  <a href="tel:+16157845747" class="hero-cta hero-cta-mobile">Hear Jessica Answer Your Calls Now</a>
+  <a href="../demo" class="hero-cta hero-cta-desktop">Hear Jessica Answer Your Calls Now</a>
+  <div class="hero-cta-sub">Live demo line — call now or try it online</div>
   <a href="../demo-live.html?industry=HVAC" style="display:inline-block;margin-top:.75rem;color:#00dc82;font-weight:700;font-size:.9rem;text-decoration:none;border-bottom:2px solid rgba(0,220,130,0.3);padding-bottom:2px;transition:border-color .2s">Hear It Answer As Your Business &rarr;</a>
 </div>
 
