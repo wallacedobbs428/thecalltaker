@@ -20,6 +20,56 @@ Read the full output before doing anything. Treat this as ground truth for the c
 
 ---
 
+## Skill Router — Auto-Trigger on Context
+
+When any task matches the triggers below, invoke the corresponding skill (via `/skill-name`) BEFORE writing code or responding. Do NOT wait for the user to type the slash command — recognize the intent and invoke proactively.
+
+### Ad Pipeline (run in order: research → scrape → brief → write → launch → report)
+| Trigger | Skill | What it does |
+|---------|-------|-------------|
+| "research competitor ads", "what ads are running", "ad library", "competitor analysis for [vertical]" | `/ads-research` | Scrape Facebook Ad Library for competitor intel |
+| "scrape ads", "analyze ad creative", "break down their ads", "what hooks are working" | `/ads-scrape` | Deep-analyze competitor ad copy, hooks, CTAs |
+| "ad brief", "creative strategy", "ad angles", "what should our ads say" | `/ads-brief` | Generate targeting + angles + compliance brief |
+| "write ads", "ad copy", "Facebook ads", "lead ad", "write the ads for [vertical]" | `/ads-write` | Write 3 complete Facebook Lead Ad sets |
+| "launch ads", "publish campaign", "create campaign", "set up ads in Meta" | `/ads-launch` | Build campaign via Meta Marketing API (ALL PAUSED) |
+| "ad performance", "how are ads doing", "CPL", "ad report", "kill/scale", "ad metrics" | `/ads-report` | Pull live metrics + kill/scale/hold recommendations |
+
+### CRM & Automation
+| Trigger | Skill |
+|---------|-------|
+| "GHL", "GoHighLevel", "create contact", "update contact", "pipeline", "opportunity", "send SMS via GHL", "send email via GHL", "calendar", "appointment", "voice AI agent", "workflow", "tags in GHL", "custom fields" | `/ghl-automation` |
+
+### Frontend & Design
+| Trigger | Skill |
+|---------|-------|
+| "build a page", "redesign", "make it look good/premium/clean/modern/sleek", "landing page", "dashboard UI", "component", "React", "HTML/CSS", "Tailwind", any frontend output request | `/ui-ux-pro-max` |
+
+### Knowledge Graph
+| Trigger | Skill |
+|---------|-------|
+| "LightRAG", "knowledge graph", "insert documents into graph", "query the graph", "RAG pipeline", "lightrag-hku" | `/lightrag` |
+
+### DevOps & Config
+| Trigger | Skill |
+|---------|-------|
+| "session start hook", "startup hook", "Claude Code on the web", "install dependencies on session start" | `/session-start-hook` |
+| "configure settings", "add permission", "hooks", "automated behavior", "env var", "settings.json" | `/update-config` |
+| "Claude API", "Anthropic SDK", "Agent SDK", code imports `anthropic` or `@anthropic-ai/sdk` | `/claude-api` |
+
+### Utilities
+| Trigger | Skill |
+|---------|-------|
+| "simplify", "review code quality", "check for reuse", "clean up the code" | `/simplify` |
+| "run every X minutes", "poll", "recurring task", "check on interval", "keep running" | `/loop` |
+
+### Routing Rules
+1. **Ad pipeline is sequential** — if the user says "run ads for HVAC", start with `/ads-research hvac` and guide through the full pipeline
+2. **Multiple skills can chain** — a "build the signup page" request triggers `/ui-ux-pro-max`, and if it involves GHL form submission, also reference `/ghl-automation`
+3. **When in doubt, invoke the skill** — false positives are cheap, missed invocations waste time
+4. **Never skip the skill** — even if you "know" the answer, the SKILL.md contains brand-specific rules, templates, and output formats that must be followed
+
+---
+
 # The Call Taker — System Documentation
 
 > AI Receptionist SaaS for service businesses. $97/$297/$497/mo. Demo line: (615) 784-5747
