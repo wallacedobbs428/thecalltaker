@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCT Ops Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:'SF Mono','Fira Code','Courier New',monospace;padding:12px;min-height:100vh}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:900px;margin:0 auto}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:#111;border:1px solid #222;border-radius:8px;padding:16px}
+.card h3{color:#00ff88;font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px}
+.hero{grid-column:1/-1;text-align:center;padding:24px}
+.hero h1{font-size:14px;color:#555;letter-spacing:3px;margin-bottom:8px}
+.mrr{font-size:64px;font-weight:900;transition:color 0.3s}
+.mrr.zero{color:#ff3333}
+.mrr.positive{color:#00ff88}
+.countdown{font-size:36px;font-weight:700;color:#ff8800;margin:8px 0}
+.countdown.critical{color:#ff3333;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.label{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:1px}
+.stat{font-size:24px;font-weight:700;color:#00ff88;margin:4px 0}
+.stat.warn{color:#ff8800}
+.stat.danger{color:#ff3333}
+.list{list-style:none;max-height:200px;overflow-y:auto}
+.list li{padding:6px 0;border-bottom:1px solid #1a1a1a;font-size:12px}
+.list li:last-child{border:none}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
+.tag.live{background:#003311;color:#00ff88}
+.tag.capped{background:#332200;color:#ff8800}
+.tag.pending{background:#221100;color:#ff6600}
+.tag.p1{background:#330000;color:#ff3333}
+.tag.p2{background:#332200;color:#ff8800}
+.tag.p3{background:#003322;color:#00ff88}
+.tag.p4{background:#002233;color:#4488ff}
+.tag.p5{background:#1a1a1a;color:#888}
+.event-time{color:#555;font-size:10px;margin-right:6px}
+.event-name{color:#00ff88;font-weight:700}
+.btn{display:inline-block;background:#00ff88;color:#0a0a0a;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:900;font-size:14px;margin-top:12px;text-transform:uppercase;letter-spacing:1px}
+.btn:hover{background:#00cc6e}
+.refresh{position:fixed;top:8px;right:12px;color:#333;font-size:10px}
+.full-width{grid-column:1/-1}
+.snapshot-note{grid-column:1/-1;text-align:center;padding:12px;color:#333;font-size:10px;letter-spacing:1px}
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="card hero">
+    <h1>The Call Taker — Ops Dashboard</h1>
+    <div class="label">Monthly Recurring Revenue</div>
+    <div class="mrr zero" id="mrr">$0</div>
+    <div class="label">Hours to Founding Deadline</div>
+    <div class="countdown" id="countdown">--:--:--</div>
+    <div class="label" id="deadline-label"></div>
+  </div>
+
+  <div class="card">
+    <h3>Business State</h3>
+    <div class="label">Total Leads</div>
+    <div class="stat" id="leads-total">--</div>
+    <div class="label">Hot Leads</div>
+    <div class="stat" id="hot-leads">--</div>
+    <div class="label">Emails Today</div>
+    <div class="stat" id="emails-today">--</div>
+    <div class="label">Fleet Agents Alive</div>
+    <div class="stat" id="fleet-alive">--</div>
+  </div>
+
+  <div class="card">
+    <h3>Active Campaigns</h3>
+    <div style="margin-bottom:8px">
+      <span class="label">Facebook </span>
+      <span class="tag" id="fb-status">--</span>
+      <span style="color:#555;font-size:11px" id="fb-budget"></span>
+    </div>
+    <div style="margin-bottom:8px">
+      <span class="label">Bland AI </span>
+      <span class="tag" id="bland-status">--</span>
+      <span style="color:#555;font-size:11px" id="bland-balance"></span>
+    </div>
+    <div style="margin-bottom:8px">
+      <span class="label">Retell </span>
+      <span class="tag" id="retell-status">--</span>
+    </div>
+    <div>
+      <span class="label">Instantly </span>
+      <span class="tag" id="instantly-status">--</span>
+    </div>
+  </div>
+
+  <div class="card full-width">
+    <h3>Skills Queued</h3>
+    <ul class="list" id="queue-list">
+      <li style="color:#555">Loading...</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Chain Status</h3>
+    <ul class="list" id="chain-list">
+      <li style="color:#555">Loading...</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Hot Leads</h3>
+    <ul class="list" id="hot-lead-list">
+      <li style="color:#555">Loading...</li>
+    </ul>
+    <a class="btn" href="call-battle-card.html">CALL NOW</a>
+  </div>
+
+  <div class="card full-width">
+    <h3>Message Bus (Last 20)</h3>
+    <ul class="list" id="bus-list">
+      <li style="color:#555">Loading...</li>
+    </ul>
+  </div>
+
+  <div class="snapshot-note">
+    Data snapshot — updates every dispatcher run. Last built: 2026-03-19T21:10:00.000Z
+  </div>
+</div>
+
+<div class="refresh" id="refresh">Last refresh: --</div>
+
+<script>
+// Embedded intelligence.json snapshot
+const INTEL_DATA = {
+  "meta": {
+    "last_updated": "2026-03-19T21:05:02.235Z",
+    "updater": "orchestrator",
+    "version": "1.0"
+  },
+  "business_state": {
+    "mrr": 0,
+    "total_customers": 0,
+    "pilot_active": 0,
+    "bland_balance": 47.83,
+    "stripe_connected": false,
+    "leads_total": 5268,
+    "hot_leads": 20,
+    "emails_sent_today": 0
+  },
+  "triggers": {
+    "mrr_is_zero": true,
+    "deadline_within_48h": false,
+    "new_fb_lead_today": false,
+    "hot_lead_replied": false,
+    "bland_cap_hit": false,
+    "last_payment_attempt": null,
+    "urgency_blitz_fired": true,
+    "hot_lead_chain_run": true
+  },
+  "skill_outputs": {
+    "competitor_teardown": null,
+    "lead_research_last_run": "2026-03-19T20:49:52.693Z",
+    "last_cold_email_batch": "2026-03-19T20:49:52.698Z",
+    "last_sms_blast": "2026-03-19T20:49:58.728Z",
+    "last_objection_script_update": "2026-03-19T20:49:52.695Z",
+    "last_ad_copy_variant": null
+  },
+  "active_campaigns": {
+    "facebook": {
+      "campaign_id": "120243367354320763",
+      "adset_id": "120243367364710763",
+      "creative_id": "1830276867608375",
+      "status": "live",
+      "daily_budget": 5
+    },
+    "bland_ai": {
+      "status": "active",
+      "balance": 47.83,
+      "calls_today": 0
+    },
+    "retell": {
+      "status": "kyc_pending"
+    },
+    "instantly": {
+      "status": "active",
+      "emails_today": 0
+    }
+  },
+  "fleet": {
+    "total_agents": 11,
+    "alive": 6,
+    "stale": ["oracle"],
+    "launchd_services": 171,
+    "status": {
+      "max": "alive",
+      "ben": "stale_44min",
+      "sam": "alive",
+      "donny": "alive",
+      "closer": "alive",
+      "atlas": "alive",
+      "vector": "alive",
+      "forge": "alive",
+      "blueprint": "alive",
+      "prism": "alive",
+      "oracle": "alive"
+    }
+  },
+  "top_leads": [
+    {"name":"actelectricians","company":"Actelectricians","score":0,"phone":"+16393737792","email":null,"industry":"unknown","tags":["hot-lead-pushed"]},
+    {"name":"theelectricalplug","company":"Theelectricalplug","score":0,"phone":"+16024909537","email":"theelectricplug@gmail.com","industry":"unknown","tags":["hot-lead-pushed"]},
+    {"name":"$23-$52/hr jobs jobs hiring","company":"$23-$52/hr Jobs Jobs HIRING","score":0,"phone":"+12840295862","email":"accessibility@ziprecruiter.com","industry":"unknown","tags":["hot-lead-pushed"]},
+    {"name":"new electric","company":"New Electric","score":0,"phone":"+16028261800","email":"servicedept@newelectricaz.com","industry":"unknown","tags":["hot-lead-pushed"]},
+    {"name":"fogelservices.com","company":"fogelservices.com","score":0,"phone":"+18649918875","email":"greenvilleservice@fogelservices.com","industry":"unknown","tags":["hot-lead-pushed"]},
+    {"name":"alabama","company":"Alabama","score":0,"phone":"+13916311238","email":"sales@roofingmobilealabama.com","industry":"unknown","tags":["hot-lead-pushed"]},
+    {"name":"today","company":"Today","score":0,"phone":"+16784370777","email":"sales@iwantairtoday.com","industry":"unknown","tags":["hot-lead-pushed"]},
+    {"name":"fogelservices.com","company":"fogelservices.com","score":0,"phone":"+18432361239","email":"blufftonservice@fogelservices.com","industry":"unknown","tags":["hot-lead-pushed"]},
+    {"name":"locksmiths","company":"Locksmiths","score":0,"phone":"+18655516212","email":"info@knoxvillelocksmiths.net","industry":"unknown","tags":["hot-lead-pushed"]},
+    {"name":"(914) 730-4325","company":null,"score":0,"phone":"+19147304325","email":null,"industry":"unknown","tags":["warm-demo-prospect","enriched","hot-lead-pushed","followup-day-0","contacted","hotlead-sequence","hot-lead-reactivation","reactivation-enrolled"]}
+  ],
+  "message_bus": [
+    {"event":"skill_queued","timestamp":"2026-03-19T21:05:02.235Z","data":{"skill":"competitor-teardown","reason":"No competitor analysis exists yet","priority":5}},
+    {"event":"skill_queued","timestamp":"2026-03-19T21:05:02.232Z","data":{"skill":"ad-creative","reason":"FB campaign live at $5/day, needs fresh variants","priority":3}},
+    {"event":"intelligence_synced","timestamp":"2026-03-19T21:00:09.569Z","data":{"leads_total":5268,"hot_leads":20,"new_fb_today":false}},
+    {"event":"skill_queued","timestamp":"2026-03-19T21:00:02.091Z","data":{"skill":"competitor-teardown","reason":"No competitor analysis exists yet","priority":5}},
+    {"event":"skill_queued","timestamp":"2026-03-19T21:00:02.090Z","data":{"skill":"ad-creative","reason":"FB campaign live at $5/day, needs fresh variants","priority":3}},
+    {"event":"skill_queued","timestamp":"2026-03-19T20:55:01.841Z","data":{"skill":"competitor-teardown","reason":"No competitor analysis exists yet","priority":5}},
+    {"event":"skill_queued","timestamp":"2026-03-19T20:55:01.840Z","data":{"skill":"ad-creative","reason":"FB campaign live at $5/day, needs fresh variants","priority":3}},
+    {"event":"intelligence_synced","timestamp":"2026-03-19T20:50:02.665Z","data":{"leads_total":5268,"hot_leads":20,"new_fb_today":false}},
+    {"event":"skill_queued","timestamp":"2026-03-19T20:50:01.679Z","data":{"skill":"competitor-teardown","reason":"No competitor analysis exists yet","priority":5}},
+    {"event":"skill_queued","timestamp":"2026-03-19T20:50:01.678Z","data":{"skill":"ad-creative","reason":"FB campaign live at $5/day, needs fresh variants","priority":3}},
+    {"event":"chain_complete","timestamp":"2026-03-19T20:49:58.730Z","data":{"chain":"urgency_blitz","hours_left":"51.2"}},
+    {"event":"chain_step","timestamp":"2026-03-19T20:49:58.728Z","data":{"chain":"urgency_blitz","step":"queue_blast","status":"done"}},
+    {"event":"chain_step","timestamp":"2026-03-19T20:49:58.726Z","data":{"chain":"urgency_blitz","step":"ad_creative","status":"done"}},
+    {"event":"chain_step","timestamp":"2026-03-19T20:49:58.725Z","data":{"chain":"urgency_blitz","step":"copywriting","status":"done"}},
+    {"event":"chain_started","timestamp":"2026-03-19T20:49:58.720Z","data":{"chain":"urgency_blitz","hours_left":"51.2"}},
+    {"event":"chain_complete","timestamp":"2026-03-19T20:49:52.700Z","data":{"chain":"close_hot_lead","steps":4}},
+    {"event":"chain_step","timestamp":"2026-03-19T20:49:52.699Z","data":{"chain":"close_hot_lead","step":"cold_email","status":"done"}},
+    {"event":"chain_step","timestamp":"2026-03-19T20:49:52.697Z","data":{"chain":"close_hot_lead","step":"sales_scripts","status":"done"}},
+    {"event":"chain_step","timestamp":"2026-03-19T20:49:52.694Z","data":{"chain":"close_hot_lead","step":"lead_research","status":"done"}},
+    {"event":"chain_started","timestamp":"2026-03-19T20:49:52.689Z","data":{"chain":"close_hot_lead"}}
+  ],
+  "outreach": {
+    "emails_sent_today": 0,
+    "sequence_enrolled": 30,
+    "replies_total": 0,
+    "demos_booked": 0
+  }
+};
+
+// Embedded pending.json snapshot
+const QUEUE_DATA = {
+  "generated_at": "2026-03-19T21:05:02.229Z",
+  "hours_to_deadline": 50.9,
+  "skills_queued": [
+    {
+      "skill": "ad-creative",
+      "priority": 3,
+      "description": "Generate 3 new Facebook ad copy variants for A/B test",
+      "reason": "FB campaign live at $5/day, needs fresh variants"
+    },
+    {
+      "skill": "competitor-teardown",
+      "priority": 5,
+      "description": "Research top 3 AI receptionist competitors, extract positioning gaps",
+      "reason": "No competitor analysis exists yet"
+    }
+  ]
+};
+
+const DEADLINE = new Date('2026-03-21T23:59:00.000Z');
+
+function formatCountdown(ms) {
+  if (ms <= 0) return '00:00:00';
+  const h = Math.floor(ms / 36e5);
+  const m = Math.floor((ms % 36e5) / 6e4);
+  const s = Math.floor((ms % 6e4) / 1e3);
+  return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function relTime(ts) {
+  const d = Date.now() - new Date(ts).getTime();
+  if (d < 6e4) return 'just now';
+  if (d < 36e5) return Math.floor(d/6e4) + 'm ago';
+  if (d < 864e5) return Math.floor(d/36e5) + 'h ago';
+  return Math.floor(d/864e5) + 'd ago';
+}
+
+function statusClass(s) {
+  if (s === 'live' || s === 'active') return 'live';
+  if (s === 'capped') return 'capped';
+  return 'pending';
+}
+
+function render() {
+  const state = INTEL_DATA;
+  const queue = QUEUE_DATA;
+
+  // MRR
+  const mrr = state.business_state.mrr || 0;
+  const mrrEl = document.getElementById('mrr');
+  mrrEl.textContent = '$' + mrr.toLocaleString();
+  mrrEl.className = 'mrr ' + (mrr > 0 ? 'positive' : 'zero');
+
+  // Business state - pull leads_total and hot_leads from embedded data
+  const leadsTotal = state.business_state.leads_total || 0;
+  const hotLeads = state.business_state.hot_leads || 0;
+  document.getElementById('leads-total').textContent = leadsTotal.toLocaleString();
+  document.getElementById('hot-leads').textContent = hotLeads;
+  document.getElementById('emails-today').textContent = state.business_state.emails_sent_today || state.outreach.emails_sent_today || 0;
+  document.getElementById('fleet-alive').textContent = (state.fleet ? state.fleet.alive : '--') + '/' + (state.fleet ? state.fleet.total_agents : '--');
+
+  // Campaigns
+  const fb = state.active_campaigns.facebook;
+  const fbS = document.getElementById('fb-status');
+  fbS.textContent = fb.status; fbS.className = 'tag ' + statusClass(fb.status);
+  document.getElementById('fb-budget').textContent = '$' + fb.daily_budget + '/day';
+
+  const bl = state.active_campaigns.bland_ai;
+  const blS = document.getElementById('bland-status');
+  blS.textContent = bl.status; blS.className = 'tag ' + statusClass(bl.status);
+  document.getElementById('bland-balance').textContent = bl.balance ? '$' + bl.balance : '';
+
+  const rt = document.getElementById('retell-status');
+  rt.textContent = state.active_campaigns.retell.status; rt.className = 'tag ' + statusClass(state.active_campaigns.retell.status);
+  const inst = document.getElementById('instantly-status');
+  inst.textContent = state.active_campaigns.instantly.status; inst.className = 'tag ' + statusClass(state.active_campaigns.instantly.status);
+
+  // Hot leads
+  const hlList = document.getElementById('hot-lead-list');
+  if (state.top_leads && state.top_leads.length > 0) {
+    hlList.innerHTML = state.top_leads.map(function(l) {
+      return '<li><strong>' + l.name + '</strong> — ' + (l.company || 'Unknown') + ' <span style="color:#555">(' + l.industry + ')</span>' + (l.phone ? '<br>' + l.phone : '') + '</li>';
+    }).join('');
+  } else {
+    hlList.innerHTML = '<li style="color:#555">No hot leads loaded</li>';
+  }
+
+  // Message bus
+  const busList = document.getElementById('bus-list');
+  const events = (state.message_bus || []).slice(0, 20);
+  if (events.length > 0) {
+    busList.innerHTML = events.map(function(e) {
+      return '<li><span class="event-time">' + relTime(e.timestamp) + '</span> <span class="event-name">' + e.event + '</span>' + (e.data ? ' <span style="color:#555"> — ' + JSON.stringify(e.data).slice(0,80) + '</span>' : '') + '</li>';
+    }).join('');
+  } else {
+    busList.innerHTML = '<li style="color:#555">No events</li>';
+  }
+
+  // Chain status
+  const chainList = document.getElementById('chain-list');
+  const chainEvents = (state.message_bus || []).filter(function(e) { return e.event === 'chain_complete' || e.event === 'chain_error'; });
+  if (chainEvents.length > 0) {
+    chainList.innerHTML = chainEvents.slice(0, 5).map(function(e) {
+      return '<li><span class="tag ' + (e.event === 'chain_complete' ? 'live' : 'capped') + '">' + (e.event === 'chain_complete' ? 'OK' : 'FAIL') + '</span> ' + e.data.chain + ' <span class="event-time">' + relTime(e.timestamp) + '</span></li>';
+    }).join('');
+  } else {
+    chainList.innerHTML = '<li style="color:#555">No chain runs yet</li>';
+  }
+
+  // Queue
+  const qList = document.getElementById('queue-list');
+  if (queue.skills_queued && queue.skills_queued.length > 0) {
+    qList.innerHTML = queue.skills_queued.map(function(s) {
+      return '<li><span class="tag p' + s.priority + '">P' + s.priority + '</span> <strong>' + s.skill + '</strong> — ' + s.reason + '</li>';
+    }).join('');
+  } else {
+    qList.innerHTML = '<li style="color:#00ff88">All clear — no skills pending</li>';
+  }
+
+  document.getElementById('refresh').textContent = 'Last refresh: ' + new Date().toLocaleTimeString();
+}
+
+// Countdown timer — runs live
+function tick() {
+  const ms = DEADLINE - Date.now();
+  const el = document.getElementById('countdown');
+  el.textContent = formatCountdown(ms);
+  el.className = 'countdown' + (ms < 864e5 ? ' critical' : '');
+  document.getElementById('deadline-label').textContent = 'Founding rate expires Fri Mar 21 11:59 PM';
+}
+
+setInterval(tick, 1000);
+tick();
+render();
+</script>
+</body>
+</html>
