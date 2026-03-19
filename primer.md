@@ -25,7 +25,7 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 
 - **Branch:** `claude/its-mills-dabnE` (Mills session)
 - **Base:** `origin/main` at 81f7643 (March 19 — merged 10+ PRs including mobile centering, skill router, GHL reactivation, outreach rebuild, frontend quickstart, ads skill system)
-- **Working tree:** Clean (no staged or unstaged changes)
+- **Working tree:** Has new lead files (indeed-houston-2026-03-19.json + .md)
 - **War room files:** `war-room/task-board.md` and `war-room/handoff-log.md` do NOT exist in this environment
 
 ## Recent Activity (March 19)
@@ -33,6 +33,15 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 - PR #19 merged (review-skill-prs) — consolidated multiple feature branches into main
 - Multiple merge commits resolving conflicts across: mobile centering, skill router, GHL reactivation workflow, outreach stack rebuild, frontend quickstart, ads skill system
 - Master branch is behind origin/main (master at 2026-03-17, origin/main at 2026-03-19)
+- **Indeed Houston lead gen completed:** 18 hiring-signal leads found across legal (8), vet (5), dental (4), HVAC (1), roofing (1). Files at `leads/indeed-houston-2026-03-19.json` and `.md`
+- **Indeed Nashville lead gen completed earlier:** Files at `leads/indeed-nashville-2026-03-19.json` and `.md`
+
+## Lead Generation Files
+
+- `leads/indeed-houston-2026-03-19.json` — 18 scored leads, JSON format
+- `leads/indeed-houston-2026-03-19.md` — Same leads with call scripts, savings pitches, and market stats
+- `leads/indeed-nashville-2026-03-19.json` — Nashville leads
+- `leads/indeed-nashville-2026-03-19.md` — Nashville leads markdown
 
 ## Homepage Design (index.html)
 
@@ -69,6 +78,7 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal
+- **Lead gen**: Indeed hiring-signal scraping across metros (Nashville done, Houston done). Next: Atlanta, Dallas, Memphis
 - **Website polish**: Fix urgency countdown, clean orphaned files, schema consistency
 - **SEO content**: Continue expanding blog with high-intent keyword posts
 - **Stripe**: NOT connected (Wallace is 16). PayPal workaround live
