@@ -5,6 +5,154 @@ Never build daemon scripts or plists here.
 
 ---
 
+# Skill Router — Auto-Load Every Session
+
+> **50+ skills available.** When any task matches the triggers below, immediately load the corresponding skill before proceeding.
+
+---
+
+## Routing Table
+
+### Custom Project Skills (The Call Taker)
+
+| # | Skill | Trigger Patterns | Slash Command |
+|---|-------|-----------------|---------------|
+| 1 | **ads-research** | competitor ads, ad library, who's running ads, Facebook ad research, what ads are competitors running, analyze competitor campaigns | `/ads-research` |
+| 2 | **ads-scrape** | scrape ads, deep-scrape ad creative, analyze ad hooks, ad copy structure, what hooks are working, burned angles | `/ads-scrape` |
+| 3 | **ads-brief** | ad brief, creative brief, ad strategy, targeting strategy, ad angles, testing framework, CPL benchmarks | `/ads-brief` |
+| 4 | **ads-write** | write ad copy, Facebook ad copy, lead ad copy, write headlines, ad primary text, lead form questions, ad CTA | `/ads-write` |
+| 5 | **ads-launch** | launch ads, create campaign, Meta Marketing API, push ads to Facebook, build ad set, activate campaign | `/ads-launch` |
+| 6 | **ads-report** | ad performance, campaign metrics, CPL report, kill/scale/hold, ad spend, how are ads doing, ROAS | `/ads-report` |
+| 7 | **ghl-automation** | GHL, GoHighLevel, contacts, pipelines, opportunities, tags, custom fields, calendars, appointments, conversations, workflows, voice AI config, CRM operations | `/ghl-automation` |
+| 8 | **ui-ux-pro-max** | build UI, website, landing page, dashboard, component, make it look good/premium/clean/modern/sleek, React/HTML/CSS/Tailwind, redesign, frontend, dark mode, design system | `/ui-ux-pro-max` |
+| 9 | **lightrag** | knowledge graph, LightRAG, RAG pipeline, insert documents, query graph, entity extraction, hybrid search, lightrag-hku | `/lightrag` |
+
+### Built-In Skills
+
+| # | Skill | Trigger Patterns | Slash Command |
+|---|-------|-----------------|---------------|
+| 10 | **session-start-hook** | startup hook, session start hook, ensure tests run, linter setup, CI for web sessions, project bootstrap hook | `/session-start-hook` |
+| 11 | **update-config** | settings.json, permissions, hooks, env vars, allow commands, add permission, configure Claude Code, "from now on when X", "whenever X" | `/update-config` |
+| 12 | **simplify** | review code, simplify, refactor for reuse, code quality check, efficiency review, clean up changed code | `/simplify` |
+| 13 | **loop** | recurring task, poll status, run every X minutes, keep checking, repeat on interval, monitor continuously | `/loop` |
+| 14 | **claude-api** | Claude API, Anthropic SDK, `import anthropic`, `@anthropic-ai/sdk`, Agent SDK, tool use API, build with Claude | `/claude-api` |
+
+### Marketing Skills (coreyhaines31/marketingskills)
+
+| # | Skill | Trigger Patterns | Slash Command |
+|---|-------|-----------------|---------------|
+| 15 | **seo-audit** | SEO audit, site audit, technical SEO, on-page SEO, meta tags, page speed, crawlability, SEO score | `/seo-audit` |
+| 16 | **copywriting** | write copy, sales copy, email copy, landing page copy, headline writing, persuasive writing, conversion copy | `/copywriting` |
+| 17 | **marketing-psychology** | persuasion, cognitive biases, buyer psychology, loss aversion, social proof tactics, scarcity psychology, anchoring | `/marketing-psychology` |
+| 18 | **programmatic-seo** | programmatic SEO, pSEO, template pages, bulk landing pages, dynamic SEO pages, auto-generate SEO content | `/programmatic-seo` |
+| 19 | **content-strategy** | content strategy, content calendar, editorial plan, content pillars, blog strategy, content funnel | `/content-strategy` |
+| 20 | **social-content** | social media content, Instagram post, LinkedIn post, Twitter/X post, social media calendar, social copy | `/social-content` |
+| 21 | **product-marketing-context** | product marketing, positioning, messaging framework, value proposition, go-to-market, product launch copy | `/product-marketing-context` |
+| 22 | **marketing-ideas** | marketing ideas, growth ideas, campaign ideas, brainstorm marketing, what should we try, marketing experiments | `/marketing-ideas` |
+| 23 | **pricing-strategy** | pricing strategy, price anchoring, pricing tiers, pricing page, how to price, pricing psychology, decoy pricing | `/pricing-strategy` |
+
+### Obra Superpowers (obra/superpowers)
+
+| # | Skill | Trigger Patterns | Slash Command |
+|---|-------|-----------------|---------------|
+| 24 | **brainstorming** | brainstorm, ideate, generate ideas, creative thinking, mind map, explore options, what if | `/brainstorming` |
+| 25 | **systematic-debugging** | debug, troubleshoot, find bug, trace error, root cause, why is this failing, diagnose issue | `/systematic-debugging` |
+| 26 | **writing-plans** | write a plan, implementation plan, project plan, technical plan, plan the approach, design doc | `/writing-plans` |
+| 27 | **test-driven-development** | TDD, write tests first, test-driven, red-green-refactor, test coverage, unit tests | `/test-driven-development` |
+| 28 | **using-superpowers** | superpowers, obra superpowers, what can you do, show capabilities, agent abilities | `/using-superpowers` |
+| 29 | **executing-plans** | execute plan, follow the plan, implement plan, run the plan, carry out steps | `/executing-plans` |
+| 30 | **requesting-code-review** | code review, review my code, PR review, review changes, review this PR, give feedback on code | `/requesting-code-review` |
+
+### Anthropic Official Skills (anthropic/skills)
+
+| # | Skill | Trigger Patterns | Slash Command |
+|---|-------|-----------------|---------------|
+| 31 | **frontend-design** | frontend design, UI design patterns, component design, design system, CSS architecture, responsive design | `/frontend-design` |
+| 32 | **pdf** | generate PDF, create PDF, export PDF, PDF document, make a PDF | `/pdf` |
+| 33 | **pptx** | create slides, PowerPoint, presentation, slide deck, pitch deck, make a pptx | `/pptx` |
+| 34 | **docx** | create Word doc, Word document, generate docx, write document, export to Word | `/docx` |
+| 35 | **xlsx** | create spreadsheet, Excel file, generate xlsx, export to Excel, spreadsheet data | `/xlsx` |
+| 36 | **webapp-testing** | test web app, end-to-end test, integration test, Playwright, Cypress, browser testing | `/webapp-testing` |
+
+### Vercel Skills (vercel-labs)
+
+| # | Skill | Trigger Patterns | Slash Command |
+|---|-------|-----------------|---------------|
+| 37 | **find-skills** | find skills, search skills, discover skills, what skills exist, skill marketplace | `/find-skills` |
+| 38 | **vercel-react-best-practices** | React best practices, React patterns, React architecture, React hooks patterns, React performance | `/vercel-react-best-practices` |
+| 39 | **web-design-guidelines** | web design guidelines, design best practices, web standards, design principles, layout guidelines | `/web-design-guidelines` |
+| 40 | **vercel-composition-patterns** | composition patterns, component composition, React composition, compound components, render props | `/vercel-composition-patterns` |
+| 41 | **vercel-react-native-skills** | React Native, mobile app, cross-platform, Expo, mobile UI, native components | `/vercel-react-native-skills` |
+| 42 | **next-best-practices** | Next.js, Next best practices, App Router, server components, Next.js patterns, RSC | `/next-best-practices` |
+| 43 | **agent-browser** | browser agent, web automation, browser control, scrape page, navigate web, browser actions | `/agent-browser` |
+
+### Other Marketplace Skills
+
+| # | Skill | Trigger Patterns | Slash Command |
+|---|-------|-----------------|---------------|
+| 44 | **remotion-best-practices** | Remotion, programmatic video, React video, generate video, video rendering | `/remotion-best-practices` |
+| 45 | **ai-image-generation** | generate image, create image, AI image, image generation, make a picture, inferen | `/ai-image-generation` |
+| 46 | **browser-use** | browser-use, control browser, web scraping agent, automated browsing, headless browser | `/browser-use` |
+| 47 | **supabase-postgres-best-practices** | Supabase, Postgres, database schema, SQL best practices, Supabase auth, RLS policies | `/supabase-postgres-best-practices` |
+| 48 | **shadcn** | shadcn, shadcn/ui, Radix UI, UI components library, shadcn components | `/shadcn` |
+| 49 | **better-auth-best-practices** | better-auth, authentication, auth library, session management, OAuth setup | `/better-auth-best-practices` |
+| 50 | **skill-creator** | create skill, build skill, make a skill, new skill, custom skill, skill template | `/skill-creator` |
+
+---
+
+## Routing Rules
+
+### 1. Exact Match — Slash Commands
+If the user types `/ads-write`, `/copywriting`, `/seo-audit`, etc., invoke that skill immediately via the Skill tool. No interpretation needed.
+
+### 2. Keyword Match — Auto-Detect
+Scan every user message for the trigger patterns above. If a match is found:
+1. Load the skill via the Skill tool
+2. Follow the skill's instructions exactly
+3. Then proceed with the task
+
+### 3. Multi-Skill Chains
+
+| Workflow | Chain |
+|----------|-------|
+| **Full ad campaign** | `/ads-research` → `/ads-scrape` → `/ads-brief` → `/ads-write` → `/ads-launch` |
+| **Ad monitoring** | `/ads-report` (daily) |
+| **GHL + UI** | `/ghl-automation` for data → `/ui-ux-pro-max` for display |
+| **Knowledge base** | `/lightrag` to build graph → `/claude-api` to query it |
+| **Content pipeline** | `/content-strategy` → `/copywriting` → `/social-content` |
+| **Marketing campaign** | `/marketing-ideas` → `/marketing-psychology` → `/copywriting` → `/ads-write` |
+| **SEO pipeline** | `/seo-audit` → `/programmatic-seo` → `/content-strategy` |
+| **Pricing overhaul** | `/pricing-strategy` → `/marketing-psychology` → `/copywriting` |
+| **Launch sequence** | `/product-marketing-context` → `/copywriting` → `/ads-brief` → `/ads-write` |
+| **Debug flow** | `/systematic-debugging` → `/requesting-code-review` → `/simplify` |
+| **Plan + Execute** | `/writing-plans` → `/executing-plans` |
+| **Full web build** | `/web-design-guidelines` → `/frontend-design` → `/ui-ux-pro-max` → `/webapp-testing` |
+
+### 4. Ambiguity Resolution
+- "ads" alone → ask which ads skill (research/scrape/brief/write/launch/report)
+- "build something" → `/ui-ux-pro-max` if it's a UI, otherwise proceed normally
+- "GHL" anything → `/ghl-automation`
+- "automate" → `/ghl-automation` if CRM-related, `/loop` if recurring task, otherwise proceed normally
+- "write copy" → `/copywriting` for general, `/ads-write` for ad-specific
+- "marketing" → `/marketing-ideas` for brainstorming, `/marketing-psychology` for tactics, `/product-marketing-context` for positioning
+- "SEO" → `/seo-audit` for analysis, `/programmatic-seo` for bulk pages, `/content-strategy` for blog/content
+- "social media" → `/social-content`
+- "pricing" → `/pricing-strategy`
+- "debug" or "not working" → `/systematic-debugging`
+- "plan" → `/writing-plans` to create, `/executing-plans` to follow through
+- "review" → `/requesting-code-review` for code, `/simplify` for quick cleanup
+- "test" → `/webapp-testing` for browser/E2E, `/test-driven-development` for unit/TDD
+- "design" → `/frontend-design` for patterns, `/web-design-guidelines` for standards, `/ui-ux-pro-max` for full build
+- "slides" or "presentation" → `/pptx`
+- "PDF" → `/pdf`
+- "spreadsheet" → `/xlsx`
+- "Word doc" → `/docx`
+
+### 5. Priority — Project Skills First
+When multiple skills could match, prefer project-specific skills (ads-*, ghl-automation, ui-ux-pro-max) over generic marketplace skills. The Call Taker business context always takes priority.
+
+---
+
 ## Session Start Protocol
 At the beginning of EVERY session, before doing anything else:
 1. Read `primer.md` in full
