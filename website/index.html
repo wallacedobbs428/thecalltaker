@@ -3296,6 +3296,103 @@ window.__tctUILoaded = true;
 </script>
 
 <script src="/shared/ui.js" defer></script>
+
+<!-- ===== LENIS SMOOTH SCROLL + SCROLL-TRIGGERED REVEALS ===== -->
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+
+  // Load Lenis
+  var ls=document.createElement('script');
+  ls.src='https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js';
+  ls.onload=function(){
+    var lenis=new Lenis({
+      duration:1.2,
+      easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},
+      smoothWheel:true,
+      touchMultiplier:1.5
+    });
+    function raf(time){lenis.raf(time);requestAnimationFrame(raf)}
+    requestAnimationFrame(raf);
+
+    // Sync Lenis with GSAP ScrollTrigger if available
+    if(window.gsap&&window.ScrollTrigger){
+      lenis.on('scroll',ScrollTrigger.update);
+      gsap.ticker.add(function(time){lenis.raf(time*1000)});
+      gsap.ticker.lagSmoothing(0);
+    }
+  };
+  document.head.appendChild(ls);
+
+  // Scroll-triggered section title + label reveals
+  if('IntersectionObserver' in window){
+    var titleObs=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          titleObs.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.2,rootMargin:'0px 0px -60px 0px'});
+
+    document.querySelectorAll('.section-title,.section-label').forEach(function(el){
+      titleObs.observe(el);
+    });
+
+    // Reveal-scale items (step cards etc)
+    var scaleObs=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          scaleObs.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+
+    document.querySelectorAll('.reveal-scale').forEach(function(el){
+      scaleObs.observe(el);
+    });
+  }
+
+  // Parallax on hero phone
+  var heroPhone=document.querySelector('.hero-phone');
+  if(heroPhone){
+    var ticking=false;
+    window.addEventListener('scroll',function(){
+      if(!ticking){
+        requestAnimationFrame(function(){
+          var scrolled=window.pageYOffset;
+          var rate=scrolled*0.08;
+          if(rate<80){
+            heroPhone.style.transform='translateY('+rate+'px)';
+          }
+          ticking=false;
+        });
+        ticking=true;
+      }
+    },{passive:true});
+  }
+
+  // Parallax on floating bubbles
+  var floats=document.querySelectorAll('.hero-float');
+  if(floats.length){
+    var ft=false;
+    window.addEventListener('scroll',function(){
+      if(!ft){
+        requestAnimationFrame(function(){
+          var s=window.pageYOffset;
+          floats.forEach(function(f,i){
+            var speed=0.03+i*0.015;
+            f.style.transform='translateY('+(-s*speed)+'px)';
+          });
+          ft=false;
+        });
+        ft=true;
+      }
+    },{passive:true});
+  }
+})();
+</script>
 </body>
 </html>
 
