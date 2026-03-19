@@ -447,7 +447,7 @@
       fetch('https://services.leadconnectorhq.com/contacts/', {
         method: 'POST',
         headers: {
-          'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+          'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY',
           'Version': '2021-07-28',
           'Content-Type': 'application/json'
         },
@@ -464,7 +464,7 @@
             notes += '\n\nResults Simulator: ' + (currentData ? currentData.ind + ', ' + currentData.calls + ' calls/day, ' + currentData.miss + ' missed' : 'N/A');
             fetch('https://services.leadconnectorhq.com/contacts/' + cid + '/notes', {
               method: 'POST',
-              headers: { 'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35', 'Version': '2021-07-28', 'Content-Type': 'application/json' },
+              headers: { 'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY', 'Version': '2021-07-28', 'Content-Type': 'application/json' },
               body: JSON.stringify({ body: notes })
             }).catch(function(){});
           }

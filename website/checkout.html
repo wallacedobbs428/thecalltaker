@@ -1,944 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17970510102');
-  </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0a0a0a">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Checkout — The Call Taker | AI Receptionist</title>
-  <meta name="description" content="Start your AI receptionist. $97/mo after-hours, $297/mo 24/7, $497/mo premium.">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="robots" content="noindex, nofollow">
+<script src="/shared/tct-tracking.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Get Started — The Call Taker</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
-    body {
-      background: #0a0a0a;
-      color: #e5e5e5;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-    }
+  body {
+    background: #0a0a0a;
+    color: #e5e5e5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
 
-    a { text-decoration: none; color: inherit; }
+  .container { max-width: 440px; margin: 0 auto; padding: 0 16px; }
 
-    .wrap { max-width: 480px; margin: 0 auto; padding: 0 20px; }
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 36px 20px 24px;
+    background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
+  }
+  .logo { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .logo span { color: #00dc82; }
+  .tagline { color: #71717a; font-size: 14px; margin-top: 4px; }
 
-    /* ── Header ── */
-    .header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(10,10,10,0.92);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .header-inner {
-      max-width: 480px; margin: 0 auto; padding: 0 20px;
-      display: flex; align-items: center; justify-content: space-between; height: 56px;
-    }
-    .logo {
-      display: flex; align-items: center; gap: 8px;
-      font-weight: 700; font-size: 1rem; color: #fff;
-    }
-    .logo-icon {
-      width: 28px; height: 28px; border-radius: 6px;
-      background: #22c55e; display: flex; align-items: center; justify-content: center;
-    }
-    .logo-icon svg { width: 16px; height: 16px; }
-    .logo span { color: #22c55e; }
-    .header-link { font-size: 0.8125rem; font-weight: 500; color: #a1a1aa; }
-    .header-link:hover { color: #fff; }
+  /* Trust badges */
+  .trust {
+    display: flex; justify-content: center; gap: 16px;
+    padding: 12px; font-size: 12px; color: #71717a;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .trust span { display: flex; align-items: center; gap: 4px; }
+  .trust .dot { width: 6px; height: 6px; background: #00dc82; border-radius: 50%; }
 
-    /* ── Progress Steps ── */
-    .progress { display: flex; align-items: center; justify-content: center; gap: 0; padding: 80px 0 24px; }
-    .step-dot {
-      width: 32px; height: 32px; border-radius: 50%;
-      border: 2px solid #27272a; background: transparent;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 700; color: #52525b;
-      transition: all 0.3s;
-    }
-    .step-dot.active { border-color: #22c55e; background: #22c55e; color: #0a0a0a; }
-    .step-dot.done { border-color: #22c55e; background: rgba(34,197,94,0.15); color: #22c55e; }
-    .step-line { width: 48px; height: 2px; background: #27272a; transition: background 0.3s; }
-    .step-line.active { background: #22c55e; }
+  /* Plan selector */
+  .plans { padding: 24px 0; }
+  .plan-label {
+    text-align: center; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; color: #71717a;
+    margin-bottom: 14px;
+  }
 
-    /* ── Cards ── */
-    .card {
-      background: #111111; border: 1px solid #1e1e1e; border-radius: 12px;
-      padding: 24px; margin-bottom: 16px;
-    }
-    .card-title {
-      font-size: 0.6875rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 1.5px; color: #52525b; margin-bottom: 16px;
-    }
+  .plan-card {
+    background: rgba(255,255,255,0.03);
+    border: 2px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin: 12px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .plan-card:active, .plan-card.selected {
+    border-color: #00dc82;
+    box-shadow: 0 0 0 1px #00dc82, 0 0 20px rgba(0,220,130,0.1);
+  }
+  .plan-card .badge {
+    position: absolute; top: -10px; right: 16px;
+    background: #00dc82; color: #0a0a0a;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
+    padding: 3px 10px; border-radius: 10px;
+  }
 
-    /* ── Plan Selector ── */
-    .plan {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 16px; border: 2px solid #1e1e1e; border-radius: 10px;
-      cursor: pointer; transition: all 0.2s; margin-bottom: 8px; position: relative;
-    }
-    .plan:last-child { margin-bottom: 0; }
-    .plan:hover { border-color: #27272a; }
-    .plan.selected { border-color: #22c55e; background: rgba(34,197,94,0.04); }
-    .plan-left { display: flex; align-items: center; gap: 12px; }
-    .plan-radio {
-      width: 18px; height: 18px; border-radius: 50%;
-      border: 2px solid #3f3f46; flex-shrink: 0; position: relative;
-      transition: all 0.2s;
-    }
-    .plan.selected .plan-radio { border-color: #22c55e; }
-    .plan.selected .plan-radio::after {
-      content: ''; position: absolute; top: 3px; left: 3px;
-      width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
-    }
-    .plan-name { font-weight: 600; font-size: 0.9375rem; color: #fff; }
-    .plan-desc { font-size: 0.75rem; color: #71717a; margin-top: 1px; }
-    .plan-price { font-size: 1.125rem; font-weight: 800; color: #fff; white-space: nowrap; }
-    .plan-price span { font-size: 0.75rem; font-weight: 400; color: #71717a; }
-    .plan-badge {
-      position: absolute; top: -9px; right: 12px;
-      background: #22c55e; color: #0a0a0a;
-      font-size: 0.5625rem; font-weight: 800; letter-spacing: 0.5px;
-      padding: 2px 8px; border-radius: 6px; text-transform: uppercase;
-    }
+  .plan-top { display: flex; justify-content: space-between; align-items: center; }
+  .plan-name { font-weight: 700; color: #fff; font-size: 17px; }
+  .plan-price { font-size: 28px; font-weight: 800; color: #fff; }
+  .plan-price span { font-size: 14px; color: #71717a; font-weight: 400; }
+  .plan-desc { color: #a1a1aa; font-size: 13px; margin-top: 8px; line-height: 1.5; }
 
-    /* ── Form Fields ── */
-    .field { margin-bottom: 12px; }
-    .field label {
-      display: block; font-size: 0.75rem; font-weight: 600;
-      color: #a1a1aa; margin-bottom: 4px;
-    }
-    .field input, .field select {
-      width: 100%; padding: 10px 12px;
-      background: #0a0a0a; border: 1px solid #27272a; border-radius: 8px;
-      color: #fff; font-size: 0.9375rem; font-family: inherit;
-      transition: border-color 0.2s;
-    }
-    .field input:focus, .field select:focus {
-      outline: none; border-color: #22c55e;
-    }
-    .field input::placeholder { color: #3f3f46; }
-    .field select { cursor: pointer; }
-    .field select option { background: #111; }
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .plan-features {
+    list-style: none; margin-top: 14px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  }
+  .plan-features li {
+    font-size: 13px; color: #d4d4d4;
+    padding-left: 18px; position: relative;
+  }
+  .plan-features li::before {
+    content: "\2713"; position: absolute; left: 0;
+    color: #00dc82; font-weight: 700; font-size: 12px;
+  }
 
-    /* ── Buttons ── */
-    .btn-primary {
-      display: block; width: 100%; padding: 14px;
-      background: #22c55e; color: #0a0a0a; border: none; border-radius: 10px;
-      font-size: 1rem; font-weight: 700; font-family: inherit;
-      cursor: pointer; transition: all 0.15s; text-align: center;
-    }
-    .btn-primary:hover { background: #16a34a; }
-    .btn-primary:active { transform: scale(0.98); }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .btn-sub { text-align: center; font-size: 0.75rem; color: #52525b; margin-top: 8px; }
+  /* Radio indicator */
+  .radio-dot {
+    width: 22px; height: 22px; border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .plan-card.selected .radio-dot {
+    border-color: #00dc82;
+  }
+  .plan-card.selected .radio-dot::after {
+    content: ''; width: 10px; height: 10px;
+    background: #00dc82; border-radius: 50%;
+  }
 
-    /* ── Order Summary ── */
-    .order-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 0; border-bottom: 1px solid #1a1a1a;
-    }
-    .order-row:last-child { border-bottom: none; }
-    .order-label { font-size: 0.875rem; color: #71717a; }
-    .order-value { font-size: 0.875rem; font-weight: 600; color: #fff; }
-    .order-total {
-      font-size: 1.5rem; font-weight: 800; color: #22c55e;
-    }
-    .order-highlight { color: #22c55e; }
+  /* CTA Button */
+  .cta-area { padding: 0 0 20px; }
+  .cta-btn {
+    display: block; width: 100%;
+    background: #00dc82;
+    color: #0a0a0a; border: none; border-radius: 14px;
+    padding: 18px; font-size: 18px; font-weight: 800;
+    text-align: center; cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+    -webkit-appearance: none;
+  }
+  .cta-btn:hover {
+    background: #00c974;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,220,130,0.3);
+  }
+  .cta-btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+  .cta-sub {
+    text-align: center; font-size: 12px; color: #71717a;
+    margin-top: 8px;
+  }
 
-    /* ── Guarantee ── */
-    .guarantee {
-      display: flex; align-items: center; gap: 10px;
-      padding: 12px 14px; background: rgba(34,197,94,0.04);
-      border: 1px solid rgba(34,197,94,0.12); border-radius: 8px;
-      margin-top: 16px;
-    }
-    .guarantee svg { flex-shrink: 0; color: #22c55e; width: 18px; height: 18px; }
-    .guarantee p { font-size: 0.8125rem; color: #a1a1aa; line-height: 1.4; }
-    .guarantee strong { color: #fff; }
+  /* ROI callout */
+  .roi-callout {
+    background: rgba(0,220,130,0.04);
+    border: 1px solid rgba(0,220,130,0.15);
+    border-radius: 12px;
+    padding: 16px; margin: 20px 0;
+    text-align: center;
+  }
+  .roi-callout .big {
+    font-size: 32px; font-weight: 800; color: #00dc82;
+  }
+  .roi-callout .sub { font-size: 13px; color: #71717a; margin-top: 2px; }
 
-    /* ── Payment Methods ── */
-    .pay-method {
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 16px; border: 2px solid #1e1e1e; border-radius: 10px;
-      cursor: pointer; transition: all 0.2s; margin-bottom: 8px;
-    }
-    .pay-method:hover { border-color: #27272a; }
-    .pay-method.selected { border-color: #22c55e; background: rgba(34,197,94,0.04); }
-    .pay-method-radio {
-      width: 18px; height: 18px; border-radius: 50%;
-      border: 2px solid #3f3f46; flex-shrink: 0; position: relative;
-      transition: all 0.2s;
-    }
-    .pay-method.selected .pay-method-radio { border-color: #22c55e; }
-    .pay-method.selected .pay-method-radio::after {
-      content: ''; position: absolute; top: 3px; left: 3px;
-      width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
-    }
-    .pay-method-name { font-weight: 600; font-size: 0.9375rem; color: #fff; }
-    .pay-method-desc { font-size: 0.75rem; color: #71717a; }
-    .pay-method-icon { font-size: 1.25rem; }
+  /* What you get */
+  .features-section { padding: 20px 0; }
+  .features-title {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: #71717a; margin-bottom: 14px;
+  }
+  .feature-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .feature-item:last-child { border-bottom: none; }
+  .feature-icon {
+    width: 36px; height: 36px; background: rgba(255,255,255,0.03);
+    border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-size: 18px; flex-shrink: 0;
+  }
+  .feature-name { font-weight: 700; color: #fff; font-size: 15px; }
+  .feature-desc { font-size: 13px; color: #a1a1aa; margin-top: 2px; }
 
-    /* ── Confirm Step ── */
-    .confirm-banner {
-      text-align: center; padding: 20px;
-      background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.15);
-      border-radius: 12px; margin-bottom: 16px;
-    }
-    .confirm-banner h2 { font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
-    .confirm-banner p { font-size: 0.875rem; color: #a1a1aa; }
+  /* Guarantee */
+  .guarantee {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 20px; margin: 20px 0;
+    text-align: center;
+  }
+  .guarantee .icon { font-size: 28px; margin-bottom: 8px; }
+  .guarantee .title { font-weight: 700; color: #fff; font-size: 16px; }
+  .guarantee .desc { font-size: 13px; color: #a1a1aa; margin-top: 6px; line-height: 1.5; }
 
-    /* ── Security ── */
-    .security {
-      display: flex; justify-content: center; gap: 16px;
-      padding: 16px 0; flex-wrap: wrap;
-    }
-    .sec-badge { display: flex; align-items: center; gap: 4px; font-size: 0.6875rem; color: #52525b; }
-    .sec-badge svg { width: 12px; height: 12px; }
+  /* Demo CTA */
+  .demo-strip {
+    background: linear-gradient(135deg, #00dc82, #059669);
+    border-radius: 12px; padding: 16px;
+    text-align: center; margin: 16px 0;
+  }
+  .demo-strip .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(0,0,0,0.6); }
+  .demo-strip a {
+    display: block; font-size: 24px; font-weight: 800;
+    color: #0a0a0a; text-decoration: none; margin: 4px 0;
+  }
+  .demo-strip .sub { font-size: 12px; color: rgba(0,0,0,0.5); }
 
-    /* ── Demo Strip ── */
-    .demo-strip {
-      background: linear-gradient(135deg, #166534, #14532d);
-      border-radius: 10px; padding: 14px; text-align: center; margin: 16px 0;
-    }
-    .demo-strip .lbl { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.6); }
-    .demo-strip a { display: block; font-size: 1.25rem; font-weight: 800; color: #fff; margin: 2px 0; }
-    .demo-strip .sub { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+  /* Footer */
+  .footer {
+    padding: 30px 16px;
+    text-align: center; font-size: 12px; color: #52525b;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer a { color: #00dc82; text-decoration: none; }
 
-    /* ── Success ── */
-    .success-state { display: none; text-align: center; padding: 80px 0 60px; }
-    .success-check {
-      width: 72px; height: 72px; border-radius: 50%;
-      background: rgba(34,197,94,0.1); border: 2px solid rgba(34,197,94,0.3);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 24px;
-    }
-    .success-check svg { width: 32px; height: 32px; stroke: #22c55e; }
-    .success-state h1 { font-size: 1.75rem; font-weight: 800; color: #fff; margin-bottom: 12px; }
-    .success-state p { font-size: 1rem; color: #a1a1aa; max-width: 360px; margin: 0 auto; line-height: 1.6; }
-    .success-state .next-steps { margin-top: 32px; text-align: left; }
-    .success-state .next-step {
-      display: flex; gap: 12px; padding: 12px 0;
-      border-bottom: 1px solid #1a1a1a;
-    }
-    .success-state .next-step:last-child { border-bottom: none; }
-    .next-step-num {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: rgba(34,197,94,0.1); color: #22c55e;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
-    }
-    .next-step-text { font-size: 0.875rem; color: #a1a1aa; }
-    .next-step-text strong { color: #fff; }
+  /* Payment option buttons */
+  .payment-options { margin: 20px 0; }
+  .pay-btn {
+    display: block; width: 100%;
+    border: none; border-radius: 14px;
+    padding: 16px; font-size: 16px; font-weight: 700;
+    text-align: center; cursor: pointer;
+    text-decoration: none; margin: 8px 0;
+    transition: all 0.15s;
+  }
+  .pay-btn:active { transform: scale(0.98); opacity: 0.9; }
+  .paypal-btn { background: #0070ba; color: #fff; }
+  .venmo-btn { background: #3d95ce; color: #fff; }
 
-    /* ── Footer ── */
-    .footer {
-      padding: 32px 20px; text-align: center;
-      border-top: 1px solid #1a1a1a; margin-top: 32px;
-    }
-    .footer span { font-size: 0.75rem; color: #3f3f46; }
-
-    /* ── Step visibility ── */
-    .step { display: none; }
-    .step.active { display: block; }
-
-    /* ── Spinner ── */
-    .spinner {
-      display: inline-block; width: 16px; height: 16px;
-      border: 2px solid rgba(10,10,10,0.3); border-top-color: #0a0a0a;
-      border-radius: 50%; animation: spin 0.6s linear infinite;
-      vertical-align: middle; margin-right: 6px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── Green Banner ── */
-    .top-banner {
-      background: linear-gradient(135deg, #166534, #14532d);
-      text-align: center; padding: 10px 16px;
-      font-size: 0.8125rem; font-weight: 700; color: #fff;
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-    }
-    .header { top: 38px !important; }
-    .progress { padding-top: 118px; }
-
-    /* ── Pilot Note ── */
-    .pilot-note {
-      text-align: center; font-size: 0.8125rem; color: #22c55e;
-      font-weight: 600; margin-top: 8px; margin-bottom: 0;
-    }
-    .scarcity-note {
-      text-align: center; font-size: 0.75rem; color: #fbbf24;
-      font-weight: 600; margin-top: 6px;
-    }
-
-    /* ── Talk Fallback ── */
-    .talk-fallback {
-      text-align: center; margin-top: 12px; font-size: 0.8125rem; color: #71717a;
-    }
-    .talk-fallback a { color: #22c55e; font-weight: 600; }
-
-    /* ── Mobile ── */
-    @media (max-width: 480px) {
-      .field-row { grid-template-columns: 1fr; }
-      .btn-primary { padding: 16px; font-size: 1.0625rem; }
-    }
-  </style>
+  /* Urgency bar */
+  .urgency-bar {
+    background: rgba(0,220,130,0.06);
+    border: 1px solid rgba(0,220,130,0.15);
+    border-radius: 10px;
+    padding: 12px 16px; margin: 16px 0;
+    text-align: center; font-size: 13px; color: #00dc82;
+    font-weight: 600;
+  }
+</style>
+<script src="/shared/ab-split.js"></script>
 </head>
 <body>
 
-  <!-- Green Banner -->
-  <div class="top-banner">Setup in 24 hours. Jessica answers your first call tomorrow.</div>
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">The <span>Call</span> Taker</div>
+  <div class="tagline">Never miss another customer call</div>
+</div>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-inner">
-      <a href="index.html" class="logo">
-        <div class="logo-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+<div class="trust">
+  <span><span class="dot"></span> No contracts</span>
+  <span><span class="dot"></span> Cancel anytime</span>
+  <span><span class="dot"></span> No setup fees</span>
+</div>
+
+<div class="container">
+
+  <!-- PLAN SELECTOR -->
+  <div class="plans">
+    <div class="plan-label">Choose Your Plan</div>
+
+    <div class="plan-card selected" id="plan-afterhours" onclick="selectPlan('afterhours')">
+      <div class="badge">MOST POPULAR</div>
+      <div class="plan-top" style="margin-bottom: 4px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="radio-dot"></div>
+          <div class="plan-name">After-Hours</div>
         </div>
-        The Call <span>Taker</span>
-      </a>
-      <a href="tel:+16157845747" class="header-link">Hear the AI: (615) 784-5747</a>
-    </div>
-  </header>
-
-  <div class="wrap">
-
-    <!-- Progress -->
-    <div class="progress" aria-label="Checkout progress">
-      <div class="step-dot active" id="dot-1">1</div>
-      <div class="step-line" id="line-1"></div>
-      <div class="step-dot" id="dot-2">2</div>
-      <div class="step-line" id="line-2"></div>
-      <div class="step-dot" id="dot-3">3</div>
-    </div>
-
-    <!-- ═══════════════════════════════════
-         STEP 1 — Choose Plan + Business Info
-         ═══════════════════════════════════ -->
-    <div class="step active" id="step-1">
-
-      <!-- Plan Selection -->
-      <div class="card">
-        <div class="card-title">Choose your plan</div>
-
-        <div class="plan selected" id="plan-afterhours" onclick="selectPlan('afterhours')" role="radio" aria-checked="true" tabindex="0">
-          <div class="plan-badge">Most popular</div>
-          <div class="plan-left">
-            <div class="plan-radio"></div>
-            <div>
-              <div class="plan-name">After-Hours</div>
-              <div class="plan-desc">Nights, weekends, holidays</div>
-            </div>
-          </div>
-          <div class="plan-price">$97<span>/mo</span></div>
-        </div>
-
-        <div class="plan" id="plan-full247" onclick="selectPlan('full247')" role="radio" aria-checked="false" tabindex="0">
-          <div class="plan-left">
-            <div class="plan-radio"></div>
-            <div>
-              <div class="plan-name">Full 24/7</div>
-              <div class="plan-desc">Every call, every hour</div>
-            </div>
-          </div>
-          <div class="plan-price">$297<span>/mo</span></div>
-        </div>
-
-        <div class="plan" id="plan-premium" onclick="selectPlan('premium')" role="radio" aria-checked="false" tabindex="0">
-          <div class="plan-left">
-            <div class="plan-radio"></div>
-            <div>
-              <div class="plan-name">Premium</div>
-              <div class="plan-desc">White-glove, dedicated manager</div>
-            </div>
-          </div>
-          <div class="plan-price">$497<span>/mo</span></div>
-        </div>
+        <div class="plan-price">$97<span>/mo</span></div>
       </div>
-      <p class="pilot-note">No credit card to start. Free for 14 days.</p>
-      <p class="scarcity-note">3 pilot spots remaining this week.</p>
-
-      <!-- Business Info -->
-      <div class="card">
-        <div class="card-title">Your business</div>
-
-        <div class="field">
-          <label for="company">Business name</label>
-          <input type="text" id="company" placeholder="Nashville Plumbing Co." required autocomplete="organization">
-        </div>
-
-        <div class="field-row">
-          <div class="field">
-            <label for="first">First name</label>
-            <input type="text" id="first" placeholder="Wallace" required autocomplete="given-name">
-          </div>
-          <div class="field">
-            <label for="last">Last name</label>
-            <input type="text" id="last" placeholder="Dobbs" autocomplete="family-name">
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="phone">Business phone</label>
-          <input type="tel" id="phone" placeholder="(615) 555-0123" required autocomplete="tel">
-        </div>
-
-        <div class="field">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="you@company.com" required autocomplete="email">
-        </div>
-
-        <div class="field">
-          <label for="industry">Industry</label>
-          <select id="industry">
-            <option value="">Select your industry</option>
-            <option value="hvac">HVAC</option>
-            <option value="plumbing">Plumbing</option>
-            <option value="electrical">Electrical</option>
-            <option value="roofing">Roofing</option>
-            <option value="dental">Dental</option>
-            <option value="legal">Legal</option>
-            <option value="medspa">Med Spa</option>
-            <option value="property-mgmt">Property Management</option>
-            <option value="veterinary">Veterinary</option>
-            <option value="locksmith">Locksmith</option>
-            <option value="garage-door">Garage Door</option>
-            <option value="towing">Towing</option>
-            <option value="pest-control">Pest Control</option>
-            <option value="auto-repair">Auto Repair</option>
-            <option value="cleaning">Cleaning</option>
-            <option value="landscaping">Landscaping</option>
-            <option value="funeral">Funeral Homes</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-      </div>
-
-      <button class="btn-primary" id="btn-step1" onclick="goToStep2()">
-        Continue to payment
-      </button>
-      <div class="btn-sub">No card required for 14-day money-back guarantee</div>
-      <div class="talk-fallback">Prefer to talk? Text Wallace: <a href="sms:+16157845747">(615) 784-5747</a></div>
-
+      <div class="plan-desc">Nights, weekends, holidays — never miss an after-hours call again</div>
+      <ul class="plan-features">
+        <li>After-hours coverage</li>
+        <li>Weekends &amp; holidays</li>
+        <li>Custom to your biz</li>
+        <li>Appointment booking</li>
+        <li>Unlimited calls</li>
+        <li>Cancel anytime</li>
+      </ul>
     </div>
 
-    <!-- ═══════════════════════════════════
-         STEP 2 — Review + Pay
-         ═══════════════════════════════════ -->
-    <div class="step" id="step-2">
-
-      <!-- Order Summary -->
-      <div class="card">
-        <div class="card-title">Order summary</div>
-        <div class="order-row">
-          <span class="order-label">Plan</span>
-          <span class="order-value" id="summary-plan">After-Hours</span>
+    <div class="plan-card" id="plan-full247" onclick="selectPlan('full247')">
+      <div class="plan-top" style="margin-bottom: 4px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="radio-dot"></div>
+          <div class="plan-name">Full 24/7</div>
         </div>
-        <div class="order-row">
-          <span class="order-label">Business</span>
-          <span class="order-value" id="summary-company">-</span>
-        </div>
-        <div class="order-row">
-          <span class="order-label">Setup fee</span>
-          <span class="order-value order-highlight">$0 (waived)</span>
-        </div>
-        <div class="order-row">
-          <span class="order-label">Billing</span>
-          <span class="order-value">Monthly, cancel anytime</span>
-        </div>
-        <div class="order-row" style="padding-top: 14px; border-top: 1px solid #27272a;">
-          <span class="order-label" style="font-weight: 700; color: #fff;">Total due today</span>
-          <span class="order-total" id="summary-total">$97/mo</span>
-        </div>
-
-        <div class="guarantee">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <p><strong>14-day money-back guarantee.</strong> Not happy? Full refund, no questions.</p>
-        </div>
+        <div class="plan-price">$497<span>/mo</span></div>
       </div>
-
-      <!-- Payment Method -->
-      <div class="card">
-        <div class="card-title">Payment method</div>
-
-        <div class="pay-method selected" id="pay-paypal" onclick="selectPayMethod('paypal')">
-          <div class="pay-method-radio"></div>
-          <div>
-            <div class="pay-method-name">PayPal</div>
-            <div class="pay-method-desc">Pay securely with your PayPal account</div>
-          </div>
-        </div>
-
-        <div class="pay-method" id="pay-venmo" onclick="selectPayMethod('venmo')">
-          <div class="pay-method-radio"></div>
-          <div>
-            <div class="pay-method-name">Venmo</div>
-            <div class="pay-method-desc">Send to @Wallace-Dobbs</div>
-          </div>
-        </div>
-
-        <div class="pay-method" id="pay-invoice" onclick="selectPayMethod('invoice')">
-          <div class="pay-method-radio"></div>
-          <div>
-            <div class="pay-method-name">Request invoice</div>
-            <div class="pay-method-desc">We'll text you a payment link</div>
-          </div>
-        </div>
-      </div>
-
-      <button class="btn-primary" id="btn-pay" onclick="processPayment()">
-        Pay now
-      </button>
-      <div class="btn-sub">
-        <a href="#" onclick="goBack(1); return false;" style="color: #52525b; text-decoration: underline;">Back to business info</a>
-      </div>
-      <div class="talk-fallback">Prefer to talk? Text Wallace: <a href="sms:+16157845747">(615) 784-5747</a></div>
-
-      <div class="security">
-        <div class="sec-badge">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          SSL encrypted
-        </div>
-        <div class="sec-badge">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          14-day guarantee
-        </div>
-        <div class="sec-badge">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          No contracts
-        </div>
-      </div>
+      <div class="plan-desc">Every call, every hour — plus business hours overflow</div>
+      <ul class="plan-features">
+        <li>24/7/365 coverage</li>
+        <li>Business hours overflow</li>
+        <li>FAQ handling</li>
+        <li>Dispatch support</li>
+        <li>Appointment booking</li>
+        <li>Cancel anytime</li>
+      </ul>
     </div>
 
-    <!-- ═══════════════════════════════════
-         STEP 3 — Confirm Payment
-         ═══════════════════════════════════ -->
-    <div class="step" id="step-3">
-
-      <div class="confirm-banner">
-        <h2 id="confirm-title">Complete your payment</h2>
-        <p id="confirm-desc">A payment window has opened. Complete it, then come back here.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-title">After you've paid</div>
-        <p style="font-size: 0.875rem; color: #a1a1aa; margin-bottom: 16px; line-height: 1.6;">
-          Click the button below once you've completed your payment. This notifies our team to start building your AI receptionist immediately.
-        </p>
-        <button class="btn-primary" id="btn-confirm" onclick="confirmPayment()">
-          I've completed my payment
-        </button>
-        <div class="btn-sub" style="margin-top: 12px;">
-          <a href="#" id="retry-pay-link" onclick="retryPayment(); return false;" style="color: #22c55e; text-decoration: underline;">Reopen payment window</a>
-          &nbsp;&middot;&nbsp;
-          <a href="#" onclick="goBack(2); return false;" style="color: #52525b; text-decoration: underline;">Change payment method</a>
+    <div class="plan-card" id="plan-premium" onclick="selectPlan('premium')">
+      <div class="plan-top" style="margin-bottom: 4px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="radio-dot"></div>
+          <div class="plan-name">Premium</div>
         </div>
+        <div class="plan-price">$997<span>/mo</span></div>
       </div>
-
-      <div class="demo-strip">
-        <div class="lbl">While you wait</div>
-        <a href="tel:+16157845747">(615) 784-5747</a>
-        <div class="sub">Call the demo line and hear your future AI receptionist</div>
-      </div>
+      <div class="plan-desc">White-glove — custom voice, CRM integration, dedicated manager</div>
+      <ul class="plan-features">
+        <li>Everything in 24/7</li>
+        <li>Custom voice &amp; scripts</li>
+        <li>CRM integration</li>
+        <li>Dedicated manager</li>
+        <li>Priority support</li>
+        <li>Cancel anytime</li>
+      </ul>
     </div>
-
-    <!-- ═══════════════════════════════════
-         SUCCESS STATE
-         ═══════════════════════════════════ -->
-    <div class="success-state" id="success-state">
-      <div class="success-check">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <h1>You're in. Welcome aboard.</h1>
-      <p>Wallace will text you within the hour to get your AI receptionist set up. Check your phone.</p>
-
-      <div class="card next-steps" style="margin-top: 32px; text-align: left;">
-        <div class="card-title">What happens next</div>
-        <div class="next-step">
-          <div class="next-step-num">1</div>
-          <div class="next-step-text"><strong>Wallace texts you</strong> within the hour to introduce himself and start setup</div>
-        </div>
-        <div class="next-step">
-          <div class="next-step-num">2</div>
-          <div class="next-step-text"><strong>We build your AI receptionist</strong> trained on your business, services, and booking process</div>
-        </div>
-        <div class="next-step">
-          <div class="next-step-num">3</div>
-          <div class="next-step-text"><strong>You forward your calls</strong> and start catching every lead within 48 hours</div>
-        </div>
-      </div>
-
-      <div class="demo-strip" style="margin-top: 24px;">
-        <div class="lbl">Hear it live right now</div>
-        <a href="tel:+16157845747">(615) 784-5747</a>
-        <div class="sub">Call the demo line while you wait</div>
-      </div>
-    </div>
-
   </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <span>&copy; 2026 The Call Taker. Brentwood, TN. All rights reserved.</span>
-  </footer>
+  <!-- ROI CALLOUT -->
+  <div class="roi-callout">
+    <div class="big" id="roi-text">$97 &lt; 1 missed call</div>
+    <div class="sub">Most businesses make it back with the first call we catch</div>
+  </div>
+
+  <!-- FREE PILOT CTA -->
+  <div class="cta-area">
+    <a class="cta-btn" href="https://thecalltaker.com/signup.html" id="checkout-btn" onclick="trackCheckout(event)">
+      Start Free 14-Day Pilot
+    </a>
+    <div class="cta-sub">No credit card &bull; No contracts &bull; Cancel anytime</div>
+  </div>
+
+  <!-- PAYMENT OPTIONS -->
+  <div class="payment-options" id="payment-options" style="display:none;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#71717a;margin-bottom:14px;text-align:center;">Ready to Pay? Choose How</div>
+    <a class="pay-btn paypal-btn" id="paypal-btn" href="#" onclick="payWithPayPal(event)">
+      Pay with PayPal — <span id="paypal-price">$97/mo</span>
+    </a>
+    <a class="pay-btn venmo-btn" href="https://venmo.com/u/Wallace-Dobbs" target="_blank">
+      Pay with Venmo — @Wallace-Dobbs
+    </a>
+    <div style="text-align:center;font-size:12px;color:#71717a;margin-top:8px;">
+      Or text "READY" to <a href="sms:+16157845747" style="color:#00dc82;">(615) 784-5747</a> and we'll send you an invoice
+    </div>
+  </div>
+
+  <!-- WHAT YOU GET -->
+  <div class="features-section">
+    <div class="features-title">What You Get</div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#128222;</div>
+      <div>
+        <div class="feature-name">Professional Receptionist</div>
+        <div class="feature-desc">Sounds like a real person. Knows your business inside and out.</div>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#128197;</div>
+      <div>
+        <div class="feature-name">Appointment Booking</div>
+        <div class="feature-desc">Books appointments on the spot. No more "leave a message."</div>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#9889;</div>
+      <div>
+        <div class="feature-name">Instant Notifications</div>
+        <div class="feature-desc">Get a text/email for every call. Never miss a lead.</div>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#128736;</div>
+      <div>
+        <div class="feature-name">Custom to Your Business</div>
+        <div class="feature-desc">Trained on your services, pricing, and booking process.</div>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <div class="feature-icon">&#127775;</div>
+      <div>
+        <div class="feature-name">Setup in 10 Minutes</div>
+        <div class="feature-desc">We handle everything. You just forward your calls.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUARANTEE -->
+  <div class="guarantee">
+    <div class="icon">&#128170;</div>
+    <div class="title">Zero Risk — 14-Day Free Pilot</div>
+    <div class="desc">Try it free for 14 days. No credit card. No contracts. No setup fees. If you don't catch at least one call that would've gone to voicemail, walk away. No questions asked.</div>
+  </div>
+
+  <!-- DEMO LINE -->
+  <div class="demo-strip">
+    <div class="lbl">Hear It Before You Buy</div>
+    <a href="tel:+16157845747">(615) 784-5747</a>
+    <div class="sub">Call our demo line — hear exactly what your customers will hear</div>
+  </div>
+
+  <!-- URGENCY -->
+  <div class="urgency-bar">
+    3 free pilot slots left this week — first come, first served
+  </div>
+
+  <!-- SECOND CTA -->
+  <div class="cta-area" style="padding: 20px 0;">
+    <a class="cta-btn" href="https://thecalltaker.com/signup.html" onclick="trackCheckout(event)">
+      Start Free Pilot — <span id="cta-price-2">$97/mo</span> after trial
+    </a>
+    <div class="cta-sub">14 days free &bull; No credit card required</div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  The Call Taker &bull; Virtual Receptionist for Service Businesses<br>
+  <a href="https://thecalltaker.com">thecalltaker.com</a> &bull; <a href="tel:+16157845747">(615) 784-5747</a><br><br>
+  Questions? Text us or call the demo line.
+</div>
 
 <script>
-// ══════════════════════════════════════════
-// CHECKOUT ENGINE — The Call Taker
-// ══════════════════════════════════════════
-
-var GHL_API = 'https://services.leadconnectorhq.com/contacts/';
-var GHL_KEY = 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35';
-var GHL_LOC = 'tQb9YmrGDrdVUJYPKrsY';
-var NTFY_URGENT = 'https://ntfy.sh/tct-urgent-Hk9UOEZR';
-
-var PLANS = {
-  afterhours: { name: 'After-Hours Starter', price: 97, paypal: 'https://paypal.me/wallacedobbs/97' },
-  full247:    { name: 'Full 24/7',           price: 297, paypal: 'https://paypal.me/wallacedobbs/297' },
-  premium:    { name: 'Premium',             price: 497, paypal: 'https://paypal.me/wallacedobbs/497' }
-};
-
-var selectedPlan = 'afterhours';
-var selectedPayMethod = 'paypal';
-var contactId = null;
-var customerData = {};
-
-// ── Plan Selection ──
-function selectPlan(plan) {
-  selectedPlan = plan;
-  document.querySelectorAll('.plan').forEach(function(el) {
-    var id = el.id.replace('plan-', '');
-    el.classList.toggle('selected', id === plan);
-    el.setAttribute('aria-checked', id === plan ? 'true' : 'false');
-  });
-}
-
-// ── Payment Method Selection ──
-function selectPayMethod(method) {
-  selectedPayMethod = method;
-  document.querySelectorAll('.pay-method').forEach(function(el) {
-    el.classList.toggle('selected', el.id === 'pay-' + method);
-  });
-  // Update button text
-  var btn = document.getElementById('btn-pay');
-  if (method === 'paypal') btn.textContent = 'Pay $' + PLANS[selectedPlan].price + ' with PayPal';
-  else if (method === 'venmo') btn.textContent = 'Pay $' + PLANS[selectedPlan].price + ' with Venmo';
-  else btn.textContent = 'Request invoice via text';
-}
-
-// ── Step Navigation ──
-function showStep(n) {
-  document.querySelectorAll('.step').forEach(function(el) { el.classList.remove('active'); });
-  var target = document.getElementById('step-' + n);
-  if (target) target.classList.add('active');
-
-  // Update progress dots
-  for (var i = 1; i <= 3; i++) {
-    var dot = document.getElementById('dot-' + i);
-    dot.classList.remove('active', 'done');
-    if (i < n) { dot.classList.add('done'); dot.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'; }
-    else if (i === n) { dot.classList.add('active'); dot.textContent = i; }
-    else { dot.textContent = i; }
-  }
-  document.getElementById('line-1').classList.toggle('active', n >= 2);
-  document.getElementById('line-2').classList.toggle('active', n >= 3);
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function goBack(step) { showStep(step); }
-
-// ── Step 1 → Step 2: Validate + Create GHL Contact ──
-function goToStep2() {
-  var company = document.getElementById('company').value.trim();
-  var first = document.getElementById('first').value.trim();
-  var last = document.getElementById('last').value.trim();
-  var phone = document.getElementById('phone').value.trim();
-  var email = document.getElementById('email').value.trim();
-  var industry = document.getElementById('industry').value;
-
-  // Validate
-  if (!company || !first || !phone || !email) {
-    alert('Please fill in all required fields.');
-    return;
-  }
-  if (!email.includes('@') || !email.includes('.')) {
-    alert('Please enter a valid email address.');
-    return;
-  }
-
-  customerData = { company: company, first: first, last: last, phone: phone, email: email, industry: industry };
-
-  // Disable button while creating contact
-  var btn = document.getElementById('btn-step1');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Creating your account...';
-
-  // Format phone
-  var cleanPhone = phone.replace(/\D/g, '');
-  if (cleanPhone.length === 10) cleanPhone = '1' + cleanPhone;
-  if (cleanPhone.charAt(0) !== '+') cleanPhone = '+' + cleanPhone;
-
-  // Build tags
-  var tags = ['checkout', 'payment-pending', 'plan-' + selectedPlan, 'self-service'];
-  if (industry) tags.push('industry-' + industry);
-
-  // Capture attribution
-  try {
-    if (typeof getTctAttributionTags === 'function') {
-      var attrTags = getTctAttributionTags();
-      if (attrTags && attrTags.length) tags = tags.concat(attrTags);
-    }
-  } catch(e) {}
-
-  // Check for gclid
-  var params = new URLSearchParams(window.location.search);
-  var gclid = params.get('gclid');
-  if (gclid) { tags.push('google-ads'); tags.push('gclid'); }
-
-  // Create GHL contact
-  var body = {
-    locationId: GHL_LOC,
-    firstName: first,
-    lastName: last || undefined,
-    email: email,
-    phone: cleanPhone,
-    companyName: company,
-    tags: tags
+  // ── PLAN CONFIG ──
+  var selectedPlan = 'afterhours';
+  var PLANS = {
+    afterhours: { name: 'After-Hours', price: 97, roi: '$97 < 1 missed call', paypal: 'https://paypal.me/wallacedobbs/97' },
+    full247:    { name: 'Full 24/7',    price: 497, roi: '$497 < 1 service call', paypal: 'https://paypal.me/wallacedobbs/497' },
+    premium:    { name: 'Pro',      price: 997, roi: '$997 < 2 service calls', paypal: 'https://paypal.me/wallacedobbs/997' }
   };
 
-  fetch(GHL_API, {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Bearer ' + GHL_KEY,
-      'Version': '2021-07-28',
-      'Content-Type': 'application/json',
-      'User-Agent': 'TheCallTaker-Checkout/1.0'
-    },
-    body: JSON.stringify(body)
-  })
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    if (data.contact && data.contact.id) {
-      contactId = data.contact.id;
-    }
+  // Stripe payment links — REPLACE THESE when Stripe is connected
+  var STRIPE_LINKS = { afterhours: '', full247: '', premium: '' };
 
+  function selectPlan(plan) {
+    selectedPlan = plan;
+    var p = PLANS[plan];
+    document.getElementById('plan-afterhours').classList.toggle('selected', plan === 'afterhours');
+    document.getElementById('plan-full247').classList.toggle('selected', plan === 'full247');
+    document.getElementById('plan-premium').classList.toggle('selected', plan === 'premium');
+    document.getElementById('roi-text').textContent = p.roi;
+    document.getElementById('cta-price-2').textContent = '$' + p.price + '/mo';
+    document.getElementById('paypal-price').textContent = '$' + p.price + '/mo';
+    document.getElementById('paypal-btn').href = p.paypal;
+  }
+
+  function trackCheckout(e) {
+    var p = PLANS[selectedPlan];
     // Send war room alert
-    fetch(NTFY_URGENT, {
+    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
       method: 'POST',
-      headers: {
-        'Title': '[CRITICAL] CHECKOUT STARTED: ' + company + ' - ' + PLANS[selectedPlan].name,
-        'Priority': 'urgent',
-        'Tags': 'rotating_light,dollar'
-      },
-      body: 'PAYMENT PENDING!\n' +
-        'Company: ' + company + '\n' +
-        'Name: ' + first + ' ' + (last || '') + '\n' +
-        'Phone: ' + phone + '\n' +
-        'Email: ' + email + '\n' +
-        'Industry: ' + (industry || 'not specified') + '\n' +
-        'Plan: ' + PLANS[selectedPlan].name + ' ($' + PLANS[selectedPlan].price + '/mo)\n' +
-        'Status: Entered checkout, about to pay\n' +
-        'ACTION: Stand by - payment incoming!'
+      headers: { 'Title': 'CHECKOUT CLICK: ' + p.name + ' $' + p.price, 'Priority': 'urgent', 'Tags': 'money_with_wings' },
+      body: 'Someone clicked Start Free Pilot for ' + p.name + ' ($' + p.price + '/mo). Redirecting to signup.'
     }).catch(function(){});
 
-    // Move to step 2
-    populateStep2();
-    showStep(2);
-  })
-  .catch(function(err) {
-    // Still move to step 2 even if GHL fails — don't lose the sale
-    console.error('GHL error:', err);
-    populateStep2();
-    showStep(2);
+    // Show payment options for returning visitors
+    document.getElementById('payment-options').style.display = 'block';
+  }
 
-    // Alert on failure
-    fetch(NTFY_URGENT, {
+  function payWithPayPal(e) {
+    e.preventDefault();
+    var p = PLANS[selectedPlan];
+    // War room alert for PayPal payment
+    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
       method: 'POST',
-      headers: { 'Title': '[CRITICAL] CHECKOUT - GHL FAILED but customer proceeding', 'Priority': 'urgent', 'Tags': 'warning' },
-      body: 'GHL contact creation failed but checkout is proceeding.\nCompany: ' + company + '\nName: ' + first + '\nPhone: ' + phone + '\nEmail: ' + email + '\nPlan: ' + PLANS[selectedPlan].name + '\nError: ' + err.message
+      headers: { 'Title': 'PAYPAL PAYMENT: ' + p.name + ' $' + p.price, 'Priority': 'urgent', 'Tags': 'dollar,fire' },
+      body: 'Someone clicked PAY WITH PAYPAL for ' + p.name + ' ($' + p.price + '/mo)! Check PayPal NOW.'
     }).catch(function(){});
-  })
-  .finally(function() {
-    btn.disabled = false;
-    btn.textContent = 'Continue to payment';
-  });
-}
-
-function populateStep2() {
-  var p = PLANS[selectedPlan];
-  document.getElementById('summary-plan').textContent = p.name;
-  document.getElementById('summary-company').textContent = customerData.company;
-  document.getElementById('summary-total').textContent = '$' + p.price + '/mo';
-  selectPayMethod('paypal'); // Reset to paypal
-}
-
-// ── Step 2 → Step 3: Open Payment Window ──
-function processPayment() {
-  var p = PLANS[selectedPlan];
-
-  if (selectedPayMethod === 'paypal') {
-    // Open PayPal in new tab
     window.open(p.paypal, '_blank');
-    showStep(3);
-    document.getElementById('confirm-title').textContent = 'Complete your PayPal payment';
-    document.getElementById('confirm-desc').textContent = 'A PayPal window has opened for $' + p.price + '. Complete the payment, then come back here.';
-
-  } else if (selectedPayMethod === 'venmo') {
-    // Open Venmo
-    window.open('https://venmo.com/u/Wallace-Dobbs', '_blank');
-    showStep(3);
-    document.getElementById('confirm-title').textContent = 'Send $' + p.price + ' on Venmo';
-    document.getElementById('confirm-desc').textContent = 'Send $' + p.price + ' to @Wallace-Dobbs on Venmo with memo "' + customerData.company + ' - ' + p.name + '"';
-
-  } else if (selectedPayMethod === 'invoice') {
-    // Request invoice — send alert, skip to success
-    fetch(NTFY_URGENT, {
-      method: 'POST',
-      headers: {
-        'Title': '[CRITICAL] INVOICE REQUESTED: ' + customerData.company,
-        'Priority': 'urgent',
-        'Tags': 'money_with_wings,fire'
-      },
-      body: 'SEND INVOICE NOW!\n' +
-        'Company: ' + customerData.company + '\n' +
-        'Name: ' + customerData.first + ' ' + (customerData.last || '') + '\n' +
-        'Phone: ' + customerData.phone + '\n' +
-        'Email: ' + customerData.email + '\n' +
-        'Plan: ' + p.name + ' ($' + p.price + '/mo)\n' +
-        'ACTION: Text ' + customerData.phone + ' a payment link RIGHT NOW'
-    }).catch(function(){});
-
-    // Tag contact as invoice-requested
-    if (contactId) {
-      updateGHLTags(['invoice-requested']);
-    }
-
-    showSuccessState('invoice');
-    return;
   }
 
-  // War room alert
-  fetch(NTFY_URGENT, {
-    method: 'POST',
-    headers: {
-      'Title': '[CRITICAL] PAYMENT WINDOW OPENED: ' + customerData.company + ' $' + p.price,
-      'Priority': 'urgent',
-      'Tags': 'money_with_wings,fire'
-    },
-    body: selectedPayMethod.toUpperCase() + ' payment window opened!\n' +
-      'Company: ' + customerData.company + '\n' +
-      'Amount: $' + p.price + '/mo\n' +
-      'Phone: ' + customerData.phone + '\n' +
-      'ACTION: Check ' + selectedPayMethod + ' for incoming payment!'
-  }).catch(function(){});
-}
-
-function retryPayment() {
-  var p = PLANS[selectedPlan];
-  if (selectedPayMethod === 'paypal') window.open(p.paypal, '_blank');
-  else if (selectedPayMethod === 'venmo') window.open('https://venmo.com/u/Wallace-Dobbs', '_blank');
-}
-
-// ── Step 3: Confirm Payment ──
-function confirmPayment() {
-  var btn = document.getElementById('btn-confirm');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Confirming...';
-
-  var p = PLANS[selectedPlan];
-
-  // Tag contact as paid
-  if (contactId) {
-    updateGHLTags(['paid', 'paid-' + selectedPayMethod, 'customer']);
-  }
-
-  // CRITICAL war room alert — MONEY COLLECTED
-  fetch(NTFY_URGENT, {
-    method: 'POST',
-    headers: {
-      'Title': '[CRITICAL] PAYMENT CONFIRMED: $' + p.price + '/mo from ' + customerData.company,
-      'Priority': 'urgent',
-      'Tags': 'money_with_wings,fire,tada'
-    },
-    body: 'MONEY COLLECTED!\n' +
-      'Company: ' + customerData.company + '\n' +
-      'Name: ' + customerData.first + ' ' + (customerData.last || '') + '\n' +
-      'Phone: ' + customerData.phone + '\n' +
-      'Email: ' + customerData.email + '\n' +
-      'Industry: ' + (customerData.industry || 'not specified') + '\n' +
-      'Plan: ' + p.name + '\n' +
-      'Amount: $' + p.price + '/mo\n' +
-      'Payment: ' + selectedPayMethod + '\n' +
-      'ACTION: Text ' + customerData.phone + ' to welcome them and start onboarding!'
-  }).catch(function(){});
-
-  // Google Ads conversion
-  if (typeof gtag === 'function') {
-    gtag('event', 'conversion', { send_to: 'AW-17970510102/checkout_payment', value: p.price, currency: 'USD' });
-    gtag('event', 'purchase', { value: p.price, currency: 'USD', items: [{ name: p.name }] });
-  }
-
-  // Show success after brief delay for UX
-  setTimeout(function() { showSuccessState('paid'); }, 800);
-}
-
-function showSuccessState(type) {
-  document.querySelectorAll('.step').forEach(function(el) { el.classList.remove('active'); });
-  document.querySelector('.progress').style.display = 'none';
-
-  var success = document.getElementById('success-state');
-  success.style.display = 'block';
-
-  if (type === 'invoice') {
-    success.querySelector('h1').textContent = 'Invoice request sent.';
-    success.querySelector('h1 + p').textContent = 'Wallace will text you a payment link within the hour. Check your phone at ' + customerData.phone + '.';
-  }
-}
-
-// ── GHL Helper: Add Tags ──
-function updateGHLTags(newTags) {
-  if (!contactId) return;
-  fetch(GHL_API + contactId, {
-    method: 'PUT',
-    headers: {
-      'Authorization': 'Bearer ' + GHL_KEY,
-      'Version': '2021-07-28',
-      'Content-Type': 'application/json',
-      'User-Agent': 'TheCallTaker-Checkout/1.0'
-    },
-    body: JSON.stringify({ tags: newTags })
-  }).catch(function(err) { console.error('GHL tag update error:', err); });
-}
-
-// ── Auto-select plan from URL ──
-var urlParams = new URLSearchParams(window.location.search);
-var urlPlan = urlParams.get('plan');
-if (urlPlan && PLANS[urlPlan]) selectPlan(urlPlan);
-
-// Keyboard support for plan selection
-document.querySelectorAll('.plan').forEach(function(el) {
-  el.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
-  });
-});
+  // Auto-select plan from URL param
+  var params = new URLSearchParams(window.location.search);
+  var urlPlan = params.get('plan');
+  if (urlPlan && PLANS[urlPlan]) selectPlan(urlPlan);
+  // Show payment options if returning from signup
+  if (params.get('pay') === '1') document.getElementById('payment-options').style.display = 'block';
 </script>
-<script src="tct-tracking.js" defer></script>
+
 </body>
 </html>

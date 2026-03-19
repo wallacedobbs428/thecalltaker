@@ -125,8 +125,6 @@
   </style>
 <link rel="stylesheet" href="/shared/ui-dark.css">
 <script src="/shared/ab-split.js"></script>
-<script src="/tct-tracking.js" defer></script>
-    <link rel="stylesheet" href="/shared/mobile-guard.css">
 </head>
 <body>
 
@@ -273,10 +271,10 @@
           </div>
         </div>
 
-        <!-- Pro -->
-        <div class="plan-card" onclick="selectPlan('pro')">
+        <!-- Premium -->
+        <div class="plan-card" onclick="selectPlan('premium')">
           <div class="plan-badge">&nbsp;</div>
-          <div class="plan-name">Pro</div>
+          <div class="plan-name">Premium</div>
           <div class="plan-desc">White-glove, fully managed</div>
           <div class="plan-price">$997<span>/mo</span></div>
           <div class="trial-badge">14-day free pilot</div>
@@ -420,7 +418,7 @@
     var plans = {
       afterhours: { name: 'After-Hours', monthly: 97, desc: 'Evenings, weekends & holidays' },
       full247: { name: 'Full 24/7', monthly: 497, desc: 'Every call, every hour, every day' },
-      pro: { name: 'Pro', monthly: 997, desc: 'White-glove, fully managed' }
+      premium: { name: 'Pro', monthly: 997, desc: 'White-glove, fully managed' }
     };
 
     function goStep(n) {
@@ -507,7 +505,7 @@
         var ghlRes = await fetch('https://services.leadconnectorhq.com/contacts/', {
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+            'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY',
             'Version': '2021-07-28',
             'Content-Type': 'application/json'
           },
@@ -524,7 +522,7 @@
                 fetch('https://services.leadconnectorhq.com/contacts/' + contactId + '/notes', {
                   method: 'POST',
                   headers: {
-                    'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+                    'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY',
                     'Version': '2021-07-28',
                     'Content-Type': 'application/json'
                   },
