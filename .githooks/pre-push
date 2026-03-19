@@ -1,0 +1,26 @@
+#!/bin/bash
+# THE CALL TAKER — Pre-push Visual QA
+# Catches broken pages before they hit the live site.
+# To bypass in emergencies: git push --no-verify
+
+echo ""
+echo "Running visual QA before push..."
+echo ""
+
+SCRIPT_DIR="$(git rev-parse --show-toplevel)/website/scripts/visual-qa.py"
+
+if [ -f "$SCRIPT_DIR" ]; then
+    python3 "$SCRIPT_DIR"
+    EXIT_CODE=$?
+    if [ $EXIT_CODE -ne 0 ]; then
+        echo ""
+        echo "PUSH BLOCKED — fix the errors above first"
+        echo "The live site will not receive broken pages."
+        echo "To bypass: git push --no-verify"
+        exit 1
+    fi
+    echo "QA passed — pushing to live site"
+else
+    echo "Warning: visual-qa.py not found at $SCRIPT_DIR"
+    echo "Proceeding with push..."
+fi

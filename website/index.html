@@ -31,93 +31,32 @@
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>@font-face{font-family:'Inter';font-style:normal;font-weight:400 900;font-display:optional;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style>
 
-<!-- Schema.org — SoftwareApplication + Service + FAQ -->
+<!-- Schema.org -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "SoftwareApplication",
-      "name": "The Call Taker",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "AI receptionist that answers calls 24/7, books appointments automatically, and never misses a lead. Built for HVAC, roofing, plumbing, dental, locksmith, and towing businesses.",
-      "url": "https://thecalltaker.com",
-      "telephone": "+16157845747",
-      "offers": {
-        "@type": "AggregateOffer",
-        "lowPrice": "19",
-        "highPrice": "997",
-        "priceCurrency": "USD",
-        "offerCount": "4",
-        "priceSpecification": {
-          "@type": "UnitPriceSpecification",
-          "price": "97",
-          "priceCurrency": "USD",
-          "unitText": "MONTH"
-        }
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "reviewCount": "47"
-      }
-    },
-    {
-      "@type": "Service",
-      "name": "AI Receptionist Service",
-      "serviceType": "AI Phone Answering Service",
-      "provider": {
-        "@type": "Organization",
-        "name": "The Call Taker",
-        "url": "https://thecalltaker.com",
-        "telephone": "+16157845747"
-      },
-      "areaServed": {
-        "@type": "Country",
-        "name": "United States"
-      },
-      "description": "24/7 AI receptionist for small businesses. Answers calls, books appointments, and texts summaries automatically.",
-      "offers": {
-        "@type": "Offer",
-        "price": "97",
-        "priceCurrency": "USD",
-        "priceSpecification": {
-          "@type": "UnitPriceSpecification",
-          "unitText": "MONTH"
-        }
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Will my customers know it's not a real person?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Most don't. Call (615) 784-5747 right now and judge for yourself."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How long does setup take?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "5 minutes. We do it with you on a quick call."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is there really a free 14-day trial?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. No card required. If Jessica doesn't book you at least one job in 14 days, you pay nothing."
-          }
-        }
-      ]
-    }
-  ]
+  "@type": "SoftwareApplication",
+  "name": "The Call Taker",
+  "description": "AI receptionist for service businesses. Answers every call 24/7, books appointments, handles emergencies.",
+  "url": "https://thecalltaker.com",
+  "applicationCategory": "BusinessApplication",
+  "offers": [
+    {"@type": "Offer", "name": "After-Hours", "price": "97", "priceCurrency": "USD"},
+    {"@type": "Offer", "name": "Full 24/7", "price": "297", "priceCurrency": "USD"},
+    {"@type": "Offer", "name": "Premium", "price": "497", "priceCurrency": "USD"}
+  ],
+  "provider": {
+    "@type": "Organization",
+    "name": "The Call Taker",
+    "url": "https://thecalltaker.com",
+    "telephone": "+16157845747"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "23",
+    "bestRating": "5"
+  }
 }
 </script>
 
@@ -163,7 +102,11 @@
   --green-glow: rgba(0,220,130,0.25);
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -172,8 +115,9 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   font-size: 17px;
-  position: relative;
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -209,6 +153,7 @@ a { color: inherit; text-decoration: none; }
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
   transition: background .4s, border-color .4s, box-shadow .4s;
+  transform: translateZ(0);
 }
 .site-header.scrolled {
   background: rgba(0,0,0,.92);
@@ -537,6 +482,7 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   align-items: center;
   min-height: 480px;
+  overflow: hidden;
 }
 .phone-device {
   position: relative;
@@ -670,15 +616,15 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 0;
 }
 .hero-float-1 {
-  top: 40px; right: 0;
+  top: 40px; right: -20px;
   animation-delay: 1s;
 }
 .hero-float-2 {
-  bottom: 80px; left: 0;
+  bottom: 80px; left: -30px;
   animation-delay: 2s;
 }
 .hero-float-3 {
-  top: 50%; right: 0;
+  top: 50%; right: -40px;
   animation-delay: 3s;
 }
 @keyframes floatIn {
@@ -725,14 +671,13 @@ a { color: inherit; text-decoration: none; }
   .hero-float { display: none; }
 }
 @media (max-width: 768px) {
-  html, body { overflow-x: hidden; }
   .hero { padding: 110px 0 56px; text-align: center; }
   .hero h1 { font-size: clamp(1.75rem, 7vw, 2.2rem); }
   .hero .subtitle { margin-left: auto; margin-right: auto; font-size: 1.05rem; max-width: 100%; }
   .hero-badge { font-size: .72rem; padding: 6px 14px; max-width: 100%; text-align: center; justify-content: center; }
   .hero-actions { justify-content: center; flex-direction: column; align-items: stretch; width: 100%; }
   .hero-actions .btn { text-align: center; min-height: 52px; font-size: 1.05rem; width: 100%; box-sizing: border-box; }
-  .hero-proof { justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .hero-proof { justify-content: center; gap: 16px; flex-wrap: wrap; text-align: center; }
   .trust-row { justify-content: center; gap: 12px; flex-wrap: wrap; }
   .trust-item { font-size: .78rem; }
   .hero .dc { max-width: 100%; margin-left: auto; margin-right: auto; }
@@ -741,88 +686,7 @@ a { color: inherit; text-decoration: none; }
   .nav-links, .header-cta { display: none; }
   .subtitle-desktop { display: none; }
   .subtitle-mobile { display: block; }
-}
-
-/* ═══ V2 ENHANCEMENTS — March 18, 2026 ═══ */
-.status-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(0,220,130,0.1);
-  border: 1px solid rgba(0,220,130,0.3);
-  border-radius: 100px; padding: 6px 14px;
-  font-size: 11px; font-weight: 700; color: #00dc82;
-  letter-spacing: 0.08em; margin-bottom: 20px;
-}
-.status-dot {
-  width: 6px; height: 6px; background: #00dc82;
-  border-radius: 50%; animation: pulse-dot 2s infinite;
-}
-@keyframes pulse-dot {
-  0%,100% { opacity:1; transform:scale(1); }
-  50% { opacity:0.4; transform:scale(1.8); }
-}
-.coord-readout {
-  font-size: 9px; color: #2a2a2a; letter-spacing: 0.12em;
-  font-family: 'Courier New', monospace; text-align: center;
-  margin-top: 8px;
-}
-.callout {
-  position: absolute;
-  background: rgba(255,255,255,0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0,220,130,0.2);
-  border-radius: 12px; padding: 10px 14px;
-  display: flex; align-items: center; gap: 10px;
-  will-change: transform; z-index: 10;
-  pointer-events: none;
-}
-.callout-title { font-size: 12px; font-weight: 700; color: #fff; }
-.callout-sub { font-size: 10px; color: #555; }
-.callout-1 { top: 20px; left: -60px; animation: cfloat1 4s ease-in-out infinite; }
-.callout-2 { bottom: 100px; right: -60px; animation: cfloat2 4s ease-in-out infinite 1.3s; }
-.callout-3 { bottom: 20px; left: -40px; animation: cfloat3 4s ease-in-out infinite 2.6s; }
-@keyframes cfloat1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-@keyframes cfloat2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-@keyframes cfloat3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-@media(max-width:768px) {
-  .callout { display: none; }
-  .corner { display: none; }
-}
-
-/* Scan corner brackets */
-.hero-phone { position: relative; }
-.corner {
-  position: absolute; width: 18px; height: 18px;
-  border-color: #00dc82; border-style: solid;
-  filter: drop-shadow(0 0 6px #00dc82);
-  pointer-events: none; z-index: 5;
-}
-.corner.tl { top:-2px; left:-2px; border-width:2px 0 0 2px; }
-.corner.tr { top:-2px; right:-2px; border-width:2px 2px 0 0; }
-.corner.bl { bottom:-2px; left:-2px; border-width:0 0 2px 2px; }
-.corner.br { bottom:-2px; right:-2px; border-width:0 2px 2px 0; }
-
-/* HUD card corners — additive class */
-.hud-card { position: relative; }
-.hud-card::before, .hud-card::after {
-  content:''; position:absolute;
-  width:14px; height:14px;
-  border-color: rgba(0,220,130,0.3); border-style:solid;
-  pointer-events: none;
-  transition: border-color 0.3s;
-}
-.hud-card::before { top:-1px; left:-1px; border-width:1px 0 0 1px; }
-.hud-card::after { bottom:-1px; right:-1px; border-width:0 1px 1px 0; }
-.hud-card:hover::before, .hud-card:hover::after { border-color: #00dc82; }
-
-/* Circuit background — position:absolute for iOS Safari compat */
-.circuit-bg {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.15;
+  .container { padding: 0 16px; }
 }
 
 </style>
@@ -876,25 +740,30 @@ a { color: inherit; text-decoration: none; }
 <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
 <link rel="stylesheet" href="/shared/ui-dark.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="/shared/ui-dark.css"></noscript>
+<link rel="stylesheet" href="/shared/premium.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="/shared/premium.css"></noscript>
 <link rel="stylesheet" href="/shared/demo-console.css">
 <script src="/shared/ab-split.js" defer></script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
-
-<!-- V2: Circuit line background — CSS only, no JS -->
-<div class="circuit-bg" aria-hidden="true">
-  <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <pattern id="circuit" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
-        <path d="M 10 60 L 50 60 L 50 20 L 110 20" stroke="rgba(0,220,130,0.08)" fill="none" stroke-width="1"/>
-        <path d="M 60 110 L 60 70 L 100 70 L 100 10" stroke="rgba(0,220,130,0.05)" fill="none" stroke-width="1"/>
-        <circle cx="50" cy="60" r="2" fill="rgba(0,220,130,0.2)"/>
-        <circle cx="100" cy="70" r="2" fill="rgba(0,220,130,0.2)"/>
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#circuit)"/>
-  </svg>
-</div>
 
 <!-- SVG Sprite for ticker icons -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -949,15 +818,15 @@ a { color: inherit; text-decoration: none; }
   <div class="container">
     <div class="hero-grid">
       <div class="fade-up">
-        <div class="status-badge">
-          <span class="status-dot"></span>
-          AI AGENT STATUS: ACTIVE &middot; JESSICA ONLINE
+        <div class="hero-badge">
+          <svg viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+          Live right now &mdash; answering calls 24/7
         </div>
         <h1>Every Missed Call Is a Customer You'll Never <span class="no-break-word">Get Back.</span></h1>
         <p class="subtitle subtitle-desktop">The AI receptionist that answers instantly, books the job, and texts you the summary. Custom-trained for your industry. Live in 5 minutes.</p>
         <p class="subtitle subtitle-mobile">AI answers your calls, books jobs, texts you the details. Any industry. 24/7.</p>
         <div class="hero-actions">
-          <a href="#demo" class="btn btn-primary" id="heroPrimaryCta">Hear the AI in 15 Seconds &rarr;</a>
+          <a href="/demo-live.html" class="btn btn-primary" id="heroPrimaryCta">Hear Jessica Answer YOUR Calls &rarr;</a>
           <a href="/book.html" class="btn btn-outline">Book a 10-Min Demo</a>
         </div>
         <div class="hero-proof reveal blur-in">
@@ -1057,28 +926,6 @@ a { color: inherit; text-decoration: none; }
             </div>
           </div>
         </div>
-        <!-- V2: Floating callouts -->
-        <div class="callout callout-1">
-          <span>&#10003;</span>
-          <div><div class="callout-title">Answered in 1 ring</div>
-          <div class="callout-sub">2:17 AM &middot; Saturday</div></div>
-        </div>
-        <div class="callout callout-2">
-          <span style="font-size:16px">&#128197;</span>
-          <div><div class="callout-title">Appointment booked</div>
-          <div class="callout-sub">8AM Sunday &middot; Confirmed</div></div>
-        </div>
-        <div class="callout callout-3">
-          <span style="font-size:16px">&#128176;</span>
-          <div><div class="callout-title">$350 job saved</div>
-          <div class="callout-sub">Would've gone to voicemail</div></div>
-        </div>
-        <!-- V2: Scan corner brackets -->
-        <div class="corner tl"></div>
-        <div class="corner tr"></div>
-        <div class="corner bl"></div>
-        <div class="corner br"></div>
-        <div class="coord-readout">JESSICA &middot; CALL-TAKER-v2.1 &middot; LIVE</div>
         <div class="hero-float hero-float-1">
           <div class="float-dot" style="background:var(--green)"></div>
           3 calls answered this hour
@@ -1309,42 +1156,42 @@ a { color: inherit; text-decoration: none; }
       <h2 class="section-title">Not Just an Answering Service. An AI Built for Your Business.</h2>
     </div>
     <div class="features-grid">
-      <div class="feature-card hud-card fade-up">
+      <div class="feature-card fade-up">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <h3>Answers in Under 1 Second</h3>
         <p>No hold music, no "press 1." Your AI picks up instantly, 24 hours a day, 365 days a year.</p>
       </div>
-      <div class="feature-card hud-card fade-up" style="transition-delay:.05s">
+      <div class="feature-card fade-up" style="transition-delay:.05s">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 00-3 3v7a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
         </div>
         <h3>Sounds Like a Real Person</h3>
         <p>Natural, human-sounding voice. Callers can&rsquo;t tell it&rsquo;s AI. Call our demo line and hear for yourself.</p>
       </div>
-      <div class="feature-card hud-card fade-up" style="transition-delay:.1s">
+      <div class="feature-card fade-up" style="transition-delay:.1s">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         </div>
         <h3>Books Jobs Automatically</h3>
         <p>Captures name, number, address, and issue. Books appointments straight to your calendar.</p>
       </div>
-      <div class="feature-card hud-card fade-up" style="transition-delay:.15s">
+      <div class="feature-card fade-up" style="transition-delay:.15s">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         </div>
         <h3>Texts You Every Lead</h3>
         <p>You get a text the instant a new lead calls. Name, number, what they need &mdash; all in one message.</p>
       </div>
-      <div class="feature-card hud-card fade-up" style="transition-delay:.2s">
+      <div class="feature-card fade-up" style="transition-delay:.2s">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9"/></svg>
         </div>
         <h3>Custom to Your Industry</h3>
         <p>We train the AI on your specific business &mdash; your services, pricing, FAQs, and tone of voice.</p>
       </div>
-      <div class="feature-card hud-card fade-up" style="transition-delay:.25s">
+      <div class="feature-card fade-up" style="transition-delay:.25s">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
@@ -1360,7 +1207,7 @@ a { color: inherit; text-decoration: none; }
   <div class="container">
     <div class="section-header fade-up">
       <span class="section-label">The Difference</span>
-      <h2 class="section-title">Tuesday Night. 1:47 AM. Your Phone Rings.</h2>
+      <h2 class="section-title">Before vs. After The Call Taker</h2>
     </div>
     <div class="ba-compare fade-up">
       <div class="ba-side ba-before">
@@ -1368,14 +1215,56 @@ a { color: inherit; text-decoration: none; }
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           Without
         </div>
-        <p style="font-size:.92rem;color:rgba(255,255,255,.7);line-height:1.7;margin:16px 0 0;">Ring. Ring. Ring. Voicemail. The caller hangs up, Googles &ldquo;locksmith near me,&rdquo; and calls the next number. You wake up to a missed call notification and no way to get them back. <strong style="color:#ef4444;">That was a $450 job.</strong></p>
+        <ul class="ba-items">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Calls go to voicemail after hours
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Customers call your competitor instead
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            No bookings while you&rsquo;re on a job
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Paying $1,200+/mo for a human answering service
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Missing 5&ndash;10 calls per week
+          </li>
+        </ul>
       </div>
       <div class="ba-side ba-after">
         <div class="ba-tag-pill">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
           With The Call Taker
         </div>
-        <p style="font-size:.92rem;color:rgba(255,255,255,.7);line-height:1.7;margin:16px 0 0;">Ring. <em>&ldquo;Hi, thanks for calling! This is Jessica. I can help &mdash; what&rsquo;s your address?&rdquo;</em> The caller books an appointment. You get a text with their name, number, and issue. You&rsquo;re on the way by 2 AM. <strong style="color:#10b981;">That&rsquo;s a $450 job in your pocket.</strong></p>
+        <ul class="ba-items">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Every call answered in under 2 seconds
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            AI books the job and texts you the details
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Customers think they&rsquo;re talking to your front desk
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Starting at $97/mo &mdash; less than one service call
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Zero missed calls. Zero missed revenue.
+          </li>
+        </ul>
       </div>
     </div>
     <div class="ba-metrics fade-up">
@@ -1835,7 +1724,7 @@ a { color: inherit; text-decoration: none; }
   </div>
   <div class="testimonial-scroll">
     <div class="testimonial-track" id="testimonialTrack">
-      <div class="testimonial-card hud-card">
+      <div class="testimonial-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testimonial-quote">&ldquo;Signed up for the pilot on Monday, caught 4 missed calls by Friday. Two of them turned into jobs. This thing paid for itself before the trial was over.&rdquo;</p>
         <div class="testimonial-result">4 calls caught in first week</div>
@@ -1847,7 +1736,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <div class="testimonial-card hud-card">
+      <div class="testimonial-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;<span style="color:var(--border)">&#9733;</span></div>
         <p class="testimonial-quote">&ldquo;Setup took a little longer than I expected &mdash; about a day to get call forwarding dialed in with my carrier. But after that, it&rsquo;s been rock solid. My patients don&rsquo;t know it&rsquo;s not a real person.&rdquo;</p>
         <div class="testimonial-result">Replaced $900/mo answering service</div>
@@ -1859,7 +1748,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <div class="testimonial-card hud-card">
+      <div class="testimonial-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testimonial-quote">&ldquo;I was losing 2&ndash;3 calls a night to voicemail. Now every single one gets answered. A customer called at 11 PM with a busted pipe &mdash; $800 emergency job I would&rsquo;ve missed.&rdquo;</p>
         <div class="testimonial-result">+$3,200/mo in after-hours jobs</div>
@@ -1871,7 +1760,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <div class="testimonial-card hud-card">
+      <div class="testimonial-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testimonial-quote">&ldquo;Tuesday night, 1:47 AM. Phone buzzes &mdash; text from The Call Taker. Emergency lockout, confirmed $175 rate. I was on the way in 10 minutes. That call alone covered the month.&rdquo;</p>
         <div class="testimonial-result">+65% emergency revenue</div>
@@ -1883,7 +1772,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <div class="testimonial-card hud-card">
+      <div class="testimonial-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;<span style="color:var(--border)">&#9733;</span></div>
         <p class="testimonial-quote">&ldquo;Wish it could handle Spanish-speaking callers better &mdash; that&rsquo;s my only gripe. For English calls, though, it&rsquo;s better than the answering service I was paying $1,400/month for. Way better.&rdquo;</p>
         <div class="testimonial-result">Saves $1,100/mo vs old service</div>
@@ -1895,7 +1784,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <div class="testimonial-card hud-card">
+      <div class="testimonial-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testimonial-quote">&ldquo;I&rsquo;m a solo operator. Can&rsquo;t answer the phone when I&rsquo;m on a roof. Last month The Call Taker booked 11 jobs I would&rsquo;ve missed. Do the math on that.&rdquo;</p>
         <div class="testimonial-result">11 jobs booked in one month</div>
@@ -2015,139 +1904,93 @@ a { color: inherit; text-decoration: none; }
   </div>
 </div>
 
-<!-- ===== PRICING (4-tier decoy layout from b6c74611 + urgency bar) ===== -->
-<section class="section" id="pricing" style="border-top: 1px solid rgba(255,255,255,.06);">
+<!-- ===== PRICING ===== -->
+<section class="section" id="pricing">
   <div class="container">
-    <div class="section-header reveal scale-in" style="text-align:center;margin-bottom:16px;">
-      <div id="urgency-badge" style="background:var(--accent,#00dc82);color:#0a0a0a;display:inline-block;padding:8px 24px;border-radius:8px;font-size:13px;font-weight:800;letter-spacing:0.5px;margin-bottom:20px;">2 founding spots left &middot; Someone in your industry just claimed one &middot; Closes Friday 11:59 PM <span id="pricing-countdown" style="font-variant-numeric:tabular-nums;"></span></div>
-      <span class="section-label">Pricing</span>
-      <h2 class="section-title">Simple, flat-rate pricing</h2>
-      <p class="section-subtitle">No per-minute fees. No contracts. Cancel anytime.</p>
+    <div class="section-header reveal scale-in">
+      <span class="section-label">Simple Pricing</span>
+      <h2 class="section-title">Less Than the Cost of One Missed Job</h2>
+      <p class="section-subtitle">Every plan starts with a free 14-day pilot. No credit card. No contracts. See it work before you pay a dime.</p>
     </div>
-
-    <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1060px;margin:0 auto;">
-
-      <!-- DECOY: Starter Saver $19 -->
-      <div class="pricing-card hud-card" style="opacity:0.6;">
-        <div class="pricing-name" style="font-size:16px;">Starter Saver</div>
-        <p class="pricing-desc">Basic call log only</p>
-        <div class="pricing-price" style="font-size:36px;">$19<span>/mo</span></div>
-        <p style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:12px;">No setup fee</p>
-        <div style="height:1px;background:rgba(255,255,255,.06);margin:0 0 16px;"></div>
-        <ul class="pricing-features" style="list-style:none;padding:0;">
-          <li style="padding:5px 0;font-size:13px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:8px;"><span class="check" style="opacity:.4;">&#10003;</span> Missed call log</li>
-          <li style="padding:5px 0;font-size:13px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:8px;"><span class="check" style="opacity:.4;">&#10003;</span> Daily email summary</li>
-          <li style="padding:5px 0;font-size:13px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:8px;"><span class="check" style="opacity:.4;">&#10003;</span> Business hours only</li>
-        </ul>
-        <a href="pay.html" class="btn btn-outline" style="width:100%;opacity:.7;margin-top:auto;">Get Started</a>
-      </div>
-
-      <!-- AFTER-HOURS $97 — MOST POPULAR -->
-      <div class="pricing-card hud-card featured reveal scale-in">
-        <div class="pricing-badge" style="background:var(--accent,#00dc82);color:#0a0a0a;">Most Popular</div>
+    <div class="pricing-grid">
+      <div class="pricing-card reveal fade-up">
         <div class="pricing-name">After-Hours</div>
-        <p class="pricing-desc">Nights, weekends, holidays</p>
         <div class="pricing-price">$97<span>/mo</span></div>
-        <p style="font-size:12px;line-height:1.5;margin-bottom:12px;"><s style="color:rgba(255,255,255,.35);">$500 setup</s> <span style="color:var(--accent,#00dc82);font-weight:700;">3 payments of $167</span></p>
-        <div style="height:1px;background:rgba(255,255,255,.06);margin:0 0 16px;"></div>
-        <ul class="pricing-features" style="list-style:none;padding:0;">
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> AI receptionist after hours</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> Appointment booking</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> Text summaries after every call</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> Emergency detection</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> Same-day setup</li>
+        <p class="pricing-desc">Evenings, weekends &amp; holidays</p>
+        <p class="pricing-outcome">One missed call pays for the whole month.</p>
+        <ul class="pricing-features">
+          <li><span class="check">&#10003;</span> AI answers after business hours</li>
+          <li><span class="check">&#10003;</span> Books appointments automatically</li>
+          <li><span class="check">&#10003;</span> Texts you every lead instantly</li>
+          <li><span class="check">&#10003;</span> Handles emergency calls</li>
+          <li><span class="check">&#10003;</span> Custom-trained on your business</li>
         </ul>
-        <a href="pay.html" class="btn btn-primary" style="width:100%;margin-top:auto;">Start for $264</a>
-        <p style="text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,.45);">No PayPal account needed &middot; Pay by card &middot; 90 seconds</p>
+        <a href="/pilot/" class="btn btn-outline" style="width:100%">Start Free 14-Day Pilot</a>
+        <p class="pricing-trial">No credit card required</p>
       </div>
-
-      <!-- FULL 24/7 $497 — RECOMMENDED -->
-      <div class="pricing-card hud-card featured reveal scale-in" style="border-color:var(--accent,#00dc82);transform:scale(1.03);box-shadow:0 0 60px rgba(0,220,130,0.1);" data-reveal-delay="100">
-        <div class="pricing-badge" style="background:var(--accent,#00dc82);color:#0a0a0a;">Recommended</div>
+      <div class="pricing-card featured reveal scale-in" data-reveal-delay="100">
+        <div class="pricing-badge">Most Popular</div>
         <div class="pricing-name">Full 24/7</div>
-        <p class="pricing-desc">Every call, every hour, every day</p>
         <div class="pricing-price">$497<span>/mo</span></div>
-        <p style="font-size:12px;line-height:1.5;margin-bottom:12px;"><s style="color:rgba(255,255,255,.35);">$500 setup</s> <span style="color:var(--accent,#00dc82);font-weight:700;">3 payments of $167</span></p>
-        <div style="height:1px;background:rgba(255,255,255,.06);margin:0 0 16px;"></div>
-        <ul class="pricing-features" style="list-style:none;padding:0;">
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> AI receptionist 24/7/365</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> Appointment booking + CRM sync</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> Text summaries after every call</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> Emergency detection + live transfer</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> Custom voice + intake questions</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:var(--accent,#00dc82);">&#10003;</span> 48-hour setup</li>
+        <p class="pricing-desc">Every call, every hour, every day</p>
+        <p class="pricing-outcome">Owners save $2K&ndash;$10K/mo in missed revenue.</p>
+        <ul class="pricing-features">
+          <li><span class="check">&#10003;</span> Everything in After-Hours</li>
+          <li><span class="check">&#10003;</span> Answers during business hours too</li>
+          <li><span class="check">&#10003;</span> Overflow call handling</li>
+          <li><span class="check">&#10003;</span> Priority support</li>
+          <li><span class="check">&#10003;</span> Monthly performance reports</li>
         </ul>
-        <a href="pay.html" class="btn btn-primary" style="width:100%;margin-top:auto;">Start for $664</a>
-        <p style="text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,.45);">No PayPal account needed &middot; Pay by card &middot; 90 seconds</p>
+        <a href="/pilot/" class="btn btn-primary" style="width:100%">Start Free 14-Day Pilot</a>
+        <p class="pricing-trial">No credit card required</p>
       </div>
-
-      <!-- PRO $997 — WHITE GLOVE -->
-      <div class="pricing-card hud-card reveal fade-up" style="border-color:rgba(245,158,11,.27);" data-reveal-delay="200">
-        <div class="pricing-badge" style="background:#f59e0b;color:#0a0a0a;">White Glove</div>
-        <div class="pricing-name">Pro</div>
-        <p class="pricing-desc">Fully managed, custom everything</p>
-        <div class="pricing-price">$997<span>/mo</span></div>
-        <p style="font-size:12px;line-height:1.5;margin-bottom:12px;"><s style="color:rgba(255,255,255,.35);">$500 setup</s> <span style="color:#f59e0b;font-weight:700;">3 payments of $167</span></p>
-        <div style="height:1px;background:rgba(255,255,255,.06);margin:0 0 16px;"></div>
-        <ul class="pricing-features" style="list-style:none;padding:0;">
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:#f59e0b;">&#10003;</span> Everything in Full 24/7</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:#f59e0b;">&#10003;</span> Smart call routing rules</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:#f59e0b;">&#10003;</span> Custom intake workflows</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:#f59e0b;">&#10003;</span> Dedicated account manager</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:#f59e0b;">&#10003;</span> Monthly performance reports</li>
-          <li style="padding:5px 0;font-size:13px;display:flex;align-items:center;gap:8px;"><span class="check" style="color:#f59e0b;">&#10003;</span> Priority support (1-hour SLA)</li>
+      <div class="pricing-card reveal fade-up" data-reveal-delay="200">
+        <div class="pricing-name">Premium</div>
+        <div class="pricing-price">$497<span>/mo</span></div>
+        <p class="pricing-desc">White-glove, fully managed</p>
+        <p class="pricing-outcome">Replace your $1,400/mo answering service.</p>
+        <ul class="pricing-features">
+          <li><span class="check">&#10003;</span> Everything in 24/7</li>
+          <li><span class="check">&#10003;</span> Custom voice &amp; scripts</li>
+          <li><span class="check">&#10003;</span> CRM integration</li>
+          <li><span class="check">&#10003;</span> Dedicated account manager</li>
+          <li><span class="check">&#10003;</span> Quarterly strategy calls</li>
         </ul>
-        <a href="pay.html" class="btn btn-outline" style="width:100%;margin-top:auto;background:linear-gradient(135deg,#f59e0b,#d97706);color:#0a0a0a;border:none;">Start for $1,164</a>
-        <p style="text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,.45);">No PayPal account needed &middot; Pay by card &middot; 90 seconds</p>
+        <a href="/pilot/" class="btn btn-outline" style="width:100%">Start Free 14-Day Pilot</a>
+        <p class="pricing-trial">No credit card required</p>
       </div>
-
     </div>
+    <div class="pricing-reassurance fade-up">
+      <span>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+        Works with your current phone number
+      </span>
+      <span>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+        Connects to your calendar
+      </span>
+      <span>
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+        Cancel anytime with one text
+      </span>
+    </div>
+  </div>
+</section>
 
-    <p style="text-align:center;font-size:13px;color:rgba(255,255,255,.35);margin-top:20px;">14-day money-back guarantee. Setup fee split into 3 monthly payments. No contracts.</p>
-    <p style="text-align:center;margin-top:16px;font-size:13px;color:rgba(255,255,255,.35);">See real ROI from businesses like yours. <a href="/case-studies/" style="color:var(--accent,#00dc82);text-decoration:underline;text-underline-offset:2px;font-weight:600;">Read the case studies &rarr;</a></p>
-
-    <!-- Mobile: reorder cards -->
-    <style>
-      @media(max-width:900px){#pricing .reveal[style*="grid"]{grid-template-columns:repeat(2,1fr)!important;}}
-      @media(max-width:600px){#pricing .reveal[style*="grid"]{grid-template-columns:1fr!important;}#pricing .pricing-card.featured[style*="scale"]{transform:none!important;order:-1;}}
-    </style>
-
-    <!-- Countdown timer — always targets next Friday 11:59 PM CT -->
-    <script>
-    (function(){
-      var el=document.getElementById('pricing-countdown');
-      var badge=document.getElementById('urgency-badge');
-      function getNextFriday(){
-        var now=new Date();
-        var ct=new Date(now.toLocaleString('en-US',{timeZone:'America/Chicago'}));
-        var day=ct.getDay();
-        var daysUntilFri=(5-day+7)%7;
-        if(daysUntilFri===0){
-          var endOfToday=new Date(ct);
-          endOfToday.setHours(23,59,0,0);
-          if(ct<endOfToday)daysUntilFri=0;
-          else daysUntilFri=7;
-        }
-        var fri=new Date(ct);
-        fri.setDate(fri.getDate()+daysUntilFri);
-        fri.setHours(23,59,0,0);
-        var offset=now.getTime()-ct.getTime();
-        return fri.getTime()+offset;
-      }
-      var deadline=getNextFriday();
-      function update(){
-        var now=Date.now();
-        var diff=deadline-now;
-        if(diff<=0){deadline=getNextFriday();diff=deadline-now;}
-        var d=Math.floor(diff/86400000);
-        var h=Math.floor((diff%86400000)/3600000);
-        var m=Math.floor((diff%3600000)/60000);
-        var s=Math.floor((diff%60000)/1000);
-        if(el)el.textContent=d+'d '+h+'h '+m+'m '+s+'s';
-      }
-      update();setInterval(update,1000);
-    })();
-    </script>
+<!-- ===== TRUST BAR ===== -->
+<section class="trust-bar" aria-label="Works with your tools">
+  <p class="trust-bar-label">Works With The Tools You Already Use</p>
+  <div class="trust-bar-wrap">
+    <div class="trust-bar-track" id="trustTrack">
+      <div class="trust-logo-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 014 10 15 15 0 01-4 10 15 15 0 01-4-10A15 15 0 0112 2z"/></svg> Google Business</div>
+      <div class="trust-logo-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Google Calendar</div>
+      <div class="trust-logo-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg> Any Phone System</div>
+      <div class="trust-logo-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg> Stripe Payments</div>
+      <div class="trust-logo-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email &amp; SMS</div>
+      <div class="trust-logo-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Live Chat</div>
+      <div class="trust-logo-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Your CRM</div>
+      <div class="trust-logo-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> Custom Integrations</div>
+    </div>
   </div>
 </section>
 
@@ -3305,103 +3148,6 @@ window.__tctUILoaded = true;
 </script>
 
 <script src="/shared/ui.js" defer></script>
-
-<!-- ===== LENIS SMOOTH SCROLL + SCROLL-TRIGGERED REVEALS ===== -->
-<script>
-(function(){
-  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-
-  // Load Lenis
-  var ls=document.createElement('script');
-  ls.src='https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js';
-  ls.onload=function(){
-    var lenis=new Lenis({
-      duration:1.2,
-      easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},
-      smoothWheel:true,
-      touchMultiplier:1.5
-    });
-    function raf(time){lenis.raf(time);requestAnimationFrame(raf)}
-    requestAnimationFrame(raf);
-
-    // Sync Lenis with GSAP ScrollTrigger if available
-    if(window.gsap&&window.ScrollTrigger){
-      lenis.on('scroll',ScrollTrigger.update);
-      gsap.ticker.add(function(time){lenis.raf(time*1000)});
-      gsap.ticker.lagSmoothing(0);
-    }
-  };
-  document.head.appendChild(ls);
-
-  // Scroll-triggered section title + label reveals
-  if('IntersectionObserver' in window){
-    var titleObs=new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          titleObs.unobserve(entry.target);
-        }
-      });
-    },{threshold:0.2,rootMargin:'0px 0px -60px 0px'});
-
-    document.querySelectorAll('.section-title,.section-label').forEach(function(el){
-      titleObs.observe(el);
-    });
-
-    // Reveal-scale items (step cards etc)
-    var scaleObs=new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          scaleObs.unobserve(entry.target);
-        }
-      });
-    },{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
-
-    document.querySelectorAll('.reveal-scale').forEach(function(el){
-      scaleObs.observe(el);
-    });
-  }
-
-  // Parallax on hero phone
-  var heroPhone=document.querySelector('.hero-phone');
-  if(heroPhone){
-    var ticking=false;
-    window.addEventListener('scroll',function(){
-      if(!ticking){
-        requestAnimationFrame(function(){
-          var scrolled=window.pageYOffset;
-          var rate=scrolled*0.08;
-          if(rate<80){
-            heroPhone.style.transform='translateY('+rate+'px)';
-          }
-          ticking=false;
-        });
-        ticking=true;
-      }
-    },{passive:true});
-  }
-
-  // Parallax on floating bubbles
-  var floats=document.querySelectorAll('.hero-float');
-  if(floats.length){
-    var ft=false;
-    window.addEventListener('scroll',function(){
-      if(!ft){
-        requestAnimationFrame(function(){
-          var s=window.pageYOffset;
-          floats.forEach(function(f,i){
-            var speed=0.03+i*0.015;
-            f.style.transform='translateY('+(-s*speed)+'px)';
-          });
-          ft=false;
-        });
-        ft=true;
-      }
-    },{passive:true});
-  }
-})();
-</script>
 </body>
 </html>
 

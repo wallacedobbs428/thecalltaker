@@ -435,7 +435,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+          'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY',
           'Version': '2021-07-28'
         },
         body: JSON.stringify(Object.assign({ locationId: GHL_LOCATION }, ghlData))

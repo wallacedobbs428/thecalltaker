@@ -1,201 +1,495 @@
 ---
 name: code-refactoring
-description: "Refactor code for better readability, maintainability, and performance. Use when cleaning up messy code, reducing duplication, extracting functions, simplifying conditionals, or restructuring modules. Covers refactoring patterns, code smells, and safe refactoring techniques."
-category: engineering
+description: Simplify and refactor code while preserving behavior, improving clarity, and reducing complexity. Use when simplifying complex code, removing duplication, or applying design patterns. Handles Extract Method, DRY principle, SOLID principles, behavior validation, and refactoring patterns.
+metadata:
+  tags: refactoring, code-quality, DRY, SOLID, design-patterns, clean-code, simplification, behavior-preservation
+  platforms: Claude, ChatGPT, Gemini, Codex
 ---
+
 
 # Code Refactoring
 
-Improve code structure without changing behavior. Always have tests before refactoring.
 
----
+## When to use this skill
 
-## Refactoring Decision Framework
+- **Code review**: Discovering complex or duplicated code
+- **Before adding new features**: Cleaning up existing code
+- **After bug fixes**: Removing root causes
+- **Resolving technical debt**: Regular refactoring
 
-### When to Refactor
-- Before adding a new feature to messy code
-- When you've touched the same code 3+ times
-- When a function exceeds ~50 lines
-- When you can't understand code you wrote last month
-- When copy-pasting instead of reusing
+## Instructions
 
-### When NOT to Refactor
-- Code that works and won't be touched again
-- During a production emergency
-- Without tests to verify behavior is preserved
-- Just to match a style preference (not a real improvement)
+### Step 1: Extract Method
 
----
+**Before (long function)**:
+```typescript
+function processOrder(order: Order) {
+  // Validation
+  if (!order.items || order.items.length === 0) {
+    throw new Error('Order must have items');
+  }
+  if (!order.customerId) {
+    throw new Error('Order must have customer');
+  }
 
-## Top Code Smells & Fixes
+  // Price calculation
+  let total = 0;
+  for (const item of order.items) {
+    total += item.price * item.quantity;
+  }
+  const tax = total * 0.1;
+  const shipping = total > 100 ? 0 : 10;
+  const finalTotal = total + tax + shipping;
 
-### 1. Long Function → Extract Functions
-```python
-# BEFORE — 80-line function doing 5 things
-def process_lead(lead):
-    # validate...20 lines
-    # score...15 lines
-    # tag...10 lines
-    # notify...15 lines
-    # save...20 lines
+  // Inventory check
+  for (const item of order.items) {
+    const product = await db.product.findUnique({ where: { id: item.productId } });
+    if (product.stock < item.quantity) {
+      throw new Error(`Insufficient stock for ${product.name}`);
+    }
+  }
 
-# AFTER — clear, testable pieces
-def process_lead(lead):
-    if not validate_lead(lead):
-        return None
-    score = calculate_score(lead)
-    tags = generate_tags(lead, score)
-    notify_if_hot(lead, score)
-    save_lead(lead, score, tags)
-```
+  // Create order
+  const newOrder = await db.order.create({
+    data: {
+      customerId: order.customerId,
+      items: order.items,
+      total: finalTotal,
+      status: 'pending'
+    }
+  });
 
-### 2. Duplicated Code → Shared Function
-```python
-# BEFORE — same pattern in 4 engines
-def max_send_email(contact, subject, body):
-    html = f"<html><body>{body}<br><br>- The Call Taker Team</body></html>"
-    ghl_post(f"/conversations/messages", {
-        "type": "Email", "contactId": contact["id"],
-        "subject": subject, "html": html
-    })
-
-# AFTER — one shared function
-# In tct_common.py:
-def send_email(contact_id, subject, body, sender="The Call Taker Team"):
-    html = f"<html><body>{body}<br><br>- {sender}</body></html>"
-    return ghl_post("/conversations/messages", {
-        "type": "Email", "contactId": contact_id,
-        "subject": subject, "html": html
-    })
-```
-
-### 3. Deep Nesting → Early Returns
-```python
-# BEFORE — pyramid of doom
-def handle_reply(msg):
-    if msg:
-        if msg.get("type") == "Email":
-            if msg.get("direction") == "inbound":
-                body = msg.get("body", "")
-                if body:
-                    if not is_auto_reply(body):
-                        process_reply(msg)
-
-# AFTER — flat and readable
-def handle_reply(msg):
-    if not msg:
-        return
-    if msg.get("type") != "Email":
-        return
-    if msg.get("direction") != "inbound":
-        return
-    body = msg.get("body", "")
-    if not body or is_auto_reply(body):
-        return
-    process_reply(msg)
-```
-
-### 4. Magic Numbers → Named Constants
-```python
-# BEFORE
-if score >= 70:
-    send_urgent()
-elif score >= 45:
-    queue_outreach()
-
-# AFTER
-SCORE_URGENT = 70
-SCORE_MEDIUM = 45
-
-if score >= SCORE_URGENT:
-    send_urgent()
-elif score >= SCORE_MEDIUM:
-    queue_outreach()
-```
-
-### 5. Boolean Parameters → Separate Functions
-```python
-# BEFORE — what does True mean?
-send_message(contact, "Hello", True, False)
-
-# AFTER — self-documenting
-send_sms(contact, "Hello")
-send_email(contact, "Hello")
-```
-
-### 6. Dictionary Soup → Data Classes
-```python
-# BEFORE — no structure, typos cause silent bugs
-lead = {"name": "John", "scroe": 85}  # typo goes unnoticed
-
-# AFTER — structured, IDE-friendly
-from dataclasses import dataclass
-
-@dataclass
-class Lead:
-    name: str
-    score: int
-    industry: str
-    phone: str = ""
-    email: str = ""
-```
-
----
-
-## Safe Refactoring Steps
-
-1. **Verify tests exist** (or write them first)
-2. **Make one small change** at a time
-3. **Run tests** after each change
-4. **Commit** after each successful refactor
-5. **Never mix** refactoring with feature work in the same commit
-
----
-
-## Quick Refactoring Recipes
-
-### Replace Conditional with Dictionary
-```python
-# BEFORE
-if industry == "hvac":
-    job_word = "service call"
-elif industry == "dental":
-    job_word = "appointment"
-elif industry == "legal":
-    job_word = "case"
-else:
-    job_word = "job"
-
-# AFTER
-JOB_WORDS = {
-    "hvac": "service call",
-    "dental": "appointment",
-    "legal": "case",
+  return newOrder;
 }
-job_word = JOB_WORDS.get(industry, "job")
 ```
 
-### Simplify Boolean Expressions
-```python
-# BEFORE
-if is_active == True:
-    if has_email == True or has_phone == True:
-        return True
-    else:
-        return False
-else:
-    return False
+**After (method extraction)**:
+```typescript
+async function processOrder(order: Order) {
+  validateOrder(order);
+  const total = calculateTotal(order);
+  await checkInventory(order);
+  return await createOrder(order, total);
+}
 
-# AFTER
-return is_active and (has_email or has_phone)
+function validateOrder(order: Order) {
+  if (!order.items || order.items.length === 0) {
+    throw new Error('Order must have items');
+  }
+  if (!order.customerId) {
+    throw new Error('Order must have customer');
+  }
+}
+
+function calculateTotal(order: Order): number {
+  const subtotal = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const tax = subtotal * 0.1;
+  const shipping = subtotal > 100 ? 0 : 10;
+  return subtotal + tax + shipping;
+}
+
+async function checkInventory(order: Order) {
+  for (const item of order.items) {
+    const product = await db.product.findUnique({ where: { id: item.productId } });
+    if (product.stock < item.quantity) {
+      throw new Error(`Insufficient stock for ${product.name}`);
+    }
+  }
+}
+
+async function createOrder(order: Order, total: number) {
+  return await db.order.create({
+    data: {
+      customerId: order.customerId,
+      items: order.items,
+      total,
+      status: 'pending'
+    }
+  });
+}
 ```
 
-### Extract Configuration
-```python
-# BEFORE — hardcoded everywhere
-ghl_get(url, headers={"Authorization": "Bearer pit-771d...", "Version": "2021-07-28"})
+### Step 2: Remove Duplication
 
-# AFTER — single config source
-from config import GHL_API_KEY, GHL_API_VERSION
-# Used in tct_common.py wrapper, never repeated
+**Before (duplication)**:
+```typescript
+async function getActiveUsers() {
+  return await db.user.findMany({
+    where: { status: 'active', deletedAt: null },
+    select: { id: true, name: true, email: true }
+  });
+}
+
+async function getActivePremiumUsers() {
+  return await db.user.findMany({
+    where: { status: 'active', deletedAt: null, plan: 'premium' },
+    select: { id: true, name: true, email: true }
+  });
+}
 ```
+
+**After (extract common logic)**:
+```typescript
+type UserFilter = {
+  plan?: string;
+};
+
+async function getActiveUsers(filter: UserFilter = {}) {
+  return await db.user.findMany({
+    where: {
+      status: 'active',
+      deletedAt: null,
+      ...filter
+    },
+    select: { id: true, name: true, email: true }
+  });
+}
+
+// Usage
+const allActiveUsers = await getActiveUsers();
+const premiumUsers = await getActiveUsers({ plan: 'premium' });
+```
+
+### Step 3: Replace Conditional with Polymorphism
+
+**Before (long if-else)**:
+```typescript
+class PaymentProcessor {
+  process(payment: Payment) {
+    if (payment.method === 'credit_card') {
+      // Credit card processing
+      const cardToken = this.tokenizeCard(payment.card);
+      const charge = this.chargeCreditCard(cardToken, payment.amount);
+      return charge;
+    } else if (payment.method === 'paypal') {
+      // PayPal processing
+      const paypalOrder = this.createPayPalOrder(payment.amount);
+      const approval = this.getPayPalApproval(paypalOrder);
+      return approval;
+    } else if (payment.method === 'bank_transfer') {
+      // Bank transfer processing
+      const transfer = this.initiateBankTransfer(payment.account, payment.amount);
+      return transfer;
+    }
+  }
+}
+```
+
+**After (polymorphism)**:
+```typescript
+interface PaymentMethod {
+  process(payment: Payment): Promise<PaymentResult>;
+}
+
+class CreditCardPayment implements PaymentMethod {
+  async process(payment: Payment): Promise<PaymentResult> {
+    const cardToken = await this.tokenizeCard(payment.card);
+    return await this.chargeCreditCard(cardToken, payment.amount);
+  }
+}
+
+class PayPalPayment implements PaymentMethod {
+  async process(payment: Payment): Promise<PaymentResult> {
+    const order = await this.createPayPalOrder(payment.amount);
+    return await this.getPayPalApproval(order);
+  }
+}
+
+class BankTransferPayment implements PaymentMethod {
+  async process(payment: Payment): Promise<PaymentResult> {
+    return await this.initiateBankTransfer(payment.account, payment.amount);
+  }
+}
+
+class PaymentProcessor {
+  private methods: Map<string, PaymentMethod> = new Map([
+    ['credit_card', new CreditCardPayment()],
+    ['paypal', new PayPalPayment()],
+    ['bank_transfer', new BankTransferPayment()]
+  ]);
+
+  async process(payment: Payment): Promise<PaymentResult> {
+    const method = this.methods.get(payment.method);
+    if (!method) {
+      throw new Error(`Unknown payment method: ${payment.method}`);
+    }
+    return await method.process(payment);
+  }
+}
+```
+
+### Step 4: Introduce Parameter Object
+
+**Before (many parameters)**:
+```typescript
+function createUser(
+  name: string,
+  email: string,
+  password: string,
+  age: number,
+  country: string,
+  city: string,
+  postalCode: string,
+  phoneNumber: string
+) {
+  // ...
+}
+```
+
+**After (grouped into object)**:
+```typescript
+interface UserProfile {
+  name: string;
+  email: string;
+  password: string;
+  age: number;
+}
+
+interface Address {
+  country: string;
+  city: string;
+  postalCode: string;
+}
+
+interface CreateUserParams {
+  profile: UserProfile;
+  address: Address;
+  phoneNumber: string;
+}
+
+function createUser(params: CreateUserParams) {
+  const { profile, address, phoneNumber } = params;
+  // ...
+}
+
+// Usage
+createUser({
+  profile: { name: 'John', email: 'john@example.com', password: 'xxx', age: 30 },
+  address: { country: 'US', city: 'NYC', postalCode: '10001' },
+  phoneNumber: '+1234567890'
+});
+```
+
+### Step 5: Apply SOLID Principles
+
+**Single Responsibility**:
+```typescript
+// ❌ Bad example: multiple responsibilities
+class User {
+  constructor(public name: string, public email: string) {}
+
+  save() {
+    // Save to DB
+  }
+
+  sendEmail(subject: string, body: string) {
+    // Send email
+  }
+
+  generateReport() {
+    // Generate report
+  }
+}
+
+// ✅ Good example: separated responsibilities
+class User {
+  constructor(public name: string, public email: string) {}
+}
+
+class UserRepository {
+  save(user: User) {
+    // Save to DB
+  }
+}
+
+class EmailService {
+  send(to: string, subject: string, body: string) {
+    // Send email
+  }
+}
+
+class UserReportGenerator {
+  generate(user: User) {
+    // Generate report
+  }
+}
+```
+
+## Output format
+
+### Refactoring Checklist
+
+```markdown
+- [ ] Function does one thing only (SRP)
+- [ ] Function name clearly describes what it does
+- [ ] Function is 20 lines or fewer (guideline)
+- [ ] 3 or fewer parameters
+- [ ] No duplicate code (DRY)
+- [ ] if nesting is 2 levels or fewer
+- [ ] No magic numbers (extract as constants)
+- [ ] Understandable without comments (self-documenting)
+```
+
+## Constraints
+
+### Mandatory Rules (MUST)
+
+1. **Test first**: Write tests before refactoring
+2. **Small steps**: Change one thing at a time
+3. **Behavior preservation**: No functional changes
+
+### Prohibited (MUST NOT)
+
+1. **Multiple tasks simultaneously**: No refactoring + feature addition at the same time
+2. **Refactoring without tests**: Risk of regression
+
+## Best practices
+
+1. **Boy Scout Rule**: Leave code cleaner than you found it
+2. **Refactoring timing**: Red-Green-Refactor (TDD)
+3. **Incremental improvement**: Consistency over perfection
+4. **Behavior preservation**: Refactoring involves no functional changes
+5. **Small commits**: Commit in focused units
+
+---
+
+## Behavior Validation (Code Simplifier Integration)
+
+### Step A: Understand Current Behavior
+
+Fully understand current behavior before refactoring:
+
+```markdown
+## Behavior Analysis
+
+### Inputs
+- [list of input parameters]
+- [types and constraints]
+
+### Outputs
+- [return values]
+- [side effects]
+
+### Invariants
+- [conditions that must always be true]
+- [edge cases]
+
+### Dependencies
+- [external dependencies]
+- [state dependencies]
+```
+
+### Step B: Validate After Refactoring
+
+```bash
+# 1. Run tests
+npm test -- --coverage
+
+# 2. Type check
+npx tsc --noEmit
+
+# 3. Lint check
+npm run lint
+
+# 4. Compare with previous behavior (snapshot tests)
+npm test -- --updateSnapshot
+```
+
+### Step C: Document Changes
+
+```markdown
+## Refactoring Summary
+
+### Changes Made
+1. [Change 1]: [reason]
+2. [Change 2]: [reason]
+
+### Behavior Preserved
+- [x] Same input → same output
+- [x] Same side effects
+- [x] Same error handling
+
+### Risks & Follow-ups
+- [potential risks]
+- [follow-up tasks]
+
+### Test Status
+- [ ] Unit tests: passing
+- [ ] Integration tests: passing
+- [ ] E2E tests: passing
+```
+
+---
+
+## Troubleshooting
+
+### Issue: Tests fail after refactor
+**Cause**: Behavior change occurred
+**Solution**: Revert and isolate the change, then retry
+
+### Issue: Code still complex
+**Cause**: Multiple responsibilities mixed in one function
+**Solution**: Extract into smaller units with clear boundaries
+
+### Issue: Performance regression
+**Cause**: Inefficient abstraction introduced
+**Solution**: Profile and optimize the hot path
+
+---
+
+## Multi-Agent Workflow
+
+### Validation & Retrospectives
+
+- **Round 1 (Orchestrator)**: Validate behavior preservation checklist
+- **Round 2 (Analyst)**: Complexity and duplication analysis
+- **Round 3 (Executor)**: Test or static analysis verification
+
+### Agent Roles
+
+| Agent | Role |
+|-------|------|
+| Claude | Refactoring plan, code transformation |
+| Gemini | Large-scale codebase analysis, pattern detection |
+| Codex | Test execution, build verification |
+
+### Workflow Example
+
+```bash
+# 1. Gemini: Codebase analysis
+ask-gemini "@src/ extract list of high-complexity functions"
+
+# 2. Claude: Refactoring plan and execution
+# Work based on IMPLEMENTATION_PLAN.md
+
+# 3. Codex: Verification
+codex-cli shell "npm test && npm run lint"
+```
+
+## References
+
+- [Refactoring (Martin Fowler)](https://refactoring.com/)
+- [Clean Code (Robert C. Martin)](https://www.oreilly.com/library/view/clean-code-a/9780136083238/)
+- [SOLID Principles](https://en.wikipedia.org/wiki/SOLID)
+
+## Metadata
+
+### Version
+- **Current Version**: 1.0.0
+- **Last Updated**: 2025-01-01
+- **Compatible Platforms**: Claude, ChatGPT, Gemini
+
+### Related Skills
+- [code-review](../code-review/SKILL.md)
+- [backend-testing](../../backend/testing/SKILL.md)
+
+### Tags
+`#refactoring` `#code-quality` `#DRY` `#SOLID` `#design-patterns` `#clean-code`
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->
