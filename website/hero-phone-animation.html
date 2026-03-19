@@ -3,52 +3,88 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Call Taker — Never Miss Another Call</title>
+<title>The Call Taker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #111318;
-  --bg-card: #191c22;
-  --bg-warm: #1e2128;
-  --cream: #e8e0d4;
-  --cream-soft: #c4bdb2;
-  --gold: #c9a96e;
-  --gold-soft: rgba(201,169,110,0.15);
-  --green: #5b8a72;
-  --green-soft: rgba(91,138,114,0.12);
-  --text: #ddd8d0;
-  --text-dim: #7a7670;
-  --text-faint: #4a4640;
-  --border: #2a2d33;
-  --shadow: 0 20px 60px rgba(0,0,0,0.5);
+  --bg: #08090c;
+  --surface: #0e1015;
+  --surface-2: #14161c;
+  --border: rgba(255,255,255,0.06);
+  --border-bright: rgba(255,255,255,0.12);
+  --white: #f0f0f0;
+  --white-60: rgba(240,240,240,0.6);
+  --white-30: rgba(240,240,240,0.3);
+  --white-12: rgba(240,240,240,0.12);
+  --white-06: rgba(240,240,240,0.06);
+  --accent: #5e7cff;
+  --accent-soft: rgba(94,124,255,0.12);
+  --accent-glow: rgba(94,124,255,0.06);
+  --green: #34d399;
+  --green-soft: rgba(52,211,153,0.1);
+  --mono: 'JetBrains Mono', 'SF Mono', monospace;
 }
 
 body {
   background: var(--bg);
-  color: var(--text);
+  color: var(--white);
   font-family: 'Inter', -apple-system, sans-serif;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══ GRAIN OVERLAY — analog warmth ═══ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+/* ═══ DOT GRID — living background ═══ */
+.dot-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.dot-grid-inner {
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(94,124,255,0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 60% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at 60% 40%, black 20%, transparent 70%);
+  animation: grid-breathe 8s ease-in-out infinite;
+}
+
+@keyframes grid-breathe {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
 }
 
 /* ═══ SCENE ═══ */
 .scene {
   position: relative;
   width: 100%;
-  max-width: 1140px;
+  max-width: 1200px;
   min-height: 100vh;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  padding: 0 48px;
+  padding: 0 64px;
   gap: 80px;
+  z-index: 1;
 }
 
 @media (max-width: 900px) {
@@ -57,134 +93,180 @@ body {
   .scene-phone { order: 1; }
 }
 
-/* ═══ COPY — warm, confident, slow ═══ */
+/* ═══ COPY ═══ */
 .scene-copy { z-index: 2; }
 
-/* Staggered slide-up entrance */
-@keyframes subtitle-enter {
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: enter 0.6s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
+}
+
+.eyebrow .blink {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  animation: pulse-dot 2.5s infinite;
+}
+
+@keyframes pulse-dot {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes enter {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.eyebrow {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
-  opacity: 0;
-  transform: translateY(16px);
-  animation: subtitle-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-}
-
-.scene-copy h1 {
-  font-family: 'DM Serif Display', Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(36px, 5vw, 64px);
-  line-height: 1.15;
-  color: #fff;
-  letter-spacing: -0.01em;
+h1 {
+  font-weight: 300;
+  font-size: clamp(38px, 5.5vw, 68px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--white);
   margin-bottom: 24px;
   opacity: 0;
-  transform: translateY(20px);
-  animation: subtitle-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+  transform: translateY(16px);
+  animation: enter 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
 }
 
-.scene-copy .subtitle {
-  font-size: 18px;
-  color: #fff;
-  line-height: 1.7;
-  max-width: 420px;
-  margin-bottom: 40px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: subtitle-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
-}
-
-.subtitle strong,
-.subtitle em {
-  color: var(--gold);
-  font-style: normal;
+h1 strong {
   font-weight: 600;
 }
 
-@media (max-width: 900px) {
-  .scene-copy .subtitle { margin-left: auto; margin-right: auto; }
+.subtitle {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--white-60);
+  line-height: 1.8;
+  max-width: 400px;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: enter 0.7s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
 }
 
-.scene-cta {
+.subtitle strong {
+  color: var(--white);
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .subtitle { margin-left: auto; margin-right: auto; }
+}
+
+/* ═══ CTA ═══ */
+.cta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: enter 0.6s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
+}
+
+@media (max-width: 900px) {
+  .cta-row { justify-content: center; }
+}
+
+.cta-primary {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  background: var(--gold);
-  color: #1a1510;
-  font-weight: 700;
-  font-size: 16px;
-  padding: 18px 40px;
+  gap: 8px;
+  background: var(--white);
+  color: var(--bg);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 14px 28px;
   border-radius: 8px;
   text-decoration: none;
-  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 4px 24px rgba(201,169,110,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
   letter-spacing: 0.01em;
-  opacity: 0;
-  transform: translateY(16px);
-  animation: subtitle-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
 }
-.scene-cta:hover {
-  background: #d4b87a;
+
+.cta-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 30px rgba(201,169,110,0.25);
+  box-shadow: 0 8px 30px rgba(255,255,255,0.08);
 }
 
-.cta-secondary {
-  display: inline-block;
-  margin-left: 16px;
-  color: #bbb;
-  font-size: 14px;
+.cta-ghost {
+  font-size: 13px;
+  color: var(--white-30);
   text-decoration: none;
-  border-bottom: 1px solid #555;
-  padding-bottom: 2px;
-  transition: color 0.3s, border-color 0.3s;
-  opacity: 0;
-  animation: subtitle-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
-}
-.cta-secondary:hover { color: var(--cream); border-color: var(--cream-soft); }
-
-@media (max-width: 900px) {
-  .cta-secondary { display: block; margin: 16px 0 0 0; }
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--white-12);
+  transition: color 0.2s, border-color 0.2s;
+  letter-spacing: 0.01em;
 }
 
-/* Stage narration — changes with animation */
-.stage-narration {
-  margin-top: 48px;
+.cta-ghost:hover {
+  color: var(--white-60);
+  border-color: var(--white-30);
+}
+
+/* ═══ STEP DISPLAY — big numbers ═══ */
+.step-display {
+  margin-top: 56px;
   padding-top: 32px;
   border-top: 1px solid var(--border);
-  min-height: 80px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  min-height: 100px;
+  opacity: 0;
+  animation: enter 0.5s cubic-bezier(0.16,1,0.3,1) 0.7s forwards;
 }
 
-.stage-step {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--gold);
+.step-num {
+  font-family: var(--mono);
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--white-12);
+  line-height: 1;
+  min-width: 60px;
+  transition: color 0.4s;
+}
+
+.step-num.active {
+  color: var(--accent);
+}
+
+.step-text {
+  flex: 1;
+}
+
+.step-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--white-30);
   text-transform: uppercase;
   margin-bottom: 8px;
-  opacity: 0;
 }
 
-.stage-desc {
-  font-size: 16px;
-  color: #d4cfc8;
+.step-desc {
+  font-size: 15px;
+  color: var(--white-60);
   line-height: 1.7;
-  max-width: 380px;
-  opacity: 0;
+  max-width: 340px;
 }
 
 @media (max-width: 900px) {
-  .stage-desc { margin: 0 auto; }
+  .step-display { justify-content: center; }
+  .step-desc { margin: 0 auto; }
 }
 
-/* ═══ PHONE — warm, elegant ═══ */
+/* ═══ PHONE ═══ */
 .scene-phone {
   position: relative;
   display: flex;
@@ -194,60 +276,61 @@ body {
   z-index: 2;
 }
 
-/* Warm ambient light behind phone */
+/* Ambient glow — soft, off-center */
 .phone-glow {
   position: absolute;
-  width: 360px;
+  width: 400px;
   height: 500px;
   background: radial-gradient(ellipse at center,
-    rgba(201,169,110,0.06) 0%,
-    rgba(91,138,114,0.03) 40%,
+    var(--accent-glow) 0%,
     transparent 70%);
   top: 50%;
-  left: 50%;
+  left: 55%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  animation: glow-drift 10s ease-in-out infinite;
 }
 
-/* Particles — warm gold/cream, not neon green */
+@keyframes glow-drift {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-48%, -52%) scale(1.05); opacity: 0.7; }
+}
+
+/* Particles — white/blue, sparse, slow */
 .particle-field {
   position: absolute;
-  width: 300px;
-  height: 540px;
-  top: 50%;
-  left: 50%;
+  width: 300px; height: 540px;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
 }
 
 .particle {
   position: absolute;
-  width: 3px;
-  height: 3px;
+  width: 2px; height: 2px;
   border-radius: 50%;
   opacity: 0;
   will-change: transform, opacity;
 }
 
-.particle.gold { background: var(--gold); }
-.particle.cream { background: var(--cream-soft); }
-.particle.green { background: var(--green); }
+.particle.a { background: var(--accent); width: 3px; height: 3px; }
+.particle.b { background: var(--white-30); }
+.particle.c { background: var(--green); width: 2px; height: 2px; }
 
 /* Phone body */
 .phone {
   position: relative;
   width: 250px;
   height: 510px;
-  background: linear-gradient(170deg, #1e2025 0%, #16181c 100%);
+  background: var(--surface);
   border-radius: 44px;
-  border: 1.5px solid #2a2d33;
+  border: 1px solid var(--border-bright);
   overflow: hidden;
   opacity: 0;
   transform: scale(0.97);
   box-shadow:
-    0 0 0 0.5px rgba(255,255,255,0.04),
-    0 30px 80px rgba(0,0,0,0.7),
-    -10px 0 40px rgba(0,0,0,0.3),
-    0 0 80px rgba(201,169,110,0.03);
+    0 0 0 0.5px rgba(255,255,255,0.03),
+    0 40px 100px rgba(0,0,0,0.7),
+    0 0 100px var(--accent-glow);
   will-change: transform, opacity;
 }
 
@@ -256,7 +339,7 @@ body {
   top: 0; left: 50%;
   transform: translateX(-50%);
   width: 90px; height: 22px;
-  background: #111318;
+  background: var(--bg);
   border-radius: 0 0 14px 14px;
   z-index: 10;
 }
@@ -264,15 +347,26 @@ body {
 .phone-screen {
   position: absolute;
   inset: 6px;
-  background: #0f1114;
+  background: var(--bg);
   border-radius: 40px;
   overflow: hidden;
 }
 
-/* ═══ SCREEN STATES ═══ */
+/* ═══ STATUS BAR — monospace readout ═══ */
+.status-bar {
+  position: absolute;
+  top: 28px; left: 16px; right: 16px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--white-30);
+  letter-spacing: 0.08em;
+  z-index: 5;
+}
 
-/* STATE 1: Incoming call */
-.screen-ring {
+/* ═══ SCREEN STATES ═══ */
+.screen-state {
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
@@ -280,129 +374,105 @@ body {
   opacity: 0;
 }
 
+/* State 1: Ring */
 .ring-time {
-  font-size: 36px;
-  font-weight: 300;
-  color: var(--cream);
+  font-size: 42px;
+  font-weight: 200;
+  color: var(--white);
   letter-spacing: -0.02em;
-  margin-bottom: 4px;
-  font-family: 'DM Serif Display', serif;
+  margin-bottom: 2px;
 }
 
 .ring-date {
-  font-size: 11px;
-  color: var(--text-faint);
-  margin-bottom: 36px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--white-30);
+  letter-spacing: 0.1em;
+  margin-bottom: 40px;
 }
 
 .ring-divider {
-  width: 32px; height: 1px;
-  background: var(--border);
+  width: 24px; height: 1px;
+  background: var(--border-bright);
   margin-bottom: 28px;
 }
 
-.ring-from-label {
+.ring-tag {
+  font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 0.15em;
-  color: var(--text-faint);
-  margin-bottom: 8px;
+  color: var(--green);
+  margin-bottom: 12px;
 }
 
 .ring-name {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--cream);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--white);
   margin-bottom: 4px;
 }
 
 .ring-desc {
   font-size: 12px;
-  color: var(--gold);
-  margin-bottom: 32px;
+  color: var(--white-30);
+  margin-bottom: 36px;
 }
 
-.ring-actions {
-  display: flex; gap: 32px;
+.ring-btns {
+  display: flex; gap: 40px;
 }
 
 .ring-btn {
-  width: 52px; height: 52px;
+  width: 48px; height: 48px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   opacity: 0;
 }
 
-.ring-btn.answer {
-  background: var(--green);
-  box-shadow: 0 0 24px rgba(91,138,114,0.3);
+.ring-btn svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
+.ring-btn.yes { background: var(--green); box-shadow: 0 0 30px rgba(52,211,153,0.25); }
+.ring-btn.no { background: rgba(239,68,68,0.7); }
+
+/* State 2: Connected */
+.conn-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--green);
+  margin-bottom: 20px;
 }
 
-.ring-btn.decline {
-  background: #6b3a3a;
-  box-shadow: 0 0 24px rgba(107,58,58,0.2);
-}
-
-.ring-btn svg {
-  width: 22px; height: 22px;
-  stroke: #fff; fill: none;
-  stroke-width: 2; stroke-linecap: round;
-}
-
-/* Subtle ring pulse — not aggressive */
-.ring-pulse-ring {
-  position: absolute;
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  border: 1px solid rgba(91,138,114,0.3);
-  opacity: 0;
-}
-
-/* STATE 2: Jessica on the line */
-.screen-answer {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 48px 24px;
-  opacity: 0;
-}
-
-.answer-status {
-  font-size: 9px; letter-spacing: 0.15em;
-  color: var(--green); font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.answer-name {
-  font-family: 'DM Serif Display', serif;
-  font-size: 24px;
-  color: var(--cream);
+.conn-name {
+  font-size: 26px;
+  font-weight: 300;
+  color: var(--white);
   margin-bottom: 4px;
 }
 
-.answer-timer {
-  font-size: 14px;
-  color: var(--text-faint);
-  font-variant-numeric: tabular-nums;
+.conn-timer {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--white-30);
   margin-bottom: 32px;
 }
 
 .waveform {
-  display: flex; gap: 4px;
+  display: flex; gap: 3px;
   align-items: center; height: 48px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .waveform span {
-  width: 3px;
-  background: var(--green);
-  border-radius: 2px;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 1px;
   opacity: 0.6;
-  transition: height 0.15s ease;
+  transition: height 0.12s ease;
 }
 
-.answer-transcript {
-  font-size: 13px;
-  color: var(--text-dim);
+.conn-transcript {
+  font-size: 12px;
+  color: var(--white-30);
   text-align: center;
   line-height: 1.7;
   max-width: 200px;
@@ -410,202 +480,189 @@ body {
   opacity: 0;
 }
 
-/* STATE 3: Details captured */
-.screen-capture {
-  position: absolute; inset: 0;
-  padding: 48px 20px 20px;
-  opacity: 0;
-}
-
-.capture-title {
-  font-size: 9px; letter-spacing: 0.15em;
-  color: var(--gold); font-weight: 600;
+/* State 3: Capture */
+.cap-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--accent);
   text-align: center;
   margin-bottom: 24px;
 }
 
-.capture-field {
-  background: rgba(255,255,255,0.02);
+.cap-field {
+  background: var(--white-06);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 10px;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  width: 100%;
   opacity: 0;
   transform: translateY(6px);
 }
 
-.capture-label {
-  font-size: 9px; color: var(--text-faint);
-  text-transform: uppercase; letter-spacing: 0.08em;
-  margin-bottom: 3px;
+.cap-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--white-30);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
 }
 
-.capture-value {
-  font-size: 14px; color: var(--cream);
+.cap-val {
+  font-size: 13px;
+  color: var(--white);
   font-weight: 500;
 }
 
-.capture-cursor {
+.cap-cursor {
   display: inline-block;
-  width: 1px; height: 15px;
-  background: var(--gold);
+  width: 1px; height: 14px;
+  background: var(--accent);
   margin-left: 1px;
-  animation: cur-blink 0.8s infinite;
+  animation: blink 0.7s infinite;
   vertical-align: middle;
 }
 
-@keyframes cur-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-/* STATE 4: Appointment booked */
-.screen-book {
-  position: absolute; inset: 0;
-  padding: 48px 18px 20px;
-  opacity: 0;
-  display: flex; flex-direction: column;
-  align-items: center;
-}
-
-.book-title {
-  font-size: 9px; letter-spacing: 0.15em;
-  color: var(--green); font-weight: 600;
+/* State 4: Book */
+.book-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--green);
   margin-bottom: 20px;
 }
 
 .book-cal {
-  display: grid; grid-template-columns: repeat(7,1fr);
-  gap: 2px; width: 100%; margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px; width: 100%; margin-bottom: 14px;
 }
 
 .book-d {
   aspect-ratio: 1;
   display: flex; align-items: center; justify-content: center;
-  font-size: 10px; color: var(--text-faint);
-  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--white-12);
+  border-radius: 4px;
 }
-.book-d.hdr { font-weight: 700; font-size: 9px; color: var(--text-dim); }
-.book-d.act { color: var(--cream-soft); }
+
+.book-d.hdr { font-size: 8px; color: var(--white-30); }
+.book-d.act { color: var(--white-30); }
 .book-d.sel {
-  background: var(--green);
-  color: #fff; font-weight: 700;
-  box-shadow: 0 0 16px rgba(91,138,114,0.3);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(94,124,255,0.3);
 }
 
 .book-detail {
-  background: var(--green-soft);
-  border: 1px solid rgba(91,138,114,0.2);
-  border-radius: 10px;
-  padding: 14px 16px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(94,124,255,0.15);
+  border-radius: 8px;
+  padding: 12px 16px;
   text-align: center;
   width: 100%;
-  margin-bottom: 12px;
-  opacity: 0; transform: translateY(8px);
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(6px);
 }
 
-.book-detail-time {
-  font-family: 'DM Serif Display', serif;
-  font-size: 20px; color: var(--cream);
-}
+.book-detail-time { font-size: 20px; font-weight: 300; color: var(--white); }
+.book-detail-day { font-family: var(--mono); font-size: 10px; color: var(--white-30); }
 
-.book-detail-day {
-  font-size: 11px; color: var(--text-dim);
-}
-
-.book-confirmed {
-  display: flex; align-items: center; gap: 8px;
-  color: var(--green); font-size: 12px; font-weight: 600;
+.book-ok {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 0.05em;
   opacity: 0;
 }
 
-.book-confirmed svg {
-  width: 16px; height: 16px;
-  stroke: var(--green); fill: none;
-  stroke-width: 2.5; stroke-linecap: round;
-}
+.book-ok svg { width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2.5; }
 
-/* STATE 5: Owner notified */
-.screen-text {
-  position: absolute; inset: 0;
-  padding: 48px 16px 20px;
-  display: flex; flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  opacity: 0;
-}
-
-.text-title {
-  font-size: 9px; letter-spacing: 0.15em;
-  color: var(--gold); font-weight: 600;
+/* State 5: Text */
+.text-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--accent);
   text-align: center;
   margin-bottom: 20px;
 }
 
-.text-bubble {
-  background: var(--bg-warm);
+.msg-bubble {
+  background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 14px 14px 14px 4px;
-  padding: 14px 16px;
-  margin-bottom: 10px;
+  border-radius: 12px 12px 12px 4px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  width: 100%;
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(6px);
 }
 
-.text-bubble.reply {
-  background: var(--gold-soft);
-  border-color: rgba(201,169,110,0.2);
-  border-radius: 14px 14px 4px 14px;
-  align-self: flex-end;
-  max-width: 85%;
+.msg-bubble.reply {
+  background: var(--accent-soft);
+  border-color: rgba(94,124,255,0.15);
+  border-radius: 12px 12px 4px 12px;
 }
 
-.text-sender {
-  font-size: 9px; color: var(--text-faint);
-  font-weight: 600; margin-bottom: 4px;
-}
-
-.text-body {
-  font-size: 13px; line-height: 1.6; color: var(--cream-soft);
-}
-
-.text-bubble.reply .text-body { color: var(--gold); }
-
-.text-timestamp {
-  font-size: 9px; color: var(--text-faint);
-  text-align: right; margin-top: 6px;
-}
-
-.result-line {
-  text-align: center;
-  margin-top: 24px;
-  opacity: 0;
-}
-
-.result-amount {
-  font-family: 'DM Serif Display', serif;
-  font-size: 28px;
-  color: var(--gold);
+.msg-from {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--white-30);
   margin-bottom: 4px;
+  letter-spacing: 0.05em;
+}
+
+.msg-body { font-size: 12px; line-height: 1.6; color: var(--white-60); }
+.msg-bubble.reply .msg-body { color: var(--accent); }
+.msg-ts { font-family: var(--mono); font-size: 8px; color: var(--white-12); text-align: right; margin-top: 4px; }
+
+.result {
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0;
+}
+
+.result-num {
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--white);
+  letter-spacing: -0.02em;
 }
 
 .result-label {
-  font-size: 12px;
-  color: var(--text-faint);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--white-30);
+  letter-spacing: 0.1em;
 }
 
-/* ═══ FRAME ACCENTS ═══ */
-.accent-line {
+/* ═══ FRAME LINES ═══ */
+.frame-line {
   position: absolute;
-  background: var(--gold);
+  background: var(--accent);
   opacity: 0;
 }
-.accent-line.top { top: -1px; left: 40px; width: 60px; height: 1px; }
-.accent-line.bottom { bottom: -1px; right: 40px; width: 60px; height: 1px; }
 
-.phone-label {
+.frame-line.top { top: -1px; left: 60px; width: 40px; height: 1px; }
+.frame-line.btm { bottom: -1px; right: 60px; width: 40px; height: 1px; }
+
+.phone-readout {
   position: absolute;
   bottom: -28px; left: 50%;
   transform: translateX(-50%);
-  font-size: 9px; color: var(--text-faint);
-  letter-spacing: 0.1em;
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--white-12);
+  letter-spacing: 0.15em;
   white-space: nowrap;
   opacity: 0;
 }
@@ -613,330 +670,216 @@ body {
 </head>
 <body>
 
+<div class="dot-grid"><div class="dot-grid-inner"></div></div>
+
 <div class="scene">
 
-  <!-- LEFT: Copy -->
   <div class="scene-copy">
-    <div class="eyebrow">The Call Taker</div>
-    <h1>It's 2 AM.<br>Your phone rings.<br>Jessica answers.</h1>
+    <div class="eyebrow"><span class="blink"></span>SYSTEM ACTIVE</div>
+    <h1>It's 2 AM.<br>Your phone rings.<br><strong>Jessica answers.</strong></h1>
     <p class="subtitle">Watch a real call happen. From the <strong>first ring</strong> to a <strong>booked appointment</strong> — while the owner sleeps.</p>
-    <div>
-      <a href="tel:6157845747" class="scene-cta">Call the demo line</a>
-      <a href="/pay.html" class="cta-secondary">See pricing</a>
+    <div class="cta-row">
+      <a href="tel:6157845747" class="cta-primary">Call the demo line</a>
+      <a href="/pay.html" class="cta-ghost">See pricing</a>
     </div>
 
-    <div class="stage-narration">
-      <div class="stage-step" id="stageStep"></div>
-      <div class="stage-desc" id="stageDesc"></div>
+    <div class="step-display">
+      <div class="step-num" id="stepNum">01</div>
+      <div class="step-text">
+        <div class="step-label" id="stepLabel">INCOMING</div>
+        <div class="step-desc" id="stepDesc">Waiting for first call...</div>
+      </div>
     </div>
   </div>
 
-  <!-- RIGHT: Phone -->
   <div class="scene-phone">
     <div class="phone-glow"></div>
-
-    <div class="particle-field" id="particleField"></div>
+    <div class="particle-field" id="pf"></div>
 
     <div class="phone" id="phone">
       <div class="phone-notch"></div>
       <div class="phone-screen">
+        <div class="status-bar">
+          <span>2:17 AM</span>
+          <span>THE CALL TAKER</span>
+          <span>LIVE</span>
+        </div>
 
-        <!-- 1: Ring -->
-        <div class="screen-ring" id="sRing">
+        <div class="screen-state" id="s1">
           <div class="ring-time">2:17</div>
-          <div class="ring-date">Saturday, March 19</div>
+          <div class="ring-date">SAT MAR 19</div>
           <div class="ring-divider"></div>
-          <div class="ring-from-label">INCOMING CALL</div>
+          <div class="ring-tag">INCOMING CALL</div>
           <div class="ring-name">Sarah Martinez</div>
           <div class="ring-desc">Emergency Lockout</div>
-          <div class="ring-actions">
-            <div class="ring-btn decline" id="ringDecline">
-              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013 5.18 2 2 0 015.11 3h3" transform="rotate(135 12 12)"/></svg>
-            </div>
-            <div class="ring-btn answer" id="ringAnswer">
-              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 5.18 2 2 0 014.11 3h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            </div>
+          <div class="ring-btns">
+            <div class="ring-btn no"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013 5.18 2 2 0 015.11 3h3" transform="rotate(135 12 12)"/></svg></div>
+            <div class="ring-btn yes" id="ansBtn"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 5.18 2 2 0 014.11 3h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
           </div>
         </div>
 
-        <!-- 2: Jessica answering -->
-        <div class="screen-answer" id="sAnswer">
-          <div class="answer-status">CONNECTED</div>
-          <div class="answer-name">Jessica</div>
-          <div class="answer-timer" id="callTimer">00:00</div>
-          <div class="waveform" id="waveform">
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span>
-          </div>
-          <div class="answer-transcript" id="transcript">"Hi Sarah, thanks for calling. I can get a locksmith to you right away. What's your address?"</div>
+        <div class="screen-state" id="s2">
+          <div class="conn-tag">CONNECTED</div>
+          <div class="conn-name">Jessica</div>
+          <div class="conn-timer" id="timer">00:00</div>
+          <div class="waveform" id="wf"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="conn-transcript" id="transcript">"Hi Sarah, thanks for calling. I can get a locksmith to you right away. What's your address?"</div>
         </div>
 
-        <!-- 3: Details -->
-        <div class="screen-capture" id="sCapture">
-          <div class="capture-title">DETAILS CAPTURED</div>
-          <div class="capture-field" id="f1">
-            <div class="capture-label">Name</div>
-            <div class="capture-value"><span id="t1"></span><span class="capture-cursor"></span></div>
-          </div>
-          <div class="capture-field" id="f2">
-            <div class="capture-label">Issue</div>
-            <div class="capture-value"><span id="t2"></span><span class="capture-cursor"></span></div>
-          </div>
-          <div class="capture-field" id="f3">
-            <div class="capture-label">Address</div>
-            <div class="capture-value"><span id="t3"></span><span class="capture-cursor"></span></div>
-          </div>
-          <div class="capture-field" id="f4">
-            <div class="capture-label">Urgency</div>
-            <div class="capture-value"><span id="t4"></span><span class="capture-cursor"></span></div>
-          </div>
+        <div class="screen-state" id="s3" style="padding:48px 18px 20px;align-items:stretch;">
+          <div class="cap-title">DETAILS CAPTURED</div>
+          <div class="cap-field" id="f1"><div class="cap-label">NAME</div><div class="cap-val"><span id="t1"></span><span class="cap-cursor"></span></div></div>
+          <div class="cap-field" id="f2"><div class="cap-label">ISSUE</div><div class="cap-val"><span id="t2"></span><span class="cap-cursor"></span></div></div>
+          <div class="cap-field" id="f3"><div class="cap-label">ADDRESS</div><div class="cap-val"><span id="t3"></span><span class="cap-cursor"></span></div></div>
+          <div class="cap-field" id="f4"><div class="cap-label">URGENCY</div><div class="cap-val"><span id="t4"></span><span class="cap-cursor"></span></div></div>
         </div>
 
-        <!-- 4: Book -->
-        <div class="screen-book" id="sBook">
-          <div class="book-title">APPOINTMENT SET</div>
+        <div class="screen-state" id="s4">
+          <div class="book-tag">APPOINTMENT SET</div>
           <div class="book-cal" id="cal"></div>
-          <div class="book-detail" id="bookDetail">
-            <div class="book-detail-time">8:00 AM</div>
-            <div class="book-detail-day">Sunday, March 19</div>
-          </div>
-          <div class="book-confirmed" id="bookOk">
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-            Confirmed &mdash; customer notified
-          </div>
+          <div class="book-detail" id="bd"><div class="book-detail-time">8:00 AM</div><div class="book-detail-day">SUN MAR 19</div></div>
+          <div class="book-ok" id="bk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>CONFIRMED</div>
         </div>
 
-        <!-- 5: Text -->
-        <div class="screen-text" id="sText">
-          <div class="text-title">YOU RECEIVE</div>
-          <div class="text-bubble" id="b1">
-            <div class="text-sender">Jessica</div>
-            <div class="text-body">New job booked:<br>Sarah Martinez<br>Lockout — 412 Oak St<br>8:00 AM Sunday</div>
-            <div class="text-timestamp">2:18 AM</div>
-          </div>
-          <div class="text-bubble reply" id="b2">
-            <div class="text-body">Got it. Sending my guy.</div>
-            <div class="text-timestamp">2:19 AM</div>
-          </div>
-          <div class="result-line" id="resultLine">
-            <div class="result-amount">$350 saved</div>
-            <div class="result-label">while you slept</div>
-          </div>
+        <div class="screen-state" id="s5" style="align-items:stretch;">
+          <div class="text-tag">OWNER NOTIFIED</div>
+          <div class="msg-bubble" id="b1"><div class="msg-from">JESSICA</div><div class="msg-body">New job booked:<br>Sarah Martinez<br>Lockout — 412 Oak St<br>8:00 AM Sunday</div><div class="msg-ts">2:18 AM</div></div>
+          <div class="msg-bubble reply" id="b2"><div class="msg-body">Got it. Sending my guy.</div><div class="msg-ts">2:19 AM</div></div>
+          <div class="result" id="res"><div class="result-num">$350 saved</div><div class="result-label">WHILE YOU SLEPT</div></div>
         </div>
-
       </div>
 
-      <div class="accent-line top" id="accentTop"></div>
-      <div class="accent-line bottom" id="accentBottom"></div>
+      <div class="frame-line top" id="flt"></div>
+      <div class="frame-line btm" id="flb"></div>
     </div>
 
-    <div class="phone-label" id="phoneLabel">Jessica &middot; Always answering</div>
+    <div class="phone-readout" id="readout">JESSICA &middot; v2.1 &middot; ACTIVE</div>
   </div>
 
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
-(function() {
+(function(){
   'use strict';
 
-  // ═══ PARTICLES — warm palette ═══
-  const field = document.getElementById('particleField');
-  const particles = [];
-  const colors = ['gold','gold','cream','cream','green'];
-
-  for (let i = 0; i < 60; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle ' + colors[i % colors.length];
-    const angle = Math.random() * Math.PI * 2;
-    const r = 250 + Math.random() * 200;
-    p.dataset.sx = Math.cos(angle) * r;
-    p.dataset.sy = Math.sin(angle) * r;
-    const ty = -240 + Math.random() * 480;
-    const tx = (Math.random() > 0.5 ? 1 : -1) * (110 + Math.random() * 15);
-    p.dataset.tx = tx;
-    p.dataset.ty = ty;
-    p.style.left = '50%';
-    p.style.top = '50%';
-    field.appendChild(p);
-    particles.push(p);
+  // Particles
+  const pf=document.getElementById('pf'),ps=[];
+  const cls=['a','b','b','c','a','b'];
+  for(let i=0;i<50;i++){
+    const p=document.createElement('div');
+    p.className='particle '+cls[i%cls.length];
+    const a=Math.random()*Math.PI*2,r=250+Math.random()*200;
+    p.dataset.sx=Math.cos(a)*r;p.dataset.sy=Math.sin(a)*r;
+    const ty=-240+Math.random()*480;
+    const tx=(Math.random()>0.5?1:-1)*(110+Math.random()*15);
+    p.dataset.tx=tx;p.dataset.ty=ty;
+    p.style.left='50%';p.style.top='50%';
+    pf.appendChild(p);ps.push(p);
   }
 
-  // ═══ CALENDAR ═══
-  const cal = document.getElementById('cal');
-  ['S','M','T','W','T','F','S'].forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'book-d hdr';
-    el.textContent = d;
-    cal.appendChild(el);
-  });
-  for (let d = 1; d <= 31; d++) {
-    const el = document.createElement('div');
-    el.className = 'book-d' + (d >= 17 ? ' act' : '') + (d === 19 ? ' sel' : '');
-    el.textContent = d;
-    cal.appendChild(el);
-  }
+  // Calendar
+  const cal=document.getElementById('cal');
+  ['S','M','T','W','T','F','S'].forEach(d=>{const e=document.createElement('div');e.className='book-d hdr';e.textContent=d;cal.appendChild(e);});
+  for(let d=1;d<=31;d++){const e=document.createElement('div');e.className='book-d'+(d>=17?' act':'')+(d===19?' sel':'');e.textContent=d;cal.appendChild(e);}
 
-  // ═══ TYPEWRITER ═══
-  function typeText(id, text, dur) {
-    const el = document.getElementById(id);
-    let i = 0;
-    const ms = (dur / text.length) * 1000;
-    return new Promise(res => {
-      const iv = setInterval(() => {
-        el.textContent = text.substring(0, ++i);
-        if (i >= text.length) { clearInterval(iv); res(); }
-      }, ms);
-    });
-  }
+  // Typewriter
+  function type(id,txt,dur){const el=document.getElementById(id);let i=0;const ms=(dur/txt.length)*1000;return new Promise(r=>{const iv=setInterval(()=>{el.textContent=txt.substring(0,++i);if(i>=txt.length){clearInterval(iv);r();}},ms);});}
 
-  // ═══ WAVEFORM ═══
-  const bars = document.querySelectorAll('#waveform span');
-  let waveIv;
-  function startWave() {
-    waveIv = setInterval(() => {
-      bars.forEach(b => {
-        b.style.height = (6 + Math.random() * 34) + 'px';
-      });
-    }, 180);
-  }
-  function stopWave() {
-    clearInterval(waveIv);
-    bars.forEach(b => b.style.height = '4px');
-  }
+  // Waveform
+  const bars=document.querySelectorAll('#wf span');
+  let wIv;
+  function startW(){wIv=setInterval(()=>bars.forEach(b=>b.style.height=(4+Math.random()*36)+'px'),150);}
+  function stopW(){clearInterval(wIv);bars.forEach(b=>b.style.height='3px');}
 
-  // ═══ CALL TIMER ═══
-  let timerIv, secs = 0;
-  function startTimer() {
-    secs = 0;
-    const el = document.getElementById('callTimer');
-    timerIv = setInterval(() => {
-      secs++;
-      el.textContent = String(Math.floor(secs/60)).padStart(2,'0') + ':' + String(secs%60).padStart(2,'0');
-    }, 1000);
-  }
-  function stopTimer() { clearInterval(timerIv); }
+  // Timer
+  let tIv,sec=0;
+  function startT(){sec=0;const el=document.getElementById('timer');tIv=setInterval(()=>{sec++;el.textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');},1000);}
+  function stopT(){clearInterval(tIv);}
 
-  // ═══ NARRATION ═══
-  function narrate(step, desc) {
-    const s = document.getElementById('stageStep');
-    const d = document.getElementById('stageDesc');
-    gsap.to([s, d], { opacity: 0, y: -8, duration: 0.25, ease: 'power2.in', onComplete: () => {
-      s.textContent = step;
-      d.textContent = desc;
-      gsap.fromTo(s, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
-      gsap.fromTo(d, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.08, ease: 'power2.out' });
+  // Step narration
+  function step(num,label,desc){
+    const n=document.getElementById('stepNum'),l=document.getElementById('stepLabel'),d=document.getElementById('stepDesc');
+    gsap.to([n,l,d],{opacity:0,y:-6,duration:0.2,ease:'power2.in',onComplete:()=>{
+      n.textContent=String(num).padStart(2,'0');n.classList.add('active');
+      l.textContent=label;d.textContent=desc;
+      gsap.fromTo(n,{opacity:0,y:10},{opacity:1,y:0,duration:0.4,ease:'power2.out'});
+      gsap.fromTo(l,{opacity:0,y:8},{opacity:1,y:0,duration:0.35,delay:0.05,ease:'power2.out'});
+      gsap.fromTo(d,{opacity:0,y:8},{opacity:1,y:0,duration:0.4,delay:0.1,ease:'power2.out'});
     }});
   }
 
-  // ═══ RESET ═══
-  function resetAll() {
-    stopTimer(); stopWave();
-    document.getElementById('callTimer').textContent = '00:00';
-    ['t1','t2','t3','t4'].forEach(id => document.getElementById(id).textContent = '');
-    gsap.set(['#sRing','#sAnswer','#sCapture','#sBook','#sText'], { opacity: 0 });
-    gsap.set(['#f1','#f2','#f3','#f4'], { opacity: 0, y: 6 });
-    gsap.set(['#bookDetail'], { opacity: 0, y: 8 });
-    gsap.set(['#bookOk'], { opacity: 0 });
-    gsap.set(['#b1','#b2'], { opacity: 0, y: 8 });
-    gsap.set('#resultLine', { opacity: 0 });
-    gsap.set('#transcript', { opacity: 0 });
-    gsap.set(['.ring-btn'], { opacity: 0 });
+  // Reset
+  function reset(){
+    stopT();stopW();
+    document.getElementById('timer').textContent='00:00';
+    ['t1','t2','t3','t4'].forEach(id=>document.getElementById(id).textContent='');
+    gsap.set(['#s1','#s2','#s3','#s4','#s5'],{opacity:0});
+    gsap.set(['#f1','#f2','#f3','#f4'],{opacity:0,y:6});
+    gsap.set('#bd',{opacity:0,y:6});gsap.set('#bk',{opacity:0});
+    gsap.set(['#b1','#b2'],{opacity:0,y:6});gsap.set('#res',{opacity:0});
+    gsap.set('#transcript',{opacity:0});gsap.set('.ring-btn',{opacity:0});
+    gsap.set('#phone',{x:0});
+    document.getElementById('stepNum').classList.remove('active');
   }
 
-  // ═══ MASTER TIMELINE — 35 seconds, slow and elegant ═══
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: 4, onRepeat: resetAll });
+  // Timeline — 32s loop
+  const tl=gsap.timeline({repeat:-1,repeatDelay:3,onRepeat:reset});
 
-  // Phase 1: Particles assemble (0-4s)
-  tl.set(particles, {
-    x: i => +particles[i].dataset.sx,
-    y: i => +particles[i].dataset.sy,
-    opacity: 0.5, scale: 1,
-  });
+  // Particles assemble
+  tl.set(ps,{x:i=>+ps[i].dataset.sx,y:i=>+ps[i].dataset.sy,opacity:0.5});
+  tl.to(ps,{x:i=>+ps[i].dataset.tx,y:i=>+ps[i].dataset.ty,opacity:0.6,duration:3,stagger:{amount:1.2,from:'random'},ease:'power1.inOut'},0);
+  tl.to('#phone',{opacity:1,scale:1,duration:1.2,ease:'power1.out'},1.8);
+  tl.to('#flt',{opacity:0.3,duration:0.6},2.2);
+  tl.to('#flb',{opacity:0.3,duration:0.6},2.4);
+  tl.to('#readout',{opacity:1,duration:0.6},2.6);
+  tl.to(ps,{opacity:0,duration:1.2},2.8);
 
-  tl.to(particles, {
-    x: i => +particles[i].dataset.tx,
-    y: i => +particles[i].dataset.ty,
-    opacity: 0.7,
-    duration: 3.5,
-    stagger: { amount: 1.5, from: 'random' },
-    ease: 'power1.inOut',
-  }, 0);
+  // Ring
+  tl.to('#s1',{opacity:1,duration:0.5},3);
+  tl.call(()=>step(1,'INCOMING','A customer calls at 2:17 AM with an emergency lockout. Most businesses send this to voicemail.'),null,3);
+  tl.to('#phone',{x:-2,duration:0.04,repeat:14,yoyo:true,ease:'none'},3.5);
+  tl.to('.ring-btn',{opacity:1,duration:0.5,stagger:0.1},4.5);
 
-  // Phone materializes gently
-  tl.to('#phone', { opacity: 1, scale: 1, duration: 1.5, ease: 'power1.out' }, 2);
-  tl.to('#accentTop', { opacity: 0.4, duration: 0.8 }, 2.5);
-  tl.to('#accentBottom', { opacity: 0.4, duration: 0.8 }, 2.8);
-  tl.to('#phoneLabel', { opacity: 1, duration: 0.8 }, 3);
-  tl.to(particles, { opacity: 0, duration: 1.5 }, 3);
+  // Answer
+  tl.call(()=>step(2,'CONNECTED','Jessica picks up on the first ring. She greets Sarah by name and asks the right questions.'),null,7);
+  tl.to('#s1',{opacity:0,duration:0.3},7);
+  tl.to('#s2',{opacity:1,duration:0.4},7.2);
+  tl.call(startT,null,7.4);tl.call(startW,null,7.4);
+  tl.to('#transcript',{opacity:1,duration:0.8},8.5);
 
-  // Phase 2: Phone rings (3-7s) — 1s earlier
-  tl.to('#sRing', { opacity: 1, duration: 0.6 }, 3);
-  tl.call(() => narrate('Step 1 of 5', 'A customer calls at 2:17 AM with an emergency lockout. Most businesses send this to voicemail.'), null, 3);
-  tl.to('#phone', { x: -2, duration: 0.05, repeat: 12, yoyo: true, ease: 'none' }, 3.5);
-  tl.to('.ring-btn', { opacity: 1, duration: 0.6, stagger: 0.15 }, 4.5);
+  // Capture
+  tl.call(()=>{stopT();stopW();},null,12);
+  tl.call(()=>step(3,'CAPTURING','Every detail captured automatically. Name, address, issue, urgency — ready before anyone wakes up.'),null,12);
+  tl.to('#s2',{opacity:0,duration:0.3},12);
+  tl.to('#s3',{opacity:1,duration:0.4},12.2);
+  tl.to('#f1',{opacity:1,y:0,duration:0.4},12.6);tl.call(()=>type('t1','Sarah Martinez',0.7),null,12.6);
+  tl.to('#f2',{opacity:1,y:0,duration:0.4},13.6);tl.call(()=>type('t2','Locked out — front door',0.7),null,13.6);
+  tl.to('#f3',{opacity:1,y:0,duration:0.4},14.6);tl.call(()=>type('t3','412 Oak St, Nashville',0.7),null,14.6);
+  tl.to('#f4',{opacity:1,y:0,duration:0.4},15.6);tl.call(()=>type('t4','High — stranded outside',0.6),null,15.6);
 
-  // Phase 3: Jessica answers (7-12s) — 1s earlier
-  tl.call(() => narrate('Step 2 of 5', 'Jessica picks up on the first ring. She greets Sarah by name and asks the right questions — like a trained employee.'), null, 7);
-  tl.to('#sRing', { opacity: 0, duration: 0.4 }, 7);
-  tl.to('#sAnswer', { opacity: 1, duration: 0.5 }, 7.2);
-  tl.call(startTimer, null, 7.5);
-  tl.call(startWave, null, 7.5);
-  tl.to('#transcript', { opacity: 1, duration: 1 }, 8.5);
+  // Book
+  tl.call(()=>step(4,'BOOKED','Jessica books the appointment into your calendar. The customer gets an instant confirmation.'),null,17.5);
+  tl.to('#s3',{opacity:0,duration:0.3},17.5);
+  tl.to('#s4',{opacity:1,duration:0.4},17.7);
+  tl.to('#bd',{opacity:1,y:0,duration:0.5,ease:'power2.out'},19);
+  tl.to('#bk',{opacity:1,duration:0.5},20);
 
-  // Phase 4: Capturing details (12-18s) — 1s earlier
-  tl.call(() => { stopTimer(); stopWave(); }, null, 12);
-  tl.call(() => narrate('Step 3 of 5', 'Every detail captured automatically. Name, address, issue, urgency — ready for your team before anyone wakes up.'), null, 12);
-  tl.to('#sAnswer', { opacity: 0, duration: 0.4 }, 12);
-  tl.to('#sCapture', { opacity: 1, duration: 0.5 }, 12.2);
+  // Text
+  tl.call(()=>step(5,'DELIVERED','You wake up to a text with every detail. The job is booked. You didn\'t lift a finger.'),null,22.5);
+  tl.to('#s4',{opacity:0,duration:0.3},22.5);
+  tl.to('#s5',{opacity:1,duration:0.4},22.7);
+  tl.to('#b1',{opacity:1,y:0,duration:0.5},23.5);
+  tl.to('#b2',{opacity:1,y:0,duration:0.5},25);
+  tl.to('#res',{opacity:1,duration:0.6},26.5);
 
-  tl.to('#f1', { opacity: 1, y: 0, duration: 0.5 }, 12.8);
-  tl.call(() => typeText('t1', 'Sarah Martinez', 0.8), null, 12.8);
-
-  tl.to('#f2', { opacity: 1, y: 0, duration: 0.5 }, 14);
-  tl.call(() => typeText('t2', 'Locked out — front door', 0.8), null, 14);
-
-  tl.to('#f3', { opacity: 1, y: 0, duration: 0.5 }, 15.2);
-  tl.call(() => typeText('t3', '412 Oak St, Nashville', 0.8), null, 15.2);
-
-  tl.to('#f4', { opacity: 1, y: 0, duration: 0.5 }, 16.4);
-  tl.call(() => typeText('t4', 'High — stranded outside', 0.7), null, 16.4);
-
-  // Phase 5: Booking appointment (18-24s) — 1.5s earlier
-  tl.call(() => narrate('Step 4 of 5', 'Jessica books the appointment into your calendar. The customer gets an instant confirmation. No phone tag. No callbacks.'), null, 18);
-  tl.to('#sCapture', { opacity: 0, duration: 0.4 }, 18);
-  tl.to('#sBook', { opacity: 1, duration: 0.5 }, 18.2);
-  tl.to('#bookDetail', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 19.5);
-  tl.to('#bookOk', { opacity: 1, duration: 0.6 }, 21);
-
-  // Phase 6: Text to owner (24-30s) — 1.5s earlier
-  tl.call(() => narrate('Step 5 of 5', 'You wake up to a text with every detail. The job is booked. The customer is confirmed. You didn\'t lift a finger.'), null, 24);
-  tl.to('#sBook', { opacity: 0, duration: 0.4 }, 24);
-  tl.to('#sText', { opacity: 1, duration: 0.5 }, 24.2);
-  tl.to('#b1', { opacity: 1, y: 0, duration: 0.6 }, 25);
-  tl.to('#b2', { opacity: 1, y: 0, duration: 0.6 }, 26.5);
-  tl.to('#resultLine', { opacity: 1, duration: 0.8 }, 28);
-
-  // Phase 7: Dissolve (30-33s) — 2.5s earlier
-  tl.to('#sText', { opacity: 0, duration: 0.8 }, 30);
-  tl.to('#accentTop', { opacity: 0, duration: 0.5 }, 30);
-  tl.to('#accentBottom', { opacity: 0, duration: 0.5 }, 30);
-  tl.to('#phoneLabel', { opacity: 0, duration: 0.5 }, 30);
-
-  tl.set(particles, { opacity: 0.5 }, 30);
-  tl.to(particles, {
-    x: i => +particles[i].dataset.sx * 1.3,
-    y: i => +particles[i].dataset.sy * 1.3,
-    opacity: 0,
-    duration: 2,
-    stagger: { amount: 0.6, from: 'random' },
-    ease: 'power1.in',
-  }, 30);
-
-  tl.to('#phone', { opacity: 0, scale: 0.97, duration: 1.5, ease: 'power1.in' }, 30);
-  tl.call(() => narrate('', ''), null, 31);
-
+  // Dissolve
+  tl.to('#s5',{opacity:0,duration:0.6},29);
+  tl.to(['#flt','#flb','#readout'],{opacity:0,duration:0.4},29);
+  tl.set(ps,{opacity:0.4},29);
+  tl.to(ps,{x:i=>+ps[i].dataset.sx*1.3,y:i=>+ps[i].dataset.sy*1.3,opacity:0,duration:1.8,stagger:{amount:0.5,from:'random'},ease:'power1.in'},29);
+  tl.to('#phone',{opacity:0,scale:0.97,duration:1.2,ease:'power1.in'},29);
+  tl.call(()=>{const n=document.getElementById('stepNum');gsap.to([n,'#stepLabel','#stepDesc'],{opacity:0,duration:0.4});},null,30);
 })();
 </script>
 </body>
