@@ -1,5 +1,5 @@
 // ============================================================================
-// The Call Taker — GHL API Proxy Worker (Production)
+// The Call Taker — GHL API Proxy Worker v1.0.0 (Production)
 // Cloudflare Worker that proxies GHL API calls so the API key never touches
 // the browser. Rate-limited, origin-locked, endpoint-restricted.
 // ============================================================================
@@ -7,7 +7,6 @@
 // ── CONFIG ──────────────────────────────────────────────────────────────────
 
 const GHL_BASE = 'https://services.leadconnectorhq.com';
-const GHL_LOCATION_ID = 'tQb9YmrGDrdVUJYPKrsY';
 
 const ALLOWED_ORIGINS = new Set([
   'https://thecalltaker.com',
@@ -15,7 +14,6 @@ const ALLOWED_ORIGINS = new Set([
 ]);
 
 // Endpoint allowlist — regex patterns matched against the proxied path.
-// Only these GHL routes are reachable through the proxy.
 const ALLOWED_ENDPOINTS = [
   /^\/contacts\/?$/,                          // POST /contacts/
   /^\/contacts\/[a-zA-Z0-9]+\/notes\/?$/,    // POST /contacts/{id}/notes
@@ -26,10 +24,10 @@ const ALLOWED_ENDPOINTS = [
   /^\/opportunities\/[a-zA-Z0-9]+\/?$/,      // GET  /opportunities/{id}
 ];
 
-const RATE_LIMIT_MAX   = 10;          // requests per window
-const RATE_LIMIT_WINDOW = 60;         // seconds
-const MAX_BODY_SIZE    = 1_048_576;   // 1 MB
-const GHL_TIMEOUT_MS   = 10_000;      // 10 s
+const RATE_LIMIT_MAX    = 10;          // requests per window
+const RATE_LIMIT_WINDOW = 60;          // seconds
+const MAX_BODY_SIZE     = 1_048_576;   // 1 MB
+const GHL_TIMEOUT_MS    = 10_000;      // 10 s
 
 // Fields stripped from GHL responses before returning to client
 const SENSITIVE_FIELDS = new Set([
@@ -39,10 +37,6 @@ const SENSITIVE_FIELDS = new Set([
 ]);
 
 // ── HELPERS ─────────────────────────────────────────────────────────────────
-
-function requestId() {
-  return crypto.randomUUID();
-}
 
 function jsonResponse(body, status, reqId, origin) {
   const headers = {
@@ -73,15 +67,14 @@ function sanitize(obj) {
   return obj;
 }
 
-/** Get the real client IP from Cloudflare headers */
 function clientIp(request) {
   return request.headers.get('CF-Connecting-IP') || 'unknown';
 }
 
-// ── RATE LIMITER (in-memory) ─────────────────────────────────────────────────
+// ── RATE LIMITER (in-memory) ────────────────────────────────────────────────
 // In-memory avoids KV writes (free tier: 1,000 writes/day, we'd blow that).
 // Trade-off: rate limit resets when isolate recycles (~30s idle). At 2K req/day
-// this is fine — an attacker would need sustained bursts from one IP.
+// this is acceptable — an attacker would need sustained bursts from one IP.
 
 const rateLimitMap = new Map();
 
@@ -120,23 +113,22 @@ function isAllowedEndpoint(path) {
 // ── MAIN HANDLER ────────────────────────────────────────────────────────────
 
 export default {
-  async fetch(request, env, ctx) {
-    const reqId = requestId();
+  async fetch(request, env) {
+    const reqId = crypto.randomUUID();
     const origin = request.headers.get('Origin') || '';
+    const url = new URL(request.url);
 
-    // ── Health check (no auth required) ──────────────────────────────────
-    const url0 = new URL(request.url);
-    if (url0.pathname === '/api/ghl/health') {
+    // ── Health check (no auth required) ────────────────────────────────
+    if (url.pathname === '/api/ghl/health') {
       return jsonResponse({
         status: 'ok',
         worker: 'tct-ghl-proxy',
+        version: '1.0.0',
         timestamp: new Date().toISOString(),
-        rateLimiter: 'in-memory',
-        secretsSet: !!(env.GHL_API_KEY && env.PROXY_SECRET),
       }, 200, reqId, origin);
     }
 
-    // ── CORS preflight ────────────────────────────────────────────────────
+    // ── CORS preflight ─────────────────────────────────────────────────
     if (request.method === 'OPTIONS') {
       if (!ALLOWED_ORIGINS.has(origin)) {
         return jsonResponse({ error: 'Forbidden origin' }, 403, reqId, null);
@@ -153,9 +145,9 @@ export default {
       });
     }
 
-    // ── Origin check ──────────────────────────────────────────────────────
-    // Allow requests with no Origin header (server-to-server, curl testing)
-    // but block requests from wrong origins (other websites)
+    // ── Origin check ───────────────────────────────────────────────────
+    // Allow requests with no Origin header (curl, server-to-server)
+    // Block requests from wrong origins (other websites)
     if (origin && !ALLOWED_ORIGINS.has(origin)) {
       console.log(JSON.stringify({
         reqId, event: 'blocked_origin', origin, ip: clientIp(request),
@@ -163,7 +155,7 @@ export default {
       return jsonResponse({ error: 'Forbidden origin' }, 403, reqId, null);
     }
 
-    // ── Proxy secret auth ─────────────────────────────────────────────────
+    // ── Proxy secret auth ──────────────────────────────────────────────
     const authHeader = request.headers.get('Authorization') || '';
     const token = authHeader.replace(/^Bearer\s+/i, '');
     if (!token || token !== env.PROXY_SECRET) {
@@ -173,7 +165,7 @@ export default {
       return jsonResponse({ error: 'Unauthorized' }, 401, reqId, origin);
     }
 
-    // ── Rate limiting ─────────────────────────────────────────────────────
+    // ── Rate limiting ──────────────────────────────────────────────────
     const ip = clientIp(request);
     const rl = checkRateLimit(ip);
     if (!rl.allowed) {
@@ -186,9 +178,7 @@ export default {
       );
     }
 
-    // ── Parse proxy path ──────────────────────────────────────────────────
-    const url = new URL(request.url);
-    // Strip the /api/ghl prefix to get the GHL endpoint path
+    // ── Parse proxy path ───────────────────────────────────────────────
     const ghlPath = url.pathname.replace(/^\/api\/ghl/, '') || '/';
 
     if (!isAllowedEndpoint(ghlPath)) {
@@ -198,13 +188,12 @@ export default {
       return jsonResponse({ error: 'Endpoint not allowed' }, 403, reqId, origin);
     }
 
-    // ── Body size check ───────────────────────────────────────────────────
+    // ── Body size check ────────────────────────────────────────────────
     const contentLength = parseInt(request.headers.get('Content-Length') || '0', 10);
     if (contentLength > MAX_BODY_SIZE) {
       return jsonResponse({ error: 'Request body too large' }, 413, reqId, origin);
     }
 
-    // Read body (if any) for size verification
     let bodyText = null;
     if (request.method !== 'GET' && request.method !== 'HEAD') {
       try {
@@ -217,16 +206,16 @@ export default {
       }
     }
 
-    // ── Build GHL request ─────────────────────────────────────────────────
+    // ── Build GHL request ──────────────────────────────────────────────
     const ghlUrl = `${GHL_BASE}${ghlPath}${url.search}`;
     const ghlHeaders = {
       'Authorization': `Bearer ${env.GHL_API_KEY}`,
       'Version': '2021-07-28',
       'Content-Type': 'application/json',
-      'User-Agent': 'TheCallTaker-Proxy/1.0',
+      'User-Agent': 'tct-ghl-proxy/1.0',
     };
 
-    // ── Fetch with timeout ────────────────────────────────────────────────
+    // ── Fetch with timeout ─────────────────────────────────────────────
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), GHL_TIMEOUT_MS);
 
@@ -253,7 +242,7 @@ export default {
     }
     clearTimeout(timeout);
 
-    // ── Handle GHL rate limiting ──────────────────────────────────────────
+    // ── Handle GHL rate limiting ───────────────────────────────────────
     if (ghlResponse.status === 429) {
       console.log(JSON.stringify({
         reqId, event: 'ghl_rate_limited', path: ghlPath, ip,
@@ -264,7 +253,7 @@ export default {
       );
     }
 
-    // ── Handle GHL auth errors (don't leak key details) ───────────────────
+    // ── Handle GHL auth errors (don't leak key details) ────────────────
     if (ghlResponse.status === 401) {
       console.log(JSON.stringify({
         reqId, event: 'ghl_auth_error', path: ghlPath, status: 401,
@@ -275,18 +264,17 @@ export default {
       );
     }
 
-    // ── Sanitize and return GHL response ──────────────────────────────────
+    // ── Sanitize and return GHL response ───────────────────────────────
     let responseBody;
     const responseText = await ghlResponse.text();
     try {
       const parsed = JSON.parse(responseText);
       responseBody = JSON.stringify(sanitize(parsed));
     } catch {
-      // Non-JSON response — return as-is (e.g. 204 No Content)
       responseBody = responseText;
     }
 
-    // ── Log (never log keys or bodies) ────────────────────────────────────
+    // ── Log success (never log keys, tokens, or bodies) ────────────────
     console.log(JSON.stringify({
       reqId,
       event: 'proxy_success',
@@ -294,10 +282,9 @@ export default {
       path: ghlPath,
       status: ghlResponse.status,
       ip,
-      rateRemaining: rl.remaining,
     }));
 
-    // ── Build response headers ────────────────────────────────────────────
+    // ── Build response headers ─────────────────────────────────────────
     const responseHeaders = {
       'Content-Type': ghlResponse.headers.get('Content-Type') || 'application/json',
       'X-Request-Id': reqId,
