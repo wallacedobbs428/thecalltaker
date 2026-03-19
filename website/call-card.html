@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Battle Card</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#141414;--border:#222;--green:#00ff88;--green-dim:rgba(0,255,136,.08);--red:#ff4444;--amber:#ffaa00;--text:#f0f0f0;--muted:#666;--mono:'SF Mono','Menlo','Consolas',monospace}
+html{overflow:hidden;height:100%}
+body{font-family:-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--text);height:100%;overflow:hidden;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;user-select:none}
+
+/* Swipe container */
+.deck{display:flex;width:400%;height:100%;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.slide{width:25%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 100px}
+
+/* Nav dots */
+.dots{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:100}
+.dot{width:8px;height:8px;border-radius:50%;background:#333;transition:background .2s}
+.dot.on{background:var(--green)}
+
+/* Nav labels */
+.nav-bar{position:fixed;bottom:28px;left:0;right:0;display:flex;justify-content:center;gap:20px;z-index:99}
+.nav-btn{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#555;background:none;border:none;padding:4px 8px;cursor:pointer}
+.nav-btn.on{color:var(--green)}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.card-title{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+
+/* Timer */
+.timer-display{font-family:var(--mono);font-size:48px;font-weight:900;color:var(--green);text-align:center;letter-spacing:.05em;margin:8px 0}
+.timer-bar{height:3px;background:#222;border-radius:2px;overflow:hidden;margin-bottom:16px}
+.timer-fill{height:100%;background:var(--green);border-radius:2px;transition:width .5s linear;width:0}
+.start-btn{width:100%;padding:14px;border:none;border-radius:10px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .15s}
+.start-btn.ready{background:var(--green);color:#000}
+.start-btn.running{background:#222;color:var(--red)}
+.start-btn.ready:active{transform:scale(.97)}
+
+/* Script lines */
+.script-line{font-family:var(--mono);font-size:12px;line-height:1.6;padding:10px 12px;border-radius:8px;margin-bottom:6px;color:#888;border-left:3px solid #222;transition:all .3s}
+.script-line.active{color:var(--text);border-left-color:var(--green);background:var(--green-dim)}
+.script-line .ts{color:var(--green);font-weight:700;font-size:10px;display:block;margin-bottom:2px}
+.script-line .label{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--green);opacity:.7}
+
+/* Objections */
+.obj-card{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;cursor:pointer}
+.obj-q{padding:14px 16px;font-size:14px;font-weight:700;color:var(--red);display:flex;justify-content:space-between;align-items:center}
+.obj-q .arrow{color:#444;transition:transform .2s;font-size:12px}
+.obj-card.open .arrow{transform:rotate(90deg)}
+.obj-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.obj-card.open .obj-a{max-height:200px}
+.obj-counter{padding:0 16px 12px;font-size:13px;color:var(--green);font-weight:600;line-height:1.5}
+.obj-why{padding:0 16px 14px;font-size:11px;color:#555;line-height:1.4}
+
+/* Schedule */
+.sched-row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;margin-bottom:6px;background:var(--card);border:1px solid var(--border);cursor:pointer;transition:border-color .15s}
+.sched-row:active{border-color:var(--green)}
+.sched-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sched-dot.green{background:var(--green)}
+.sched-dot.amber{background:var(--amber)}
+.sched-dot.red{background:var(--red)}
+.sched-time{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--green);min-width:52px}
+.sched-name{font-size:13px;font-weight:600;flex:1}
+.sched-star{color:var(--amber);font-size:14px}
+.sched-phone{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.copied-toast{position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);background:var(--green);color:#000;padding:12px 28px;border-radius:10px;font-size:14px;font-weight:800;z-index:200;opacity:0;transition:opacity .2s;pointer-events:none}
+.copied-toast.show{opacity:1}
+
+/* Action buttons */
+.action-btn{width:100%;padding:16px;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:10px;font-family:inherit;transition:all .15s}
+.action-btn:active{transform:scale(.97)}
+.btn-green{background:var(--green);color:#000}
+.btn-amber{background:var(--amber);color:#000}
+.btn-party{background:linear-gradient(135deg,var(--green),#00ccff);color:#000}
+
+/* Confetti */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:300}
+.confetti-piece{position:absolute;width:8px;height:8px;border-radius:2px;animation:confettiFall 2s ease forwards}
+@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+
+/* Section header */
+.sec-head{font-size:20px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px}
+.sec-sub{font-size:12px;color:var(--muted);margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══ SLIDE 1: SCRIPT + TIMER ═══ -->
+<div class="slide" id="s1">
+  <div class="sec-head">90-Second Close</div>
+  <div class="sec-sub">Tap START when they pick up</div>
+
+  <div class="timer-display" id="timer">1:30</div>
+  <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+  <button class="start-btn ready" id="startBtn" onclick="toggleTimer()">START CALL</button>
+
+  <div style="margin-top:16px">
+    <div class="script-line active" data-start="0" data-end="10">
+      <span class="ts">0:00 – 0:10</span>
+      <span class="label">Opener</span>
+      "Hey, is this the owner? This is Wallace from The Call Taker. We actually called your business after hours last night — nobody picked up. That's why I'm reaching out."
+    </div>
+    <div class="script-line" data-start="10" data-end="25">
+      <span class="ts">0:10 – 0:25</span>
+      <span class="label">Bridge</span>
+      "You got a text from me earlier about a roofing company we set up in Nashville. I wanted to call you personally instead of just texting — figured you'd appreciate that."
+    </div>
+    <div class="script-line" data-start="25" data-end="45">
+      <span class="ts">0:25 – 0:45</span>
+      <span class="label">Pain + Proof</span>
+      "Quick question — how many calls do you think you miss after hours in a week? Most owners say 3-5. At your job value, that's $1,000-$2,500 a month going to whoever answers first."
+    </div>
+    <div class="script-line" data-start="45" data-end="65">
+      <span class="ts">0:45 – 1:05</span>
+      <span class="label">Micro-Demo</span>
+      "Can I play you a 20-second clip of Jessica answering as YOUR business? Or better — call (615) 784-5747 right now on another phone. She'll pick up. Try to stump her."
+    </div>
+    <div class="script-line" data-start="65" data-end="80">
+      <span class="ts">1:05 – 1:20</span>
+      <span class="label">Close</span>
+      "We're taking 2 more founding customers this week. $264 first month, Jessica goes live tonight. After Friday it's standard pricing. Want me to text you the link?"
+    </div>
+    <div class="script-line" data-start="80" data-end="90">
+      <span class="ts">1:20 – 1:30</span>
+      <span class="label">Next Step</span>
+      "I'll text you the payment link right now — thecalltaker.com/pay. Stay on the phone with me while you open it. Takes 90 seconds."
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2: OBJECTIONS ═══ -->
+<div class="slide" id="s2">
+  <div class="sec-head">Objection Kills</div>
+  <div class="sec-sub">Tap to reveal counter</div>
+
+  <div class="obj-card" onclick="this.classList.toggle('open')">
+    <div class="obj-q">"Too expensive" <span class="arrow">›</span></div>
+    <div class="obj-a">
+      <div class="obj-counter">"$97/mo is less than one missed service call. You're losing that every night right now."</div>
+      <div class="obj-why">Reframes cost as loss they're already paying. Don't defend price — attack the alternative.</div>
+    </div>
+  </div>
+
+  <div class="obj-card" onclick="this.classList.toggle('open')">
+    <div class="obj-q">"My customers want humans" <span class="arrow">›</span></div>
+    <div class="obj-a">
+      <div class="obj-counter">"Call (615) 784-5747 right now. If you can tell it's not human, I'll never call you again."</div>
+      <div class="obj-why">Turns objection into demo. Nobody has ever correctly identified Jessica as AI on first call.</div>
+    </div>
+  </div>
+
+  <div class="obj-card" onclick="this.classList.toggle('open')">
+    <div class="obj-q">"What if it fails?" <span class="arrow">›</span></div>
+    <div class="obj-a">
+      <div class="obj-counter">"14-day free pilot. If Jessica doesn't book you a single job, you pay nothing. I eat the cost."</div>
+      <div class="obj-why">Zero risk. They literally cannot lose money. The pilot is the answer to every fear objection.</div>
+    </div>
+  </div>
+
+  <div class="obj-card" onclick="this.classList.toggle('open')">
+    <div class="obj-q">"I already have voicemail" <span class="arrow">›</span></div>
+    <div class="obj-a">
+      <div class="obj-counter">"85% of callers don't leave voicemails. They call the next company. Voicemail is a competitor referral machine."</div>
+      <div class="obj-why">Makes them see voicemail as the enemy, not the solution. The stat hits hard because they know it's true.</div>
+    </div>
+  </div>
+
+  <div class="obj-card" onclick="this.classList.toggle('open')">
+    <div class="obj-q">"How do I set it up?" <span class="arrow">›</span></div>
+    <div class="obj-a">
+      <div class="obj-counter">"Forward your phone to us — same way you'd forward to an employee. Takes 2 minutes. I'll walk you through it live."</div>
+      <div class="obj-why">This isn't an objection — it's buying intent. Answer fast and close immediately.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3: CALL SCHEDULE ═══ -->
+<div class="slide" id="s3">
+  <div class="sec-head">Call Schedule</div>
+  <div class="sec-sub">March 19 · Tap to copy number</div>
+
+  <div class="sched-row" onclick="copyPhone('+13639993104',this)" data-idx="0">
+    <div class="sched-dot green"></div>
+    <div class="sched-time">7:32</div>
+    <div class="sched-name">Lead #4 <span class="sched-star">★</span> REPLIED</div>
+    <div class="sched-phone">+1 363-999-3104</div>
+  </div>
+
+  <div class="sched-row" onclick="copyPhone('+19196083694',this)" data-idx="1">
+    <div class="sched-dot green"></div>
+    <div class="sched-time">7:38</div>
+    <div class="sched-name">Highest (score 95)</div>
+    <div class="sched-phone">+1 919-608-3694</div>
+  </div>
+
+  <div class="sched-row" onclick="copyPhone('+16018329837',this)" data-idx="2">
+    <div class="sched-dot green"></div>
+    <div class="sched-time">10:05</div>
+    <div class="sched-name">HVAC Jackson MS (95)</div>
+    <div class="sched-phone">+1 601-832-9837</div>
+  </div>
+
+  <div class="sched-row" onclick="copyPhone('+17133677985',this)" data-idx="3">
+    <div class="sched-dot green"></div>
+    <div class="sched-time">10:20</div>
+    <div class="sched-name">Best HVAC Houston (95)</div>
+    <div class="sched-phone">+1 713-367-7985</div>
+  </div>
+
+  <div class="sched-row" onclick="copyPhone('+12147482999',this)" data-idx="4">
+    <div class="sched-dot green"></div>
+    <div class="sched-time">10:35</div>
+    <div class="sched-name">Rainaldi (80)</div>
+    <div class="sched-phone">+1 214-748-2999</div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4: POST-CALL ACTIONS ═══ -->
+<div class="slide" id="s4">
+  <div class="sec-head">Post-Call</div>
+  <div class="sec-sub">Tap after each call</div>
+
+  <button class="action-btn btn-green" onclick="sendPayLink()">SEND PAYMENT LINK</button>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Copies this SMS</div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.6">Hey — here's the link to get started: thecalltaker.com/pay · $264 first month, Jessica goes live tonight. I'm standing by. -Wallace</div>
+  </div>
+
+  <button class="action-btn btn-amber" onclick="logVoicemail()">LOG VOICEMAIL</button>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">18-Second VM Script</div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.6">Hey, this is Wallace from The Call Taker. Called your line last night after hours — nobody picked up. That's costing you money every night. Call me back at 615-784-5747 or just reply to my text. 45 seconds is all I need.</div>
+  </div>
+
+  <button class="action-btn btn-party" onclick="markClosed()">MARK CLOSED 🎉</button>
+</div>
+
+</div><!-- /deck -->
+
+<!-- Nav -->
+<div class="dots">
+  <div class="dot on" data-s="0"></div>
+  <div class="dot" data-s="1"></div>
+  <div class="dot" data-s="2"></div>
+  <div class="dot" data-s="3"></div>
+</div>
+<div class="nav-bar">
+  <button class="nav-btn on" data-s="0" onclick="goSlide(0)">Script</button>
+  <button class="nav-btn" data-s="1" onclick="goSlide(1)">Objections</button>
+  <button class="nav-btn" data-s="2" onclick="goSlide(2)">Schedule</button>
+  <button class="nav-btn" data-s="3" onclick="goSlide(3)">Actions</button>
+</div>
+
+<!-- Toast -->
+<div class="copied-toast" id="toast">Copied!</div>
+
+<!-- Confetti container -->
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<script>
+// ═══ SWIPE NAV ═══
+var deck=document.getElementById('deck'),cur=0,total=4,startX=0,diff=0;
+function goSlide(n){cur=Math.max(0,Math.min(n,total-1));deck.style.transform='translateX(-'+cur*25+'%)';document.querySelectorAll('.dot').forEach(function(d,i){d.classList.toggle('on',i===cur)});document.querySelectorAll('.nav-btn').forEach(function(b,i){b.classList.toggle('on',i===cur)})}
+deck.addEventListener('touchstart',function(e){startX=e.touches[0].clientX},{passive:true});
+deck.addEventListener('touchmove',function(e){diff=startX-e.touches[0].clientX},{passive:true});
+deck.addEventListener('touchend',function(){if(Math.abs(diff)>50){diff>0?goSlide(cur+1):goSlide(cur-1)}diff=0});
+
+// ═══ TIMER ═══
+var timerEl=document.getElementById('timer'),fillEl=document.getElementById('timerFill'),startBtn=document.getElementById('startBtn');
+var timerInterval=null,seconds=90,running=false;
+function toggleTimer(){
+  if(!running){running=true;startBtn.textContent='STOP';startBtn.className='start-btn running';seconds=90;
+    timerInterval=setInterval(function(){
+      seconds--;if(seconds<0){clearInterval(timerInterval);running=false;startBtn.textContent='RESTART';startBtn.className='start-btn ready';seconds=0}
+      var m=Math.floor(seconds/60),s=seconds%60;timerEl.textContent=m+':'+(s<10?'0':'')+s;
+      fillEl.style.width=((90-seconds)/90*100)+'%';
+      if(seconds<=10){timerEl.style.color='var(--red)'}else{timerEl.style.color='var(--green)'}
+      updateScriptHighlight(90-seconds);
+    },1000);
+  }else{clearInterval(timerInterval);running=false;startBtn.textContent='START CALL';startBtn.className='start-btn ready';seconds=90;timerEl.textContent='1:30';timerEl.style.color='var(--green)';fillEl.style.width='0';document.querySelectorAll('.script-line').forEach(function(l,i){l.classList.toggle('active',i===0)})}
+}
+function updateScriptHighlight(elapsed){
+  document.querySelectorAll('.script-line').forEach(function(l){
+    var s=parseInt(l.dataset.start),e=parseInt(l.dataset.end);
+    l.classList.toggle('active',elapsed>=s&&elapsed<e);
+  });
+}
+
+// ═══ COPY PHONE ═══
+function copyPhone(num,el){
+  navigator.clipboard.writeText(num).then(function(){showToast('Phone copied: '+num)}).catch(function(){
+    var ta=document.createElement('textarea');ta.value=num;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('Phone copied: '+num);
+  });
+}
+
+// ═══ TOAST ═══
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1500)}
+
+// ═══ ACTIONS ═══
+function sendPayLink(){
+  var msg="Hey — here's the link to get started: thecalltaker.com/pay · $264 first month, Jessica goes live tonight. I'm standing by. -Wallace";
+  navigator.clipboard.writeText(msg).then(function(){showToast('Payment SMS copied!')}).catch(function(){showToast('Payment SMS copied!')});
+}
+
+function logVoicemail(){
+  // Mark current schedule row amber
+  var rows=document.querySelectorAll('.sched-row');
+  rows.forEach(function(r){
+    var d=r.querySelector('.sched-dot');
+    if(d.classList.contains('green')){d.classList.remove('green');d.classList.add('amber');return}
+  });
+  var vm="Hey, this is Wallace from The Call Taker. Called your line last night after hours — nobody picked up. That's costing you money every night. Call me back at 615-784-5747 or just reply to my text. 45 seconds is all I need.";
+  navigator.clipboard.writeText(vm).then(function(){showToast('VM script copied + logged')}).catch(function(){showToast('VM logged')});
+}
+
+function markClosed(){
+  showToast('FIRST DOLLAR!');
+  // Confetti
+  var wrap=document.getElementById('confettiWrap');
+  var colors=['#00ff88','#00ccff','#ffaa00','#ff4444','#ffffff','#ff00ff'];
+  for(var i=0;i<80;i++){
+    var p=document.createElement('div');p.className='confetti-piece';
+    p.style.left=Math.random()*100+'%';p.style.top='-10px';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDelay=Math.random()*0.5+'s';
+    p.style.animationDuration=(1.5+Math.random())+'s';
+    p.style.width=(4+Math.random()*8)+'px';
+    p.style.height=(4+Math.random()*8)+'px';
+    wrap.appendChild(p);
+  }
+  setTimeout(function(){wrap.innerHTML=''},3000);
+  // Fire ntfy
+  fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR',{method:'POST',body:'FIRST DOLLAR CLOSED!\nWallace marked a deal as closed from the battle card.\nCheck GHL for payment-received tag.\nTimestamp: '+new Date().toLocaleString(),headers:{'Title':'FIRST DOLLAR CLOSED','Priority':'urgent','Tags':'moneybag,tada,rotating_light'}}).catch(function(){});
+}
+</script>
+</body>
+</html>
