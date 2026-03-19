@@ -871,60 +871,60 @@ body {
   tl.to('#phoneLabel', { opacity: 1, duration: 0.8 }, 3);
   tl.to(particles, { opacity: 0, duration: 1.5 }, 3);
 
-  // Phase 2: Phone rings (4-8s)
-  tl.to('#sRing', { opacity: 1, duration: 0.6 }, 4);
-  tl.call(() => narrate('Step 1 of 5', 'A customer calls at 2:17 AM with an emergency lockout. Most businesses send this to voicemail.'), null, 4);
-  tl.to('#phone', { x: -2, duration: 0.05, repeat: 12, yoyo: true, ease: 'none' }, 4.5);
-  tl.to('.ring-btn', { opacity: 1, duration: 0.6, stagger: 0.15 }, 5.5);
+  // Phase 2: Phone rings (3-7s) — 1s earlier
+  tl.to('#sRing', { opacity: 1, duration: 0.6 }, 3);
+  tl.call(() => narrate('Step 1 of 5', 'A customer calls at 2:17 AM with an emergency lockout. Most businesses send this to voicemail.'), null, 3);
+  tl.to('#phone', { x: -2, duration: 0.05, repeat: 12, yoyo: true, ease: 'none' }, 3.5);
+  tl.to('.ring-btn', { opacity: 1, duration: 0.6, stagger: 0.15 }, 4.5);
 
-  // Phase 3: Jessica answers (8-13s)
-  tl.call(() => narrate('Step 2 of 5', 'Jessica picks up on the first ring. She greets Sarah by name and asks the right questions — like a trained employee.'), null, 8);
-  tl.to('#sRing', { opacity: 0, duration: 0.4 }, 8);
-  tl.to('#sAnswer', { opacity: 1, duration: 0.5 }, 8.2);
-  tl.call(startTimer, null, 8.5);
-  tl.call(startWave, null, 8.5);
-  tl.to('#transcript', { opacity: 1, duration: 1 }, 9.5);
+  // Phase 3: Jessica answers (7-12s) — 1s earlier
+  tl.call(() => narrate('Step 2 of 5', 'Jessica picks up on the first ring. She greets Sarah by name and asks the right questions — like a trained employee.'), null, 7);
+  tl.to('#sRing', { opacity: 0, duration: 0.4 }, 7);
+  tl.to('#sAnswer', { opacity: 1, duration: 0.5 }, 7.2);
+  tl.call(startTimer, null, 7.5);
+  tl.call(startWave, null, 7.5);
+  tl.to('#transcript', { opacity: 1, duration: 1 }, 8.5);
 
-  // Phase 4: Capturing details (13-19s)
-  tl.call(() => { stopTimer(); stopWave(); }, null, 13);
-  tl.call(() => narrate('Step 3 of 5', 'Every detail captured automatically. Name, address, issue, urgency — ready for your team before anyone wakes up.'), null, 13);
-  tl.to('#sAnswer', { opacity: 0, duration: 0.4 }, 13);
-  tl.to('#sCapture', { opacity: 1, duration: 0.5 }, 13.2);
+  // Phase 4: Capturing details (12-18s) — 1s earlier
+  tl.call(() => { stopTimer(); stopWave(); }, null, 12);
+  tl.call(() => narrate('Step 3 of 5', 'Every detail captured automatically. Name, address, issue, urgency — ready for your team before anyone wakes up.'), null, 12);
+  tl.to('#sAnswer', { opacity: 0, duration: 0.4 }, 12);
+  tl.to('#sCapture', { opacity: 1, duration: 0.5 }, 12.2);
 
-  tl.to('#f1', { opacity: 1, y: 0, duration: 0.5 }, 13.8);
-  tl.call(() => typeText('t1', 'Sarah Martinez', 0.8), null, 13.8);
+  tl.to('#f1', { opacity: 1, y: 0, duration: 0.5 }, 12.8);
+  tl.call(() => typeText('t1', 'Sarah Martinez', 0.8), null, 12.8);
 
-  tl.to('#f2', { opacity: 1, y: 0, duration: 0.5 }, 15);
-  tl.call(() => typeText('t2', 'Locked out — front door', 0.8), null, 15);
+  tl.to('#f2', { opacity: 1, y: 0, duration: 0.5 }, 14);
+  tl.call(() => typeText('t2', 'Locked out — front door', 0.8), null, 14);
 
-  tl.to('#f3', { opacity: 1, y: 0, duration: 0.5 }, 16.2);
-  tl.call(() => typeText('t3', '412 Oak St, Nashville', 0.8), null, 16.2);
+  tl.to('#f3', { opacity: 1, y: 0, duration: 0.5 }, 15.2);
+  tl.call(() => typeText('t3', '412 Oak St, Nashville', 0.8), null, 15.2);
 
-  tl.to('#f4', { opacity: 1, y: 0, duration: 0.5 }, 17.4);
-  tl.call(() => typeText('t4', 'High — stranded outside', 0.7), null, 17.4);
+  tl.to('#f4', { opacity: 1, y: 0, duration: 0.5 }, 16.4);
+  tl.call(() => typeText('t4', 'High — stranded outside', 0.7), null, 16.4);
 
-  // Phase 5: Booking appointment (19-25s)
-  tl.call(() => narrate('Step 4 of 5', 'Jessica books the appointment into your calendar. The customer gets an instant confirmation. No phone tag. No callbacks.'), null, 19.5);
-  tl.to('#sCapture', { opacity: 0, duration: 0.4 }, 19.5);
-  tl.to('#sBook', { opacity: 1, duration: 0.5 }, 19.7);
-  tl.to('#bookDetail', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 21);
-  tl.to('#bookOk', { opacity: 1, duration: 0.6 }, 22.5);
+  // Phase 5: Booking appointment (18-24s) — 1.5s earlier
+  tl.call(() => narrate('Step 4 of 5', 'Jessica books the appointment into your calendar. The customer gets an instant confirmation. No phone tag. No callbacks.'), null, 18);
+  tl.to('#sCapture', { opacity: 0, duration: 0.4 }, 18);
+  tl.to('#sBook', { opacity: 1, duration: 0.5 }, 18.2);
+  tl.to('#bookDetail', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 19.5);
+  tl.to('#bookOk', { opacity: 1, duration: 0.6 }, 21);
 
-  // Phase 6: Text to owner (25-32s)
-  tl.call(() => narrate('Step 5 of 5', 'You wake up to a text with every detail. The job is booked. The customer is confirmed. You didn\'t lift a finger.'), null, 25.5);
-  tl.to('#sBook', { opacity: 0, duration: 0.4 }, 25.5);
-  tl.to('#sText', { opacity: 1, duration: 0.5 }, 25.7);
-  tl.to('#b1', { opacity: 1, y: 0, duration: 0.6 }, 26.5);
-  tl.to('#b2', { opacity: 1, y: 0, duration: 0.6 }, 28);
-  tl.to('#resultLine', { opacity: 1, duration: 0.8 }, 29.5);
+  // Phase 6: Text to owner (24-30s) — 1.5s earlier
+  tl.call(() => narrate('Step 5 of 5', 'You wake up to a text with every detail. The job is booked. The customer is confirmed. You didn\'t lift a finger.'), null, 24);
+  tl.to('#sBook', { opacity: 0, duration: 0.4 }, 24);
+  tl.to('#sText', { opacity: 1, duration: 0.5 }, 24.2);
+  tl.to('#b1', { opacity: 1, y: 0, duration: 0.6 }, 25);
+  tl.to('#b2', { opacity: 1, y: 0, duration: 0.6 }, 26.5);
+  tl.to('#resultLine', { opacity: 1, duration: 0.8 }, 28);
 
-  // Phase 7: Dissolve (32-35s)
-  tl.to('#sText', { opacity: 0, duration: 0.8 }, 32.5);
-  tl.to('#accentTop', { opacity: 0, duration: 0.5 }, 32.5);
-  tl.to('#accentBottom', { opacity: 0, duration: 0.5 }, 32.5);
-  tl.to('#phoneLabel', { opacity: 0, duration: 0.5 }, 32.5);
+  // Phase 7: Dissolve (30-33s) — 2.5s earlier
+  tl.to('#sText', { opacity: 0, duration: 0.8 }, 30);
+  tl.to('#accentTop', { opacity: 0, duration: 0.5 }, 30);
+  tl.to('#accentBottom', { opacity: 0, duration: 0.5 }, 30);
+  tl.to('#phoneLabel', { opacity: 0, duration: 0.5 }, 30);
 
-  tl.set(particles, { opacity: 0.5 }, 32.5);
+  tl.set(particles, { opacity: 0.5 }, 30);
   tl.to(particles, {
     x: i => +particles[i].dataset.sx * 1.3,
     y: i => +particles[i].dataset.sy * 1.3,
@@ -932,10 +932,10 @@ body {
     duration: 2,
     stagger: { amount: 0.6, from: 'random' },
     ease: 'power1.in',
-  }, 32.5);
+  }, 30);
 
-  tl.to('#phone', { opacity: 0, scale: 0.97, duration: 1.5, ease: 'power1.in' }, 32.5);
-  tl.call(() => narrate('', ''), null, 33);
+  tl.to('#phone', { opacity: 0, scale: 0.97, duration: 1.5, ease: 'power1.in' }, 30);
+  tl.call(() => narrate('', ''), null, 31);
 
 })();
 </script>
