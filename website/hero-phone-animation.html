@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phone Animation — The Call Taker</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #050505;
+  color: #fff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══ SCENE CONTAINER ═══ */
+.scene {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 0 48px;
+  gap: 64px;
+}
+
+@media (max-width: 768px) {
+  .scene {
+    grid-template-columns: 1fr;
+    padding: 60px 24px;
+    gap: 32px;
+  }
+  .scene-copy { text-align: center; order: 2; }
+  .scene-phone { order: 1; }
+}
+
+/* ═══ LEFT: COPY (static, Joby-style) ═══ */
+.scene-copy {
+  z-index: 2;
+}
+
+.scene-copy h1 {
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+.scene-copy h1 .accent {
+  color: #00dc82;
+}
+
+.scene-copy .subtitle {
+  font-size: 18px;
+  color: #666;
+  line-height: 1.6;
+  max-width: 420px;
+  margin-bottom: 32px;
+}
+
+/* Stage label — updates as animation progresses */
+.stage-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #00dc82;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  min-height: 20px;
+  opacity: 0;
+}
+
+.scene-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #00dc82;
+  color: #000;
+  font-weight: 800;
+  font-size: 17px;
+  padding: 18px 36px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 40px rgba(0,220,130,0.2);
+}
+.scene-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 60px rgba(0,220,130,0.4);
+}
+
+/* ═══ RIGHT: PHONE ANIMATION ═══ */
+.scene-phone {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 560px;
+  z-index: 2;
+}
+
+/* ═══ PARTICLE FIELD ═══ */
+.particle-field {
+  position: absolute;
+  width: 300px;
+  height: 560px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #00dc82;
+  border-radius: 1px;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* ═══ PHONE FRAME ═══ */
+.phone {
+  position: relative;
+  width: 240px;
+  height: 490px;
+  background: #0d0d0d;
+  border-radius: 40px;
+  border: 2px solid #1a1a1a;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.95);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 25px 80px rgba(0,0,0,0.8),
+    0 0 120px rgba(0,220,130,0.05);
+  will-change: transform, opacity;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 24px;
+  background: #000;
+  border-radius: 0 0 16px 16px;
+  z-index: 10;
+}
+
+.phone-screen {
+  position: absolute;
+  inset: 8px;
+  background: #080808;
+  border-radius: 34px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ═══ SCREEN STATES ═══ */
+
+/* State 1: Incoming call */
+.screen-ring {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  opacity: 0;
+}
+
+.ring-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: #00dc82;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.ring-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.ring-desc {
+  font-size: 11px;
+  color: #555;
+  margin-bottom: 32px;
+}
+
+.ring-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a1a1a, #111);
+  border: 2px solid #00dc82;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 0 30px rgba(0,220,130,0.2);
+}
+
+.ring-pulse {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,220,130,0.4);
+  top: calc(50% - 48px);
+  left: calc(50% - 32px);
+  animation: ring-expand 1.5s ease-out infinite;
+  opacity: 0;
+}
+.ring-pulse:nth-child(2) { animation-delay: 0.5s; }
+.ring-pulse:nth-child(3) { animation-delay: 1.0s; }
+
+@keyframes ring-expand {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.ring-answer-btn {
+  background: #00dc82;
+  color: #000;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 32px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  opacity: 0;
+}
+
+/* State 2: Jessica answering */
+.screen-answer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  opacity: 0;
+}
+
+.answer-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: #00dc82;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.answer-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.answer-time {
+  font-size: 11px;
+  color: #555;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 28px;
+}
+
+.waveform {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 24px;
+}
+
+.waveform span {
+  width: 3px;
+  background: #00dc82;
+  border-radius: 2px;
+  height: 8px;
+  animation: wave-bar 0.8s ease-in-out infinite alternate;
+}
+.waveform span:nth-child(1) { animation-delay: 0s; height: 12px; }
+.waveform span:nth-child(2) { animation-delay: 0.1s; height: 20px; }
+.waveform span:nth-child(3) { animation-delay: 0.2s; height: 32px; }
+.waveform span:nth-child(4) { animation-delay: 0.15s; height: 24px; }
+.waveform span:nth-child(5) { animation-delay: 0.25s; height: 36px; }
+.waveform span:nth-child(6) { animation-delay: 0.1s; height: 28px; }
+.waveform span:nth-child(7) { animation-delay: 0.3s; height: 16px; }
+.waveform span:nth-child(8) { animation-delay: 0.05s; height: 22px; }
+.waveform span:nth-child(9) { animation-delay: 0.2s; height: 30px; }
+
+@keyframes wave-bar {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+.answer-quote {
+  font-size: 11px;
+  color: #444;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.5;
+  max-width: 180px;
+}
+
+/* State 3: Capturing details */
+.screen-capture {
+  position: absolute;
+  inset: 0;
+  padding: 48px 20px 20px;
+  opacity: 0;
+}
+
+.capture-header {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: #00dc82;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.capture-field {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.capture-label {
+  font-size: 8px;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+
+.capture-value {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.capture-cursor {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background: #00dc82;
+  margin-left: 2px;
+  animation: blink 0.6s infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* State 4: Booking appointment */
+.screen-book {
+  position: absolute;
+  inset: 0;
+  padding: 48px 16px 20px;
+  opacity: 0;
+}
+
+.book-header {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: #00dc82;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.book-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 12px;
+}
+
+.book-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: #444;
+  border-radius: 6px;
+}
+
+.book-day.header {
+  font-weight: 700;
+  color: #555;
+  font-size: 8px;
+}
+
+.book-day.active {
+  color: #fff;
+}
+
+.book-day.selected {
+  background: #00dc82;
+  color: #000;
+  font-weight: 800;
+  box-shadow: 0 0 12px rgba(0,220,130,0.4);
+}
+
+.book-slot {
+  background: rgba(0,220,130,0.08);
+  border: 1px solid rgba(0,220,130,0.3);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 12px;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.book-slot-time {
+  font-size: 15px;
+  font-weight: 800;
+  color: #00dc82;
+}
+
+.book-slot-day {
+  font-size: 10px;
+  color: #555;
+}
+
+.book-confirm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #00dc82;
+  color: #000;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.book-checkmark {
+  width: 16px;
+  height: 16px;
+}
+
+/* State 5: Text sent to owner */
+.screen-text {
+  position: absolute;
+  inset: 0;
+  padding: 48px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.text-header {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: #00dc82;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.text-bubble {
+  background: #1a1a1a;
+  border-radius: 16px 16px 16px 4px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  max-width: 200px;
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
+}
+
+.text-bubble.outgoing {
+  background: #00dc82;
+  color: #000;
+  border-radius: 16px 16px 4px 16px;
+  align-self: flex-end;
+}
+
+.text-from {
+  font-size: 9px;
+  color: #555;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.text-body {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #ccc;
+}
+
+.text-bubble.outgoing .text-body {
+  color: #000;
+}
+
+.text-time {
+  font-size: 9px;
+  color: #333;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.text-saved {
+  font-size: 22px;
+  font-weight: 900;
+  color: #00dc82;
+  margin-top: 20px;
+  opacity: 0;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.text-saved-sub {
+  font-size: 11px;
+  color: #444;
+  opacity: 0;
+  text-align: center;
+}
+
+/* ═══ AMBIENT GLOW ═══ */
+.ambient-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0,220,130,0.06) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ═══ CORNER BRACKETS ═══ */
+.bracket {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(0,220,130,0.3);
+  border-style: solid;
+  z-index: 3;
+  opacity: 0;
+}
+.bracket.tl { top: -8px; left: -8px; border-width: 2px 0 0 2px; }
+.bracket.tr { top: -8px; right: -8px; border-width: 2px 2px 0 0; }
+.bracket.bl { bottom: -8px; left: -8px; border-width: 0 0 2px 2px; }
+.bracket.br { bottom: -8px; right: -8px; border-width: 0 2px 2px 0; }
+
+/* ═══ READOUT ═══ */
+.readout {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: #222;
+  letter-spacing: 0.12em;
+  font-family: 'Courier New', monospace;
+  white-space: nowrap;
+  opacity: 0;
+}
+</style>
+</head>
+<body>
+
+<div class="scene">
+
+  <!-- LEFT: Copy -->
+  <div class="scene-copy">
+    <div class="stage-label" id="stageLabel">INCOMING CALL</div>
+    <h1>Your Phone Rings<br>at <span class="accent">2AM.</span><br>Jessica Answers.</h1>
+    <p class="subtitle">Watch the entire call happen in real time. From ring to booked appointment in 45 seconds. No human needed.</p>
+    <a href="tel:6157845747" class="scene-cta">Call Jessica Now &mdash; (615) 784-5747</a>
+  </div>
+
+  <!-- RIGHT: Phone animation -->
+  <div class="scene-phone">
+    <div class="ambient-glow"></div>
+
+    <!-- Particles (generated by JS) -->
+    <div class="particle-field" id="particleField"></div>
+
+    <!-- Phone -->
+    <div class="phone" id="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- State 1: Ringing -->
+        <div class="screen-ring" id="screenRing">
+          <div class="ring-label">INCOMING CALL</div>
+          <div class="ring-avatar">&#128274;</div>
+          <div class="ring-pulse"></div>
+          <div class="ring-pulse"></div>
+          <div class="ring-pulse"></div>
+          <div class="ring-name">Sarah Martinez</div>
+          <div class="ring-desc">Emergency Lockout</div>
+          <div class="ring-answer-btn" id="answerBtn">JESSICA ANSWERING</div>
+        </div>
+
+        <!-- State 2: Jessica answering -->
+        <div class="screen-answer" id="screenAnswer">
+          <div class="answer-label">CONNECTED</div>
+          <div class="answer-name">Jessica</div>
+          <div class="answer-time" id="callTimer">00:00</div>
+          <div class="waveform" id="waveform">
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </div>
+          <div class="answer-quote">"Hi Sarah, thanks for calling. I can get a locksmith to you right away. What's your address?"</div>
+        </div>
+
+        <!-- State 3: Capturing info -->
+        <div class="screen-capture" id="screenCapture">
+          <div class="capture-header">DETAILS CAPTURED</div>
+          <div class="capture-field" id="field1">
+            <div class="capture-label">Name</div>
+            <div class="capture-value"><span id="type1"></span><span class="capture-cursor"></span></div>
+          </div>
+          <div class="capture-field" id="field2">
+            <div class="capture-label">Issue</div>
+            <div class="capture-value"><span id="type2"></span><span class="capture-cursor"></span></div>
+          </div>
+          <div class="capture-field" id="field3">
+            <div class="capture-label">Address</div>
+            <div class="capture-value"><span id="type3"></span><span class="capture-cursor"></span></div>
+          </div>
+          <div class="capture-field" id="field4">
+            <div class="capture-label">Urgency</div>
+            <div class="capture-value"><span id="type4"></span><span class="capture-cursor"></span></div>
+          </div>
+        </div>
+
+        <!-- State 4: Booking -->
+        <div class="screen-book" id="screenBook">
+          <div class="book-header">APPOINTMENT BOOKED</div>
+          <div class="book-calendar" id="calendar"></div>
+          <div class="book-slot" id="bookSlot">
+            <div class="book-slot-time">8:00 AM</div>
+            <div class="book-slot-day">Sunday, March 19</div>
+          </div>
+          <div class="book-confirm" id="bookConfirm">
+            <svg class="book-checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Confirmed &mdash; Customer Notified
+          </div>
+        </div>
+
+        <!-- State 5: Text to owner -->
+        <div class="screen-text" id="screenText">
+          <div class="text-header">OWNER NOTIFIED</div>
+          <div class="text-bubble" id="bubble1">
+            <div class="text-from">Jessica &rarr; You</div>
+            <div class="text-body">New job: Sarah Martinez<br>Lockout &mdash; 412 Oak St<br>Booked: 8AM Sunday</div>
+            <div class="text-time">2:18 AM</div>
+          </div>
+          <div class="text-bubble outgoing" id="bubble2">
+            <div class="text-body">Confirmed. Sending my guy.</div>
+            <div class="text-time">2:19 AM</div>
+          </div>
+          <div class="text-saved" id="textSaved">$350 job saved.</div>
+          <div class="text-saved-sub" id="textSavedSub">While you slept.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Brackets -->
+    <div class="bracket tl" id="bracketTL"></div>
+    <div class="bracket tr" id="bracketTR"></div>
+    <div class="bracket bl" id="bracketBL"></div>
+    <div class="bracket br" id="bracketBR"></div>
+
+    <!-- Readout -->
+    <div class="readout" id="readout">JESSICA &middot; CALL-TAKER-v2.1 &middot; LIVE</div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // ═══ GENERATE PARTICLES ═══
+  const field = document.getElementById('particleField');
+  const PARTICLE_COUNT = 80;
+  const particles = [];
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    // Random positions around the phone shape
+    const angle = Math.random() * Math.PI * 2;
+    const radius = 200 + Math.random() * 300;
+    p.dataset.startX = Math.cos(angle) * radius;
+    p.dataset.startY = Math.sin(angle) * radius;
+    // Target position on the phone outline
+    const ty = -220 + Math.random() * 440;
+    const side = Math.random() > 0.5 ? 1 : -1;
+    const tx = side * (100 + Math.random() * 20);
+    p.dataset.targetX = tx;
+    p.dataset.targetY = ty;
+    p.style.left = '50%';
+    p.style.top = '50%';
+    field.appendChild(p);
+    particles.push(p);
+  }
+
+  // ═══ BUILD CALENDAR ═══
+  const cal = document.getElementById('calendar');
+  const days = ['S','M','T','W','T','F','S'];
+  days.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'book-day header';
+    el.textContent = d;
+    cal.appendChild(el);
+  });
+  // March 2026 starts on Sunday
+  const marchDays = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
+  marchDays.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'book-day' + (d >= 17 ? ' active' : '') + (d === 19 ? ' selected' : '');
+    el.textContent = d;
+    cal.appendChild(el);
+  });
+
+  // ═══ TYPEWRITER EFFECT ═══
+  function typeText(elementId, text, duration) {
+    const el = document.getElementById(elementId);
+    let i = 0;
+    const step = duration / text.length;
+    return new Promise(resolve => {
+      const interval = setInterval(() => {
+        el.textContent = text.substring(0, i + 1);
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, step * 1000);
+    });
+  }
+
+  // ═══ CALL TIMER ═══
+  let timerInterval;
+  function startTimer() {
+    let seconds = 0;
+    const el = document.getElementById('callTimer');
+    timerInterval = setInterval(() => {
+      seconds++;
+      const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const s = String(seconds % 60).padStart(2, '0');
+      el.textContent = m + ':' + s;
+    }, 1000);
+  }
+  function stopTimer() {
+    clearInterval(timerInterval);
+  }
+
+  // ═══ MASTER TIMELINE ═══
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
+
+  // PHASE 0: Particles scatter (start state)
+  tl.set(particles, {
+    x: (i) => parseFloat(particles[i].dataset.startX),
+    y: (i) => parseFloat(particles[i].dataset.startY),
+    opacity: 0.6,
+    scale: 1,
+  });
+
+  // PHASE 1: Particles assemble into phone shape (0s-2s)
+  tl.to(particles, {
+    x: (i) => parseFloat(particles[i].dataset.targetX),
+    y: (i) => parseFloat(particles[i].dataset.targetY),
+    opacity: 0.8,
+    duration: 1.8,
+    stagger: { amount: 0.8, from: 'random' },
+    ease: 'power2.inOut',
+  }, 0);
+
+  // Phone fades in as particles converge
+  tl.to('#phone', { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' }, 1.2);
+  tl.to('.bracket', { opacity: 1, duration: 0.4 }, 1.4);
+  tl.to('#readout', { opacity: 1, duration: 0.4 }, 1.6);
+  tl.to('#stageLabel', { opacity: 1, duration: 0.3 }, 1.4);
+
+  // Particles fade out once phone is solid
+  tl.to(particles, { opacity: 0, duration: 0.5 }, 1.8);
+
+  // PHASE 2: Phone rings (2s-3.5s)
+  tl.to('#screenRing', { opacity: 1, duration: 0.3 }, 2);
+  tl.to('#phone', {
+    x: -3, duration: 0.06, repeat: 8, yoyo: true, ease: 'none',
+  }, 2);
+  tl.to('#answerBtn', { opacity: 1, duration: 0.3 }, 2.8);
+
+  // PHASE 3: Jessica answers (3.5s-5.5s)
+  tl.call(() => {
+    document.getElementById('stageLabel').textContent = 'JESSICA ANSWERING';
+  }, null, 3.5);
+  tl.to('#screenRing', { opacity: 0, duration: 0.2 }, 3.5);
+  tl.to('#screenAnswer', { opacity: 1, duration: 0.3 }, 3.5);
+  tl.call(startTimer, null, 3.8);
+
+  // PHASE 4: Capturing details (5.5s-8s)
+  tl.call(() => {
+    document.getElementById('stageLabel').textContent = 'CAPTURING DETAILS';
+  }, null, 5.5);
+  tl.call(stopTimer, null, 5.5);
+  tl.to('#screenAnswer', { opacity: 0, duration: 0.2 }, 5.5);
+  tl.to('#screenCapture', { opacity: 1, duration: 0.3 }, 5.5);
+
+  // Fields appear one by one with typewriter
+  tl.to('#field1', { opacity: 1, y: 0, duration: 0.3 }, 5.8);
+  tl.call(() => typeText('type1', 'Sarah Martinez', 0.6), null, 5.8);
+
+  tl.to('#field2', { opacity: 1, y: 0, duration: 0.3 }, 6.5);
+  tl.call(() => typeText('type2', 'Locked out — front door', 0.6), null, 6.5);
+
+  tl.to('#field3', { opacity: 1, y: 0, duration: 0.3 }, 7.2);
+  tl.call(() => typeText('type3', '412 Oak St, Nashville', 0.6), null, 7.2);
+
+  tl.to('#field4', { opacity: 1, y: 0, duration: 0.3 }, 7.9);
+  tl.call(() => typeText('type4', 'High — stranded outside', 0.5), null, 7.9);
+
+  // PHASE 5: Booking appointment (8s-10s)
+  tl.call(() => {
+    document.getElementById('stageLabel').textContent = 'BOOKING APPOINTMENT';
+  }, null, 8.5);
+  tl.to('#screenCapture', { opacity: 0, duration: 0.2 }, 8.5);
+  tl.to('#screenBook', { opacity: 1, duration: 0.3 }, 8.5);
+  tl.to('#bookSlot', { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, 9);
+  tl.to('#bookConfirm', { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, 9.5);
+
+  // PHASE 6: Text notification (10s-12s)
+  tl.call(() => {
+    document.getElementById('stageLabel').textContent = 'OWNER NOTIFIED';
+  }, null, 10.5);
+  tl.to('#screenBook', { opacity: 0, duration: 0.2 }, 10.5);
+  tl.to('#screenText', { opacity: 1, duration: 0.3 }, 10.5);
+  tl.to('#bubble1', { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: 'back.out(1.5)' }, 10.8);
+  tl.to('#bubble2', { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: 'back.out(1.5)' }, 11.4);
+  tl.to('#textSaved', { opacity: 1, duration: 0.5 }, 11.8);
+  tl.to('#textSavedSub', { opacity: 1, duration: 0.4 }, 12.2);
+
+  // PHASE 7: Dissolve (13s-14s)
+  tl.call(() => {
+    document.getElementById('stageLabel').textContent = '';
+  }, null, 13.5);
+
+  // Phone dissolves
+  tl.to('#screenText', { opacity: 0, duration: 0.3 }, 13.5);
+  tl.to('.bracket', { opacity: 0, duration: 0.3 }, 13.5);
+  tl.to('#readout', { opacity: 0, duration: 0.3 }, 13.5);
+
+  // Particles scatter outward
+  tl.set(particles, { opacity: 0.6 }, 13.5);
+  tl.to(particles, {
+    x: (i) => parseFloat(particles[i].dataset.startX) * 1.5,
+    y: (i) => parseFloat(particles[i].dataset.startY) * 1.5,
+    opacity: 0,
+    duration: 1.2,
+    stagger: { amount: 0.4, from: 'random' },
+    ease: 'power2.in',
+  }, 13.5);
+
+  tl.to('#phone', { opacity: 0, scale: 0.95, duration: 0.8, ease: 'power2.in' }, 13.5);
+
+  // Reset all screens for loop
+  tl.call(() => {
+    document.getElementById('callTimer').textContent = '00:00';
+    document.getElementById('type1').textContent = '';
+    document.getElementById('type2').textContent = '';
+    document.getElementById('type3').textContent = '';
+    document.getElementById('type4').textContent = '';
+    document.getElementById('stageLabel').textContent = 'INCOMING CALL';
+    gsap.set(['#screenRing','#screenAnswer','#screenCapture','#screenBook','#screenText'], { opacity: 0 });
+    gsap.set(['#field1','#field2','#field3','#field4'], { opacity: 0, y: 8 });
+    gsap.set(['#bookSlot','#bookConfirm'], { opacity: 0, scale: 0.95 });
+    gsap.set(['#bubble1','#bubble2'], { opacity: 0, y: 10, scale: 0.95 });
+    gsap.set(['#textSaved','#textSavedSub'], { opacity: 0 });
+    gsap.set('#answerBtn', { opacity: 0 });
+    gsap.set('#phone', { x: 0 });
+  }, null, 14.8);
+
+})();
+</script>
+</body>
+</html>
