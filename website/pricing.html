@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0a0a0a">
 <title>Pricing — The Call Taker AI Receptionist</title>
-<meta name="description" content="Simple pricing for The Call Taker AI receptionist. After-Hours $97/mo, Full 24/7 $497/mo, Pro $997/mo. Start with a free 14-day pilot.">
+<meta name="description" content="The Call Taker AI receptionist pricing. Starter $497/mo, Pro $997/mo. 14-day free trial, no setup fee, cancel anytime.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://thecalltaker.com/pricing">
 <meta property="og:title" content="Pricing — The Call Taker AI Receptionist">
@@ -42,7 +42,7 @@
   "email": "thecalltakerai@gmail.com",
   "address": {"@type": "PostalAddress", "addressLocality": "Nashville", "addressRegion": "TN", "addressCountry": "US"},
   "areaServed": {"@type": "Country", "name": "United States"},
-  "priceRange": "$97-$997/mo"
+  "priceRange": "$97-$497/mo"
 }
 </script>
 <script type="application/ld+json">
@@ -72,13 +72,13 @@
   --shadow: 0 4px 6px -1px rgba(0,0,0,.4), 0 2px 4px -2px rgba(0,0,0,.3);
   --radius: 12px; --radius-lg: 16px; --radius-full: 9999px;
 }
-html { scroll-behavior: smooth; }
-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: #000; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: #000; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; width: 100%; position: relative; }
 a { color: inherit; text-decoration: none; }
 .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
 /* Header */
-.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,.04); }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,.04); transform: translateZ(0); }
 .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
 .logo { font-size: 1.2rem; font-weight: 850; color: var(--navy); letter-spacing: -.03em; }
 .logo span { color: var(--orange); }
@@ -215,9 +215,27 @@ a { color: inherit; text-decoration: none; }
 .site-footer a { color: var(--text-secondary); margin: 0 12px; font-size: .82rem; }
 .site-footer a:hover { color: var(--orange); }
 </style>
+<link rel="stylesheet" href="/shared/premium.css">
 <link rel="stylesheet" href="/shared/demo-console.css">
 <link rel="stylesheet" href="/shared/ui-dark.css">
-    <link rel="stylesheet" href="/shared/mobile-guard.css">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -239,8 +257,8 @@ a { color: inherit; text-decoration: none; }
 <!-- Hero -->
 <section class="pricing-hero light-grid">
   <div class="container" style="position:relative;z-index:1">
-    <h1>Less Than One Missed Job.</h1>
-    <p>Every plan starts with a free 14-day pilot. No credit card. No contracts.</p>
+    <h1>Never Miss Another Job Because No One Picked Up.</h1>
+    <p>Jessica answers 24/7, sounds like a real dispatcher, and books appointments automatically &mdash; so you never lose a job to voicemail again.</p>
     <div class="social-proof-line"><span class="sp-dot"></span> Trusted by 500+ service businesses across 13 industries</div>
     <div style="text-align:center"><span class="live-badge"><span class="lb-dot"></span> AI LIVE NOW — answering calls 24/7</span></div>
   </div>
@@ -249,59 +267,65 @@ a { color: inherit; text-decoration: none; }
 <!-- Pricing Cards -->
 <section style="padding-bottom:80px">
   <div class="container">
-    <div class="pricing-grid">
-      <!-- After-Hours -->
+    <div class="pricing-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 820px; margin: 0 auto 64px;">
+      <!-- Starter — $497/mo -->
       <div class="p-card">
         <div class="p-who">Best for solo operators</div>
-        <div class="p-name">After-Hours</div>
-        <div class="p-price">$97<span>/mo</span></div>
-        <p class="p-desc">Evenings, weekends &amp; holidays covered.</p>
+        <div class="p-name">Starter</div>
+        <div class="p-price">$497<span>/mo</span></div>
+        <p class="p-desc">1 phone line. 24/7 coverage. Every call answered.</p>
         <ul class="p-features">
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> AI answers after business hours</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Books appointments automatically</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Texts you every lead instantly</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Custom-trained on your business</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> 1 phone line covered</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> 24/7 call answering</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Basic FAQ handling</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Appointment booking</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> After-hours coverage</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Email support</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> 14-day free trial</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> No setup fee (founding customers)</li>
         </ul>
-        <a href="/pilot/" class="p-cta p-cta-outline">Start Free 14-Day Pilot</a>
-        <div class="p-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 30-Day Money Back Guarantee</div>
-        <p class="p-trust">No credit card required</p>
+        <!-- PAYPAL: Replace href with your Starter plan PayPal subscription link -->
+        <a href="[PAYPAL_STARTER_LINK]" class="p-cta p-cta-primary">Start Free Trial &rarr;</a>
+        <div class="p-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 14-Day Free Trial &bull; Cancel Anytime</div>
+        <p class="p-trust">PayPal or credit card accepted</p>
       </div>
 
-      <!-- Full 24/7 — Featured -->
+      <!-- Pro — $997/mo — Featured -->
       <div class="p-card featured">
         <div class="p-badge">Most Popular</div>
         <div class="p-who">Best for growing teams</div>
-        <div class="p-name">Full 24/7</div>
-        <div class="p-price">$497<span>/mo</span></div>
-        <p class="p-desc">Every call, every hour, every day.</p>
-        <ul class="p-features">
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Everything in After-Hours</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Answers during business hours too</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Overflow call handling</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Priority support</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Monthly performance reports</li>
-        </ul>
-        <a href="/pilot/" class="p-cta p-cta-primary">Start Free 14-Day Pilot</a>
-        <div class="p-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 30-Day Money Back Guarantee</div>
-        <p class="p-trust">No credit card required</p>
-      </div>
-
-      <!-- Pro -->
-      <div class="p-card">
-        <div class="p-who">Best for multi-location</div>
         <div class="p-name">Pro</div>
         <div class="p-price">$997<span>/mo</span></div>
-        <p class="p-desc">White-glove, fully managed.</p>
+        <p class="p-desc">Multi-line. Advanced routing. Priority support.</p>
         <ul class="p-features">
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Everything in Full 24/7</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Custom voice &amp; scripts</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> CRM integration</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Dedicated account manager</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Quarterly strategy calls</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Everything in Starter</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Up to 3 phone lines</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Advanced call routing</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Emergency escalation rules</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Priority support</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Monthly performance report</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> 14-day free trial</li>
         </ul>
-        <a href="/pilot/" class="p-cta p-cta-outline">Start Free 14-Day Pilot</a>
-        <div class="p-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 30-Day Money Back Guarantee</div>
-        <p class="p-trust">No credit card required</p>
+        <!-- PAYPAL: Replace href with your Pro plan PayPal subscription link -->
+        <a href="[PAYPAL_PRO_LINK]" class="p-cta p-cta-primary">Start Free Trial &rarr;</a>
+        <div class="p-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 14-Day Free Trial &bull; Cancel Anytime</div>
+        <p class="p-trust">PayPal or credit card accepted</p>
+      </div>
+    </div>
+
+    <!-- Objection Block -->
+    <div style="max-width:680px;margin:0 auto 48px;display:flex;flex-direction:column;gap:24px">
+      <div>
+        <div style="font-size:.95rem;font-weight:700;color:#fff;margin-bottom:6px">"Will my customers know it's not a real person?"</div>
+        <div style="font-size:.88rem;color:var(--text-secondary);line-height:1.7">Most callers can't tell. Jessica sounds human, follows your script, and gets them booked. She doesn't sound like a robot &mdash; she sounds like a sharp dispatcher who's been doing this for years.</div>
+      </div>
+      <div>
+        <div style="font-size:.95rem;font-weight:700;color:#fff;margin-bottom:6px">"What if she books the wrong jobs?"</div>
+        <div style="font-size:.88rem;color:var(--text-secondary);line-height:1.7">She only books what you tell her to. You set the rules &mdash; which services, which hours, which calendar. She follows them exactly.</div>
+      </div>
+      <div>
+        <div style="font-size:.95rem;font-weight:700;color:#fff;margin-bottom:6px">"How hard is setup?"</div>
+        <div style="font-size:.88rem;color:var(--text-secondary);line-height:1.7">15 minutes. Forward your line, share your calendar, do a test call. We walk you through the whole thing live.</div>
       </div>
     </div>
     <div class="scarcity-bar">
@@ -358,19 +382,20 @@ a { color: inherit; text-decoration: none; }
     <h2>What You Get</h2>
     <table class="matrix-table">
       <thead>
-        <tr><th>Feature</th><th>After-Hours</th><th>Full 24/7</th><th>Pro</th></tr>
+        <tr><th>Feature</th><th>Starter $497</th><th>Pro $997</th></tr>
       </thead>
       <tbody>
-        <tr><td>AI answers calls</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-        <tr><td>Books appointments</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-        <tr><td>Texts you every lead</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-        <tr><td>Custom-trained on your biz</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-        <tr><td>During business hours</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-        <tr><td>Overflow handling</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-        <tr><td>Priority support</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-        <tr><td>Custom voice &amp; scripts</td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
-        <tr><td>CRM integration</td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
-        <tr><td>Dedicated account manager</td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>AI answers calls 24/7</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>Books appointments</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>Texts you every lead</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>Custom-trained on your biz</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>Basic FAQ handling</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>After-hours coverage</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>Up to 3 phone lines</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>Advanced call routing</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>Emergency escalation rules</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>Priority support</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
+        <tr><td>Monthly performance report</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
       </tbody>
     </table>
   </div>
@@ -498,9 +523,11 @@ a { color: inherit; text-decoration: none; }
 <!-- CTA -->
 <section class="pricing-cta">
   <div class="container">
-    <h2>Your Competitors Are Answering Their Phones Right Now.</h2>
-    <p>Start your free 14-day pilot in under 5 minutes.</p>
-    <a href="/pilot/" class="p-cta p-cta-primary">Start Your Free Pilot &rarr;</a>
+    <h2>One Extra Booked Job a Month More Than Pays for It.</h2>
+    <p>Start your 14-day free trial &mdash; no setup fee, cancel anytime. Jessica starts answering tonight.</p>
+    <!-- PAYPAL: Replace href with your Starter plan PayPal subscription link -->
+    <a href="[PAYPAL_STARTER_LINK]" class="p-cta p-cta-primary">Start Free Trial &rarr;</a>
+    <p style="margin-top:16px;font-size:.85rem;color:rgba(255,255,255,.45);position:relative">Questions? <a href="tel:+16157845747" style="color:var(--green)">Call the demo line</a> and talk to Jessica yourself.</p>
   </div>
 </section>
 
