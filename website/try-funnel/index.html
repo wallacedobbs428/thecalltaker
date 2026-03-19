@@ -453,6 +453,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
     <a href="tel:+16157845747" style="background: transparent !important; color: #fff !important;">Hear the AI</a>
   </div>
 
+  <script src="/shared/tct-ghl-proxy.js"></script>
   <script>
     // Mobile nav toggle
     var toggle = document.querySelector('.menu-toggle');
@@ -513,10 +514,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
           ghlBody.tags.push('google-ads', 'gclid');
         }
 
-        await fetch('https://services.leadconnectorhq.com/contacts/', {
+        await fetch('/api/ghl/contacts/', {
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer REMOVED_FOR_SECURITY',
+            'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
             'Version': '2021-07-28',
             'Content-Type': 'application/json'
           },

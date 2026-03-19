@@ -469,6 +469,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
   <script>if(!window.__tctUILoaded){window.__tctScriptJsOK=true;}</script>
 <script src="script.js"></script>
+  <script src="/shared/tct-ghl-proxy.js"></script>
   <script>
     // Calculator state
     var calcState = {
@@ -588,10 +589,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
       try {
         // Create contact in GHL via API
-        var res = await fetch('https://services.leadconnectorhq.com/contacts/', {
+        var res = await fetch('/api/ghl/contacts/', {
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer REMOVED_FOR_SECURITY',
+            'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
             'Version': '2021-07-28',
             'Content-Type': 'application/json'
           },
@@ -614,10 +615,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
             if (contactId && typeof getTctAttributionNotes === 'function') {
               var attrNotes = getTctAttributionNotes();
               if (attrNotes) {
-                fetch('https://services.leadconnectorhq.com/contacts/' + contactId + '/notes', {
+                fetch('/api/ghl/contacts/' + contactId + '/notes', {
                   method: 'POST',
                   headers: {
-                    'Authorization': 'Bearer REMOVED_FOR_SECURITY',
+                    'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
                     'Version': '2021-07-28',
                     'Content-Type': 'application/json'
                   },

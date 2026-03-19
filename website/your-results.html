@@ -321,6 +321,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
   <div class="toast" id="toast">Link copied to clipboard!</div>
 
+  <script src="/shared/tct-ghl-proxy.js"></script>
   <script>
     var INDUSTRY_DATA = {
       'hvac':     { avgJob: 350, name: 'HVAC' },
@@ -461,10 +462,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       if (currentData && currentData.ind) tags.push('industry-' + currentData.ind);
       if (typeof getTctAttributionTags === 'function') tags = tags.concat(getTctAttributionTags());
 
-      fetch('https://services.leadconnectorhq.com/contacts/', {
+      fetch('/api/ghl/contacts/', {
         method: 'POST',
         headers: {
-          'Authorization': 'Bearer REMOVED_FOR_SECURITY',
+          'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
           'Version': '2021-07-28',
           'Content-Type': 'application/json'
         },
@@ -479,9 +480,9 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
           var notes = getTctAttributionNotes();
           if (notes) {
             notes += '\n\nResults Simulator: ' + (currentData ? currentData.ind + ', ' + currentData.calls + ' calls/day, ' + currentData.miss + ' missed' : 'N/A');
-            fetch('https://services.leadconnectorhq.com/contacts/' + cid + '/notes', {
+            fetch('/api/ghl/contacts/' + cid + '/notes', {
               method: 'POST',
-              headers: { 'Authorization': 'Bearer REMOVED_FOR_SECURITY', 'Version': '2021-07-28', 'Content-Type': 'application/json' },
+              headers: { 'Authorization': 'Bearer ' + TCT_PROXY_SECRET, 'Version': '2021-07-28', 'Content-Type': 'application/json' },
               body: JSON.stringify({ body: notes })
             }).catch(function(){});
           }

@@ -340,9 +340,10 @@ body{
   </footer>
 </div>
 
+<script src="/shared/tct-ghl-proxy.js"></script>
 <script>
 (function(){
-  var GHL_API_KEY = 'GHL_KEY_REMOVED_USE_SERVER_PROXY';
+  var GHL_API_KEY = TCT_PROXY_SECRET;
   var GHL_LOCATION_ID = 'tQb9YmrGDrdVUJYPKrsY';
 
   var form = document.getElementById('leadForm');
@@ -389,7 +390,7 @@ body{
     }
 
     // Create GHL contact
-    fetch('https://services.leadconnectorhq.com/contacts/', {
+    fetch('/api/ghl/contacts/', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + GHL_API_KEY,

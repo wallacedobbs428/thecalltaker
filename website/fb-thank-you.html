@@ -242,6 +242,7 @@
 </section>
 
 <!-- GHL tracking pixel + tag fire -->
+<script src="/shared/tct-ghl-proxy.js"></script>
 <script>
 (function() {
   // Fire fb-thank-you-viewed tag via GHL webhook
@@ -250,9 +251,11 @@
     var params = new URLSearchParams(window.location.search);
     var contactId = params.get('cid') || params.get('contact_id') || '';
     if (contactId) {
-      // Pixel fire to track page view
-      var img = new Image();
-      img.src = 'https://services.leadconnectorhq.com/contacts/' + contactId + '/track?locationId=tQb9YmrGDrdVUJYPKrsY&event=fb-thank-you-viewed';
+      // Pixel fire to track page view via proxy
+      fetch('/api/ghl/contacts/' + contactId + '/track?locationId=tQb9YmrGDrdVUJYPKrsY&event=fb-thank-you-viewed', {
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + TCT_PROXY_SECRET }
+      }).catch(function() {});
     }
     // Store for attribution
     if (window.sessionStorage) {

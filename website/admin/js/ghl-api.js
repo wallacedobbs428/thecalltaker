@@ -2,8 +2,8 @@
 // Single source of truth for all GoHighLevel API calls
 
 var GHL = (function() {
-  var BASE = 'https://services.leadconnectorhq.com';
-  var KEY = 'GHL_KEY_REMOVED_USE_SERVER_PROXY';
+  var BASE = '/api/ghl';
+  var KEY = TCT_PROXY_SECRET;
   var LOCATION = 'tQb9YmrGDrdVUJYPKrsY';
   var V_CONTACTS = '2021-07-28';
   var V_CONVERSATIONS = '2021-04-15';

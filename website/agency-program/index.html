@@ -1478,6 +1478,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   </div>
 </footer>
 
+<script src="/shared/tct-ghl-proxy.js"></script>
 <script>
 // ===========================
 // SCROLL PROGRESS
@@ -1594,7 +1595,6 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   var formSuccess = document.getElementById('formSuccess');
   var formError = document.getElementById('formError');
 
-  var GHL_API_KEY = 'REMOVED_FOR_SECURITY';
   var GHL_LOCATION = 'tQb9YmrGDrdVUJYPKrsY';
   var NTFY_TOPIC = 'tct-urgent-Hk9UOEZR';
 
@@ -1675,10 +1675,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       notes: notes
     };
 
-    fetch('https://services.leadconnectorhq.com/contacts/', {
+    fetch('/api/ghl/contacts/', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + GHL_API_KEY,
+        'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
         'Content-Type': 'application/json',
         'Version': '2021-07-28',
         'User-Agent': 'TheCallTaker/1.0'
@@ -1695,10 +1695,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       // Add note with full form details if we got a contact ID
       var contactId = (data && data.contact && data.contact.id) ? data.contact.id : null;
       if (contactId) {
-        fetch('https://services.leadconnectorhq.com/contacts/' + contactId + '/notes', {
+        fetch('/api/ghl/contacts/' + contactId + '/notes', {
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer ' + GHL_API_KEY,
+            'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
             'Content-Type': 'application/json',
             'Version': '2021-07-28',
             'User-Agent': 'TheCallTaker/1.0'

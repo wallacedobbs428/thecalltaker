@@ -208,7 +208,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
           <span class="settings-label">GHL API Key</span>
           <span class="settings-value" id="api-key-display">pit-••••••••35</span>
           <button class="reveal-btn" id="api-key-reveal" onclick="toggleApiKey()">Reveal</button>
-          <button class="copy-btn" onclick="copyValue('REMOVED_FOR_SECURITY', this)" title="Copy">
+          <button class="copy-btn" onclick="copyValue(TCT_PROXY_SECRET, this)" title="Copy">
             <span class="copy-feedback">Copied!</span>
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
@@ -225,8 +225,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
         <div class="settings-row">
           <span class="settings-label">API Base URL</span>
-          <span class="settings-value">https://services.leadconnectorhq.com</span>
-          <button class="copy-btn" onclick="copyValue('https://services.leadconnectorhq.com', this)" title="Copy">
+          <span class="settings-value">/api/ghl</span>
+          <button class="copy-btn" onclick="copyValue('/api/ghl', this)" title="Copy">
             <span class="copy-feedback">Copied!</span>
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
@@ -427,6 +427,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
 <!-- Shared JS -->
 <script src="js/admin-auth.js"></script>
+<script src="/shared/tct-ghl-proxy.js"></script>
 <script src="js/ghl-api.js"></script>
 <script src="js/admin-nav.js"></script>
 
@@ -484,7 +485,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
     var btn = document.getElementById('api-key-reveal');
     apiKeyRevealed = !apiKeyRevealed;
     if (apiKeyRevealed) {
-      display.textContent = 'REMOVED_FOR_SECURITY';
+      display.textContent = TCT_PROXY_SECRET;
       btn.textContent = 'Hide';
     } else {
       display.textContent = 'pit-\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u202235';

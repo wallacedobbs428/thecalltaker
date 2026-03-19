@@ -584,6 +584,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   </div>
 </footer>
 
+<script src="/shared/tct-ghl-proxy.js"></script>
 <script>
 // ===== REVENUE CALCULATOR =====
 const clientSlider = document.getElementById('clientSlider');
@@ -712,7 +713,6 @@ async function submitApplication() {
   btn.disabled = true;
   btn.textContent = 'Submitting...';
 
-  const GHL_KEY = 'REMOVED_FOR_SECURITY';
   const LOCATION_ID = 'tQb9YmrGDrdVUJYPKrsY';
 
   try {
@@ -733,10 +733,10 @@ async function submitApplication() {
       ]
     };
 
-    const ghlResp = await fetch('https://services.leadconnectorhq.com/contacts/', {
+    const ghlResp = await fetch('/api/ghl/contacts/', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + GHL_KEY,
+        'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
         'Version': '2021-07-28',
         'Content-Type': 'application/json'
       },

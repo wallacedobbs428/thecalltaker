@@ -638,6 +638,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
 <script>if(!window.__tctUILoaded){window.__tctScriptJsOK=true;}</script>
 <script src="/shared/ui-dark.js" defer></script>
+<script src="/shared/tct-ghl-proxy.js"></script>
 <script>
 function submitFallbackForm(e) {
   e.preventDefault();
@@ -673,10 +674,10 @@ function submitFallbackForm(e) {
   if (message) notes += "\nMessage: " + message;
   if (company) notes += "\nCompany: " + company;
 
-  fetch("https://services.leadconnectorhq.com/contacts/", {
+  fetch("/api/ghl/contacts/", {
     method: "POST",
     headers: {
-      "Authorization": "Bearer REMOVED_FOR_SECURITY",
+      "Authorization": "Bearer " + TCT_PROXY_SECRET,
       "Version": "2021-07-28",
       "Content-Type": "application/json"
     },
@@ -693,10 +694,10 @@ function submitFallbackForm(e) {
   }).then(function(r) { return r.json(); }).then(function(data) {
     var cid = data.contact ? data.contact.id : null;
     if (cid) {
-      fetch("https://services.leadconnectorhq.com/contacts/" + cid + "/notes", {
+      fetch("/api/ghl/contacts/" + cid + "/notes", {
         method: "POST",
         headers: {
-          "Authorization": "Bearer REMOVED_FOR_SECURITY",
+          "Authorization": "Bearer " + TCT_PROXY_SECRET,
           "Version": "2021-07-28",
           "Content-Type": "application/json"
         },

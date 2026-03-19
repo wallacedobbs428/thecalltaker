@@ -259,6 +259,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   </div>
 </footer>
 
+<script src="/shared/tct-ghl-proxy.js"></script>
 <script>
 function formatPhone(raw) {
   var d = raw.replace(/\D/g, '');
@@ -278,16 +279,14 @@ function submitReferral(e) {
   var bizName = document.getElementById('bizName').value.trim();
   var bizPhone = document.getElementById('bizPhone').value.trim();
 
-  var GHL_API = 'https://rest.gohighlevel.com/v1';
-  var GHL_KEY = 'REMOVED_FOR_SECURITY';
   var LOCATION_ID = 'tQb9YmrGDrdVUJYPKrsY';
   var NTFY_TOPIC = 'tct-urgent-Hk9UOEZR';
 
   // Create contact in GHL
-  fetch(GHL_API + '/contacts/', {
+  fetch('/api/ghl/contacts/', {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer ' + GHL_KEY,
+      'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
       'Content-Type': 'application/json',
       'User-Agent': 'TheCallTaker-Referral/1.0'
     },

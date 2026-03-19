@@ -607,6 +607,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   </div>
 </div>
 
+<script src="/shared/tct-ghl-proxy.js"></script>
 <script>
 (function(){
   // ===== HEADER SCROLL =====
@@ -740,10 +741,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
     };
 
     // Create GHL contact
-    fetch('https://services.leadconnectorhq.com/contacts/', {
+    fetch('/api/ghl/contacts/', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer REMOVED_FOR_SECURITY',
+        'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
         'Version': '2021-07-28',
         'Content-Type': 'application/json',
         'Accept': 'application/json'

@@ -496,6 +496,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   <!-- Footer -->
   <!-- Sticky mobile bar -->
   <!-- Scripts -->
+  <script src="/shared/tct-ghl-proxy.js"></script>
   <script>
     async function submitPilot() {
       var btn = document.getElementById('pilot-submit');
@@ -547,10 +548,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
           tags: tags
         };
 
-        var resp = await fetch('https://services.leadconnectorhq.com/contacts/', {
+        var resp = await fetch('/api/ghl/contacts/', {
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer REMOVED_FOR_SECURITY',
+            'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
             'Version': '2021-07-28',
             'Content-Type': 'application/json'
           },
@@ -562,10 +563,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
         if (result && result.contact && result.contact.id && typeof getTctAttributionNotes === 'function') {
           var notes = getTctAttributionNotes();
           if (notes) {
-            await fetch('https://services.leadconnectorhq.com/contacts/' + result.contact.id + '/notes', {
+            await fetch('/api/ghl/contacts/' + result.contact.id + '/notes', {
               method: 'POST',
               headers: {
-                'Authorization': 'Bearer REMOVED_FOR_SECURITY',
+                'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
                 'Version': '2021-07-28',
                 'Content-Type': 'application/json'
               },

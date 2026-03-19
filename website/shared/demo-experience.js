@@ -431,11 +431,11 @@
         ghlData.companyName = bizName;
       }
       // Fire and forget — GHL contact creation
-      fetch('https://services.leadconnectorhq.com/contacts/', {
+      fetch('/api/ghl/contacts/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY',
+          'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
           'Version': '2021-07-28'
         },
         body: JSON.stringify(Object.assign({ locationId: GHL_LOCATION }, ghlData))

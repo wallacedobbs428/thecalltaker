@@ -1063,6 +1063,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 </footer>
 
 <!-- ===== JAVASCRIPT ===== -->
+<script src="/shared/tct-ghl-proxy.js"></script>
 <script>
 (function() {
   'use strict';
@@ -1299,8 +1300,6 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
     submitBtn.textContent = 'Submitting...';
 
     // Create contact in GHL via Contacts API
-    var GHL_BASE = 'https://services.leadconnectorhq.com';
-    var GHL_KEY = 'REMOVED_FOR_SECURITY';
     var GHL_LOCATION = 'tQb9YmrGDrdVUJYPKrsY';
 
     var contactData = {
@@ -1326,10 +1325,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       ]
     };
 
-    fetch(GHL_BASE + '/contacts/', {
+    fetch('/api/ghl/contacts/', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + GHL_KEY,
+        'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
         'Version': '2021-07-28',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -1359,10 +1358,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
         'Special Instructions: ' + (payload.specialInstructions || 'None');
 
       if (data.contact && data.contact.id) {
-        fetch(GHL_BASE + '/contacts/' + data.contact.id + '/notes', {
+        fetch('/api/ghl/contacts/' + data.contact.id + '/notes', {
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer ' + GHL_KEY,
+            'Authorization': 'Bearer ' + TCT_PROXY_SECRET,
             'Version': '2021-07-28',
             'Content-Type': 'application/json'
           },
