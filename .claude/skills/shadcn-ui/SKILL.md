@@ -1,195 +1,326 @@
 ---
 name: shadcn-ui
-description: "Build modern UI components with shadcn/ui patterns, Tailwind CSS, and Radix primitives. Use when creating accessible, composable UI components, design systems, or when the user wants polished, production-ready interface elements. Covers component patterns, dark mode, animations, and accessibility."
-category: frontend
+description: Expert guidance for integrating and building applications with shadcn/ui components, including component discovery, installation, customization, and best practices.
+allowed-tools:
+  - "shadcn*:*"
+  - "mcp_shadcn*"
+  - "Read"
+  - "Write"
+  - "Bash"
+  - "web_fetch"
 ---
 
-# shadcn/ui — Modern Component Patterns
+# shadcn/ui Component Integration
 
-Build accessible, composable UI components using Tailwind CSS utility patterns inspired by shadcn/ui.
+You are a frontend engineer specialized in building applications with shadcn/ui—a collection of beautifully designed, accessible, and customizable components built with Radix UI or Base UI and Tailwind CSS. You help developers discover, integrate, and customize components following best practices.
 
----
+## Core Principles
 
-## Core Design Tokens
+shadcn/ui is **not a component library**—it's a collection of reusable components that you copy into your project. This gives you:
+- **Full ownership**: Components live in your codebase, not node_modules
+- **Complete customization**: Modify styling, behavior, and structure freely, including choosing between Radix UI or Base UI primitives
+- **No version lock-in**: Update components selectively at your own pace
+- **Zero runtime overhead**: No library bundle, just the code you need
+
+## Component Discovery and Installation
+
+### 1. Browse Available Components
+
+Use the shadcn MCP tools to explore the component catalog and Registry Directory:
+- **List all components**: Use `list_components` to see the complete catalog
+- **Get component metadata**: Use `get_component_metadata` to understand props, dependencies, and usage
+- **View component demos**: Use `get_component_demo` to see implementation examples
+
+### 2. Component Installation
+
+There are two approaches to adding components:
+
+**A. Direct Installation (Recommended)**
+```bash
+npx shadcn@latest add [component-name]
+```
+
+This command:
+- Downloads the component source code (adapting to your config: Radix vs Base UI)
+- Installs required dependencies
+- Places files in `components/ui/`
+- Updates your `components.json` config
+
+**B. Manual Integration**
+1. Use `get_component` to retrieve the source code
+2. Create the file in `components/ui/[component-name].tsx`
+3. Install peer dependencies manually
+4. Adjust imports if needed
+
+### 3. Registry and Custom Registries
+
+If working with a custom registry (defined in `components.json`) or exploring the Registry Directory:
+- Use `get_project_registries` to list available registries
+- Use `list_items_in_registries` to see registry-specific components
+- Use `view_items_in_registries` for detailed component information
+- Use `search_items_in_registries` to find specific components
+
+## Project Setup
+
+### Initial Configuration
+
+For **new projects**, use the `create` command to customize everything (style, fonts, component library):
+
+```bash
+npx shadcn@latest create
+```
+
+For **existing projects**, initialize configuration:
+
+```bash
+npx shadcn@latest init
+```
+
+This creates `components.json` with your configuration:
+- **style**: default, new-york (classic) OR choose new visual styles like Vega, Nova, Maia, Lyra, Mira
+- **baseColor**: slate, gray, zinc, neutral, stone
+- **cssVariables**: true/false for CSS variable usage
+- **tailwind config**: paths to Tailwind files
+- **aliases**: import path shortcuts
+- **rsc**: Use React Server Components (yes/no)
+- **rtl**: Enable RTL support (optional)
+
+### Required Dependencies
+
+shadcn/ui components require:
+- **React** (18+)
+- **Tailwind CSS** (3.0+)
+- **Primitives**: Radix UI OR Base UI (depending on your choice)
+- **class-variance-authority** (for variant styling)
+- **clsx** and **tailwind-merge** (for class composition)
+
+## Component Architecture
+
+### File Structure
+```
+src/
+├── components/
+│   ├── ui/              # shadcn components
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   └── dialog.tsx
+│   └── [custom]/        # your composed components
+│       └── user-card.tsx
+├── lib/
+│   └── utils.ts         # cn() utility
+└── app/
+    └── page.tsx
+```
+
+### The `cn()` Utility
+
+All shadcn components use the `cn()` helper for class merging:
+
+```typescript
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+```
+
+This allows you to:
+- Override default styles without conflicts
+- Conditionally apply classes
+- Merge Tailwind classes intelligently
+
+## Customization Best Practices
+
+### 1. Theme Customization
+
+Edit your Tailwind config and CSS variables in `app/globals.css`:
 
 ```css
-:root {
-  /* Colors — HSL for easy theme switching */
-  --background: 0 0% 100%;
-  --foreground: 0 0% 3.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 3.9%;
-  --primary: 24 95% 53%;          /* Orange for The Call Taker */
-  --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 96.1%;
-  --secondary-foreground: 0 0% 9%;
-  --muted: 0 0% 96.1%;
-  --muted-foreground: 0 0% 45.1%;
-  --accent: 0 0% 96.1%;
-  --accent-foreground: 0 0% 9%;
-  --destructive: 0 84.2% 60.2%;
-  --border: 0 0% 89.8%;
-  --ring: 24 95% 53%;
-  --radius: 0.5rem;
-}
-
-.dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --primary: 24 95% 53%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 14.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 14.9%;
-  --muted-foreground: 0 0% 63.9%;
-  --border: 0 0% 14.9%;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    /* ... more variables */
+  }
+  
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    /* ... dark mode overrides */
+  }
 }
 ```
 
----
+### 2. Component Variants
 
-## Component Patterns
+Use `class-variance-authority` (cva) for variant logic:
 
-### Button Variants
-```html
-<!-- Primary -->
-<button class="inline-flex items-center justify-center rounded-md text-sm font-medium
-  bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]
-  hover:bg-[hsl(var(--primary))]/90 h-10 px-4 py-2
-  transition-colors focus-visible:outline-none focus-visible:ring-2
-  focus-visible:ring-[hsl(var(--ring))] disabled:pointer-events-none disabled:opacity-50">
-  Start Free Pilot
-</button>
+```typescript
+import { cva } from "class-variance-authority"
 
-<!-- Secondary / Outline -->
-<button class="inline-flex items-center justify-center rounded-md text-sm font-medium
-  border border-[hsl(var(--border))] bg-transparent
-  hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))]
-  h-10 px-4 py-2 transition-colors">
-  Learn More
-</button>
-
-<!-- Ghost -->
-<button class="inline-flex items-center justify-center rounded-md text-sm font-medium
-  hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))]
-  h-10 px-4 py-2 transition-colors">
-  Cancel
-</button>
+const buttonVariants = cva(
+  "inline-flex items-center justify-center rounded-md",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground",
+        outline: "border border-input",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
 ```
 
-### Card
-```html
-<div class="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))]
-  text-[hsl(var(--card-foreground))] shadow-sm">
-  <div class="flex flex-col space-y-1.5 p-6">
-    <h3 class="text-2xl font-semibold leading-none tracking-tight">Pro Plan</h3>
-    <p class="text-sm text-[hsl(var(--muted-foreground))]">24/7 AI receptionist</p>
-  </div>
-  <div class="p-6 pt-0">
-    <p class="text-4xl font-bold">$297<span class="text-sm font-normal text-[hsl(var(--muted-foreground))]">/mo</span></p>
-  </div>
-  <div class="flex items-center p-6 pt-0">
-    <button class="w-full rounded-md bg-[hsl(var(--primary))] text-white h-10 px-4">
-      Get Started
-    </button>
-  </div>
-</div>
-```
+### 3. Extending Components
 
-### Badge
-```html
-<!-- Default -->
-<span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold
-  transition-colors border-transparent bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]">
-  New
-</span>
+Create wrapper components in `components/` (not `components/ui/`):
 
-<!-- Outline -->
-<span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold
-  text-[hsl(var(--foreground))]">
-  HVAC
-</span>
+```typescript
+// components/custom-button.tsx
+import { Button } from "@/components/ui/button"
+import { Loader2 } from "lucide-react"
 
-<!-- Success -->
-<span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold
-  border-transparent bg-green-500/10 text-green-500">
-  Active
-</span>
-```
-
-### Input
-```html
-<div class="space-y-2">
-  <label class="text-sm font-medium leading-none" for="email">Email</label>
-  <input type="email" id="email" placeholder="john@company.com"
-    class="flex h-10 w-full rounded-md border border-[hsl(var(--border))]
-    bg-[hsl(var(--background))] px-3 py-2 text-sm
-    placeholder:text-[hsl(var(--muted-foreground))]
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))]
-    disabled:cursor-not-allowed disabled:opacity-50">
-</div>
-```
-
-### Dialog/Modal
-```html
-<div class="fixed inset-0 z-50 bg-black/80" id="overlay"></div>
-<div class="fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%]
-  border border-[hsl(var(--border))] bg-[hsl(var(--background))] p-6 shadow-lg rounded-lg"
-  role="dialog" aria-modal="true">
-  <div class="flex flex-col space-y-1.5 text-center sm:text-left">
-    <h2 class="text-lg font-semibold">Start Your Free Pilot</h2>
-    <p class="text-sm text-[hsl(var(--muted-foreground))]">14 days free, no credit card.</p>
-  </div>
-  <div class="mt-4">
-    <!-- Form content -->
-  </div>
-  <div class="mt-6 flex justify-end space-x-2">
-    <button class="rounded-md border px-4 py-2 text-sm" onclick="closeDialog()">Cancel</button>
-    <button class="rounded-md bg-[hsl(var(--primary))] text-white px-4 py-2 text-sm">Submit</button>
-  </div>
-</div>
-```
-
----
-
-## Accessibility Checklist
-
-Every component must have:
-- [ ] Proper `role` attributes (dialog, button, etc.)
-- [ ] `aria-label` or `aria-labelledby` for non-text elements
-- [ ] `aria-expanded` for toggleable elements
-- [ ] Keyboard navigation (Tab, Enter, Escape)
-- [ ] Focus management (trap focus in modals)
-- [ ] Color contrast ratio >= 4.5:1
-- [ ] `disabled` state styling
-- [ ] Screen reader announcements for dynamic content
-
----
-
-## Animation Patterns
-
-```css
-/* Fade in */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+export function LoadingButton({ 
+  loading, 
+  children, 
+  ...props 
+}: ButtonProps & { loading?: boolean }) {
+  return (
+    <Button disabled={loading} {...props}>
+      {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+      {children}
+    </Button>
+  )
 }
-
-/* Slide up */
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Scale in (for modals) */
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.animate-in { animation: fadeIn 0.2s ease-out; }
-.animate-slide-up { animation: slideUp 0.3s ease-out; }
-.animate-scale-in { animation: scaleIn 0.2s ease-out; }
 ```
+
+## Blocks and Complex Components
+
+shadcn/ui provides complete UI blocks (authentication forms, dashboards, etc.):
+
+1. **List available blocks**: Use `list_blocks` with optional category filter
+2. **Get block source**: Use `get_block` with the block name
+3. **Install blocks**: Many blocks include multiple component files
+
+Blocks are organized by category:
+- **calendar**: Calendar interfaces
+- **dashboard**: Dashboard layouts
+- **login**: Authentication flows
+- **sidebar**: Navigation sidebars
+- **products**: E-commerce components
+
+## Accessibility
+
+All shadcn/ui components are built on Radix UI primitives, ensuring:
+- **Keyboard navigation**: Full keyboard support out of the box
+- **Screen reader support**: Proper ARIA attributes
+- **Focus management**: Logical focus flow
+- **Disabled states**: Proper disabled and aria-disabled handling
+
+When customizing, maintain accessibility:
+- Keep ARIA attributes
+- Preserve keyboard handlers
+- Test with screen readers
+- Maintain focus indicators
+
+## Common Patterns
+
+### Form Building
+```typescript
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+// Use with react-hook-form for validation
+import { useForm } from "react-hook-form"
+```
+
+### Dialog/Modal Patterns
+```typescript
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+```
+
+### Data Display
+```typescript
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+```
+
+## Troubleshooting
+
+### Import Errors
+- Check `components.json` for correct alias configuration
+- Verify `tsconfig.json` includes the `@` path alias:
+  ```json
+  {
+    "compilerOptions": {
+      "paths": {
+        "@/*": ["./src/*"]
+      }
+    }
+  }
+  ```
+
+### Style Conflicts
+- Ensure Tailwind CSS is properly configured
+- Check that `globals.css` is imported in your root layout
+- Verify CSS variable names match between components and theme
+
+### Missing Dependencies
+- Run component installation via CLI to auto-install deps
+- Manually check `package.json` for required Radix UI packages
+- Use `get_component_metadata` to see dependency lists
+
+### Version Compatibility
+- shadcn/ui v4 requires React 18+ and Next.js 13+ (if using Next.js)
+- Some components require specific Radix UI versions
+- Check documentation for breaking changes between versions
+
+## Validation and Quality
+
+Before committing components:
+1. **Type check**: Run `tsc --noEmit` to verify TypeScript
+2. **Lint**: Run your linter to catch style issues
+3. **Test accessibility**: Use tools like axe DevTools
+4. **Visual QA**: Test in light and dark modes
+5. **Responsive check**: Verify behavior at different breakpoints
+
+## Resources
+
+Refer to the following resource files for detailed guidance:
+- `resources/setup-guide.md` - Step-by-step project initialization
+- `resources/component-catalog.md` - Complete component reference
+- `resources/customization-guide.md` - Theming and variant patterns
+- `resources/migration-guide.md` - Upgrading from other UI libraries
+
+## Examples
+
+See the `examples/` directory for:
+- Complete component implementations
+- Form patterns with validation
+- Dashboard layouts
+- Authentication flows
+- Data table implementations
