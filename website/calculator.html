@@ -376,7 +376,7 @@
             <div style="font-size: 0.8125rem; color: var(--text-muted);">Answer time</div>
           </div>
           <div style="padding: 16px;">
-            <div style="font-size: 1.75rem; font-weight: 800; color: var(--green-400); margin-bottom: 4px;">$497</div>
+            <div style="font-size: 1.75rem; font-weight: 800; color: var(--green-400); margin-bottom: 4px;">$97</div>
             <div style="font-size: 0.8125rem; color: var(--text-muted);">/mo starting</div>
           </div>
         </div>
@@ -521,7 +521,7 @@
       var missedPerMonth = Math.round(missedPerWeek * 4.33);
       var lostMonthly = missedPerMonth * calcState.jobValue;
       var lostYearly = lostMonthly * 12;
-      var roi = Math.round(lostMonthly / 297);
+      var roi = Math.round(lostMonthly / 97);
 
       // Update results
       document.getElementById('result-calls-month').textContent = missedPerMonth + ' calls per month';
@@ -574,7 +574,7 @@
         var res = await fetch('https://services.leadconnectorhq.com/contacts/', {
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+            'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY',
             'Version': '2021-07-28',
             'Content-Type': 'application/json'
           },
@@ -600,7 +600,7 @@
                 fetch('https://services.leadconnectorhq.com/contacts/' + contactId + '/notes', {
                   method: 'POST',
                   headers: {
-                    'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+                    'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY',
                     'Version': '2021-07-28',
                     'Content-Type': 'application/json'
                   },
@@ -654,6 +654,6 @@
 <script src="/shared/ui-dark.js" defer></script>
 <script src="/shared/carousel.js" defer></script>
 <script src="/shared/variant-b.js" defer></script>
-<script src="tct-tracking.js" defer></script>
+<script src="/shared/tct-tracking.js" defer></script>
 </body>
 </html>
