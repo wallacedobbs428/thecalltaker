@@ -6,101 +6,64 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 # Primer — The Call Taker
 
-> Last updated: 2026-03-15 | Rewrite this file at the start of every session.
+> Last updated: 2026-03-19 | Rewrite this file at the start of every session.
 
 ## What This Is
 
-AI Receptionist SaaS for service businesses. $97/$297/$497/mo plans. 14-day free pilot. Demo line: (615) 784-5747. Built by Wallace Dobbs (16yo founder, @moneymaker99). Mills (co-founder) handles demos and closing alongside Wallace.
+AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier decoy pricing). 14-day free pilot. Demo line: (615) 784-5747. Built by Wallace Dobbs (16yo founder, @moneymaker99). Mills (co-founder) handles demos and closing alongside Wallace.
 
 ## Architecture
 
-- **This repo** (`~/Desktop/thecalltaker/` or `/home/user/thecalltaker/`): Website (GitHub Pages), lead tools, dashboard, agent configs, sales assets, outreach ops scripts
+- **This repo** (`/home/user/thecalltaker/`): Website (GitHub Pages), lead tools, dashboard, agent configs, sales assets
 - **Ops repo** (`~/thecalltaker-ops/`): 4 AI engines (Max, Ben, Sam, Donny), 40+ ops scripts, state files, logs — all on launchd on a Mac
-- **Voice AI**: GHL Voice AI agent (Jessica, universal demo). Voice ID: `lxYfHSkYm1EzQzGhdbfc` (deep variant, v9)
+- **Voice AI**: GHL Voice AI agent (universal demo). Demo line: (615) 784-5747
 - **CRM**: GoHighLevel (GHL). All contacts, conversations, pipelines
 - **Notifications**: ntfy.sh (5 topics: urgent, sales, system, activity, william)
+- **Deployment**: GitHub Pages via `.github/workflows/deploy.yml` — triggers on `website/**` changes to `main`
 
-## Outreach Stack v2 (Rebuilt March 15, 2026)
+## Current Branch & State
 
-Full 7-component outreach system rebuild. All scripts in `ops/`.
+- **Branch:** `claude/website-review-ciovZ`
+- **Base:** `master` (last commit 2026-03-17)
+- **Latest commits (March 18):** Major homepage redesign — HUD design, warm palette, Lenis smooth scroll, phone animation, floating callouts, circuit background, urgency bar, GSAP motion system
+- **Working tree:** Clean (no staged or unstaged changes)
 
-| # | Component | Script | What It Does |
-|---|-----------|--------|-------------|
-| C6 | Hot Lead 7-Touch | `hot-lead-converter.py` | 7-touch SMS/email/call sequence. Bland.ai voicemail Day 1. Per-touch GHL tagging. |
-| C1 | Cold Caller v2 | `cold-caller-v2.py` | Bland.ai outbound calls. Hot leads first. 2x retry with 4hr gaps. |
-| C2 | Storm Chaser v3 | `storm-chaser-v3.py` | NWS API storm detection. Emails within 5 min of hail/tornado/wind. |
-| C3 | Blast Engine v3 | `blast-engine-v3.py` | 40/day/address, 90s gaps, 5-address rotation, A/B auto-promote. |
-| C4 | Lead Quality | `lead-quality-engine.py` | Dedup + quality score 1-10. Only 5+ leads pass to blast. |
-| C5 | Speed-to-Lead v2 | `speed-to-lead-v2.py` | 15s hot signal checks. SMS 60s, call 5min, email 10min. Dead lead resurrection. |
-| C7 | DM Outreach v2 | `dm-outreach-v2.py` | 3-DM sequence per industry. Copy-paste export for Wallace. |
-| NEW | Hot Lead 5-Step | `hot-lead-sequence.py` | 5-step SMS/email/voicemail sequence (Day 0/1/2/4/7). Pain-first + scarcity. |
-| Sys | Health Monitor | `system-health-monitor.py` | Green/yellow/red for all components. SMS alert on red. |
-| Sys | Dashboard | `master-dashboard.html` | Visual command center. Auto-refreshes 60s. |
+## Homepage Design (index.html — 3,398 lines)
 
-## Current Branch & Recent Work
+- **Color scheme:** Green accent (#00dc82) — all CSS vars (--blue, --orange, --green) map to same green
+- **Layout:** Dark theme, glassmorphism header, scroll spy, GSAP mobile menu, Lenis smooth scroll
+- **Hero:** Animated phone mockup (pure CSS/SVG, no images), circuit background, floating callouts
+- **Sections:** Hero → Industry strip → How It Works → Features → Demo → Pricing → FAQ → Final CTA → Footer
+- **Pricing:** 4-tier decoy ($19/$97/$497/$997), urgency badge with countdown to Friday deadline
+- **Nav:** Glassmorphism header, scroll progress bar, mobile overlay menu
+- **External deps:** GSAP 3.12.5 (cdnjs), Lenis 1.1.18 (jsdelivr)
+- **Font:** Self-hosted Inter (woff2)
 
-- **Branch:** `claude/rebuild-outreach-stack-DYwVo`
-- **Homepage has unstaged changes** — Trust Layer added (see below)
-- **Latest session (March 15):** Created `hot-lead-sequence.py` — 5-step automated follow-up for hot-lead tagged contacts. Also previously added 5 SEO blog posts.
+## Website Stats
 
-## Hot Lead Sequence (March 15, 2026)
+- **Total pages:** ~210+ HTML files deployed
+- **Root HTML:** 41 pages
+- **Industries:** 19 pages (expanded beyond documented 13)
+- **Blog:** 69 posts
+- **Case Studies:** 14 + index
+- **SEO Pages:** 13 (ai-answering-service/)
+- **Pilot funnel:** 3 pages
+- **Try funnel:** 3 pages
 
-New 5-step follow-up script at `ops/hot-lead-sequence.py`:
-- Step 1 (Day 0): SMS pain hook + pilot offer
-- Step 2 (Day 1): Email with missed call costs, competitor angle, case studies
-- Step 3 (Day 2): Bland.ai voicemail drop
-- Step 4 (Day 4): SMS social proof + scarcity countdown
-- Step 5 (Day 7): Breakup email
-- Commands: scan, send, status, run, test (dry run)
-- State: `ops/hot-lead-sequence-state.json`
-- Rate limits: 20 SMS/day, 30 emails/day
-- Contact registry integration for cross-engine coordination
-- 19 industries with pain hooks in INDUSTRY_HOOKS dict
-- launchd templates in docstring (scan every 2hrs, send 3x daily)
+## Known Issues (Current)
 
-## Homepage Trust Layer (March 15, 2026)
-
-Added 4 trust elements to `website/index.html`:
-
-1. **Trust Logo Bar** — Infinite-scroll bar with 6 logos. Positioned between hero and demo sections.
-2. **Live Call Counter** — Fixed floating badge: "Jessica has answered X calls this month".
-3. **Uptime Badge** — Pill badge in hero: "99.9% Uptime - 24/7/365 - Answers in Under 2 Rings".
-4. **Response Time Claim** — Hero proof stat updated to "< 2 Rings Answer Speed".
-5. **Live Demo Nav Link** — Added `/try-live.html` link to both desktop nav and mobile menu.
-
-## Blog Posts (82+ pages total, 54+ blog posts)
-
-All in `website/blog/`. Green/black design system. Inter font. Schema.org Article markup. OG/Twitter meta. Mid-article and bottom CTAs. Related posts section. Mobile responsive.
-
-### New Posts Added (March 15, 2026) — Batch 1
-- `answering-service-water-damage.html` — Water damage answering service
-- `after-hours-answering-service-small-business.html` — After-hours answering for small business
-- `how-many-calls-small-business-miss.html` — Missed call statistics
-- `virtual-receptionist-cost-2026.html` — Virtual receptionist pricing guide
-- `best-ai-phone-answering-service.html` — Best AI answering services ranked
-
-### New Posts Added (March 15, 2026) — Batch 2
-- `answering-service-pest-control.html` — Best pest control answering service (emergency routing, seasonal surges, termite/bed bug/rodent)
-- `answering-service-auto-repair.html` — Auto repair shops losing $8K/mo in missed calls (hands-on work problem, Monday rush)
-- `answering-service-cleaning-companies.html` — Best cleaning company answering service (residential/commercial, Airbnb turnovers, recurring revenue)
-- `missed-calls-cost-contractors.html` — Data-driven missed call cost analysis by trade (roofing, plumbing, HVAC, electrical, GC, painting, landscaping, concrete)
-- `ai-receptionist-vs-voicemail.html` — AI receptionist vs voicemail deep dive (80% hang-up stat, psychology, revenue math, comparison table)
+1. **Urgency countdown hardcoded to March 21, 2026** — expires in 2 days, needs rolling logic
+2. **premium.css is empty** — loaded on every page, zero CSS rules
+3. **Schema.org prices don't match UI** — schema says $97-$997, UI has $19/$97/$497/$997
+4. **index-v2.html orphaned** — 3,398-line duplicate sitting in root
+5. **hero-phone-animation.html orphaned** — standalone test file in root
+6. **41 HTML files in root** — cluttered, many could be organized into subdirectories
+7. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live
+8. **CLAUDE.md documents 13 industries** — actual site has 19
 
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal
-- **Outreach stack**: ALL 7 components rebuilt + new hot-lead-sequence — deploy to Mac
-- **Stripe**: NOT connected (Wallace is 16). PayPal/Venmo workaround live
-- **Bland.ai balance**: Cold caller + voicemails require funded account
-- **GHL aliases**: Blast v3 needs 5 aliases verified (wallace@, hello@, support@, info@, team@)
-- **Unsubscribe page**: Blast v3 links to thecalltaker.com/unsubscribe — needs building
+- **Website polish**: Fix urgency countdown, clean orphaned files, schema consistency
 - **SEO content**: Continue expanding blog with high-intent keyword posts
-
-## Known Blockers
-
-1. Stripe not connected — PayPal/Venmo workaround live
-2. GHL API unreachable from CI — deploy from Mac only
-3. Retell.ai blocked — needs payment card
-4. Bland.ai balance — must be funded before cold caller goes live
-5. 5 GHL email aliases need verification
-6. Unsubscribe page needs to be built
+- **Stripe**: NOT connected (Wallace is 16). PayPal workaround live via pay.html
