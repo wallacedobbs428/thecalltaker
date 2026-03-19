@@ -1,6 +1,6 @@
 # Pricing Page Copy — thecalltaker.com/pricing
 
-**Ready to drop into GitHub Pages. All copy final.**
+> Ready to drop into the existing GitHub Pages site. All copy final.
 
 ---
 
@@ -15,30 +15,25 @@ Jessica answers 24/7, sounds like a real dispatcher, and books appointments auto
 **CTA Button:**
 Start 14-Day Free Trial →
 
-*Button links to PayPal Starter plan subscription link*
+**CTA Link:** [Starter PayPal subscription link]
 
 ---
 
 ## SOCIAL PROOF SECTION
 
-**Section label:** What Owners Are Saying
+> Placeholder testimonials — swap in real quotes as customers come in.
 
-### Testimonial 1 — Missed Jobs
-> "We were losing 8-10 calls a week to voicemail. First week with Jessica, she booked 6 jobs we would have missed. One of them was a $3,200 AC install."
+**Testimonial 1:**
+"We were missing 6-8 calls a week after hours. Jessica caught every single one. That's $4,000 in jobs we would've lost last month."
+— [Name], [HVAC Company], Nashville TN
 
-— **[Name]**, [HVAC Company], Nashville TN
+**Testimonial 2:**
+"I used to lose Saturday calls because I couldn't answer on job sites. Jessica books them while I'm on the roof. Haven't missed one since."
+— [Name], [Roofing Company], Atlanta GA
 
-### Testimonial 2 — After-Hours
-> "I used to wake up to voicemails from people who already called someone else. Now Jessica picks up at 2am, books them on my calendar, and texts me the details. I've caught 3 emergency jobs this month I never would have gotten."
-
-— **[Name]**, [Plumbing Company], Atlanta GA
-
-### Testimonial 3 — Hiring Relief
-> "I fired my answering service and saved $1,200 a month. Jessica does more than they did — she actually books the appointments instead of just taking messages."
-
-— **[Name]**, [Dental Practice], Memphis TN
-
-*Replace brackets with real customer info when available.*
+**Testimonial 3:**
+"I was paying $2,400/month for a receptionist who called in sick twice a month. Jessica costs a fraction of that and never misses a shift."
+— [Name], [Dental Practice], Charlotte NC
 
 ---
 
@@ -49,78 +44,78 @@ Start 14-Day Free Trial →
 - 1 phone line covered
 - 24/7 call answering
 - Basic FAQ handling
-- Appointment booking
+- Appointment booking (Google Calendar, Housecall Pro, Jobber + more)
 - After-hours coverage
 - Email support
 - 14-day free trial
 - No setup fee (founding customers)
 
-**CTA:** Start Free Trial →
-
-*Links to PayPal Starter subscription*
+**CTA Button:** Start Free Trial →
+**CTA Link:** [Starter PayPal subscription link]
 
 ---
 
 ### Pro — $997/mo
 
-**Badge:** MOST POPULAR
-
 - Everything in Starter, plus:
 - Up to 3 phone lines
-- Advanced call routing
-- Emergency escalation rules
-- Priority support
-- Monthly performance report
+- Advanced call routing (emergency vs. standard, VIP callers)
+- Custom emergency escalation rules
+- Priority support (text Wallace directly)
+- Monthly performance report with call stats + revenue captured
 
-**CTA:** Start Free Trial →
+**CTA Button:** Start Free Trial →
+**CTA Link:** [Pro PayPal subscription link]
 
-*Links to PayPal Pro subscription*
+---
+
+### Both Plans Include:
+
+- 14-day free trial — no charge, no risk
+- No setup fee for founding customers
+- Month-to-month — cancel anytime with 7 days notice
+- Jessica configured to your business in under 1 hour
+- Sounds human — callers can't tell the difference
 
 ---
 
 ## OBJECTION BLOCK
 
-**Section label:** Questions We Get Every Day
-
 **"Will my customers know it's not a real person?"**
-Most callers can't tell. Jessica sounds human, follows your script, and gets them booked. She doesn't sound like a robot — she sounds like a sharp dispatcher who's been doing this for years.
+Most callers can't tell. Jessica sounds human, uses your business name, follows your script, and gets them booked — usually faster than a real receptionist.
 
 **"What if she books the wrong jobs?"**
-She only books what you tell her to. You set the rules — which services, which hours, which calendar. She follows them exactly.
+She only books what you tell her to. You set the service area, job types, hours, and rules. She follows them exactly. Every booking sends you a notification so you can review it.
 
 **"How hard is setup?"**
-15 minutes. Forward your line, share your calendar, do a test call. We walk you through the whole thing live.
+15 minutes. Forward your line, share your calendar, test her live. We walk you through the whole thing on a call.
 
-**"What happens after the 14-day trial?"**
-Your plan starts billing monthly. Cancel anytime — no contracts, no cancellation fees. Most owners know within the first week whether Jessica is catching jobs they were missing.
-
-**"What if I need to change how she handles calls?"**
-Text Wallace directly. We adjust your script, routing rules, or booking settings same-day. No tickets, no waiting.
+**"Is it worth $497/month?"**
+One extra booked job a month more than pays for it. Most service businesses miss 5-10 calls a week — that's $2,000-$10,000 in lost revenue every month. Jessica catches all of them.
 
 ---
 
 ## FOOTER CTA
 
 **Headline:**
-One Extra Booked Job a Month More Than Pays for It
+One missed call is one lost job.
 
 **Body:**
-Start your 14-day free trial — no setup fee, cancel anytime. Jessica starts answering tonight.
+Most service businesses lose $2,000-$10,000 a month in calls that go to voicemail. Jessica answers every one.
 
-**CTA Button:**
-Start Free Trial →
+**CTA Button:** Start Your 14-Day Free Trial →
+**CTA Link:** [Starter PayPal subscription link]
 
-**Sub-text:**
-Questions? Call the demo line and talk to Jessica yourself: (615) 784-5747
+**Fine print:**
+No setup fee · No contracts · Cancel anytime · 14-day free trial
 
 ---
 
 ## IMPLEMENTATION NOTES
 
-- Page URL: `thecalltaker.com/pricing` (or update existing `pricing.html`)
-- Both "Start Free Trial" buttons link to PayPal Starter plan by default
-- Pro CTA links to PayPal Pro plan
-- Demo line number links to `tel:+16157845747`
-- Page style: match existing dark theme from index.html
-- No images needed — text-only converts better for service businesses
-- Mobile: stack pricing cards vertically, full-width CTAs
+- Page URL: `thecalltaker.com/pricing` or `website/pricing.html`
+- Style: match existing site (green/black, Inter font, --green: #00dc82)
+- Payment links: replace [Starter PayPal subscription link] and [Pro PayPal subscription link] with actual links after PayPal setup
+- Testimonials: swap placeholders with real customer quotes as they come in
+- Mobile: stack plans vertically, full-width CTA buttons
+- Schema markup: add Product + Offer structured data for SEO

@@ -1,107 +1,94 @@
-# Welcome Email Templates
+# Welcome Email Templates — New Customers
 
-**Send within 5 minutes of payment.** Copy-paste into Gmail, swap the brackets, hit send. Plain text only — no images, no formatting. Feels personal, lands in inbox.
+> Send within 1 hour of close. Match the template to whichever pain point landed the deal.
+> Plain text style. Under 150 words. No images. One bold CTA.
 
 ---
 
-## TEMPLATE 1: MISSED REVENUE ANGLE
+## TEMPLATE 1: MISSED REVENUE
 
-**Use when:** They signed up because they're losing jobs to missed calls / voicemail.
+**Subject:** Jessica is live on [Business Name] — test her now
 
-**Subject:** Jessica is live on [Business Name] — here's how to test her
-
-**Body:**
-
-```
 Hey [First Name],
 
-Jessica is forwarding on [Business Name]'s line right now.
+Jessica is answering your phones starting tonight.
 
-Here's how to test her: call your main number and say "I need a [service] estimate." She'll handle it like a real dispatcher — takes the info, books the job, texts you the summary.
+Before anything else — test her yourself. Call [their business number] from a different phone and say "[vertical request, e.g., I need an AC repair estimate]." She'll handle the whole thing in under 60 seconds.
 
-What you're getting for the next 14 days:
+Here's your 14-day trial:
+- Jessica answers every call — nights, weekends, holidays
+- Appointments go straight into your calendar
+- You get a text notification for every booking
 
-- Every call answered in under 2 seconds
-- Appointment booking on your calendar
-- Text summary after every call
-- After-hours coverage included
+If she doesn't catch at least 2 jobs you were missing, it costs you nothing.
 
-Do a test call tonight so you can hear it yourself. Most owners call 3-4 times the first night just to make sure it's real.
-
-I'll check in with you in 48 hours to see how the first calls went. If anything feels off before then, text me directly.
+I'll check in with you in a few days. Text me anytime — I respond in minutes.
 
 — Wallace
-[WALLACE PHONE NUMBER]
-```
+(615) 653-9004
 
 ---
 
-## TEMPLATE 2: AFTER-HOURS ANGLE
-
-**Use when:** They signed up because they're missing calls nights/weekends.
+## TEMPLATE 2: AFTER-HOURS
 
 **Subject:** Jessica is answering your after-hours calls starting tonight
 
-**Body:**
-
-```
 Hey [First Name],
 
-Jessica goes live on [Business Name]'s line tonight.
+Jessica goes live on your phones tonight.
 
-Here's what happens now when someone calls at 10pm: Jessica picks up in under 2 seconds, sounds like a real person, takes their info, books the job on your calendar, and texts you the summary. No more waking up to voicemail from a $500 job that called someone else.
+Here's what changes: when someone calls [Business Name] at 10 PM with a [vertical emergency, e.g., burst pipe], Jessica picks up on the first ring, gets their info, and books the job. No more voicemails. No more lost calls.
 
-Test her right now — call your main number and say "I need a [service] estimate for tomorrow morning."
+Test her right now — call [their business number] and say "[vertical request]." She handles the whole call.
 
-Your 14-day trial includes full 24/7 coverage. Every call answered, every job booked, every detail texted to you.
+Your 14-day trial:
+- 24/7 answering — every call, every night
+- Jobs booked straight into your calendar
+- Text notification for every new booking
 
-I'll check in Wednesday to see how the first few nights went. Text me anytime if you need anything adjusted.
+I'll check in this week. Text me anytime.
 
 — Wallace
-[WALLACE PHONE NUMBER]
-```
+(615) 653-9004
 
 ---
 
-## TEMPLATE 3: HIRING HEADACHE ANGLE
+## TEMPLATE 3: HIRING HEADACHE
 
-**Use when:** They signed up because they're tired of hiring/managing front desk staff.
+**Subject:** You just got a receptionist without hiring one
 
-**Subject:** You just got a receptionist without hiring one — here's what's next
-
-**Body:**
-
-```
 Hey [First Name],
 
-Jessica is live on [Business Name]'s line. No interview, no training, no payroll.
+No interviews. No payroll. No sick days. Jessica is live on [Business Name] starting tonight.
 
-Here's what she handles so you don't have to:
+She handles what used to take a full-time hire:
+- Answers every call — even when you're on a job
+- Books appointments into your calendar automatically
+- Follows your rules: service area, job types, hours
 
-- Answers every call in under 2 seconds
-- Takes caller info and books appointments
-- Handles basic FAQs about your services
-- Texts you a summary after every call
-- Works nights, weekends, holidays — never calls in sick
+Test her yourself — call [their business number] from a different phone and say "[vertical request]." She'll book it in under a minute.
 
-Test her right now: call your main number and say "I need to schedule a [service]." She'll handle it start to finish.
+14-day free trial. If she's not worth it, cancel anytime.
 
-I'll follow up in 48 hours to make sure everything's dialed in. If you want to tweak how she handles anything, just text me.
+Text me if you need anything — I'm fast.
 
 — Wallace
-[WALLACE PHONE NUMBER]
-```
+(615) 653-9004
 
 ---
 
-## SENDING CHECKLIST
+## USAGE NOTES
 
-Before you hit send:
-
-- [ ] Replace `[First Name]` with their first name
-- [ ] Replace `[Business Name]` with their company name
-- [ ] Replace `[service]` with their industry (AC repair, plumbing estimate, dental cleaning, etc.)
-- [ ] Replace `[WALLACE PHONE NUMBER]` with your direct number
-- [ ] Send from `thecalltakerai@gmail.com`
-- [ ] Send within 5 minutes of payment confirmation
-- [ ] Set a 48-hour reminder to check in
+- **Pick the template** that matches whichever pain point closed the deal
+- **Fill in brackets:** [First Name], [Business Name], [their business number], [vertical request]
+- **Vertical requests by industry:**
+  - HVAC: "My AC stopped working"
+  - Plumbing: "I have a burst pipe"
+  - Dental: "I need a new patient appointment"
+  - Roofing: "I need a storm damage estimate"
+  - Electrical: "Half my house lost power"
+  - Locksmith: "I'm locked out"
+  - Towing: "My car broke down"
+  - Pest control: "I found mice in my garage"
+- **Send from:** thecalltakerai@gmail.com or GHL
+- **Timing:** Within 1 hour of close — this kills buyer's remorse
