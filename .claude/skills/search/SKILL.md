@@ -1,172 +1,91 @@
 ---
-name: search
-description: "Perform deep web research and information gathering. Use when researching competitors, market data, industry trends, pricing intelligence, technology comparisons, or gathering data for business decisions. Covers search strategies, source evaluation, data synthesis, and competitive intelligence."
-category: research
+name: tavily-search
+description: |
+  Search the web with LLM-optimized results via the Tavily CLI. Use this skill when the user wants to search the web, find articles, look up information, get recent news, discover sources, or says "search for", "find me", "look up", "what's the latest on", "find articles about", or needs current information from the internet. Returns relevant results with content snippets, relevance scores, and metadata — optimized for LLM consumption. Supports domain filtering, time ranges, and multiple search depths.
+allowed-tools: Bash(tvly *)
 ---
 
-# Search — Deep Research Skill
+# tavily search
 
-Systematic approach to gathering, evaluating, and synthesizing information from the web.
+Web search returning LLM-optimized results with content snippets and relevance scores.
 
----
+## Before running any command
 
-## Research Framework
+If `tvly` is not found on PATH, install it first:
 
-### Step 1: Define the Question
-Before searching, write down:
-- **What specifically do I need to know?**
-- **What will I do with this information?**
-- **What format should the output be in?**
-
-### Step 2: Search Strategy
-Use multiple query formulations:
-
-```
-Primary query:    [exact topic]
-Comparison query: [topic] vs [alternative]
-Review query:     [topic] review 2026
-Pricing query:    [topic] pricing plans cost
-Problem query:    [topic] problems issues complaints
+```bash
+curl -fsSL https://cli.tavily.com/install.sh | bash && tvly login
 ```
 
-### Step 3: Evaluate Sources
-| Source Type | Reliability | Use For |
-|------------|------------|---------|
-| Company website | Medium (biased) | Official features, pricing |
-| G2/Capterra reviews | High | Real user experiences |
-| Reddit/forums | Medium | Unfiltered opinions |
-| Industry reports | High | Market data, trends |
-| Blog posts | Low-Medium | Analysis, how-tos |
-| News articles | Medium-High | Recent events, funding |
+Do not skip this step or fall back to other tools.
 
-### Step 4: Synthesize
-- Cross-reference claims across 3+ sources
-- Note conflicting information
-- Distinguish facts from opinions
-- Date-stamp everything (info expires)
+See [tavily-cli](../tavily-cli/SKILL.md) for alternative install methods and auth options.
 
----
+## When to use
 
-## Competitive Intelligence Template
+- You need to find information on any topic
+- You don't have a specific URL yet
+- First step in the [workflow](../tavily-cli/SKILL.md): **search** → extract → map → crawl → research
 
-```markdown
-## Competitor: [Company Name]
+## Quick start
 
-**URL:** [website]
-**Founded:** [year]
-**Funding:** [amount/stage]
-**Team size:** [estimate]
+```bash
+# Basic search
+tvly search "your query" --json
 
-### Product
-- **What they do:** [1-2 sentences]
-- **Target market:** [who they sell to]
-- **Key features:** [bullet list]
-- **Missing features:** [what they DON'T do]
+# Advanced search with more results
+tvly search "quantum computing" --depth advanced --max-results 10 --json
 
-### Pricing
-| Plan | Price | What's Included |
-|------|-------|----------------|
-| [Plan 1] | $X/mo | [features] |
-| [Plan 2] | $X/mo | [features] |
+# Recent news
+tvly search "AI news" --time-range week --topic news --json
 
-### Strengths
-- [What they do well]
+# Domain-filtered
+tvly search "SEC filings" --include-domains sec.gov,reuters.com --json
 
-### Weaknesses
-- [Where they fall short]
-- [Common complaints from reviews]
-
-### How We Win Against Them
-- [Our advantage 1]
-- [Our advantage 2]
+# Include full page content in results
+tvly search "react hooks tutorial" --include-raw-content --max-results 3 --json
 ```
 
----
+## Options
 
-## Market Research Template
+| Option | Description |
+|--------|-------------|
+| `--depth` | `ultra-fast`, `fast`, `basic` (default), `advanced` |
+| `--max-results` | Max results, 0-20 (default: 5) |
+| `--topic` | `general` (default), `news`, `finance` |
+| `--time-range` | `day`, `week`, `month`, `year` |
+| `--start-date` | Results after date (YYYY-MM-DD) |
+| `--end-date` | Results before date (YYYY-MM-DD) |
+| `--include-domains` | Comma-separated domains to include |
+| `--exclude-domains` | Comma-separated domains to exclude |
+| `--country` | Boost results from country |
+| `--include-answer` | Include AI answer (`basic` or `advanced`) |
+| `--include-raw-content` | Include full page content (`markdown` or `text`) |
+| `--include-images` | Include image results |
+| `--include-image-descriptions` | Include AI image descriptions |
+| `--chunks-per-source` | Chunks per source (advanced/fast depth only) |
+| `-o, --output` | Save output to file |
+| `--json` | Structured JSON output |
 
-```markdown
-## Market: [Industry/Niche]
+## Search depth
 
-### Market Size
-- TAM: [Total Addressable Market]
-- SAM: [Serviceable Addressable Market]
-- SOM: [Serviceable Obtainable Market]
+| Depth | Speed | Relevance | Best for |
+|-------|-------|-----------|----------|
+| `ultra-fast` | Fastest | Lower | Real-time chat, autocomplete |
+| `fast` | Fast | Good | Need chunks, latency matters |
+| `basic` | Medium | High | General-purpose (default) |
+| `advanced` | Slower | Highest | Precision, specific facts |
 
-### Key Players
-| Company | Market Share | Pricing | Differentiation |
-|---------|-------------|---------|-----------------|
+## Tips
 
-### Trends
-- [Trend 1 with data]
-- [Trend 2 with data]
+- **Keep queries under 400 characters** — think search query, not prompt.
+- **Break complex queries into sub-queries** for better results.
+- **Use `--include-raw-content`** when you need full page text (saves a separate extract call).
+- **Use `--include-domains`** to focus on trusted sources.
+- **Use `--time-range`** for recent information.
+- Read from stdin: `echo "query" | tvly search - --json`
 
-### Customer Pain Points
-1. [Pain point + evidence]
-2. [Pain point + evidence]
+## See also
 
-### Opportunities
-- [Underserved segment]
-- [Emerging need]
-```
-
----
-
-## Search Query Techniques
-
-### For Business Research
-```
-"answering service" HVAC pricing 2026
-site:g2.com "answering service" review
-"smith.ai" OR "ruby receptionists" pricing
-"AI receptionist" -"call center" startup
-```
-
-### For Technical Research
-```
-"GHL API" "voice AI" integration guide
-python asyncio "rate limiting" best practices
-"GitHub Actions" deploy "GitHub Pages" workflow
-```
-
-### For Lead Research
-```
-"[company name]" "[city]" [industry] phone
-site:yelp.com "[company name]" reviews
-site:bbb.org "[company name]" complaints
-```
-
----
-
-## Output Formats
-
-### Quick Summary (for Slack/ntfy)
-```
-[Company] — $X/mo, does [feature], weak on [gap]. We win on [advantage].
-```
-
-### Decision Brief (for strategy)
-```markdown
-## Decision: [Question]
-
-### Options
-1. **Option A:** [Description] — Pros: [X]. Cons: [Y].
-2. **Option B:** [Description] — Pros: [X]. Cons: [Y].
-
-### Recommendation
-[Option X] because [evidence-based reason].
-
-### Sources
-- [URL 1] — [what it confirmed]
-- [URL 2] — [what it confirmed]
-```
-
-### Data Table (for comparison)
-```markdown
-| Criteria | Us | Competitor A | Competitor B |
-|----------|-----|-------------|-------------|
-| Price | $97/mo | $300/mo | $200/mo |
-| 24/7 | Yes | Yes | No |
-| AI-powered | Yes | No | Partial |
-| Setup time | Same day | 1-2 weeks | 3-5 days |
-```
+- [tavily-extract](../tavily-extract/SKILL.md) — extract content from specific URLs
+- [tavily-research](../tavily-research/SKILL.md) — comprehensive multi-source research

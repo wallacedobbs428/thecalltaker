@@ -1,174 +1,581 @@
 ---
 name: technical-writing
-description: "Write clear technical documentation, guides, and content. Use when creating setup guides, how-to docs, runbooks, changelogs, README files, onboarding docs, or technical blog content. Covers document structure, audience-appropriate language, and technical accuracy."
-category: documentation
+description: Write clear, comprehensive technical documentation. Use when creating specs, architecture docs, runbooks, or API documentation. Handles technical specifications, system design docs, operational guides, and developer documentation with industry best practices.
+allowed-tools: Read Write Edit Glob Grep
+metadata:
+  tags: technical-writing, documentation, specs, architecture, runbooks, API-docs
+  platforms: Claude, ChatGPT, Gemini
 ---
+
 
 # Technical Writing
 
-Write documentation that people actually read and find useful.
+## When to use this skill
+- Writing technical specifications
+- Creating architecture documentation
+- Documenting system designs
+- Writing runbooks and operational guides
+- Creating developer documentation
+- API documentation
+- User manuals and guides
+- Release notes and changelogs
 
----
+## Instructions
 
-## Core Principles
+### Step 1: Understand your audience
 
-1. **Write for your reader, not yourself** — Who is reading this? What do they already know?
-2. **Lead with the answer** — Don't make readers wade through context to find what they need
-3. **Show, then tell** — Example first, explanation second
-4. **One idea per paragraph** — If it has two ideas, split it
-5. **Use active voice** — "Click the button" not "The button should be clicked"
+**Developer audience**:
+- Focus on implementation details
+- Include code examples
+- Technical terminology is okay
+- Show how, not just what
 
----
+**DevOps/Operations audience**:
+- Focus on deployment and maintenance
+- Include configuration examples
+- Emphasize monitoring and troubleshooting
+- Provide runbooks
 
-## Document Types
+**Manager/Stakeholder audience**:
+- High-level overview
+- Business impact
+- Minimal technical jargon
+- Focus on outcomes
 
-### How-To Guide (Task-Oriented)
-**Purpose:** Help someone accomplish a specific task.
-**Structure:**
+**End user audience**:
+- Simple, clear language
+- Step-by-step instructions
+- Visual aids (screenshots, videos)
+- FAQ section
+
+### Step 2: Choose the right document type
+
+**Technical Specification**:
+```markdown
+# [Feature Name] Technical Specification
+
+## Overview
+Brief description of what this spec covers
+
+## Problem Statement
+What problem are we solving?
+
+## Goals and Non-Goals
+### Goals
+- Goal 1
+- Goal 2
+
+### Non-Goals
+- What we're explicitly not doing
+
+## Solution Design
+### High-Level Architecture
+### Data Models
+### API Contracts
+### User Interface
+
+## Implementation Plan
+### Phase 1
+### Phase 2
+
+## Testing Strategy
+
+## Security Considerations
+
+## Performance Considerations
+
+## Monitoring and Alerting
+
+## Rollout Plan
+
+## Rollback Plan
+
+## Open Questions
+
+## References
 ```
-## How to [Do the Thing]
 
-**Prerequisites:**
-- Thing you need first
-- Another prerequisite
+**Architecture Document**:
+```markdown
+# System Architecture
 
-**Steps:**
-1. Do this first
-2. Then do this
-3. Finally do this
+## Overview
+High-level system description
 
-**Verify:** [How to confirm it worked]
+## Architecture Diagram
+[Insert diagram]
 
-**Troubleshooting:**
-- If X happens → do Y
-- If Z happens → do W
+## Components
+### Component 1
+- Responsibility
+- Technology stack
+- Interfaces
+
+### Component 2
+...
+
+## Data Flow
+How data moves through the system
+
+## Key Design Decisions
+### Decision 1
+- Context
+- Options considered
+- Decision made
+- Rationale
+
+## Technology Stack
+- Frontend: React, TypeScript
+- Backend: Python, FastAPI
+- Database: PostgreSQL
+- Infrastructure: AWS, Docker, Kubernetes
+
+## Scalability
+How the system scales
+
+## Security
+Authentication, authorization, data protection
+
+## Monitoring and Observability
+Metrics, logs, tracing
+
+## Disaster Recovery
+Backup and recovery procedures
+
+## Future Considerations
 ```
 
-### Reference Doc (Information-Oriented)
-**Purpose:** Provide complete, accurate details.
-**Structure:**
-```
-## [Component Name]
+**Runbook**:
+```markdown
+# [Service Name] Runbook
 
-**What it is:** [1 sentence]
-**Where it lives:** [File path / URL]
+## Service Overview
+What this service does
 
-### Configuration
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| ... | ... | ... | ... |
+## Dependencies
+- Service A
+- Service B
+- Database X
 
-### API / Interface
-[Methods, endpoints, parameters]
-
-### Examples
-[Code examples for common use cases]
+## Deployment
+### How to deploy
+```bash
+./deploy.sh production
 ```
 
-### Runbook (Operations)
-**Purpose:** Handle incidents and routine operations.
-**Structure:**
-```
-## [Incident/Task Name]
-
-**When to use:** [Trigger condition]
-**Severity:** [Low/Medium/High/Critical]
-**Time to resolve:** [Expected duration]
-
-### Diagnosis
-1. Check X: `command to run`
-2. If X shows Y → go to Step 3
-3. If X shows Z → go to "Escalation"
-
-### Fix
-1. Run: `specific command`
-2. Verify: `verification command`
-3. Expected output: [what success looks like]
-
-### Escalation
-- Contact: [who to contact]
-- Provide: [what info to share]
+### Rollback
+```bash
+./rollback.sh
 ```
 
-### Changelog
+## Monitoring
+### Key Metrics
+- Request rate
+- Error rate
+- Latency
+
+### Dashboards
+- [Production Dashboard](link)
+- [Alerts](link)
+
+## Common Issues
+### Issue 1: High latency
+**Symptoms**: Response time > 1s
+**Diagnosis**: Check database connection pool
+**Resolution**: Restart service or scale up
+
+### Issue 2: Memory leak
+**Symptoms**: Memory usage growing over time
+**Diagnosis**: Check heap dump
+**Resolution**: Restart service, investigate in staging
+
+## Troubleshooting
+### How to check logs
+```bash
+kubectl logs -f deployment/service-name
 ```
-## [Version] — YYYY-MM-DD
+
+### How to access metrics
+```bash
+curl https://api/metrics
+```
+
+## Emergency Contacts
+- On-call: [PagerDuty](link)
+- Team Slack: #team-name
+```
+
+**API Documentation**:
+```markdown
+# API Documentation
+
+## Authentication
+All requests require authentication:
+```bash
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  https://api.example.com/endpoint
+```
+
+## Endpoints
+
+### List Users
+```
+GET /api/v1/users
+```
+
+**Parameters**:
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| page | integer | No | Page number (default: 1) |
+| limit | integer | No | Items per page (default: 20) |
+
+**Example Request**:
+```bash
+curl -X GET "https://api.example.com/api/v1/users?page=1&limit=20" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+**Example Response**:
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 100
+  }
+}
+```
+
+**Error Responses**:
+| Status | Description |
+|--------|-------------|
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 500 | Server Error |
+```
+
+### Step 3: Writing guidelines
+
+**Clarity**:
+- Use simple, direct language
+- One idea per sentence
+- Short paragraphs (3-5 sentences)
+- Define technical terms
+- Avoid jargon when possible
+
+**Structure**:
+- Use hierarchical headings (H1, H2, H3)
+- Break content into sections
+- Use lists for multiple items
+- Use tables for structured data
+- Add table of contents for long docs
+
+**Examples**:
+- Include code examples
+- Provide diagrams
+- Show before/after comparisons
+- Real-world scenarios
+
+**Completeness**:
+- Cover prerequisites
+- Include error handling
+- Document edge cases
+- Explain why, not just how
+- Link to related docs
+
+**Consistency**:
+- Consistent terminology
+- Consistent formatting
+- Consistent code style
+- Consistent structure
+
+### Step 4: Visual aids
+
+**Architecture diagrams** (Mermaid):
+```mermaid
+graph TB
+    A[Client] -->|HTTP| B[Load Balancer]
+    B --> C[Web Server 1]
+    B --> D[Web Server 2]
+    C --> E[Database]
+    D --> E
+```
+
+**Sequence diagrams**:
+```mermaid
+sequenceDiagram
+    Client->>+Server: Request
+    Server->>+Database: Query
+    Database-->>-Server: Data
+    Server-->>-Client: Response
+```
+
+**Flowcharts**:
+```mermaid
+flowchart TD
+    A[Start] --> B{Is valid?}
+    B -->|Yes| C[Process]
+    B -->|No| D[Error]
+    C --> E[End]
+    D --> E
+```
+
+**Code blocks** with syntax highlighting:
+```python
+def calculate_total(items: List[Item]) -> Decimal:
+    """Calculate total price of items."""
+    return sum(item.price for item in items)
+```
+
+**Screenshots**:
+- Use for UI documentation
+- Annotate important parts
+- Keep up-to-date with UI changes
+
+**Tables**:
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| timeout | int | 30 | Request timeout in seconds |
+| retries | int | 3 | Number of retry attempts |
+
+### Step 5: Review and refine
+
+**Self-review checklist**:
+- [ ] Clear purpose stated upfront
+- [ ] Logical flow of information
+- [ ] All terms defined
+- [ ] Code examples tested
+- [ ] Links work
+- [ ] Diagrams are clear
+- [ ] No typos or grammar errors
+- [ ] Consistent formatting
+- [ ] Table of contents (if needed)
+- [ ] Last updated date
+
+**Get feedback**:
+- Have someone from target audience review
+- Test instructions (can they follow them?)
+- Check for missing information
+- Verify accuracy
+
+**Maintain documentation**:
+- Update with code changes
+- Version your docs
+- Archive outdated docs
+- Regular review cycle
+
+## Document templates
+
+### Technical Spec Template
+```markdown
+# [Feature Name] Technical Spec
+
+**Author**: [Your Name]
+**Date**: [Date]
+**Status**: [Draft/Review/Approved]
+
+## Overview
+[1-2 paragraphs describing what this document covers]
+
+## Background
+[Context and motivation]
+
+## Goals
+- Goal 1
+- Goal 2
+
+## Non-Goals
+- What we're not doing
+
+## Detailed Design
+[Technical details]
+
+## Alternatives Considered
+[Other approaches and why we didn't choose them]
+
+## Timeline
+- Week 1: ...
+- Week 2: ...
+
+## Open Questions
+- Question 1
+- Question 2
+
+## Features
+- Feature 1
+- Feature 2
+
+## Installation
+
+### Prerequisites
+- Node.js >= 14
+- npm >= 6
+
+### Setup
+```bash
+git clone https://github.com/user/project.git
+cd project
+npm install
+```
+
+## Usage
+```bash
+npm start
+```
+
+## Configuration
+Environment variables:
+- `API_KEY`: Your API key
+- `PORT`: Server port (default: 3000)
+
+## Development
+```bash
+npm run dev
+npm test
+```
+
+## Deployment
+[Deployment instructions]
+
+## Contributing
+[Contributing guidelines]
+
+## License
+MIT
+```
+
+### Changelog Template
+```markdown
+# Changelog
+
+## [1.2.0] - 2024-01-15
 
 ### Added
-- New feature description
+- New feature X
+- Support for Y
 
 ### Changed
-- What was modified and why
+- Improved performance of Z
+- Updated dependency A to v2.0
 
 ### Fixed
-- Bug that was fixed
+- Bug where user couldn't login
+- Memory leak in background task
+
+### Deprecated
+- Old API endpoint /v1/users (use /v2/users)
 
 ### Removed
-- What was removed and why
+- Legacy authentication method
+
+### Security
+- Fixed XSS vulnerability in comments
+
+## [1.1.0] - 2024-01-01
+...
 ```
 
----
+## Writing tips
 
-## Writing Style
-
-### Do
-- Use short sentences (< 25 words)
-- Use bullet points for lists of 3+
-- Use code blocks for commands, file paths, and code
-- Use tables for structured comparisons
-- Use bold for key terms on first use
-- Include expected output for commands
-- Write "you" not "the user"
-
-### Don't
-- Don't use jargon without defining it
-- Don't write walls of text
-- Don't assume the reader knows the context
-- Don't use "simply" or "just" (if it were simple, they wouldn't need docs)
-- Don't mix instructions with explanations (separate them)
-- Don't write "please" in instructions (it's not a request)
-
----
-
-## Templates
-
-### Setup Guide Opening
-```markdown
-# Getting Started with [Product]
-
-Get [Product] running in under [X] minutes.
-
-## What You'll Need
-- [Prerequisite 1]
-- [Prerequisite 2]
-
-## Quick Start
-
-### 1. [First Step Name]
-```bash
-command to run
+### Use active voice
 ```
-[One sentence explaining what this does]
+✅ Good: "The system sends a notification"
+❌ Bad: "A notification is sent by the system"
 ```
 
-### Troubleshooting Section
-```markdown
-## Troubleshooting
-
-### [Error message or symptom]
-**Cause:** [Why this happens]
-**Fix:** [Exact steps to resolve]
-
-### [Another common issue]
-**Cause:** [Why]
-**Fix:** [Steps]
+### Be concise
+```
+✅ Good: "Click Save to save changes"
+❌ Bad: "In order to save your changes, you should click on the Save button"
 ```
 
-### Internal Doc Header
-```markdown
-# [Document Title]
-> Last updated: YYYY-MM-DD | Owner: [Name]
-> Status: Draft | Active | Deprecated
-
-[One-line summary of what this doc covers]
+### Use examples
 ```
+✅ Good:
+"Set the timeout in seconds:
+```yaml
+timeout: 30
+```
+
+❌ Bad:
+"Configure the timeout parameter appropriately"
+```
+
+### Break down complexity
+```
+✅ Good:
+"To deploy:
+1. Build the image
+2. Push to registry
+3. Update deployment
+4. Verify rollout"
+
+❌ Bad:
+"Deploy by building and pushing the image to the registry, then update
+the deployment and verify the rollout succeeded"
+```
+
+## Common mistakes to avoid
+
+1. **Assuming knowledge**: Define terms, explain context
+2. **Outdated docs**: Keep in sync with code
+3. **Missing examples**: Always include examples
+4. **No visuals**: Use diagrams for complex concepts
+5. **Poor structure**: Use headings and sections
+6. **Passive voice**: Use active voice
+7. **Too much jargon**: Write for your audience
+8. **No version info**: Date docs, note versions
+9. **Missing error cases**: Document what can go wrong
+10. **No maintenance**: Update regularly
+
+## Best practices
+
+1. **Write for your audience**: Match their knowledge level
+2. **Start with why**: Explain the purpose
+3. **Show, don't just tell**: Use examples
+4. **Be consistent**: Terminology, style, structure
+5. **Test your docs**: Can someone follow them?
+6. **Version your docs**: Track with code versions
+7. **Use templates**: Consistency across docs
+8. **Link related docs**: Help readers find more info
+9. **Update with code**: Docs are part of the code
+10. **Review regularly**: Quarterly doc review
+
+## Tools
+
+**Diagram tools**:
+- Mermaid (markdown-based)
+- Draw.io
+- Lucidchart
+- PlantUML
+
+**Documentation platforms**:
+- GitBook
+- Docusaurus
+- MkDocs
+- Sphinx
+
+**Style checkers**:
+- Grammarly
+- Hemingway Editor
+- Vale
+
+**Screenshot tools**:
+- Snagit
+- CloudApp
+- Loom (for videos)
+
+## Examples
+
+### Example 1: Basic usage
+<!-- Add example content here -->
+
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->

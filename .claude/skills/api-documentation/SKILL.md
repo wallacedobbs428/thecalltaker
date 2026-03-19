@@ -1,153 +1,390 @@
 ---
 name: api-documentation
-description: "Write clear, complete API documentation. Use when documenting REST endpoints, webhook payloads, SDK functions, configuration options, or integration guides. Covers OpenAPI/Swagger specs, endpoint docs, request/response examples, error codes, and authentication guides."
-category: documentation
+description: Create comprehensive API documentation for developers. Use when documenting REST APIs, GraphQL schemas, or SDK methods. Handles OpenAPI/Swagger, interactive docs, examples, and API reference guides.
+metadata:
+  tags: API-documentation, OpenAPI, Swagger, REST, GraphQL, developer-docs
+  platforms: Claude, ChatGPT, Gemini
 ---
+
 
 # API Documentation
 
-Write documentation that developers can actually use without asking questions.
 
----
+## When to use this skill
 
-## Documentation Structure
+- **API Development**: When adding new endpoints
+- **External Release**: Public API launch
+- **Team Collaboration**: Frontend-backend interface definition
 
-Every API doc should include:
+## Instructions
 
-1. **Overview** — What the API does, who it's for, base URL
-2. **Authentication** — How to get and use credentials
-3. **Endpoints** — Each endpoint with method, URL, params, body, response
-4. **Error Codes** — What can go wrong and how to fix it
-5. **Rate Limits** — Requests per minute/hour, what happens when exceeded
-6. **Examples** — Real curl/Python/JS examples that work when copied
+### Step 1: OpenAPI (Swagger) Spec
 
----
+```yaml
+openapi: 3.0.0
+info:
+  title: User Management API
+  version: 1.0.0
+  description: API for managing users
+  contact:
+    email: api@example.com
 
-## Endpoint Documentation Template
+servers:
+  - url: https://api.example.com/v1
+    description: Production
+  - url: https://staging-api.example.com/v1
+    description: Staging
 
-```markdown
-## Create Contact
+paths:
+  /users:
+    get:
+      summary: List all users
+      description: Retrieve a paginated list of users
+      tags:
+        - Users
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
-Creates a new contact in the CRM.
+    post:
+      summary: Create a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
 
-**Endpoint:** `POST /contacts`
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - email
+        - name
 
-**Headers:**
-| Header | Required | Value |
-|--------|----------|-------|
-| Authorization | Yes | `Bearer {api_key}` |
-| Content-Type | Yes | `application/json` |
-| Version | Yes | `2021-07-28` |
+    CreateUserRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+          minLength: 2
+          maxLength: 50
+        password:
+          type: string
+          minLength: 8
+      required:
+        - email
+        - name
+        - password
 
-**Request Body:**
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| firstName | string | Yes | Contact's first name |
-| lastName | string | No | Contact's last name |
-| email | string | No | Email address |
-| phone | string | No | Phone in E.164 format (+1XXXXXXXXXX) |
-| tags | string[] | No | Array of tag names |
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
 
-**Example Request:**
-```bash
-curl -X POST "https://services.leadconnectorhq.com/contacts" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -H "Version: 2021-07-28" \
-  -d '{
-    "firstName": "John",
-    "lastName": "Smith",
-    "email": "john@smithhvac.com",
-    "phone": "+16155551234",
-    "tags": ["pilot-candidate", "hvac"]
-  }'
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Authentication required"
+
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid input"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
 ```
 
-**Success Response (201):**
-```json
+### Step 2: Generate Documentation from Code (JSDoc/Decorators)
+
+**Express + TypeScript**:
+```typescript
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: Create a new user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - name
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               name:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *                 minLength: 8
+ *     responses:
+ *       201:
+ *         description: User created successfully
+ *       400:
+ *         description: Invalid input
+ */
+router.post('/users', async (req, res) => {
+  const { email, name, password } = req.body;
+  const user = await userService.createUser({ email, name, password });
+  res.status(201).json(user);
+});
+```
+
+### Step 3: Interactive Documentation
+
+**Swagger UI Setup**:
+```typescript
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
+
+const swaggerDocument = YAML.load('./openapi.yaml');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: "My API Documentation"
+}));
+```
+
+### Step 4: Examples & Guides
+
+```markdown
+## API Documentation
+
+### Authentication
+
+All API requests require authentication using JWT tokens.
+
+#### Getting a Token
+\`\`\`bash
+curl -X POST https://api.example.com/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com", "password": "yourpassword"}'
+\`\`\`
+
+Response:
+\`\`\`json
 {
-  "contact": {
-    "id": "abc123",
-    "firstName": "John",
-    "lastName": "Smith",
-    "email": "john@smithhvac.com",
-    "phone": "+16155551234",
-    "tags": ["pilot-candidate", "hvac"],
-    "dateAdded": "2026-03-19T14:00:00.000Z"
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refreshToken": "..."
+}
+\`\`\`
+
+#### Using the Token
+\`\`\`bash
+curl -X GET https://api.example.com/v1/users \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+\`\`\`
+
+### Creating a User
+
+**Endpoint**: `POST /v1/users`
+
+**Request Body**:
+\`\`\`json
+{
+  "email": "john@example.com",
+  "name": "John Doe",
+  "password": "SecurePass123!"
+}
+\`\`\`
+
+**Success Response** (201):
+\`\`\`json
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "email": "john@example.com",
+  "name": "John Doe",
+  "createdAt": "2025-01-15T10:00:00Z"
+}
+\`\`\`
+
+**Error Response** (400):
+\`\`\`json
+{
+  "error": "Email already exists"
+}
+\`\`\`
+
+### Rate Limiting
+- 100 requests per 15 minutes per IP
+- Header: `X-RateLimit-Remaining`
+
+### Pagination
+\`\`\`
+GET /v1/users?page=2&limit=20
+\`\`\`
+
+Response includes pagination info:
+\`\`\`json
+{
+  "data": [...],
+  "pagination": {
+    "page": 2,
+    "limit": 20,
+    "total": 157,
+    "pages": 8
   }
 }
+\`\`\`
+
+### Error Codes
+- `400` - Bad Request (validation error)
+- `401` - Unauthorized (missing/invalid token)
+- `403` - Forbidden (insufficient permissions)
+- `404` - Not Found
+- `409` - Conflict (duplicate resource)
+- `429` - Too Many Requests (rate limit)
+- `500` - Internal Server Error
 ```
 
-**Error Responses:**
-| Code | Reason | Fix |
-|------|--------|-----|
-| 400 | Missing required field | Include firstName |
-| 401 | Invalid API key | Check Authorization header |
-| 409 | Duplicate contact | Contact with this email/phone exists |
-| 429 | Rate limited | Wait and retry after Retry-After header |
+## Output format
+
+### API Documentation Structure
+
+```
+docs/
+├── README.md                    # Overview
+├── getting-started.md           # Quick start guide
+├── authentication.md            # Auth guide
+├── api-reference/
+│   ├── users.md                 # Users endpoints
+│   ├── auth.md                  # Auth endpoints
+│   └── products.md              # Products endpoints
+├── guides/
+│   ├── pagination.md
+│   ├── error-handling.md
+│   └── rate-limiting.md
+├── examples/
+│   ├── curl.md
+│   ├── javascript.md
+│   └── python.md
+└── openapi.yaml                 # OpenAPI spec
 ```
 
----
+## Constraints
 
-## Writing Style Rules
+### Required Rules (MUST)
 
-1. **Use second person** — "You can create a contact" not "Users can create contacts"
-2. **Show, don't tell** — Every endpoint needs a working example
-3. **Be specific about types** — "string" not "text", "integer" not "number"
-4. **Document edge cases** — What happens with empty arrays? Null fields? Unicode?
-5. **Include error examples** — Not just success cases
-6. **Version your docs** — Note when endpoints were added/changed
+1. **Real Examples**: Provide working code examples
+2. **Error Cases**: Document not only success but also failure cases
+3. **Keep Updated**: Update documentation when API changes
 
----
+### Prohibited (MUST NOT)
 
-## Python SDK Documentation Template
+1. **Real Keys in Examples**: Do not use real API keys/passwords in examples
+2. **Vague Descriptions**: Unclear descriptions like "returns data"
 
-```markdown
-## send_email(contact_id, subject, body, sender=None)
+## Best practices
 
-Sends an email to a contact via GHL conversations API.
+1. **Try It Out**: Provide interactive documentation (Swagger UI)
+2. **Provide SDK**: SDK and examples for major languages
+3. **Changelog**: Document API changes
 
-**Parameters:**
-| Param | Type | Default | Description |
-|-------|------|---------|-------------|
-| contact_id | str | required | GHL contact ID |
-| subject | str | required | Email subject line |
-| body | str | required | HTML email body |
-| sender | str | "The Call Taker Team" | Sender name in signature |
+## References
 
-**Returns:** `dict` — GHL API response with message ID
+- [OpenAPI Specification](https://swagger.io/specification/)
+- [Swagger UI](https://swagger.io/tools/swagger-ui/)
+- [Redoc](https://redocly.com/)
 
-**Raises:**
-- `ValueError` — If contact_id is empty
-- `APIError` — If GHL returns non-200 status
+## Metadata
 
-**Example:**
-```python
-from tct_common import send_email
+### Version
+- **Current Version**: 1.0.0
+- **Last Updated**: 2025-01-01
+- **Compatible Platforms**: Claude, ChatGPT, Gemini
 
-response = send_email(
-    contact_id="abc123",
-    subject="Your Free Pilot is Ready",
-    body="<p>Hey John, your AI receptionist is live...</p>"
-)
-print(response["messageId"])  # "msg_xyz789"
-```
+### Tags
+`#API-documentation` `#OpenAPI` `#Swagger` `#REST` `#developer-docs` `#documentation`
 
-**Notes:**
-- Body should be HTML (GHL uses `html` field, NOT `message`)
-- Subject line max 200 chars
-- Rate limited to 100 emails/hour per location
-```
+## Examples
 
----
+### Example 1: Basic usage
+<!-- Add example content here -->
 
-## Quick Checklist
-
-Before publishing any API doc:
-- [ ] Every endpoint has a working curl example
-- [ ] All required vs optional params clearly marked
-- [ ] Error responses documented with fix suggestions
-- [ ] Authentication section complete with example
-- [ ] Rate limits documented
-- [ ] Request and response body examples are valid JSON
-- [ ] No placeholder values that would confuse copy-pasters
+### Example 2: Advanced usage
+<!-- Add advanced example content here -->
