@@ -25,9 +25,22 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 
 - **Branch:** `claude/merge-all-skills-IsTcc`
 - **Base:** `master` (last commit 2026-03-17)
-- **Latest commits (March 19):** Massive merge session — all feature branches merged into single branch. Includes: GHL reactivation workflow, skill router, mobile centering fixes, frontend quickstart, outreach stack rebuild, ads skill system, and more.
-- **Working tree:** Clean (no staged or unstaged changes)
-- **Upstream:** Not yet pushed
+- **Latest work (March 19):** GHL API proxy deployment prep — added /health endpoint, switched to in-memory rate limiting, uncommented routes in wrangler.toml, updated DEPLOY.md
+- **Working tree:** Changes pending commit (worker.js, wrangler.toml, DEPLOY.md updates)
+- **Upstream:** Synced before this session
+
+## GHL API Proxy (NEW — March 19)
+
+Cloudflare Worker (`tct-ghl-proxy`) proxying browser → GHL API calls so the API key never touches the browser.
+
+- **Files:** `cloudflare/worker.js`, `cloudflare/wrangler.toml`, `cloudflare/DEPLOY.md`, `website/shared/tct-ghl-proxy.js`
+- **Status:** Code ready, NOT yet deployed to Cloudflare (Wallace needs to run `wrangler deploy`)
+- **Key decisions:**
+  - In-memory rate limiting (not KV) — avoids free tier 1,000 KV writes/day limit
+  - Routes in wrangler.toml (not dashboard) — auto-bind on deploy
+  - /health endpoint added — no auth required, confirms Worker is alive + secrets set
+  - PROXY_SECRET in frontend JS is safe — origin-locked + rate-limited, not the real API key
+  - `echo -n` required for `wrangler secret put` to avoid trailing newline corruption
 
 ## Homepage Design (index.html)
 
@@ -36,7 +49,6 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 - **Hero:** Animated phone mockup (pure CSS/SVG, no images), circuit background, floating callouts
 - **Sections:** Hero → Industry strip → How It Works → Features → Demo → Pricing → FAQ → Final CTA → Footer
 - **Pricing:** 4-tier decoy ($19/$97/$497/$997), urgency badge with countdown
-- **Nav:** Glassmorphism header, scroll progress bar, mobile overlay menu
 - **External deps:** GSAP 3.12.5 (cdnjs), Lenis 1.1.18 (jsdelivr)
 - **Font:** Self-hosted Inter (woff2)
 
@@ -48,24 +60,18 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 - **Blog:** 69 posts
 - **Case Studies:** 14 + index
 - **SEO Pages:** 13 (ai-answering-service/)
-- **Pilot funnel:** 3 pages
-- **Try funnel:** 3 pages
 
 ## Known Issues (Current)
 
 1. **Urgency countdown hardcoded** — needs rolling logic
 2. **premium.css is empty** — loaded on every page, zero CSS rules
 3. **Schema.org prices don't match UI** — schema says $97-$997, UI has $19/$97/$497/$997
-4. **index-v2.html orphaned** — duplicate sitting in root
-5. **hero-phone-animation.html orphaned** — standalone test file in root
-6. **41 HTML files in root** — cluttered, many could be organized into subdirectories
-7. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live
-8. **CLAUDE.md documents 13 industries** — actual site has 19
+4. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live
+5. **GHL proxy not yet deployed** — code ready, needs `wrangler deploy` on Wallace's machine
 
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal
+- **GHL Proxy**: Deploy to Cloudflare (4 steps in DEPLOY.md)
 - **Website polish**: Fix urgency countdown, clean orphaned files, schema consistency
-- **SEO content**: Continue expanding blog with high-intent keyword posts
 - **Stripe**: NOT connected (Wallace is 16). PayPal workaround live via pay.html
-- **All skills merged**: Branch `claude/merge-all-skills-IsTcc` consolidates all feature work — ready for review/push

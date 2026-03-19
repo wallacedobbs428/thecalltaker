@@ -78,39 +78,36 @@ function clientIp(request) {
   return request.headers.get('CF-Connecting-IP') || 'unknown';
 }
 
-// ── RATE LIMITER (KV-backed) ────────────────────────────────────────────────
+// ── RATE LIMITER (in-memory) ─────────────────────────────────────────────────
+// In-memory avoids KV writes (free tier: 1,000 writes/day, we'd blow that).
+// Trade-off: rate limit resets when isolate recycles (~30s idle). At 2K req/day
+// this is fine — an attacker would need sustained bursts from one IP.
 
-async function checkRateLimit(ip, kv) {
-  const key = `rl:${ip}`;
+const rateLimitMap = new Map();
+
+function checkRateLimit(ip) {
   const now = Math.floor(Date.now() / 1000);
-
-  let record;
-  try {
-    const raw = await kv.get(key);
-    record = raw ? JSON.parse(raw) : null;
-  } catch {
-    record = null;
-  }
+  let record = rateLimitMap.get(ip);
 
   if (!record || now - record.windowStart >= RATE_LIMIT_WINDOW) {
-    // New window
     record = { windowStart: now, count: 1 };
   } else {
     record.count += 1;
   }
 
-  const ttl = RATE_LIMIT_WINDOW - (now - record.windowStart);
+  rateLimitMap.set(ip, record);
 
-  try {
-    await kv.put(key, JSON.stringify(record), { expirationTtl: Math.max(ttl, 1) });
-  } catch {
-    // KV write failure — allow the request (fail open for availability)
+  // Prune expired entries when map grows (prevents memory leak)
+  if (rateLimitMap.size > 200) {
+    for (const [k, v] of rateLimitMap) {
+      if (now - v.windowStart >= RATE_LIMIT_WINDOW) rateLimitMap.delete(k);
+    }
   }
 
   return {
     allowed: record.count <= RATE_LIMIT_MAX,
     remaining: Math.max(0, RATE_LIMIT_MAX - record.count),
-    resetIn: ttl,
+    resetIn: RATE_LIMIT_WINDOW - (now - record.windowStart),
   };
 }
 
@@ -126,6 +123,18 @@ export default {
   async fetch(request, env, ctx) {
     const reqId = requestId();
     const origin = request.headers.get('Origin') || '';
+
+    // ── Health check (no auth required) ──────────────────────────────────
+    const url0 = new URL(request.url);
+    if (url0.pathname === '/api/ghl/health') {
+      return jsonResponse({
+        status: 'ok',
+        worker: 'tct-ghl-proxy',
+        timestamp: new Date().toISOString(),
+        rateLimiter: 'in-memory',
+        secretsSet: !!(env.GHL_API_KEY && env.PROXY_SECRET),
+      }, 200, reqId, origin);
+    }
 
     // ── CORS preflight ────────────────────────────────────────────────────
     if (request.method === 'OPTIONS') {
@@ -166,7 +175,7 @@ export default {
 
     // ── Rate limiting ─────────────────────────────────────────────────────
     const ip = clientIp(request);
-    const rl = await checkRateLimit(ip, env.RATE_LIMIT);
+    const rl = checkRateLimit(ip);
     if (!rl.allowed) {
       console.log(JSON.stringify({
         reqId, event: 'rate_limited', ip,
