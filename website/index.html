@@ -46,9 +46,10 @@
       "telephone": "+16157845747",
       "offers": {
         "@type": "AggregateOffer",
-        "lowPrice": "97",
+        "lowPrice": "19",
         "highPrice": "997",
         "priceCurrency": "USD",
+        "offerCount": "4",
         "priceSpecification": {
           "@type": "UnitPriceSpecification",
           "price": "97",
@@ -875,8 +876,6 @@ a { color: inherit; text-decoration: none; }
 <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
 <link rel="stylesheet" href="/shared/ui-dark.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="/shared/ui-dark.css"></noscript>
-<link rel="stylesheet" href="/shared/premium.css" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="/shared/premium.css"></noscript>
 <link rel="stylesheet" href="/shared/demo-console.css">
 <script src="/shared/ab-split.js" defer></script>
 </head>
@@ -2113,23 +2112,33 @@ a { color: inherit; text-decoration: none; }
       @media(max-width:600px){#pricing .reveal[style*="grid"]{grid-template-columns:1fr!important;}#pricing .pricing-card.featured[style*="scale"]{transform:none!important;order:-1;}}
     </style>
 
-    <!-- Countdown timer — Friday March 21 2026 11:59 PM CT -->
+    <!-- Countdown timer — always targets next Friday 11:59 PM CT -->
     <script>
     (function(){
-      var spotsLeft=7;
-      var deadline=new Date('2026-03-21T23:59:00-06:00').getTime();
       var el=document.getElementById('pricing-countdown');
       var badge=document.getElementById('urgency-badge');
-      var spotsEl=document.getElementById('spots-counter');
-      if(spotsEl)spotsEl.textContent=spotsLeft;
+      function getNextFriday(){
+        var now=new Date();
+        var ct=new Date(now.toLocaleString('en-US',{timeZone:'America/Chicago'}));
+        var day=ct.getDay();
+        var daysUntilFri=(5-day+7)%7;
+        if(daysUntilFri===0){
+          var endOfToday=new Date(ct);
+          endOfToday.setHours(23,59,0,0);
+          if(ct<endOfToday)daysUntilFri=0;
+          else daysUntilFri=7;
+        }
+        var fri=new Date(ct);
+        fri.setDate(fri.getDate()+daysUntilFri);
+        fri.setHours(23,59,0,0);
+        var offset=now.getTime()-ct.getTime();
+        return fri.getTime()+offset;
+      }
+      var deadline=getNextFriday();
       function update(){
         var now=Date.now();
         var diff=deadline-now;
-        if(diff<=0){
-          if(el)el.textContent='';
-          if(badge)badge.innerHTML='Waitlist Open — Next cohort: $97/$497/$997 + $500 setup fee';
-          return;
-        }
+        if(diff<=0){deadline=getNextFriday();diff=deadline-now;}
         var d=Math.floor(diff/86400000);
         var h=Math.floor((diff%86400000)/3600000);
         var m=Math.floor((diff%3600000)/60000);
