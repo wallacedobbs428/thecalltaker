@@ -1,8 +1,7 @@
 ---
 name: >-
   cli-anything-libreoffice
-description: >-
-  Command-line interface for Libreoffice - A stateful command-line interface for document editing, producing real ODF files (ZIP archives with ...
+description: "Command-line interface for LibreOffice document processing. Use when the user needs to convert documents, create spreadsheets, or automate LibreOffice operations via CLI."
 ---
 
 # cli-anything-libreoffice

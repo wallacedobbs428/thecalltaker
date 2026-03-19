@@ -1,7 +1,7 @@
 ---
 name: recipe-bulk-download-folder
 version: 1.0.0
-description: "List and download all files from a Google Drive folder."
+description: "List and download all files from a Google Drive folder. Use when backing up a folder, migrating files, or bulk-downloading Drive content."
 metadata:
   openclaw:
     category: "recipe"

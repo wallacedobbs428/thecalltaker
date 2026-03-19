@@ -1,7 +1,7 @@
 ---
 name: recipe-share-doc-and-notify
 version: 1.0.0
-description: "Share a Google Docs document with edit access and email collaborators the link."
+description: "Share a Google Docs document with edit access and email the link. Use when sharing documents, granting edit permissions, or distributing collaborative docs."
 metadata:
   openclaw:
     category: "recipe"

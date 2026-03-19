@@ -1,6 +1,6 @@
 ---
 name: cancel
-description: Cancel any active OMC mode (autopilot, ralph, ultrawork, ultraqa, swarm, ultrapilot, pipeline, team)
+description: "Cancel any active OMC mode (autopilot, ralph, ultrawork, ultraqa, swarm, ultrapilot, pipeline, team). Use when the user wants to stop, cancel, or exit an active orchestration mode."
 level: 2
 ---
 

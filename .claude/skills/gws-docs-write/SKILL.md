@@ -1,7 +1,7 @@
 ---
 name: gws-docs-write
 version: 1.0.0
-description: "Google Docs: Append text to a document."
+description: "Google Docs: Append text to a document. Use when adding content to an existing Google Doc or writing new sections."
 metadata:
   openclaw:
     category: "productivity"

@@ -1,9 +1,9 @@
 ---
 name: delight
-description: Add moments of joy, personality, and unexpected touches that make interfaces memorable and enjoyable to use. Elevates functional to delightful.
+description: "Add moments of joy, personality, and unexpected touches to interfaces. Use when the user wants to make a UI more fun, add personality, easter eggs, or whimsical touches."
 args:
   - name: target
-    description: The feature or area to add delight to (optional)
+    description: "Add moments of joy, personality, and unexpected touches to interfaces. Use when the user wants to make a UI more fun, add personality, easter eggs, or whimsical touches."
     required: false
 user-invokable: true
 ---

@@ -1,7 +1,7 @@
 ---
 name: gws-workflow
 version: 1.0.0
-description: "Google Workflow: Cross-service productivity workflows."
+description: "Google Workflow: Cross-service productivity workflows combining multiple Google APIs. Use when automating multi-step Workspace operations."
 metadata:
   openclaw:
     category: "productivity"

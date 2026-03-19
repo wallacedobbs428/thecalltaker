@@ -1,6 +1,6 @@
 ---
 name: omc-teams
-description: Spawn claude, codex, or gemini CLI workers in tmux panes for parallel task execution
+description: "Spawn claude, codex, or gemini CLI workers in tmux panes for parallel task execution. Use when the user needs multiple AI agents working simultaneously or parallel task processing."
 aliases: []
 level: 4
 ---

@@ -1,7 +1,7 @@
 ---
 name: gws-tasks
 version: 1.0.0
-description: "Google Tasks: Manage task lists and tasks."
+description: "Google Tasks: Manage task lists and individual tasks. Use when creating, updating, completing, or organizing tasks and task lists."
 metadata:
   openclaw:
     category: "productivity"

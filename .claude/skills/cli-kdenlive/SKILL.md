@@ -1,8 +1,7 @@
 ---
 name: >-
   cli-anything-kdenlive
-description: >-
-  Command-line interface for Kdenlive - A stateful command-line interface for video editing, following the same patterns as the Blender CLI ...
+description: "Command-line interface for Kdenlive video editing. Use when the user needs to edit video, process clips, or automate Kdenlive operations via CLI."
 ---
 
 # cli-anything-kdenlive

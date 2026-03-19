@@ -1,6 +1,6 @@
 ---
 name: documentation-writer
-description: "Diataxis Documentation Expert for creating high-quality software documentation aligned with the Diataxis Framework. Supports tutorials, how-to guides, reference docs, and explanations."
+description: "Diataxis Documentation Expert for creating tutorials, how-to guides, reference docs, and explanations. Use when writing software documentation, creating user guides, or structuring documentation."
 ---
 
 # Documentation Writer — Diataxis Documentation Expert

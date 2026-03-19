@@ -1,6 +1,6 @@
 ---
 name: python-executor
-description: "Sandboxed Python code execution via inference.sh. Run Python scripts with 100+ pre-installed libraries for web scraping, data processing, visualization, image manipulation, video editing, and 3D modeling. CPU-only, non-interactive."
+description: "Sandboxed Python code execution via inference.sh with 100+ pre-installed libraries. Use when the user needs to run Python scripts for data processing, web scraping, visualization, or image manipulation."
 allowed-tools: Bash(infsh *)
 ---
 

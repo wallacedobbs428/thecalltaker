@@ -1,7 +1,7 @@
 ---
 name: gws-gmail
 version: 1.0.0
-description: "Gmail: Send, read, and manage email."
+description: "Gmail: Send, read, search, and manage email via the Gmail API. Use when the user needs any email operation — sending, reading, searching, labeling, or filtering."
 metadata:
   openclaw:
     category: "productivity"

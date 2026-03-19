@@ -1,7 +1,7 @@
 ---
 name: recipe-backup-sheet-as-csv
 version: 1.0.0
-description: "Export a Google Sheets spreadsheet as a CSV file for local backup or processing."
+description: "Export a Google Sheets spreadsheet as a CSV file for backup or processing. Use when backing up spreadsheet data, exporting to CSV, or creating local copies."
 metadata:
   openclaw:
     category: "recipe"

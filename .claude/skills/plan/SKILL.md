@@ -1,6 +1,6 @@
 ---
 name: omc-plan
-description: Strategic planning with optional interview workflow
+description: "Strategic planning with optional Socratic interview workflow. Use when the user needs to design a plan, break down a complex project, or think through an implementation strategy before coding."
 pipeline: [deep-interview, omc-plan, autopilot]
 next-skill: autopilot
 handoff: .omc/plans/ralplan-*.md

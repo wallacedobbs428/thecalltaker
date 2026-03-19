@@ -1,6 +1,6 @@
 ---
 name: autopilot
-description: Full autonomous execution from idea to working code
+description: "Full autonomous execution from idea to working code. Use when the user says 'autopilot', 'do everything', 'build this end-to-end', or wants hands-free implementation of a complete feature."
 level: 4
 ---
 

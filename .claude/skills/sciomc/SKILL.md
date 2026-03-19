@@ -1,6 +1,6 @@
 ---
 name: sciomc
-description: Orchestrate parallel scientist agents for comprehensive analysis with AUTO mode
+description: "Orchestrate parallel scientist agents for comprehensive analysis with AUTO mode. Use when running multi-agent research, parallel analysis tasks, or scientific investigation workflows."
 argument-hint: <research goal>
 level: 4
 ---

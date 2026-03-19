@@ -1,7 +1,7 @@
 ---
 name: persona-hr-coordinator
 version: 1.0.0
-description: "Handle HR workflows — onboarding, announcements, and employee comms."
+description: "Handle HR workflows — onboarding, announcements, and employee communications via Workspace. Use when managing HR tasks, employee onboarding, or internal announcements."
 metadata:
   openclaw:
     category: "persona"

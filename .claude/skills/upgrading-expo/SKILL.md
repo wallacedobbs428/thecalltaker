@@ -1,6 +1,6 @@
 ---
 name: upgrading-expo
-description: Guidelines for upgrading Expo SDK versions and fixing dependency issues
+description: "Guidelines for upgrading Expo SDK versions and fixing dependency issues. Use when upgrading Expo, resolving version conflicts, or migrating between SDK versions."
 version: 1.0.0
 license: MIT
 ---

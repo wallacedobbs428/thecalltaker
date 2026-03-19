@@ -1,7 +1,7 @@
 ---
 name: recipe-compare-sheet-tabs
 version: 1.0.0
-description: "Read data from two tabs in a Google Sheet to compare and identify differences."
+description: "Read and compare data from two tabs in a Google Sheet to identify differences. Use when auditing spreadsheet data, finding discrepancies, or comparing sheet versions."
 metadata:
   openclaw:
     category: "recipe"

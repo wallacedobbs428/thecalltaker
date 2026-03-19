@@ -1,7 +1,7 @@
 ---
 name: recipe-save-email-to-doc
 version: 1.0.0
-description: "Save a Gmail message body into a Google Doc for archival or reference."
+description: "Save a Gmail message body into a Google Doc for archival. Use when preserving email content, creating document records of conversations, or archiving important messages."
 metadata:
   openclaw:
     category: "recipe"

@@ -1,7 +1,7 @@
 ---
 name: gws-people
 version: 1.0.0
-description: "Google People: Manage contacts and profiles."
+description: "Google People: Manage contacts, profiles, and directory listings. Use when looking up contacts, updating profiles, or syncing contact information."
 metadata:
   openclaw:
     category: "productivity"

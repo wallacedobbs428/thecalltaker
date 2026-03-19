@@ -1,7 +1,7 @@
 ---
 name: recipe-collect-form-responses
 version: 1.0.0
-description: "Retrieve and review responses from a Google Form."
+description: "Retrieve and review responses from a Google Form. Use when analyzing survey results, checking feedback submissions, or reviewing form data."
 metadata:
   openclaw:
     category: "recipe"

@@ -1,6 +1,6 @@
 ---
 name: deep-dive
-description: "2-stage pipeline: trace (causal investigation) -> deep-interview (requirements crystallization) with 3-point injection"
+description: "2-stage investigation pipeline: trace (causal analysis) then deep-interview (requirements crystallization). Use when debugging complex issues, investigating root causes, or when the user says 'deep dive' or 'investigate this'."
 argument-hint: "<problem or exploration target>"
 triggers:
   - "deep dive"

@@ -1,6 +1,6 @@
 ---
 name: omx
-description: Multi-agent orchestration layer for OpenAI Codex CLI. Provides 30 specialized agents, 40+ workflow skills, team orchestration in tmux, persistent MCP servers, and staged pipeline execution.
+description: "Multi-agent orchestration layer for OpenAI Codex CLI with 30+ specialized agents and workflow skills. Use when running Codex CLI, managing multi-agent workflows, or orchestrating parallel tasks via oh-my-codex."
 allowed-tools: Read Write Bash Grep Glob
 metadata:
   tags: omx, multi-agent, orchestration, codex, openai, team-mode, mcp-servers, workflow

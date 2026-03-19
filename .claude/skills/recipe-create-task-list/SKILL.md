@@ -1,7 +1,7 @@
 ---
 name: recipe-create-task-list
 version: 1.0.0
-description: "Set up a new Google Tasks list with initial tasks."
+description: "Set up a new Google Tasks list with initial tasks. Use when organizing a project, creating a todo list, or setting up task tracking."
 metadata:
   openclaw:
     category: "recipe"

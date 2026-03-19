@@ -1,8 +1,7 @@
 ---
 name: >-
   cli-anything-audacity
-description: >-
-  Command-line interface for Audacity - A stateful command-line interface for audio editing, following the same patterns as the GIMP and Ble...
+description: "Command-line interface for Audacity audio editing. Use when the user needs to edit audio, process sound files, or automate Audacity operations via CLI."
 ---
 
 # cli-anything-audacity

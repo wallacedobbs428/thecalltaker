@@ -1,7 +1,7 @@
 ---
 name: gws-forms
 version: 1.0.0
-description: "Read and write Google Forms."
+description: "Google Forms: Read and write forms. Use when creating surveys, feedback forms, or reviewing form responses."
 metadata:
   openclaw:
     category: "productivity"

@@ -1,7 +1,7 @@
 ---
 name: recipe-sync-contacts-to-sheet
 version: 1.0.0
-description: "Export Google Contacts directory to a Google Sheets spreadsheet."
+description: "Export Google Contacts directory to a Google Sheets spreadsheet. Use when backing up contacts, creating contact lists, or syncing directory data."
 metadata:
   openclaw:
     category: "recipe"

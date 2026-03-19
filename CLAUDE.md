@@ -5,6 +5,34 @@ Never build daemon scripts or plists here.
 
 ---
 
+## Skill Routing Rules (267 skills)
+Before executing any task, route through `/skill-router` or use these rules:
+
+### Quick Route
+- **GHL/CRM** → `/ghl-automation`
+- **Website/frontend build** → `/frontend-design` or `/ui-ux-pro-max`
+- **Facebook ads** → `/ads-research` → `/ads-scrape` → `/ads-brief` → `/ads-write` → `/ads-launch` → `/ads-report`
+- **Google Workspace** → `/gws-*` (match the specific service) or `/recipe-*` (match the task pattern)
+- **Cold email** → `/cold-email`
+- **SEO** → `/seo-geo` (traditional) or `/ai-seo` (AI search engines)
+- **Code quality** → `/code-review`, `/refactor`, `/debugging`
+- **Deploy** → `/deploy-to-vercel` or `/vercel-deploy`
+- **Planning** → `/plan` or `/task-planning`
+- **Multi-agent** → `/autopilot`, `/team`, `/ultrawork`
+- **Design polish** → Match the verb: `/animate`, `/colorize`, `/typeset`, `/polish`, `/bolder`, `/distill`
+- **Documentation** → `/documentation-writer`, `/technical-writing`, `/api-documentation`
+- **Git** → `/git-commit`, `/git-workflow`, `/gh-cli`
+- **Social media** → `/post-to-x`
+- **Sales assets** → `/sales-enablement`, `/prd`
+
+### Routing Principles
+1. **Specificity wins** — `/gws-gmail-send` over `/gws-gmail` when sending email
+2. **TCT business first** — Check `ghl-automation` before generic CRM skills
+3. **Skill-router runs first** — When unsure, invoke `/skill-router`
+4. **No match = handle directly** — Not every task needs a skill
+
+---
+
 ## Response Format Rules
 When Wallace asks for a copyable summary or output block, put ALL content inside a single fenced code block (triple backticks). Never split it across multiple blocks or add prose between sections. One block = one copy button.
 

@@ -1,6 +1,6 @@
 ---
 name: trace
-description: Evidence-driven tracing lane that orchestrates competing tracer hypotheses in Claude built-in team mode
+description: "Evidence-driven tracing lane that orchestrates competing hypotheses in Claude team mode. Use when investigating bugs, tracing root causes, or when the user says 'trace this' or 'find the root cause'."
 agent: tracer
 level: 2
 ---

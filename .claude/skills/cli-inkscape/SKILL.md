@@ -1,8 +1,7 @@
 ---
 name: >-
   cli-anything-inkscape
-description: >-
-  Command-line interface for Inkscape - A stateful command-line interface for vector graphics editing, following the same patterns as the GI...
+description: "Command-line interface for Inkscape vector graphics. Use when the user needs to edit SVGs, create vector art, or automate Inkscape operations via CLI."
 ---
 
 # cli-anything-inkscape

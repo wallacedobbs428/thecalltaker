@@ -1,7 +1,7 @@
 ---
 name: gws-keep
 version: 1.0.0
-description: "Manage Google Keep notes."
+description: "Google Keep: Manage notes, lists, and reminders. Use when the user wants to create, read, or organize Google Keep notes."
 metadata:
   openclaw:
     category: "productivity"

@@ -1,6 +1,6 @@
 ---
 name: team
-description: N coordinated agents on shared task list using Claude Code native teams
+description: "Launch N coordinated agents on a shared task list using Claude Code native teams. Use when the user needs parallel agent execution, team-based task completion, or multi-agent collaboration."
 aliases: []
 level: 4
 ---

@@ -1,8 +1,7 @@
 ---
 name: >-
   cli-anything-mubu
-description: >-
-  Command-line interface for Mubu - Canonical packaged entrypoint for the Mubu live bridge....
+description: "Command-line interface for Mubu outline and mind-mapping tool. Use when the user needs to manage Mubu outlines, export mind maps, or automate Mubu operations."
 ---
 
 # cli-anything-mubu

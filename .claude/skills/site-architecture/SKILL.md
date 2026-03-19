@@ -1,6 +1,6 @@
 ---
 name: site-architecture
-description: "Plan website structure, hierarchy, navigation, and internal linking strategy. Covers page organization, URL patterns, sitemaps, and site restructuring with redirect planning."
+description: "Plan website structure, hierarchy, navigation, and internal linking. Use when designing site maps, restructuring websites, planning URL patterns, or organizing page hierarchies."
 ---
 
 # Site Architecture Agent

@@ -1,7 +1,7 @@
 ---
 name: gws-calendar-agenda
 version: 1.0.0
-description: "Google Calendar: Show upcoming events across all calendars."
+description: "Google Calendar: Show upcoming events across all calendars. Use when the user wants to review their schedule, see today's meetings, or check upcoming events."
 metadata:
   openclaw:
     category: "productivity"

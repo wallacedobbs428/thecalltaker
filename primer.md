@@ -23,10 +23,19 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 
 ## Current Branch & State
 
-- **Branch:** `claude/website-review-ciovZ`
+- **Branch:** `claude/resume-session-6rtF5`
 - **Base:** `master` (last commit 2026-03-17)
-- **Latest commits (March 18):** Major homepage redesign — HUD design, warm palette, Lenis smooth scroll, phone animation, floating callouts, circuit background, urgency bar, GSAP motion system
-- **Working tree:** Clean (no staged or unstaged changes)
+- **Latest work (March 19):** Skill routing audit — rewrote 127 skill descriptions for routing clarity, created skill-router master orchestrator, loop-intelligence health monitor, updated CLAUDE.md with routing rules
+- **Working tree:** Changes pending commit (skill description rewrites)
+
+## Skills System (269 skills)
+
+- **Location:** `.claude/skills/` — 269 SKILL.md files
+- **Health:** 269/269 scoring 8+ (100% routing clarity)
+- **Router:** `.claude/skills/skill-router/SKILL.md` — master orchestrator categorizing all skills
+- **Monitor:** `.claude/skills/loop-intelligence/SKILL.md` — recurring health audit
+- **Audit report:** `.claude/skills/AUDIT-REPORT.md` — before/after scores
+- **CLAUDE.md:** Updated with quick-route table and routing principles
 
 ## Homepage Design (index.html — 3,398 lines)
 
@@ -52,7 +61,7 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 
 ## Known Issues (Current)
 
-1. **Urgency countdown hardcoded to March 21, 2026** — expires in 2 days, needs rolling logic
+1. **Urgency countdown hardcoded to March 21, 2026** — expires soon, needs rolling logic
 2. **premium.css is empty** — loaded on every page, zero CSS rules
 3. **Schema.org prices don't match UI** — schema says $97-$997, UI has $19/$97/$497/$997
 4. **index-v2.html orphaned** — 3,398-line duplicate sitting in root

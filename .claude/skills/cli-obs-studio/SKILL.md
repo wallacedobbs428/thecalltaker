@@ -1,8 +1,7 @@
 ---
 name: >-
   cli-anything-obs_studio
-description: >-
-  Command-line interface for Obs Studio - A stateful command-line interface for OBS Studio scene collection editing, following the same patter...
+description: "Command-line interface for OBS Studio streaming and recording. Use when the user needs to configure streams, manage recording, or automate OBS operations via CLI."
 ---
 
 # cli-anything-obs_studio

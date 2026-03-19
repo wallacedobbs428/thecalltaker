@@ -1,6 +1,6 @@
 ---
 name: agentic-workflow
-description: Visual UI annotation tool for AI agents. Drop the React toolbar into any app — humans click elements and leave feedback, agents receive structured CSS selectors, bounding boxes, and React component trees to find exact code. Supports MCP watch-loop, platform-specific hooks (Claude Code / Codex / Gemini CLI / OpenCode), webhook delivery, and autonomous self-driving critique with agent-browser.
+description: "Visual UI annotation tool for AI agents. Use when building human-in-the-loop feedback systems, annotating UI elements for agent interaction, or setting up MCP watch-loops for autonomous UI testing."
 compatibility: React 18+, Node.js 18+
 allowed-tools: Read Write Bash Grep Glob
 metadata:

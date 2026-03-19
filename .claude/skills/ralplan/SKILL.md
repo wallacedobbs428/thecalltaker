@@ -1,6 +1,6 @@
 ---
 name: ralplan
-description: Alias for /omc-plan --consensus
+description: "Alias for /omc-plan --consensus. Use when running multi-model consensus planning via oh-my-claudecode."
 level: 4
 ---
 

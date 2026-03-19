@@ -1,6 +1,6 @@
 ---
 name: agent-browser
-description: "Browser automation for AI agents via inference.sh. Navigate web pages, interact with elements using @e refs, take screenshots, record video. Capabilities: web scraping, form filling, clicking, typing, drag-drop, file upload, JavaScript execution."
+description: "Browser automation for AI agents via inference.sh. Use when the user needs to navigate web pages, interact with elements, take screenshots, fill forms, scrape data, or automate web interactions."
 allowed-tools: Bash(infsh *)
 ---
 

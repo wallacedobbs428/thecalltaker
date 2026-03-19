@@ -1,6 +1,6 @@
 ---
 name: deepinit
-description: Deep codebase initialization with hierarchical AGENTS.md documentation
+description: "Deep codebase initialization with hierarchical AGENTS.md documentation. Use when onboarding to a new codebase, creating project documentation, or generating architecture overviews."
 level: 4
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: persona-team-lead
 version: 1.0.0
-description: "Lead a team — run standups, coordinate tasks, and communicate."
+description: "Lead a team — run standups, coordinate tasks, and manage communications via Workspace. Use when managing team workflows, standup processes, or team coordination."
 metadata:
   openclaw:
     category: "persona"

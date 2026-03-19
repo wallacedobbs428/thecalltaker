@@ -1,7 +1,7 @@
 ---
 name: recipe-copy-sheet-for-new-month
 version: 1.0.0
-description: "Duplicate a Google Sheets template tab for a new month of tracking."
+description: "Duplicate a Google Sheets template tab for a new month of tracking. Use when rolling over monthly templates, creating new tracking periods, or duplicating sheet tabs."
 metadata:
   openclaw:
     category: "recipe"

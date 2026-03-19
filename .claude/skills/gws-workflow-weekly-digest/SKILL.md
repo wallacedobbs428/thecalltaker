@@ -1,7 +1,7 @@
 ---
 name: gws-workflow-weekly-digest
 version: 1.0.0
-description: "Google Workflow: Weekly summary: this week's meetings + unread email count."
+description: "Google Workflow: Generate weekly summary of meetings + unread email count. Use when creating weekly reports, reviewing the past week, or planning ahead."
 metadata:
   openclaw:
     category: "productivity"

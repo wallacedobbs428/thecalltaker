@@ -1,6 +1,6 @@
 ---
 name: cli-anything-notebooklm
-description: Experimental NotebookLM harness for listing notebooks, managing sources, asking questions, generating artifacts, and downloading outputs through an installed notebooklm CLI.
+description: "Experimental NotebookLM harness for managing notebooks, sources, and AI-generated artifacts. Use when the user asks about NotebookLM, wants to manage notebook sources, or generate NotebookLM outputs."
 ---
 
 # cli-anything-notebooklm

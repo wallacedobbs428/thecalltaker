@@ -1,9 +1,9 @@
 ---
 name: optimize
-description: Improve interface performance across loading speed, rendering, animations, images, and bundle size. Makes experiences faster and smoother.
+description: "Optimize interface performance across loading speed, rendering, animations, images, and bundle size. Use when pages are slow, Lighthouse scores are low, or the user asks to speed up their site."
 args:
   - name: target
-    description: The feature or area to optimize (optional)
+    description: "Optimize interface performance across loading speed, rendering, animations, images, and bundle size. Use when pages are slow, Lighthouse scores are low, or the user asks to speed up their site."
     required: false
 user-invokable: true
 ---

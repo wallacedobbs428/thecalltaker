@@ -1,6 +1,6 @@
 ---
 name: ccg
-description: Claude-Codex-Gemini tri-model orchestration via /ask codex + /ask gemini, then Claude synthesizes results
+description: "Claude-Codex-Gemini tri-model orchestration via /ask codex + /ask gemini, then Claude synthesizes. Use when the user wants multi-model consensus, tri-model comparison, or cross-LLM validation."
 level: 5
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: recipe-log-deal-update
 version: 1.0.0
-description: "Append a deal status update to a Google Sheets sales tracking spreadsheet."
+description: "Append a deal status update to a Google Sheets sales tracker. Use when logging CRM updates, recording deal progress, or maintaining sales pipeline spreadsheets."
 metadata:
   openclaw:
     category: "recipe"

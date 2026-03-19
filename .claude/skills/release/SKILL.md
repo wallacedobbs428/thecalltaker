@@ -1,6 +1,6 @@
 ---
 name: release
-description: Automated release workflow for oh-my-claudecode
+description: "Automated release workflow for oh-my-claudecode packages. Use when publishing new versions, creating release tags, or managing changelogs for OMC."
 level: 3
 ---
 

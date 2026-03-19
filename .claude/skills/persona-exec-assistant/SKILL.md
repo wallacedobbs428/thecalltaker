@@ -1,7 +1,7 @@
 ---
 name: persona-exec-assistant
 version: 1.0.0
-description: "Manage an executive's schedule, inbox, and communications."
+description: "Manage an executive's schedule, inbox, and communications via Workspace. Use when handling executive assistant tasks, calendar management, or inbox triage."
 metadata:
   openclaw:
     category: "persona"

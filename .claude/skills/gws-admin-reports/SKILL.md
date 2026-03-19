@@ -1,7 +1,7 @@
 ---
 name: gws-admin-reports
 version: 1.0.0
-description: "Google Workspace Admin SDK: Audit logs and usage reports."
+description: "Google Workspace Admin SDK: Generate audit logs and usage reports. Use when reviewing Workspace admin activity, login events, or usage analytics."
 metadata:
   openclaw:
     category: "productivity"

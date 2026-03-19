@@ -1,7 +1,7 @@
 ---
 name: gws-modelarmor-create-template
 version: 1.0.0
-description: "Google Model Armor: Create a new Model Armor template."
+description: "Google Model Armor: Create a new content filtering template. Use when setting up safety filters, content moderation rules, or AI output guardrails."
 metadata:
   openclaw:
     category: "security"

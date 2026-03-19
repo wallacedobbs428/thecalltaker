@@ -1,7 +1,7 @@
 ---
 name: recipe-create-feedback-form
 version: 1.0.0
-description: "Create a Google Form for feedback and share it via Gmail."
+description: "Create a Google Form for feedback and share it via Gmail. Use when gathering feedback, running surveys, or creating intake forms."
 metadata:
   openclaw:
     category: "recipe"

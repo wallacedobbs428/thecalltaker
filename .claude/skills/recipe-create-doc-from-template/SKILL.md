@@ -1,7 +1,7 @@
 ---
 name: recipe-create-doc-from-template
 version: 1.0.0
-description: "Copy a Google Docs template, fill in content, and share with collaborators."
+description: "Copy a Google Docs template, fill in content, and share with collaborators. Use when generating documents from templates, creating standardized reports, or producing form letters."
 metadata:
   openclaw:
     category: "recipe"

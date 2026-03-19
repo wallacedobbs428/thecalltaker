@@ -1,7 +1,7 @@
 ---
 name: gws-sheets
 version: 1.0.0
-description: "Google Sheets: Read and write spreadsheets."
+description: "Google Sheets: Read and write spreadsheet data. Use when accessing, creating, or modifying spreadsheet data, formulas, or formatting."
 metadata:
   openclaw:
     category: "productivity"

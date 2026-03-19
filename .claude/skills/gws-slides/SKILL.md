@@ -1,7 +1,7 @@
 ---
 name: gws-slides
 version: 1.0.0
-description: "Google Slides: Read and write presentations."
+description: "Google Slides: Read and write presentations. Use when creating slides, modifying presentations, or generating slide decks."
 metadata:
   openclaw:
     category: "productivity"

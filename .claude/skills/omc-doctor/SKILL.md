@@ -1,6 +1,6 @@
 ---
 name: omc-doctor
-description: Diagnose and fix oh-my-claudecode installation issues
+description: "Diagnose and fix oh-my-claudecode installation issues. Use when oh-my-claudecode commands fail, plugins break, or the installation needs repair."
 level: 3
 ---
 

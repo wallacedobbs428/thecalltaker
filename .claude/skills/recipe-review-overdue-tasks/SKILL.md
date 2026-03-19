@@ -1,7 +1,7 @@
 ---
 name: recipe-review-overdue-tasks
 version: 1.0.0
-description: "Find Google Tasks that are past due and need attention."
+description: "Find Google Tasks that are past due and need attention. Use when reviewing task backlogs, catching up on overdue items, or auditing task completion."
 metadata:
   openclaw:
     category: "recipe"

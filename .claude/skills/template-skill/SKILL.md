@@ -1,6 +1,6 @@
 ---
 name: template-skill
-description: Replace with description of the skill and when Claude should use it.
+description: "Template for creating new skills. Use when building a new skill definition from scratch."
 ---
 
 # Insert instructions below

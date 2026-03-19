@@ -1,7 +1,7 @@
 ---
 name: persona-project-manager
 version: 1.0.0
-description: "Coordinate projects — track tasks, schedule meetings, and share docs."
+description: "Coordinate projects — track tasks, schedule meetings, and share documents via Workspace. Use when managing project timelines, task coordination, or team collaboration."
 metadata:
   openclaw:
     category: "persona"

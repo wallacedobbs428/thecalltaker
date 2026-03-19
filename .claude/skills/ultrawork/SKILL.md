@@ -1,6 +1,6 @@
 ---
 name: ultrawork
-description: Parallel execution engine for high-throughput task completion
+description: "Parallel execution engine for high-throughput task completion. Use when the user needs maximum throughput, parallel task execution, or says 'ultrawork' or 'do it fast'."
 level: 4
 ---
 

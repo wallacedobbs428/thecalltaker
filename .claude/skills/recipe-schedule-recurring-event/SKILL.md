@@ -1,7 +1,7 @@
 ---
 name: recipe-schedule-recurring-event
 version: 1.0.0
-description: "Create a recurring Google Calendar event with attendees."
+description: "Create a recurring Google Calendar event with attendees and notifications. Use when scheduling regular meetings, standups, or repeated events."
 metadata:
   openclaw:
     category: "recipe"

@@ -1,7 +1,7 @@
 ---
 name: persona-content-creator
 version: 1.0.0
-description: "Create, organize, and distribute content across Workspace."
+description: "Create, organize, and distribute content across Google Workspace. Use when managing content creation workflows, editorial calendars, or multi-platform publishing."
 metadata:
   openclaw:
     category: "persona"

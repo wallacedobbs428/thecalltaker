@@ -1,7 +1,7 @@
 ---
 name: gws-chat
 version: 1.0.0
-description: "Google Chat: Manage Chat spaces and messages."
+description: "Google Chat: Manage Chat spaces, memberships, and messages. Use when creating spaces, managing members, or automating Chat communications."
 metadata:
   openclaw:
     category: "productivity"

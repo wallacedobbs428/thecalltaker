@@ -1,6 +1,6 @@
 ---
 name: create-auth-skill
-description: "Add authentication to TypeScript/JavaScript applications using Better Auth. Supports email/password, OAuth, passkeys, 2FA, organizations, and more. Works with Next.js, Express, SvelteKit, Nuxt, and other frameworks."
+description: "Add authentication to TypeScript/JavaScript applications using Better Auth. Use when setting up login, OAuth, passkeys, 2FA, or auth in Next.js, Express, SvelteKit, or Nuxt projects."
 ---
 
 # Create Auth Skill — Better Auth

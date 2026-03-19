@@ -1,7 +1,7 @@
 ---
 name: recipe-reschedule-meeting
 version: 1.0.0
-description: "Move a Google Calendar event to a new time and automatically notify all attendees."
+description: "Move a Google Calendar event to a new time and notify all attendees. Use when rescheduling meetings, changing event times, or moving calendar entries."
 metadata:
   openclaw:
     category: "recipe"

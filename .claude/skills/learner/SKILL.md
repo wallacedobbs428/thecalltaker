@@ -1,6 +1,6 @@
 ---
 name: learner
-description: Extract a learned skill from the current conversation
+description: "Extract a learned skill from the current conversation and save it for future use. Use when the user wants to capture a reusable pattern, workflow, or technique from the current session."
 level: 7
 ---
 

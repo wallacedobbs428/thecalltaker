@@ -1,7 +1,7 @@
 ---
 name: recipe-draft-email-from-doc
 version: 1.0.0
-description: "Read content from a Google Doc and use it as the body of a Gmail message."
+description: "Read content from a Google Doc and use it as the body of a Gmail draft. Use when composing emails from document content or creating email templates from Docs."
 metadata:
   openclaw:
     category: "recipe"

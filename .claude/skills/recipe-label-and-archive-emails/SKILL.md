@@ -1,7 +1,7 @@
 ---
 name: recipe-label-and-archive-emails
 version: 1.0.0
-description: "Apply Gmail labels to matching messages and archive them to keep your inbox clean."
+description: "Apply Gmail labels to matching messages and archive them. Use when organizing inbox, auto-labeling emails, or cleaning up messages by criteria."
 metadata:
   openclaw:
     category: "recipe"

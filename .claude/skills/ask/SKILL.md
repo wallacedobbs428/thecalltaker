@@ -1,6 +1,6 @@
 ---
 name: ask
-description: Ask Claude, Codex, or Gemini via local CLI and capture a reusable artifact
+description: "Ask Claude, Codex, or Gemini via local CLI and capture a reusable artifact. Use when the user wants to query another AI model, get a second opinion, or run a prompt through a different LLM."
 ---
 
 # Ask

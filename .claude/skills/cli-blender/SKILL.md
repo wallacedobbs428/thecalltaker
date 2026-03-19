@@ -1,8 +1,7 @@
 ---
 name: >-
   cli-anything-blender
-description: >-
-  Command-line interface for Blender - A stateful command-line interface for 3D scene editing, following the same patterns as the GIMP CLI ...
+description: "Command-line interface for Blender 3D modeling and rendering. Use when the user needs to create 3D models, render scenes, or automate Blender operations via CLI."
 ---
 
 # cli-anything-blender

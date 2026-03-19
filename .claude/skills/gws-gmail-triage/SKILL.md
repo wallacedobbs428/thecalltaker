@@ -1,7 +1,7 @@
 ---
 name: gws-gmail-triage
 version: 1.0.0
-description: "Gmail: Show unread inbox summary (sender, subject, date)."
+description: "Gmail: Show unread inbox summary (sender, subject, date). Use when the user wants to review their inbox, check new emails, or triage messages."
 metadata:
   openclaw:
     category: "productivity"

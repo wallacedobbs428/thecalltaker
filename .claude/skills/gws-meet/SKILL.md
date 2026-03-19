@@ -1,7 +1,7 @@
 ---
 name: gws-meet
 version: 1.0.0
-description: "Manage Google Meet conferences."
+description: "Google Meet: Manage meeting conferences and settings. Use when creating Meet links, managing meeting spaces, or configuring video call settings."
 metadata:
   openclaw:
     category: "productivity"

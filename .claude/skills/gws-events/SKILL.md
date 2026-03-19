@@ -1,7 +1,7 @@
 ---
 name: gws-events
 version: 1.0.0
-description: "Subscribe to Google Workspace events."
+description: "Subscribe to Google Workspace events and receive real-time notifications. Use when setting up event watchers or monitoring Workspace activity."
 metadata:
   openclaw:
     category: "productivity"

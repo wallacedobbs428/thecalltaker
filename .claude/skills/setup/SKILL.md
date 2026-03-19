@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Unified setup entrypoint for install, diagnostics, and MCP configuration
+description: "Unified setup entrypoint for installing tools, running diagnostics, and configuring MCP servers. Use when setting up a new environment, installing dependencies, or configuring MCP."
 level: 2
 ---
 

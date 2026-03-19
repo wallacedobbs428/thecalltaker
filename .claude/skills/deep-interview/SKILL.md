@@ -1,6 +1,6 @@
 ---
 name: deep-interview
-description: Socratic deep interview with mathematical ambiguity gating before autonomous execution
+description: "Socratic deep interview with mathematical ambiguity gating before autonomous execution. Use when requirements are unclear, the user needs help thinking through a problem, or when saying 'interview me'."
 argument-hint: "[--quick|--standard|--deep] [--autoresearch] <idea or vague description>"
 pipeline: [deep-interview, omc-plan, autopilot]
 next-skill: omc-plan

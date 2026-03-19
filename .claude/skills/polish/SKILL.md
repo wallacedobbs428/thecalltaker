@@ -1,9 +1,9 @@
 ---
 name: polish
-description: Final quality pass before shipping. Fixes alignment, spacing, consistency, and detail issues that separate good from great.
+description: "Final quality pass before shipping. Use when the user asks to polish, do a final review, or fix alignment, spacing, consistency, and detail issues before launch."
 args:
   - name: target
-    description: The feature or area to polish (optional)
+    description: "Final quality pass before shipping. Use when the user asks to polish, do a final review, or fix alignment, spacing, consistency, and detail issues before launch."
     required: false
 user-invokable: true
 ---

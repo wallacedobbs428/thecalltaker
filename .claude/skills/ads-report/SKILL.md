@@ -1,6 +1,6 @@
 ---
 name: ads-report
-description: "Pull live performance metrics for all active Meta ad campaigns. Reports spend, CPL, leads, and recommends kill/scale/hold decisions. Compares against vertical benchmarks. Use daily to monitor ad performance."
+description: "Pull live performance metrics for all active Meta ad campaigns. Use when checking ad spend, CPL, leads, or when the user asks for campaign performance, daily ad metrics, or kill/scale/hold recommendations."
 argument-hint: [optional: vertical]
 allowed-tools: Read, Write, Bash, Glob, Grep
 ---

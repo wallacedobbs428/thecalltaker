@@ -1,9 +1,9 @@
 ---
 name: typeset
-description: Improve typography by fixing font choices, hierarchy, sizing, weight consistency, and readability. Makes text feel intentional and polished.
+description: "Improve typography by fixing font choices, hierarchy, sizing, weight, and readability. Use when text feels off, fonts need adjustment, or the user asks to fix typography."
 args:
   - name: target
-    description: The feature or component to improve typography for (optional)
+    description: "Improve typography by fixing font choices, hierarchy, sizing, weight, and readability. Use when text feels off, fonts need adjustment, or the user asks to fix typography."
     required: false
 user-invokable: true
 ---

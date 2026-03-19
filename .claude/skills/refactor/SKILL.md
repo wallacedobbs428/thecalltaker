@@ -1,6 +1,6 @@
 ---
 name: refactor
-description: "Surgical code refactoring — gradual improvements to structure and maintainability without altering external behavior. Identifies code smells and applies safe refactoring patterns."
+description: "Surgical code refactoring — improve structure and maintainability without changing behavior. Use when the user asks to refactor, clean up code, reduce complexity, or apply design patterns."
 ---
 
 # Refactor Skill
