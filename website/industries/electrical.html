@@ -33,18 +33,10 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "The Call Taker - Electrical Virtual Receptionist",
-  "description": "Stop losing electrical emergency calls to voicemail. The Call Taker answers sparking outlets, power outages, and panel upgrades 24/7. Starting at $497/mo.",
+  "@type": "Service",
+  "name": "AI Receptionist for Electricians",
+  "description": "24/7 AI receptionist for electrical contractors. Captures emergency calls, books service appointments, and texts you summaries. Starting at $497/mo.",
   "url": "https://thecalltaker.com/industries/electrical",
-  "applicationCategory": "BusinessApplication",
-  "operatingSystem": "Web",
-  "offers": {
-    "@type": "Offer",
-    "price": "297",
-    "priceCurrency": "USD",
-    "priceValidUntil": "2027-12-31"
-  },
   "provider": {
     "@type": "Organization",
     "name": "The Call Taker",
@@ -55,11 +47,16 @@
       "name": "Wallace Dobbs"
     }
   },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "23",
-    "bestRating": "5"
+  "offers": {
+    "@type": "Offer",
+    "price": "497",
+    "priceCurrency": "USD",
+    "description": "14-day free pilot, then $497/mo. No contract."
+  },
+  "serviceType": "AI Receptionist",
+  "areaServed": {
+    "@type": "Country",
+    "name": "United States"
   }
 }
 </script>
@@ -294,15 +291,30 @@ a { color: inherit; text-decoration: none; }
 .sticky-demo a svg { width: 18px; height: 18px; }
 @keyframes sticky-glow { 0%, 100% { box-shadow: 0 4px 24px rgba(0,220,130,.35); } 50% { box-shadow: 0 4px 32px rgba(0,220,130,.55); } }
 @media (max-width: 480px) { .sticky-demo { bottom: 16px; right: 16px; left: 16px; } .sticky-demo a { width: 100%; justify-content: center; } }
-.hero-cta-desktop{display:none}
-@media(min-width:769px){.hero-cta-mobile{display:none}.hero-cta-desktop{display:inline-flex}}
 </style>
 
 <!-- Tracking -->
 
 <script src="../tct-tracking.js" defer></script>
 <link rel="stylesheet" href="/shared/ui-dark.css">
-    <link rel="stylesheet" href="/shared/mobile-guard.css">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -327,9 +339,8 @@ a { color: inherit; text-decoration: none; }
   <div class="hero-badge">Electrical Industry</div>
   <h1>Every Missed Electrical Call Is a $400 Job Going to the Electrician Who Answered</h1>
   <p class="subtitle">Sparking outlets, tripped breakers, and power outages don't wait for business hours. 38% of electrical calls come after hours. Homeowners in panic call the first 3 electricians -- the one who answers gets the $400 job.</p>
-  <a href="tel:+16157845747" class="hero-cta hero-cta-mobile">Hear Jessica Answer Your Calls Now</a>
-  <a href="../demo" class="hero-cta hero-cta-desktop">Hear Jessica Answer Your Calls Now</a>
-  <div class="hero-cta-sub">Live demo line — call now or try it online</div>
+  <a href="tel:+16157845747" class="hero-cta">(615) 784-5747</a>
+  <div class="hero-cta-sub">Call our demo line right now -- hear what your customers would hear</div>
   <a href="../demo-live.html?industry=Electrical" style="display:inline-block;margin-top:.75rem;color:#00dc82;font-weight:700;font-size:.9rem;text-decoration:none;border-bottom:2px solid rgba(0,220,130,0.3);padding-bottom:2px;transition:border-color .2s">Hear It Answer As Your Business &rarr;</a>
 </div>
 
@@ -668,7 +679,7 @@ function submitFallbackForm(e) {
   fetch("https://services.leadconnectorhq.com/contacts/", {
     method: "POST",
     headers: {
-      "Authorization": "Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY",
+      "Authorization": "Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35",
       "Version": "2021-07-28",
       "Content-Type": "application/json"
     },
@@ -688,7 +699,7 @@ function submitFallbackForm(e) {
       fetch("https://services.leadconnectorhq.com/contacts/" + cid + "/notes", {
         method: "POST",
         headers: {
-          "Authorization": "Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY",
+          "Authorization": "Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35",
           "Version": "2021-07-28",
           "Content-Type": "application/json"
         },

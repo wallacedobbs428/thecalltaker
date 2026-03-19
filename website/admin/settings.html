@@ -158,7 +158,24 @@
 <script>window.TCT_UI_V2 = true;</script>
 <link rel="stylesheet" href="/shared/ui-dark.css">
   <script src="../tct-tracking.js" defer></script>
-    <link rel="stylesheet" href="/shared/mobile-guard.css">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body data-app="admin">
 
@@ -191,7 +208,7 @@
           <span class="settings-label">GHL API Key</span>
           <span class="settings-value" id="api-key-display">pit-••••••••35</span>
           <button class="reveal-btn" id="api-key-reveal" onclick="toggleApiKey()">Reveal</button>
-          <button class="copy-btn" onclick="copyValue('GHL_KEY_REMOVED_USE_SERVER_PROXY', this)" title="Copy">
+          <button class="copy-btn" onclick="copyValue('pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35', this)" title="Copy">
             <span class="copy-feedback">Copied!</span>
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           </button>
@@ -467,7 +484,7 @@
     var btn = document.getElementById('api-key-reveal');
     apiKeyRevealed = !apiKeyRevealed;
     if (apiKeyRevealed) {
-      display.textContent = 'GHL_KEY_REMOVED_USE_SERVER_PROXY';
+      display.textContent = 'pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35';
       btn.textContent = 'Hide';
     } else {
       display.textContent = 'pit-\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u202235';

@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Get Started | The Call Taker</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="description" content="Sign up for The Call Taker AI receptionist. Never miss another call. Plans from $97/mo for service businesses.">
+  <meta name="description" content="Sign up for The Call Taker AI receptionist. Never miss another call. Plans from $497/mo for service businesses.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -125,6 +125,25 @@
   </style>
 <link rel="stylesheet" href="/shared/ui-dark.css">
 <script src="/shared/ab-split.js"></script>
+<script src="/tct-tracking.js" defer></script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -276,7 +295,7 @@
           <div class="plan-badge">&nbsp;</div>
           <div class="plan-name">Premium</div>
           <div class="plan-desc">White-glove, fully managed</div>
-          <div class="plan-price">$997<span>/mo</span></div>
+          <div class="plan-price">$497<span>/mo</span></div>
           <div class="trial-badge">14-day free pilot</div>
           <div class="plan-divider"></div>
           <div class="plan-features">
@@ -505,7 +524,7 @@
         var ghlRes = await fetch('https://services.leadconnectorhq.com/contacts/', {
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY',
+            'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
             'Version': '2021-07-28',
             'Content-Type': 'application/json'
           },
@@ -522,7 +541,7 @@
                 fetch('https://services.leadconnectorhq.com/contacts/' + contactId + '/notes', {
                   method: 'POST',
                   headers: {
-                    'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY',
+                    'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
                     'Version': '2021-07-28',
                     'Content-Type': 'application/json'
                   },
