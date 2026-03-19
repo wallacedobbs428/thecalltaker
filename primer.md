@@ -10,7 +10,7 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 ## What This Is
 
-AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier decoy pricing). 14-day free pilot. Demo line: (615) 784-5747. Built by Wallace Dobbs (16yo founder, @moneymaker99). Mills (co-founder) handles demos and closing alongside Wallace.
+AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier decoy pricing). 14-day free pilot. Demo line: (615) 784-5747. Built by Wallace Dobbs (16yo founder, @moneymaker99). Mills (co-founder/partner, strategy + GitHub access).
 
 ## Architecture
 
@@ -23,19 +23,24 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 
 ## Current Branch & State
 
-- **Branch:** `claude/website-review-ciovZ`
-- **Base:** `master` (last commit 2026-03-17)
-- **Latest commits (March 18):** Major homepage redesign — HUD design, warm palette, Lenis smooth scroll, phone animation, floating callouts, circuit background, urgency bar, GSAP motion system
+- **Branch:** `claude/its-mills-dabnE` (Mills session)
+- **Base:** `origin/main` at 81f7643 (March 19 — merged 10+ PRs including mobile centering, skill router, GHL reactivation, outreach rebuild, frontend quickstart, ads skill system)
 - **Working tree:** Clean (no staged or unstaged changes)
+- **War room files:** `war-room/task-board.md` and `war-room/handoff-log.md` do NOT exist in this environment
 
-## Homepage Design (index.html — 3,398 lines)
+## Recent Activity (March 19)
 
-- **Color scheme:** Green accent (#00dc82) — all CSS vars (--blue, --orange, --green) map to same green
+- PR #19 merged (review-skill-prs) — consolidated multiple feature branches into main
+- Multiple merge commits resolving conflicts across: mobile centering, skill router, GHL reactivation workflow, outreach stack rebuild, frontend quickstart, ads skill system
+- Master branch is behind origin/main (master at 2026-03-17, origin/main at 2026-03-19)
+
+## Homepage Design (index.html)
+
+- **Color scheme:** Green accent (#00dc82) — all CSS vars map to same green
 - **Layout:** Dark theme, glassmorphism header, scroll spy, GSAP mobile menu, Lenis smooth scroll
 - **Hero:** Animated phone mockup (pure CSS/SVG, no images), circuit background, floating callouts
-- **Sections:** Hero → Industry strip → How It Works → Features → Demo → Pricing → FAQ → Final CTA → Footer
-- **Pricing:** 4-tier decoy ($19/$97/$497/$997), urgency badge with countdown to Friday deadline
-- **Nav:** Glassmorphism header, scroll progress bar, mobile overlay menu
+- **Sections:** Hero -> Industry strip -> How It Works -> Features -> Demo -> Pricing -> FAQ -> Final CTA -> Footer
+- **Pricing:** 4-tier decoy ($19/$97/$497/$997), urgency badge with countdown
 - **External deps:** GSAP 3.12.5 (cdnjs), Lenis 1.1.18 (jsdelivr)
 - **Font:** Self-hosted Inter (woff2)
 
@@ -43,7 +48,7 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 
 - **Total pages:** ~210+ HTML files deployed
 - **Root HTML:** 41 pages
-- **Industries:** 19 pages (expanded beyond documented 13)
+- **Industries:** 19 pages
 - **Blog:** 69 posts
 - **Case Studies:** 14 + index
 - **SEO Pages:** 13 (ai-answering-service/)
@@ -52,13 +57,13 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 
 ## Known Issues (Current)
 
-1. **Urgency countdown hardcoded to March 21, 2026** — expires in 2 days, needs rolling logic
+1. **Urgency countdown hardcoded** — needs rolling logic (was set to March 21)
 2. **premium.css is empty** — loaded on every page, zero CSS rules
 3. **Schema.org prices don't match UI** — schema says $97-$997, UI has $19/$97/$497/$997
 4. **index-v2.html orphaned** — 3,398-line duplicate sitting in root
 5. **hero-phone-animation.html orphaned** — standalone test file in root
-6. **41 HTML files in root** — cluttered, many could be organized into subdirectories
-7. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live
+6. **41 HTML files in root** — cluttered, many could be organized
+7. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live via pay.html
 8. **CLAUDE.md documents 13 industries** — actual site has 19
 
 ## Active Priorities
@@ -66,4 +71,4 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 - **Revenue**: Get to first paid customer. $20K MRR goal
 - **Website polish**: Fix urgency countdown, clean orphaned files, schema consistency
 - **SEO content**: Continue expanding blog with high-intent keyword posts
-- **Stripe**: NOT connected (Wallace is 16). PayPal workaround live via pay.html
+- **Stripe**: NOT connected (Wallace is 16). PayPal workaround live
