@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Call Taker — Never Miss Another Call</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111318;
+  --bg-card: #191c22;
+  --bg-warm: #1e2128;
+  --cream: #e8e0d4;
+  --cream-soft: #c4bdb2;
+  --gold: #c9a96e;
+  --gold-soft: rgba(201,169,110,0.15);
+  --green: #5b8a72;
+  --green-soft: rgba(91,138,114,0.12);
+  --text: #ddd8d0;
+  --text-dim: #7a7670;
+  --text-faint: #4a4640;
+  --border: #2a2d33;
+  --shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ═══ SCENE ═══ */
+.scene {
+  position: relative;
+  width: 100%;
+  max-width: 1140px;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 0 48px;
+  gap: 80px;
+}
+
+@media (max-width: 900px) {
+  .scene { grid-template-columns: 1fr; padding: 48px 24px; gap: 40px; }
+  .scene-copy { text-align: center; order: 2; }
+  .scene-phone { order: 1; }
+}
+
+/* ═══ COPY — warm, confident, slow ═══ */
+.scene-copy { z-index: 2; }
+
+/* Staggered slide-up entrance */
+@keyframes subtitle-enter {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: subtitle-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.scene-copy h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.15;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: subtitle-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+.scene-copy .subtitle {
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.7;
+  max-width: 420px;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: subtitle-enter 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+.subtitle strong,
+.subtitle em {
+  color: var(--gold);
+  font-style: normal;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .scene-copy .subtitle { margin-left: auto; margin-right: auto; }
+}
+
+.scene-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--gold);
+  color: #1a1510;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 18px 40px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 24px rgba(201,169,110,0.2);
+  letter-spacing: 0.01em;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: subtitle-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+.scene-cta:hover {
+  background: #d4b87a;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(201,169,110,0.25);
+}
+
+.cta-secondary {
+  display: inline-block;
+  margin-left: 16px;
+  color: #bbb;
+  font-size: 14px;
+  text-decoration: none;
+  border-bottom: 1px solid #555;
+  padding-bottom: 2px;
+  transition: color 0.3s, border-color 0.3s;
+  opacity: 0;
+  animation: subtitle-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+}
+.cta-secondary:hover { color: var(--cream); border-color: var(--cream-soft); }
+
+@media (max-width: 900px) {
+  .cta-secondary { display: block; margin: 16px 0 0 0; }
+}
+
+/* Stage narration — changes with animation */
+.stage-narration {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  min-height: 80px;
+}
+
+.stage-step {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0;
+}
+
+.stage-desc {
+  font-size: 16px;
+  color: #d4cfc8;
+  line-height: 1.7;
+  max-width: 380px;
+  opacity: 0;
+}
+
+@media (max-width: 900px) {
+  .stage-desc { margin: 0 auto; }
+}
+
+/* ═══ PHONE — warm, elegant ═══ */
+.scene-phone {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 580px;
+  z-index: 2;
+}
+
+/* Warm ambient light behind phone */
+.phone-glow {
+  position: absolute;
+  width: 360px;
+  height: 500px;
+  background: radial-gradient(ellipse at center,
+    rgba(201,169,110,0.06) 0%,
+    rgba(91,138,114,0.03) 40%,
+    transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Particles — warm gold/cream, not neon green */
+.particle-field {
+  position: absolute;
+  width: 300px;
+  height: 540px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.particle.gold { background: var(--gold); }
+.particle.cream { background: var(--cream-soft); }
+.particle.green { background: var(--green); }
+
+/* Phone body */
+.phone {
+  position: relative;
+  width: 250px;
+  height: 510px;
+  background: linear-gradient(170deg, #1e2025 0%, #16181c 100%);
+  border-radius: 44px;
+  border: 1.5px solid #2a2d33;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.97);
+  box-shadow:
+    0 0 0 0.5px rgba(255,255,255,0.04),
+    0 30px 80px rgba(0,0,0,0.7),
+    -10px 0 40px rgba(0,0,0,0.3),
+    0 0 80px rgba(201,169,110,0.03);
+  will-change: transform, opacity;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 90px; height: 22px;
+  background: #111318;
+  border-radius: 0 0 14px 14px;
+  z-index: 10;
+}
+
+.phone-screen {
+  position: absolute;
+  inset: 6px;
+  background: #0f1114;
+  border-radius: 40px;
+  overflow: hidden;
+}
+
+/* ═══ SCREEN STATES ═══ */
+
+/* STATE 1: Incoming call */
+.screen-ring {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 48px 24px;
+  opacity: 0;
+}
+
+.ring-time {
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--cream);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+  font-family: 'DM Serif Display', serif;
+}
+
+.ring-date {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-bottom: 36px;
+}
+
+.ring-divider {
+  width: 32px; height: 1px;
+  background: var(--border);
+  margin-bottom: 28px;
+}
+
+.ring-from-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+}
+
+.ring-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+
+.ring-desc {
+  font-size: 12px;
+  color: var(--gold);
+  margin-bottom: 32px;
+}
+
+.ring-actions {
+  display: flex; gap: 32px;
+}
+
+.ring-btn {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+}
+
+.ring-btn.answer {
+  background: var(--green);
+  box-shadow: 0 0 24px rgba(91,138,114,0.3);
+}
+
+.ring-btn.decline {
+  background: #6b3a3a;
+  box-shadow: 0 0 24px rgba(107,58,58,0.2);
+}
+
+.ring-btn svg {
+  width: 22px; height: 22px;
+  stroke: #fff; fill: none;
+  stroke-width: 2; stroke-linecap: round;
+}
+
+/* Subtle ring pulse — not aggressive */
+.ring-pulse-ring {
+  position: absolute;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(91,138,114,0.3);
+  opacity: 0;
+}
+
+/* STATE 2: Jessica on the line */
+.screen-answer {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 48px 24px;
+  opacity: 0;
+}
+
+.answer-status {
+  font-size: 9px; letter-spacing: 0.15em;
+  color: var(--green); font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.answer-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+
+.answer-timer {
+  font-size: 14px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 32px;
+}
+
+.waveform {
+  display: flex; gap: 4px;
+  align-items: center; height: 48px;
+  margin-bottom: 28px;
+}
+
+.waveform span {
+  width: 3px;
+  background: var(--green);
+  border-radius: 2px;
+  opacity: 0.6;
+  transition: height 0.15s ease;
+}
+
+.answer-transcript {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.7;
+  max-width: 200px;
+  font-style: italic;
+  opacity: 0;
+}
+
+/* STATE 3: Details captured */
+.screen-capture {
+  position: absolute; inset: 0;
+  padding: 48px 20px 20px;
+  opacity: 0;
+}
+
+.capture-title {
+  font-size: 9px; letter-spacing: 0.15em;
+  color: var(--gold); font-weight: 600;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.capture-field {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.capture-label {
+  font-size: 9px; color: var(--text-faint);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 3px;
+}
+
+.capture-value {
+  font-size: 14px; color: var(--cream);
+  font-weight: 500;
+}
+
+.capture-cursor {
+  display: inline-block;
+  width: 1px; height: 15px;
+  background: var(--gold);
+  margin-left: 1px;
+  animation: cur-blink 0.8s infinite;
+  vertical-align: middle;
+}
+
+@keyframes cur-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* STATE 4: Appointment booked */
+.screen-book {
+  position: absolute; inset: 0;
+  padding: 48px 18px 20px;
+  opacity: 0;
+  display: flex; flex-direction: column;
+  align-items: center;
+}
+
+.book-title {
+  font-size: 9px; letter-spacing: 0.15em;
+  color: var(--green); font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.book-cal {
+  display: grid; grid-template-columns: repeat(7,1fr);
+  gap: 2px; width: 100%; margin-bottom: 16px;
+}
+
+.book-d {
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--text-faint);
+  border-radius: 6px;
+}
+.book-d.hdr { font-weight: 700; font-size: 9px; color: var(--text-dim); }
+.book-d.act { color: var(--cream-soft); }
+.book-d.sel {
+  background: var(--green);
+  color: #fff; font-weight: 700;
+  box-shadow: 0 0 16px rgba(91,138,114,0.3);
+}
+
+.book-detail {
+  background: var(--green-soft);
+  border: 1px solid rgba(91,138,114,0.2);
+  border-radius: 10px;
+  padding: 14px 16px;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 12px;
+  opacity: 0; transform: translateY(8px);
+}
+
+.book-detail-time {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; color: var(--cream);
+}
+
+.book-detail-day {
+  font-size: 11px; color: var(--text-dim);
+}
+
+.book-confirmed {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--green); font-size: 12px; font-weight: 600;
+  opacity: 0;
+}
+
+.book-confirmed svg {
+  width: 16px; height: 16px;
+  stroke: var(--green); fill: none;
+  stroke-width: 2.5; stroke-linecap: round;
+}
+
+/* STATE 5: Owner notified */
+.screen-text {
+  position: absolute; inset: 0;
+  padding: 48px 16px 20px;
+  display: flex; flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  opacity: 0;
+}
+
+.text-title {
+  font-size: 9px; letter-spacing: 0.15em;
+  color: var(--gold); font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.text-bubble {
+  background: var(--bg-warm);
+  border: 1px solid var(--border);
+  border-radius: 14px 14px 14px 4px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.text-bubble.reply {
+  background: var(--gold-soft);
+  border-color: rgba(201,169,110,0.2);
+  border-radius: 14px 14px 4px 14px;
+  align-self: flex-end;
+  max-width: 85%;
+}
+
+.text-sender {
+  font-size: 9px; color: var(--text-faint);
+  font-weight: 600; margin-bottom: 4px;
+}
+
+.text-body {
+  font-size: 13px; line-height: 1.6; color: var(--cream-soft);
+}
+
+.text-bubble.reply .text-body { color: var(--gold); }
+
+.text-timestamp {
+  font-size: 9px; color: var(--text-faint);
+  text-align: right; margin-top: 6px;
+}
+
+.result-line {
+  text-align: center;
+  margin-top: 24px;
+  opacity: 0;
+}
+
+.result-amount {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.result-label {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+/* ═══ FRAME ACCENTS ═══ */
+.accent-line {
+  position: absolute;
+  background: var(--gold);
+  opacity: 0;
+}
+.accent-line.top { top: -1px; left: 40px; width: 60px; height: 1px; }
+.accent-line.bottom { bottom: -1px; right: 40px; width: 60px; height: 1px; }
+
+.phone-label {
+  position: absolute;
+  bottom: -28px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px; color: var(--text-faint);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  opacity: 0;
+}
+</style>
+</head>
+<body>
+
+<div class="scene">
+
+  <!-- LEFT: Copy -->
+  <div class="scene-copy">
+    <div class="eyebrow">The Call Taker</div>
+    <h1>It's 2 AM.<br>Your phone rings.<br>Jessica answers.</h1>
+    <p class="subtitle">Watch a real call happen. From the <strong>first ring</strong> to a <strong>booked appointment</strong> — while the owner sleeps.</p>
+    <div>
+      <a href="tel:6157845747" class="scene-cta">Call the demo line</a>
+      <a href="/pay.html" class="cta-secondary">See pricing</a>
+    </div>
+
+    <div class="stage-narration">
+      <div class="stage-step" id="stageStep"></div>
+      <div class="stage-desc" id="stageDesc"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Phone -->
+  <div class="scene-phone">
+    <div class="phone-glow"></div>
+
+    <div class="particle-field" id="particleField"></div>
+
+    <div class="phone" id="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- 1: Ring -->
+        <div class="screen-ring" id="sRing">
+          <div class="ring-time">2:17</div>
+          <div class="ring-date">Saturday, March 19</div>
+          <div class="ring-divider"></div>
+          <div class="ring-from-label">INCOMING CALL</div>
+          <div class="ring-name">Sarah Martinez</div>
+          <div class="ring-desc">Emergency Lockout</div>
+          <div class="ring-actions">
+            <div class="ring-btn decline" id="ringDecline">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013 5.18 2 2 0 015.11 3h3" transform="rotate(135 12 12)"/></svg>
+            </div>
+            <div class="ring-btn answer" id="ringAnswer">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 5.18 2 2 0 014.11 3h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2: Jessica answering -->
+        <div class="screen-answer" id="sAnswer">
+          <div class="answer-status">CONNECTED</div>
+          <div class="answer-name">Jessica</div>
+          <div class="answer-timer" id="callTimer">00:00</div>
+          <div class="waveform" id="waveform">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </div>
+          <div class="answer-transcript" id="transcript">"Hi Sarah, thanks for calling. I can get a locksmith to you right away. What's your address?"</div>
+        </div>
+
+        <!-- 3: Details -->
+        <div class="screen-capture" id="sCapture">
+          <div class="capture-title">DETAILS CAPTURED</div>
+          <div class="capture-field" id="f1">
+            <div class="capture-label">Name</div>
+            <div class="capture-value"><span id="t1"></span><span class="capture-cursor"></span></div>
+          </div>
+          <div class="capture-field" id="f2">
+            <div class="capture-label">Issue</div>
+            <div class="capture-value"><span id="t2"></span><span class="capture-cursor"></span></div>
+          </div>
+          <div class="capture-field" id="f3">
+            <div class="capture-label">Address</div>
+            <div class="capture-value"><span id="t3"></span><span class="capture-cursor"></span></div>
+          </div>
+          <div class="capture-field" id="f4">
+            <div class="capture-label">Urgency</div>
+            <div class="capture-value"><span id="t4"></span><span class="capture-cursor"></span></div>
+          </div>
+        </div>
+
+        <!-- 4: Book -->
+        <div class="screen-book" id="sBook">
+          <div class="book-title">APPOINTMENT SET</div>
+          <div class="book-cal" id="cal"></div>
+          <div class="book-detail" id="bookDetail">
+            <div class="book-detail-time">8:00 AM</div>
+            <div class="book-detail-day">Sunday, March 19</div>
+          </div>
+          <div class="book-confirmed" id="bookOk">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Confirmed &mdash; customer notified
+          </div>
+        </div>
+
+        <!-- 5: Text -->
+        <div class="screen-text" id="sText">
+          <div class="text-title">YOU RECEIVE</div>
+          <div class="text-bubble" id="b1">
+            <div class="text-sender">Jessica</div>
+            <div class="text-body">New job booked:<br>Sarah Martinez<br>Lockout — 412 Oak St<br>8:00 AM Sunday</div>
+            <div class="text-timestamp">2:18 AM</div>
+          </div>
+          <div class="text-bubble reply" id="b2">
+            <div class="text-body">Got it. Sending my guy.</div>
+            <div class="text-timestamp">2:19 AM</div>
+          </div>
+          <div class="result-line" id="resultLine">
+            <div class="result-amount">$350 saved</div>
+            <div class="result-label">while you slept</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="accent-line top" id="accentTop"></div>
+      <div class="accent-line bottom" id="accentBottom"></div>
+    </div>
+
+    <div class="phone-label" id="phoneLabel">Jessica &middot; Always answering</div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  // ═══ PARTICLES — warm palette ═══
+  const field = document.getElementById('particleField');
+  const particles = [];
+  const colors = ['gold','gold','cream','cream','green'];
+
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle ' + colors[i % colors.length];
+    const angle = Math.random() * Math.PI * 2;
+    const r = 250 + Math.random() * 200;
+    p.dataset.sx = Math.cos(angle) * r;
+    p.dataset.sy = Math.sin(angle) * r;
+    const ty = -240 + Math.random() * 480;
+    const tx = (Math.random() > 0.5 ? 1 : -1) * (110 + Math.random() * 15);
+    p.dataset.tx = tx;
+    p.dataset.ty = ty;
+    p.style.left = '50%';
+    p.style.top = '50%';
+    field.appendChild(p);
+    particles.push(p);
+  }
+
+  // ═══ CALENDAR ═══
+  const cal = document.getElementById('cal');
+  ['S','M','T','W','T','F','S'].forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'book-d hdr';
+    el.textContent = d;
+    cal.appendChild(el);
+  });
+  for (let d = 1; d <= 31; d++) {
+    const el = document.createElement('div');
+    el.className = 'book-d' + (d >= 17 ? ' act' : '') + (d === 19 ? ' sel' : '');
+    el.textContent = d;
+    cal.appendChild(el);
+  }
+
+  // ═══ TYPEWRITER ═══
+  function typeText(id, text, dur) {
+    const el = document.getElementById(id);
+    let i = 0;
+    const ms = (dur / text.length) * 1000;
+    return new Promise(res => {
+      const iv = setInterval(() => {
+        el.textContent = text.substring(0, ++i);
+        if (i >= text.length) { clearInterval(iv); res(); }
+      }, ms);
+    });
+  }
+
+  // ═══ WAVEFORM ═══
+  const bars = document.querySelectorAll('#waveform span');
+  let waveIv;
+  function startWave() {
+    waveIv = setInterval(() => {
+      bars.forEach(b => {
+        b.style.height = (6 + Math.random() * 34) + 'px';
+      });
+    }, 180);
+  }
+  function stopWave() {
+    clearInterval(waveIv);
+    bars.forEach(b => b.style.height = '4px');
+  }
+
+  // ═══ CALL TIMER ═══
+  let timerIv, secs = 0;
+  function startTimer() {
+    secs = 0;
+    const el = document.getElementById('callTimer');
+    timerIv = setInterval(() => {
+      secs++;
+      el.textContent = String(Math.floor(secs/60)).padStart(2,'0') + ':' + String(secs%60).padStart(2,'0');
+    }, 1000);
+  }
+  function stopTimer() { clearInterval(timerIv); }
+
+  // ═══ NARRATION ═══
+  function narrate(step, desc) {
+    const s = document.getElementById('stageStep');
+    const d = document.getElementById('stageDesc');
+    gsap.to([s, d], { opacity: 0, y: -8, duration: 0.25, ease: 'power2.in', onComplete: () => {
+      s.textContent = step;
+      d.textContent = desc;
+      gsap.fromTo(s, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
+      gsap.fromTo(d, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.08, ease: 'power2.out' });
+    }});
+  }
+
+  // ═══ RESET ═══
+  function resetAll() {
+    stopTimer(); stopWave();
+    document.getElementById('callTimer').textContent = '00:00';
+    ['t1','t2','t3','t4'].forEach(id => document.getElementById(id).textContent = '');
+    gsap.set(['#sRing','#sAnswer','#sCapture','#sBook','#sText'], { opacity: 0 });
+    gsap.set(['#f1','#f2','#f3','#f4'], { opacity: 0, y: 6 });
+    gsap.set(['#bookDetail'], { opacity: 0, y: 8 });
+    gsap.set(['#bookOk'], { opacity: 0 });
+    gsap.set(['#b1','#b2'], { opacity: 0, y: 8 });
+    gsap.set('#resultLine', { opacity: 0 });
+    gsap.set('#transcript', { opacity: 0 });
+    gsap.set(['.ring-btn'], { opacity: 0 });
+  }
+
+  // ═══ MASTER TIMELINE — 35 seconds, slow and elegant ═══
+  const tl = gsap.timeline({ repeat: -1, repeatDelay: 4, onRepeat: resetAll });
+
+  // Phase 1: Particles assemble (0-4s)
+  tl.set(particles, {
+    x: i => +particles[i].dataset.sx,
+    y: i => +particles[i].dataset.sy,
+    opacity: 0.5, scale: 1,
+  });
+
+  tl.to(particles, {
+    x: i => +particles[i].dataset.tx,
+    y: i => +particles[i].dataset.ty,
+    opacity: 0.7,
+    duration: 3.5,
+    stagger: { amount: 1.5, from: 'random' },
+    ease: 'power1.inOut',
+  }, 0);
+
+  // Phone materializes gently
+  tl.to('#phone', { opacity: 1, scale: 1, duration: 1.5, ease: 'power1.out' }, 2);
+  tl.to('#accentTop', { opacity: 0.4, duration: 0.8 }, 2.5);
+  tl.to('#accentBottom', { opacity: 0.4, duration: 0.8 }, 2.8);
+  tl.to('#phoneLabel', { opacity: 1, duration: 0.8 }, 3);
+  tl.to(particles, { opacity: 0, duration: 1.5 }, 3);
+
+  // Phase 2: Phone rings (4-8s)
+  tl.to('#sRing', { opacity: 1, duration: 0.6 }, 4);
+  tl.call(() => narrate('Step 1 of 5', 'A customer calls at 2:17 AM with an emergency lockout. Most businesses send this to voicemail.'), null, 4);
+  tl.to('#phone', { x: -2, duration: 0.05, repeat: 12, yoyo: true, ease: 'none' }, 4.5);
+  tl.to('.ring-btn', { opacity: 1, duration: 0.6, stagger: 0.15 }, 5.5);
+
+  // Phase 3: Jessica answers (8-13s)
+  tl.call(() => narrate('Step 2 of 5', 'Jessica picks up on the first ring. She greets Sarah by name and asks the right questions — like a trained employee.'), null, 8);
+  tl.to('#sRing', { opacity: 0, duration: 0.4 }, 8);
+  tl.to('#sAnswer', { opacity: 1, duration: 0.5 }, 8.2);
+  tl.call(startTimer, null, 8.5);
+  tl.call(startWave, null, 8.5);
+  tl.to('#transcript', { opacity: 1, duration: 1 }, 9.5);
+
+  // Phase 4: Capturing details (13-19s)
+  tl.call(() => { stopTimer(); stopWave(); }, null, 13);
+  tl.call(() => narrate('Step 3 of 5', 'Every detail captured automatically. Name, address, issue, urgency — ready for your team before anyone wakes up.'), null, 13);
+  tl.to('#sAnswer', { opacity: 0, duration: 0.4 }, 13);
+  tl.to('#sCapture', { opacity: 1, duration: 0.5 }, 13.2);
+
+  tl.to('#f1', { opacity: 1, y: 0, duration: 0.5 }, 13.8);
+  tl.call(() => typeText('t1', 'Sarah Martinez', 0.8), null, 13.8);
+
+  tl.to('#f2', { opacity: 1, y: 0, duration: 0.5 }, 15);
+  tl.call(() => typeText('t2', 'Locked out — front door', 0.8), null, 15);
+
+  tl.to('#f3', { opacity: 1, y: 0, duration: 0.5 }, 16.2);
+  tl.call(() => typeText('t3', '412 Oak St, Nashville', 0.8), null, 16.2);
+
+  tl.to('#f4', { opacity: 1, y: 0, duration: 0.5 }, 17.4);
+  tl.call(() => typeText('t4', 'High — stranded outside', 0.7), null, 17.4);
+
+  // Phase 5: Booking appointment (19-25s)
+  tl.call(() => narrate('Step 4 of 5', 'Jessica books the appointment into your calendar. The customer gets an instant confirmation. No phone tag. No callbacks.'), null, 19.5);
+  tl.to('#sCapture', { opacity: 0, duration: 0.4 }, 19.5);
+  tl.to('#sBook', { opacity: 1, duration: 0.5 }, 19.7);
+  tl.to('#bookDetail', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 21);
+  tl.to('#bookOk', { opacity: 1, duration: 0.6 }, 22.5);
+
+  // Phase 6: Text to owner (25-32s)
+  tl.call(() => narrate('Step 5 of 5', 'You wake up to a text with every detail. The job is booked. The customer is confirmed. You didn\'t lift a finger.'), null, 25.5);
+  tl.to('#sBook', { opacity: 0, duration: 0.4 }, 25.5);
+  tl.to('#sText', { opacity: 1, duration: 0.5 }, 25.7);
+  tl.to('#b1', { opacity: 1, y: 0, duration: 0.6 }, 26.5);
+  tl.to('#b2', { opacity: 1, y: 0, duration: 0.6 }, 28);
+  tl.to('#resultLine', { opacity: 1, duration: 0.8 }, 29.5);
+
+  // Phase 7: Dissolve (32-35s)
+  tl.to('#sText', { opacity: 0, duration: 0.8 }, 32.5);
+  tl.to('#accentTop', { opacity: 0, duration: 0.5 }, 32.5);
+  tl.to('#accentBottom', { opacity: 0, duration: 0.5 }, 32.5);
+  tl.to('#phoneLabel', { opacity: 0, duration: 0.5 }, 32.5);
+
+  tl.set(particles, { opacity: 0.5 }, 32.5);
+  tl.to(particles, {
+    x: i => +particles[i].dataset.sx * 1.3,
+    y: i => +particles[i].dataset.sy * 1.3,
+    opacity: 0,
+    duration: 2,
+    stagger: { amount: 0.6, from: 'random' },
+    ease: 'power1.in',
+  }, 32.5);
+
+  tl.to('#phone', { opacity: 0, scale: 0.97, duration: 1.5, ease: 'power1.in' }, 32.5);
+  tl.call(() => narrate('', ''), null, 33);
+
+})();
+</script>
+</body>
+</html>
