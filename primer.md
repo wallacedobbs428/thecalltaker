@@ -35,9 +35,12 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 - Master branch is behind origin/main (master at 2026-03-17, origin/main at 2026-03-19)
 - **Indeed Houston lead gen completed:** 18 hiring-signal leads found across legal (8), vet (5), dental (4), HVAC (1), roofing (1). Files at `leads/indeed-houston-2026-03-19.json` and `.md`
 - **Indeed Nashville lead gen completed earlier:** Files at `leads/indeed-nashville-2026-03-19.json` and `.md`
+- **Indeed Phoenix lead gen completed:** 17 hiring-signal leads found across dental (5), HVAC/plumbing (5), veterinary (3), roofing (1), garage door (1), pest control (1), medical (1). Files at `leads/indeed-phoenix-2026-03-19.json` and `.md`
 
 ## Lead Generation Files
 
+- `leads/indeed-phoenix-2026-03-19.json` — 17 scored leads, JSON format (8 hot, 9 warm)
+- `leads/indeed-phoenix-2026-03-19.md` — Same leads with savings pitches, call priority order, market insights
 - `leads/indeed-houston-2026-03-19.json` — 18 scored leads, JSON format
 - `leads/indeed-houston-2026-03-19.md` — Same leads with call scripts, savings pitches, and market stats
 - `leads/indeed-nashville-2026-03-19.json` — Nashville leads
@@ -78,7 +81,7 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal
-- **Lead gen**: Indeed hiring-signal scraping across metros (Nashville done, Houston done). Next: Atlanta, Dallas, Memphis
+- **Lead gen**: Indeed hiring-signal scraping across metros (Nashville done, Houston done, Phoenix done). Next: Atlanta, Dallas, Memphis
 - **Website polish**: Fix urgency countdown, clean orphaned files, schema consistency
 - **SEO content**: Continue expanding blog with high-intent keyword posts
 - **Stripe**: NOT connected (Wallace is 16). PayPal workaround live
