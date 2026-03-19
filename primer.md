@@ -6,7 +6,7 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 # Primer — The Call Taker
 
-> Last updated: 2026-03-15 | Rewrite this file at the start of every session.
+> Last updated: 2026-03-19 | Rewrite this file at the start of every session.
 
 ## What This Is
 
@@ -19,6 +19,13 @@ AI Receptionist SaaS for service businesses. $97/$297/$497/mo plans. 14-day free
 - **Voice AI**: GHL Voice AI agent (Jessica, universal demo). Voice ID: `lxYfHSkYm1EzQzGhdbfc` (deep variant, v9)
 - **CRM**: GoHighLevel (GHL). All contacts, conversations, pipelines
 - **Notifications**: ntfy.sh (5 topics: urgent, sales, system, activity, william)
+
+## Current State (March 19, 2026)
+
+- **Branch:** `claude/add-missing-features-2qItU` (no upstream set)
+- **Clean working tree** — no staged or unstaged changes
+- **Latest commits (March 18):** Series of homepage redesign work — warm palette phone animation, Lenis smooth scroll, hero fixes, HUD design, floating callouts, iOS-safe circuit bg, Friday urgency bar
+- **Master branch** last updated March 17
 
 ## Outreach Stack v2 (Rebuilt March 15, 2026)
 
@@ -37,54 +44,29 @@ Full 7-component outreach system rebuild. All scripts in `ops/`.
 | Sys | Health Monitor | `system-health-monitor.py` | Green/yellow/red for all components. SMS alert on red. |
 | Sys | Dashboard | `master-dashboard.html` | Visual command center. Auto-refreshes 60s. |
 
-## Current Branch & Recent Work
+## Homepage Redesign (March 18, 2026)
 
-- **Branch:** `claude/rebuild-outreach-stack-DYwVo`
-- **Homepage has unstaged changes** — Trust Layer added (see below)
-- **Latest session (March 15):** Created `hot-lead-sequence.py` — 5-step automated follow-up for hot-lead tagged contacts. Also previously added 5 SEO blog posts.
-
-## Hot Lead Sequence (March 15, 2026)
-
-New 5-step follow-up script at `ops/hot-lead-sequence.py`:
-- Step 1 (Day 0): SMS pain hook + pilot offer
-- Step 2 (Day 1): Email with missed call costs, competitor angle, case studies
-- Step 3 (Day 2): Bland.ai voicemail drop
-- Step 4 (Day 4): SMS social proof + scarcity countdown
-- Step 5 (Day 7): Breakup email
-- Commands: scan, send, status, run, test (dry run)
-- State: `ops/hot-lead-sequence-state.json`
-- Rate limits: 20 SMS/day, 30 emails/day
-- Contact registry integration for cross-engine coordination
-- 19 industries with pain hooks in INDUSTRY_HOOKS dict
-- launchd templates in docstring (scan every 2hrs, send 3x daily)
-
-## Homepage Trust Layer (March 15, 2026)
-
-Added 4 trust elements to `website/index.html`:
-
-1. **Trust Logo Bar** — Infinite-scroll bar with 6 logos. Positioned between hero and demo sections.
-2. **Live Call Counter** — Fixed floating badge: "Jessica has answered X calls this month".
-3. **Uptime Badge** — Pill badge in hero: "99.9% Uptime - 24/7/365 - Answers in Under 2 Rings".
-4. **Response Time Claim** — Hero proof stat updated to "< 2 Rings Answer Speed".
-5. **Live Demo Nav Link** — Added `/try-live.html` link to both desktop nav and mobile menu.
+Major visual overhaul on the current branch:
+- Warm palette + slow-mo pacing for phone animation
+- Hero phone animation prototype with particles + 5-stage call flow
+- Premium motion system: Lenis smooth scroll + scroll-triggered reveals
+- HUD design with floating callouts, iOS-safe circuit background
+- Friday urgency bar with social proof + scarcity + deadline
+- Fixed hero: removed duplicate badge, fixed floating bubble overflow
 
 ## Blog Posts (82+ pages total, 54+ blog posts)
 
-All in `website/blog/`. Green/black design system. Inter font. Schema.org Article markup. OG/Twitter meta. Mid-article and bottom CTAs. Related posts section. Mobile responsive.
+All in `website/blog/`. Green/black design system. Inter font. Schema.org Article markup. Multiple batches added through March 15.
 
-### New Posts Added (March 15, 2026) — Batch 1
-- `answering-service-water-damage.html` — Water damage answering service
-- `after-hours-answering-service-small-business.html` — After-hours answering for small business
-- `how-many-calls-small-business-miss.html` — Missed call statistics
-- `virtual-receptionist-cost-2026.html` — Virtual receptionist pricing guide
-- `best-ai-phone-answering-service.html` — Best AI answering services ranked
+## Claude Code Skills (March 19)
 
-### New Posts Added (March 15, 2026) — Batch 2
-- `answering-service-pest-control.html` — Best pest control answering service (emergency routing, seasonal surges, termite/bed bug/rodent)
-- `answering-service-auto-repair.html` — Auto repair shops losing $8K/mo in missed calls (hands-on work problem, Monday rush)
-- `answering-service-cleaning-companies.html` — Best cleaning company answering service (residential/commercial, Airbnb turnovers, recurring revenue)
-- `missed-calls-cost-contractors.html` — Data-driven missed call cost analysis by trade (roofing, plumbing, HVAC, electrical, GC, painting, landscaping, concrete)
-- `ai-receptionist-vs-voicemail.html` — AI receptionist vs voicemail deep dive (80% hang-up stat, psychology, revenue math, comparison table)
+Added 4 skills to `.claude/skills/`:
+- `task-estimation` — agile estimation (story points, planning poker, t-shirt sizing)
+- `prompt-repetition` — prompt repetition technique for lightweight LLMs
+- `ohmg` — oh-my-ag multi-agent orchestrator
+- `oh-my-codex` — OMX multi-agent orchestration for Codex CLI
+
+Note: 4 requested skills (`agentic-workflow`, `agentic-development-principles`, `agent-configuration`, `agent-evaluation`) do not exist in the supercent-io/skills-template repo.
 
 ## Active Priorities
 
