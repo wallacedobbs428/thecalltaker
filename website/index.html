@@ -171,6 +171,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   font-size: 17px;
+  position: relative;
+  overflow-x: hidden;
 }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -740,6 +742,88 @@ a { color: inherit; text-decoration: none; }
   .subtitle-mobile { display: block; }
 }
 
+/* ═══ V2 ENHANCEMENTS — March 18, 2026 ═══ */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,220,130,0.1);
+  border: 1px solid rgba(0,220,130,0.3);
+  border-radius: 100px; padding: 6px 14px;
+  font-size: 11px; font-weight: 700; color: #00dc82;
+  letter-spacing: 0.08em; margin-bottom: 20px;
+}
+.status-dot {
+  width: 6px; height: 6px; background: #00dc82;
+  border-radius: 50%; animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.4; transform:scale(1.8); }
+}
+.coord-readout {
+  font-size: 9px; color: #2a2a2a; letter-spacing: 0.12em;
+  font-family: 'Courier New', monospace; text-align: center;
+  margin-top: 8px;
+}
+.callout {
+  position: absolute;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,220,130,0.2);
+  border-radius: 12px; padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+  will-change: transform; z-index: 10;
+  pointer-events: none;
+}
+.callout-title { font-size: 12px; font-weight: 700; color: #fff; }
+.callout-sub { font-size: 10px; color: #555; }
+.callout-1 { top: 20px; left: -60px; animation: cfloat1 4s ease-in-out infinite; }
+.callout-2 { bottom: 100px; right: -60px; animation: cfloat2 4s ease-in-out infinite 1.3s; }
+.callout-3 { bottom: 20px; left: -40px; animation: cfloat3 4s ease-in-out infinite 2.6s; }
+@keyframes cfloat1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+@keyframes cfloat2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes cfloat3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+@media(max-width:768px) {
+  .callout { display: none; }
+  .corner { display: none; }
+}
+
+/* Scan corner brackets */
+.hero-phone { position: relative; }
+.corner {
+  position: absolute; width: 18px; height: 18px;
+  border-color: #00dc82; border-style: solid;
+  filter: drop-shadow(0 0 6px #00dc82);
+  pointer-events: none; z-index: 5;
+}
+.corner.tl { top:-2px; left:-2px; border-width:2px 0 0 2px; }
+.corner.tr { top:-2px; right:-2px; border-width:2px 2px 0 0; }
+.corner.bl { bottom:-2px; left:-2px; border-width:0 0 2px 2px; }
+.corner.br { bottom:-2px; right:-2px; border-width:0 2px 2px 0; }
+
+/* HUD card corners — additive class */
+.hud-card { position: relative; }
+.hud-card::before, .hud-card::after {
+  content:''; position:absolute;
+  width:14px; height:14px;
+  border-color: rgba(0,220,130,0.3); border-style:solid;
+  pointer-events: none;
+  transition: border-color 0.3s;
+}
+.hud-card::before { top:-1px; left:-1px; border-width:1px 0 0 1px; }
+.hud-card::after { bottom:-1px; right:-1px; border-width:0 1px 1px 0; }
+.hud-card:hover::before, .hud-card:hover::after { border-color: #00dc82; }
+
+/* Circuit background — position:absolute for iOS Safari compat */
+.circuit-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.15;
+}
+
 </style>
 <link rel="stylesheet" href="/shared/below-fold.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="/shared/below-fold.css"></noscript>
@@ -798,6 +882,21 @@ a { color: inherit; text-decoration: none; }
 </head>
 <body>
 
+<!-- V2: Circuit line background — CSS only, no JS -->
+<div class="circuit-bg" aria-hidden="true">
+  <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="circuit" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+        <path d="M 10 60 L 50 60 L 50 20 L 110 20" stroke="rgba(0,220,130,0.08)" fill="none" stroke-width="1"/>
+        <path d="M 60 110 L 60 70 L 100 70 L 100 10" stroke="rgba(0,220,130,0.05)" fill="none" stroke-width="1"/>
+        <circle cx="50" cy="60" r="2" fill="rgba(0,220,130,0.2)"/>
+        <circle cx="100" cy="70" r="2" fill="rgba(0,220,130,0.2)"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#circuit)"/>
+  </svg>
+</div>
+
 <!-- SVG Sprite for ticker icons -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
   <symbol id="ti-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11.3 11.7L21 2M17 2h4v4"/></symbol>
@@ -854,6 +953,10 @@ a { color: inherit; text-decoration: none; }
         <div class="hero-badge">
           <svg viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
           Live right now &mdash; answering calls 24/7
+        </div>
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          AI AGENT STATUS: ACTIVE &middot; JESSICA ONLINE
         </div>
         <h1>Every Missed Call Is a Customer You'll Never <span class="no-break-word">Get Back.</span></h1>
         <p class="subtitle subtitle-desktop">The AI receptionist that answers instantly, books the job, and texts you the summary. Custom-trained for your industry. Live in 5 minutes.</p>
@@ -959,6 +1062,28 @@ a { color: inherit; text-decoration: none; }
             </div>
           </div>
         </div>
+        <!-- V2: Floating callouts -->
+        <div class="callout callout-1">
+          <span>&#10003;</span>
+          <div><div class="callout-title">Answered in 1 ring</div>
+          <div class="callout-sub">2:17 AM &middot; Saturday</div></div>
+        </div>
+        <div class="callout callout-2">
+          <span style="font-size:16px">&#128197;</span>
+          <div><div class="callout-title">Appointment booked</div>
+          <div class="callout-sub">8AM Sunday &middot; Confirmed</div></div>
+        </div>
+        <div class="callout callout-3">
+          <span style="font-size:16px">&#128176;</span>
+          <div><div class="callout-title">$350 job saved</div>
+          <div class="callout-sub">Would've gone to voicemail</div></div>
+        </div>
+        <!-- V2: Scan corner brackets -->
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <div class="coord-readout">JESSICA &middot; CALL-TAKER-v2.1 &middot; LIVE</div>
         <div class="hero-float hero-float-1">
           <div class="float-dot" style="background:var(--green)"></div>
           3 calls answered this hour
@@ -1189,42 +1314,42 @@ a { color: inherit; text-decoration: none; }
       <h2 class="section-title">Not Just an Answering Service. An AI Built for Your Business.</h2>
     </div>
     <div class="features-grid">
-      <div class="feature-card fade-up">
+      <div class="feature-card hud-card fade-up">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <h3>Answers in Under 1 Second</h3>
         <p>No hold music, no "press 1." Your AI picks up instantly, 24 hours a day, 365 days a year.</p>
       </div>
-      <div class="feature-card fade-up" style="transition-delay:.05s">
+      <div class="feature-card hud-card fade-up" style="transition-delay:.05s">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 00-3 3v7a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>
         </div>
         <h3>Sounds Like a Real Person</h3>
         <p>Natural, human-sounding voice. Callers can&rsquo;t tell it&rsquo;s AI. Call our demo line and hear for yourself.</p>
       </div>
-      <div class="feature-card fade-up" style="transition-delay:.1s">
+      <div class="feature-card hud-card fade-up" style="transition-delay:.1s">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         </div>
         <h3>Books Jobs Automatically</h3>
         <p>Captures name, number, address, and issue. Books appointments straight to your calendar.</p>
       </div>
-      <div class="feature-card fade-up" style="transition-delay:.15s">
+      <div class="feature-card hud-card fade-up" style="transition-delay:.15s">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         </div>
         <h3>Texts You Every Lead</h3>
         <p>You get a text the instant a new lead calls. Name, number, what they need &mdash; all in one message.</p>
       </div>
-      <div class="feature-card fade-up" style="transition-delay:.2s">
+      <div class="feature-card hud-card fade-up" style="transition-delay:.2s">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9"/></svg>
         </div>
         <h3>Custom to Your Industry</h3>
         <p>We train the AI on your specific business &mdash; your services, pricing, FAQs, and tone of voice.</p>
       </div>
-      <div class="feature-card fade-up" style="transition-delay:.25s">
+      <div class="feature-card hud-card fade-up" style="transition-delay:.25s">
         <div class="feature-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
@@ -1715,7 +1840,7 @@ a { color: inherit; text-decoration: none; }
   </div>
   <div class="testimonial-scroll">
     <div class="testimonial-track" id="testimonialTrack">
-      <div class="testimonial-card">
+      <div class="testimonial-card hud-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testimonial-quote">&ldquo;Signed up for the pilot on Monday, caught 4 missed calls by Friday. Two of them turned into jobs. This thing paid for itself before the trial was over.&rdquo;</p>
         <div class="testimonial-result">4 calls caught in first week</div>
@@ -1727,7 +1852,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card hud-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;<span style="color:var(--border)">&#9733;</span></div>
         <p class="testimonial-quote">&ldquo;Setup took a little longer than I expected &mdash; about a day to get call forwarding dialed in with my carrier. But after that, it&rsquo;s been rock solid. My patients don&rsquo;t know it&rsquo;s not a real person.&rdquo;</p>
         <div class="testimonial-result">Replaced $900/mo answering service</div>
@@ -1739,7 +1864,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card hud-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testimonial-quote">&ldquo;I was losing 2&ndash;3 calls a night to voicemail. Now every single one gets answered. A customer called at 11 PM with a busted pipe &mdash; $800 emergency job I would&rsquo;ve missed.&rdquo;</p>
         <div class="testimonial-result">+$3,200/mo in after-hours jobs</div>
@@ -1751,7 +1876,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card hud-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testimonial-quote">&ldquo;Tuesday night, 1:47 AM. Phone buzzes &mdash; text from The Call Taker. Emergency lockout, confirmed $175 rate. I was on the way in 10 minutes. That call alone covered the month.&rdquo;</p>
         <div class="testimonial-result">+65% emergency revenue</div>
@@ -1763,7 +1888,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card hud-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;<span style="color:var(--border)">&#9733;</span></div>
         <p class="testimonial-quote">&ldquo;Wish it could handle Spanish-speaking callers better &mdash; that&rsquo;s my only gripe. For English calls, though, it&rsquo;s better than the answering service I was paying $1,400/month for. Way better.&rdquo;</p>
         <div class="testimonial-result">Saves $1,100/mo vs old service</div>
@@ -1775,7 +1900,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card hud-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testimonial-quote">&ldquo;I&rsquo;m a solo operator. Can&rsquo;t answer the phone when I&rsquo;m on a roof. Last month The Call Taker booked 11 jobs I would&rsquo;ve missed. Do the math on that.&rdquo;</p>
         <div class="testimonial-result">11 jobs booked in one month</div>
@@ -1908,7 +2033,7 @@ a { color: inherit; text-decoration: none; }
     <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1060px;margin:0 auto;">
 
       <!-- DECOY: Starter Saver $19 -->
-      <div class="pricing-card" style="opacity:0.6;">
+      <div class="pricing-card hud-card" style="opacity:0.6;">
         <div class="pricing-name" style="font-size:16px;">Starter Saver</div>
         <p class="pricing-desc">Basic call log only</p>
         <div class="pricing-price" style="font-size:36px;">$19<span>/mo</span></div>
@@ -1923,7 +2048,7 @@ a { color: inherit; text-decoration: none; }
       </div>
 
       <!-- AFTER-HOURS $97 — MOST POPULAR -->
-      <div class="pricing-card featured reveal scale-in">
+      <div class="pricing-card hud-card featured reveal scale-in">
         <div class="pricing-badge" style="background:var(--accent,#00dc82);color:#0a0a0a;">Most Popular</div>
         <div class="pricing-name">After-Hours</div>
         <p class="pricing-desc">Nights, weekends, holidays</p>
@@ -1942,7 +2067,7 @@ a { color: inherit; text-decoration: none; }
       </div>
 
       <!-- FULL 24/7 $497 — RECOMMENDED -->
-      <div class="pricing-card featured reveal scale-in" style="border-color:var(--accent,#00dc82);transform:scale(1.03);box-shadow:0 0 60px rgba(0,220,130,0.1);" data-reveal-delay="100">
+      <div class="pricing-card hud-card featured reveal scale-in" style="border-color:var(--accent,#00dc82);transform:scale(1.03);box-shadow:0 0 60px rgba(0,220,130,0.1);" data-reveal-delay="100">
         <div class="pricing-badge" style="background:var(--accent,#00dc82);color:#0a0a0a;">Recommended</div>
         <div class="pricing-name">Full 24/7</div>
         <p class="pricing-desc">Every call, every hour, every day</p>
@@ -1962,7 +2087,7 @@ a { color: inherit; text-decoration: none; }
       </div>
 
       <!-- PRO $997 — WHITE GLOVE -->
-      <div class="pricing-card reveal fade-up" style="border-color:rgba(245,158,11,.27);" data-reveal-delay="200">
+      <div class="pricing-card hud-card reveal fade-up" style="border-color:rgba(245,158,11,.27);" data-reveal-delay="200">
         <div class="pricing-badge" style="background:#f59e0b;color:#0a0a0a;">White Glove</div>
         <div class="pricing-name">Pro</div>
         <p class="pricing-desc">Fully managed, custom everything</p>
