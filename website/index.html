@@ -69,23 +69,29 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --white: #000;
-  --off-white: #0a0a0a;
-  --light: #111;
-  --border: rgba(255,255,255,0.08);
-  --text: #fff;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --navy: #fff;
-  --navy-dark: #fff;
-  --blue: #00dc82;
-  --blue-light: rgba(0,220,130,0.08);
-  --orange: #00dc82;
-  --orange-hover: #00c974;
-  --orange-light: rgba(0,220,130,0.06);
-  --green: #00dc82;
-  --green-light: rgba(0,220,130,0.08);
-  --star: #fbbf24;
+  /* ═══ THE CALL TAKER — 4-Color Brand System ═══
+     1. #1a7a5c — deep warm green (primary)
+     2. #0c0b0a — warm charcoal (background)
+     3. #ede8e1 — warm cream (text)
+     4. #c27c3a — warm amber (urgency)
+     ═══════════════════════════════════════════════ */
+  --white: #0c0b0a;
+  --off-white: #0c0b0a;
+  --light: #141210;
+  --border: rgba(237,232,225,0.08);
+  --text: #ede8e1;
+  --text-secondary: #a89f94;
+  --text-muted: #6b6560;
+  --navy: #ede8e1;
+  --navy-dark: #ede8e1;
+  --blue: #1a7a5c;
+  --blue-light: rgba(26,122,92,0.08);
+  --orange: #1a7a5c;
+  --orange-hover: #2a9d7a;
+  --orange-light: rgba(26,122,92,0.06);
+  --green: #1a7a5c;
+  --green-light: rgba(26,122,92,0.08);
+  --star: #c27c3a;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
   --shadow: 0 4px 6px -1px rgba(0,0,0,.4), 0 2px 4px -2px rgba(0,0,0,.3);
   --shadow-lg: 0 10px 25px -3px rgba(0,0,0,.5), 0 4px 6px -4px rgba(0,0,0,.3);
@@ -93,13 +99,15 @@
   --radius: 12px;
   --radius-lg: 16px;
   --radius-full: 9999px;
-  --text-1: #fff;
-  --text-2: #a1a1aa;
-  --text-3: #71717a;
-  --surface: rgba(255,255,255,0.03);
-  --surface-hover: rgba(255,255,255,0.06);
-  --green-dim: rgba(0,220,130,0.12);
-  --green-glow: rgba(0,220,130,0.25);
+  --text-1: #ede8e1;
+  --text-2: #a89f94;
+  --text-3: #6b6560;
+  --surface: rgba(237,232,225,0.03);
+  --surface-hover: rgba(237,232,225,0.06);
+  --green-dim: rgba(26,122,92,0.12);
+  --green-glow: rgba(26,122,92,0.25);
+  --accent: #1a7a5c;
+  --amber: #c27c3a;
 }
 
 html {
@@ -110,8 +118,8 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: #a1a1aa;
-  background: #0a0a0a;
+  color: #a89f94;
+  background: #0c0b0a;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   font-size: 17px;
@@ -136,7 +144,7 @@ a { color: inherit; text-decoration: none; }
   left: 0;
   width: 0%;
   height: 3px;
-  background: linear-gradient(90deg, #00dc82, #34d399);
+  background: linear-gradient(90deg, #1a7a5c, #34d399);
   z-index: 1100;
   pointer-events: none;
 }
@@ -174,11 +182,11 @@ a { color: inherit; text-decoration: none; }
 .logo {
   font-size: 1.25rem;
   font-weight: 800;
-  color: #fff;
+  color: #ede8e1;
   letter-spacing: -.02em;
   text-decoration: none;
 }
-.logo span { color: #00dc82; }
+.logo span { color: #1a7a5c; }
 
 /* Nav links with underline slide animation */
 .nav-links {
@@ -207,9 +215,9 @@ a { color: inherit; text-decoration: none; }
   border-radius: 1px;
   transition: width .3s cubic-bezier(.4,0,.2,1);
 }
-.nav-links a:hover { color: #fff; }
+.nav-links a:hover { color: #ede8e1; }
 .nav-links a:hover::after { width: 100%; }
-.nav-links a.active { color: #fff; font-weight: 600; }
+.nav-links a.active { color: #ede8e1; font-weight: 600; }
 .nav-links a.active::after { width: 100%; }
 .nav-links .nav-demo::after { display: none; }
 .nav-demo {
@@ -236,7 +244,7 @@ a { color: inherit; text-decoration: none; }
   transition: all .4s cubic-bezier(.4,0,.2,1);
 }
 .header-cta:hover {
-  background: rgba(0,220,130,.08);
+  background: rgba(26,122,92,.08);
   text-decoration: none;
   color: var(--orange);
 }
@@ -244,13 +252,13 @@ a { color: inherit; text-decoration: none; }
   background: var(--orange);
   color: #000;
   border-color: var(--orange);
-  box-shadow: 0 0 16px rgba(0,220,130,.18);
+  box-shadow: 0 0 16px rgba(26,122,92,.18);
 }
 .header-cta.filled:hover {
   background: var(--orange-hover);
   border-color: var(--orange-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0,220,130,.3);
+  box-shadow: 0 4px 16px rgba(26,122,92,.3);
   color: #000;
 }
 .btn {
@@ -282,15 +290,15 @@ a { color: inherit; text-decoration: none; }
 }
 .btn-outline {
   background: transparent;
-  color: #fff;
+  color: #ede8e1;
   padding: 14px 28px;
   border-radius: var(--radius-full);
   font-size: .95rem;
   border: 2px solid rgba(255,255,255,0.15);
 }
 .btn-outline:hover {
-  border-color: #00dc82;
-  background: rgba(0,220,130,0.06);
+  border-color: #1a7a5c;
+  background: rgba(26,122,92,0.06);
   text-decoration: none;
 }
 .btn-sm {
@@ -355,22 +363,22 @@ a { color: inherit; text-decoration: none; }
   display: block;
   font-size: 1.6rem;
   font-weight: 700;
-  color: #fff;
+  color: #ede8e1;
   text-decoration: none;
   padding: 14px 0;
   transition: color .2s, transform .2s;
   letter-spacing: -.02em;
 }
-.mobile-menu-inner a:active { color: #00dc82; transform: scale(1.03); }
+.mobile-menu-inner a:active { color: #1a7a5c; transform: scale(1.03); }
 .mobile-menu-cta {
   display: inline-block !important;
   margin-top: 28px;
   padding: 16px 40px !important;
-  background: #00dc82;
+  background: #1a7a5c;
   color: #000 !important;
   border-radius: var(--radius-full);
   font-size: 1.1rem !important;
-  box-shadow: 0 4px 16px rgba(0,220,130,.25);
+  box-shadow: 0 4px 16px rgba(26,122,92,.25);
   transition: transform .2s, box-shadow .2s;
 }
 .mobile-menu-cta:active { transform: scale(.97); }
@@ -388,9 +396,9 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 15% 20%, rgba(0,220,130,.04), transparent),
-    radial-gradient(ellipse 60% 80% at 85% 30%, rgba(0,220,130,.02), transparent),
-    radial-gradient(ellipse 50% 40% at 50% 90%, rgba(0,220,130,.03), transparent);
+    radial-gradient(ellipse 80% 60% at 15% 20%, rgba(26,122,92,.04), transparent),
+    radial-gradient(ellipse 60% 80% at 85% 30%, rgba(26,122,92,.02), transparent),
+    radial-gradient(ellipse 50% 40% at 50% 90%, rgba(26,122,92,.03), transparent);
   pointer-events: none;
   z-index: 0;
 }
@@ -490,7 +498,7 @@ a { color: inherit; text-decoration: none; }
   height: 540px;
   background: linear-gradient(145deg, #1a1a2e 0%, #0f0f1a 100%);
   border-radius: 40px;
-  border: 2px solid rgba(0,220,130,.15);
+  border: 2px solid rgba(26,122,92,.15);
   box-shadow: 0 20px 48px -16px rgba(0,0,0,.35);
   overflow: hidden;
   padding: 16px;
@@ -566,8 +574,8 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 0;
   font-size: .85rem;
 }
-.notif-icon.call { background: rgba(0,220,130,.15); color: #00dc82; }
-.notif-icon.book { background: rgba(0,220,130,.15); color: #00dc82; }
+.notif-icon.call { background: rgba(26,122,92,.15); color: #1a7a5c; }
+.notif-icon.book { background: rgba(26,122,92,.15); color: #1a7a5c; }
 .notif-icon.msg { background: rgba(37,99,235,.15); color: #3b82f6; }
 .notif-body { flex: 1; min-width: 0; }
 .notif-title {
@@ -604,7 +612,7 @@ a { color: inherit; text-decoration: none; }
   gap: 10px;
   font-size: .78rem;
   font-weight: 600;
-  color: #fff;
+  color: #ede8e1;
   opacity: 0;
   animation: floatIn .6s ease forwards;
   white-space: nowrap;
@@ -954,12 +962,12 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
     </div>
     <div class="session-trust">
       <div class="session-trust-item">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1a7a5c" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         <span><span data-metric="trust_calls">1,247+</span> calls handled</span>
       </div>
       <div class="session-trust-divider"></div>
       <div class="session-trust-item">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00dc82" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1a7a5c" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         <span>&lt; 2s avg answer time</span>
       </div>
       <div class="session-trust-divider"></div>
@@ -1338,7 +1346,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
     </div>
 
     <div class="acf-track" id="acfTrack">
-      <svg class="acf-svg" id="acfSvg" aria-hidden="true"><defs><linearGradient id="acfGrad"><stop offset="0%" stop-color="#00dc82"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs></svg>
+      <svg class="acf-svg" id="acfSvg" aria-hidden="true"><defs><linearGradient id="acfGrad"><stop offset="0%" stop-color="#1a7a5c"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs></svg>
 
       <div class="acf-node" data-step="0">
         <div class="acf-ring"><div class="acf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg></div></div>
