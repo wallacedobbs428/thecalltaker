@@ -142,15 +142,128 @@ body::after {
   background: var(--t06);
 }
 
-/* ═══ REVEAL ANIMATION ═══ */
+/* ═══ SCROLL REVEAL ANIMATIONS ═══ */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Slide from left */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Slide from right */
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale up */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Staggered children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.08s; opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.16s; opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.24s; opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.32s; opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+
+/* ═══ LIGHT MODE ═══ */
+html.light {
+  --bg: #f5f3f0;
+  --surface: #eae7e2;
+  --surface-2: #e0ddd8;
+  --border: rgba(20,18,16,0.08);
+  --border-bright: rgba(20,18,16,0.12);
+  --t100: rgba(20,18,16,1);
+  --t70: rgba(20,18,16,0.7);
+  --t40: rgba(20,18,16,0.4);
+  --t20: rgba(20,18,16,0.2);
+  --t10: rgba(20,18,16,0.1);
+  --t06: rgba(20,18,16,0.06);
+  --accent: #14694e;
+  --accent-hover: #1a7a5c;
+  --accent-soft: rgba(20,105,78,0.08);
+  --accent-glow: rgba(20,105,78,0.04);
+}
+
+html.light body::after { opacity: 0.15; }
+html.light .nav { background: rgba(245,243,240,0.85); }
+html.light .phone { background: linear-gradient(170deg, #e8e5e0 0%, #ddd9d4 100%); box-shadow: 0 40px 100px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06); }
+html.light .phone-screen { background: #f5f3f0; }
+html.light .phone-notch { background: #f5f3f0; }
+html.light .ambient-inner { background: radial-gradient(ellipse at 65% 35%, rgba(26,122,92,0.06) 0%, transparent 55%), radial-gradient(ellipse at 25% 75%, rgba(194,124,58,0.03) 0%, transparent 45%); }
+html.light .ring-btn.yes { box-shadow: 0 0 24px rgba(26,122,92,0.15); }
+html.light .ring-btn.no { background: rgba(200,80,70,0.5); }
+html.light .ring-btn svg { stroke: var(--t100); }
+html.light .feature-card { background: #fff; border-color: rgba(0,0,0,0.06); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+html.light .test-card { background: #fff; border-color: rgba(0,0,0,0.06); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+html.light .price-card { background: #fff; border-color: rgba(0,0,0,0.06); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+html.light .price-card.featured { box-shadow: 0 4px 24px rgba(26,122,92,0.1); }
+html.light .msg-bubble { background: #fff; border-color: rgba(0,0,0,0.06); }
+html.light .cap-field { background: rgba(0,0,0,0.03); }
+html.light .btn-primary { color: #fff; }
+html.light .nav-cta { color: #fff !important; }
+html.light .mobile-bar a { color: #fff; }
+html.light .book-d.sel { color: #fff; }
+
+/* ═══ THEME TOGGLE ═══ */
+.theme-toggle {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border-bright);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  z-index: 101;
+  transition: background 0.3s, border-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.theme-toggle:hover { transform: scale(1.08); border-color: var(--accent); }
+.theme-toggle svg { width: 20px; height: 20px; stroke: var(--t40); fill: none; stroke-width: 2; transition: stroke 0.3s; }
+.theme-toggle:hover svg { stroke: var(--accent); }
+
+/* Sun icon hidden in dark mode, moon hidden in light */
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+html.light .theme-toggle .icon-sun { display: block; }
+html.light .theme-toggle .icon-moon { display: none; }
+
+@media(max-width:768px) {
+  .theme-toggle { bottom: 72px; right: 16px; }
 }
 
 /* ═══ BUTTONS ═══ */
@@ -590,7 +703,7 @@ body::after {
 </div>
 
 <!-- PROBLEM -->
-<section class="sec reveal" id="problem">
+<section class="sec reveal-left" id="problem">
   <div class="sec-label">01 &mdash; THE PROBLEM</div>
   <h2 class="sec-title">Every missed call costs you $300&ndash;$500.</h2>
   <p class="sec-sub">When someone's locked out at midnight or has a burst pipe at 2 AM, they're not leaving a voicemail. They're calling the next company on Google.</p>
@@ -605,36 +718,36 @@ body::after {
 <div class="sec-divider"></div>
 
 <!-- FEATURES -->
-<section class="sec reveal" id="features">
+<section class="sec reveal-right" id="features">
   <div class="sec-label">02 &mdash; WHY THE CALL TAKER</div>
   <h2 class="sec-title">Not an answering service.<br>An AI built for your business.</h2>
   <p class="sec-sub">Six things that make Jessica different from every receptionist you've ever hired.</p>
-  <div class="features-grid">
-    <div class="feature-card reveal"><h3>Answers in under 1 second</h3><p>No hold music, no "press 1." Jessica picks up instantly, 24/7/365.</p></div>
-    <div class="feature-card reveal"><h3>Sounds like a real person</h3><p>Natural, human voice. Callers can't tell. Call our demo line and hear for yourself.</p></div>
-    <div class="feature-card reveal"><h3>Books jobs automatically</h3><p>Captures name, number, address, and issue. Books straight to your calendar.</p></div>
-    <div class="feature-card reveal"><h3>Texts you every lead</h3><p>You get a text the instant a new lead calls. Name, number, what they need.</p></div>
-    <div class="feature-card reveal"><h3>Custom to your industry</h3><p>Trained on your services, pricing, FAQs, and tone of voice.</p></div>
-    <div class="feature-card reveal"><h3>Zero setup hassle</h3><p>No hardware. No software. Forward your calls and you're live in 5 minutes.</p></div>
+  <div class="features-grid reveal-stagger">
+    <div class="feature-card"><h3>Answers in under 1 second</h3><p>No hold music, no "press 1." Jessica picks up instantly, 24/7/365.</p></div>
+    <div class="feature-card"><h3>Sounds like a real person</h3><p>Natural, human voice. Callers can't tell. Call our demo line and hear for yourself.</p></div>
+    <div class="feature-card"><h3>Books jobs automatically</h3><p>Captures name, number, address, and issue. Books straight to your calendar.</p></div>
+    <div class="feature-card"><h3>Texts you every lead</h3><p>You get a text the instant a new lead calls. Name, number, what they need.</p></div>
+    <div class="feature-card"><h3>Custom to your industry</h3><p>Trained on your services, pricing, FAQs, and tone of voice.</p></div>
+    <div class="feature-card"><h3>Zero setup hassle</h3><p>No hardware. No software. Forward your calls and you're live in 5 minutes.</p></div>
   </div>
 </section>
 
 <div class="sec-divider"></div>
 
 <!-- HOW IT WORKS -->
-<section class="sec reveal" id="how">
+<section class="sec reveal-left" id="how">
   <div class="sec-label">03 &mdash; HOW IT WORKS</div>
   <h2 class="sec-title">Three steps. Five minutes.<br>Never miss a call again.</h2>
   <p class="sec-sub">No equipment. No software. Just forward your phone and start catching every lead.</p>
-  <div class="steps">
-    <div class="hw-step reveal"><div class="hw-num">01</div><div class="hw-content"><h3>Forward your calls</h3><p>Same way you'd forward to an employee. Takes 2 minutes.</p></div></div>
-    <div class="hw-step reveal"><div class="hw-num">02</div><div class="hw-content"><h3>Jessica answers like your best employee</h3><p>She knows your business — services, pricing, everything. Callers can't tell she's not real.</p></div></div>
-    <div class="hw-step reveal"><div class="hw-num">03</div><div class="hw-content"><h3>You get every lead</h3><p>Text with every new lead. Name, number, what they need. Appointments booked to your calendar.</p></div></div>
+  <div class="steps reveal-stagger">
+    <div class="hw-step"><div class="hw-num">01</div><div class="hw-content"><h3>Forward your calls</h3><p>Same way you'd forward to an employee. Takes 2 minutes.</p></div></div>
+    <div class="hw-step"><div class="hw-num">02</div><div class="hw-content"><h3>Jessica answers like your best employee</h3><p>She knows your business — services, pricing, everything. Callers can't tell she's not real.</p></div></div>
+    <div class="hw-step"><div class="hw-num">03</div><div class="hw-content"><h3>You get every lead</h3><p>Text with every new lead. Name, number, what they need. Appointments booked to your calendar.</p></div></div>
   </div>
 </section>
 
 <!-- DEMO CTA -->
-<div class="demo-cta reveal">
+<div class="demo-cta reveal-scale">
   <div class="sec-label">HEAR IT YOURSELF</div>
   <h2 class="sec-title">15 seconds. Real call. Real AI.</h2>
   <a href="tel:6157845747" class="demo-phone">(615) 784-5747</a>
@@ -642,26 +755,26 @@ body::after {
 </div>
 
 <!-- TESTIMONIALS -->
-<section class="sec reveal" id="testimonials">
+<section class="sec reveal-right" id="testimonials">
   <div class="sec-label">04 &mdash; REAL RESULTS</div>
   <h2 class="sec-title">Business owners who stopped losing calls.</h2>
   <p class="sec-sub">Every business below was losing thousands in missed calls. Then they turned on The Call Taker.</p>
-  <div class="testimonials-grid">
-    <div class="test-card reveal">
+  <div class="testimonials-grid reveal-stagger">
+    <div class="test-card">
       <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       <p class="test-quote">"Signed up Monday, caught 4 missed calls by Friday. Two turned into jobs. Paid for itself before the trial was over."</p>
       <div class="test-result">4 calls caught in first week</div>
       <div class="test-name">Mike R.</div>
       <div class="test-role">Locksmith &bull; Nashville, TN</div>
     </div>
-    <div class="test-card reveal">
+    <div class="test-card">
       <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       <p class="test-quote">"I was losing 2-3 calls a night. Now every one gets answered. $800 emergency job at 11 PM I would've missed."</p>
       <div class="test-result">+$3,200/mo in after-hours jobs</div>
       <div class="test-name">James K.</div>
       <div class="test-role">Plumber &bull; Memphis, TN</div>
     </div>
-    <div class="test-card reveal">
+    <div class="test-card">
       <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       <p class="test-quote">"Solo operator. Can't answer the phone on a roof. Last month The Call Taker booked 11 jobs I would've missed."</p>
       <div class="test-result">11 jobs booked in one month</div>
@@ -674,12 +787,12 @@ body::after {
 <div class="sec-divider"></div>
 
 <!-- PRICING -->
-<section class="sec reveal" id="pricing">
+<section class="sec reveal-left" id="pricing">
   <div class="sec-label">05 &mdash; SIMPLE PRICING</div>
   <h2 class="sec-title">Less than the cost of one missed job.</h2>
   <p class="sec-sub">Every plan starts with a free 14-day pilot. No credit card. No contracts.</p>
-  <div class="pricing-grid">
-    <div class="price-card reveal">
+  <div class="pricing-grid reveal-stagger">
+    <div class="price-card">
       <div class="price-name">After-Hours</div>
       <div class="price-desc">Evenings, weekends &amp; holidays</div>
       <div class="price-amount">$97<span>/mo</span></div>
@@ -708,7 +821,7 @@ body::after {
       </ul>
       <a href="/pilot/" class="btn btn-primary price-cta"><span>Start Free Pilot</span></a>
     </div>
-    <div class="price-card reveal">
+    <div class="price-card">
       <div class="price-badge amber">WHITE GLOVE</div>
       <div class="price-name">Pro</div>
       <div class="price-desc">Fully managed, custom everything</div>
@@ -730,7 +843,7 @@ body::after {
 <div class="sec-divider"></div>
 
 <!-- FAQ -->
-<section class="sec reveal" id="faq">
+<section class="sec reveal-right" id="faq">
   <div class="sec-label">06 &mdash; FAQ</div>
   <h2 class="sec-title">Common questions, straight answers.</h2>
   <div class="faq-list" style="margin-top:40px;">
@@ -744,7 +857,7 @@ body::after {
 </section>
 
 <!-- FINAL CTA -->
-<div class="final-cta reveal">
+<div class="final-cta reveal-scale">
   <div class="sec-label">YOUR MOVE</div>
   <h2 class="sec-title">Your competitors are answering their phones right now.</h2>
   <p style="color:var(--t40);font-size:16px;max-width:500px;margin:0 auto 32px;line-height:1.7;">Start your free 14-day pilot in under 5 minutes. No credit card. No commitment.</p>
@@ -793,6 +906,12 @@ body::after {
   </div>
 </footer>
 
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+
 <!-- MOBILE CALL BAR -->
 <div class="mobile-bar">
   <a href="tel:6157845747">Call Jessica Now &mdash; (615) 784-5747</a>
@@ -827,13 +946,13 @@ body::after {
 })();
 </script>
 
-<!-- SCROLL REVEALS + FAQ -->
+<!-- SCROLL REVEALS + FAQ + THEME -->
 <script>
-// IntersectionObserver for scroll reveals
+// IntersectionObserver for ALL reveal types
 const obs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+}, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-stagger').forEach(el => obs.observe(el));
 
 // FAQ accordion
 document.querySelectorAll('.faq-q').forEach(q => {
@@ -843,6 +962,19 @@ document.querySelectorAll('.faq-q').forEach(q => {
     item.classList.toggle('open');
   });
 });
+
+// Theme toggle — remembers preference
+(function() {
+  const toggle = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('tct-theme');
+  if (saved === 'light') document.documentElement.classList.add('light');
+
+  toggle.addEventListener('click', () => {
+    document.documentElement.classList.toggle('light');
+    const isLight = document.documentElement.classList.contains('light');
+    localStorage.setItem('tct-theme', isLight ? 'light' : 'dark');
+  });
+})();
 </script>
 
 <!-- GA (deferred) -->
