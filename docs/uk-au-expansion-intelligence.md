@@ -1,0 +1,259 @@
+# The Call Taker — UK & Australia Phase 1 Expansion Intelligence
+
+> March 20, 2026 | Pre-launch competitive intelligence for UK (£397/mo) and Australia (AU$750/mo) market entry
+
+---
+
+## 1. UK Competitor Deep-Dive — Moneypenny
+
+### Pricing (Opaque — Exploitation Goldmine)
+
+Moneypenny **does not publish full pricing online**. This is confirmed across multiple sources — "Moneypenny costs" is one of the most common search queries from UK SMBs, precisely because they can't find the answer.
+
+| Component | What We Know | Source |
+|-----------|-------------|--------|
+| Base plan (live answering) | From **£160/mo** (required for AI add-on) | norango.ai |
+| Billing model | **Per-minute** — variable monthly bills | moneypenny.com |
+| AI "Assist" overage | **£1.10–£2.20 per call** on top of base | norango.ai |
+| 24/7 coverage | **Not included** — extra £35–£150/mo depending on plan | callchimps.com |
+| Minimum contract | **3 months** for smaller plans | moneypenny.com |
+| Setup fee | **Costly one-time setup** (exact figure undisclosed) | fitsmallbusiness.com |
+| Estimated real monthly cost | **£300–£800/mo** for typical SMB (20-50 calls/day) | callchimps.com, norango.ai |
+
+### Review Weaknesses (Trustpilot 4.7/5 — 985 reviews)
+
+Strong overall rating, but the complaints reveal structural vulnerabilities:
+
+| Complaint | Quote / Detail | Our Angle |
+|-----------|---------------|-----------|
+| **Price shock** | "They quoted me one price, and the price they charged me ended up being triple what was quoted" | We never surprise — flat £397/mo, period |
+| **Spam marketing** | "All they do is spam — multiple emails at a time" (Dec 2025) | We don't spam, we answer your calls |
+| **Cancellation difficulty** | "Difficulty canceling subscriptions and unexpected monthly charges" | No contracts, cancel anytime |
+| **Not truly 24/7** | Standard is Mon-Fri 9am-5pm only; 24/7 costs extra | We're 24/7/365 by default |
+| **Employee morale** | Glassdoor 2.9/5 — "bad pay" (12 reviews), "bad management" (11 reviews) | Their staff is unhappy; our AI never has a bad day |
+
+### Dominated Verticals
+
+Legal, dental, medical practices, and professional services — **identical to our US verticals**.
+
+### Exploitation Angles
+
+- **"Know your bill before it arrives"** — Our flat £397/mo vs their unpredictable per-minute billing is the #1 differentiator. Every UK SMB owner searching "Moneypenny costs" is a prospect.
+- **"24/7 included, not extra"** — Their 24/7 upcharge is £35–£150/mo extra. Ours is built in.
+
+---
+
+## 2. Australia Competitor Deep-Dive — ReceptionHQ + Market
+
+### ReceptionHQ
+
+| Aspect | Detail |
+|--------|--------|
+| Model | Human-staffed virtual receptionist, US-owned (Phoenix, AZ HQ) |
+| Trustpilot AU | **1 review** on UK page; mixed US reviews |
+| VirtualAssistantAssistant | **2 out of 10** rating (5 reviews) |
+| Known complaints | 43-second answer times, wrong business names, rude staff, no refund on reserve balance |
+| Pricing | Not scraped (403 blocked), but market range AU$150–$600/mo |
+| Acquisition channel | Primarily **SEO** + Google Ads |
+
+### AU Market Has Exploded with AI Competitors (2026)
+
+| Competitor | Focus | Price Range | Weakness |
+|-----------|-------|-------------|----------|
+| **Johnni.ai** | Tradies (HVAC, plumbing, electrical) | Undisclosed | Niche-only, no multi-industry |
+| **AiDial** | General SMB, AU-hosted data | Undisclosed | New, unproven at scale |
+| **Reptri** | AI receptionist + workflows | Undisclosed | AU-only, small team |
+| **Digitalon** | AU cloud-hosted | Undisclosed | Limited voice quality info |
+| **Sophiie AI** | Trades + email replies | Undisclosed | Not voice-focused |
+| **Smith.ai** | Hybrid AI+human | Premium ($300+/mo) | Expensive, US-centric |
+
+**Key AU Market Stats:**
+- Full-time receptionist cost: **AU$57,952 + super** (~AU$65k total)
+- SMB missed-call rate: **22–40%** of all inbound calls
+- AI adoption drives **28% reduction** in admin costs
+- Market range: AU$49–$500/mo
+
+### Exploitation Angles
+
+- **"Built for every industry, not just tradies"** — Johnni.ai owns tradies; we own *everyone else* (dental, legal, medical, property mgmt).
+- **Price transparency** — Every AU competitor hides pricing. Publish AU$750/mo prominently and own the "I know what I'm paying" search intent.
+
+---
+
+## 3. UK Payment Infrastructure
+
+### Can Stripe US Process GBP? **Yes**
+
+| Fee Component | Rate |
+|--------------|------|
+| Base transaction | 2.9% + $0.30 |
+| Cross-border fee | +1.0% |
+| Currency conversion | +1.0% |
+| **Total effective rate** | **~4.9% + $0.30** |
+
+On a £397/mo subscription (~$502 USD): **~$25 per transaction in fees**.
+
+### Optimal Stack (Ranked)
+
+| Option | Pros | Cons | Verdict |
+|--------|------|------|---------|
+| **Paddle (MoR)** | Handles VAT collection, filing, compliance. You never touch UK tax. 5% + $0.50/txn | Higher fee, less control | **Best for Phase 1** — eliminates VAT headache entirely |
+| **Stripe US + manual VAT** | Lower fees (~4.9%), familiar | Must register for UK VAT yourself, file returns quarterly | Good for Phase 2 at scale |
+| **Lemon Squeezy (MoR)** | Simple setup, handles tax | Less customizable for SaaS subscriptions | Backup option |
+| **PayPal** | UK SMBs trust it | Higher fees, disputes favor buyer, less professional | Emergency fallback only |
+
+### Exploitation Angle
+
+- Use **Paddle** as merchant of record. They handle UK VAT, AU GST, currency conversion, refunds, and compliance. You focus on selling. Switch to Stripe UK entity when you hit £50k+ MRR internationally.
+
+---
+
+## 4. UK/AU Facebook (Meta) Ads
+
+### Can a US Account Target UK/AU? **Yes**
+
+| Item | UK | Australia |
+|------|-----|-----------|
+| US account can target? | **Yes** | **Yes** |
+| Location surcharge | **2% added** (from July 2026) | None currently |
+| Avg CPL (B2B services) | **£22** (~$28) on Meta | **AU$6.94** (~$4.50) |
+| B2B professional services CPL | **£30–£200** | **AU$30–$150** |
+| Compared to Google | Meta £22 vs Google £56 | Meta cheaper than Google |
+| Compared to LinkedIn | Meta £22 vs LinkedIn £64–£96 | Meta dramatically cheaper |
+
+### UK GDPR/ICO Requirements
+
+| Requirement | Answer |
+|------------|--------|
+| Need UK privacy policy? | **Yes** — must be GDPR-compliant, mention UK data processing |
+| ICO registration needed? | **Yes** if processing UK personal data — £40/yr for small orgs |
+| Consent for lead forms? | **Yes** — explicit opt-in checkbox required on Meta lead forms |
+| Data transfer (US storage)? | Must have Standard Contractual Clauses (SCCs) or UK adequacy basis |
+| Cookie consent? | **Yes** — cookie banner required on UK-facing landing pages |
+
+### Actionable Setup
+
+1. Start with **£5/day** (~£150/mo) budget targeting UK dental + legal + HVAC owners
+2. Use **Meta Lead Forms** (not website traffic) — lower CPL, pre-filled contact info
+3. Headline: *"Your receptionist costs you £26,000/year. We cost £397/month."*
+4. AU: Start at **AU$10/day**, target tradies + dental in Sydney/Melbourne
+5. Register with ICO (£40/yr) before launching UK ads
+
+---
+
+## 5. Retell AI UK/AU Voice Quality
+
+### British English Support
+
+| Question | Answer |
+|----------|--------|
+| Retell native British English? | **Yes** — `en-GB` language code supported |
+| How accent works | Voice selection (voiceId) determines accent, NOT language setting |
+| Built-in British voices? | Limited — **use ElevenLabs integration** for best quality |
+| UK phone numbers via Retell? | **No** — Retell only sells US/Canada numbers directly |
+| Solution for UK numbers | **Twilio SIP trunk** → Retell AI (fully supported) |
+| Known ASR issue | 13–31% higher word error rate for British/AU vs American English (OpenAI Whisper study) |
+
+### Australian English Support
+
+| Question | Answer |
+|----------|--------|
+| Retell native AU English? | **Partial** — not explicitly listed, but achievable via ElevenLabs voices |
+| AU phone numbers via Retell? | **No** — Twilio SIP trunk required |
+| ElevenLabs AU accent voices? | **Yes** — dedicated Australian accent category with multiple voices |
+
+### Top ElevenLabs Voices for UK/AU
+
+| Voice | Accent | Best For | Notes |
+|-------|--------|----------|-------|
+| **James** | British (RP) | Professional receptionist | Calm, deep, authoritative — ideal for legal/dental |
+| **David – British Storyteller** | British | Warm professional | Engaging, trustworthy tone |
+| **Amelia** | British | Female receptionist | Natural, "sounds like a real person" |
+| **Australian accent voices** | Australian | Trades, general | 5000+ voices with accent filter in ElevenLabs library |
+
+**Model recommendation:** ElevenLabs Multilingual V2 for best quality + accent stability.
+
+### Twilio International Number Costs
+
+| Item | UK (+44) | Australia (+61) |
+|------|----------|----------------|
+| Monthly number fee | ~$1.00/mo (local) | ~$3.50/mo (local) |
+| Inbound per-minute | ~$0.0075/min | ~$0.0085/min |
+| Regulatory bundle required? | **Yes** — business verification, 1-3 business days | **Yes** — Australian address required (recently changed) |
+| Can US company get number? | **Yes** with regulatory docs | **Yes** with AU address (virtual office works) |
+
+### Exploitation Angle
+
+- **Deploy path:** Twilio buys UK/AU number → SIP trunk to Retell → ElevenLabs British/AU voice → Done. Same agent logic, localized voice. Total added infra cost: ~$5/mo per number + Twilio per-minute.
+- **AU address requirement:** Use a virtual office service (~AU$15/mo) to satisfy Twilio's AU address requirement.
+
+---
+
+## 6. UK Domain + Business Presence + Tax
+
+### .co.uk Domain
+
+| Question | Answer |
+|----------|--------|
+| Can US LLC register .co.uk? | **Yes** — no UK entity required |
+| Registrar | Namecheap, GoDaddy, or any ICANN registrar |
+| Cost | ~$8–12/year |
+
+### Legal to Sell SaaS to UK Without UK Entity? **Yes**
+
+No UK entity is required to sell digital services to UK customers. Thousands of US SaaS companies do this.
+
+### UK VAT — Critical
+
+| Rule | Detail |
+|------|--------|
+| VAT rate | **20%** on B2C digital services |
+| Threshold for non-UK companies | **£0 — NO THRESHOLD** |
+| What this means | Must register for UK VAT from **first B2C sale** |
+| B2B sales | **Reverse charge** — UK business customer handles VAT (you don't charge it) |
+| Filing frequency | Quarterly returns to HMRC |
+| **Paddle/Lemon Squeezy workaround** | MoR handles ALL VAT — you never register |
+
+**Most UK SMBs are VAT-registered businesses (B2B).** The reverse charge applies — you invoice £397 ex-VAT, they self-assess the VAT. You don't collect or remit it.
+
+### Australia GST
+
+| Rule | Detail |
+|------|--------|
+| GST rate | **10%** |
+| Threshold | **AU$75,000/year** in AU sales |
+| What this means | You're exempt until you hit ~63 AU customers at AU$750/mo |
+| B2B sales | Reverse charge applies |
+
+### Exploitation Angle
+
+- **Phase 1 (now):** Use Paddle as MoR — they handle UK VAT and AU GST entirely. Zero tax registration needed from you.
+- **Phase 2 (at scale):** Register for UK VAT when you want the lower Stripe fees. Until then, Paddle's 5% + $0.50 is worth the compliance peace of mind.
+- Register `thecalltaker.co.uk` immediately (~$10) — defensive + SEO value even before UK landing pages go live.
+
+---
+
+## Summary: Phase 1 Readiness Checklist
+
+| Item | Status | Action |
+|------|--------|--------|
+| UK competitor intel | DONE | Moneypenny is expensive, opaque, not 24/7 by default |
+| AU competitor intel | DONE | Market fragmented, no dominant AI player, tradies underserved |
+| Payment processing | READY | Use Paddle (MoR) — handles VAT/GST/currency |
+| Meta Ads UK/AU | READY | US account works, £5/day start, ICO registration £40/yr |
+| Voice AI (British) | READY | Retell + ElevenLabs "James" voice + Twilio UK number |
+| Voice AI (Australian) | READY | Retell + ElevenLabs AU voices + Twilio AU number (need virtual office) |
+| .co.uk domain | DO NOW | Register thecalltaker.co.uk ($10) |
+| UK entity | NOT NEEDED | Legal to sell SaaS without UK entity |
+| UK VAT | HANDLED | Paddle MoR or B2B reverse charge |
+| AU GST | EXEMPT | Under AU$75k threshold for now |
+
+---
+
+## The Pitch That Works in Every Country
+
+> **UK:** "A receptionist costs you £26,000 a year. We cost £397 a month. You do the maths."
+>
+> **AU:** "A receptionist costs you $58,000 a year. We cost $750 a month. You do the maths."
+
+Flat price. 24/7. No contracts. No overages. No surprises.
