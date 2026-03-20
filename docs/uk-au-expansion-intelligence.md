@@ -343,3 +343,9 @@ No UK entity is required to sell digital services to UK customers. Thousands of 
 > **AU:** "A receptionist costs you $58,000 a year. We cost $750 a month. You do the maths."
 
 Flat price. 24/7. No contracts. No overages. No surprises.
+
+---
+
+## AU Deep-Dive: Launch Playbook
+
+Full AU launch playbook with call volume data, Reptri weakness analysis, Spam Act compliance, Facebook ad strategy, pricing psychology, GST requirements, and week-1 priority stack: **[docs/au-launch-playbook.md](au-launch-playbook.md)**
