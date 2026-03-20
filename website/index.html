@@ -477,6 +477,53 @@ html.light .theme-toggle .icon-moon { display: none; }
 .frame-line.btm { bottom: -1px; right: 60px; width: 40px; height: 1px; }
 .phone-readout { position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 8px; color: var(--t10); letter-spacing: 0.15em; white-space: nowrap; opacity: 0; }
 
+/* ═══ JESSICA LOGO ═══ */
+.jessica-section { background: var(--bg); }
+.jessica-logo {
+  position: relative;
+  z-index: 2;
+  animation: jessica-float 6s ease-in-out infinite;
+}
+.jessica-img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 40px rgba(26,122,92,0.15));
+  animation: jessica-rotate 20s linear infinite;
+}
+@keyframes jessica-rotate {
+  0% { transform: perspective(800px) rotateY(0deg); }
+  100% { transform: perspective(800px) rotateY(360deg); }
+}
+@keyframes jessica-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.jessica-orbit {
+  position: absolute;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  border: 1px solid var(--t06);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotateX(60deg);
+  animation: orbit-spin 12s linear infinite;
+  z-index: 1;
+}
+.jessica-orbit::before {
+  content: '';
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  top: -4px; left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 12px rgba(26,122,92,0.6);
+}
+@keyframes orbit-spin {
+  0% { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg); }
+  100% { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(360deg); }
+}
+
 /* ═══ SCROLLING MARQUEE ═══ */
 .marquee { overflow: hidden; }
 .marquee-track {
@@ -710,6 +757,34 @@ html.light .theme-toggle .icon-moon { display: none; }
     </div>
     <div class="phone-readout" id="readout">JESSICA &middot; v2.1 &middot; ACTIVE</div>
   </div>
+</section>
+
+<!-- ═══ JESSICA LOGO INTERSTITIAL — 3D rotating logo ═══ -->
+<section class="jessica-section reveal-scale" style="min-height:80vh;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;overflow:hidden;border-bottom:1px solid var(--t06);">
+  <!-- Orbit ring -->
+  <div class="jessica-orbit"></div>
+  <!-- Logo container -->
+  <div class="jessica-logo">
+    <img src="jessica-logo.png" alt="Jessica — The Call Taker AI Receptionist" class="jessica-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+    <!-- SVG fallback if image doesn't load -->
+    <div class="jessica-fallback" style="display:none;flex-direction:column;align-items:center;">
+      <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="80" r="45" stroke="var(--t40)" stroke-width="1.5"/>
+        <path d="M55 80 Q55 55 75 45 Q90 38 100 38 Q110 38 125 45 Q145 55 145 80" stroke="var(--t40)" stroke-width="1.5" fill="none"/>
+        <ellipse cx="85" cy="75" rx="5" ry="3" stroke="var(--t40)" stroke-width="1"/>
+        <ellipse cx="115" cy="75" rx="5" ry="3" stroke="var(--t40)" stroke-width="1"/>
+        <path d="M90 92 Q100 98 110 92" stroke="var(--t40)" stroke-width="1" fill="none"/>
+        <path d="M70 65 Q65 50 55 60 Q48 67 55 78" stroke="var(--t40)" stroke-width="1.5" fill="none"/>
+        <circle cx="55" cy="78" r="10" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M130 65 Q135 50 145 60 Q152 67 145 78" stroke="var(--t40)" stroke-width="1.5" fill="none"/>
+        <circle cx="145" cy="78" r="10" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M145 88 Q155 100 148 110 Q145 115 140 115" stroke="var(--accent)" stroke-width="2" fill="none"/>
+        <path d="M80 120 Q90 140 100 145 Q110 140 120 120" stroke="var(--t40)" stroke-width="1.5" fill="none"/>
+      </svg>
+      <div style="font-family:var(--serif);font-size:24px;color:var(--t100);margin-top:16px;">The Call Taker</div>
+    </div>
+  </div>
+  <p style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.2em;margin-top:32px;">MEET JESSICA</p>
 </section>
 
 <!-- ═══ SECTION 1: SCROLLING MARQUEE — industries ticker ═══ -->
