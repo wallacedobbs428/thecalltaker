@@ -69,38 +69,85 @@ All **identical to our US verticals**. Plus trades (HVAC, plumbing) on their US 
 
 ## 2. Australia Competitor Deep-Dive — ReceptionHQ + Market
 
-### ReceptionHQ
+### ReceptionHQ / OfficeHQ (AU brand)
+
+ReceptionHQ operates in Australia as **OfficeHQ** (officehq.com.au). Founded 2003, Sunshine Coast QLD. Expanded to US (2007), UK (2010), NZ (2018).
+
+**Pricing (AUD, ex GST):**
+
+| Plan | Price | Calls Included | Overage | After-hours |
+|------|-------|---------------|---------|-------------|
+| MessageExpress PAYG | **$25/mo** | Per-call fee | — | +$0.60/call |
+| MyReceptionist 15 | **$39/mo** | 15 calls | **$3.99/call** | +$1.00/call |
+| MyReceptionist 20 | **$80/mo** | 20 calls | $3.99/call | +$1.00/call |
+| MyAssistant | **$49/mo** | PAYG | Per-call | +$1.00/call |
+| Setup fee | **$50** | — | — | — |
+
+**Real cost example:** A tradie getting 50 calls/month = $80 base + 30 overages × $3.99 = **$200/mo AUD** for human answering.
 
 | Aspect | Detail |
 |--------|--------|
-| Model | Human-staffed virtual receptionist, US-owned (Phoenix, AZ HQ) |
-| Trustpilot AU | **1 review** on UK page; mixed US reviews |
-| VirtualAssistantAssistant | **2 out of 10** rating (5 reviews) |
-| Known complaints | 43-second answer times, wrong business names, rude staff, no refund on reserve balance |
-| Pricing | Not scraped (403 blocked), but market range AU$150–$600/mo |
-| Acquisition channel | Primarily **SEO** + Google Ads |
+| Trustpilot | **~20 reviews**, mixed. VirtualAssistantAssistant: **2/10** |
+| Google Play app | **2.4 stars** (29 reviews) |
+| Acquisition channel | **SEO + referral program** (10% lifetime commission). No evidence of paid ads. |
+| Trial | 7-day free, no card required. Current promo: 20% off first 2 months |
+| Contracts | No lock-in, month-to-month |
 
-### AU Market Has Exploded with AI Competitors (2026)
+**Review Weaknesses — Kill Quotes:**
 
-| Competitor | Focus | Price Range | Weakness |
-|-----------|-------|-------------|----------|
-| **Johnni.ai** | Tradies (HVAC, plumbing, electrical) | Undisclosed | Niche-only, no multi-industry |
-| **AiDial** | General SMB, AU-hosted data | Undisclosed | New, unproven at scale |
-| **Reptri** | AI receptionist + workflows | Undisclosed | AU-only, small team |
-| **Digitalon** | AU cloud-hosted | Undisclosed | Limited voice quality info |
-| **Sophiie AI** | Trades + email replies | Undisclosed | Not voice-focused |
-| **Smith.ai** | Hybrid AI+human | Premium ($300+/mo) | Expensive, US-centric |
+| Complaint | Quote | Our Angle |
+|-----------|-------|-----------|
+| **43-second wait times** | "Waited 43 SECONDS before a receptionist answered, and they didn't get my business name right" (Jan 2026) | AI answers in <1 second, never gets the name wrong |
+| **Bait-and-switch** | "Stopped texting without notice, told to upgrade at 3X THE PRICE to restore SMS" | All features included at AU$750/mo, no upgrades needed |
+| **Rude staff** | "Rep was rude to their customer — it cost me a significant opportunity" | AI is consistently professional, every call |
+| **No refund on cancel** | "They charge a reserve amount and when you cancel, they do not give that back" | No setup fee, no reserve, cancel anytime |
+
+### AU Market — Full Competitor Landscape (2026)
+
+**Human Answering Services:**
+
+| Competitor | Price | Per-call | Contract | Notes |
+|-----------|-------|----------|----------|-------|
+| **OfficeHQ** | $25–$80/mo | $3.99/call overage | None | Largest AU player, bait-and-switch rep |
+| **Alltel** | $25–$50/mo | $2.20/call overage | None | AU contact centre, 24/7, $30 setup |
+| **Your Phones Covered** | PAYG | $1.45–$3.79/call | None | Budget option |
+| **B2B HQ** | From $20/mo | $2–$3/call | None | Melbourne-based |
+| **Business1300** | Custom | Custom | 7-day cancel | 24/7/365 including holidays |
+
+**AI Receptionist Startups:**
+
+| Competitor | Focus | Price | Key Strength | Key Weakness |
+|-----------|-------|-------|-------------|-------------|
+| **Johnni.ai** | Tradies only | ~$150–$300/mo | ServiceM8/Simpro integration, Aussie jargon | Tradies-only, hides pricing |
+| **Reptri** | SMBs, tradies, lawyers | **~$200/mo unlimited** | Fixed price, AU-built/hosted, CRM included | Small, new |
+| **AiDial** | Enterprise, healthcare, legal | Quote-based | AU data sovereignty, local accents | Enterprise focus, opaque pricing |
+| **Sophiie AI** | Trades (electricians, plumbers) | Undisclosed | Brand-tailored replies | Not voice-focused |
+| **Digitalon** | General | Undisclosed | AU data centres (Sydney/Melbourne) | Limited info |
+| **Trade-VA** | Tradies | Undisclosed | AU trade-specific | Niche |
+| **HiThere AI** | Tradies | Undisclosed | Lead capture focus | Niche |
+| **Get Fully Booked** | Tradies | **~$500/mo** | Full business automation | Expensive |
 
 **Key AU Market Stats:**
-- Full-time receptionist cost: **AU$57,952 + super** (~AU$65k total)
+- Full-time receptionist cost: **AU$57,952 + super + leave** (~AU$65-75k total)
 - SMB missed-call rate: **22–40%** of all inbound calls
-- AI adoption drives **28% reduction** in admin costs
-- Market range: AU$49–$500/mo
+- AI adoption drives **28% reduction** in admin costs, **35% improvement** in customer satisfaction (ACMA)
+- AI pricing dropped **40-60%** since early 2025
+- Per-call cost: AI ~$1.98 vs human $12–$15
+
+**AU Pricing Tiers:**
+- Budget human: $20–$50/mo + $1.45–$3.99/call
+- Mid human: $80–$250/mo for 20-200 calls
+- AI mid-range: $150–$300/mo (Johnni, Reptri)
+- AI premium: $500–$1,500/mo (Fully Booked, custom)
+- **The Call Taker: AU$750/mo flat, unlimited, 24/7**
 
 ### Exploitation Angles
 
-- **"Built for every industry, not just tradies"** — Johnni.ai owns tradies; we own *everyone else* (dental, legal, medical, property mgmt).
-- **Price transparency** — Every AU competitor hides pricing. Publish AU$750/mo prominently and own the "I know what I'm paying" search intent.
+- **"Built for every industry, not just tradies"** — Johnni.ai, Trade-VA, HiThere AI, Sophiie ALL target only tradies. Nobody owns dental, legal, medical, property mgmt in AU. That's our lane.
+- **Price transparency** — Johnni.ai, AiDial, Sophiie all hide pricing. Publish AU$750/mo prominently.
+- **Reptri is the price-to-beat** — $200/mo unlimited is aggressive. Our AU$750/mo must justify the premium with multi-industry support, proven US track record, and 14-day free pilot (vs their no trial).
+- **OfficeHQ's bait-and-switch reputation** — Their review damage creates a trust gap. Our "no overages, no surprises" positioning lands harder because of their failures.
+- **14-day pilot vs 7-day trial** — No AU competitor offers more than 7 days. Our 14-day pilot is 2x longer and requires no credit card.
 
 ---
 
