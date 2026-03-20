@@ -65,6 +65,18 @@ body::after {
   opacity: 0.45; mix-blend-mode: soft-light;
 }
 
+/* ═══ SCROLL PROGRESS BAR ═══ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 0%;
+  height: 3px;
+  background: var(--accent);
+  z-index: 102;
+  transition: width 0.05s linear;
+  box-shadow: 0 0 8px rgba(26,122,92,0.4);
+}
+
 /* ═══ NAV ═══ */
 .nav {
   position: fixed; top: 0; left: 0; right: 0;
@@ -643,6 +655,9 @@ html.light .theme-toggle .icon-moon { display: none; }
 
 <div class="ambient"><div class="ambient-inner"></div></div>
 
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
 <!-- NAV -->
 <nav class="nav">
   <a href="/" class="nav-logo">The Call<span>Taker</span></a>
@@ -948,6 +963,15 @@ html.light .theme-toggle .icon-moon { display: none; }
 
 <!-- SCROLL REVEALS + FAQ + THEME -->
 <script>
+// Scroll progress bar — left to right as you scroll down
+const progressBar = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  progressBar.style.width = scrollPercent + '%';
+}, { passive: true });
+
 // IntersectionObserver for ALL reveal types
 const obs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
