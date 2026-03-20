@@ -43,7 +43,8 @@
   "offers": [
     {"@type": "Offer", "name": "After-Hours", "price": "97", "priceCurrency": "USD"},
     {"@type": "Offer", "name": "Full 24/7", "price": "297", "priceCurrency": "USD"},
-    {"@type": "Offer", "name": "Premium", "price": "497", "priceCurrency": "USD"}
+    {"@type": "Offer", "name": "Premium", "price": "497", "priceCurrency": "USD"},
+    {"@type": "Offer", "name": "Free Pilot", "price": "0", "priceCurrency": "USD", "description": "14-day free trial, no credit card required"}
   ],
   "provider": {
     "@type": "Organization",
@@ -414,6 +415,18 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 24px;
   letter-spacing: .02em;
 }
+.hero-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  animation: badgeDotPulse 2s ease-in-out infinite;
+}
+@keyframes badgeDotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,220,130,.4); }
+  50% { box-shadow: 0 0 0 5px rgba(0,220,130,0); }
+}
 .hero-badge svg {
   width: 16px;
   height: 16px;
@@ -689,6 +702,43 @@ a { color: inherit; text-decoration: none; }
   .container { padding: 0 16px; }
 }
 
+/* ===== PRICING URGENCY COUNTDOWN ===== */
+.pricing-urgency {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  background: rgba(239,68,68,.08);
+  border: 1px solid rgba(239,68,68,.2);
+  font-size: .85rem;
+  color: #fca5a5;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.urgency-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: urgencyPulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes urgencyPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,.5); }
+  50% { box-shadow: 0 0 0 6px rgba(239,68,68,0); }
+}
+#urgencyCountdown {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: #f87171;
+  letter-spacing: .02em;
+}
+@media (max-width: 768px) {
+  .pricing-urgency { font-size: .78rem; padding: 8px 16px; gap: 8px; }
+}
+
 </style>
 <link rel="stylesheet" href="/shared/below-fold.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="/shared/below-fold.css"></noscript>
@@ -818,9 +868,9 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   <div class="container">
     <div class="hero-grid">
       <div class="fade-up">
-        <div class="hero-badge">
-          <svg viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
-          Live right now &mdash; answering calls 24/7
+        <div class="hero-badge" id="heroBadge">
+          <span class="hero-badge-dot"></span>
+          <span id="heroBadgeText">Live right now &mdash; answering calls 24/7</span>
         </div>
         <h1>Every Missed Call Is a Customer You'll Never <span class="no-break-word">Get Back.</span></h1>
         <p class="subtitle subtitle-desktop">The AI receptionist that answers instantly, books the job, and texts you the summary. Custom-trained for your industry. Live in 5 minutes.</p>
@@ -1911,6 +1961,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       <span class="section-label">Simple Pricing</span>
       <h2 class="section-title">Less Than the Cost of One Missed Job</h2>
       <p class="section-subtitle">Every plan starts with a free 14-day pilot. No credit card. No contracts. See it work before you pay a dime.</p>
+      <div class="pricing-urgency" id="pricingUrgency">
+        <div class="urgency-pulse"></div>
+        <span class="urgency-text">
+          <strong id="urgencySpotsLeft">3</strong> pilot spots left this week &mdash; resets in
+          <span id="urgencyCountdown">--:--:--</span>
+        </span>
+      </div>
     </div>
     <div class="pricing-grid">
       <div class="pricing-card reveal fade-up">
@@ -1931,7 +1988,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       <div class="pricing-card featured reveal scale-in" data-reveal-delay="100">
         <div class="pricing-badge">Most Popular</div>
         <div class="pricing-name">Full 24/7</div>
-        <div class="pricing-price">$497<span>/mo</span></div>
+        <div class="pricing-price">$297<span>/mo</span></div>
         <p class="pricing-desc">Every call, every hour, every day</p>
         <p class="pricing-outcome">Owners save $2K&ndash;$10K/mo in missed revenue.</p>
         <ul class="pricing-features">
@@ -3148,6 +3205,86 @@ window.__tctUILoaded = true;
 </script>
 
 <script src="/shared/ui.js" defer></script>
+
+<!-- ===== HERO LIVE TICKER ===== -->
+<script>
+(function(){
+  var el = document.getElementById('heroBadgeText');
+  if (!el) return;
+  var msgs = [
+    'Live right now \u2014 answering calls 24/7',
+    'HVAC call answered 12 seconds ago',
+    '3 appointments booked in the last hour',
+    'Locksmith emergency handled at 2:14 AM',
+    'Dental patient rescheduled automatically',
+    'Plumber got a text summary in 8 seconds',
+    'Roofer inquiry captured while owner slept',
+    'Live right now \u2014 answering calls 24/7'
+  ];
+  var i = 0;
+  setInterval(function(){
+    i = (i + 1) % msgs.length;
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(4px)';
+    setTimeout(function(){
+      el.textContent = msgs[i];
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 300);
+  }, 4000);
+  el.style.transition = 'opacity .3s, transform .3s';
+})();
+</script>
+
+<!-- ===== EVERGREEN URGENCY COUNTDOWN ===== -->
+<script>
+(function(){
+  var cdEl = document.getElementById('urgencyCountdown');
+  var spotsEl = document.getElementById('urgencySpotsLeft');
+  if (!cdEl) return;
+
+  function nextSunday() {
+    var now = new Date();
+    var d = new Date(now);
+    d.setDate(d.getDate() + (7 - d.getDay()) % 7 || 7);
+    d.setHours(23, 59, 59, 0);
+    if (now.getDay() === 0 && now.getHours() >= 23) {
+      d.setDate(d.getDate() + 7);
+    }
+    return d;
+  }
+
+  function spotsFromTime(now) {
+    var dayOfWeek = now.getDay();
+    var hour = now.getHours();
+    if (dayOfWeek <= 2) return 3;
+    if (dayOfWeek <= 4) return 2;
+    return 1;
+  }
+
+  function tick() {
+    var now = new Date();
+    var target = nextSunday();
+    var diff = target - now;
+    if (diff <= 0) { cdEl.textContent = '00:00:00'; return; }
+
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+
+    var parts = [];
+    if (d > 0) parts.push(d + 'd');
+    parts.push(String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0'));
+    cdEl.textContent = parts.join(' ');
+    if (spotsEl) spotsEl.textContent = spotsFromTime(now);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+
 </body>
 </html>
 
