@@ -477,16 +477,20 @@ html.light .theme-toggle .icon-moon { display: none; }
 .frame-line.btm { bottom: -1px; right: 60px; width: 40px; height: 1px; }
 .phone-readout { position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 8px; color: var(--t10); letter-spacing: 0.15em; white-space: nowrap; opacity: 0; }
 
-/* ═══ TRUST STRIP ═══ */
-.trust-strip {
-  text-align: center;
-  padding: 48px 20px;
-  border-top: 1px solid var(--t06);
-  border-bottom: 1px solid var(--t06);
+/* ═══ SCROLLING MARQUEE ═══ */
+.marquee { overflow: hidden; }
+.marquee-track {
+  display: flex; gap: 24px; white-space: nowrap;
+  animation: scroll-marquee 30s linear infinite;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--t20);
 }
-.trust-strip p { font-family: var(--mono); font-size: 11px; color: var(--t20); letter-spacing: 0.15em; }
-.trust-industries { display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; margin-top: 16px; }
-.trust-industries span { font-size: 13px; color: var(--t20); }
+@keyframes scroll-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
 /* ═══ STATS ═══ */
 .stats-grid {
@@ -708,103 +712,162 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 </section>
 
-<!-- TRUST STRIP -->
-<div class="trust-strip reveal">
-  <p>TRUSTED ACROSS 17+ INDUSTRIES</p>
-  <div class="trust-industries">
-    <span>HVAC</span><span>Plumbing</span><span>Roofing</span><span>Locksmith</span><span>Electrical</span><span>Dental</span><span>Legal</span><span>Towing</span>
+<!-- ═══ SECTION 1: SCROLLING MARQUEE — industries ticker ═══ -->
+<div class="marquee reveal" style="border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);padding:20px 0;overflow:hidden;">
+  <div class="marquee-track">
+    <span>HVAC</span><span>&middot;</span><span>PLUMBING</span><span>&middot;</span><span>ROOFING</span><span>&middot;</span><span>LOCKSMITH</span><span>&middot;</span><span>ELECTRICAL</span><span>&middot;</span><span>DENTAL</span><span>&middot;</span><span>LEGAL</span><span>&middot;</span><span>TOWING</span><span>&middot;</span><span>MED SPA</span><span>&middot;</span><span>VETERINARY</span><span>&middot;</span><span>PEST CONTROL</span><span>&middot;</span><span>PROPERTY MGMT</span><span>&middot;</span>
+    <span>HVAC</span><span>&middot;</span><span>PLUMBING</span><span>&middot;</span><span>ROOFING</span><span>&middot;</span><span>LOCKSMITH</span><span>&middot;</span><span>ELECTRICAL</span><span>&middot;</span><span>DENTAL</span><span>&middot;</span><span>LEGAL</span><span>&middot;</span><span>TOWING</span><span>&middot;</span><span>MED SPA</span><span>&middot;</span><span>VETERINARY</span><span>&middot;</span><span>PEST CONTROL</span><span>&middot;</span><span>PROPERTY MGMT</span><span>&middot;</span>
   </div>
 </div>
 
-<!-- PROBLEM -->
-<section class="sec reveal-left" id="problem">
-  <div class="sec-label">01 &mdash; THE PROBLEM</div>
-  <h2 class="sec-title">Every missed call costs you $300&ndash;$500.</h2>
-  <p class="sec-sub">When someone's locked out at midnight or has a burst pipe at 2 AM, they're not leaving a voicemail. They're calling the next company on Google.</p>
-  <div class="stats-grid">
-    <div><div class="stat-num">85%</div><div class="stat-label">WON'T LEAVE VOICEMAIL</div></div>
-    <div><div class="stat-num">62%</div><div class="stat-label">CALLS AFTER HOURS</div></div>
-    <div><div class="stat-num">$1,200</div><div class="stat-label">AVG EMERGENCY JOB</div></div>
-    <div><div class="stat-num">$0</div><div class="stat-label">REVENUE FROM MISSED CALL</div></div>
+<!-- ═══ SECTION 2: THE PROBLEM — full-width split, giant stat left ═══ -->
+<section id="problem" style="display:grid;grid-template-columns:1fr 1fr;min-height:80vh;border-bottom:1px solid var(--t06);">
+  <div class="reveal-left" style="display:flex;flex-direction:column;justify-content:center;padding:80px 64px;border-right:1px solid var(--t06);">
+    <div class="sec-label">01 &mdash; THE PROBLEM</div>
+    <div style="font-family:var(--serif);font-size:clamp(5rem,12vw,9rem);color:var(--amber);line-height:0.9;letter-spacing:-0.04em;margin-bottom:12px;">85%</div>
+    <div style="font-family:var(--mono);font-size:12px;color:var(--t40);letter-spacing:0.1em;">OF CALLERS WON'T LEAVE A VOICEMAIL</div>
   </div>
-</section>
-
-<div class="sec-divider"></div>
-
-<!-- FEATURES -->
-<section class="sec reveal-right" id="features">
-  <div class="sec-label">02 &mdash; WHY THE CALL TAKER</div>
-  <h2 class="sec-title">Not an answering service.<br>An AI built for your business.</h2>
-  <p class="sec-sub">Six things that make Jessica different from every receptionist you've ever hired.</p>
-  <div class="features-grid reveal-stagger">
-    <div class="feature-card"><h3>Answers in under 1 second</h3><p>No hold music, no "press 1." Jessica picks up instantly, 24/7/365.</p></div>
-    <div class="feature-card"><h3>Sounds like a real person</h3><p>Natural, human voice. Callers can't tell. Call our demo line and hear for yourself.</p></div>
-    <div class="feature-card"><h3>Books jobs automatically</h3><p>Captures name, number, address, and issue. Books straight to your calendar.</p></div>
-    <div class="feature-card"><h3>Texts you every lead</h3><p>You get a text the instant a new lead calls. Name, number, what they need.</p></div>
-    <div class="feature-card"><h3>Custom to your industry</h3><p>Trained on your services, pricing, FAQs, and tone of voice.</p></div>
-    <div class="feature-card"><h3>Zero setup hassle</h3><p>No hardware. No software. Forward your calls and you're live in 5 minutes.</p></div>
-  </div>
-</section>
-
-<div class="sec-divider"></div>
-
-<!-- HOW IT WORKS -->
-<section class="sec reveal-left" id="how">
-  <div class="sec-label">03 &mdash; HOW IT WORKS</div>
-  <h2 class="sec-title">Three steps. Five minutes.<br>Never miss a call again.</h2>
-  <p class="sec-sub">No equipment. No software. Just forward your phone and start catching every lead.</p>
-  <div class="steps reveal-stagger">
-    <div class="hw-step"><div class="hw-num">01</div><div class="hw-content"><h3>Forward your calls</h3><p>Same way you'd forward to an employee. Takes 2 minutes.</p></div></div>
-    <div class="hw-step"><div class="hw-num">02</div><div class="hw-content"><h3>Jessica answers like your best employee</h3><p>She knows your business — services, pricing, everything. Callers can't tell she's not real.</p></div></div>
-    <div class="hw-step"><div class="hw-num">03</div><div class="hw-content"><h3>You get every lead</h3><p>Text with every new lead. Name, number, what they need. Appointments booked to your calendar.</p></div></div>
-  </div>
-</section>
-
-<!-- DEMO CTA -->
-<div class="demo-cta reveal-scale">
-  <div class="sec-label">HEAR IT YOURSELF</div>
-  <h2 class="sec-title">15 seconds. Real call. Real AI.</h2>
-  <a href="tel:6157845747" class="demo-phone">(615) 784-5747</a>
-  <p style="color:var(--t40);font-size:14px;">Call right now. Jessica picks up in one ring.</p>
-</div>
-
-<!-- TESTIMONIALS -->
-<section class="sec reveal-right" id="testimonials">
-  <div class="sec-label">04 &mdash; REAL RESULTS</div>
-  <h2 class="sec-title">Business owners who stopped losing calls.</h2>
-  <p class="sec-sub">Every business below was losing thousands in missed calls. Then they turned on The Call Taker.</p>
-  <div class="testimonials-grid reveal-stagger">
-    <div class="test-card">
-      <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p class="test-quote">"Signed up Monday, caught 4 missed calls by Friday. Two turned into jobs. Paid for itself before the trial was over."</p>
-      <div class="test-result">4 calls caught in first week</div>
-      <div class="test-name">Mike R.</div>
-      <div class="test-role">Locksmith &bull; Nashville, TN</div>
-    </div>
-    <div class="test-card">
-      <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p class="test-quote">"I was losing 2-3 calls a night. Now every one gets answered. $800 emergency job at 11 PM I would've missed."</p>
-      <div class="test-result">+$3,200/mo in after-hours jobs</div>
-      <div class="test-name">James K.</div>
-      <div class="test-role">Plumber &bull; Memphis, TN</div>
-    </div>
-    <div class="test-card">
-      <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p class="test-quote">"Solo operator. Can't answer the phone on a roof. Last month The Call Taker booked 11 jobs I would've missed."</p>
-      <div class="test-result">11 jobs booked in one month</div>
-      <div class="test-name">Derek M.</div>
-      <div class="test-role">Roofing &bull; Charlotte, NC</div>
+  <div class="reveal-right" style="display:flex;flex-direction:column;justify-content:center;padding:80px 64px;">
+    <h2 class="sec-title" style="margin-bottom:24px;">Every missed call costs you $300&ndash;$500.</h2>
+    <p style="color:var(--t70);font-size:16px;line-height:1.8;margin-bottom:40px;">When someone's locked out at midnight or has a burst pipe at 2 AM, they're not leaving a voicemail. They're calling the next company on Google.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;">
+      <div><div class="stat-num">62%</div><div class="stat-label">AFTER HOURS</div></div>
+      <div><div class="stat-num">$1,200</div><div class="stat-label">AVG JOB VALUE</div></div>
+      <div><div class="stat-num">$0</div><div class="stat-label">FROM MISSED CALL</div></div>
     </div>
   </div>
 </section>
+<style>@media(max-width:768px){#problem{grid-template-columns:1fr !important;min-height:auto !important;}#problem>div{padding:48px 24px !important;border-right:none !important;border-bottom:1px solid var(--t06);}}</style>
 
-<div class="sec-divider"></div>
+<!-- ═══ SECTION 3: BEFORE / AFTER — two columns, stark contrast ═══ -->
+<section id="features" style="padding:120px 0;border-bottom:1px solid var(--t06);">
+  <div style="max-width:1100px;margin:0 auto;padding:0 40px;">
+    <div class="sec-label reveal" style="text-align:center;">02 &mdash; THE DIFFERENCE</div>
+    <h2 class="sec-title reveal" style="text-align:center;max-width:600px;margin:0 auto 64px;">Before Jessica. After Jessica.</h2>
 
-<!-- PRICING -->
-<section class="sec reveal-left" id="pricing">
-  <div class="sec-label">05 &mdash; SIMPLE PRICING</div>
-  <h2 class="sec-title">Less than the cost of one missed job.</h2>
-  <p class="sec-sub">Every plan starts with a free 14-day pilot. No credit card. No contracts.</p>
+    <div class="reveal-scale" style="display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--t10);border-radius:16px;overflow:hidden;">
+      <!-- WITHOUT -->
+      <div style="padding:48px 40px;border-right:1px solid var(--t06);">
+        <div style="font-family:var(--mono);font-size:10px;color:rgba(200,80,60,0.7);letter-spacing:0.15em;margin-bottom:28px;">WITHOUT THE CALL TAKER</div>
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Calls go to voicemail after 5 PM</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Customers call your competitor instead</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">No bookings while you're on a job</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Paying $1,200/mo for a human service</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">5&ndash;10 missed calls every week</span></div>
+        </div>
+      </div>
+      <!-- WITH -->
+      <div style="padding:48px 40px;background:var(--accent-soft);">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:28px;">WITH THE CALL TAKER</div>
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Every call answered in under 2 seconds</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">AI books the job and texts you details</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Callers think it's your front desk</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Starting at $97/mo &mdash; less than one job</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Zero missed calls. Zero missed revenue.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>@media(max-width:768px){#features [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}#features [style*="border-right"]{border-right:none !important;border-bottom:1px solid var(--t06);}}</style>
+
+<!-- ═══ SECTION 4: HOW IT WORKS — horizontal timeline ═══ -->
+<section id="how" style="padding:120px 40px;max-width:1100px;margin:0 auto;">
+  <div class="sec-label reveal" style="text-align:center;">03 &mdash; HOW IT WORKS</div>
+  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 64px;">Three steps. Five minutes.</h2>
+
+  <div class="reveal-stagger" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;position:relative;">
+    <!-- Connecting line -->
+    <div style="position:absolute;top:28px;left:15%;right:15%;height:1px;background:var(--t06);z-index:0;"></div>
+
+    <div style="text-align:center;position:relative;z-index:1;">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--accent);">1</div>
+      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Forward your calls</h3>
+      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Same way you'd forward to an employee. Takes 2 minutes.</p>
+    </div>
+
+    <div style="text-align:center;position:relative;z-index:1;">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--bg);box-shadow:0 0 24px rgba(26,122,92,0.3);">2</div>
+      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Jessica answers</h3>
+      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">She knows your business. Callers can't tell she's not real.</p>
+    </div>
+
+    <div style="text-align:center;position:relative;z-index:1;">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--accent);">3</div>
+      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">You get every lead</h3>
+      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Text with name, number, what they need. Appointments booked.</p>
+    </div>
+  </div>
+</section>
+<style>@media(max-width:768px){#how [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr !important;gap:48px !important;}#how [style*="position:absolute;top:28px"]{display:none;}}</style>
+
+<!-- ═══ SECTION 5: DEMO CTA — full-bleed, massive type ═══ -->
+<section class="reveal-scale" style="padding:140px 40px;text-align:center;background:linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
+  <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--accent);margin-bottom:32px;">HEAR IT YOURSELF</div>
+  <a href="tel:6157845747" style="font-family:var(--serif);font-size:clamp(3rem,8vw,6rem);color:var(--accent);text-decoration:none;display:block;letter-spacing:-0.03em;transition:color 0.3s;line-height:1.1;">(615) 784-5747</a>
+  <p style="color:var(--t40);font-size:15px;margin-top:20px;">Call right now. Jessica picks up in one ring. Judge for yourself.</p>
+</section>
+
+<!-- ═══ SECTION 6: TESTIMONIALS — offset quote layout, not cards ═══ -->
+<section id="testimonials" style="padding:120px 40px;max-width:1100px;margin:0 auto;">
+  <div class="sec-label reveal" style="text-align:center;">04 &mdash; REAL RESULTS</div>
+  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 72px;">Don't take our word for it.</h2>
+
+  <!-- Testimonial 1: big quote -->
+  <div class="reveal-left" style="display:grid;grid-template-columns:120px 1fr;gap:40px;align-items:start;margin-bottom:64px;padding-bottom:64px;border-bottom:1px solid var(--t06);">
+    <div>
+      <div style="font-family:var(--serif);font-size:96px;color:var(--accent);line-height:0.8;opacity:0.4;">&ldquo;</div>
+    </div>
+    <div>
+      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"Signed up Monday, caught 4 missed calls by Friday. Two turned into jobs. Paid for itself before the trial was over."</p>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">MR</div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Mike R.</div><div style="font-size:12px;color:var(--t40);">Locksmith &bull; Nashville, TN</div></div>
+        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:4px;">4 calls caught in first week</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonial 2 -->
+  <div class="reveal-right" style="display:grid;grid-template-columns:1fr 120px;gap:40px;align-items:start;margin-bottom:64px;padding-bottom:64px;border-bottom:1px solid var(--t06);">
+    <div>
+      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"I was losing 2&ndash;3 calls a night. Now every one gets answered. $800 emergency job at 11 PM I would've missed."</p>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">JK</div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">James K.</div><div style="font-size:12px;color:var(--t40);">Plumber &bull; Memphis, TN</div></div>
+        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--amber);background:rgba(194,124,58,0.1);padding:6px 12px;border-radius:4px;">+$3,200/mo revenue</div>
+      </div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-family:var(--serif);font-size:96px;color:var(--accent);line-height:0.8;opacity:0.4;">&rdquo;</div>
+    </div>
+  </div>
+
+  <!-- Testimonial 3 -->
+  <div class="reveal-left" style="display:grid;grid-template-columns:120px 1fr;gap:40px;align-items:start;">
+    <div>
+      <div style="font-family:var(--serif);font-size:96px;color:var(--accent);line-height:0.8;opacity:0.4;">&ldquo;</div>
+    </div>
+    <div>
+      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"Solo operator. Can't answer the phone on a roof. Last month The Call Taker booked 11 jobs I would've missed. Do the math."</p>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">DM</div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Derek M.</div><div style="font-size:12px;color:var(--t40);">Roofing &bull; Charlotte, NC</div></div>
+        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:4px;">11 jobs in one month</div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>@media(max-width:768px){#testimonials [style*="grid-template-columns:120px"]{grid-template-columns:1fr !important;}#testimonials [style*="grid-template-columns:1fr 120px"]{grid-template-columns:1fr !important;}#testimonials [style*="font-size:96px"]{font-size:48px !important;}#testimonials [style*="margin-left:auto"]{margin-left:0 !important;margin-top:12px;}#testimonials [style*="display:flex;align-items:center;gap:16px"]{flex-wrap:wrap;}}</style>
+
+<!-- ═══ SECTION 7: PRICING — center featured card, flanked ═══ -->
+<section id="pricing" style="padding:120px 40px;max-width:1100px;margin:0 auto;border-top:1px solid var(--t06);">
+  <div class="sec-label reveal" style="text-align:center;">05 &mdash; PRICING</div>
+  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 12px;">Less than one missed job.</h2>
+  <p class="reveal" style="text-align:center;color:var(--t40);font-size:15px;margin-bottom:64px;">14-day free pilot. No credit card. No contracts.</p>
+
   <div class="pricing-grid reveal-stagger">
     <div class="price-card">
       <div class="price-name">After-Hours</div>
@@ -820,7 +883,7 @@ html.light .theme-toggle .icon-moon { display: none; }
       </ul>
       <a href="/pilot/" class="btn btn-outline price-cta">Start Free Pilot</a>
     </div>
-    <div class="price-card featured reveal">
+    <div class="price-card featured">
       <div class="price-badge">MOST POPULAR</div>
       <div class="price-name">Full 24/7</div>
       <div class="price-desc">Every call, every hour, every day</div>
@@ -851,41 +914,44 @@ html.light .theme-toggle .icon-moon { display: none; }
       <a href="/pilot/" class="btn btn-outline price-cta">Start Free Pilot</a>
     </div>
   </div>
-  <p style="text-align:center;font-size:12px;color:var(--t20);margin-top:24px;">No credit card required &middot; Cancel anytime &middot; Setup in 5 minutes</p>
+  <p style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--t20);margin-top:32px;letter-spacing:0.05em;">NO CREDIT CARD &middot; CANCEL ANYTIME &middot; SETUP IN 5 MINUTES</p>
 </section>
 
-<div class="sec-divider"></div>
-
-<!-- FAQ -->
-<section class="sec reveal-right" id="faq">
-  <div class="sec-label">06 &mdash; FAQ</div>
-  <h2 class="sec-title">Common questions, straight answers.</h2>
-  <div class="faq-list" style="margin-top:40px;">
-    <div class="faq-item"><div class="faq-q">How does call forwarding work?</div><div class="faq-a"><p>You set your phone to forward to us — same way you'd forward to an employee. Takes 2 minutes and your customers still call your regular number.</p></div></div>
-    <div class="faq-item"><div class="faq-q">What does the AI actually sound like?</div><div class="faq-a"><p>It sounds like a real person — not a robot. Call (615) 784-5747 right now and hear for yourself.</p></div></div>
+<!-- ═══ SECTION 8: FAQ — left title, right accordion ═══ -->
+<section id="faq" style="display:grid;grid-template-columns:1fr 1.5fr;gap:80px;padding:120px 40px;max-width:1100px;margin:0 auto;border-top:1px solid var(--t06);">
+  <div class="reveal-left">
+    <div class="sec-label">06 &mdash; FAQ</div>
+    <h2 class="sec-title">Questions we<br>hear every day.</h2>
+    <p style="color:var(--t40);font-size:15px;line-height:1.7;margin-top:16px;">Can't find your answer? Call us at <a href="tel:6157845747" style="color:var(--accent);text-decoration:none;">(615) 784-5747</a> and ask Jessica yourself.</p>
+  </div>
+  <div class="faq-list reveal-right">
+    <div class="faq-item"><div class="faq-q">How does call forwarding work?</div><div class="faq-a"><p>You set your phone to forward to us &mdash; same way you'd forward to an employee. Takes 2 minutes and your customers still call your regular number.</p></div></div>
+    <div class="faq-item"><div class="faq-q">What does the AI actually sound like?</div><div class="faq-a"><p>It sounds like a real person &mdash; not a robot. Call (615) 784-5747 right now and hear for yourself.</p></div></div>
     <div class="faq-item"><div class="faq-q">Can it actually book appointments?</div><div class="faq-a"><p>Yes. It gets their name, number, and what they need, then books them into your schedule. You get a text with all the details.</p></div></div>
     <div class="faq-item"><div class="faq-q">What if the caller needs a real person?</div><div class="faq-a"><p>It handles almost every call on its own. If someone really needs you, it transfers the call or texts you their info immediately.</p></div></div>
     <div class="faq-item"><div class="faq-q">How fast can I get set up?</div><div class="faq-a"><p>About 5 minutes. We set up the AI with your business info, give you a number to forward to, and you're live.</p></div></div>
-    <div class="faq-item"><div class="faq-q">What happens after the 14-day pilot?</div><div class="faq-a"><p>You pick a plan. If you don't like it, we turn it off — no contracts, no fees. Most people see it pay for itself in the first week.</p></div></div>
+    <div class="faq-item"><div class="faq-q">What happens after the 14-day pilot?</div><div class="faq-a"><p>You pick a plan. If you don't like it, we turn it off &mdash; no contracts, no fees. Most people see it pay for itself in the first week.</p></div></div>
+  </div>
+</section>
+<style>@media(max-width:768px){#faq{grid-template-columns:1fr !important;gap:40px !important;}}</style>
+
+<!-- ═══ SECTION 9: FINAL CTA — full-bleed dark with giant serif ═══ -->
+<section class="reveal-scale" style="text-align:center;padding:140px 40px;background:var(--surface);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
+  <h2 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;color:var(--t100);letter-spacing:-0.02em;max-width:700px;margin:0 auto 32px;line-height:1.15;">Your competitors are answering their phones right now.</h2>
+  <p style="color:var(--t40);font-size:16px;max-width:460px;margin:0 auto 40px;line-height:1.7;">Start your free 14-day pilot in under 5 minutes. No credit card. No commitment.</p>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <a href="/pilot/" class="btn btn-primary" style="font-size:16px;padding:18px 40px;"><span>Start Your Free Pilot</span></a>
+    <a href="tel:6157845747" class="btn btn-outline" style="font-size:16px;padding:18px 40px;">Call (615) 784-5747</a>
+  </div>
+  <div style="display:flex;justify-content:center;gap:28px;margin-top:36px;flex-wrap:wrap;">
+    <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">NO CREDIT CARD</span>
+    <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">CANCEL ANYTIME</span>
+    <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">5 MIN SETUP</span>
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<div class="final-cta reveal-scale">
-  <div class="sec-label">YOUR MOVE</div>
-  <h2 class="sec-title">Your competitors are answering their phones right now.</h2>
-  <p style="color:var(--t40);font-size:16px;max-width:500px;margin:0 auto 32px;line-height:1.7;">Start your free 14-day pilot in under 5 minutes. No credit card. No commitment.</p>
-  <a href="/pilot/" class="btn btn-primary" style="font-size:16px;padding:18px 40px;"><span>Start Your Free Pilot</span></a>
-  <p style="color:var(--t40);font-size:14px;margin-top:16px;">Or call our demo line: <a href="tel:6157845747" style="color:var(--accent);text-decoration:none;">(615) 784-5747</a></p>
-  <div class="final-trust">
-    <span>No credit card</span>
-    <span>Cancel anytime</span>
-    <span>Setup in 5 minutes</span>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer class="footer">
+<!-- ═══ FOOTER — minimal, clean ═══ -->
+<footer style="padding:64px 40px 32px;max-width:1100px;margin:0 auto;">
   <div class="footer-grid">
     <div>
       <div class="footer-brand">The Call<span>Taker</span></div>
