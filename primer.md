@@ -6,7 +6,7 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 # Primer — The Call Taker
 
-> Last updated: 2026-03-19 | Rewrite this file at the start of every session.
+> Last updated: 2026-03-20 | Rewrite this file at the start of every session.
 
 ## What This Is
 
@@ -23,14 +23,14 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 
 ## Current Branch & State
 
-- **Branch:** `claude/website-review-ciovZ`
-- **Base:** `master` (last commit 2026-03-17)
-- **Latest commits (March 18):** Major homepage redesign — HUD design, warm palette, Lenis smooth scroll, phone animation, floating callouts, circuit background, urgency bar, GSAP motion system
+- **Branch:** `claude/work-session-continuation-DcuWo`
+- **Base:** `master` (last commit 2026-03-19)
+- **Latest commits (March 19):** Interior designer palette (warm bronze, cream, sage on charcoal), live ops dashboard with deadline countdown, 2050 aesthetic redesign (dot grid, grain texture, monospace data UI), timing polish, brightness + slide-up animation fixes, merged 8+ feature PRs
 - **Working tree:** Clean (no staged or unstaged changes)
 
-## Homepage Design (index.html — 3,398 lines)
+## Homepage Design (index.html)
 
-- **Color scheme:** Green accent (#00dc82) — all CSS vars (--blue, --orange, --green) map to same green
+- **Color scheme:** Interior designer palette — warm bronze, cream, sage on charcoal background
 - **Layout:** Dark theme, glassmorphism header, scroll spy, GSAP mobile menu, Lenis smooth scroll
 - **Hero:** Animated phone mockup (pure CSS/SVG, no images), circuit background, floating callouts
 - **Sections:** Hero → Industry strip → How It Works → Features → Demo → Pricing → FAQ → Final CTA → Footer
@@ -38,6 +38,7 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 - **Nav:** Glassmorphism header, scroll progress bar, mobile overlay menu
 - **External deps:** GSAP 3.12.5 (cdnjs), Lenis 1.1.18 (jsdelivr)
 - **Font:** Self-hosted Inter (woff2)
+- **Recent design work:** 2050 aesthetic (dot grid, grain texture, monospace data UI), live ops dashboard section, slide-up entrance animations
 
 ## Website Stats
 
@@ -52,10 +53,10 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 
 ## Known Issues (Current)
 
-1. **Urgency countdown hardcoded to March 21, 2026** — expires in 2 days, needs rolling logic
+1. **Urgency countdown hardcoded to March 21, 2026** — expires tomorrow, needs rolling logic
 2. **premium.css is empty** — loaded on every page, zero CSS rules
 3. **Schema.org prices don't match UI** — schema says $97-$997, UI has $19/$97/$497/$997
-4. **index-v2.html orphaned** — 3,398-line duplicate sitting in root
+4. **index-v2.html orphaned** — duplicate sitting in root
 5. **hero-phone-animation.html orphaned** — standalone test file in root
 6. **41 HTML files in root** — cluttered, many could be organized into subdirectories
 7. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live
