@@ -12,13 +12,16 @@ Moneypenny **does not publish full pricing online**. This is confirmed across mu
 
 | Component | What We Know | Source |
 |-----------|-------------|--------|
-| Base plan (live answering) | From **£160/mo** (required for AI add-on) | norango.ai |
+| Entry plan (live answering) | **£99/mo for 30 minutes** (~£3.30/min effective) | fitsmallbusiness.com |
+| AI Voice Agent | Requires live subscription starting **£160/mo** — cannot buy AI standalone | norango.ai |
 | Billing model | **Per-minute** — variable monthly bills | moneypenny.com |
+| Overage rate | **£1.65–£1.85/min** beyond included minutes | norango.ai, callchimps.com |
 | AI "Assist" overage | **£1.10–£2.20 per call** on top of base | norango.ai |
 | 24/7 coverage | **Not included** — extra £35–£150/mo depending on plan | callchimps.com |
-| Minimum contract | **3 months** for smaller plans | moneypenny.com |
-| Setup fee | **Costly one-time setup** (exact figure undisclosed) | fitsmallbusiness.com |
+| Minimum contract | **3–12 months** (smaller plans 3mo, larger plans 6–12mo) | moneypenny.com |
+| Setup fee (US reference) | **$1,000 one-time** (UK likely similar) | fitsmallbusiness.com |
 | Estimated real monthly cost | **£300–£800/mo** for typical SMB (20-50 calls/day) | callchimps.com, norango.ai |
+| Scale | 21,000+ businesses, 1,000+ employees, 20M+ calls/yr | moneypenny.com |
 
 ### Review Weaknesses (Trustpilot 4.7/5 — 985 reviews)
 
@@ -27,19 +30,40 @@ Strong overall rating, but the complaints reveal structural vulnerabilities:
 | Complaint | Quote / Detail | Our Angle |
 |-----------|---------------|-----------|
 | **Price shock** | "They quoted me one price, and the price they charged me ended up being triple what was quoted" | We never surprise — flat £397/mo, period |
-| **Spam marketing** | "All they do is spam — multiple emails at a time" (Dec 2025) | We don't spam, we answer your calls |
+| **Minute padding** | "Charged 17.5 minutes for a call that lasted about 2 minutes" / "puts customers on hold to rack up minutes" | AI doesn't pad minutes — flat rate |
+| **Script failures** | "Despite giving them a framework to follow, they just end up doing it their way" (Mar 2026) | AI follows YOUR script every single time |
+| **Call centre reality** | Employee: "You sit at a phone pretending to work for a company you know nothing about" | Our AI is trained on YOUR business specifically |
 | **Cancellation difficulty** | "Difficulty canceling subscriptions and unexpected monthly charges" | No contracts, cancel anytime |
 | **Not truly 24/7** | Standard is Mon-Fri 9am-5pm only; 24/7 costs extra | We're 24/7/365 by default |
+| **No answer-time guarantee** | Competitors publish ring-time stats; Moneypenny does not | AI answers in <1 second, every time |
 | **Employee morale** | Glassdoor 2.9/5 — "bad pay" (12 reviews), "bad management" (11 reviews) | Their staff is unhappy; our AI never has a bad day |
 
 ### Dominated Verticals
 
-Legal, dental, medical practices, and professional services — **identical to our US verticals**.
+1. **Legal** — their #1 vertical ("sole practitioners to Magic Circle")
+2. **Property/Real Estate** — "#1 provider to the industry for over a decade"
+3. **Finance & Accountancy**
+4. **Healthcare/Medical** — "preferred supplier to the health & care industries"
+5. **Franchise** — recommended by British Franchise Association
+
+All **identical to our US verticals**. Plus trades (HVAC, plumbing) on their US side.
+
+### UK Competitor Benchmarks
+
+| Competitor | Price | Contract | 24/7 | Notes |
+|-----------|-------|----------|------|-------|
+| **Moneypenny** | £99–£800+/mo | 3–12 months | Extra £35–£150/mo | Per-minute, opaque |
+| **AllDayPA** | £90/mo (80 min) | 30 days | Available | £1/min overage, 98.6% in 3 rings |
+| **AnswerConnect** | Similar range | Flexible | Yes | Forbes Best 2026, 4.9/5 Trustpilot |
+| **CallChimps (AI)** | £29–£89/mo | None | Yes | £0.37/min overage — 4.5x cheaper than Moneypenny |
+| **The Call Taker** | **£397/mo flat** | **None** | **Yes** | AI, unlimited, no overages |
 
 ### Exploitation Angles
 
 - **"Know your bill before it arrives"** — Our flat £397/mo vs their unpredictable per-minute billing is the #1 differentiator. Every UK SMB owner searching "Moneypenny costs" is a prospect.
 - **"24/7 included, not extra"** — Their 24/7 upcharge is £35–£150/mo extra. Ours is built in.
+- **"Minute padding is impossible with AI"** — Reviews accuse Moneypenny of extending calls to bill more minutes. Our AI has zero incentive to do that.
+- **"Your AI knows your business"** — Their own employee admits "pretending to work for a company you know nothing about." Our AI is trained specifically on each client's business.
 
 ---
 
@@ -164,12 +188,27 @@ On a £397/mo subscription (~$502 USD): **~$25 per transaction in fees**.
 
 ### Top ElevenLabs Voices for UK/AU
 
-| Voice | Accent | Best For | Notes |
+**British English:**
+
+| Voice | Gender | Best For | Notes |
 |-------|--------|----------|-------|
-| **James** | British (RP) | Professional receptionist | Calm, deep, authoritative — ideal for legal/dental |
-| **David – British Storyteller** | British | Warm professional | Engaging, trustworthy tone |
-| **Amelia** | British | Female receptionist | Natural, "sounds like a real person" |
-| **Australian accent voices** | Australian | Trades, general | 5000+ voices with accent filter in ElevenLabs library |
+| **George** | Male | Professional receptionist | Warm, captivating British — TOP PICK for UK |
+| **Daniel** | Male | Legal/dental/medical | Authoritative British tone |
+| **Lily** | Female | Professional receptionist | Velvety British female — great for dental/medspa |
+| **James** | Male | Trades/general | Calm, deep, authoritative |
+| **Dorothy** | Female | Warm/friendly | Pleasant young British voice |
+| **Amelia** | Female | Audiobook-quality natural | "Sounds like Hermione" |
+
+**Australian English:**
+
+| Voice | Gender | Best For | Notes |
+|-------|--------|----------|-------|
+| **Hannah** | Female | General receptionist | "The Natural Australian Voice" — TOP PICK for AU |
+| **Abbi Jones** | Female | Professional/marketing | Late 30s, polished Australian |
+| **Alesta** | Male | Business/conversational | Natural, relaxed, professional Australian |
+| **Andrew** | Male | Narration/trades | Deep Australian with gravitas |
+
+**New feature:** ElevenLabs v3 Audio Tags allow accent switching mid-sentence with `[British accent]` or `[Australian accent]` tags — no separate voice model needed.
 
 **Model recommendation:** ElevenLabs Multilingual V2 for best quality + accent stability.
 
