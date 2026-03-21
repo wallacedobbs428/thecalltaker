@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Your AI Receptionist Is Ready — The Call Taker</title>
+<meta name="description" content="Your personalized AI receptionist demo. Hear it answer as your business.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<!-- Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17970510102');</script>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0c0b0a;
+  --surface: #141210;
+  --surface-2: #1a1816;
+  --border: rgba(237,232,225,0.06);
+  --border-bright: rgba(237,232,225,0.1);
+  --t100: rgba(237,232,225,1);
+  --t70: rgba(237,232,225,0.7);
+  --t40: rgba(237,232,225,0.4);
+  --t20: rgba(237,232,225,0.2);
+  --t10: rgba(237,232,225,0.1);
+  --t06: rgba(237,232,225,0.06);
+  --accent: #1a7a5c;
+  --accent-hover: #2a9d7a;
+  --accent-soft: rgba(26,122,92,0.1);
+  --accent-glow: rgba(26,122,92,0.05);
+  --amber: #c27c3a;
+  --green: #2a9d7a;
+  --red: #c0392b;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --mono: 'JetBrains Mono', 'SF Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--t100);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999;
+  opacity: 0.45; mix-blend-mode: soft-light;
+}
+
+/* ═══ LAYOUT ═══ */
+.page { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+/* ═══ HERO ═══ */
+.hero {
+  text-align: center;
+  padding: 80px 0 48px;
+}
+
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; font-weight: 400;
+  letter-spacing: 0.15em; color: var(--accent);
+  text-transform: uppercase;
+  background: var(--accent-soft);
+  border: 1px solid rgba(26,122,92,0.15);
+  padding: 8px 16px; border-radius: 100px;
+  margin-bottom: 32px;
+}
+.badge .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2.5s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+.hero h1 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--t100); margin-bottom: 16px;
+}
+.hero h1 .name { color: var(--accent); }
+
+.hero-sub {
+  font-size: 16px; color: var(--t40);
+  line-height: 1.7; max-width: 520px;
+  margin: 0 auto 40px;
+}
+.hero-sub strong { color: var(--t70); font-weight: 500; }
+
+/* ═══ DEMO CONSOLE ═══ */
+.demo-section {
+  background: var(--surface);
+  border: 1px solid var(--border-bright);
+  border-radius: 16px;
+  padding: 40px 32px;
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.demo-label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.2em; color: var(--accent);
+  text-transform: uppercase; margin-bottom: 16px;
+}
+
+.demo-title {
+  font-family: var(--serif); font-size: 22px;
+  color: var(--t100); margin-bottom: 8px;
+}
+
+.demo-desc {
+  font-size: 14px; color: var(--t40);
+  margin-bottom: 28px; line-height: 1.6;
+}
+
+.demo-phone {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--accent); color: var(--t100);
+  font-size: 18px; font-weight: 600;
+  padding: 16px 32px; border-radius: 12px;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(26,122,92,0.2);
+}
+.demo-phone:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 8px 32px rgba(26,122,92,0.3);
+}
+.demo-phone svg { width: 22px; height: 22px; fill: currentColor; }
+
+.demo-hint {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--t20); margin-top: 16px;
+  letter-spacing: 0.05em;
+}
+
+/* ═══ PAIN POINTS ═══ */
+.pain-section {
+  margin-bottom: 48px;
+}
+
+.pain-header {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.2em; color: var(--red);
+  text-transform: uppercase; margin-bottom: 20px;
+}
+
+.pain-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 8px;
+  display: flex; align-items: flex-start; gap: 16px;
+}
+.pain-icon {
+  font-size: 20px; min-width: 28px; text-align: center;
+  padding-top: 2px;
+}
+.pain-text {
+  font-size: 15px; color: var(--t70); line-height: 1.6;
+}
+.pain-text strong { color: var(--t100); font-weight: 600; }
+
+/* ═══ WHAT CHANGES ═══ */
+.fix-section {
+  margin-bottom: 48px;
+}
+
+.fix-header {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.2em; color: var(--green);
+  text-transform: uppercase; margin-bottom: 20px;
+}
+
+.fix-card {
+  background: var(--surface);
+  border: 1px solid rgba(26,122,92,0.12);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 8px;
+  display: flex; align-items: flex-start; gap: 16px;
+}
+.fix-icon {
+  color: var(--green); font-size: 18px; min-width: 28px;
+  text-align: center; padding-top: 3px;
+}
+.fix-text {
+  font-size: 15px; color: var(--t70); line-height: 1.6;
+}
+.fix-text strong { color: var(--t100); font-weight: 600; }
+
+/* ═══ URGENCY BLOCK ═══ */
+.urgency {
+  background: var(--surface);
+  border: 1px solid var(--border-bright);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.urgency-eyebrow {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.2em; color: var(--amber);
+  text-transform: uppercase; margin-bottom: 16px;
+}
+
+.urgency h2 {
+  font-family: var(--serif); font-size: clamp(1.4rem, 3.5vw, 2rem);
+  color: var(--t100); margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.urgency-sub {
+  font-size: 15px; color: var(--t40);
+  line-height: 1.7; margin-bottom: 28px;
+  max-width: 460px; margin-left: auto; margin-right: auto;
+}
+
+.countdown {
+  display: flex; justify-content: center; gap: 16px;
+  margin-bottom: 32px;
+}
+.countdown-unit {
+  text-align: center;
+}
+.countdown-num {
+  font-family: var(--mono); font-size: 36px;
+  font-weight: 400; color: var(--amber);
+  line-height: 1;
+  min-width: 56px;
+}
+.countdown-label {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.15em; color: var(--t20);
+  text-transform: uppercase; margin-top: 6px;
+}
+.countdown-sep {
+  font-family: var(--mono); font-size: 28px;
+  color: var(--t10); padding-top: 4px;
+}
+
+.spots-left {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--amber); letter-spacing: 0.05em;
+  background: rgba(194,124,58,0.08);
+  border: 1px solid rgba(194,124,58,0.15);
+  padding: 8px 16px; border-radius: 100px;
+}
+.spots-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber);
+  animation: pulse 2s infinite;
+}
+
+/* ═══ CTA BLOCK ═══ */
+.cta-section {
+  text-align: center;
+  padding: 48px 0 40px;
+  border-top: 1px solid var(--t06);
+  margin-bottom: 48px;
+}
+
+.cta-price {
+  margin-bottom: 24px;
+}
+.cta-price .amount {
+  font-family: var(--serif); font-size: 48px;
+  color: var(--t100);
+}
+.cta-price .period {
+  font-size: 16px; color: var(--t40);
+}
+.cta-price .note {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--t20); letter-spacing: 0.05em;
+  margin-top: 4px;
+}
+
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--accent); color: var(--t100);
+  font-size: 16px; font-weight: 600;
+  padding: 18px 40px; border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  box-shadow: 0 4px 24px rgba(26,122,92,0.2);
+  position: relative; overflow: hidden;
+}
+.cta-btn::after {
+  content: ''; position: absolute; inset: 0;
+  background: var(--accent-hover);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  border-radius: 10px;
+}
+.cta-btn:hover::after { transform: translateX(0); }
+.cta-btn:hover {
+  box-shadow: 0 8px 32px rgba(26,122,92,0.3);
+  transform: translateY(-1px);
+}
+.cta-btn span { position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; }
+
+.cta-trust {
+  display: flex; justify-content: center; gap: 24px;
+  margin-top: 20px; flex-wrap: wrap;
+}
+.cta-trust span {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--t20); letter-spacing: 0.05em;
+}
+
+/* ═══ SOCIAL PROOF ═══ */
+.proof {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 48px;
+}
+.proof-quote {
+  font-size: 15px; color: var(--t70);
+  line-height: 1.7; font-style: italic;
+  margin-bottom: 16px;
+}
+.proof-author {
+  display: flex; align-items: center; gap: 12px;
+}
+.proof-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--accent); color: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600;
+}
+.proof-name { font-size: 13px; font-weight: 600; color: var(--t100); }
+.proof-role { font-size: 12px; color: var(--t40); }
+
+/* ═══ FOOTER ═══ */
+.close-footer {
+  text-align: center;
+  padding: 32px 0 48px;
+  border-top: 1px solid var(--t06);
+}
+.close-footer p {
+  font-size: 13px; color: var(--t20);
+  margin-bottom: 8px;
+}
+.close-footer a {
+  color: var(--accent); text-decoration: none;
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:640px) {
+  .hero { padding: 60px 0 32px; }
+  .demo-section, .urgency { padding: 28px 20px; }
+  .pain-card, .fix-card { padding: 16px 18px; }
+  .countdown-num { font-size: 28px; }
+  .cta-btn { padding: 16px 32px; font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HERO — personalized -->
+  <section class="hero">
+    <div class="badge"><span class="dot"></span> BUILT FOR YOUR BUSINESS</div>
+    <h1><span class="name" id="heroName">Your</span>, here's your AI receptionist answering as <span class="name" id="heroBiz">your business</span>.</h1>
+    <p class="hero-sub">We custom-trained an AI receptionist on <strong id="heroBiz2">your business</strong>. It answers the phone, books the job, and texts you the details — <strong>24 hours a day, 7 days a week</strong>.</p>
+  </section>
+
+  <!-- LIVE DEMO -->
+  <section class="demo-section">
+    <div class="demo-label">HEAR IT LIVE</div>
+    <div class="demo-title">Call your AI receptionist right now</div>
+    <div class="demo-desc">This is the same voice your customers will hear. Tell it you need <span id="demoJobWord">a service call</span> and watch it handle everything.</div>
+    <a href="tel:+16157845747" class="demo-phone">
+      <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      (615) 784-5747
+    </a>
+    <div class="demo-hint">30 seconds. That's all it takes to hear the difference.</div>
+  </section>
+
+  <!-- PAIN POINTS — vertical specific -->
+  <section class="pain-section">
+    <div class="pain-header" id="painHeader">THE CALLS YOU'RE MISSING</div>
+    <div id="painCards">
+      <div class="pain-card">
+        <div class="pain-icon">📵</div>
+        <div class="pain-text">Right now, <strong id="painBiz1">your business</strong> sends after-hours calls to voicemail. <strong>80% of callers hang up and call your competitor instead.</strong></div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">💸</div>
+        <div class="pain-text">Every missed call is a <strong id="painJobValue">$300–$500</strong> job walking out the door. That's <strong>$2,000–$10,000/month</strong> in lost revenue.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">⏰</div>
+        <div class="pain-text">Your highest-value calls come nights, weekends, and emergencies — exactly when nobody's answering.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT CHANGES -->
+  <section class="fix-section">
+    <div class="fix-header">WHAT CHANGES WITH THE CALL TAKER</div>
+    <div class="fix-card">
+      <div class="fix-icon">✓</div>
+      <div class="fix-text"><strong>Every call answered in under 3 seconds</strong> — nights, weekends, holidays. No hold music. No voicemail.</div>
+    </div>
+    <div class="fix-card">
+      <div class="fix-icon">✓</div>
+      <div class="fix-text"><strong>Appointments booked automatically</strong> into your calendar. Customer gets a confirmation text. You get a summary.</div>
+    </div>
+    <div class="fix-card">
+      <div class="fix-icon">✓</div>
+      <div class="fix-text"><strong>Custom-trained on <span id="fixBiz">your business</span></strong> — knows your services, hours, service area, and pricing.</div>
+    </div>
+    <div class="fix-card">
+      <div class="fix-icon">✓</div>
+      <div class="fix-text"><strong>Emergency calls routed to you instantly.</strong> Non-urgent calls handled and booked without waking you up.</div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <div class="proof" id="proofBlock">
+    <div class="proof-quote">"I was losing $3K a month in missed calls and didn't even know it. First week with The Call Taker, it booked 7 jobs I would have lost. Pays for itself ten times over."</div>
+    <div class="proof-author">
+      <div class="proof-avatar">DM</div>
+      <div>
+        <div class="proof-name">Derek M.</div>
+        <div class="proof-role">Roofing — Charlotte, NC</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- URGENCY — founding customer countdown -->
+  <section class="urgency">
+    <div class="urgency-eyebrow">FOUNDING CUSTOMER OFFER</div>
+    <h2>Lock in the lowest price we'll ever offer.</h2>
+    <p class="urgency-sub">We're onboarding our first 10 businesses at a founding rate. Once these spots fill, the price goes up permanently.</p>
+    <div class="countdown" id="countdown">
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cdHours">48</div>
+        <div class="countdown-label">Hours</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cdMins">00</div>
+        <div class="countdown-label">Minutes</div>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cdSecs">00</div>
+        <div class="countdown-label">Seconds</div>
+      </div>
+    </div>
+    <div class="spots-left"><span class="spots-dot"></span> <span id="spotsNum">3</span> founding spots remaining</div>
+  </section>
+
+  <!-- CTA — CLAIM YOUR SPOT -->
+  <section class="cta-section">
+    <div class="cta-price">
+      <div><span class="amount">$97</span><span class="period">/mo</span></div>
+      <div class="note">Less than one missed job pays for a full year</div>
+    </div>
+    <a href="/pay.html" class="cta-btn" id="ctaBtn">
+      <span>Claim Your Founding Spot →</span>
+    </a>
+    <div class="cta-trust">
+      <span>NO CONTRACT</span>
+      <span>CANCEL ANYTIME</span>
+      <span>SETUP IN 5 MIN</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="close-footer">
+    <p>Questions? Call <a href="tel:+16157845747">(615) 784-5747</a> and ask Jessica yourself.</p>
+    <p>&copy; 2026 The Call Taker &middot; <a href="/">thecalltaker.com</a></p>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ─── URL PARAM EXTRACTION ───
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get('name') || '';
+  const biz = params.get('biz') || '';
+  const vertical = (params.get('vertical') || '').toLowerCase();
+
+  // ─── VERTICAL DATA ───
+  const verticals = {
+    locksmith: { job: 'a lockout', value: '$150–$400', proof: { quote: '"I was on a job and missed 3 calls in an hour. The Call Taker answered all of them — two were emergency lockouts. That\'s $600 I would\'ve lost."', initials: 'RK', name: 'Ryan K.', role: 'Locksmith — Nashville, TN', result: '$600 saved in one hour' }},
+    hvac: { job: 'an HVAC repair', value: '$300–$800', proof: { quote: '"AC goes out at 2am in August — that\'s a $500+ emergency call. I used to miss those. Now The Call Taker books them while I sleep."', initials: 'PM', name: 'Pete M.', role: 'HVAC — Houston, TX', result: '11 after-hours jobs in 2 weeks' }},
+    plumbing: { job: 'a plumbing emergency', value: '$250–$600', proof: { quote: '"Burst pipe at midnight? My AI receptionist handles it. Gets the address, books the call, texts me the details. I just show up."', initials: 'JR', name: 'Jake R.', role: 'Plumbing — Atlanta, GA', result: '8 emergency calls caught in week 1' }},
+    electrical: { job: 'an electrical job', value: '$200–$500', proof: null },
+    roofing: { job: 'a roofing estimate', value: '$500–$2,000', proof: { quote: '"Solo operator. Can\'t answer the phone on a roof. Last month The Call Taker booked 11 jobs I would\'ve missed."', initials: 'DM', name: 'Derek M.', role: 'Roofing — Charlotte, NC', result: '11 jobs in one month' }},
+    dental: { job: 'an appointment', value: '$200–$500', proof: null },
+    legal: { job: 'a consultation', value: '$300–$1,000', proof: null },
+    medspa: { job: 'a booking', value: '$200–$800', proof: null },
+    towing: { job: 'a tow', value: '$150–$400', proof: null },
+    pest_control: { job: 'a service call', value: '$150–$350', proof: null },
+    veterinary: { job: 'an appointment', value: '$100–$500', proof: null },
+    property_management: { job: 'a maintenance request', value: '$200–$600', proof: null },
+    garage_door: { job: 'a garage door repair', value: '$200–$500', proof: null },
+    cleaning: { job: 'a cleaning job', value: '$150–$400', proof: null },
+    auto_repair: { job: 'a repair appointment', value: '$200–$800', proof: null },
+    landscaping: { job: 'a landscaping job', value: '$200–$600', proof: null },
+    water_damage: { job: 'a water damage call', value: '$500–$2,000', proof: null },
+  };
+
+  const v = verticals[vertical] || { job: 'a service call', value: '$300–$500', proof: null };
+
+  // ─── PERSONALIZE PAGE ───
+  if (name) {
+    document.getElementById('heroName').textContent = name;
+    document.title = name + ', Your AI Receptionist Is Ready — The Call Taker';
+  } else {
+    document.getElementById('heroName').textContent = 'Hey';
+  }
+
+  if (biz) {
+    document.getElementById('heroBiz').textContent = biz;
+    document.getElementById('heroBiz2').textContent = biz;
+    document.getElementById('fixBiz').textContent = biz;
+    document.getElementById('painBiz1').textContent = biz;
+  }
+
+  document.getElementById('demoJobWord').textContent = v.job;
+  document.getElementById('painJobValue').textContent = v.value;
+
+  // ─── VERTICAL-SPECIFIC PROOF ───
+  if (v.proof) {
+    const pb = document.getElementById('proofBlock');
+    pb.querySelector('.proof-quote').textContent = '"' + v.proof.quote.replace(/^"|"$/g, '') + '"';
+    pb.querySelector('.proof-avatar').textContent = v.proof.initials;
+    pb.querySelector('.proof-name').textContent = v.proof.name;
+    pb.querySelector('.proof-role').textContent = v.proof.role;
+  }
+
+  // ─── COUNTDOWN — 48hr from first visit ───
+  const STORAGE_KEY = 'tct_close_deadline';
+  let deadline;
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) {
+    deadline = parseInt(stored, 10);
+  } else {
+    deadline = Date.now() + (48 * 60 * 60 * 1000);
+    localStorage.setItem(STORAGE_KEY, deadline.toString());
+  }
+
+  function updateCountdown() {
+    const now = Date.now();
+    let diff = Math.max(0, deadline - now);
+    const h = Math.floor(diff / 3600000); diff %= 3600000;
+    const m = Math.floor(diff / 60000); diff %= 60000;
+    const s = Math.floor(diff / 1000);
+    document.getElementById('cdHours').textContent = String(h).padStart(2, '0');
+    document.getElementById('cdMins').textContent = String(m).padStart(2, '0');
+    document.getElementById('cdSecs').textContent = String(s).padStart(2, '0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ─── CTA LINK — pass params through to pay ───
+  const ctaBtn = document.getElementById('ctaBtn');
+  const payParams = new URLSearchParams();
+  if (name) payParams.set('name', name);
+  if (biz) payParams.set('biz', biz);
+  if (vertical) payParams.set('vertical', vertical);
+  payParams.set('plan', 'after-hours');
+  payParams.set('ref', 'close');
+  ctaBtn.href = '/pay.html?' + payParams.toString();
+
+  // ─── TRACK VIEW ───
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'close_page_view', {
+      'contact_name': name,
+      'business': biz,
+      'vertical': vertical
+    });
+  }
+})();
+</script>
+</body>
+</html>
