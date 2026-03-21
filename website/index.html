@@ -735,6 +735,8 @@ a { color: inherit; text-decoration: none; }
 <noscript><link rel="stylesheet" href="/shared/premium.css"></noscript>
 <link rel="stylesheet" href="/shared/demo-console.css">
 <script src="/shared/ab-split.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -916,17 +918,16 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
-<!-- ===== JESSICA HOLOGRAM v3 — Gideon premium ===== -->
-<section id="jessica-hologram" style="min-height:85vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#000;">
-  <!-- Ambient glow -->
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,rgba(0,255,159,0.05) 0%,transparent 60%);pointer-events:none;"></div>
-  <!-- Bottom bloom -->
-  <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:500px;height:250px;background:radial-gradient(ellipse at 50% 100%,rgba(0,255,159,0.1) 0%,transparent 70%);filter:blur(40px);pointer-events:none;"></div>
-  <!-- Particle field -->
-  <div id="holoParticles" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;"></div>
-  <!-- Hologram image -->
-  <div style="position:relative;z-index:2;text-align:center;">
-    <img src="jessica-hologram.jpg" alt="Jessica — AI Receptionist" id="holoImg" style="width:min(85vw,520px);height:auto;object-fit:contain;will-change:transform;filter:drop-shadow(0 0 20px rgba(0,255,159,0.3)) drop-shadow(0 0 60px rgba(0,255,159,0.1));">
+<!-- ==================== JESSICA HOLOGRAM v3 — GIDEON PREMIUM ==================== -->
+<section class="jessica-section" style="position:relative;min-height:85vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle at 50% 30%, #001122 0%, #000811 70%);margin:0 auto;left:0;right:0;">
+  <div style="position:relative;width:100%;max-width:64rem;margin:0 auto;perspective:1400px;text-align:center;">
+    <div id="hologram" style="position:relative;display:inline-block;margin:0 auto;will-change:transform;filter:drop-shadow(0 0 60px #00FF9F) drop-shadow(0 0 120px rgba(0,255,159,0.5));">
+      <img src="jessica-hologram.jpg" alt="Jessica — AI Receptionist" style="width:420px;max-width:90vw;height:auto;object-fit:contain;display:block;margin:0 auto;background:transparent;">
+    </div>
+    <div style="position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:min(520px,90vw);height:256px;pointer-events:none;background:radial-gradient(ellipse at 50% 0%, rgba(0,255,159,0.45) 0%, transparent 70%);filter:blur(40px);"></div>
+    <div style="margin-top:80px;text-align:center;color:#00FF9F;font-size:clamp(13px,2vw,18px);letter-spacing:5px;font-family:'JetBrains Mono',monospace;font-weight:300;">
+      JESSICA &nbsp;&bull;&nbsp; AI RECEPTIONIST &nbsp;&bull;&nbsp; ONLINE
+    </div>
   </div>
 </section>
 
@@ -3194,6 +3195,81 @@ window.__tctUILoaded = true;
 </script>
 
 <script src="/shared/ui.js" defer></script>
+
+<!-- JESSICA HOLOGRAM v3 — GSAP animations -->
+<script>
+(function(){
+  if(typeof gsap==='undefined'){console.warn('GSAP missing');return;}
+  const h=document.getElementById('hologram');
+  if(!h)return;
+  let mx=0,my=0,tx=0,ty=0;
+
+  /* Particles */
+  (function(){
+    const s=document.querySelector('.jessica-section');
+    if(!s)return;
+    const c=document.createElement('div');
+    c.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;';
+    s.appendChild(c);
+    for(let i=0;i<30;i++){
+      const p=document.createElement('div');
+      p.style.cssText='position:absolute;width:2px;height:2px;background:rgba(0,255,159,0.55);border-radius:50%;';
+      p.style.left=(Math.random()*100)+'%';
+      p.style.top=(Math.random()*100)+'%';
+      c.appendChild(p);
+      gsap.to(p,{y:'-110vh',duration:Math.random()*25+35,repeat:-1,ease:'none',delay:Math.random()*-40});
+    }
+  })();
+
+  /* Float */
+  gsap.to(h,{y:-12,duration:4.2,ease:'sine.inOut',yoyo:true,repeat:-1});
+
+  /* Bloom breathe */
+  gsap.to(h,{filter:'drop-shadow(0 0 80px #00FF9F) drop-shadow(0 0 160px rgba(0,255,159,0.6))',duration:3,ease:'sine.inOut',yoyo:true,repeat:-1});
+
+  /* Auto Y-rotate 30s */
+  gsap.to(h,{rotationY:360,duration:30,ease:'none',repeat:-1,transformOrigin:'50% 50%',transformPerspective:1400});
+
+  /* Mouse tilt */
+  const mob=()=>window.innerWidth<700;
+  document.addEventListener('mousemove',e=>{
+    if(mob())return;
+    const r=h.getBoundingClientRect();
+    tx=((e.clientX-r.left)/r.width-0.5)*5;
+    ty=((e.clientY-r.top)/r.height-0.5)*3;
+  });
+  document.addEventListener('mouseleave',()=>{tx=0;ty=0;});
+  document.addEventListener('touchmove',e=>{
+    const t=e.touches[0],r=h.getBoundingClientRect();
+    tx=((t.clientX-r.left)/r.width-0.5)*2;
+    ty=((t.clientY-r.top)/r.height-0.5)*1.5;
+  },{passive:true});
+  document.addEventListener('touchend',()=>{tx=0;ty=0;});
+
+  gsap.ticker.add(()=>{
+    mx=gsap.utils.interpolate(mx,tx,0.055);
+    my=gsap.utils.interpolate(my,ty,0.055);
+    gsap.set(h,{rotationX:-my,transformPerspective:1400});
+  });
+
+  /* Flicker */
+  function flicker(){
+    gsap.delayedCall(7+Math.random()*12,()=>{
+      gsap.timeline({onComplete:flicker})
+        .to(h,{opacity:0.80+Math.random()*0.05,duration:0.06})
+        .to(h,{opacity:1,duration:0.10});
+    });
+  }
+  gsap.delayedCall(6,flicker);
+
+  /* iOS fix */
+  window.addEventListener('orientationchange',()=>{
+    const s=document.querySelector('.jessica-section');
+    if(!s)return;
+    setTimeout(()=>{s.style.display='none';requestAnimationFrame(()=>{s.style.display='';});},180);
+  });
+})();
+</script>
 </body>
 </html>
 
