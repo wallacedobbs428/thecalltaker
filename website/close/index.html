@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Your AI Receptionist Demo | The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #0a0a0a; color: #e5e5e5;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    @font-face {
+      font-family: 'Inter';
+      src: url('../fonts/Inter-Variable.woff2') format('woff2');
+      font-weight: 100 900;
+      font-display: swap;
+    }
+
+    /* ── Layout ── */
+    .container { max-width: 640px; margin: 0 auto; padding: 24px 20px; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 48px 0 40px;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(0,220,130,0.08); border: 1px solid rgba(0,220,130,0.2);
+      border-radius: 100px; padding: 6px 14px;
+      font-size: 0.75rem; font-weight: 700; color: #00dc82;
+      margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #00dc82;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .hero h1 {
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      font-weight: 900; color: #fff;
+      line-height: 1.15; letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+    .hero h1 .name { color: #00dc82; }
+    .hero h1 .biz { color: #00dc82; }
+    .hero .sub {
+      font-size: 1rem; color: #71717a; line-height: 1.6;
+      max-width: 480px; margin: 0 auto;
+    }
+
+    /* ── Phone Demo ── */
+    .phone-section {
+      margin: 40px auto;
+      max-width: 340px;
+    }
+    .phone-frame {
+      background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
+      border: 2px solid #00dc82;
+      border-radius: 28px;
+      padding: 16px;
+      box-shadow: 0 0 60px rgba(0,220,130,0.15), 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .phone-status {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 4px 12px; font-size: 0.6875rem; color: #52525b;
+    }
+    .phone-status .active {
+      display: flex; align-items: center; gap: 4px;
+      color: #00dc82; font-weight: 700;
+    }
+    .phone-status .active .dot {
+      width: 5px; height: 5px; border-radius: 50%; background: #00dc82;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    .call-card {
+      background: #111; border: 1px solid #1e1e1e; border-radius: 16px;
+      padding: 20px; margin-bottom: 8px;
+      animation: slide-in 0.6s ease both;
+    }
+    .call-card:nth-child(2) { animation-delay: 0.3s; }
+    .call-card:nth-child(3) { animation-delay: 0.6s; }
+    .call-card:nth-child(4) { animation-delay: 0.9s; }
+
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .call-card .label {
+      font-size: 0.625rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1.5px; color: #00dc82; margin-bottom: 8px;
+    }
+    .call-card .msg {
+      font-size: 0.875rem; color: #d4d4d8; line-height: 1.5;
+    }
+    .call-card .msg .highlight { color: #fff; font-weight: 700; }
+    .call-card .time {
+      font-size: 0.6875rem; color: #3f3f46; margin-top: 8px;
+    }
+
+    /* ── Stats ── */
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin: 32px 0;
+    }
+    .stat {
+      background: #111; border: 1px solid #1e1e1e; border-radius: 12px;
+      padding: 16px; text-align: center;
+    }
+    .stat .num {
+      font-size: 1.5rem; font-weight: 900; color: #00dc82;
+    }
+    .stat .lbl {
+      font-size: 0.6875rem; color: #52525b; margin-top: 4px;
+      text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 32px 0;
+      border-top: 1px solid #1a1a1a;
+      margin-top: 24px;
+    }
+    .cta-section h2 {
+      font-size: 1.5rem; font-weight: 900; color: #fff;
+      margin-bottom: 8px;
+    }
+    .cta-section .price {
+      font-size: 0.875rem; color: #71717a; margin-bottom: 24px;
+    }
+    .cta-section .price .amount {
+      color: #00dc82; font-weight: 800; font-size: 1.125rem;
+    }
+    .cta-section .price .strike {
+      text-decoration: line-through; color: #52525b;
+    }
+    .spots-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);
+      border-radius: 100px; padding: 6px 14px;
+      font-size: 0.75rem; font-weight: 700; color: #ef4444;
+      margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      display: block; width: 100%; padding: 18px;
+      background: linear-gradient(135deg, #00dc82, #00b368);
+      color: #0a0a0a; border: none; border-radius: 12px;
+      font-size: 1.125rem; font-weight: 800; font-family: inherit;
+      cursor: pointer; text-decoration: none; text-align: center;
+      box-shadow: 0 4px 24px rgba(0,220,130,0.25);
+      transition: transform 0.15s;
+    }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary .sub {
+      display: block; font-size: 0.75rem; font-weight: 500;
+      opacity: 0.7; margin-top: 2px;
+    }
+
+    .btn-demo {
+      display: block; width: 100%; padding: 16px;
+      margin-top: 12px;
+      background: transparent; color: #a1a1aa;
+      border: 1px solid #27272a; border-radius: 12px;
+      font-size: 0.9375rem; font-weight: 700; font-family: inherit;
+      cursor: pointer; text-decoration: none; text-align: center;
+      transition: all 0.15s;
+    }
+    .btn-demo:hover { border-color: #00dc82; color: #00dc82; }
+
+    .trust {
+      font-size: 0.6875rem; color: #3f3f46; margin-top: 16px;
+      text-align: center;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center; padding: 32px 0 24px;
+      font-size: 0.75rem; color: #27272a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="hero">
+      <div class="badge"><span class="dot"></span> Live AI Demo</div>
+      <h1>
+        Jessica is ready to answer<br>
+        <span class="biz" id="bizName">your</span> phones
+      </h1>
+      <p class="sub" id="heroSub">
+        Listen to how your AI receptionist handles real calls — trained on your business, available 24/7.
+      </p>
+    </div>
+
+    <!-- Phone Demo -->
+    <div class="phone-section">
+      <div class="phone-frame">
+        <div class="phone-status">
+          <span class="active"><span class="dot"></span> Jessica Active</span>
+          <span id="bizLabel">The Call Taker</span>
+        </div>
+
+        <div class="call-card">
+          <div class="label">Incoming Call</div>
+          <div class="msg">
+            "<span class="highlight" id="scenario1">Hi, I need help right away — </span>
+            <span id="scenario1b">can someone come out tonight?</span>"
+          </div>
+          <div class="time">Just now</div>
+        </div>
+
+        <div class="call-card">
+          <div class="label">Jessica Responds</div>
+          <div class="msg">
+            "Absolutely! Let me get you scheduled right away.
+            <span class="highlight">Can I grab your name and address?</span>"
+          </div>
+          <div class="time">2 seconds later</div>
+        </div>
+
+        <div class="call-card">
+          <div class="label">Job Booked</div>
+          <div class="msg">
+            "<span class="highlight" id="contactName">You</span>, you're all set.
+            <span id="scenario2">Someone from the team</span> will be in touch shortly.
+            Is there anything else I can help with?"
+          </div>
+          <div class="time">45 seconds total</div>
+        </div>
+
+        <div class="call-card">
+          <div class="label">Sent to You</div>
+          <div class="msg">
+            <span class="highlight">New job booked:</span> Emergency service call,
+            customer confirmed. Details texted to your phone.
+          </div>
+          <div class="time">Instant notification</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat">
+        <div class="num">24/7</div>
+        <div class="lbl">Coverage</div>
+      </div>
+      <div class="stat">
+        <div class="num">2s</div>
+        <div class="lbl">Answer</div>
+      </div>
+      <div class="stat">
+        <div class="num">$0</div>
+        <div class="lbl">Missed Jobs</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <div class="spots-badge">Only 7 founding spots left</div>
+      <h2>Lock In Your Founding Rate</h2>
+      <p class="price">
+        <span class="amount">$264/mo</span> founding rate &mdash;
+        goes to <span class="strike">$497/mo</span> when spots fill
+      </p>
+
+      <a href="https://thecalltaker.com/pay" class="btn-primary" id="ctaPrimary">
+        Claim Your Spot
+        <span class="sub">14-day free pilot included &mdash; cancel anytime</span>
+      </a>
+
+      <a href="tel:+16157845747" class="btn-demo">
+        Or Call the Demo Line: (615) 784-5747
+      </a>
+
+      <p class="trust">No contracts. No card for pilot. Cancel in one text.</p>
+    </div>
+
+    <div class="footer">
+      &copy; 2026 The Call Taker &mdash; AI That Answers Your Calls
+    </div>
+  </div>
+
+<script>
+(function() {
+  // Parse URL params safely
+  var params = new URLSearchParams(window.location.search);
+  var name = params.get('name') || '';
+  var biz = params.get('biz') || '';
+  var vertical = params.get('vertical') || '';
+
+  // Sanitize — strip HTML to prevent XSS
+  function clean(str) {
+    var el = document.createElement('div');
+    el.textContent = str;
+    return el.innerHTML.substring(0, 100);
+  }
+
+  name = clean(name);
+  biz = clean(biz);
+  vertical = clean(vertical.toLowerCase());
+
+  // Personalize page title
+  if (biz) {
+    document.title = biz + ' — Your AI Receptionist Demo | The Call Taker';
+  }
+
+  // Personalize hero
+  if (biz) {
+    document.getElementById('bizName').textContent = biz + "'s";
+    document.getElementById('bizLabel').textContent = biz;
+  }
+  if (name) {
+    document.getElementById('contactName').textContent = name;
+    document.getElementById('heroSub').textContent =
+      name + ', this is what Jessica sounds like answering for ' +
+      (biz || 'your business') + ' — 24/7, never misses a call.';
+  }
+
+  // Industry-specific scenarios
+  var scenarios = {
+    locksmith: {
+      call: "I'm locked out of my house —",
+      detail: "can someone come right now? It's an emergency.",
+      team: "A locksmith from " + (biz || "your team")
+    },
+    hvac: {
+      call: "My AC just died and it's 95 degrees —",
+      detail: "can someone come look at it today?",
+      team: "A technician from " + (biz || "your team")
+    },
+    plumbing: {
+      call: "I've got a pipe burst in my basement —",
+      detail: "I need someone out here ASAP!",
+      team: "A plumber from " + (biz || "your team")
+    },
+    roofing: {
+      call: "The storm last night tore shingles off my roof —",
+      detail: "can someone come give me an estimate?",
+      team: "Someone from " + (biz || "your team")
+    },
+    electrical: {
+      call: "Half my house lost power and I smell burning —",
+      detail: "can an electrician come out tonight?",
+      team: "An electrician from " + (biz || "your team")
+    },
+    dental: {
+      call: "I chipped my front tooth and I'm in pain —",
+      detail: "do you have any openings today?",
+      team: "The team at " + (biz || "your office")
+    },
+    legal: {
+      call: "I was just in a car accident —",
+      detail: "I need to speak with an attorney right away.",
+      team: "An attorney from " + (biz || "your firm")
+    },
+    medspa: {
+      call: "I want to book Botox and a facial —",
+      detail: "do you have availability this week?",
+      team: "The team at " + (biz || "your clinic")
+    },
+    towing: {
+      call: "My car broke down on the highway —",
+      detail: "I need a tow truck as fast as possible!",
+      team: "A driver from " + (biz || "your fleet")
+    },
+    veterinary: {
+      call: "My dog ate something and he's vomiting —",
+      detail: "can I bring him in right now?",
+      team: "The vet team at " + (biz || "your clinic")
+    },
+    property_management: {
+      call: "My tenant says there's a water leak —",
+      detail: "I need maintenance sent over today.",
+      team: "Your maintenance team at " + (biz || "your company")
+    },
+    pest_control: {
+      call: "I've got termites swarming my kitchen —",
+      detail: "can someone come inspect today?",
+      team: "A tech from " + (biz || "your company")
+    },
+    garage_door: {
+      call: "My garage door won't open and I can't get my car out —",
+      detail: "is someone available this morning?",
+      team: "A tech from " + (biz || "your company")
+    },
+    general: {
+      call: "Hi, I need help right away —",
+      detail: "can someone come out tonight?",
+      team: "Someone from " + (biz || "the team")
+    }
+  };
+
+  var s = scenarios[vertical] || scenarios.general;
+
+  document.getElementById('scenario1').textContent = s.call;
+  document.getElementById('scenario1b').textContent = s.detail;
+  document.getElementById('scenario2').textContent = s.team;
+})();
+</script>
+</body>
+</html>
