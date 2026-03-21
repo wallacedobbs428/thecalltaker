@@ -8,19 +8,39 @@
 <meta name="robots" content="noindex, nofollow">
 <script src="/shared/tct-tracking.js" defer></script>
 <title>Get Started — The Call Taker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
   body {
-    background: #0d1117;
-    color: #e6edf3;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #07090F;
+    color: #e8eaf0;
+    font-family: 'Inter', sans-serif;
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
+    position: relative;
   }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 300px 300px;
+  }
+
+  /* All direct children of body need relative z-index to sit above noise */
+  .header, .trust, .container, .footer { position: relative; z-index: 1; }
 
   .container { max-width: 440px; margin: 0 auto; padding: 0 16px; }
 
@@ -28,179 +48,293 @@
   .header {
     text-align: center;
     padding: 36px 20px 24px;
-    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+    background: linear-gradient(180deg, rgba(0,255,136,0.04) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
-  .logo { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
-  .logo span { color: #f85149; }
-  .tagline { color: #8b949e; font-size: 14px; margin-top: 4px; }
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .logo span { color: #00FF88; }
+  .tagline { color: rgba(255,255,255,0.4); font-size: 13px; margin-top: 4px; letter-spacing: 0.02em; }
 
   /* Trust badges */
   .trust {
-    display: flex; justify-content: center; gap: 16px;
-    padding: 12px; font-size: 12px; color: #8b949e;
-    border-bottom: 1px solid #21262d;
+    display: flex; justify-content: center; gap: 20px;
+    padding: 12px; font-size: 12px; color: rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    letter-spacing: 0.02em;
   }
-  .trust span { display: flex; align-items: center; gap: 4px; }
-  .trust .dot { width: 6px; height: 6px; background: #3fb950; border-radius: 50%; }
+  .trust span { display: flex; align-items: center; gap: 5px; }
+  .trust .dot {
+    width: 6px; height: 6px;
+    background: #00FF88;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #00FF88;
+    flex-shrink: 0;
+  }
 
   /* Plan selector */
-  .plans { padding: 24px 0; }
+  .plans { padding: 28px 0; }
   .plan-label {
-    text-align: center; font-size: 13px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 1px; color: #8b949e;
-    margin-bottom: 14px;
+    text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 18px;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .plan-card {
-    background: #161b22;
-    border: 2px solid #21262d;
-    border-radius: 16px;
-    padding: 24px 20px;
-    margin: 12px 0;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 22px 20px;
+    margin: 10px 0;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
     position: relative;
   }
   .plan-card:active, .plan-card.selected {
-    border-color: #3fb950;
-    box-shadow: 0 0 0 1px #3fb950, 0 0 20px rgba(63,185,80,0.1);
+    border-color: #00FF88;
+    background: rgba(0,255,136,0.04);
+    box-shadow: 0 0 0 1px rgba(0,255,136,0.15), 0 0 24px rgba(0,255,136,0.06);
   }
   .plan-card .badge {
-    position: absolute; top: -10px; right: 16px;
-    background: #3fb950; color: #0d1117;
-    font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
-    padding: 3px 10px; border-radius: 10px;
+    position: absolute; top: -10px; right: 14px;
+    background: #00FF88;
+    color: #07090F;
+    font-size: 9px; font-weight: 800; letter-spacing: 1px;
+    padding: 3px 10px; border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
   }
 
   .plan-top { display: flex; justify-content: space-between; align-items: center; }
-  .plan-name { font-weight: 700; color: #fff; font-size: 17px; }
-  .plan-price { font-size: 28px; font-weight: 800; color: #fff; }
-  .plan-price span { font-size: 14px; color: #8b949e; font-weight: 400; }
-  .plan-desc { color: #8b949e; font-size: 13px; margin-top: 8px; line-height: 1.5; }
+  .plan-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #fff;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .plan-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .plan-price span {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 400;
+  }
+  .plan-desc { color: rgba(255,255,255,0.45); font-size: 13px; margin-top: 7px; line-height: 1.5; }
 
   .plan-features {
     list-style: none; margin-top: 14px;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 7px;
   }
   .plan-features li {
-    font-size: 13px; color: #c9d1d9;
-    padding-left: 18px; position: relative;
+    font-size: 12px; color: rgba(255,255,255,0.6);
+    padding-left: 16px; position: relative;
   }
   .plan-features li::before {
     content: "\2713"; position: absolute; left: 0;
-    color: #3fb950; font-weight: 700; font-size: 12px;
+    color: #00FF88; font-weight: 700; font-size: 11px;
   }
 
   /* Radio indicator */
   .radio-dot {
-    width: 22px; height: 22px; border: 2px solid #30363d;
-    border-radius: 50%; display: flex; align-items: center;
+    width: 20px; height: 20px;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center;
     justify-content: center; flex-shrink: 0;
     transition: all 0.2s;
   }
   .plan-card.selected .radio-dot {
-    border-color: #3fb950;
+    border-color: #00FF88;
+    box-shadow: 0 0 8px rgba(0,255,136,0.3);
   }
   .plan-card.selected .radio-dot::after {
-    content: ''; width: 10px; height: 10px;
-    background: #3fb950; border-radius: 50%;
+    content: '';
+    width: 9px; height: 9px;
+    background: #00FF88;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0,255,136,0.6);
   }
+
+  /* ROI callout — terminal style */
+  .roi-callout {
+    background: rgba(0,255,136,0.04);
+    border: 1px solid rgba(0,255,136,0.15);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 18px 0;
+    text-align: center;
+  }
+  .roi-callout .big {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: #00FF88;
+    letter-spacing: -0.02em;
+  }
+  .roi-callout .big::after {
+    content: '_';
+    animation: blink 1.1s step-end infinite;
+    opacity: 0.7;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 0; }
+  }
+  .roi-callout .sub { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 4px; letter-spacing: 0.02em; }
 
   /* CTA Button */
   .cta-area { padding: 0 0 20px; }
   .cta-btn {
     display: block; width: 100%;
-    background: linear-gradient(135deg, #3fb950, #2ea043);
-    color: #fff; border: none; border-radius: 14px;
-    padding: 18px; font-size: 18px; font-weight: 800;
+    background: #00FF88;
+    color: #07090F;
+    border: none; border-radius: 10px;
+    padding: 17px; font-size: 16px; font-weight: 800;
     text-align: center; cursor: pointer;
     text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 18px;
     transition: all 0.15s;
     -webkit-appearance: none;
+    box-shadow: 0 0 24px rgba(0,255,136,0.2);
   }
   .cta-btn:active {
     transform: scale(0.98);
-    opacity: 0.9;
+    box-shadow: 0 0 12px rgba(0,255,136,0.15);
   }
   .cta-sub {
-    text-align: center; font-size: 12px; color: #8b949e;
+    text-align: center; font-size: 12px;
+    color: rgba(255,255,255,0.3);
     margin-top: 8px;
+    letter-spacing: 0.02em;
   }
-
-  /* ROI callout */
-  .roi-callout {
-    background: rgba(248,81,73,0.08);
-    border: 1px solid rgba(248,81,73,0.2);
-    border-radius: 12px;
-    padding: 16px; margin: 20px 0;
-    text-align: center;
-  }
-  .roi-callout .big {
-    font-size: 32px; font-weight: 800; color: #f85149;
-  }
-  .roi-callout .sub { font-size: 13px; color: #8b949e; margin-top: 2px; }
 
   /* What you get */
   .features-section { padding: 20px 0; }
   .features-title {
-    font-size: 13px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: #8b949e; margin-bottom: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 14px;
   }
   .feature-item {
-    display: flex; gap: 12px; align-items: flex-start;
-    padding: 12px 0; border-bottom: 1px solid #21262d;
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .feature-item:last-child { border-bottom: none; }
   .feature-icon {
-    width: 36px; height: 36px; background: #161b22;
-    border-radius: 10px; display: flex; align-items: center;
-    justify-content: center; font-size: 18px; flex-shrink: 0;
+    width: 36px; height: 36px;
+    background: rgba(0,255,136,0.06);
+    border: 1px solid rgba(0,255,136,0.12);
+    border-radius: 8px;
+    display: flex; align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
   }
-  .feature-name { font-weight: 700; color: #fff; font-size: 15px; }
-  .feature-desc { font-size: 13px; color: #8b949e; margin-top: 2px; }
+  .feature-name { font-weight: 700; color: #fff; font-size: 14px; }
+  .feature-desc { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
 
   /* Guarantee */
   .guarantee {
-    background: #161b22;
-    border: 1px solid #21262d;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: 12px;
     padding: 20px; margin: 20px 0;
     text-align: center;
   }
-  .guarantee .icon { font-size: 28px; margin-bottom: 8px; }
-  .guarantee .title { font-weight: 700; color: #fff; font-size: 16px; }
-  .guarantee .desc { font-size: 13px; color: #8b949e; margin-top: 6px; line-height: 1.5; }
+  .guarantee .icon { font-size: 26px; margin-bottom: 8px; }
+  .guarantee .title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #fff;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .guarantee .desc { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 6px; line-height: 1.5; }
 
   /* Demo CTA */
   .demo-strip {
-    background: linear-gradient(135deg, #f85149, #da3633);
-    border-radius: 12px; padding: 16px;
+    background: rgba(0,255,136,0.06);
+    border: 1px solid rgba(0,255,136,0.18);
+    border-radius: 10px;
+    padding: 16px;
     text-align: center; margin: 16px 0;
   }
-  .demo-strip .lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.7); }
-  .demo-strip a {
-    display: block; font-size: 24px; font-weight: 800;
-    color: #fff; text-decoration: none; margin: 4px 0;
+  .demo-strip .lbl {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.35);
+    font-family: 'Barlow Condensed', sans-serif;
   }
-  .demo-strip .sub { font-size: 12px; color: rgba(255,255,255,0.75); }
+  .demo-strip a {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px; font-weight: 700;
+    color: #00FF88;
+    text-decoration: none;
+    margin: 6px 0 4px;
+    letter-spacing: 0.02em;
+  }
+  .demo-strip .sub { font-size: 12px; color: rgba(255,255,255,0.35); }
 
   /* Footer */
   .footer {
     padding: 30px 16px;
-    text-align: center; font-size: 12px; color: #484f58;
-    border-top: 1px solid #21262d;
+    text-align: center; font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    border-top: 1px solid rgba(255,255,255,0.05);
   }
-  .footer a { color: #58a6ff; text-decoration: none; }
+  .footer a { color: rgba(0,255,136,0.6); text-decoration: none; }
 
   /* Payment option buttons */
   .payment-options { margin: 20px 0; }
+  .payment-options .pay-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 14px; text-align: center;
+  }
   .pay-btn {
     display: block; width: 100%;
-    border: none; border-radius: 14px;
-    padding: 16px; font-size: 16px; font-weight: 700;
+    border: none; border-radius: 10px;
+    padding: 15px; font-size: 15px; font-weight: 700;
     text-align: center; cursor: pointer;
     text-decoration: none; margin: 8px 0;
     transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
   }
   .pay-btn:active { transform: scale(0.98); opacity: 0.9; }
   .paypal-btn { background: #0070ba; color: #fff; }
@@ -208,12 +342,20 @@
 
   /* Urgency bar */
   .urgency-bar {
-    background: rgba(248,81,73,0.12);
-    border: 1px solid rgba(248,81,73,0.25);
-    border-radius: 10px;
-    padding: 12px 16px; margin: 16px 0;
-    text-align: center; font-size: 13px; color: #f85149;
-    font-weight: 600;
+    background: rgba(0,255,136,0.04);
+    border: 1px solid rgba(0,255,136,0.12);
+    border-radius: 8px;
+    padding: 11px 16px; margin: 16px 0;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #00FF88;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  .urgency-bar::before {
+    content: '> ';
+    opacity: 0.5;
   }
 </style>
 <script src="/shared/ab-split.js"></script>
@@ -257,9 +399,9 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   <div class="plans">
     <div class="plan-label">Choose Your Plan</div>
 
-    <div class="plan-card selected" id="plan-afterhours" onclick="selectPlan('afterhours')">
+    <div class="plan-card selected reveal" id="plan-afterhours" onclick="selectPlan('afterhours')">
       <div class="badge">MOST POPULAR</div>
-      <div class="plan-top" style="margin-bottom: 4px;">
+      <div class="plan-top" style="margin-bottom: 5px;">
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="radio-dot"></div>
           <div class="plan-name">After-Hours</div>
@@ -277,13 +419,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       </ul>
     </div>
 
-    <div class="plan-card" id="plan-full247" onclick="selectPlan('full247')">
-      <div class="plan-top" style="margin-bottom: 4px;">
+    <div class="plan-card reveal" id="plan-full247" onclick="selectPlan('full247')" style="transition-delay:0.1s">
+      <div class="plan-top" style="margin-bottom: 5px;">
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="radio-dot"></div>
           <div class="plan-name">Full 24/7</div>
         </div>
-        <div class="plan-price">$497<span>/mo</span></div>
+        <div class="plan-price">$297<span>/mo</span></div>
       </div>
       <div class="plan-desc">Every call, every hour — plus business hours overflow</div>
       <ul class="plan-features">
@@ -296,8 +438,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       </ul>
     </div>
 
-    <div class="plan-card" id="plan-premium" onclick="selectPlan('premium')">
-      <div class="plan-top" style="margin-bottom: 4px;">
+    <div class="plan-card reveal" id="plan-premium" onclick="selectPlan('premium')" style="transition-delay:0.2s">
+      <div class="plan-top" style="margin-bottom: 5px;">
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="radio-dot"></div>
           <div class="plan-name">Premium</div>
@@ -317,13 +459,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   </div>
 
   <!-- ROI CALLOUT -->
-  <div class="roi-callout">
+  <div class="roi-callout reveal">
     <div class="big" id="roi-text">$97 &lt; 1 missed call</div>
     <div class="sub">Most businesses make it back with the first call we catch</div>
   </div>
 
   <!-- FREE PILOT CTA -->
-  <div class="cta-area">
+  <div class="cta-area reveal">
     <a class="cta-btn" href="https://thecalltaker.com/signup.html" id="checkout-btn" onclick="trackCheckout(event)">
       Start Free 14-Day Pilot
     </a>
@@ -332,15 +474,15 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
   <!-- PAYMENT OPTIONS -->
   <div class="payment-options" id="payment-options" style="display:none;">
-    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:14px;text-align:center;">Ready to Pay? Choose How</div>
+    <div class="pay-label">Ready to Pay? Choose How</div>
     <a class="pay-btn paypal-btn" id="paypal-btn" href="#" onclick="payWithPayPal(event)">
       Pay with PayPal — <span id="paypal-price">$97/mo</span>
     </a>
     <a class="pay-btn venmo-btn" href="https://venmo.com/u/Wallace-Dobbs" target="_blank">
       Pay with Venmo — @Wallace-Dobbs
     </a>
-    <div style="text-align:center;font-size:12px;color:#8b949e;margin-top:8px;">
-      Or text "READY" to <a href="sms:+16157845747" style="color:#58a6ff;">(615) 784-5747</a> and we'll send you an invoice
+    <div style="text-align:center;font-size:12px;color:rgba(255,255,255,0.3);margin-top:8px;">
+      Or text "READY" to <a href="sms:+16157845747" style="color:rgba(0,255,136,0.6);">(615) 784-5747</a> and we'll send you an invoice
     </div>
   </div>
 
@@ -348,7 +490,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   <div class="features-section">
     <div class="features-title">What You Get</div>
 
-    <div class="feature-item">
+    <div class="feature-item reveal">
       <div class="feature-icon">&#128222;</div>
       <div>
         <div class="feature-name">Professional Receptionist</div>
@@ -356,7 +498,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       </div>
     </div>
 
-    <div class="feature-item">
+    <div class="feature-item reveal" style="transition-delay:0.05s">
       <div class="feature-icon">&#128197;</div>
       <div>
         <div class="feature-name">Appointment Booking</div>
@@ -364,7 +506,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       </div>
     </div>
 
-    <div class="feature-item">
+    <div class="feature-item reveal" style="transition-delay:0.1s">
       <div class="feature-icon">&#9889;</div>
       <div>
         <div class="feature-name">Instant Notifications</div>
@@ -372,7 +514,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       </div>
     </div>
 
-    <div class="feature-item">
+    <div class="feature-item reveal" style="transition-delay:0.15s">
       <div class="feature-icon">&#128736;</div>
       <div>
         <div class="feature-name">Custom to Your Business</div>
@@ -380,7 +522,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       </div>
     </div>
 
-    <div class="feature-item">
+    <div class="feature-item reveal" style="transition-delay:0.2s">
       <div class="feature-icon">&#127775;</div>
       <div>
         <div class="feature-name">Setup in 10 Minutes</div>
@@ -390,26 +532,26 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   </div>
 
   <!-- GUARANTEE -->
-  <div class="guarantee">
+  <div class="guarantee reveal">
     <div class="icon">&#128170;</div>
     <div class="title">Zero Risk — 14-Day Free Pilot</div>
     <div class="desc">Try it free for 14 days. No credit card. No contracts. No setup fees. If you don't catch at least one call that would've gone to voicemail, walk away. No questions asked.</div>
   </div>
 
   <!-- DEMO LINE -->
-  <div class="demo-strip">
+  <div class="demo-strip reveal">
     <div class="lbl">Hear It Before You Buy</div>
     <a href="tel:+16157845747">(615) 784-5747</a>
     <div class="sub">Call our demo line — hear exactly what your customers will hear</div>
   </div>
 
   <!-- URGENCY -->
-  <div class="urgency-bar">
+  <div class="urgency-bar reveal">
     3 free pilot slots left this week — first come, first served
   </div>
 
   <!-- SECOND CTA -->
-  <div class="cta-area" style="padding: 20px 0;">
+  <div class="cta-area reveal" style="padding: 20px 0;">
     <a class="cta-btn" href="https://thecalltaker.com/signup.html" onclick="trackCheckout(event)">
       Start Free Pilot — <span id="cta-price-2">$97/mo</span> after trial
     </a>
@@ -429,9 +571,9 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   // ── PLAN CONFIG ──
   var selectedPlan = 'afterhours';
   var PLANS = {
-    afterhours: { name: 'After-Hours', price: 97, roi: '$97 < 1 missed call', paypal: 'https://paypal.me/wallacedobbs/97' },
-    full247:    { name: 'Full 24/7',    price: 497, roi: '$497 < 1 service call', paypal: 'https://paypal.me/wallacedobbs/497' },
-    premium:    { name: 'Pro',      price: 997, roi: '$497 < 2 service calls', paypal: 'https://paypal.me/wallacedobbs/997' }
+    afterhours: { name: 'After-Hours', price: 97,  roi: '$97 < 1 missed call',    paypal: 'https://paypal.me/wallacedobbs/97' },
+    full247:    { name: 'Full 24/7',   price: 297, roi: '$297 < 1 service call',   paypal: 'https://paypal.me/wallacedobbs/297' },
+    premium:    { name: 'Premium',     price: 497, roi: '$497 < 2 service calls',  paypal: 'https://paypal.me/wallacedobbs/497' }
   };
 
   // Stripe payment links — REPLACE THESE when Stripe is connected
@@ -451,21 +593,17 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
   function trackCheckout(e) {
     var p = PLANS[selectedPlan];
-    // Send war room alert
     fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
       method: 'POST',
       headers: { 'Title': 'CHECKOUT CLICK: ' + p.name + ' $' + p.price, 'Priority': 'urgent', 'Tags': 'money_with_wings' },
       body: 'Someone clicked Start Free Pilot for ' + p.name + ' ($' + p.price + '/mo). Redirecting to signup.'
     }).catch(function(){});
-
-    // Show payment options for returning visitors
     document.getElementById('payment-options').style.display = 'block';
   }
 
   function payWithPayPal(e) {
     e.preventDefault();
     var p = PLANS[selectedPlan];
-    // War room alert for PayPal payment
     fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
       method: 'POST',
       headers: { 'Title': 'PAYPAL PAYMENT: ' + p.name + ' $' + p.price, 'Priority': 'urgent', 'Tags': 'dollar,fire' },
@@ -478,8 +616,33 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
   var params = new URLSearchParams(window.location.search);
   var urlPlan = params.get('plan');
   if (urlPlan && PLANS[urlPlan]) selectPlan(urlPlan);
-  // Show payment options if returning from signup
   if (params.get('pay') === '1') document.getElementById('payment-options').style.display = 'block';
+
+  // ── INTERSECTION OBSERVER — SCROLL REVEAL ──
+  (function() {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: just show everything
+      els.forEach(function(el) { el.classList.add('visible'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+    els.forEach(function(el) { io.observe(el); });
+    // Elements near top of page should be immediately visible on load
+    els.forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add('visible');
+      }
+    });
+  })();
 </script>
 
 </body>

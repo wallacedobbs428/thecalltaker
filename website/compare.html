@@ -25,51 +25,215 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
 <style>
-/* ===== COMPARE PAGE ===== */
+/* ===== COMPARE PAGE — DARK LUXURY TECH ===== */
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .cmp-hero { padding: 140px 0 60px; text-align: center; }
 @media (min-width: 768px) { .cmp-hero { padding: 160px 0 80px; } }
-.cmp-hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+.cmp-hero h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(38px, 6vw, 64px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
 .cmp-hero p { font-size: 18px; color: var(--text-2); max-width: 520px; margin: 0 auto; }
 
 /* Table */
 .cmp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 auto; max-width: 1100px; padding: 0 24px 80px; }
 .cmp-table { width: 100%; border-collapse: collapse; min-width: 800px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
 .cmp-table thead th { padding: 20px 16px; font-size: 13px; font-weight: 700; color: var(--text-3); text-align: center; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); letter-spacing: 0.02em; }
-.cmp-table thead th:first-child { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
-.cmp-table thead th.cmp-us { color: var(--green); background: rgba(0,220,130,0.04); position: relative; }
-.cmp-table thead th.cmp-us::after { content: 'RECOMMENDED'; display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: var(--green); margin-top: 4px; opacity: 0.7; }
+.cmp-table thead th:first-child { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; }
+.cmp-table thead th.cmp-us { color: #00FF88; background: rgba(0,255,136,0.04); position: relative; }
+.cmp-table thead th.cmp-us::after { content: 'RECOMMENDED'; display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: #00FF88; margin-top: 4px; opacity: 0.7; font-family: 'Barlow Condensed', sans-serif; }
 
 .cmp-table tbody td { padding: 16px; text-align: center; font-size: 14px; color: var(--text-2); border-bottom: 1px solid var(--border); }
-.cmp-table tbody td:first-child { text-align: left; font-weight: 600; color: #fff; font-size: 13px; white-space: nowrap; position: sticky; left: 0; background: #000; z-index: 2; }
+.cmp-table tbody td:first-child { text-align: left; font-weight: 600; color: #fff; font-size: 13px; white-space: nowrap; position: sticky; left: 0; background: #07090F; z-index: 2; }
 .cmp-table tbody tr:hover td { background: rgba(255,255,255,0.015); }
 .cmp-table tbody tr:hover td:first-child { background: rgba(255,255,255,0.03); }
 
 /* Us column highlight */
-.cmp-table tbody td.cmp-us { background: rgba(0,220,130,0.03); color: #fff; font-weight: 600; }
-.cmp-table tbody tr:hover td.cmp-us { background: rgba(0,220,130,0.05); }
+.cmp-table tbody td.cmp-us { background: rgba(0,255,136,0.03); color: #fff; font-weight: 600; }
+.cmp-table tbody tr:hover td.cmp-us { background: rgba(0,255,136,0.05); }
 
-/* Check / X / Partial */
-.cmp-yes { color: var(--green); font-weight: 700; }
-.cmp-no { color: #00dc82; }
-.cmp-partial { color: #00dc82; }
-.cmp-price-us { font-size: 18px; font-weight: 800; color: var(--green); }
-.cmp-price-them { font-size: 14px; color: var(--text-3); }
+/* Check / X / Partial — CORRECT SEMANTIC COLORS */
+.cmp-yes { color: #00FF88; font-weight: 700; }
+.cmp-no { color: #ef4444; font-weight: 600; }
+.cmp-partial { color: #f59e0b; font-weight: 600; }
+.cmp-price-us {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #00FF88;
+  background: rgba(0,255,136,0.06);
+  border: 1px solid rgba(0,255,136,0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  display: inline-block;
+  letter-spacing: -0.01em;
+}
+.cmp-price-us::after {
+  content: '_';
+  animation: blink-cur 1.1s step-end infinite;
+  opacity: 0.6;
+}
+@keyframes blink-cur {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0; }
+}
+.cmp-price-them {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text-3);
+}
 
-/* Why Switch Cards */
-.cmp-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: 900px; margin: 0 auto; }
-@media (max-width: 768px) { .cmp-cards { grid-template-columns: 1fr; } }
-.cmp-card { background: #000; padding: 40px 28px; text-align: center; }
-.cmp-card:hover { background: rgba(255,255,255,0.02); }
-.cmp-card-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--green-dim); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-.cmp-card-icon svg { width: 24px; height: 24px; color: var(--green); }
-.cmp-card h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-.cmp-card p { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+/* ===== ASYMMETRIC WHY SWITCH CARDS ===== */
+.cmp-cards-wrap { max-width: 900px; margin: 0 auto; display: grid; gap: 16px; }
+
+/* First card: full-width, accent treatment */
+.cmp-card-featured {
+  background: rgba(0,255,136,0.04);
+  border: 1px solid rgba(0,255,136,0.18);
+  border-radius: 16px;
+  padding: 40px 48px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: center;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.cmp-card-featured:hover {
+  background: rgba(0,255,136,0.07);
+  box-shadow: 0 0 32px rgba(0,255,136,0.06);
+}
+@media (max-width: 600px) {
+  .cmp-card-featured { grid-template-columns: 1fr; padding: 28px 24px; gap: 16px; }
+}
+.cmp-card-featured .stat-readout {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  color: #00FF88;
+  background: rgba(0,255,136,0.06);
+  border: 1px solid rgba(0,255,136,0.2);
+  border-radius: 10px;
+  padding: 16px 24px;
+  white-space: nowrap;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.cmp-card-featured .stat-readout::after {
+  content: '_';
+  animation: blink-cur 1.1s step-end infinite;
+  opacity: 0.5;
+}
+.cmp-card-featured h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.cmp-card-featured p { font-size: 15px; color: var(--text-2); line-height: 1.6; }
+
+/* Second row: two cards side-by-side, different heights via padding */
+.cmp-cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .cmp-cards-row { grid-template-columns: 1fr; } }
+
+.cmp-card-secondary {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.cmp-card-secondary:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(0,255,136,0.2);
+}
+
+/* First secondary: taller (more padding) */
+.cmp-card-secondary:first-child { padding: 40px 28px 48px; }
+/* Second secondary: shorter (less padding) — creates height contrast */
+.cmp-card-secondary:last-child { padding: 28px 28px 32px; }
+
+.cmp-card-secondary .cmp-card-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: rgba(0,255,136,0.06);
+  border: 1px solid rgba(0,255,136,0.12);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+.cmp-card-secondary .cmp-card-icon svg { width: 22px; height: 22px; color: #00FF88; }
+.cmp-card-secondary h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+.cmp-card-secondary p { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+
+/* Terminal stat inline — for use in secondary cards */
+.term-stat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #00FF88;
+  background: rgba(0,255,136,0.06);
+  border: 1px solid rgba(0,255,136,0.18);
+  border-radius: 5px;
+  padding: 3px 8px;
+  display: inline-block;
+  margin-top: 10px;
+  letter-spacing: 0.01em;
+}
 
 /* CTA */
 .cmp-cta { padding: 80px 0 100px; text-align: center; }
-.cmp-cta h2 { font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-bottom: 12px; }
+.cmp-cta h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
 .cmp-cta p { font-size: 16px; color: var(--text-2); margin-bottom: 32px; max-width: 400px; margin-left: auto; margin-right: auto; }
 .cmp-cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 </style>
@@ -128,13 +292,13 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 <main>
 <section class="cmp-hero">
   <div class="wrap">
-    <p class="section-label">Why Us</p>
-    <h1>See Why Service Businesses Are Switching</h1>
-    <p>We compared every option. Spoiler: one of these is cheaper, faster, smarter, and available right now for you to test.</p>
+    <p class="section-label reveal">Why Us</p>
+    <h1 class="reveal" style="transition-delay:0.08s">See Why Service Businesses Are Switching</h1>
+    <p class="reveal" style="transition-delay:0.16s">We compared every option. Spoiler: one of these is cheaper, faster, smarter, and available right now for you to test.</p>
   </div>
 </section>
 
-<section class="cmp-table-wrap">
+<section class="cmp-table-wrap reveal">
   <table class="cmp-table">
     <thead>
       <tr>
@@ -253,27 +417,40 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
     <h2 class="section-title">Why Businesses Switch to Us</h2>
   </div>
   <div class="wrap">
-    <div class="cmp-cards">
-      <div class="cmp-card">
-        <div class="cmp-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+    <div class="cmp-cards-wrap">
+
+      <!-- Card 1: Full-width featured card with terminal stat -->
+      <div class="cmp-card-featured reveal">
+        <div class="stat-readout">-70%</div>
+        <div>
+          <h3>Save 70% vs Human Answering Services</h3>
+          <p>Ruby charges $449/mo for what we do at $97/mo. Same calls answered — AI never calls in sick, never puts callers on hold, and never forgets your pricing. No per-minute fees, no surprise overage charges.</p>
         </div>
-        <h3>Save 70% vs Answering Services</h3>
-        <p>Ruby charges $449/mo for what we do at $97/mo. Same calls answered, fraction of the cost. No per-minute fees, no surprise charges.</p>
       </div>
-      <div class="cmp-card">
-        <div class="cmp-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+
+      <!-- Row 2: Two cards, different heights -->
+      <div class="cmp-cards-row">
+
+        <!-- Card 2: Taller (more content) -->
+        <div class="cmp-card-secondary reveal" style="transition-delay:0.1s">
+          <div class="cmp-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>Live in 5 Minutes, Not 5 Days</h3>
+          <p>Forward your number, we handle the rest. No training sessions, no onboarding calls, no waiting weeks for setup. Your AI receptionist is live today — and running 24/7 before your competitors finish their discovery call with Ruby.</p>
+          <span class="term-stat">&gt; setup_time: 5min</span>
         </div>
-        <h3>Live in 5 Minutes, Not 5 Days</h3>
-        <p>Forward your number, we handle the rest. No training sessions, no onboarding calls, no waiting. Your AI receptionist is live today.</p>
-      </div>
-      <div class="cmp-card">
-        <div class="cmp-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+
+        <!-- Card 3: Shorter (less content = height contrast) -->
+        <div class="cmp-card-secondary reveal" style="transition-delay:0.2s">
+          <div class="cmp-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Try Before You Buy</h3>
+          <p>Free 14-day pilot. No credit card. No contracts. If it doesn't pay for itself with the first call we catch, walk away. Nobody else lets you do that.</p>
+          <span class="term-stat">&gt; risk: $0.00</span>
         </div>
-        <h3>Try Before You Buy</h3>
-        <p>Free 14-day pilot. No credit card. No contracts. If it doesn't pay for itself in week one, walk away. Nobody else lets you do that.</p>
+
       </div>
     </div>
   </div>
@@ -281,8 +458,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
 <section class="cmp-cta">
   <div class="wrap">
-    <h2>Ready to Stop Losing Calls?</h2>
-    <p>14 days free. No credit card. Call the demo line right now and hear it yourself.</p>
+    <h2 class="reveal">Ready to Stop Losing Calls?</h2>
+    <p class="reveal" style="transition-delay:0.1s">14 days free. No credit card. Call the demo line right now and hear it yourself.</p>
     <div class="cmp-cta-buttons">
       <a href="/pilot/" class="btn btn-green btn-lg">Start Free Pilot &rarr;</a>
       <a href="tel:+16157845747" class="btn btn-secondary btn-lg">Call Demo: (615) 784-5747</a>
