@@ -154,6 +154,26 @@ N8N_STATUS="n8n PID: $N8N_PID"
 # If n8n API is available locally
 N8N_EXECUTIONS="$(curl -sS --max-time 10 "http://localhost:5678/api/v1/executions?limit=10" 2>/dev/null | head -c 2000 || echo "N8N_API_UNREACHABLE")"
 
+# ── STEP 9.5: Scout intelligence check ───────────────────────
+log "Checking Scout intelligence layer"
+
+SCOUT_STATUS=""
+INTEL_INDEX="$REPO_DIR/intelligence/intelligence.json"
+SCOUT_STATE_FILE="$REPO_DIR/intelligence/scout-state.json"
+
+if [ -f "$INTEL_INDEX" ]; then
+  SCOUT_STATUS+="Intelligence index: $(python3 -c "import json; d=json.load(open('$INTEL_INDEX')); print(f\"{d.get('total',0)} contacts scouted, last updated {d.get('last_updated','never')}\")" 2>/dev/null || echo "PARSE_ERROR")"$'\n'
+fi
+
+if [ -f "$SCOUT_STATE_FILE" ]; then
+  SCOUT_STATUS+="Scout state: $(python3 -c "import json; d=json.load(open('$SCOUT_STATE_FILE')); print(f\"cursor={d.get('cursor',0)}, runs={d.get('runs',0)}, last_run={d.get('last_run','never')}\")" 2>/dev/null || echo "PARSE_ERROR")"$'\n'
+fi
+
+SCOUT_CONTACTS="$(ls "$REPO_DIR/intelligence/contacts/" 2>/dev/null | wc -l | tr -d ' ')"
+SCOUT_STATUS+="Contact dossiers on disk: $SCOUT_CONTACTS"
+
+[ -z "$SCOUT_STATUS" ] && SCOUT_STATUS="Scout not yet initialized"
+
 # ── STEP 10: Build API request ──────────────────────────────
 log "Building Anthropic API request"
 
@@ -295,6 +315,9 @@ $PERF_AUDIT
 $N8N_STATUS
 Recent executions:
 $N8N_EXECUTIONS
+
+--- SCOUT INTELLIGENCE ---
+$SCOUT_STATUS
 
 Run all 10 checks and produce your FORGE report."
 
