@@ -11,7 +11,7 @@
 <link rel="canonical" href="https://thecalltaker.com/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;800&family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 
 <!-- Schema.org -->
 <script type="application/ld+json">
@@ -836,7 +836,7 @@ html.light .theme-toggle .icon-moon { display: none; }
 <nav class="nav">
   <a href="/" class="nav-logo">The Call<span>Taker</span></a>
   <div class="nav-links">
-    <a href="#features">Features</a>
+    <a href="#compare">Features</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
     <a href="tel:6157845747">Demo: (615) 784-5747</a>
@@ -1189,88 +1189,255 @@ html.light .ww-map-wrap svg .land.highlighted { fill: #00C96B; fill-opacity: 0.7
   </div>
 </section>
 
-<!-- ═══ SECTION 2: THE PROBLEM — full-width split, giant stat left ═══ -->
-<section id="problem" style="display:grid;grid-template-columns:1fr 1fr;min-height:80vh;border-bottom:1px solid var(--t06);">
-  <div class="reveal-left" style="display:flex;flex-direction:column;justify-content:center;padding:80px 64px;border-right:1px solid var(--t06);">
-    <div class="sec-label">01 &mdash; THE PROBLEM</div>
-    <div style="font-family:var(--serif);font-size:clamp(5rem,12vw,9rem);color:var(--amber);line-height:0.9;letter-spacing:-0.04em;margin-bottom:12px;">85%</div>
-    <div style="font-family:var(--mono);font-size:12px;color:var(--t40);letter-spacing:0.1em;">OF CALLERS WON'T LEAVE A VOICEMAIL</div>
-  </div>
-  <div class="reveal-right" style="display:flex;flex-direction:column;justify-content:center;padding:80px 64px;">
-    <h2 class="sec-title" style="margin-bottom:24px;">Every missed call costs you $300&ndash;$500.</h2>
-    <p style="color:var(--t70);font-size:16px;line-height:1.8;margin-bottom:40px;">When someone's locked out at midnight or has a burst pipe at 2 AM, they're not leaving a voicemail. They're calling the next company on Google.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;">
-      <div><div class="stat-num">62%</div><div class="stat-label">AFTER HOURS</div></div>
-      <div><div class="stat-num">$1,200</div><div class="stat-label">AVG JOB VALUE</div></div>
-      <div><div class="stat-num">$0</div><div class="stat-label">FROM MISSED CALL</div></div>
+<!-- ═══ SECTION 2: THE PROBLEM — terminal-style data blocks ═══ -->
+<style>
+/* ═══ PROBLEM SECTION ═══ */
+.prob { padding: 120px 8vw; position: relative; }
+.prob-grid { display: grid; grid-template-columns: 45% 55%; gap: 6vw; align-items: center; max-width: 1200px; margin: 0 auto; }
+.prob-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 24px; }
+.prob-h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 5.5vw, 80px); color: var(--t100); line-height: 0.9; margin-bottom: 0; }
+.prob-h2 span { display: block; }
+.prob-stat { font-family: 'Bebas Neue', sans-serif; font-size: clamp(96px, 12vw, 160px); color: var(--accent); line-height: 1; display: block; margin-top: 32px; }
+.prob-stat-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: clamp(15px, 1.8vw, 18px); color: var(--t40); margin-top: 8px; }
+.prob-terms { display: flex; flex-direction: column; gap: 16px; }
+.prob-term {
+  background: var(--surface-2, var(--surface));
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 20px 24px;
+  border-radius: 8px;
+  font-family: var(--mono), 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  line-height: 1.7;
+}
+.prob-term .line { display: block; }
+.prob-term .line-red { color: var(--amber); }
+.prob-term .cursor { animation: prob-blink 1s step-end infinite; }
+@keyframes prob-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+@media (prefers-reduced-motion: reduce) { .prob-term .cursor { animation: none; } }
+@media (max-width: 768px) {
+  .prob { padding: 80px 20px; }
+  .prob-grid { grid-template-columns: 1fr; gap: 48px; }
+  .prob-stat { font-size: clamp(72px, 18vw, 96px); }
+  .prob-terms { gap: 12px; }
+}
+
+/* ═══ COMPARE SECTION ═══ */
+.cmp { padding: 120px 8vw; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.cmp-header { text-align: center; max-width: 600px; margin: 0 auto 64px; }
+.cmp-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 24px; }
+.cmp-h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 5.5vw, 80px); color: var(--t100); line-height: 0.9; margin-bottom: 16px; }
+.cmp-sub { font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 18px; color: var(--t40); }
+.cmp-cards { position: relative; height: 520px; max-width: 960px; margin: 0 auto; }
+.cmp-card-without {
+  position: absolute; top: 48px; left: 0; width: 46%;
+  background: #0A0A0C; border: 1px solid rgba(255,68,68,0.2);
+  padding: 36px; border-radius: 8px; opacity: 0.75; z-index: 1;
+}
+html.light .cmp-card-without { background: #f0eded; border-color: rgba(200,68,68,0.15); }
+.cmp-card-with {
+  position: absolute; top: 0; right: 0; width: 58%;
+  background: var(--surface-2, #1a1816); border: 1px solid var(--border-bright);
+  box-shadow: 0 0 80px rgba(26,122,92,0.1), inset 0 0 80px rgba(26,122,92,0.02);
+  padding: 44px; border-radius: 8px; z-index: 2;
+}
+.cmp-card-head { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 28px; padding-left: 12px; }
+.cmp-card-head-bad { color: #FF4444; border-left: 3px solid #FF4444; }
+.cmp-card-head-good { color: var(--accent); border-left: 3px solid var(--accent); }
+.cmp-item { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; }
+.cmp-icon { font-size: 18px; flex-shrink: 0; line-height: 1.3; }
+.cmp-icon-x { color: #FF4444; }
+.cmp-icon-ok { color: var(--accent); }
+.cmp-item-text-bad { font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 15px; color: var(--t40); line-height: 1.5; }
+.cmp-item-text-good { font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 16px; color: var(--t100); line-height: 1.5; }
+.cmp-strip { border-top: 1px solid var(--border); padding-top: 24px; margin-top: 28px; font-family: var(--mono); font-size: 12px; color: var(--accent); }
+@media (max-width: 768px) {
+  .cmp { padding: 80px 20px; }
+  .cmp-cards { height: auto; position: static; display: flex; flex-direction: column-reverse; gap: 16px; }
+  .cmp-card-without, .cmp-card-with { position: static; width: 100%; }
+  .cmp-card-without { opacity: 1; }
+}
+
+/* ═══ HOW IT WORKS SECTION ═══ */
+.hiw { padding: 120px 8vw; }
+.hiw-header { text-align: center; max-width: 560px; margin: 0 auto 80px; }
+.hiw-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 24px; }
+.hiw-h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 5.5vw, 80px); color: var(--t100); line-height: 0.9; }
+.hiw-steps { max-width: 900px; margin: 0 auto; position: relative; }
+.hiw-step { position: relative; padding-left: 32px; }
+.hiw-step + .hiw-step { margin-top: 72px; }
+.hiw-step-2 { margin-left: 10vw; }
+.hiw-num {
+  position: absolute; top: -48px; left: -16px;
+  font-family: 'Bebas Neue', sans-serif; font-size: 180px;
+  color: var(--t100); opacity: 0.05; z-index: 0;
+  pointer-events: none; line-height: 1; user-select: none;
+}
+.hiw-content { position: relative; z-index: 1; }
+.hiw-step-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px; }
+.hiw-h3 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 4vw, 56px); color: var(--t100); line-height: 0.95; margin-bottom: 16px; }
+.hiw-body { font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: clamp(15px, 1.6vw, 17px); color: var(--t40); max-width: 520px; line-height: 1.6; margin-bottom: 20px; }
+.hiw-term {
+  background: var(--surface-2, var(--surface));
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  border-radius: 8px;
+  font-family: var(--mono), 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  line-height: 1.7;
+  width: fit-content;
+  max-width: 480px;
+}
+.hiw-term .line { display: block; }
+.hiw-connector {
+  position: absolute; left: 8px; width: 1px; top: 0;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  height: calc(100% + 72px); opacity: 0.3;
+}
+@media (max-width: 768px) {
+  .hiw { padding: 80px 20px; }
+  .hiw-step-2 { margin-left: 0; }
+  .hiw-num { font-size: 100px; opacity: 0.04; }
+  .hiw-connector { display: none; }
+  .hiw-body { max-width: 100%; }
+  .hiw-step { padding-left: 0; }
+  .hiw-term { max-width: 100%; width: 100%; }
+}
+</style>
+
+<section class="prob" id="problem">
+  <div class="prob-grid">
+    <!-- Left column -->
+    <div>
+      <div class="prob-label reveal">THE PROBLEM</div>
+      <h2 class="prob-h2">
+        <span class="reveal">EVERY MISSED</span>
+        <span class="reveal" style="transition-delay:0.1s;">CALL IS REVENUE</span>
+        <span class="reveal" style="transition-delay:0.2s;">OUT THE DOOR.</span>
+      </h2>
+      <span class="prob-stat reveal" style="transition-delay:0.25s;">85%</span>
+      <div class="prob-stat-label reveal" style="transition-delay:0.35s;">of callers won't leave a voicemail.</div>
+    </div>
+
+    <!-- Right column — terminals -->
+    <div class="prob-terms">
+      <div class="prob-term reveal">
+        <span class="line">&gt; INCOMING CALL: 11:47 PM</span>
+        <span class="line">&gt; BUSINESS STATUS: CLOSED / VOICEMAIL</span>
+        <span class="line">&gt; CALLER BEHAVIOR: Will not leave message</span>
+        <span class="line line-red">&gt; RESULT: [MISSED] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>
+        <span class="line">&gt; COST: ~$340 average job value lost<span class="cursor">&#9608;</span></span>
+      </div>
+      <div class="prob-term reveal" style="transition-delay:0.1s;">
+        <span class="line">&gt; POST-MISSED CALL ANALYSIS</span>
+        <span class="line">&gt; 85% will not leave voicemail</span>
+        <span class="line">&gt; 1 in 3 will never call back</span>
+        <span class="line">&gt; Next action: calls competitor</span>
+        <span class="line line-red">&gt; STATUS: [LEAD TRANSFERRED] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;<span class="cursor">&#9608;</span></span>
+      </div>
+      <div class="prob-term reveal" style="transition-delay:0.2s;">
+        <span class="line">&gt; ANNUAL IMPACT CALCULATION</span>
+        <span class="line">&gt; Est. missed calls/week: 8</span>
+        <span class="line">&gt; Weeks per year: 52 = 416 calls</span>
+        <span class="line">&gt; Avg job value: $340</span>
+        <span class="line line-red">&gt; REVENUE LEAKED: $141,440/yr</span>
+        <span class="line line-red">&gt; STATUS: [CRITICAL] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;<span class="cursor">&#9608;</span></span>
+      </div>
     </div>
   </div>
 </section>
-<style>@media(max-width:768px){#problem{grid-template-columns:1fr !important;min-height:auto !important;}#problem>div{padding:48px 24px !important;border-right:none !important;border-bottom:1px solid var(--t06);}}</style>
 
-<!-- ═══ SECTION 3: BEFORE / AFTER — two columns, stark contrast ═══ -->
-<section id="features" style="padding:120px 0;border-bottom:1px solid var(--t06);">
-  <div style="max-width:1100px;margin:0 auto;padding:0 40px;">
-    <div class="sec-label reveal" style="text-align:center;">02 &mdash; THE DIFFERENCE</div>
-    <h2 class="sec-title reveal" style="text-align:center;max-width:600px;margin:0 auto 64px;">Before Jessica. After Jessica.</h2>
+<!-- ═══ SECTION 3: BEFORE / AFTER — offset overlapping cards ═══ -->
+<section class="cmp" id="compare">
+  <div class="cmp-header">
+    <div class="cmp-label reveal">THE SOLUTION</div>
+    <h2 class="cmp-h2 reveal" style="transition-delay:0.1s;">JESSICA NEVER MISSES.</h2>
+    <div class="cmp-sub reveal" style="transition-delay:0.2s;">One AI receptionist. Every call answered. Every lead captured.</div>
+  </div>
 
-    <div class="reveal-scale" style="display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--t10);border-radius:16px;overflow:hidden;">
-      <!-- WITHOUT -->
-      <div style="padding:48px 40px;border-right:1px solid var(--t06);">
-        <div style="font-family:var(--mono);font-size:10px;color:rgba(200,80,60,0.7);letter-spacing:0.15em;margin-bottom:28px;">WITHOUT THE CALL TAKER</div>
-        <div style="display:flex;flex-direction:column;gap:20px;">
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Calls go to voicemail after 5 PM</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Customers call your competitor instead</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">No bookings while you're on a job</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Paying $1,200/mo for a human service</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">5&ndash;10 missed calls every week</span></div>
+  <div class="cmp-cards">
+    <!-- WITHOUT card -->
+    <div class="cmp-card-without reveal">
+      <div class="cmp-card-head cmp-card-head-bad">WITHOUT JESSICA</div>
+      <div class="cmp-item"><span class="cmp-icon cmp-icon-x">&#10005;</span><span class="cmp-item-text-bad">Calls roll to voicemail after hours</span></div>
+      <div class="cmp-item"><span class="cmp-icon cmp-icon-x">&#10005;</span><span class="cmp-item-text-bad">Leads dial your competitor next</span></div>
+      <div class="cmp-item"><span class="cmp-icon cmp-icon-x">&#10005;</span><span class="cmp-item-text-bad">Morning means a missed-call list</span></div>
+      <div class="cmp-item"><span class="cmp-icon cmp-icon-x">&#10005;</span><span class="cmp-item-text-bad">No record of who tried to reach you</span></div>
+      <div class="cmp-item"><span class="cmp-icon cmp-icon-x">&#10005;</span><span class="cmp-item-text-bad">Revenue stops at 5pm</span></div>
+    </div>
+
+    <!-- WITH card -->
+    <div class="cmp-card-with reveal" style="transition-delay:0.15s;">
+      <div class="cmp-card-head cmp-card-head-good">WITH JESSICA</div>
+      <div class="cmp-item"><span class="cmp-icon cmp-icon-ok">&#10003;</span><span class="cmp-item-text-good">Every call answered in 2 rings, 24/7</span></div>
+      <div class="cmp-item"><span class="cmp-icon cmp-icon-ok">&#10003;</span><span class="cmp-item-text-good">Lead captured, qualified, and logged</span></div>
+      <div class="cmp-item"><span class="cmp-icon cmp-icon-ok">&#10003;</span><span class="cmp-item-text-good">Appointment booked to your calendar</span></div>
+      <div class="cmp-item"><span class="cmp-icon cmp-icon-ok">&#10003;</span><span class="cmp-item-text-good">Customer texted a confirmation</span></div>
+      <div class="cmp-item"><span class="cmp-icon cmp-icon-ok">&#10003;</span><span class="cmp-item-text-good">You wake up to a full schedule</span></div>
+      <div class="cmp-strip">&gt; JESSICA STATUS: ONLINE &mdash; ALL CALLS COVERED</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 4: HOW IT WORKS — stacked steps with giant numbers ═══ -->
+<section class="hiw" id="how-it-works">
+  <div class="hiw-header">
+    <div class="hiw-label reveal">HOW IT WORKS</div>
+    <h2 class="hiw-h2 reveal" style="transition-delay:0.1s;">THREE STEPS.<br>ZERO COMPLEXITY.</h2>
+  </div>
+
+  <div class="hiw-steps">
+    <!-- Step 1 -->
+    <div class="hiw-step reveal">
+      <div class="hiw-connector"></div>
+      <div class="hiw-num">1</div>
+      <div class="hiw-content">
+        <div class="hiw-step-label">STEP 01</div>
+        <h3 class="hiw-h3">WE BUILD YOUR JESSICA</h3>
+        <p class="hiw-body">In 24 hours, we configure your AI receptionist with your business name, hours, services, and booking flow. She sounds like she works for you &mdash; because she does.</p>
+        <div class="hiw-term">
+          <span class="line">&gt; SETUP TIME: 24 hours</span>
+          <span class="line">&gt; CONFIGURATION: Your business, your voice</span>
+          <span class="line">&gt; STATUS: [READY TO DEPLOY] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>
         </div>
       </div>
-      <!-- WITH -->
-      <div style="padding:48px 40px;background:var(--accent-soft);">
-        <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:28px;">WITH THE CALL TAKER</div>
-        <div style="display:flex;flex-direction:column;gap:20px;">
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Every call answered in under 2 seconds</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">AI books the job and texts you details</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Callers think it's your front desk</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Starting at $97/mo &mdash; less than one job</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Zero missed calls. Zero missed revenue.</span></div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="hiw-step hiw-step-2 reveal" style="transition-delay:0.15s;">
+      <div class="hiw-connector"></div>
+      <div class="hiw-num">2</div>
+      <div class="hiw-content">
+        <div class="hiw-step-label">STEP 02</div>
+        <h3 class="hiw-h3">SHE ANSWERS EVERY CALL</h3>
+        <p class="hiw-body">Forward your number or get a new one. Jessica picks up in under 2 rings, handles FAQs, captures lead info, and books directly to your calendar. No hold music. No voicemail.</p>
+        <div class="hiw-term">
+          <span class="line">&gt; PICKUP TIME: &lt; 2 rings, 24/7/365</span>
+          <span class="line">&gt; CAPABILITY: Book, capture, qualify, text</span>
+          <span class="line">&gt; STATUS: [LIVE] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="hiw-step reveal" style="transition-delay:0.3s;">
+      <div class="hiw-num">3</div>
+      <div class="hiw-content">
+        <div class="hiw-step-label">STEP 03</div>
+        <h3 class="hiw-h3">YOU GET THE JOBS</h3>
+        <p class="hiw-body">Every call summary hits your phone. Every lead lands in your dashboard. Every appointment shows on your calendar. You just do the work &mdash; Jessica fills your schedule while you sleep.</p>
+        <div class="hiw-term">
+          <span class="line">&gt; LEAD CAPTURE RATE: 100% of answered calls</span>
+          <span class="line">&gt; REPORTING: Real-time text + dashboard</span>
+          <span class="line">&gt; STATUS: [REVENUE FLOWING] &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>
         </div>
       </div>
     </div>
   </div>
 </section>
-<style>@media(max-width:768px){#features [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}#features [style*="border-right"]{border-right:none !important;border-bottom:1px solid var(--t06);}}</style>
-
-<!-- ═══ SECTION 4: HOW IT WORKS — horizontal timeline ═══ -->
-<section id="how" style="padding:120px 40px;max-width:1100px;margin:0 auto;">
-  <div class="sec-label reveal" style="text-align:center;">03 &mdash; HOW IT WORKS</div>
-  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 64px;">Three steps. Five minutes.</h2>
-
-  <div class="reveal-stagger" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;position:relative;">
-    <!-- Connecting line -->
-    <div style="position:absolute;top:28px;left:15%;right:15%;height:1px;background:var(--t06);z-index:0;"></div>
-
-    <div style="text-align:center;position:relative;z-index:1;">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--accent);">1</div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Forward your calls</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Same way you'd forward to an employee. Takes 2 minutes.</p>
-    </div>
-
-    <div style="text-align:center;position:relative;z-index:1;">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--bg);box-shadow:0 0 24px rgba(26,122,92,0.3);">2</div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Jessica answers</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">She knows your business. Callers can't tell she's not real.</p>
-    </div>
-
-    <div style="text-align:center;position:relative;z-index:1;">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--accent);">3</div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">You get every lead</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Text with name, number, what they need. Appointments booked.</p>
-    </div>
-  </div>
-</section>
-<style>@media(max-width:768px){#how [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr !important;gap:48px !important;}#how [style*="position:absolute;top:28px"]{display:none;}}</style>
 
 <!-- ═══ SECTION 5: DEMO CTA — full-bleed, massive type ═══ -->
 <section class="reveal-scale" style="padding:140px 40px;text-align:center;background:linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
@@ -1428,9 +1595,9 @@ html.light .ww-map-wrap svg .land.highlighted { fill: #00C96B; fill-opacity: 0.7
     </div>
     <div class="footer-col">
       <h4>PRODUCT</h4>
-      <a href="#features">Features</a>
+      <a href="#compare">Features</a>
       <a href="#pricing">Pricing</a>
-      <a href="#how">How It Works</a>
+      <a href="#how-it-works">How It Works</a>
       <a href="/industries.html">Industries</a>
       <a href="/pilot/">Free Pilot</a>
     </div>
