@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="robots" content="noindex, nofollow">
+<title>Your AI Receptionist Is Ready | The Call Taker</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { overflow-x: hidden; max-width: 100%; }
+html { background: #0a0a0a; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #e5e5e5; background: #0a0a0a;
+  min-height: 100vh; min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+a { text-decoration: none; color: inherit; }
+
+.wrap { max-width: 480px; margin: 0 auto; padding: 20px 16px 48px; }
+
+/* ── Logo / Trust Header ── */
+.top-bar {
+  text-align: center; padding: 16px 0 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 20px;
+}
+.top-bar .logo {
+  font-size: 14px; font-weight: 800; color: #fff;
+  letter-spacing: -0.02em;
+}
+.top-bar .logo span { color: #00dc82; }
+.top-bar .trust-line {
+  font-size: 11px; color: #52525b; margin-top: 4px;
+}
+
+/* ── Personalized Hero ── */
+.hero-greeting {
+  font-size: clamp(32px, 8vw, 56px);
+  font-weight: 900; color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1.1; margin-bottom: 8px;
+}
+.hero-sub {
+  font-size: 15px; color: #a1a1aa; line-height: 1.5;
+  margin-bottom: 28px;
+}
+.hero-sub strong { color: #fff; font-weight: 700; }
+
+/* ── Demo Player ── */
+.demo-card {
+  background: #111; border: 1px solid #1e1e1e;
+  border-radius: 16px; padding: 20px; margin-bottom: 24px;
+}
+.demo-label {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 1.5px; color: #00dc82; margin-bottom: 12px;
+}
+.demo-biz-input {
+  width: 100%; box-sizing: border-box;
+  background: #1a1a1a; border: 1px solid #2a2a2a;
+  border-radius: 10px; padding: 14px 16px;
+  color: #fff; font-size: 16px; font-family: inherit;
+  outline: none; transition: border-color 0.2s;
+  -webkit-appearance: none; appearance: none;
+}
+.demo-biz-input:focus { border-color: #00dc82; }
+.demo-biz-input::placeholder { color: #52525b; }
+
+.play-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; min-height: 52px;
+  background: #00dc82; color: #0a0a0a;
+  border: none; border-radius: 12px;
+  font-size: 16px; font-weight: 800; font-family: inherit;
+  cursor: pointer; margin-top: 12px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, transform 0.1s;
+  min-width: 48px;
+}
+.play-btn:active { transform: scale(0.97); }
+.play-btn.connecting { background: #27272a; color: #a1a1aa; pointer-events: none; }
+.play-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* ── Vertical Pain Blocks ── */
+.pain-section { margin-bottom: 28px; }
+.pain-block {
+  background: #111; border: 1px solid #1e1e1e;
+  border-radius: 12px; padding: 20px; margin-bottom: 12px;
+}
+.pain-industry {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 1.5px; color: #f59e0b; margin-bottom: 8px;
+}
+.pain-text {
+  font-size: 15px; line-height: 1.6; color: #d4d4d8;
+}
+.pain-text strong { color: #fff; }
+
+/* ── Urgency Dots ── */
+.urgency-section {
+  background: #111; border: 1px solid #1e1e1e;
+  border-radius: 16px; padding: 20px; margin-bottom: 24px;
+  text-align: center;
+}
+.urgency-label {
+  font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px;
+}
+.urgency-sub {
+  font-size: 12px; color: #71717a; margin-bottom: 16px;
+}
+.dots-row {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 6px;
+}
+.dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #27272a; border: 1px solid #3f3f46;
+  flex-shrink: 0;
+}
+.dot.filled {
+  background: #00dc82; border-color: #00dc82;
+  box-shadow: 0 0 6px rgba(0,220,130,0.4);
+}
+@media (max-width: 400px) {
+  .dot { width: 10px; height: 10px; }
+  .dots-row { gap: 5px; }
+}
+
+/* ── PayPal CTA ── */
+.cta-section { margin-bottom: 24px; }
+.paypal-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; min-height: 56px;
+  background: linear-gradient(135deg, #00dc82, #00b368);
+  color: #0a0a0a; border: none; border-radius: 14px;
+  font-size: 17px; font-weight: 800; font-family: inherit;
+  cursor: pointer; text-decoration: none; text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.1s;
+  padding: 16px 20px;
+}
+.paypal-btn:active { transform: scale(0.97); }
+.price-note {
+  text-align: center; font-size: 12px; color: #52525b;
+  margin-top: 8px;
+}
+.price-note strong { color: #a1a1aa; }
+
+/* ── Guarantee ── */
+.guarantee {
+  text-align: center; padding: 20px;
+  border: 1px solid #1e1e1e; border-radius: 12px;
+  margin-bottom: 24px;
+}
+.guarantee-icon { font-size: 28px; margin-bottom: 8px; }
+.guarantee h3 {
+  font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px;
+}
+.guarantee p {
+  font-size: 13px; color: #71717a; line-height: 1.5;
+}
+
+/* ── Footer ── */
+.close-footer {
+  text-align: center; font-size: 11px; color: #3f3f46;
+  padding: 20px 0;
+}
+.close-footer a { color: #52525b; text-decoration: underline; }
+
+/* ── iOS Safari fixes ── */
+button, a { -webkit-tap-highlight-color: transparent; }
+input { font-size: 16px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Trust header -->
+  <div class="top-bar">
+    <div class="logo">The Call <span>Taker</span></div>
+    <div class="trust-line">AI Receptionist for Service Businesses</div>
+  </div>
+
+  <!-- Personalized headline -->
+  <h1 class="hero-greeting" id="heroGreeting">Your AI Receptionist Is Ready</h1>
+  <p class="hero-sub" id="heroSub">
+    Hear exactly what your customers will hear when they call.
+    <strong>Jessica answers in 2 seconds, 24/7.</strong>
+  </p>
+
+  <!-- Demo Player -->
+  <div class="demo-card">
+    <div class="demo-label">Live Demo</div>
+    <input
+      type="text"
+      class="demo-biz-input"
+      id="demoBizInput"
+      placeholder="Your business name"
+      autocomplete="off"
+      autocapitalize="words"
+    >
+    <button class="play-btn" id="playBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      HEAR JESSICA ANSWER
+    </button>
+  </div>
+
+  <!-- Pain blocks -->
+  <div class="pain-section">
+    <div class="pain-block" data-industry="locksmith">
+      <div class="pain-industry">Locksmith</div>
+      <div class="pain-text">
+        Customer locked out at 11pm. Calls your number. Gets voicemail.
+        Calls the next locksmith on Google. <strong>That's a $250-400 job gone in 10 seconds.</strong>
+      </div>
+    </div>
+    <div class="pain-block" data-industry="hvac">
+      <div class="pain-industry">HVAC</div>
+      <div class="pain-text">
+        AC dies on a Saturday afternoon. Homeowner calls 3 companies.
+        First one that picks up gets the job. <strong>$300-800 gone because nobody answered.</strong>
+      </div>
+    </div>
+    <div class="pain-block" data-industry="water-damage">
+      <div class="pain-industry">Water Damage</div>
+      <div class="pain-text">
+        Pipe bursts at 2am. Frantic homeowner needs help NOW.
+        Your phone rings 4 times and goes to voicemail. <strong>$2,000-5,000 job — gone.</strong>
+      </div>
+    </div>
+    <div class="pain-block" data-industry="property-mgmt">
+      <div class="pain-industry">Property Management</div>
+      <div class="pain-text">
+        Tenant calls about a leak on Sunday. No answer.
+        They call the landlord directly. Now you look unresponsive.
+        <strong>That's how you lose accounts.</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Urgency Dots -->
+  <div class="urgency-section">
+    <div class="urgency-label">Founding Customer Spots</div>
+    <div class="urgency-sub">20 total &mdash; 13 claimed, 7 remaining</div>
+    <div class="dots-row" id="dotsRow"></div>
+  </div>
+
+  <!-- PayPal CTA -->
+  <div class="cta-section">
+    <a href="/pay#starter" class="paypal-btn" id="ctaBtn">
+      CLAIM FOUNDING SPOT &rarr;
+    </a>
+    <div class="price-note">
+      <strong>$264/mo</strong> &mdash; locked forever. Goes to $497 after spot 20.
+    </div>
+  </div>
+
+  <!-- Guarantee -->
+  <div class="guarantee">
+    <div class="guarantee-icon">&#128274;</div>
+    <h3>14-Day Money-Back Guarantee</h3>
+    <p>If Jessica doesn't pay for herself in missed calls recovered, we'll refund every penny. No questions.</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="close-footer">
+    <p>&copy; 2026 The Call Taker &mdash; <a href="/privacy.html">Privacy</a> &middot; <a href="/terms.html">Terms</a></p>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  // === URL PARAMS ===
+  var params = new URLSearchParams(window.location.search);
+  var name = params.get('name');
+  var company = params.get('company') || params.get('biz');
+  var industry = params.get('industry');
+
+  // Personalize headline
+  var greetEl = document.getElementById('heroGreeting');
+  if (name && greetEl) {
+    greetEl.textContent = 'Hey ' + name + ',';
+  }
+
+  // Personalize sub
+  var subEl = document.getElementById('heroSub');
+  if (company && subEl) {
+    subEl.innerHTML = 'Hear exactly what <strong>' + escapeHtml(company) + '</strong> customers will hear when they call. <strong>Jessica answers in 2 seconds, 24/7.</strong>';
+  }
+
+  // Pre-fill demo input
+  var input = document.getElementById('demoBizInput');
+  if (company && input) {
+    input.value = company;
+  }
+
+  // Highlight matching industry pain block
+  if (industry) {
+    var blocks = document.querySelectorAll('.pain-block');
+    blocks.forEach(function(b) {
+      if (b.dataset.industry === industry) {
+        b.style.borderColor = '#f59e0b';
+        b.style.order = '-1';
+      }
+    });
+    // Reorder: set parent to flex column
+    var painSection = document.querySelector('.pain-section');
+    if (painSection) {
+      painSection.style.display = 'flex';
+      painSection.style.flexDirection = 'column';
+    }
+  }
+
+  // === URGENCY DOTS ===
+  var dotsRow = document.getElementById('dotsRow');
+  if (dotsRow) {
+    var total = 20;
+    var filled = 13;
+    for (var i = 0; i < total; i++) {
+      var dot = document.createElement('div');
+      dot.className = 'dot' + (i < filled ? ' filled' : '');
+      dotsRow.appendChild(dot);
+    }
+  }
+
+  // === PLAY BUTTON ===
+  var playBtn = document.getElementById('playBtn');
+  if (playBtn) {
+    playBtn.addEventListener('click', function() {
+      var bizName = (input && input.value.trim()) || 'Your Business';
+      playBtn.classList.add('connecting');
+      playBtn.innerHTML = 'CONNECTING...';
+
+      // Simulate connection delay, then redirect to demo
+      setTimeout(function() {
+        window.location.href = '/demo-live?biz=' + encodeURIComponent(bizName);
+      }, 1500);
+    });
+  }
+
+  // === HELPERS ===
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+})();
+</script>
+
+<!-- Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17970510102');</script>
+<script src="/tct-tracking.js" defer></script>
+
+</body>
+</html>
