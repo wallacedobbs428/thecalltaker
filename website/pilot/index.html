@@ -535,44 +535,36 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       var gclid = urlParams.get('gclid');
       if (gclid) tags.push('google-ads', 'gclid');
 
-      // Create GHL contact
+      // Create GHL contact via widget/form endpoint (public-safe, no API key)
       try {
-        var ghlBody = {
-          locationId: 'tQb9YmrGDrdVUJYPKrsY',
-          firstName: data.firstName,
-          lastName: data.lastName,
+        var ghlPayload = {
+          first_name: data.firstName,
+          last_name: data.lastName || '',
           email: data.email,
           phone: data.phone,
-          companyName: data.company,
-          tags: tags
+          company_name: data.company,
+          tags: tags.join(','),
+          source: 'pilot-landing-page',
+          industry: data.industry
         };
 
-        var resp = await fetch('https://services.leadconnectorhq.com/contacts/', {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
-            'Version': '2021-07-28',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(ghlBody)
-        });
-        var result = await resp.json();
-
-        // Post attribution notes
-        if (result && result.contact && result.contact.id && typeof getTctAttributionNotes === 'function') {
-          var notes = getTctAttributionNotes();
-          if (notes) {
-            await fetch('https://services.leadconnectorhq.com/contacts/' + result.contact.id + '/notes', {
-              method: 'POST',
-              headers: {
-                'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
-                'Version': '2021-07-28',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ body: 'Pilot Signup Attribution:\n' + notes })
-            });
-          }
+        // Append tctData if available
+        if (window.tctData) {
+          var tct = window.tctData;
+          ghlPayload.session_id = tct.session_id || '';
+          ghlPayload.device_type = tct.device_type || '';
+          ghlPayload.utm_source = tct.utm_source || '';
+          ghlPayload.utm_medium = tct.utm_medium || '';
+          ghlPayload.utm_campaign = tct.utm_campaign || '';
+          ghlPayload.referrer = tct.referrer || '';
+          ghlPayload.landing_page = tct.landing_page || '';
         }
+
+        await fetch('https://services.leadconnectorhq.com/widget/form/tQb9YmrGDrdVUJYPKrsY', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(ghlPayload)
+        });
       } catch(e) {}
 
       // War room alert
