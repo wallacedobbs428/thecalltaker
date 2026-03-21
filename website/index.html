@@ -652,6 +652,132 @@ html.light .theme-toggle .icon-moon { display: none; }
 }
 .mobile-bar a { color: var(--t100); font-weight: 700; font-size: 16px; text-decoration: none; }
 @media(max-width:768px) { .mobile-bar { display: block; } }
+
+/* ── HOLOGRAM v4 ── */
+:root {
+  --hg: #00FF9F;
+  --hg6: rgba(0,255,159,0.6);
+  --hg2: rgba(0,255,159,0.2);
+  --glass: rgba(0,18,28,0.75);
+}
+.jessica-section {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, #001a22 0%, #000000 80%);
+  margin: 0 auto;
+  left: 0; right: 0;
+}
+.holo-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  perspective: 1800px;
+  text-align: center;
+}
+.holo-3d {
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.holo-3d img {
+  width: 440px;
+  max-width: 85vw;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  background: transparent;
+  filter:
+    drop-shadow(0 0 60px #00FF9F)
+    drop-shadow(0 0 120px rgba(0,255,159,0.7))
+    drop-shadow(0 0 220px rgba(0,255,159,0.35));
+  will-change: filter, opacity;
+}
+.holo-beam {
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(700px, 90vw);
+  height: 460px;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 0%, rgba(0,255,159,0.7) 0%, transparent 65%);
+  filter: blur(65px);
+  opacity: 0.85;
+  z-index: 0;
+}
+.glass-hud {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0,255,159,0.35);
+  color: var(--hg);
+  padding: 14px 22px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1.2;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+.glass-hud::before, .glass-hud::after {
+  content: '';
+  position: absolute;
+  width: 7px; height: 7px;
+  border-color: rgba(0,255,159,0.5);
+  border-style: solid;
+}
+.glass-hud::before { top:-1px; left:-1px; border-width:1px 0 0 1px; }
+.glass-hud::after  { bottom:-1px; right:-1px; border-width:0 1px 1px 0; }
+.glass-hud .hv {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 0 14px rgba(0,255,159,0.65);
+  margin-top: 4px;
+}
+.glass-hud .hv.online { animation: hblink 2.8s ease-in-out infinite; }
+.holo-label {
+  position: absolute;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--hg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(10px, 1.5vw, 16px);
+  letter-spacing: 5px;
+  font-weight: 300;
+  white-space: nowrap;
+  text-shadow: 0 0 14px rgba(0,255,159,0.6);
+  border: 1px solid rgba(0,255,159,0.2);
+  padding: 8px 20px;
+  background: rgba(0,18,28,0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.h-neural  { top: -50px;  left: 8%; }
+.h-calls   { top: -30px;  right: 8%; }
+.h-latency { top: 36%;    left: -20px; }
+.h-uptime  { top: 36%;    right: -20px; }
+.h-appts   { bottom: 30%; left: 10%; }
+.h-satisfy { bottom: 30%; right: 10%; }
+.h-status  { bottom: -30px; left: 50%; transform: translateX(-50%); }
+@keyframes hblink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.jessica-section * { -webkit-transform-style: preserve-3d; }
+@media (max-width: 600px) {
+  .glass-hud { display: none; }
+  .holo-3d img { width: 280px; }
+}
 </style>
 </head>
 <body>
@@ -712,24 +838,35 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 </section>
 
-<!-- ==================== JESSICA HOLOGRAM v3 — GIDEON PREMIUM ==================== -->
-<section class="jessica-section" style="position:relative;min-height:80vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle at 50% 30%, #001122 0%, #000811 70%);margin:0 auto;left:0;right:0;padding:60px 24px 100px;">
+<!-- ==================== JESSICA HOLOGRAM v4 — TRUE 3D VOLUMETRIC ==================== -->
+<section class="jessica-section">
+  <div class="holo-wrap">
 
-  <div style="position:relative;width:100%;max-width:64rem;margin:0 auto;perspective:1400px;text-align:center;">
+    <!-- Particle canvas -->
+    <canvas id="holoParticles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.6;"></canvas>
 
-    <div id="hologram" style="position:relative;display:inline-block;margin:0 auto;will-change:transform;filter:drop-shadow(0 0 60px #00FF9F) drop-shadow(0 0 120px rgba(0,255,159,0.5));">
+    <!-- Volumetric beam -->
+    <div class="holo-beam"></div>
+
+    <!-- HUD Panels — real HTML, never rotate, always readable -->
+    <div class="glass-hud h-neural">Neural Core<span class="hv">ACTIVE</span></div>
+    <div class="glass-hud h-calls">Calls Today<span class="hv" id="hCalls">47</span></div>
+    <div class="glass-hud h-latency">Latency<span class="hv">1.2s</span></div>
+    <div class="glass-hud h-uptime">Uptime<span class="hv">99.97%</span></div>
+    <div class="glass-hud h-appts">Appointments<span class="hv" id="hAppts">12</span></div>
+    <div class="glass-hud h-satisfy">Satisfaction<span class="hv">98%</span></div>
+    <div class="glass-hud h-status">Status<span class="hv online">ONLINE</span></div>
+
+    <!-- 3D Core — ONLY the image rotates -->
+    <div id="hologram3d" class="holo-3d">
       <img
         src="jessica-hologram.jpg"
         alt="Jessica — AI Receptionist"
-        style="width:420px;max-width:90vw;height:auto;object-fit:contain;display:block;margin:0 auto;background:transparent;"
       />
     </div>
 
-    <div style="position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:min(520px,90vw);height:256px;pointer-events:none;background:radial-gradient(ellipse at 50% 0%, rgba(0,255,159,0.55) 0%, transparent 70%);filter:blur(50px);opacity:0.7;"></div>
-
-    <div style="margin-top:80px;text-align:center;color:#00FF9F;font-size:clamp(12px,2vw,18px);letter-spacing:5px;font-family:'JetBrains Mono',monospace;font-weight:300;">
-      JESSICA &nbsp;&bull;&nbsp; AI RECEPTIONIST &nbsp;&bull;&nbsp; ONLINE
-    </div>
+    <!-- Bottom label -->
+    <div class="holo-label">JESSICA &nbsp;&bull;&nbsp; AI RECEPTIONIST &nbsp;&bull;&nbsp; ONLINE</div>
 
   </div>
 </section>
@@ -1093,78 +1230,119 @@ document.querySelectorAll('.faq-q').forEach(q => {
 (function(){var f=false;function l(){if(f)return;f=true;var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV';s.async=true;document.head.appendChild(s);s.onload=function(){window.dataLayer=window.dataLayer||[];function g(){dataLayer.push(arguments)}g('js',new Date());g('config','G-29LL5GPBQV');g('config','AW-17970510102');};};['scroll','click','mousemove','touchstart'].forEach(function(e){window.addEventListener(e,l,{once:true});});})();
 </script>
 
-<!-- ==================== JESSICA HOLOGRAM v3 — GIDEON SCRIPT ==================== -->
+<!-- ==================== JESSICA HOLOGRAM v4 — TRUE 3D VOLUMETRIC SCRIPT ==================== -->
 <script>
 (function(){
-  if(typeof gsap==='undefined'){console.warn('GSAP missing');return;}
-  const h=document.getElementById('hologram');
+  if(typeof gsap==='undefined')return;
+  const h=document.getElementById('hologram3d');
   if(!h)return;
+  const panels=document.querySelectorAll('.glass-hud');
   let mx=0,my=0,tx=0,ty=0;
 
-  /* 50 particles with opacity variation */
+  /* Canvas particles */
   (function(){
-    const s=document.querySelector('.jessica-section');
-    if(!s)return;
-    const c=document.createElement('div');
-    c.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;';
-    s.appendChild(c);
-    for(let i=0;i<50;i++){
-      const p=document.createElement('div');
-      const sz=Math.random()<0.3?3:2;
-      const op=0.3+Math.random()*0.5;
-      p.style.cssText='position:absolute;width:'+sz+'px;height:'+sz+'px;background:rgba(0,255,159,'+op+');border-radius:50%;';
-      p.style.left=(Math.random()*100)+'%';
-      p.style.top=(Math.random()*100)+'%';
-      c.appendChild(p);
-      gsap.to(p,{y:'-115vh',duration:Math.random()*25+30,repeat:-1,ease:'none',delay:Math.random()*-45});
-    }
+    const cv=document.getElementById('holoParticles');
+    if(!cv)return;
+    const ctx=cv.getContext('2d');
+    const sec=document.querySelector('.jessica-section');
+    function resize(){cv.width=sec.offsetWidth;cv.height=sec.offsetHeight;}
+    resize();
+    window.addEventListener('resize',resize);
+    const pts=Array.from({length:50},()=>({
+      x:Math.random()*cv.width,y:Math.random()*cv.height,
+      r:Math.random()<0.3?1.5:1,
+      vx:(Math.random()-.5)*.1,vy:-.05-Math.random()*.12,
+      a:.2+Math.random()*.5
+    }));
+    (function tick(){
+      ctx.clearRect(0,0,cv.width,cv.height);
+      pts.forEach(p=>{
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.y<-4)p.y=cv.height+4;
+        if(p.x<-4)p.x=cv.width+4;
+        if(p.x>cv.width+4)p.x=-4;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(0,255,159,'+p.a+')';ctx.fill();
+      });
+      requestAnimationFrame(tick);
+    })();
   })();
 
-  /* Float — 18px amplitude */
+  /* HUD staggered entrance */
+  gsap.fromTo(panels,{opacity:0,y:8},{opacity:1,y:0,duration:.65,ease:'power2.out',stagger:.1,delay:.3});
+
+  /* HUD border pulse */
+  function hudPulse(){
+    const p=panels[Math.floor(Math.random()*panels.length)];
+    gsap.timeline()
+      .to(p,{borderColor:'rgba(0,255,159,0.6)',duration:.3,ease:'power2.out'})
+      .to(p,{borderColor:'rgba(0,255,159,0.35)',duration:.9,ease:'power2.inOut'});
+    gsap.delayedCall(7+Math.random()*6,hudPulse);
+  }
+  gsap.delayedCall(1.5,hudPulse);
+
+  /* Float — 18px */
   gsap.to(h,{y:-18,duration:4.2,ease:'sine.inOut',yoyo:true,repeat:-1});
 
   /* Bloom breathe */
-  gsap.to(h,{filter:'drop-shadow(0 0 80px #00FF9F) drop-shadow(0 0 160px rgba(0,255,159,0.65)) drop-shadow(0 0 220px rgba(0,200,120,0.3))',duration:3,ease:'sine.inOut',yoyo:true,repeat:-1});
+  var gBase='drop-shadow(0 0 60px #00FF9F) drop-shadow(0 0 120px rgba(0,255,159,0.7)) drop-shadow(0 0 220px rgba(0,255,159,0.35))';
+  var gHi='drop-shadow(0 0 90px #00FF9F) drop-shadow(0 0 180px rgba(0,255,159,0.85)) drop-shadow(0 0 320px rgba(0,255,159,0.5))';
+  var bFwd=true;
+  function bloom(){gsap.to(h.querySelector('img'),{filter:bFwd?gHi:gBase,duration:3.2,ease:'sine.inOut',onComplete:function(){bFwd=!bFwd;bloom();}});}
+  bloom();
 
-  /* Auto Y-rotate 30s */
-  gsap.to(h,{rotationY:360,duration:30,ease:'none',repeat:-1,transformOrigin:'50% 50%',transformPerspective:1400});
+  /* Auto Y-rotate 30s — ONLY the 3d div, HUD stays still */
+  gsap.to(h,{rotationY:360,duration:30,ease:'none',repeat:-1,transformOrigin:'50% 50%',transformPerspective:1800});
 
-  /* Mouse tilt */
-  const mob=()=>window.innerWidth<700;
-  document.addEventListener('mousemove',e=>{
+  /* Mouse tilt (additive) */
+  var mob=function(){return window.innerWidth<700;};
+  document.addEventListener('mousemove',function(e){
     if(mob())return;
-    const r=h.getBoundingClientRect();
-    tx=((e.clientX-r.left)/r.width-0.5)*5;
-    ty=((e.clientY-r.top)/r.height-0.5)*3;
+    var r=h.getBoundingClientRect();
+    tx=((e.clientX-r.left)/r.width-.5)*5;
+    ty=((e.clientY-r.top)/r.height-.5)*3;
   });
-  document.addEventListener('mouseleave',()=>{tx=0;ty=0;});
-  document.addEventListener('touchmove',e=>{
-    const t=e.touches[0],r=h.getBoundingClientRect();
-    tx=((t.clientX-r.left)/r.width-0.5)*2;
-    ty=((t.clientY-r.top)/r.height-0.5)*1.5;
+  document.addEventListener('mouseleave',function(){tx=0;ty=0;});
+  document.addEventListener('touchmove',function(e){
+    var t=e.touches[0],r=h.getBoundingClientRect();
+    tx=((t.clientX-r.left)/r.width-.5)*2;
+    ty=((t.clientY-r.top)/r.height-.5)*1.5;
   },{passive:true});
-  document.addEventListener('touchend',()=>{tx=0;ty=0;});
-  gsap.ticker.add(()=>{
-    mx=gsap.utils.interpolate(mx,tx,0.055);
-    my=gsap.utils.interpolate(my,ty,0.055);
-    gsap.set(h,{rotateX:-my,transformPerspective:1400});
+  document.addEventListener('touchend',function(){tx=0;ty=0;});
+  gsap.ticker.add(function(){
+    mx=gsap.utils.interpolate(mx,tx,.055);
+    my=gsap.utils.interpolate(my,ty,.055);
+    gsap.set(h,{rotationX:-my,transformPerspective:1800});
   });
 
-  /* Flicker — drops to 70% occasionally */
+  /* Flicker — drops to 68-76% */
   function flicker(){
-    gsap.delayedCall(7+Math.random()*12,()=>{
+    gsap.delayedCall(7+Math.random()*12,function(){
       gsap.timeline({onComplete:flicker})
-        .to(h,{opacity:0.68+Math.random()*0.08,duration:0.05})
-        .to(h,{opacity:1,duration:0.12});
+        .to(h,{opacity:.68+Math.random()*.08,duration:.05})
+        .to(h,{opacity:1,duration:.12});
     });
   }
   gsap.delayedCall(5,flicker);
 
+  /* Live stat tick */
+  var calls=47,appts=12;
+  function flash(el){
+    gsap.to(el,{color:'#fff',textShadow:'0 0 20px rgba(255,255,255,0.9)',duration:.08,
+      onComplete:function(){gsap.to(el,{color:'#00FF9F',textShadow:'0 0 14px rgba(0,255,159,.65)',duration:.9,ease:'power2.out'});}});
+  }
+  function tick(){
+    if(Math.random()<.35){calls++;var e=document.getElementById('hCalls');if(e){e.textContent=calls;flash(e);}}
+    if(Math.random()<.18){appts++;var e=document.getElementById('hAppts');if(e){e.textContent=appts;flash(e);}}
+    setTimeout(tick,15000+Math.random()*18000);
+  }
+  setTimeout(tick,9000);
+
   /* iOS fix */
-  window.addEventListener('orientationchange',()=>{
-    const s=document.querySelector('.jessica-section');
+  window.addEventListener('orientationchange',function(){
+    var s=document.querySelector('.jessica-section');
     if(!s)return;
-    setTimeout(()=>{s.style.display='none';requestAnimationFrame(()=>{s.style.display='';});},180);
+    setTimeout(function(){s.style.display='none';requestAnimationFrame(function(){s.style.display='';});},180);
   });
 })();
 </script>
