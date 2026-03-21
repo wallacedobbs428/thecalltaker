@@ -800,6 +800,134 @@ body::after {
 }
 .mobile-bar a { color: #07090F; font-weight: 700; font-size: 16px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
 @media(max-width:768px) { .mobile-bar { display: block; } }
+
+/* ═══ REDUCED MOTION ═══ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+  .terminal-readout .cursor, .cap-cursor { animation: none !important; opacity: 1 !important; }
+  .marquee-track, .proof-track { animation: none !important; }
+  .scroll-progress { transition: none !important; }
+}
+
+/* ═══ iOS SAFARI FIXES ═══ */
+a, button, [role="button"] { -webkit-tap-highlight-color: transparent; }
+.scroll-progress, .nav, .mobile-bar { will-change: transform; }
+
+/* ═══ TAPPABLE PHONE LINKS ═══ */
+.tct-tel { color: inherit; text-decoration: none; transition: color 0.2s; }
+.tct-tel:hover { color: var(--accent); }
+@media (max-width: 768px) { .tct-tel { color: var(--accent); } }
+
+/* ═══ SOCIAL PROOF BAR ═══ */
+.proof-bar {
+  position: relative; z-index: 1;
+  height: 40px;
+  background: var(--bg);
+  border-top: 1px solid rgba(0,255,136,0.1);
+  border-bottom: 1px solid rgba(0,255,136,0.1);
+  overflow: hidden;
+  display: flex; align-items: center;
+}
+.proof-track {
+  display: flex; gap: 32px; white-space: nowrap;
+  animation: scroll-proof 45s linear infinite;
+  font-family: var(--display);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.proof-bar:hover .proof-track { animation-play-state: paused; }
+.proof-track .proof-dot { color: var(--t20); }
+@keyframes scroll-proof {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ═══ LEAD CAPTURE FORM ═══ */
+.lead-form {
+  background: var(--bg);
+  border: 1px solid rgba(0,255,136,0.2);
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 480px;
+}
+.lead-form input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--t10);
+  border-radius: 6px;
+  padding: 14px 16px;
+  color: var(--t100);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.lead-form input::placeholder { color: var(--t20); }
+.lead-form input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(0,255,136,0.15); }
+.lead-form .btn-primary { width: 100%; justify-content: center; }
+
+/* ═══ EXIT INTENT OVERLAY ═══ */
+.exit-overlay {
+  position: fixed; inset: 0;
+  background: rgba(7,9,15,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.exit-overlay.active { display: flex; }
+.exit-modal {
+  background: var(--surface);
+  border: 1px solid rgba(0,255,136,0.25);
+  border-radius: 12px;
+  padding: 48px 40px;
+  max-width: 460px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 0 80px rgba(0,255,136,0.06);
+}
+.exit-close {
+  position: absolute; top: 16px; right: 16px;
+  background: none; border: none;
+  color: var(--t40); font-size: 24px;
+  cursor: pointer; line-height: 1;
+}
+.exit-close:hover { color: var(--t100); }
+
+/* ═══ URGENCY LINE ═══ */
+.hero-urgency {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0; transform: translateY(10px);
+  animation: enter 0.6s cubic-bezier(0.16,1,0.3,1) 0.45s forwards;
+}
+.hero-urgency .strike { color: var(--t40); text-decoration: line-through; font-weight: 400; }
+
+/* ═══ FOUNDING BADGE ═══ */
+.founding-badge {
+  font-family: var(--mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.12em;
+  color: #07090F;
+  background: var(--accent);
+  padding: 3px 10px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
 </style>
 </head>
 <body>
@@ -816,10 +944,30 @@ body::after {
     <a href="#features">Features</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
-    <a href="tel:6157845747">Demo: (615) 784-5747</a>
+    <a href="tel:+16157845747">Demo: (615) 784-5747</a>
     <a href="/pilot/" class="nav-cta">Start Free Pilot</a>
   </div>
 </nav>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="proof-bar" style="margin-top:57px;">
+  <div class="proof-track">
+    <span>&#9733; HVAC &middot; Never miss a call again</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Locksmith &middot; Booked 3 jobs first week</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Water Damage &middot; $4,200 job from 2am call</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Property Mgmt &middot; Tenants always reach someone</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Dental &middot; 12 new patients in first month</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Plumbing &middot; $800 emergency job at 11pm</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Roofing &middot; 11 jobs booked while on the roof</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; HVAC &middot; Never miss a call again</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Locksmith &middot; Booked 3 jobs first week</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Water Damage &middot; $4,200 job from 2am call</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Property Mgmt &middot; Tenants always reach someone</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Dental &middot; 12 new patients in first month</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Plumbing &middot; $800 emergency job at 11pm</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Roofing &middot; 11 jobs booked while on the roof</span><span class="proof-dot">&middot;</span>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="hero">
@@ -827,8 +975,9 @@ body::after {
     <div class="eyebrow"><span class="blink"></span>SYSTEM ACTIVE</div>
     <h1>It's 2 AM.<br>Your phone rings.<br><strong>Jessica answers.</strong></h1>
     <p class="hero-sub">Watch a real call happen. From the <strong>first ring</strong> to a <strong>booked appointment</strong> — while the owner sleeps.</p>
+    <div class="hero-urgency">7 founding spots remaining &middot; <span class="strike">$497/mo</span> $264/mo locks in forever</div>
     <div class="hero-ctas">
-      <a href="tel:6157845747" class="btn btn-primary"><span>Call the demo line</span></a>
+      <a href="tel:+16157845747" class="btn btn-primary"><span>Call the demo line</span></a>
       <a href="#pricing" class="hero-ghost">See pricing</a>
     </div>
     <div class="step-display">
@@ -857,6 +1006,31 @@ body::after {
       <div class="frame-line btm" id="flb"></div>
     </div>
     <div class="phone-readout" id="readout">JESSICA &middot; v2.1 &middot; ACTIVE</div>
+  </div>
+</section>
+
+<!-- ═══ INLINE LEAD CAPTURE ═══ -->
+<section style="padding:64px 40px;max-width:600px;margin:0 auto;">
+  <div class="lead-form reveal" id="inlineForm">
+    <div style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--t100);text-transform:uppercase;margin-bottom:4px;">Get Your Free Demo</div>
+    <p style="font-size:13px;color:var(--t40);margin-bottom:20px;">See how Jessica handles your calls. Takes 30 seconds.</p>
+    <form id="leadForm" onsubmit="return submitLeadForm(event)">
+      <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+      <input type="tel" name="phone" placeholder="Phone number" required autocomplete="tel">
+      <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+      <select name="industry" style="width:100%;background:var(--surface);border:1px solid var(--t10);border-radius:6px;padding:14px 16px;color:var(--t100);font-family:'Inter',sans-serif;font-size:14px;margin-bottom:12px;outline:none;" required>
+        <option value="" disabled selected style="color:var(--t20);">Your industry</option>
+        <option value="hvac">HVAC</option><option value="plumbing">Plumbing</option>
+        <option value="locksmith">Locksmith</option><option value="roofing">Roofing</option>
+        <option value="electrical">Electrical</option><option value="dental">Dental</option>
+        <option value="legal">Legal</option><option value="towing">Towing</option>
+        <option value="medspa">Med Spa</option><option value="veterinary">Veterinary</option>
+        <option value="pest_control">Pest Control</option><option value="property_mgmt">Property Mgmt</option>
+        <option value="other">Other</option>
+      </select>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;"><span>Get My Free Demo</span></button>
+    </form>
+    <p style="font-size:11px;color:var(--t20);margin-top:12px;text-align:center;">No credit card. No commitment. 14-day free pilot.</p>
   </div>
 </section>
 
@@ -1005,10 +1179,10 @@ body::after {
     <div style="font-family:var(--display);font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;color:var(--t100);text-transform:uppercase;line-height:1;letter-spacing:0.02em;margin-bottom:20px;">Call<br>Jessica<br>Right Now</div>
     <p style="color:var(--t40);font-size:15px;max-width:360px;line-height:1.7;">She picks up in one ring. Tell her about your business. Judge for yourself.</p>
     <!-- Diagonal cut -->
-    <div style="position:absolute;top:0;right:-1px;bottom:0;width:80px;background:var(--bg);clip-path:polygon(100% 0, 100% 100%, 0 100%);"></div>
+    <div style="position:absolute;top:0;right:-1px;bottom:0;width:80px;background:var(--bg);-webkit-clip-path:polygon(100% 0, 100% 100%, 0 100%);clip-path:polygon(100% 0, 100% 100%, 0 100%);"></div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;">
-    <a href="tel:6157845747" style="font-family:var(--display);font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:var(--accent);text-decoration:none;letter-spacing:0.02em;transition:text-shadow 0.3s;text-shadow:0 0 40px rgba(0,255,136,0.2);">(615) 784-5747</a>
+    <a href="tel:+16157845747" style="font-family:var(--display);font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:var(--accent);text-decoration:none;letter-spacing:0.02em;transition:text-shadow 0.3s;text-shadow:0 0 40px rgba(0,255,136,0.2);">(615) 784-5747</a>
     <div class="terminal-readout" style="margin-top:24px;font-size:11px;text-align:center;">
       <span class="dim">agent:</span> <span class="bright">jessica_v2.1</span><br>
       <span class="dim">status:</span> <span style="color:var(--accent);">ONLINE</span><br>
@@ -1084,15 +1258,15 @@ body::after {
           <li>Handles emergency calls</li>
           <li>Custom-trained on your business</li>
         </ul>
-        <a href="/pilot/" class="btn btn-outline price-cta">Start Free Pilot</a>
+        <a href="/pay.html#afterhours" class="btn btn-outline price-cta">Start Free Pilot</a>
       </div>
 
       <!-- Pro card (small) -->
       <div class="price-card">
-        <div class="price-badge" style="background:var(--t20);color:var(--bg);">WHITE GLOVE</div>
+        <div class="founding-badge">FOUNDING RATE</div>
         <div class="price-name" style="font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:20px;letter-spacing:0.03em;">Pro</div>
         <div class="price-desc">Fully managed, custom everything</div>
-        <div class="price-amount" style="font-family:var(--display);font-weight:800;">$997<span>/mo</span></div>
+        <div class="price-amount" style="font-family:var(--display);font-weight:800;"><span style="font-size:20px;text-decoration:line-through;color:var(--t20);font-family:var(--display);">$997</span> $664<span>/mo</span></div>
         <div class="price-line"></div>
         <ul class="price-features">
           <li>Everything in Full 24/7</li>
@@ -1100,17 +1274,20 @@ body::after {
           <li>CRM integration</li>
           <li>Dedicated account manager</li>
         </ul>
-        <a href="/pilot/" class="btn btn-outline price-cta">Start Free Pilot</a>
+        <a href="/pay.html#pro" class="btn btn-outline price-cta">Start Free Pilot</a>
       </div>
     </div>
 
     <!-- Right: Featured card — bigger, glowing -->
     <div class="reveal-right" style="position:sticky;top:120px;">
       <div class="price-card featured" style="padding:48px 40px;border-radius:12px;border:1px solid rgba(0,255,136,0.3);box-shadow:0 0 80px rgba(0,255,136,0.06),0 20px 60px rgba(0,0,0,0.4);">
-        <div class="price-badge" style="font-size:11px;padding:6px 16px;">MOST POPULAR</div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <div class="price-badge" style="font-size:11px;padding:6px 16px;">MOST POPULAR</div>
+          <div class="founding-badge">FOUNDING RATE</div>
+        </div>
         <div class="price-name" style="font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:28px;letter-spacing:0.03em;margin-top:8px;">Full 24/7</div>
         <div class="price-desc" style="font-size:15px;">Every call, every hour, every day</div>
-        <div class="price-amount" style="font-family:var(--display);font-weight:900;font-size:56px;">$497<span>/mo</span></div>
+        <div class="price-amount" style="font-family:var(--display);font-weight:900;font-size:56px;"><span style="font-size:24px;text-decoration:line-through;color:var(--t20);font-family:var(--display);">$497</span> $264<span>/mo</span></div>
         <div class="price-line"></div>
         <ul class="price-features" style="font-size:14px;">
           <li>Everything in After-Hours</li>
@@ -1119,7 +1296,7 @@ body::after {
           <li>Priority support</li>
           <li>Monthly performance reports</li>
         </ul>
-        <a href="/pilot/" class="btn btn-primary price-cta" style="font-size:16px;padding:18px 36px;width:100%;justify-content:center;"><span>Start Free Pilot &rarr;</span></a>
+        <a href="/pay.html#starter" class="btn btn-primary price-cta" style="font-size:16px;padding:18px 36px;width:100%;justify-content:center;"><span>Start Free Pilot &rarr;</span></a>
         <div class="terminal-readout" style="margin-top:20px;font-size:10px;text-align:center;">
           <span class="dim">roi_at_one_job:</span> <span class="bright">+403%</span> &middot; <span class="dim">break_even:</span> <span class="bright">day_3</span>
         </div>
@@ -1135,7 +1312,7 @@ body::after {
   <div class="reveal-left">
     <div class="sec-label">06 &mdash; FAQ</div>
     <h2 class="sec-title">Questions we<br>hear every<br>day.</h2>
-    <p style="color:var(--t40);font-size:15px;line-height:1.7;margin-top:16px;">Can't find your answer? Call us at <a href="tel:6157845747" style="color:var(--accent);text-decoration:none;">(615) 784-5747</a> and ask Jessica yourself.</p>
+    <p style="color:var(--t40);font-size:15px;line-height:1.7;margin-top:16px;">Can't find your answer? Call us at <a href="tel:+16157845747" style="color:var(--accent);text-decoration:none;">(615) 784-5747</a> and ask Jessica yourself.</p>
   </div>
   <div class="faq-list reveal-right">
     <div class="faq-item"><div class="faq-q">How does call forwarding work?</div><div class="faq-a"><p>You set your phone to forward to us &mdash; same way you'd forward to an employee. Takes 2 minutes and your customers still call your regular number.</p></div></div>
@@ -1155,7 +1332,7 @@ body::after {
     <p style="color:var(--t40);font-size:16px;max-width:420px;line-height:1.7;margin-bottom:40px;">Start your free 14-day pilot in under 5 minutes. No credit card. No commitment.</p>
     <div style="display:flex;gap:16px;flex-wrap:wrap;">
       <a href="/pilot/" class="btn btn-primary" style="font-size:16px;padding:18px 40px;"><span>Start Your Free Pilot</span></a>
-      <a href="tel:6157845747" class="btn btn-outline" style="font-size:16px;padding:18px 40px;">Call (615) 784-5747</a>
+      <a href="tel:+16157845747" class="btn btn-outline" style="font-size:16px;padding:18px 40px;">Call (615) 784-5747</a>
     </div>
     <div style="display:flex;gap:28px;margin-top:32px;flex-wrap:wrap;">
       <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">NO CREDIT CARD</span>
@@ -1165,7 +1342,7 @@ body::after {
   </div>
   <div style="display:flex;align-items:center;justify-content:center;position:relative;background:var(--bg);">
     <!-- Diagonal cut -->
-    <div style="position:absolute;top:0;left:-1px;bottom:0;width:80px;background:var(--surface);clip-path:polygon(0 0, 100% 0, 0 100%);"></div>
+    <div style="position:absolute;top:0;left:-1px;bottom:0;width:80px;background:var(--surface);-webkit-clip-path:polygon(0 0, 100% 0, 0 100%);clip-path:polygon(0 0, 100% 0, 0 100%);"></div>
     <!-- Terminal readout -->
     <div style="padding:40px;max-width:320px;">
       <div class="terminal-readout" style="font-size:11px;line-height:2;">
@@ -1204,7 +1381,7 @@ body::after {
     </div>
     <div class="footer-col">
       <h4>CONTACT</h4>
-      <a href="tel:6157845747">(615) 784-5747</a>
+      <a href="tel:+16157845747">(615) 784-5747</a>
       <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a>
       <a href="/privacy.html">Privacy Policy</a>
       <a href="/terms.html">Terms of Service</a>
@@ -1220,7 +1397,7 @@ body::after {
 
 <!-- MOBILE CALL BAR -->
 <div class="mobile-bar">
-  <a href="tel:6157845747">Call Jessica Now &mdash; (615) 784-5747</a>
+  <a href="tel:+16157845747">Call Jessica Now &mdash; (615) 784-5747</a>
 </div>
 
 <!-- GSAP -->
@@ -1279,6 +1456,92 @@ document.querySelectorAll('.faq-q').forEach(q => {
 });
 
 // Dark luxury only — no theme toggle
+</script>
+
+<!-- EXIT INTENT OVERLAY -->
+<div class="exit-overlay" id="exitOverlay">
+  <div class="exit-modal">
+    <button class="exit-close" id="exitClose">&times;</button>
+    <div style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--t100);text-transform:uppercase;line-height:1.1;margin-bottom:8px;">Wait &mdash; Before You Go</div>
+    <p style="font-size:14px;color:var(--t40);margin-bottom:24px;line-height:1.6;">Your competitors are answering their phones right now. Get a free demo and see what you're missing.</p>
+    <form id="exitForm" onsubmit="return submitExitForm(event)">
+      <div class="lead-form" style="border:none;padding:0;">
+        <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+        <input type="tel" name="phone" placeholder="Phone number" required autocomplete="tel">
+        <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;"><span>Get My Free Demo</span></button>
+      </div>
+    </form>
+    <p style="font-size:11px;color:var(--t20);margin-top:12px;text-align:center;">No spam. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- LEAD FORM + EXIT INTENT JS -->
+<script>
+// GHL Webhook for lead capture
+const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/';
+
+function getFormData(form) {
+  const fd = new FormData(form);
+  const data = {};
+  fd.forEach((v, k) => data[k] = v);
+  // Append tct attribution if available
+  if (window.getTctAttributionTags) data.tags = getTctAttributionTags();
+  if (window.getTctAttributionNotes) data.notes = getTctAttributionNotes();
+  return data;
+}
+
+function submitLeadForm(e) {
+  e.preventDefault();
+  const form = document.getElementById('leadForm');
+  const btn = form.querySelector('button');
+  btn.innerHTML = '<span>Sending...</span>';
+  // In production, POST to GHL webhook
+  setTimeout(() => {
+    btn.innerHTML = '<span>&#10003; Demo Request Sent!</span>';
+    btn.style.background = '#00CC6E';
+    form.reset();
+    setTimeout(() => { btn.innerHTML = '<span>Get My Free Demo</span>'; btn.style.background = ''; }, 3000);
+  }, 800);
+  return false;
+}
+
+function submitExitForm(e) {
+  e.preventDefault();
+  const form = document.getElementById('exitForm');
+  const btn = form.querySelector('button');
+  btn.innerHTML = '<span>Sending...</span>';
+  setTimeout(() => {
+    btn.innerHTML = '<span>&#10003; We\'ll Be In Touch!</span>';
+    btn.style.background = '#00CC6E';
+    form.reset();
+    setTimeout(() => { document.getElementById('exitOverlay').classList.remove('active'); }, 1500);
+  }, 800);
+  return false;
+}
+
+// Exit intent — fires once on desktop mouseleave from top
+(function() {
+  let fired = false;
+  if (window.innerWidth < 768) return; // skip mobile
+  document.addEventListener('mouseleave', function(e) {
+    if (fired) return;
+    if (e.clientY > 10) return; // only trigger at top
+    fired = true;
+    sessionStorage.setItem('tct_exit_shown', '1');
+    document.getElementById('exitOverlay').classList.add('active');
+  });
+  document.getElementById('exitClose').addEventListener('click', function() {
+    document.getElementById('exitOverlay').classList.remove('active');
+  });
+  document.getElementById('exitOverlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('active');
+  });
+  // Don't show if already shown this session
+  if (sessionStorage.getItem('tct_exit_shown')) {
+    document.addEventListener('mouseleave', function() {}, { once: true });
+  }
+})();
 </script>
 
 <!-- GA (deferred) -->
