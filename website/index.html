@@ -11,7 +11,8 @@
 <link rel="canonical" href="https://thecalltaker.com/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- Schema.org -->
 <script type="application/ld+json">
@@ -22,24 +23,24 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #0c0b0a;
-  --surface: #141210;
-  --surface-2: #1a1816;
-  --border: rgba(237,232,225,0.06);
-  --border-bright: rgba(237,232,225,0.1);
-  --t100: rgba(237,232,225,1);
-  --t70: rgba(237,232,225,0.7);
-  --t40: rgba(237,232,225,0.4);
-  --t20: rgba(237,232,225,0.2);
-  --t10: rgba(237,232,225,0.1);
-  --t06: rgba(237,232,225,0.06);
-  --accent: #1a7a5c;
-  --accent-hover: #2a9d7a;
-  --accent-soft: rgba(26,122,92,0.1);
-  --accent-glow: rgba(26,122,92,0.05);
-  --amber: #c27c3a;
-  --green: #2a9d7a;
-  --serif: 'DM Serif Display', Georgia, serif;
+  --bg: #07090F;
+  --surface: #0D1017;
+  --surface-2: #131620;
+  --border: rgba(255,255,255,0.06);
+  --border-bright: rgba(255,255,255,0.1);
+  --t100: rgba(255,255,255,0.95);
+  --t70: rgba(255,255,255,0.7);
+  --t40: rgba(255,255,255,0.4);
+  --t20: rgba(255,255,255,0.2);
+  --t10: rgba(255,255,255,0.1);
+  --t06: rgba(255,255,255,0.06);
+  --accent: #00FF88;
+  --accent-hover: #00CC6E;
+  --accent-soft: rgba(0,255,136,0.08);
+  --accent-glow: rgba(0,255,136,0.04);
+  --amber: #00FF88;
+  --green: #00FF88;
+  --display: 'Barlow Condensed', 'Impact', sans-serif;
   --mono: 'JetBrains Mono', 'SF Mono', monospace;
 }
 
@@ -60,9 +61,9 @@ body {
 body::after {
   content: '';
   position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none; z-index: 9999;
-  opacity: 0.45; mix-blend-mode: soft-light;
+  opacity: 0.6; mix-blend-mode: overlay;
 }
 
 /* ═══ SCROLL PROGRESS BAR ═══ */
@@ -71,9 +72,9 @@ body::after {
   top: 0; left: 0;
   width: 0%;
   height: 4px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  background: linear-gradient(90deg, var(--accent), #00CC6E);
   z-index: 102;
-  box-shadow: 0 0 12px rgba(26,122,92,0.6), 0 0 4px rgba(26,122,92,0.3);
+  box-shadow: 0 0 16px rgba(0,255,136,0.5), 0 0 4px rgba(0,255,136,0.3);
 }
 
 /* ═══ NAV ═══ */
@@ -82,15 +83,18 @@ body::after {
   display: flex; align-items: center; justify-content: space-between;
   padding: 16px 40px;
   z-index: 100;
-  background: rgba(12,11,10,0.8);
+  background: rgba(7,9,15,0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--t06);
 }
 .nav-logo {
-  font-family: var(--serif);
-  font-size: 18px; color: var(--t100);
+  font-family: var(--display);
+  font-size: 20px; color: var(--t100);
   text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 .nav-logo span { color: var(--accent); }
 .nav-links { display: flex; gap: 28px; align-items: center; }
@@ -100,11 +104,13 @@ body::after {
 }
 .nav-links a:hover { color: var(--t100); }
 .nav-cta {
-  font-size: 13px; font-weight: 600;
-  color: var(--t100) !important;
+  font-size: 13px; font-weight: 700;
+  color: #07090F !important;
   background: var(--accent);
   padding: 8px 20px; border-radius: 6px;
   transition: background 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 .nav-cta:hover { background: var(--accent-hover) !important; }
 @media(max-width:768px) {
@@ -130,13 +136,14 @@ body::after {
 }
 
 .sec-title {
-  font-family: var(--serif);
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: 400;
+  font-family: var(--display);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 700;
   color: var(--t100);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
   margin-bottom: 16px;
+  text-transform: uppercase;
 }
 
 .sec-sub {
@@ -210,72 +217,39 @@ body::after {
 .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.32s; opacity: 1; transform: translateY(0); }
 .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
 
-/* ═══ LIGHT MODE ═══ */
-html.light {
-  --bg: #f5f3f0;
-  --surface: #eae7e2;
-  --surface-2: #e0ddd8;
-  --border: rgba(20,18,16,0.08);
-  --border-bright: rgba(20,18,16,0.12);
-  --t100: rgba(20,18,16,1);
-  --t70: rgba(20,18,16,0.7);
-  --t40: rgba(20,18,16,0.4);
-  --t20: rgba(20,18,16,0.2);
-  --t10: rgba(20,18,16,0.1);
-  --t06: rgba(20,18,16,0.06);
-  --accent: #14694e;
-  --accent-hover: #1a7a5c;
-  --accent-soft: rgba(20,105,78,0.08);
-  --accent-glow: rgba(20,105,78,0.04);
+/* Light mode removed — dark luxury only */
+
+/* Theme toggle removed — dark luxury only */
+
+/* ═══ TERMINAL READOUT ═══ */
+.terminal-readout {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  background: rgba(0,255,136,0.04);
+  border: 1px solid rgba(0,255,136,0.15);
+  border-radius: 4px;
+  padding: 16px 20px;
+  position: relative;
+  line-height: 1.8;
 }
-
-html.light body::after { opacity: 0.15; }
-html.light .nav { background: rgba(245,243,240,0.85); }
-html.light .phone { background: linear-gradient(170deg, #e8e5e0 0%, #ddd9d4 100%); box-shadow: 0 40px 100px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06); }
-html.light .phone-screen { background: #f5f3f0; }
-html.light .phone-notch { background: #f5f3f0; }
-html.light .ambient-inner { background: radial-gradient(ellipse at 65% 35%, rgba(26,122,92,0.06) 0%, transparent 55%), radial-gradient(ellipse at 25% 75%, rgba(194,124,58,0.03) 0%, transparent 45%); }
-html.light .ring-btn.yes { box-shadow: 0 0 24px rgba(26,122,92,0.15); }
-html.light .ring-btn.no { background: rgba(200,80,70,0.5); }
-html.light .ring-btn svg { stroke: var(--t100); }
-html.light .feature-card { background: #fff; border-color: rgba(0,0,0,0.06); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-html.light .test-card { background: #fff; border-color: rgba(0,0,0,0.06); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-html.light .price-card { background: #fff; border-color: rgba(0,0,0,0.06); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-html.light .price-card.featured { box-shadow: 0 4px 24px rgba(26,122,92,0.1); }
-html.light .msg-bubble { background: #fff; border-color: rgba(0,0,0,0.06); }
-html.light .cap-field { background: rgba(0,0,0,0.03); }
-html.light .btn-primary { color: #fff; }
-html.light .nav-cta { color: #fff !important; }
-html.light .mobile-bar a { color: #fff; }
-html.light .book-d.sel { color: #fff; }
-
-/* ═══ THEME TOGGLE ═══ */
-.theme-toggle {
-  position: fixed;
-  bottom: 24px; right: 24px;
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 1px solid var(--border-bright);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  z-index: 101;
-  transition: background 0.3s, border-color 0.3s, transform 0.2s;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+.terminal-readout::before {
+  content: '>';
+  color: var(--accent);
+  margin-right: 8px;
+  opacity: 0.6;
 }
-.theme-toggle:hover { transform: scale(1.08); border-color: var(--accent); }
-.theme-toggle svg { width: 20px; height: 20px; stroke: var(--t40); fill: none; stroke-width: 2; transition: stroke 0.3s; }
-.theme-toggle:hover svg { stroke: var(--accent); }
-
-/* Sun icon hidden in dark mode, moon hidden in light */
-.theme-toggle .icon-sun { display: none; }
-.theme-toggle .icon-moon { display: block; }
-html.light .theme-toggle .icon-sun { display: block; }
-html.light .theme-toggle .icon-moon { display: none; }
-
-@media(max-width:768px) {
-  .theme-toggle { bottom: 72px; right: 16px; }
+.terminal-readout .cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--accent);
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: blink 0.8s infinite;
 }
+.terminal-readout .dim { color: rgba(0,255,136,0.4); }
+.terminal-readout .bright { color: #fff; font-weight: 500; }
 
 /* ═══ BUTTONS ═══ */
 .btn {
@@ -288,8 +262,9 @@ html.light .theme-toggle .icon-moon { display: none; }
 }
 .btn-primary {
   background: var(--accent);
-  color: var(--t100);
-  box-shadow: 0 4px 24px rgba(26,122,92,0.15);
+  color: #07090F;
+  font-weight: 700;
+  box-shadow: 0 4px 24px rgba(0,255,136,0.2);
 }
 .btn-primary::after {
   content: ''; position: absolute; inset: 0;
@@ -299,7 +274,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   border-radius: 8px; z-index: 0;
 }
 .btn-primary:hover::after { transform: translateX(0); }
-.btn-primary:hover { box-shadow: 0 8px 32px rgba(26,122,92,0.25); }
+.btn-primary:hover { box-shadow: 0 8px 32px rgba(0,255,136,0.25); }
 .btn-primary span { position: relative; z-index: 1; }
 
 .btn-outline {
@@ -313,8 +288,8 @@ html.light .theme-toggle .icon-moon { display: none; }
 .ambient { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 .ambient-inner {
   width: 100%; height: 100%;
-  background: radial-gradient(ellipse at 65% 35%, rgba(26,122,92,0.04) 0%, transparent 55%),
-              radial-gradient(ellipse at 25% 75%, rgba(194,124,58,0.02) 0%, transparent 45%);
+  background: radial-gradient(ellipse at 65% 35%, rgba(0,255,136,0.06) 0%, transparent 55%),
+              radial-gradient(ellipse at 25% 75%, rgba(0,255,136,0.03) 0%, transparent 45%);
   animation: amb 14s ease-in-out infinite;
 }
 @keyframes amb { 0%,100%{opacity:1} 50%{opacity:0.5} }
@@ -356,10 +331,11 @@ html.light .theme-toggle .icon-moon { display: none; }
 @keyframes enter { to{opacity:1;transform:translateY(0)} }
 
 .hero-copy h1 {
-  font-family: var(--serif); font-weight: 400;
-  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
-  line-height: 1.12; letter-spacing: -0.03em;
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  line-height: 1.05; letter-spacing: 0.02em;
   color: var(--t100); margin-bottom: 24px;
+  text-transform: uppercase;
   opacity: 0; transform: translateY(16px);
   animation: enter 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
 }
@@ -404,7 +380,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   animation: enter 0.5s cubic-bezier(0.16,1,0.3,1) 0.7s forwards;
 }
 .step-num {
-  font-family: var(--serif); font-size: 56px; font-weight: 400;
+  font-family: var(--display); font-size: 56px; font-weight: 800;
   color: var(--t06); line-height: 1; min-width: 68px;
   transition: color 0.5s;
 }
@@ -416,19 +392,19 @@ html.light .theme-toggle .icon-moon { display: none; }
 
 /* ═══ PHONE ANIMATION ═══ */
 .hero-phone { position: relative; display: flex; justify-content: center; align-items: center; min-height: 580px; z-index: 2; }
-.phone-glow { position: absolute; width: 420px; height: 520px; background: radial-gradient(ellipse at center, rgba(26,122,92,0.06) 0%, rgba(194,124,58,0.015) 40%, transparent 70%); top: 50%; left: 55%; transform: translate(-50%,-50%); pointer-events: none; animation: glow-drift 14s ease-in-out infinite; }
+.phone-glow { position: absolute; width: 420px; height: 520px; background: radial-gradient(ellipse at center, rgba(0,255,136,0.06) 0%, rgba(0,255,136,0.015) 40%, transparent 70%); top: 50%; left: 55%; transform: translate(-50%,-50%); pointer-events: none; animation: glow-drift 14s ease-in-out infinite; }
 @keyframes glow-drift { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1} 50%{transform:translate(-48%,-52%) scale(1.04);opacity:0.5} }
 .particle-field { position: absolute; width: 300px; height: 540px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
 .particle { position: absolute; width: 2px; height: 2px; border-radius: 50%; opacity: 0; will-change: transform, opacity; }
 .particle.a { background: var(--accent); width: 3px; height: 3px; }
 .particle.b { background: var(--t10); }
 .particle.c { background: var(--green); width: 2px; height: 2px; }
-.phone { position: relative; width: 250px; height: 510px; background: linear-gradient(170deg, #161412 0%, var(--surface) 100%); border-radius: 44px; border: 1px solid var(--t10); overflow: hidden; opacity: 0; transform: scale(0.97); box-shadow: 0 0 0 0.5px var(--t06), 0 40px 100px rgba(0,0,0,0.6), 0 0 80px var(--accent-glow); will-change: transform, opacity; }
+.phone { position: relative; width: 250px; height: 510px; background: linear-gradient(170deg, #0D1017 0%, var(--surface) 100%); border-radius: 44px; border: 1px solid var(--t10); overflow: hidden; opacity: 0; transform: scale(0.97); box-shadow: 0 0 0 0.5px var(--t06), 0 40px 100px rgba(0,0,0,0.6), 0 0 80px var(--accent-glow); will-change: transform, opacity; }
 .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 90px; height: 22px; background: var(--bg); border-radius: 0 0 14px 14px; z-index: 10; }
 .phone-screen { position: absolute; inset: 6px; background: var(--bg); border-radius: 40px; overflow: hidden; }
 .status-bar { position: absolute; top: 28px; left: 16px; right: 16px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 8px; color: var(--t20); letter-spacing: 0.08em; z-index: 5; }
 .screen-state { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; opacity: 0; }
-.ring-time { font-size: 42px; font-weight: 200; color: var(--t100); letter-spacing: -0.02em; margin-bottom: 2px; }
+.ring-time { font-family: var(--display); font-size: 42px; font-weight: 300; color: var(--t100); letter-spacing: 0.02em; margin-bottom: 2px; }
 .ring-date { font-family: var(--mono); font-size: 10px; color: var(--t20); letter-spacing: 0.1em; margin-bottom: 40px; }
 .ring-divider { width: 24px; height: 1px; background: var(--t10); margin-bottom: 28px; }
 .ring-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--green); margin-bottom: 12px; }
@@ -437,10 +413,10 @@ html.light .theme-toggle .icon-moon { display: none; }
 .ring-btns { display: flex; gap: 40px; }
 .ring-btn { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; }
 .ring-btn svg { width: 20px; height: 20px; stroke: var(--t100); fill: none; stroke-width: 2; }
-.ring-btn.yes { background: var(--accent); box-shadow: 0 0 24px rgba(26,122,92,0.3); }
+.ring-btn.yes { background: var(--accent); box-shadow: 0 0 24px rgba(0,255,136,0.3); }
 .ring-btn.no { background: rgba(180,60,50,0.6); }
 .conn-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--green); margin-bottom: 20px; }
-.conn-name { font-family: var(--serif); font-size: 26px; font-weight: 400; color: var(--t100); margin-bottom: 4px; }
+.conn-name { font-family: var(--display); font-size: 26px; font-weight: 700; color: var(--t100); margin-bottom: 4px; text-transform: uppercase; }
 .conn-timer { font-family: var(--mono); font-size: 13px; color: var(--t20); margin-bottom: 32px; }
 .waveform { display: flex; gap: 3px; align-items: center; height: 48px; margin-bottom: 24px; }
 .waveform span { width: 2px; background: var(--accent); border-radius: 1px; opacity: 0.6; transition: height 0.12s ease; }
@@ -456,21 +432,21 @@ html.light .theme-toggle .icon-moon { display: none; }
 .book-d { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 9px; color: var(--t10); border-radius: 4px; }
 .book-d.hdr { font-size: 8px; color: var(--t20); }
 .book-d.act { color: var(--t20); }
-.book-d.sel { background: var(--accent); color: var(--t100); font-weight: 600; box-shadow: 0 0 12px rgba(26,122,92,0.3); }
-.book-detail { background: var(--accent-soft); border: 1px solid rgba(26,122,92,0.12); border-radius: 8px; padding: 12px 16px; text-align: center; width: 100%; margin-bottom: 10px; opacity: 0; transform: translateY(6px); }
+.book-d.sel { background: var(--accent); color: var(--t100); font-weight: 600; box-shadow: 0 0 12px rgba(0,255,136,0.3); }
+.book-detail { background: var(--accent-soft); border: 1px solid rgba(0,255,136,0.12); border-radius: 8px; padding: 12px 16px; text-align: center; width: 100%; margin-bottom: 10px; opacity: 0; transform: translateY(6px); }
 .book-detail-time { font-size: 20px; font-weight: 300; color: var(--t100); }
 .book-detail-day { font-family: var(--mono); font-size: 10px; color: var(--t40); }
 .book-ok { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; color: var(--green); letter-spacing: 0.05em; opacity: 0; }
 .book-ok svg { width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2.5; }
-.text-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--amber); text-align: center; margin-bottom: 20px; }
+.text-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--accent); text-align: center; margin-bottom: 20px; }
 .msg-bubble { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px 12px 12px 4px; padding: 12px 14px; margin-bottom: 8px; width: 100%; opacity: 0; transform: translateY(6px); }
-.msg-bubble.reply { background: var(--accent-soft); border-color: rgba(26,122,92,0.12); border-radius: 12px 12px 4px 12px; }
+.msg-bubble.reply { background: var(--accent-soft); border-color: rgba(0,255,136,0.12); border-radius: 12px 12px 4px 12px; }
 .msg-from { font-family: var(--mono); font-size: 8px; color: var(--t20); margin-bottom: 4px; letter-spacing: 0.05em; }
 .msg-body { font-size: 12px; line-height: 1.6; color: var(--t70); }
 .msg-bubble.reply .msg-body { color: var(--accent); }
 .msg-ts { font-family: var(--mono); font-size: 8px; color: var(--t10); text-align: right; margin-top: 4px; }
 .result { text-align: center; margin-top: 20px; opacity: 0; }
-.result-num { font-family: var(--serif); font-size: 36px; font-weight: 400; color: var(--amber); letter-spacing: -0.02em; }
+.result-num { font-family: var(--display); font-size: 36px; font-weight: 800; color: var(--accent); letter-spacing: 0.02em; text-transform: uppercase; }
 .result-label { font-family: var(--mono); font-size: 10px; color: var(--t20); letter-spacing: 0.1em; margin-top: 4px; }
 .frame-line { position: absolute; background: var(--accent); opacity: 0; }
 .frame-line.top { top: -1px; left: 60px; width: 40px; height: 1px; }
@@ -498,7 +474,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   object-fit: contain;
   mix-blend-mode: screen;
   animation: holo-spin 14s linear infinite;
-  filter: drop-shadow(0 0 30px rgba(26,122,92,0.4)) drop-shadow(0 0 60px rgba(26,122,92,0.15));
+  filter: drop-shadow(0 0 30px rgba(0,255,136,0.4)) drop-shadow(0 0 60px rgba(0,255,136,0.15));
   position: relative;
   z-index: 2;
 }
@@ -517,8 +493,8 @@ html.light .theme-toggle .icon-moon { display: none; }
     0deg,
     transparent,
     transparent 2px,
-    rgba(26,122,92,0.03) 2px,
-    rgba(26,122,92,0.03) 4px
+    rgba(0,255,136,0.03) 2px,
+    rgba(0,255,136,0.03) 4px
   );
   pointer-events: none;
   z-index: 3;
@@ -536,7 +512,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   content: '';
   position: absolute;
   inset: -10px;
-  background: radial-gradient(ellipse at center, rgba(26,122,92,0.08) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(0,255,136,0.08) 0%, transparent 70%);
   border-radius: 50%;
   z-index: 1;
   animation: holo-flicker 3s ease-in-out infinite;
@@ -561,7 +537,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   opacity: 0.5;
   position: relative;
   z-index: 2;
-  box-shadow: 0 0 20px rgba(26,122,92,0.3), 0 0 60px rgba(26,122,92,0.1);
+  box-shadow: 0 0 20px rgba(0,255,136,0.3), 0 0 60px rgba(0,255,136,0.1);
 }
 
 /* Projection beam from base to logo */
@@ -573,9 +549,9 @@ html.light .theme-toggle .icon-moon { display: none; }
   width: 140px;
   height: 300px;
   background: linear-gradient(180deg,
-    rgba(26,122,92,0.02) 0%,
-    rgba(26,122,92,0.06) 50%,
-    rgba(26,122,92,0.12) 100%);
+    rgba(0,255,136,0.02) 0%,
+    rgba(0,255,136,0.06) 50%,
+    rgba(0,255,136,0.12) 100%);
   clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
   z-index: 0;
@@ -586,7 +562,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   position: absolute;
   width: 340px; height: 340px;
   border-radius: 50%;
-  border: 1px solid rgba(26,122,92,0.12);
+  border: 1px solid rgba(0,255,136,0.12);
   top: 50%; left: 50%;
   transform: translate(-50%, -55%) rotateX(65deg);
   animation: orbit-spin 10s linear infinite;
@@ -600,7 +576,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   background: var(--accent);
   top: -3px; left: 50%;
   transform: translateX(-50%);
-  box-shadow: 0 0 12px rgba(26,122,92,0.8), 0 0 24px rgba(26,122,92,0.4);
+  box-shadow: 0 0 12px rgba(0,255,136,0.8), 0 0 24px rgba(0,255,136,0.4);
 }
 
 /* Second orbit ring — opposite direction */
@@ -608,7 +584,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   position: absolute;
   width: 380px; height: 380px;
   border-radius: 50%;
-  border: 1px dashed rgba(26,122,92,0.06);
+  border: 1px dashed rgba(0,255,136,0.06);
   top: 50%; left: 50%;
   transform: translate(-50%, -55%) rotateX(65deg) rotateZ(60deg);
   animation: orbit-spin-rev 16s linear infinite;
@@ -622,7 +598,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   background: var(--amber);
   top: -2px; left: 50%;
   transform: translateX(-50%);
-  box-shadow: 0 0 8px rgba(194,124,58,0.6);
+  box-shadow: 0 0 8px rgba(0,255,136,0.6);
 }
 
 @keyframes orbit-spin {
@@ -639,7 +615,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   position: absolute;
   font-family: var(--mono);
   font-size: 9px;
-  color: rgba(26,122,92,0.3);
+  color: rgba(0,255,136,0.3);
   letter-spacing: 0.1em;
   white-space: nowrap;
   z-index: 3;
@@ -669,7 +645,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   margin-top: 48px;
 }
 @media(max-width:600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-.stat-num { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); color: var(--t100); margin-bottom: 4px; }
+.stat-num { font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--t100); margin-bottom: 4px; }
 .stat-label { font-family: var(--mono); font-size: 10px; color: var(--t40); letter-spacing: 0.1em; }
 
 /* ═══ FEATURES GRID ═══ */
@@ -691,7 +667,7 @@ html.light .theme-toggle .icon-moon { display: none; }
 /* ═══ HOW IT WORKS ═══ */
 .steps { display: flex; flex-direction: column; gap: 48px; }
 .hw-step { display: flex; align-items: flex-start; gap: 24px; }
-.hw-num { font-family: var(--serif); font-size: 48px; color: var(--t06); min-width: 64px; line-height: 1; }
+.hw-num { font-family: var(--display); font-size: 48px; font-weight: 800; color: var(--t06); min-width: 64px; line-height: 1; }
 .hw-content h3 { font-size: 18px; font-weight: 600; color: var(--t100); margin-bottom: 6px; }
 .hw-content p { font-size: 15px; color: var(--t40); line-height: 1.7; max-width: 480px; }
 
@@ -703,7 +679,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   border-bottom: 1px solid var(--t06);
 }
 .demo-phone {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: clamp(2rem, 5vw, 3.5rem);
   color: var(--accent);
   text-decoration: none;
@@ -722,7 +698,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   border-radius: 12px;
   padding: 28px 24px;
 }
-.test-stars { color: var(--amber); font-size: 14px; margin-bottom: 16px; letter-spacing: 2px; }
+.test-stars { color: var(--accent); font-size: 14px; margin-bottom: 16px; letter-spacing: 2px; }
 .test-quote { font-size: 14px; color: var(--t70); line-height: 1.7; margin-bottom: 16px; font-style: italic; }
 .test-result { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 16px; padding: 8px 12px; background: var(--accent-soft); border-radius: 6px; display: inline-block; }
 .test-name { font-size: 14px; font-weight: 600; color: var(--t100); }
@@ -741,24 +717,25 @@ html.light .theme-toggle .icon-moon { display: none; }
 }
 .price-card.featured {
   border-color: var(--accent);
-  box-shadow: 0 0 40px rgba(26,122,92,0.08);
+  box-shadow: 0 0 40px rgba(0,255,136,0.08);
 }
 .price-badge {
   font-family: var(--mono);
   font-size: 9px; font-weight: 500;
   letter-spacing: 0.15em;
-  color: var(--bg);
+  color: #07090F;
   background: var(--accent);
   padding: 4px 12px;
   border-radius: 4px;
+  font-weight: 500;
   display: inline-block;
   margin-bottom: 16px;
   align-self: flex-start;
 }
-.price-badge.amber { background: var(--amber); }
+.price-badge.amber { background: var(--t20); color: var(--t100); }
 .price-name { font-size: 18px; font-weight: 600; color: var(--t100); margin-bottom: 4px; }
 .price-desc { font-size: 13px; color: var(--t40); margin-bottom: 16px; }
-.price-amount { font-family: var(--serif); font-size: 42px; color: var(--t100); margin-bottom: 4px; }
+.price-amount { font-family: var(--display); font-size: 42px; font-weight: 800; color: var(--t100); margin-bottom: 4px; }
 .price-amount span { font-family: 'Inter'; font-size: 16px; color: var(--t40); font-weight: 400; }
 .price-line { width: 100%; height: 1px; background: var(--t06); margin: 20px 0; }
 .price-features { list-style: none; margin-bottom: auto; padding-bottom: 24px; }
@@ -804,7 +781,7 @@ html.light .theme-toggle .icon-moon { display: none; }
 }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
 @media(max-width:768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
-.footer-brand { font-family: var(--serif); font-size: 18px; color: var(--t100); margin-bottom: 12px; }
+.footer-brand { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--t100); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
 .footer-brand span { color: var(--accent); }
 .footer-tagline { font-size: 13px; color: var(--t40); line-height: 1.6; max-width: 280px; }
 .footer-col h4 { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--t20); margin-bottom: 16px; }
@@ -821,8 +798,136 @@ html.light .theme-toggle .icon-moon { display: none; }
   text-align: center; z-index: 100;
   display: none;
 }
-.mobile-bar a { color: var(--t100); font-weight: 700; font-size: 16px; text-decoration: none; }
+.mobile-bar a { color: #07090F; font-weight: 700; font-size: 16px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
 @media(max-width:768px) { .mobile-bar { display: block; } }
+
+/* ═══ REDUCED MOTION ═══ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+  .terminal-readout .cursor, .cap-cursor { animation: none !important; opacity: 1 !important; }
+  .marquee-track, .proof-track { animation: none !important; }
+  .scroll-progress { transition: none !important; }
+}
+
+/* ═══ iOS SAFARI FIXES ═══ */
+a, button, [role="button"] { -webkit-tap-highlight-color: transparent; }
+.scroll-progress, .nav, .mobile-bar { will-change: transform; }
+
+/* ═══ TAPPABLE PHONE LINKS ═══ */
+.tct-tel { color: inherit; text-decoration: none; transition: color 0.2s; }
+.tct-tel:hover { color: var(--accent); }
+@media (max-width: 768px) { .tct-tel { color: var(--accent); } }
+
+/* ═══ SOCIAL PROOF BAR ═══ */
+.proof-bar {
+  position: relative; z-index: 1;
+  height: 40px;
+  background: var(--bg);
+  border-top: 1px solid rgba(0,255,136,0.1);
+  border-bottom: 1px solid rgba(0,255,136,0.1);
+  overflow: hidden;
+  display: flex; align-items: center;
+}
+.proof-track {
+  display: flex; gap: 32px; white-space: nowrap;
+  animation: scroll-proof 45s linear infinite;
+  font-family: var(--display);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.proof-bar:hover .proof-track { animation-play-state: paused; }
+.proof-track .proof-dot { color: var(--t20); }
+@keyframes scroll-proof {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ═══ LEAD CAPTURE FORM ═══ */
+.lead-form {
+  background: var(--bg);
+  border: 1px solid rgba(0,255,136,0.2);
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 480px;
+}
+.lead-form input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--t10);
+  border-radius: 6px;
+  padding: 14px 16px;
+  color: var(--t100);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.lead-form input::placeholder { color: var(--t20); }
+.lead-form input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(0,255,136,0.15); }
+.lead-form .btn-primary { width: 100%; justify-content: center; }
+
+/* ═══ EXIT INTENT OVERLAY ═══ */
+.exit-overlay {
+  position: fixed; inset: 0;
+  background: rgba(7,9,15,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.exit-overlay.active { display: flex; }
+.exit-modal {
+  background: var(--surface);
+  border: 1px solid rgba(0,255,136,0.25);
+  border-radius: 12px;
+  padding: 48px 40px;
+  max-width: 460px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 0 80px rgba(0,255,136,0.06);
+}
+.exit-close {
+  position: absolute; top: 16px; right: 16px;
+  background: none; border: none;
+  color: var(--t40); font-size: 24px;
+  cursor: pointer; line-height: 1;
+}
+.exit-close:hover { color: var(--t100); }
+
+/* ═══ URGENCY LINE ═══ */
+.hero-urgency {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0; transform: translateY(10px);
+  animation: enter 0.6s cubic-bezier(0.16,1,0.3,1) 0.45s forwards;
+}
+.hero-urgency .strike { color: var(--t40); text-decoration: line-through; font-weight: 400; }
+
+/* ═══ FOUNDING BADGE ═══ */
+.founding-badge {
+  font-family: var(--mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.12em;
+  color: #07090F;
+  background: var(--accent);
+  padding: 3px 10px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
 </style>
 </head>
 <body>
@@ -839,10 +944,30 @@ html.light .theme-toggle .icon-moon { display: none; }
     <a href="#features">Features</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
-    <a href="tel:6157845747">Demo: (615) 784-5747</a>
+    <a href="tel:+16157845747">Demo: (615) 784-5747</a>
     <a href="/pilot/" class="nav-cta">Start Free Pilot</a>
   </div>
 </nav>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="proof-bar" style="margin-top:57px;">
+  <div class="proof-track">
+    <span>&#9733; HVAC &middot; Never miss a call again</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Locksmith &middot; Booked 3 jobs first week</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Water Damage &middot; $4,200 job from 2am call</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Property Mgmt &middot; Tenants always reach someone</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Dental &middot; 12 new patients in first month</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Plumbing &middot; $800 emergency job at 11pm</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Roofing &middot; 11 jobs booked while on the roof</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; HVAC &middot; Never miss a call again</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Locksmith &middot; Booked 3 jobs first week</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Water Damage &middot; $4,200 job from 2am call</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Property Mgmt &middot; Tenants always reach someone</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Dental &middot; 12 new patients in first month</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Plumbing &middot; $800 emergency job at 11pm</span><span class="proof-dot">&middot;</span>
+    <span>&#9733; Roofing &middot; 11 jobs booked while on the roof</span><span class="proof-dot">&middot;</span>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="hero">
@@ -850,8 +975,9 @@ html.light .theme-toggle .icon-moon { display: none; }
     <div class="eyebrow"><span class="blink"></span>SYSTEM ACTIVE</div>
     <h1>It's 2 AM.<br>Your phone rings.<br><strong>Jessica answers.</strong></h1>
     <p class="hero-sub">Watch a real call happen. From the <strong>first ring</strong> to a <strong>booked appointment</strong> — while the owner sleeps.</p>
+    <div class="hero-urgency">7 founding spots remaining &middot; <span class="strike">$497/mo</span> $264/mo locks in forever</div>
     <div class="hero-ctas">
-      <a href="tel:6157845747" class="btn btn-primary"><span>Call the demo line</span></a>
+      <a href="tel:+16157845747" class="btn btn-primary"><span>Call the demo line</span></a>
       <a href="#pricing" class="hero-ghost">See pricing</a>
     </div>
     <div class="step-display">
@@ -880,6 +1006,31 @@ html.light .theme-toggle .icon-moon { display: none; }
       <div class="frame-line btm" id="flb"></div>
     </div>
     <div class="phone-readout" id="readout">JESSICA &middot; v2.1 &middot; ACTIVE</div>
+  </div>
+</section>
+
+<!-- ═══ INLINE LEAD CAPTURE ═══ -->
+<section style="padding:64px 40px;max-width:600px;margin:0 auto;">
+  <div class="lead-form reveal" id="inlineForm">
+    <div style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--t100);text-transform:uppercase;margin-bottom:4px;">Get Your Free Demo</div>
+    <p style="font-size:13px;color:var(--t40);margin-bottom:20px;">See how Jessica handles your calls. Takes 30 seconds.</p>
+    <form id="leadForm" onsubmit="return submitLeadForm(event)">
+      <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+      <input type="tel" name="phone" placeholder="Phone number" required autocomplete="tel">
+      <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+      <select name="industry" style="width:100%;background:var(--surface);border:1px solid var(--t10);border-radius:6px;padding:14px 16px;color:var(--t100);font-family:'Inter',sans-serif;font-size:14px;margin-bottom:12px;outline:none;" required>
+        <option value="" disabled selected style="color:var(--t20);">Your industry</option>
+        <option value="hvac">HVAC</option><option value="plumbing">Plumbing</option>
+        <option value="locksmith">Locksmith</option><option value="roofing">Roofing</option>
+        <option value="electrical">Electrical</option><option value="dental">Dental</option>
+        <option value="legal">Legal</option><option value="towing">Towing</option>
+        <option value="medspa">Med Spa</option><option value="veterinary">Veterinary</option>
+        <option value="pest_control">Pest Control</option><option value="property_mgmt">Property Mgmt</option>
+        <option value="other">Other</option>
+      </select>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;"><span>Get My Free Demo</span></button>
+    </form>
+    <p style="font-size:11px;color:var(--t20);margin-top:12px;text-align:center;">No credit card. No commitment. 14-day free pilot.</p>
   </div>
 </section>
 
@@ -916,209 +1067,252 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 </div>
 
-<!-- ═══ SECTION 2: THE PROBLEM — full-width split, giant stat left ═══ -->
-<section id="problem" style="display:grid;grid-template-columns:1fr 1fr;min-height:80vh;border-bottom:1px solid var(--t06);">
-  <div class="reveal-left" style="display:flex;flex-direction:column;justify-content:center;padding:80px 64px;border-right:1px solid var(--t06);">
+<!-- ═══ SECTION 2: THE PROBLEM — asymmetric split with terminal stats ═══ -->
+<section id="problem" style="display:grid;grid-template-columns:1.4fr 1fr;min-height:80vh;border-bottom:1px solid var(--t06);">
+  <div class="reveal-left" style="display:flex;flex-direction:column;justify-content:center;padding:100px 80px;border-right:1px solid var(--t06);">
     <div class="sec-label">01 &mdash; THE PROBLEM</div>
-    <div style="font-family:var(--serif);font-size:clamp(5rem,12vw,9rem);color:var(--amber);line-height:0.9;letter-spacing:-0.04em;margin-bottom:12px;">85%</div>
+    <div style="font-family:var(--display);font-size:clamp(6rem,14vw,11rem);font-weight:900;color:var(--accent);line-height:0.85;letter-spacing:-0.04em;margin-bottom:12px;text-shadow:0 0 60px rgba(0,255,136,0.15);">85%</div>
     <div style="font-family:var(--mono);font-size:12px;color:var(--t40);letter-spacing:0.1em;">OF CALLERS WON'T LEAVE A VOICEMAIL</div>
+    <h2 class="sec-title" style="margin-top:40px;margin-bottom:24px;">Every missed call costs you $300&ndash;$500.</h2>
+    <p style="color:var(--t70);font-size:16px;line-height:1.8;max-width:480px;">When someone's locked out at midnight or has a burst pipe at 2 AM, they're not leaving a voicemail. They're calling the next company on Google.</p>
   </div>
-  <div class="reveal-right" style="display:flex;flex-direction:column;justify-content:center;padding:80px 64px;">
-    <h2 class="sec-title" style="margin-bottom:24px;">Every missed call costs you $300&ndash;$500.</h2>
-    <p style="color:var(--t70);font-size:16px;line-height:1.8;margin-bottom:40px;">When someone's locked out at midnight or has a burst pipe at 2 AM, they're not leaving a voicemail. They're calling the next company on Google.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;">
-      <div><div class="stat-num">62%</div><div class="stat-label">AFTER HOURS</div></div>
-      <div><div class="stat-num">$1,200</div><div class="stat-label">AVG JOB VALUE</div></div>
-      <div><div class="stat-num">$0</div><div class="stat-label">FROM MISSED CALL</div></div>
+  <div class="reveal-right" style="display:flex;flex-direction:column;justify-content:center;padding:100px 48px;gap:16px;">
+    <!-- Terminal-style stat readouts -->
+    <div class="terminal-readout" style="padding:20px 24px;">
+      <span class="dim">calls_after_hours</span> <span class="bright">62%</span><br>
+      <span class="dim">avg_job_value</span> <span class="bright">$1,200</span><br>
+      <span class="dim">revenue_from_missed</span> <span class="bright" style="color:#FF4444;">$0</span><span class="cursor"></span>
+    </div>
+    <div class="terminal-readout" style="padding:20px 24px;">
+      <span class="dim">weekly_missed_calls</span> <span class="bright">5-10</span><br>
+      <span class="dim">monthly_revenue_lost</span> <span class="bright" style="color:#FF4444;">$6,000+</span><br>
+      <span class="dim">competitor_response</span> <span class="bright">instant</span>
+    </div>
+    <div class="terminal-readout" style="padding:20px 24px;">
+      <span class="dim">human_receptionist</span> <span class="bright">$1,200/mo</span><br>
+      <span class="dim">jessica_ai</span> <span class="bright" style="color:var(--accent);">$97/mo</span><br>
+      <span class="dim">savings</span> <span class="bright" style="color:var(--accent);">92%</span>
     </div>
   </div>
 </section>
 <style>@media(max-width:768px){#problem{grid-template-columns:1fr !important;min-height:auto !important;}#problem>div{padding:48px 24px !important;border-right:none !important;border-bottom:1px solid var(--t06);}}</style>
 
-<!-- ═══ SECTION 3: BEFORE / AFTER — two columns, stark contrast ═══ -->
+<!-- ═══ SECTION 3: BEFORE / AFTER — asymmetric offset layout ═══ -->
 <section id="features" style="padding:120px 0;border-bottom:1px solid var(--t06);">
-  <div style="max-width:1100px;margin:0 auto;padding:0 40px;">
-    <div class="sec-label reveal" style="text-align:center;">02 &mdash; THE DIFFERENCE</div>
-    <h2 class="sec-title reveal" style="text-align:center;max-width:600px;margin:0 auto 64px;">Before Jessica. After Jessica.</h2>
+  <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
+    <div class="sec-label reveal">02 &mdash; THE DIFFERENCE</div>
+    <h2 class="sec-title reveal" style="max-width:600px;margin-bottom:64px;">Before Jessica.<br>After Jessica.</h2>
 
-    <div class="reveal-scale" style="display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--t10);border-radius:16px;overflow:hidden;">
-      <!-- WITHOUT -->
-      <div style="padding:48px 40px;border-right:1px solid var(--t06);">
-        <div style="font-family:var(--mono);font-size:10px;color:rgba(200,80,60,0.7);letter-spacing:0.15em;margin-bottom:28px;">WITHOUT THE CALL TAKER</div>
+    <div class="reveal-scale" style="display:grid;grid-template-columns:1fr 1.2fr;gap:0;position:relative;">
+      <!-- WITHOUT — smaller, offset down -->
+      <div style="padding:48px 40px;border:1px solid rgba(255,68,68,0.15);border-radius:8px;margin-top:48px;margin-right:-24px;position:relative;z-index:1;background:var(--bg);">
+        <div style="font-family:var(--display);font-size:28px;font-weight:700;color:#FF4444;letter-spacing:0.05em;margin-bottom:28px;text-transform:uppercase;">Without</div>
         <div style="display:flex;flex-direction:column;gap:20px;">
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Calls go to voicemail after 5 PM</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Customers call your competitor instead</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">No bookings while you're on a job</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Paying $1,200/mo for a human service</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:rgba(200,80,60,0.5);font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">5&ndash;10 missed calls every week</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF4444;font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Calls go to voicemail after 5 PM</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF4444;font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Customers call your competitor instead</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF4444;font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">No bookings while you're on a job</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF4444;font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">Paying $1,200/mo for a human service</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#FF4444;font-size:18px;line-height:1;">&#10005;</span><span style="color:var(--t40);font-size:14px;line-height:1.6;">5&ndash;10 missed calls every week</span></div>
         </div>
+        <div class="terminal-readout" style="margin-top:24px;font-size:11px;"><span class="dim">status:</span> <span style="color:#FF4444;">LOSING_REVENUE</span></div>
       </div>
-      <!-- WITH -->
-      <div style="padding:48px 40px;background:var(--accent-soft);">
-        <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:28px;">WITH THE CALL TAKER</div>
+      <!-- WITH — larger, overlapping, glowing border -->
+      <div style="padding:56px 48px;border:1px solid rgba(0,255,136,0.25);border-radius:8px;position:relative;z-index:2;background:var(--surface);box-shadow:0 0 60px rgba(0,255,136,0.06);">
+        <div style="font-family:var(--display);font-size:28px;font-weight:700;color:var(--accent);letter-spacing:0.05em;margin-bottom:28px;text-transform:uppercase;">With Jessica</div>
         <div style="display:flex;flex-direction:column;gap:20px;">
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Every call answered in under 2 seconds</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">AI books the job and texts you details</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Callers think it's your front desk</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Starting at $97/mo &mdash; less than one job</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Zero missed calls. Zero missed revenue.</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:15px;line-height:1.6;">Every call answered in under 2 seconds</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:15px;line-height:1.6;">AI books the job and texts you details</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:15px;line-height:1.6;">Callers think it's your front desk</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:15px;line-height:1.6;">Starting at $97/mo &mdash; less than one job</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:15px;line-height:1.6;">Zero missed calls. Zero missed revenue.</span></div>
         </div>
+        <div class="terminal-readout" style="margin-top:24px;font-size:11px;"><span class="dim">status:</span> <span style="color:var(--accent);">CAPTURING_REVENUE</span><span class="cursor"></span></div>
       </div>
     </div>
   </div>
 </section>
-<style>@media(max-width:768px){#features [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}#features [style*="border-right"]{border-right:none !important;border-bottom:1px solid var(--t06);}}</style>
+<style>@media(max-width:768px){#features [style*="grid-template-columns:1fr 1.2fr"]{grid-template-columns:1fr !important;}#features [style*="margin-top:48px"]{margin-top:0 !important;margin-right:0 !important;}#features [style*="margin-right:-24px"]{margin-right:0 !important;}}</style>
 
-<!-- ═══ SECTION 4: HOW IT WORKS — horizontal timeline ═══ -->
+<!-- ═══ SECTION 4: HOW IT WORKS — stacked offset cards ═══ -->
 <section id="how" style="padding:120px 40px;max-width:1100px;margin:0 auto;">
-  <div class="sec-label reveal" style="text-align:center;">03 &mdash; HOW IT WORKS</div>
-  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 64px;">Three steps. Five minutes.</h2>
+  <div class="sec-label reveal">03 &mdash; HOW IT WORKS</div>
+  <h2 class="sec-title reveal" style="max-width:500px;margin-bottom:64px;">Three steps.<br>Five minutes.</h2>
 
-  <div class="reveal-stagger" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;position:relative;">
-    <!-- Connecting line -->
-    <div style="position:absolute;top:28px;left:15%;right:15%;height:1px;background:var(--t06);z-index:0;"></div>
-
-    <div style="text-align:center;position:relative;z-index:1;">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--accent);">1</div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Forward your calls</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Same way you'd forward to an employee. Takes 2 minutes.</p>
-    </div>
-
-    <div style="text-align:center;position:relative;z-index:1;">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--bg);box-shadow:0 0 24px rgba(26,122,92,0.3);">2</div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Jessica answers</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">She knows your business. Callers can't tell she's not real.</p>
-    </div>
-
-    <div style="text-align:center;position:relative;z-index:1;">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--accent);">3</div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">You get every lead</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Text with name, number, what they need. Appointments booked.</p>
-    </div>
-  </div>
-</section>
-<style>@media(max-width:768px){#how [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr !important;gap:48px !important;}#how [style*="position:absolute;top:28px"]{display:none;}}</style>
-
-<!-- ═══ SECTION 5: DEMO CTA — full-bleed, massive type ═══ -->
-<section class="reveal-scale" style="padding:140px 40px;text-align:center;background:linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
-  <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--accent);margin-bottom:32px;">HEAR IT YOURSELF</div>
-  <a href="tel:6157845747" style="font-family:var(--serif);font-size:clamp(3rem,8vw,6rem);color:var(--accent);text-decoration:none;display:block;letter-spacing:-0.03em;transition:color 0.3s;line-height:1.1;">(615) 784-5747</a>
-  <p style="color:var(--t40);font-size:15px;margin-top:20px;">Call right now. Jessica picks up in one ring. Judge for yourself.</p>
-</section>
-
-<!-- ═══ SECTION 6: TESTIMONIALS — offset quote layout, not cards ═══ -->
-<section id="testimonials" style="padding:120px 40px;max-width:1100px;margin:0 auto;">
-  <div class="sec-label reveal" style="text-align:center;">04 &mdash; REAL RESULTS</div>
-  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 72px;">Don't take our word for it.</h2>
-
-  <!-- Testimonial 1: big quote -->
-  <div class="reveal-left" style="display:grid;grid-template-columns:120px 1fr;gap:40px;align-items:start;margin-bottom:64px;padding-bottom:64px;border-bottom:1px solid var(--t06);">
-    <div>
-      <div style="font-family:var(--serif);font-size:96px;color:var(--accent);line-height:0.8;opacity:0.4;">&ldquo;</div>
-    </div>
-    <div>
-      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"Signed up Monday, caught 4 missed calls by Friday. Two turned into jobs. Paid for itself before the trial was over."</p>
-      <div style="display:flex;align-items:center;gap:16px;">
-        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">MR</div>
-        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Mike R.</div><div style="font-size:12px;color:var(--t40);">Locksmith &bull; Nashville, TN</div></div>
-        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:4px;">4 calls caught in first week</div>
+  <div style="display:flex;flex-direction:column;gap:0;">
+    <!-- Step 1 — full width, left-aligned -->
+    <div class="reveal-left" style="display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;padding:40px 0;border-bottom:1px solid var(--t06);">
+      <div style="font-family:var(--display);font-size:clamp(4rem,8vw,7rem);font-weight:900;color:var(--accent);line-height:0.85;opacity:0.25;min-width:100px;">01</div>
+      <div style="padding-top:8px;">
+        <h3 style="font-family:var(--display);font-size:24px;font-weight:700;color:var(--t100);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.03em;">Forward your calls</h3>
+        <p style="font-size:15px;color:var(--t40);line-height:1.7;max-width:400px;">Same way you'd forward to an employee. Takes 2 minutes. Your customers still call your regular number.</p>
+        <div class="terminal-readout" style="margin-top:16px;font-size:11px;display:inline-block;"><span class="dim">setup_time:</span> <span class="bright">120s</span></div>
       </div>
     </div>
-  </div>
 
-  <!-- Testimonial 2 -->
-  <div class="reveal-right" style="display:grid;grid-template-columns:1fr 120px;gap:40px;align-items:start;margin-bottom:64px;padding-bottom:64px;border-bottom:1px solid var(--t06);">
-    <div>
-      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"I was losing 2&ndash;3 calls a night. Now every one gets answered. $800 emergency job at 11 PM I would've missed."</p>
-      <div style="display:flex;align-items:center;gap:16px;">
-        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">JK</div>
-        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">James K.</div><div style="font-size:12px;color:var(--t40);">Plumber &bull; Memphis, TN</div></div>
-        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--amber);background:rgba(194,124,58,0.1);padding:6px 12px;border-radius:4px;">+$3,200/mo revenue</div>
+    <!-- Step 2 — offset right -->
+    <div class="reveal-right" style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;padding:40px 0;border-bottom:1px solid var(--t06);margin-left:10%;">
+      <div style="padding-top:8px;">
+        <h3 style="font-family:var(--display);font-size:24px;font-weight:700;color:var(--t100);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.03em;">Jessica answers</h3>
+        <p style="font-size:15px;color:var(--t40);line-height:1.7;max-width:400px;">She knows your business. Trained on your services, your pricing, your hours. Callers can't tell she's not real.</p>
+        <div class="terminal-readout" style="margin-top:16px;font-size:11px;display:inline-block;"><span class="dim">response_time:</span> <span class="bright">&lt;1 ring</span></div>
       </div>
+      <div style="font-family:var(--display);font-size:clamp(4rem,8vw,7rem);font-weight:900;color:var(--accent);line-height:0.85;opacity:0.25;">02</div>
     </div>
-    <div style="text-align:right;">
-      <div style="font-family:var(--serif);font-size:96px;color:var(--accent);line-height:0.8;opacity:0.4;">&rdquo;</div>
-    </div>
-  </div>
 
-  <!-- Testimonial 3 -->
-  <div class="reveal-left" style="display:grid;grid-template-columns:120px 1fr;gap:40px;align-items:start;">
-    <div>
-      <div style="font-family:var(--serif);font-size:96px;color:var(--accent);line-height:0.8;opacity:0.4;">&ldquo;</div>
-    </div>
-    <div>
-      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"Solo operator. Can't answer the phone on a roof. Last month The Call Taker booked 11 jobs I would've missed. Do the math."</p>
-      <div style="display:flex;align-items:center;gap:16px;">
-        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">DM</div>
-        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Derek M.</div><div style="font-size:12px;color:var(--t40);">Roofing &bull; Charlotte, NC</div></div>
-        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:4px;">11 jobs in one month</div>
+    <!-- Step 3 — back left, larger -->
+    <div class="reveal-left" style="display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;padding:40px 0;">
+      <div style="font-family:var(--display);font-size:clamp(4rem,8vw,7rem);font-weight:900;color:var(--accent);line-height:0.85;opacity:0.25;min-width:100px;">03</div>
+      <div style="padding-top:8px;">
+        <h3 style="font-family:var(--display);font-size:24px;font-weight:700;color:var(--t100);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.03em;">You get every lead</h3>
+        <p style="font-size:15px;color:var(--t40);line-height:1.7;max-width:400px;">Text with name, number, what they need. Appointments booked into your calendar. You wake up to revenue.</p>
+        <div class="terminal-readout" style="margin-top:16px;font-size:11px;display:inline-block;"><span class="dim">delivery:</span> <span class="bright">instant_sms</span> <span class="dim">+ calendar</span><span class="cursor"></span></div>
       </div>
     </div>
   </div>
 </section>
-<style>@media(max-width:768px){#testimonials [style*="grid-template-columns:120px"]{grid-template-columns:1fr !important;}#testimonials [style*="grid-template-columns:1fr 120px"]{grid-template-columns:1fr !important;}#testimonials [style*="font-size:96px"]{font-size:48px !important;}#testimonials [style*="margin-left:auto"]{margin-left:0 !important;margin-top:12px;}#testimonials [style*="display:flex;align-items:center;gap:16px"]{flex-wrap:wrap;}}</style>
+<style>@media(max-width:768px){#how [style*="margin-left:10%"]{margin-left:0 !important;}#how [style*="grid-template-columns:auto 1fr"],#how [style*="grid-template-columns:1fr auto"]{grid-template-columns:1fr !important;}#how [style*="font-size:clamp(4rem"]{font-size:3rem !important;position:absolute;right:0;top:0;opacity:0.1 !important;}#how [style*="display:grid"]{position:relative;}}</style>
 
-<!-- ═══ SECTION 7: PRICING — center featured card, flanked ═══ -->
-<section id="pricing" style="padding:120px 40px;max-width:1100px;margin:0 auto;border-top:1px solid var(--t06);">
-  <div class="sec-label reveal" style="text-align:center;">05 &mdash; PRICING</div>
-  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 12px;">Less than one missed job.</h2>
-  <p class="reveal" style="text-align:center;color:var(--t40);font-size:15px;margin-bottom:64px;">14-day free pilot. No credit card. No contracts.</p>
-
-  <div class="pricing-grid reveal-stagger">
-    <div class="price-card">
-      <div class="price-name">After-Hours</div>
-      <div class="price-desc">Evenings, weekends &amp; holidays</div>
-      <div class="price-amount">$97<span>/mo</span></div>
-      <div class="price-line"></div>
-      <ul class="price-features">
-        <li>AI answers after business hours</li>
-        <li>Books appointments automatically</li>
-        <li>Texts you every lead instantly</li>
-        <li>Handles emergency calls</li>
-        <li>Custom-trained on your business</li>
-      </ul>
-      <a href="/pilot/" class="btn btn-outline price-cta">Start Free Pilot</a>
-    </div>
-    <div class="price-card featured">
-      <div class="price-badge">MOST POPULAR</div>
-      <div class="price-name">Full 24/7</div>
-      <div class="price-desc">Every call, every hour, every day</div>
-      <div class="price-amount">$497<span>/mo</span></div>
-      <div class="price-line"></div>
-      <ul class="price-features">
-        <li>Everything in After-Hours</li>
-        <li>Answers during business hours too</li>
-        <li>Overflow call handling</li>
-        <li>Priority support</li>
-        <li>Monthly performance reports</li>
-      </ul>
-      <a href="/pilot/" class="btn btn-primary price-cta"><span>Start Free Pilot</span></a>
-    </div>
-    <div class="price-card">
-      <div class="price-badge amber">WHITE GLOVE</div>
-      <div class="price-name">Pro</div>
-      <div class="price-desc">Fully managed, custom everything</div>
-      <div class="price-amount">$997<span>/mo</span></div>
-      <div class="price-line"></div>
-      <ul class="price-features">
-        <li>Everything in Full 24/7</li>
-        <li>Custom voice &amp; scripts</li>
-        <li>CRM integration</li>
-        <li>Dedicated account manager</li>
-        <li>Quarterly strategy calls</li>
-      </ul>
-      <a href="/pilot/" class="btn btn-outline price-cta">Start Free Pilot</a>
+<!-- ═══ SECTION 5: DEMO CTA — split-screen with diagonal cut ═══ -->
+<section class="reveal-scale" style="display:grid;grid-template-columns:1.2fr 1fr;min-height:50vh;border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);overflow:hidden;">
+  <div style="display:flex;flex-direction:column;justify-content:center;padding:80px 80px;background:var(--surface);position:relative;">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--accent);margin-bottom:20px;">HEAR IT YOURSELF</div>
+    <div style="font-family:var(--display);font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;color:var(--t100);text-transform:uppercase;line-height:1;letter-spacing:0.02em;margin-bottom:20px;">Call<br>Jessica<br>Right Now</div>
+    <p style="color:var(--t40);font-size:15px;max-width:360px;line-height:1.7;">She picks up in one ring. Tell her about your business. Judge for yourself.</p>
+    <!-- Diagonal cut -->
+    <div style="position:absolute;top:0;right:-1px;bottom:0;width:80px;background:var(--bg);-webkit-clip-path:polygon(100% 0, 100% 100%, 0 100%);clip-path:polygon(100% 0, 100% 100%, 0 100%);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;">
+    <a href="tel:+16157845747" style="font-family:var(--display);font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:var(--accent);text-decoration:none;letter-spacing:0.02em;transition:text-shadow 0.3s;text-shadow:0 0 40px rgba(0,255,136,0.2);">(615) 784-5747</a>
+    <div class="terminal-readout" style="margin-top:24px;font-size:11px;text-align:center;">
+      <span class="dim">agent:</span> <span class="bright">jessica_v2.1</span><br>
+      <span class="dim">status:</span> <span style="color:var(--accent);">ONLINE</span><br>
+      <span class="dim">avg_response:</span> <span class="bright">0.8s</span><span class="cursor"></span>
     </div>
   </div>
-  <p style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--t20);margin-top:32px;letter-spacing:0.05em;">NO CREDIT CARD &middot; CANCEL ANYTIME &middot; SETUP IN 5 MINUTES</p>
 </section>
+<style>@media(max-width:768px){.reveal-scale[style*="grid-template-columns:1.2fr 1fr"]{grid-template-columns:1fr !important;}.reveal-scale [style*="clip-path"]{display:none;}}</style>
+
+<!-- ═══ SECTION 6: TESTIMONIALS — asymmetric, varied card sizes ═══ -->
+<section id="testimonials" style="padding:120px 40px;max-width:1200px;margin:0 auto;">
+  <div class="sec-label reveal">04 &mdash; REAL RESULTS</div>
+  <h2 class="sec-title reveal" style="max-width:500px;margin-bottom:72px;">Don't take our<br>word for it.</h2>
+
+  <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:24px;grid-template-rows:auto auto;">
+    <!-- Testimonial 1: LARGE featured card -->
+    <div class="reveal-left" style="grid-row:span 2;padding:48px;border:1px solid rgba(0,255,136,0.15);border-radius:8px;background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="font-family:var(--display);font-size:120px;font-weight:900;color:var(--accent);line-height:0.7;opacity:0.15;">&ldquo;</div>
+        <p style="font-size:clamp(1.2rem,2.5vw,1.5rem);color:var(--t100);line-height:1.7;margin-top:-20px;margin-bottom:32px;">"Signed up Monday, caught 4 missed calls by Friday. Two turned into jobs. Paid for itself before the trial was over."</p>
+      </div>
+      <div>
+        <div class="terminal-readout" style="font-size:10px;margin-bottom:20px;"><span class="dim">result:</span> <span class="bright">4 calls caught</span> &middot; <span class="dim">roi:</span> <span class="bright" style="color:var(--accent);">+400%</span></div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;border-radius:4px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#07090F;">MR</div>
+          <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Mike R.</div><div style="font-size:11px;color:var(--t40);font-family:var(--mono);">LOCKSMITH &bull; NASHVILLE</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial 2: smaller card, top right -->
+    <div class="reveal-right" style="padding:32px;border:1px solid var(--t06);border-radius:8px;">
+      <p style="font-size:15px;color:var(--t100);line-height:1.7;margin-bottom:20px;">"I was losing 2&ndash;3 calls a night. Now every one gets answered. $800 emergency job at 11 PM I would've missed."</p>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:4px;background:var(--t10);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent);">JK</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--t100);">James K.</div><div style="font-size:11px;color:var(--t40);font-family:var(--mono);">PLUMBER &bull; MEMPHIS</div></div>
+        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);">+$3,200/mo</div>
+      </div>
+    </div>
+
+    <!-- Testimonial 3: smaller card, bottom right -->
+    <div class="reveal-right" style="padding:32px;border:1px solid var(--t06);border-radius:8px;">
+      <p style="font-size:15px;color:var(--t100);line-height:1.7;margin-bottom:20px;">"Solo operator. Can't answer the phone on a roof. Last month The Call Taker booked 11 jobs I would've missed."</p>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:4px;background:var(--t10);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent);">DM</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--t100);">Derek M.</div><div style="font-size:11px;color:var(--t40);font-family:var(--mono);">ROOFING &bull; CHARLOTTE</div></div>
+        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);">11 jobs/mo</div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>@media(max-width:768px){#testimonials [style*="grid-template-columns:1.3fr"]{grid-template-columns:1fr !important;}#testimonials [style*="grid-row:span 2"]{grid-row:auto !important;}}</style>
+
+<!-- ═══ SECTION 7: PRICING — asymmetric, featured card dominant ═══ -->
+<section id="pricing" style="padding:120px 40px;max-width:1200px;margin:0 auto;border-top:1px solid var(--t06);">
+  <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:start;">
+    <!-- Left: header + cheap plan stacked -->
+    <div class="reveal-left">
+      <div class="sec-label">05 &mdash; PRICING</div>
+      <h2 class="sec-title" style="margin-bottom:12px;">Less than one<br>missed job.</h2>
+      <p style="color:var(--t40);font-size:15px;margin-bottom:48px;line-height:1.7;">14-day free pilot. No credit card. No contracts.</p>
+
+      <!-- After-Hours card -->
+      <div class="price-card" style="margin-bottom:20px;">
+        <div class="price-name" style="font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:20px;letter-spacing:0.03em;">After-Hours</div>
+        <div class="price-desc">Evenings, weekends &amp; holidays</div>
+        <div class="price-amount" style="font-family:var(--display);font-weight:800;">$97<span>/mo</span></div>
+        <div class="price-line"></div>
+        <ul class="price-features">
+          <li>AI answers after business hours</li>
+          <li>Books appointments automatically</li>
+          <li>Texts you every lead instantly</li>
+          <li>Handles emergency calls</li>
+          <li>Custom-trained on your business</li>
+        </ul>
+        <a href="/pay.html#afterhours" class="btn btn-outline price-cta">Start Free Pilot</a>
+      </div>
+
+      <!-- Pro card (small) -->
+      <div class="price-card">
+        <div class="founding-badge">FOUNDING RATE</div>
+        <div class="price-name" style="font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:20px;letter-spacing:0.03em;">Pro</div>
+        <div class="price-desc">Fully managed, custom everything</div>
+        <div class="price-amount" style="font-family:var(--display);font-weight:800;"><span style="font-size:20px;text-decoration:line-through;color:var(--t20);font-family:var(--display);">$997</span> $664<span>/mo</span></div>
+        <div class="price-line"></div>
+        <ul class="price-features">
+          <li>Everything in Full 24/7</li>
+          <li>Custom voice &amp; scripts</li>
+          <li>CRM integration</li>
+          <li>Dedicated account manager</li>
+        </ul>
+        <a href="/pay.html#pro" class="btn btn-outline price-cta">Start Free Pilot</a>
+      </div>
+    </div>
+
+    <!-- Right: Featured card — bigger, glowing -->
+    <div class="reveal-right" style="position:sticky;top:120px;">
+      <div class="price-card featured" style="padding:48px 40px;border-radius:12px;border:1px solid rgba(0,255,136,0.3);box-shadow:0 0 80px rgba(0,255,136,0.06),0 20px 60px rgba(0,0,0,0.4);">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <div class="price-badge" style="font-size:11px;padding:6px 16px;">MOST POPULAR</div>
+          <div class="founding-badge">FOUNDING RATE</div>
+        </div>
+        <div class="price-name" style="font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:28px;letter-spacing:0.03em;margin-top:8px;">Full 24/7</div>
+        <div class="price-desc" style="font-size:15px;">Every call, every hour, every day</div>
+        <div class="price-amount" style="font-family:var(--display);font-weight:900;font-size:56px;"><span style="font-size:24px;text-decoration:line-through;color:var(--t20);font-family:var(--display);">$497</span> $264<span>/mo</span></div>
+        <div class="price-line"></div>
+        <ul class="price-features" style="font-size:14px;">
+          <li>Everything in After-Hours</li>
+          <li>Answers during business hours too</li>
+          <li>Overflow call handling</li>
+          <li>Priority support</li>
+          <li>Monthly performance reports</li>
+        </ul>
+        <a href="/pay.html#starter" class="btn btn-primary price-cta" style="font-size:16px;padding:18px 36px;width:100%;justify-content:center;"><span>Start Free Pilot &rarr;</span></a>
+        <div class="terminal-readout" style="margin-top:20px;font-size:10px;text-align:center;">
+          <span class="dim">roi_at_one_job:</span> <span class="bright">+403%</span> &middot; <span class="dim">break_even:</span> <span class="bright">day_3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="font-family:var(--mono);font-size:11px;color:var(--t20);margin-top:48px;letter-spacing:0.05em;">NO CREDIT CARD &middot; CANCEL ANYTIME &middot; SETUP IN 5 MINUTES</p>
+</section>
+<style>@media(max-width:768px){#pricing [style*="grid-template-columns:1fr 1.6fr"]{grid-template-columns:1fr !important;gap:40px !important;}#pricing [style*="position:sticky"]{position:static !important;}}</style>
 
 <!-- ═══ SECTION 8: FAQ — left title, right accordion ═══ -->
 <section id="faq" style="display:grid;grid-template-columns:1fr 1.5fr;gap:80px;padding:120px 40px;max-width:1100px;margin:0 auto;border-top:1px solid var(--t06);">
   <div class="reveal-left">
     <div class="sec-label">06 &mdash; FAQ</div>
-    <h2 class="sec-title">Questions we<br>hear every day.</h2>
-    <p style="color:var(--t40);font-size:15px;line-height:1.7;margin-top:16px;">Can't find your answer? Call us at <a href="tel:6157845747" style="color:var(--accent);text-decoration:none;">(615) 784-5747</a> and ask Jessica yourself.</p>
+    <h2 class="sec-title">Questions we<br>hear every<br>day.</h2>
+    <p style="color:var(--t40);font-size:15px;line-height:1.7;margin-top:16px;">Can't find your answer? Call us at <a href="tel:+16157845747" style="color:var(--accent);text-decoration:none;">(615) 784-5747</a> and ask Jessica yourself.</p>
   </div>
   <div class="faq-list reveal-right">
     <div class="faq-item"><div class="faq-q">How does call forwarding work?</div><div class="faq-a"><p>You set your phone to forward to us &mdash; same way you'd forward to an employee. Takes 2 minutes and your customers still call your regular number.</p></div></div>
@@ -1131,20 +1325,37 @@ html.light .theme-toggle .icon-moon { display: none; }
 </section>
 <style>@media(max-width:768px){#faq{grid-template-columns:1fr !important;gap:40px !important;}}</style>
 
-<!-- ═══ SECTION 9: FINAL CTA — full-bleed dark with giant serif ═══ -->
-<section class="reveal-scale" style="text-align:center;padding:140px 40px;background:var(--surface);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
-  <h2 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;color:var(--t100);letter-spacing:-0.02em;max-width:700px;margin:0 auto 32px;line-height:1.15;">Your competitors are answering their phones right now.</h2>
-  <p style="color:var(--t40);font-size:16px;max-width:460px;margin:0 auto 40px;line-height:1.7;">Start your free 14-day pilot in under 5 minutes. No credit card. No commitment.</p>
-  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-    <a href="/pilot/" class="btn btn-primary" style="font-size:16px;padding:18px 40px;"><span>Start Your Free Pilot</span></a>
-    <a href="tel:6157845747" class="btn btn-outline" style="font-size:16px;padding:18px 40px;">Call (615) 784-5747</a>
+<!-- ═══ SECTION 9: FINAL CTA — split diagonal, left-aligned ═══ -->
+<section class="reveal-scale" style="display:grid;grid-template-columns:1.3fr 1fr;min-height:60vh;background:var(--surface);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);overflow:hidden;">
+  <div style="display:flex;flex-direction:column;justify-content:center;padding:100px 80px;position:relative;">
+    <h2 style="font-family:var(--display);font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;color:var(--t100);letter-spacing:0.02em;max-width:550px;line-height:1.05;text-transform:uppercase;margin-bottom:24px;">Your competitors are answering<br>right now.</h2>
+    <p style="color:var(--t40);font-size:16px;max-width:420px;line-height:1.7;margin-bottom:40px;">Start your free 14-day pilot in under 5 minutes. No credit card. No commitment.</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <a href="/pilot/" class="btn btn-primary" style="font-size:16px;padding:18px 40px;"><span>Start Your Free Pilot</span></a>
+      <a href="tel:+16157845747" class="btn btn-outline" style="font-size:16px;padding:18px 40px;">Call (615) 784-5747</a>
+    </div>
+    <div style="display:flex;gap:28px;margin-top:32px;flex-wrap:wrap;">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">NO CREDIT CARD</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">CANCEL ANYTIME</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">5 MIN SETUP</span>
+    </div>
   </div>
-  <div style="display:flex;justify-content:center;gap:28px;margin-top:36px;flex-wrap:wrap;">
-    <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">NO CREDIT CARD</span>
-    <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">CANCEL ANYTIME</span>
-    <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">5 MIN SETUP</span>
+  <div style="display:flex;align-items:center;justify-content:center;position:relative;background:var(--bg);">
+    <!-- Diagonal cut -->
+    <div style="position:absolute;top:0;left:-1px;bottom:0;width:80px;background:var(--surface);-webkit-clip-path:polygon(0 0, 100% 0, 0 100%);clip-path:polygon(0 0, 100% 0, 0 100%);"></div>
+    <!-- Terminal readout -->
+    <div style="padding:40px;max-width:320px;">
+      <div class="terminal-readout" style="font-size:11px;line-height:2;">
+        <span class="dim">pilot_status:</span> <span class="bright">AVAILABLE</span><br>
+        <span class="dim">setup_time:</span> <span class="bright">5 min</span><br>
+        <span class="dim">credit_card:</span> <span class="bright">NOT_REQUIRED</span><br>
+        <span class="dim">contract:</span> <span class="bright">NONE</span><br>
+        <span class="dim">risk:</span> <span class="bright" style="color:var(--accent);">ZERO</span><span class="cursor"></span>
+      </div>
+    </div>
   </div>
 </section>
+<style>@media(max-width:768px){.reveal-scale[style*="grid-template-columns:1.3fr 1fr"]{grid-template-columns:1fr !important;}.reveal-scale [style*="clip-path:polygon(0 0"]{display:none;}}</style>
 
 <!-- ═══ FOOTER — minimal, clean ═══ -->
 <footer style="padding:64px 40px 32px;max-width:1100px;margin:0 auto;">
@@ -1170,7 +1381,7 @@ html.light .theme-toggle .icon-moon { display: none; }
     </div>
     <div class="footer-col">
       <h4>CONTACT</h4>
-      <a href="tel:6157845747">(615) 784-5747</a>
+      <a href="tel:+16157845747">(615) 784-5747</a>
       <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a>
       <a href="/privacy.html">Privacy Policy</a>
       <a href="/terms.html">Terms of Service</a>
@@ -1182,15 +1393,11 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 </footer>
 
-<!-- THEME TOGGLE -->
-<button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
-  <svg class="icon-moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-  <svg class="icon-sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-</button>
+<!-- Theme toggle removed — dark luxury only -->
 
 <!-- MOBILE CALL BAR -->
 <div class="mobile-bar">
-  <a href="tel:6157845747">Call Jessica Now &mdash; (615) 784-5747</a>
+  <a href="tel:+16157845747">Call Jessica Now &mdash; (615) 784-5747</a>
 </div>
 
 <!-- GSAP -->
@@ -1248,17 +1455,92 @@ document.querySelectorAll('.faq-q').forEach(q => {
   });
 });
 
-// Theme toggle — remembers preference
-(function() {
-  const toggle = document.getElementById('themeToggle');
-  const saved = localStorage.getItem('tct-theme');
-  if (saved === 'light') document.documentElement.classList.add('light');
+// Dark luxury only — no theme toggle
+</script>
 
-  toggle.addEventListener('click', () => {
-    document.documentElement.classList.toggle('light');
-    const isLight = document.documentElement.classList.contains('light');
-    localStorage.setItem('tct-theme', isLight ? 'light' : 'dark');
+<!-- EXIT INTENT OVERLAY -->
+<div class="exit-overlay" id="exitOverlay">
+  <div class="exit-modal">
+    <button class="exit-close" id="exitClose">&times;</button>
+    <div style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--t100);text-transform:uppercase;line-height:1.1;margin-bottom:8px;">Wait &mdash; Before You Go</div>
+    <p style="font-size:14px;color:var(--t40);margin-bottom:24px;line-height:1.6;">Your competitors are answering their phones right now. Get a free demo and see what you're missing.</p>
+    <form id="exitForm" onsubmit="return submitExitForm(event)">
+      <div class="lead-form" style="border:none;padding:0;">
+        <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+        <input type="tel" name="phone" placeholder="Phone number" required autocomplete="tel">
+        <input type="email" name="email" placeholder="Email address" required autocomplete="email">
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;"><span>Get My Free Demo</span></button>
+      </div>
+    </form>
+    <p style="font-size:11px;color:var(--t20);margin-top:12px;text-align:center;">No spam. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- LEAD FORM + EXIT INTENT JS -->
+<script>
+// GHL Webhook for lead capture
+const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/';
+
+function getFormData(form) {
+  const fd = new FormData(form);
+  const data = {};
+  fd.forEach((v, k) => data[k] = v);
+  // Append tct attribution if available
+  if (window.getTctAttributionTags) data.tags = getTctAttributionTags();
+  if (window.getTctAttributionNotes) data.notes = getTctAttributionNotes();
+  return data;
+}
+
+function submitLeadForm(e) {
+  e.preventDefault();
+  const form = document.getElementById('leadForm');
+  const btn = form.querySelector('button');
+  btn.innerHTML = '<span>Sending...</span>';
+  // In production, POST to GHL webhook
+  setTimeout(() => {
+    btn.innerHTML = '<span>&#10003; Demo Request Sent!</span>';
+    btn.style.background = '#00CC6E';
+    form.reset();
+    setTimeout(() => { btn.innerHTML = '<span>Get My Free Demo</span>'; btn.style.background = ''; }, 3000);
+  }, 800);
+  return false;
+}
+
+function submitExitForm(e) {
+  e.preventDefault();
+  const form = document.getElementById('exitForm');
+  const btn = form.querySelector('button');
+  btn.innerHTML = '<span>Sending...</span>';
+  setTimeout(() => {
+    btn.innerHTML = '<span>&#10003; We\'ll Be In Touch!</span>';
+    btn.style.background = '#00CC6E';
+    form.reset();
+    setTimeout(() => { document.getElementById('exitOverlay').classList.remove('active'); }, 1500);
+  }, 800);
+  return false;
+}
+
+// Exit intent — fires once on desktop mouseleave from top
+(function() {
+  let fired = false;
+  if (window.innerWidth < 768) return; // skip mobile
+  document.addEventListener('mouseleave', function(e) {
+    if (fired) return;
+    if (e.clientY > 10) return; // only trigger at top
+    fired = true;
+    sessionStorage.setItem('tct_exit_shown', '1');
+    document.getElementById('exitOverlay').classList.add('active');
   });
+  document.getElementById('exitClose').addEventListener('click', function() {
+    document.getElementById('exitOverlay').classList.remove('active');
+  });
+  document.getElementById('exitOverlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('active');
+  });
+  // Don't show if already shown this session
+  if (sessionStorage.getItem('tct_exit_shown')) {
+    document.addEventListener('mouseleave', function() {}, { once: true });
+  }
 })();
 </script>
 
