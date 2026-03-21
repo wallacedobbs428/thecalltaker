@@ -29,107 +29,367 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+/* ================================================
+   BLOG — DARK LUXURY TECH
+   Black #07090F | Electric green #00FF88 | Barlow Condensed headings | JetBrains Mono data
+   ================================================ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --green:#00dc82;--green-hover:#00c974;--green-light:rgba(0,220,130,0.08);--green-dim:rgba(0,220,130,0.12);
-  --border:rgba(255,255,255,0.08);--text:#fff;--text-secondary:#a1a1aa;--text-muted:#71717a;
-  --surface:rgba(255,255,255,0.03);
+  --bg:#07090F;
+  --green:#00FF88;
+  --green-dim:rgba(0,255,136,0.08);
+  --green-border:rgba(0,255,136,0.18);
+  --border:rgba(255,255,255,0.07);
+  --surface:rgba(255,255,255,0.025);
+  --text:#ffffff;
+  --text-secondary:#a1a1aa;
+  --text-muted:#52525b;
 }
 html{scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text-secondary);background:#0a0a0a;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* Noise texture */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--text-secondary);
+  background:var(--bg);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+}
 a{color:inherit;text-decoration:none}
 
-/* Header */
-.header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,10,10,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+h1,h2,h3,h4{
+  font-family:'Barlow Condensed',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+/* ---- Header ---- */
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(7,9,15,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .header-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:72px}
-.logo{font-size:1.25rem;font-weight:800;color:#fff;letter-spacing:-.02em}.logo span{color:var(--green)}
+.logo{font-size:1.25rem;font-weight:800;color:#fff;letter-spacing:-.02em;font-family:'Inter',sans-serif}.logo span{color:var(--green)}
 .nav{display:flex;align-items:center;gap:32px;list-style:none}
-.nav a{font-size:.9rem;font-weight:500;color:var(--text-secondary);transition:color .2s;padding:4px 0}
+.nav a{font-size:.9rem;font-weight:500;color:var(--text-secondary);transition:color .2s;padding:4px 0;font-family:'Inter',sans-serif;text-transform:none;letter-spacing:normal}
 .nav a:hover,.nav a.active{color:#fff}
-.header-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:10px;font-size:.88rem;font-weight:700;background:var(--green);color:#000;border:none;cursor:pointer;transition:all .2s}
-.header-cta:hover{background:var(--green-hover);transform:translateY(-1px)}
+.header-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:6px;font-size:.85rem;font-weight:700;background:var(--green);color:#000;border:none;cursor:pointer;transition:all .2s;font-family:'JetBrains Mono',monospace}
+.header-cta:hover{background:#00e07a;transform:translateY(-1px);box-shadow:0 0 20px rgba(0,255,136,.3)}
 .menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1050}
 .menu-toggle span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
-.mobile-nav{display:none;position:fixed;inset:0;background:rgba(10,10,10,.97);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:32px;backdrop-filter:blur(24px)}
+.mobile-nav{display:none;position:fixed;inset:0;background:rgba(7,9,15,.97);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:32px;backdrop-filter:blur(24px)}
 .mobile-nav.open{display:flex}
-.mobile-nav a{font-size:1.4rem;font-weight:600;color:#fff}
-.mobile-nav .mobile-cta{padding:14px 32px;border-radius:12px;background:var(--green);color:#000;font-weight:700;font-size:1rem;margin-top:16px}
+.mobile-nav a{font-size:1.4rem;font-weight:600;color:#fff;font-family:'Inter',sans-serif}
+.mobile-nav .mobile-cta{padding:14px 32px;border-radius:6px;background:var(--green);color:#000;font-weight:700;font-size:1rem;margin-top:16px;font-family:'JetBrains Mono',monospace}
 @media(max-width:768px){.nav,.header-cta{display:none}.menu-toggle{display:flex}}
 
-/* Hero */
-.hero{padding:140px 24px 48px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(0,220,130,.06) 0%,transparent 70%)}
-.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1.1;margin-bottom:16px;max-width:700px;margin-left:auto;margin-right:auto}
+/* ---- Hero — split layout ---- */
+.hero{
+  padding:140px 24px 64px;
+  background:radial-gradient(ellipse at 60% 0%,rgba(0,255,136,.05) 0%,transparent 60%);
+  position:relative;z-index:1;
+}
+.hero-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+  align-items:center;
+}
+@media(max-width:768px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-stats{display:none}
+}
+.hero-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;
+  color:var(--green);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.hero-label::before{content:'';display:block;width:24px;height:1px;background:var(--green)}
+.hero h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(3rem,6vw,5.5rem);
+  font-weight:900;
+  color:#fff;
+  letter-spacing:.5px;
+  line-height:.95;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
 .hero h1 em{font-style:normal;color:var(--green)}
-.hero-sub{font-size:clamp(.95rem,2vw,1.1rem);color:var(--text-secondary);max-width:560px;margin:0 auto;line-height:1.7}
+.hero-sub{
+  font-size:1rem;
+  color:var(--text-secondary);
+  max-width:460px;
+  line-height:1.7;
+  font-family:'Inter',sans-serif;
+  text-transform:none;
+  letter-spacing:normal;
+  font-weight:400;
+}
 
-/* Filter tabs */
-.filter-section{max-width:1200px;margin:0 auto;padding:0 24px 32px}
-.filter-bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.filter-btn{padding:8px 18px;border-radius:100px;font-size:.82rem;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--text-secondary);cursor:pointer;transition:all .2s;font-family:inherit}
-.filter-btn:hover{border-color:rgba(0,220,130,.3);color:#fff}
+/* Right side stats panel */
+.hero-stats{
+  background:rgba(0,255,136,.03);
+  border:1px solid var(--green-border);
+  border-radius:4px;
+  padding:32px;
+  position:relative;
+}
+.hero-stats::before{
+  content:'// BLOG_INDEX.DATA';
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;
+  color:rgba(0,255,136,.4);
+  letter-spacing:.08em;
+  display:block;
+  margin-bottom:24px;
+}
+.stat-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.stat-row:last-child{border-bottom:none}
+.stat-key{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em}
+.stat-val{font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--green)}
+
+/* ---- Filter tabs ---- */
+.filter-section{max-width:1200px;margin:0 auto;padding:0 24px 36px;position:relative;z-index:1}
+.filter-bar{display:flex;flex-wrap:wrap;gap:8px}
+.filter-btn{
+  padding:6px 16px;
+  border-radius:3px;
+  font-size:.72rem;
+  font-weight:700;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text-muted);
+  cursor:pointer;
+  transition:all .2s;
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.filter-btn:hover{border-color:var(--green-border);color:#fff}
 .filter-btn.active{background:var(--green);color:#000;border-color:var(--green)}
 
-/* Posts grid */
-.posts-section{max-width:1200px;margin:0 auto;padding:0 24px 80px}
-.posts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-@media(max-width:900px){.posts-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.posts-grid{grid-template-columns:1fr}}
+/* ---- Posts section ---- */
+.posts-section{max-width:1200px;margin:0 auto;padding:0 24px 80px;position:relative;z-index:1}
 
-.post-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .3s;display:flex;flex-direction:column}
-.post-card:hover{border-color:rgba(0,220,130,.2);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
-.post-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;margin-bottom:14px;width:fit-content}
-.tag-hvac{background:rgba(239,68,68,.08);color:#f87171;border:1px solid rgba(239,68,68,.15)}
-.tag-plumbing{background:rgba(0,220,130,.08);color:#34d399;border:1px solid rgba(0,220,130,.15)}
-.tag-dental{background:rgba(168,85,247,.08);color:#c084fc;border:1px solid rgba(168,85,247,.15)}
-.tag-electrical{background:rgba(234,179,8,.08);color:#facc15;border:1px solid rgba(234,179,8,.15)}
-.tag-roofing{background:rgba(0,220,130,.08);color:#fb923c;border:1px solid rgba(0,220,130,.15)}
-.tag-locksmith{background:rgba(14,165,233,.08);color:#38bdf8;border:1px solid rgba(14,165,233,.15)}
-.tag-legal{background:rgba(99,102,241,.08);color:#818cf8;border:1px solid rgba(99,102,241,.15)}
-.tag-towing{background:rgba(244,63,94,.08);color:#fb7185;border:1px solid rgba(244,63,94,.15)}
-.tag-veterinary{background:rgba(34,197,94,.08);color:#4ade80;border:1px solid rgba(34,197,94,.15)}
-.tag-medspa{background:rgba(236,72,153,.08);color:#f472b6;border:1px solid rgba(236,72,153,.15)}
-.tag-property{background:rgba(45,212,191,.08);color:#2dd4bf;border:1px solid rgba(45,212,191,.15)}
-.tag-funeral{background:rgba(148,163,184,.08);color:#94a3b8;border:1px solid rgba(148,163,184,.15)}
-.tag-garage{background:rgba(251,146,60,.08);color:#fdba74;border:1px solid rgba(251,146,60,.15)}
-.tag-general{background:rgba(0,220,130,.08);color:#00dc82;border:1px solid rgba(0,220,130,.15)}
+/* Magazine grid — first card spans full width */
+.posts-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+@media(max-width:900px){.posts-grid{grid-template-columns:1fr}}
 
-.post-card h2{font-size:1.05rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:10px;flex:1}
-.post-card p{font-size:.88rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px}
-.post-meta{font-size:.78rem;color:var(--text-muted);display:flex;gap:8px;align-items:center;margin-top:auto}
+/* First 3 posts: featured layout */
+.post-card:nth-child(1){grid-column:1/-1}
+.post-card:nth-child(2),.post-card:nth-child(3){grid-column:span 1}
 
-/* Featured row */
-.featured{max-width:1200px;margin:0 auto;padding:0 24px 48px}
-.featured-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-@media(max-width:768px){.featured-grid{grid-template-columns:1fr}}
-.featured-card{background:var(--surface);border:1px solid rgba(0,220,130,.15);border-radius:20px;padding:36px;transition:all .3s}
-.featured-card:hover{border-color:rgba(0,220,130,.3);transform:translateY(-2px)}
-.featured-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:700;background:rgba(0,220,130,.08);color:var(--green);border:1px solid rgba(0,220,130,.15);margin-bottom:14px;text-transform:uppercase;letter-spacing:.04em}
-.featured-card h2{font-size:1.25rem;font-weight:800;color:#fff;line-height:1.3;margin-bottom:10px}
-.featured-card p{font-size:.92rem;color:var(--text-secondary);line-height:1.6;margin-bottom:14px}
+/* Hidden posts */
+.hidden-post{display:none!important}
 
-/* CTA */
-.cta-section{padding:80px 24px;text-align:center;background:radial-gradient(ellipse at 50% 100%,rgba(0,220,130,.04) 0%,transparent 70%)}
-.cta-section h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;color:#fff;letter-spacing:-.03em;margin-bottom:16px}
-.cta-section p{font-size:1rem;color:var(--text-secondary);margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto}
-.btn-cta{display:inline-flex;align-items:center;gap:8px;padding:16px 36px;border-radius:12px;background:var(--green);color:#000;border:none;font-size:1.05rem;font-weight:800;font-family:inherit;cursor:pointer;transition:all .2s}
-.btn-cta:hover{background:var(--green-hover);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,220,130,.4)}
+/* Industry border-top colors per tag */
+.post-card[data-industry="hvac"]{border-top:4px solid #f87171}
+.post-card[data-industry="plumbing"]{border-top:4px solid #34d399}
+.post-card[data-industry="dental"]{border-top:4px solid #c084fc}
+.post-card[data-industry="electrical"]{border-top:4px solid #facc15}
+.post-card[data-industry="roofing"]{border-top:4px solid #fb923c}
+.post-card[data-industry="locksmith"]{border-top:4px solid #38bdf8}
+.post-card[data-industry="legal"]{border-top:4px solid #818cf8}
+.post-card[data-industry="towing"]{border-top:4px solid #fb7185}
+.post-card[data-industry="veterinary"]{border-top:4px solid #4ade80}
+.post-card[data-industry="medspa"]{border-top:4px solid #f472b6}
+.post-card[data-industry="property"]{border-top:4px solid #2dd4bf}
+.post-card[data-industry="funeral"]{border-top:4px solid #94a3b8}
+.post-card[data-industry="garage"]{border-top:4px solid #fdba74}
+.post-card[data-industry="general"]{border-top:4px solid var(--green)}
 
-/* Footer */
-.site-footer{border-top:1px solid var(--border);padding:60px 24px 32px}
+.post-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:0 0 4px 4px;
+  padding:28px;
+  transition:all .3s cubic-bezier(.2,.8,.2,1);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  /* scroll-reveal starting state */
+  opacity:0;
+  transform:translateY(20px);
+}
+.post-card.revealed{opacity:1;transform:translateY(0)}
+
+/* First card (featured) gets bigger text */
+.post-card:nth-child(1){padding:40px}
+.post-card:nth-child(1) h2{font-size:clamp(1.4rem,3vw,2.2rem)}
+.post-card:nth-child(1) p{font-size:1rem;max-width:640px}
+
+.post-card:hover{
+  border-color:var(--green-border);
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 0 1px var(--green-border);
+}
+.post-card.revealed:hover{opacity:1;transform:translateY(-3px)}
+
+.post-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:2px 8px;
+  border-radius:2px;
+  font-size:.65rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+  width:fit-content;
+  font-family:'JetBrains Mono',monospace;
+}
+.tag-hvac{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.2)}
+.tag-plumbing{background:rgba(52,211,153,.1);color:#34d399;border:1px solid rgba(52,211,153,.2)}
+.tag-dental{background:rgba(192,132,252,.1);color:#c084fc;border:1px solid rgba(192,132,252,.2)}
+.tag-electrical{background:rgba(250,204,21,.1);color:#facc15;border:1px solid rgba(250,204,21,.2)}
+.tag-roofing{background:rgba(251,146,60,.1);color:#fb923c;border:1px solid rgba(251,146,60,.2)}
+.tag-locksmith{background:rgba(56,189,248,.1);color:#38bdf8;border:1px solid rgba(56,189,248,.2)}
+.tag-legal{background:rgba(129,140,248,.1);color:#818cf8;border:1px solid rgba(129,140,248,.2)}
+.tag-towing{background:rgba(251,113,133,.1);color:#fb7185;border:1px solid rgba(251,113,133,.2)}
+.tag-veterinary{background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.2)}
+.tag-medspa{background:rgba(244,114,182,.1);color:#f472b6;border:1px solid rgba(244,114,182,.2)}
+.tag-property{background:rgba(45,212,191,.1);color:#2dd4bf;border:1px solid rgba(45,212,191,.2)}
+.tag-funeral{background:rgba(148,163,184,.1);color:#94a3b8;border:1px solid rgba(148,163,184,.2)}
+.tag-garage{background:rgba(253,186,116,.1);color:#fdba74;border:1px solid rgba(253,186,116,.2)}
+.tag-general{background:rgba(0,255,136,.08);color:var(--green);border:1px solid var(--green-border)}
+
+.post-card h2{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.2rem;
+  font-weight:700;
+  color:#fff;
+  line-height:1.2;
+  margin-bottom:10px;
+  flex:1;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.post-card p{font-size:.88rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px;font-family:'Inter',sans-serif;text-transform:none;letter-spacing:normal;font-weight:400}
+.post-meta{
+  font-size:.72rem;
+  color:var(--text-muted);
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-top:auto;
+  font-family:'JetBrains Mono',monospace;
+}
+.post-read-more{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;
+  color:var(--green);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  margin-top:16px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:gap .2s;
+}
+.post-card:hover .post-read-more{gap:10px}
+
+/* ---- Load More ---- */
+.load-more-wrap{text-align:center;padding:32px 0 0;position:relative;z-index:1}
+.btn-load-more{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.8rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:14px 32px;
+  background:transparent;
+  color:var(--green);
+  border:1px solid var(--green-border);
+  border-radius:3px;
+  cursor:pointer;
+  transition:all .2s;
+}
+.btn-load-more:hover{background:var(--green-dim);box-shadow:0 0 20px rgba(0,255,136,.15)}
+.btn-load-more.all-loaded{opacity:.3;cursor:default;pointer-events:none}
+
+/* ---- CTA ---- */
+.cta-section{
+  padding:80px 24px;
+  text-align:center;
+  background:radial-gradient(ellipse at 50% 100%,rgba(0,255,136,.04) 0%,transparent 70%);
+  position:relative;z-index:1;
+}
+.cta-section h2{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(2rem,5vw,3.5rem);
+  font-weight:900;
+  color:#fff;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+.cta-section p{font-size:1rem;color:var(--text-secondary);margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto;font-family:'Inter',sans-serif;text-transform:none}
+.btn-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:16px 36px;
+  border-radius:4px;
+  background:var(--green);
+  color:#000;
+  border:none;
+  font-size:.85rem;
+  font-weight:700;
+  font-family:'JetBrains Mono',monospace;
+  cursor:pointer;
+  transition:all .2s;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+.btn-cta:hover{background:#00e07a;transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,255,136,.35)}
+
+/* ---- Footer ---- */
+.site-footer{border-top:1px solid var(--border);padding:60px 24px 32px;position:relative;z-index:1}
 .footer-inner{max-width:1200px;margin:0 auto}
 .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
 .footer-brand .logo{display:inline-block;margin-bottom:12px}
-.footer-brand p{font-size:.88rem;color:var(--text-muted);max-width:280px;line-height:1.6}
-.footer-col h3{font-size:.82rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
-.footer-col a{display:block;font-size:.88rem;color:var(--text-muted);padding:4px 0;transition:color .2s}
+.footer-brand p{font-size:.88rem;color:var(--text-muted);max-width:280px;line-height:1.6;font-family:'Inter',sans-serif;text-transform:none;letter-spacing:normal;font-weight:400}
+.footer-col h3{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.footer-col a{display:block;font-size:.88rem;color:var(--text-muted);padding:4px 0;transition:color .2s;font-family:'Inter',sans-serif;text-transform:none;letter-spacing:normal;font-weight:400}
 .footer-col a:hover{color:var(--green)}
-.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace}
 @media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px}}
 @media(max-width:480px){.footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:8px;text-align:center}}
 
-.hidden{display:none !important}
+.hidden{display:none!important}
 
-@media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+/* Scroll reveal */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .post-card{opacity:1;transform:none}
+}
 </style>
   <script src="tct-tracking.js" defer></script>
 <!-- Meta Pixel Code -->
@@ -181,25 +441,34 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
 <!-- Hero -->
 <section class="hero">
-  <h1>AI Receptionist Insights for <em>Every Industry</em></h1>
-  <p class="hero-sub">Missed call costs, AI vs answering services, and growth strategies for 17 industries. Real numbers. No fluff.</p>
-</section>
-
-<!-- Featured Posts -->
-<section class="featured">
-  <div class="featured-grid">
-    <a href="/blog/ai-receptionist-small-business.html" class="featured-card">
-      <span class="featured-badge">New</span>
-      <h2>AI Receptionist for Small Business: The Complete 2026 Guide</h2>
-      <p>Everything you need to know about AI receptionists — how they work, what they cost, and whether they're right for your business.</p>
-      <span class="post-meta">March 2026 &middot; 12 min read</span>
-    </a>
-    <a href="/blog/missed-calls-costing-business-money.html" class="featured-card">
-      <span class="featured-badge">New</span>
-      <h2>Missed Calls Are Costing Your Business $4,200/Month (Here's the Math)</h2>
-      <p>The industry-by-industry breakdown of exactly how much revenue you're losing to voicemail.</p>
-      <span class="post-meta">March 2026 &middot; 10 min read</span>
-    </a>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-label">Intelligence / Industry</div>
+      <h1>AI Receptionist<br>Insights For<br><em>Every Industry</em></h1>
+      <p class="hero-sub">Missed call costs, AI vs answering services, and growth strategies for 17 industries. Real numbers. No fluff.</p>
+    </div>
+    <div class="hero-stats" aria-label="Blog statistics">
+      <div class="stat-row">
+        <span class="stat-key">Articles</span>
+        <span class="stat-val">39</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Industries</span>
+        <span class="stat-val">13</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Avg Missed/Mo</span>
+        <span class="stat-val">$4,200</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Answer Time</span>
+        <span class="stat-val">&lt;2s</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Uptime</span>
+        <span class="stat-val">99.9%</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -227,6 +496,23 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 <!-- Posts Grid -->
 <section class="posts-section" id="blog-posts">
   <div class="posts-grid">
+
+    <!-- FEATURED POSTS — first two span the grid specially via CSS nth-child -->
+    <a href="/blog/ai-receptionist-small-business.html" class="post-card" data-industry="general">
+      <span class="post-tag tag-general">Featured</span>
+      <h2>AI Receptionist for Small Business: The Complete 2026 Guide</h2>
+      <p>Everything you need to know about AI receptionists — how they work, what they cost, and whether they're right for your business.</p>
+      <span class="post-meta">March 2026 &middot; 12 min read</span>
+      <span class="post-read-more">Read Article &rarr;</span>
+    </a>
+
+    <a href="/blog/missed-calls-costing-business-money.html" class="post-card" data-industry="general">
+      <span class="post-tag tag-general">Featured</span>
+      <h2>Missed Calls Are Costing Your Business $4,200/Month (Here's the Math)</h2>
+      <p>The industry-by-industry breakdown of exactly how much revenue you're losing to voicemail.</p>
+      <span class="post-meta">March 2026 &middot; 10 min read</span>
+      <span class="post-read-more">Read Article &rarr;</span>
+    </a>
 
     <!-- NEW POSTS (March 2026) -->
     <a href="/blog/best-answering-service-hvac-2026.html" class="post-card" data-industry="hvac">
