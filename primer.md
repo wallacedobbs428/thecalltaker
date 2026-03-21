@@ -10,7 +10,7 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 ## What This Is
 
-AI Receptionist SaaS for service businesses. $97/$497/$997/mo plans. 14-day free pilot. Demo line: (615) 784-5747. Built by Wallace Dobbs (16yo founder, @moneymaker99). Mills (co-founder) handles demos and closing alongside Wallace.
+AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier decoy pricing). 14-day free pilot. Demo line: (615) 784-5747. Built by Wallace Dobbs (16yo founder, @moneymaker99). Mills (co-founder) handles demos and closing alongside Wallace.
 
 ## Architecture
 
@@ -23,25 +23,23 @@ AI Receptionist SaaS for service businesses. $97/$497/$997/mo plans. 14-day free
 
 ## Current Branch & State
 
-- **Branch:** `claude/dark-luxury-redesign-UPpU4`
+- **Branch:** `claude/worldwide-section-theme-toggle-uaHon`
 - **Base:** `master` (last commit 2026-03-20)
-- **Latest work (March 21):** DARK LUXURY TECH redesign — complete visual overhaul of index.html
-- **Working tree:** Modified (index.html dark luxury redesign in progress)
+- **Latest commit:** Added "Worldwide" section to homepage — SVG world map with highlighted countries, pulsing city dots, terminal stats, noise texture, scroll reveal. Placed between marquee and problem section.
+- **Working tree:** Clean
 
-## Homepage Design (index.html — ~1270 lines)
+## Homepage Design (index.html — ~1,543 lines)
 
-- **Design direction:** DARK LUXURY TECH — Bloomberg Terminal meets Apple.com
-- **Color scheme:** #07090F deep navy-black bg, #00FF88 electric green accent (single accent color), white text
-- **Fonts:** Barlow Condensed (bold condensed display for all headings), JetBrains Mono (terminal readouts), Inter (body)
-- **Light mode:** REMOVED — dark only
-- **Layout:** Asymmetric sections, diagonal cuts, offset overlapping cards, terminal-style stat readouts
-- **Hero:** Split-screen with animated phone mockup (pure CSS/SVG), Barlow Condensed uppercase headings
-- **Sections:** Hero → Jessica Hologram → Industry Marquee → Problem (terminal stats) → Before/After (offset overlap) → How It Works (stacked offset) → Demo CTA (split diagonal) → Testimonials (asymmetric cards) → Pricing (featured dominant) → FAQ (split layout) → Final CTA (diagonal cut) → Footer
-- **Pricing:** 3-tier ($97/$497/$997), featured card sticky + dominant right column
-- **Nav:** Glassmorphism header, scroll progress bar (green glow), mobile overlay menu
-- **External deps:** GSAP 3.12.5 (cdnjs)
-- **Noise texture:** SVG feTurbulence at 3% opacity, overlay blend mode — premium dark feel
-- **Terminal readouts:** Monospace green-on-dark bordered boxes with blinking cursor, used throughout for data callouts
+- **Color scheme:** Warm dark palette — `--bg: #0c0b0a`, green accent (#1a7a5c), amber (#c27c3a)
+- **Light mode:** Full CSS variable swap (html.light), toggle button fixed bottom-right, persists via localStorage
+- **Layout:** Dark theme, glassmorphism header, scroll progress bar, GSAP phone animation
+- **Hero:** Animated phone mockup (pure CSS/SVG, 5-state GSAP timeline), Jessica hologram section
+- **Sections:** Hero → Jessica Hologram → Marquee → **Worldwide (NEW)** → Problem → Before/After → How It Works → Demo CTA → Testimonials → Pricing → FAQ → Final CTA → Footer
+- **Worldwide section:** SVG world map, 12 highlighted countries, 8 pulsing city dots with tooltips, terminal stats (195+ / 24/7 / Any Language), noise texture overlay, "Jessica" quote + CTA
+- **Pricing:** 4-tier decoy ($19/$97/$497/$997), urgency badge
+- **Nav:** Glassmorphism header, scroll progress bar, mobile overlay menu
+- **External deps:** GSAP 3.12.5 (cdnjs), Google Fonts (Inter, DM Serif Display, JetBrains Mono)
+- **Existing scroll reveal system:** IntersectionObserver for `.reveal`, `.reveal-left`, `.reveal-right`, `.reveal-scale`, `.reveal-stagger` classes
 
 ## Website Stats
 
@@ -54,12 +52,13 @@ AI Receptionist SaaS for service businesses. $97/$497/$997/mo plans. 14-day free
 
 ## Known Issues (Current)
 
-1. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live
-2. **CLAUDE.md documents 13 industries** — actual site has 19
-3. **Other pages (industries, blog, etc.)** still use old color scheme — need updating to match new dark luxury system
+1. **Urgency countdown may be hardcoded** — check if still referencing a past date
+2. **premium.css is empty** — loaded on every page, zero CSS rules
+3. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live
+4. **CLAUDE.md documents 13 industries** — actual site has 19
 
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal
-- **Website polish**: Propagate dark luxury redesign to subpages
+- **Website polish**: Worldwide section done, extend theme toggle to subpages
 - **SEO content**: Continue expanding blog with high-intent keyword posts
