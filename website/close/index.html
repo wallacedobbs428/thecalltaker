@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Jessica Is Ready — The Call Taker</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<script src="/tct-tracking.js"></script>
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0c0b0a;
+  --surface: #141210;
+  --surface-2: #1a1816;
+  --border: rgba(237,232,225,0.06);
+  --t100: rgba(237,232,225,1);
+  --t70: rgba(237,232,225,0.7);
+  --t40: rgba(237,232,225,0.4);
+  --t20: rgba(237,232,225,0.2);
+  --t10: rgba(237,232,225,0.1);
+  --accent: #1a7a5c;
+  --accent-hover: #2a9d7a;
+  --green: #2a9d7a;
+  --mono: 'JetBrains Mono', 'SF Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: var(--t100);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── LAYOUT ── */
+.close-wrap { max-width: 640px; margin: 0 auto; padding: 32px 20px 64px; }
+
+/* ── HEADER ── */
+.close-header {
+  text-align: center;
+  padding: 20px 0 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+.close-header img { height: 24px; opacity: 0.6; }
+.close-header .brand {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--t40);
+  text-transform: uppercase;
+}
+
+/* ── HERO ── */
+.close-hero { text-align: center; margin-bottom: 48px; }
+.close-hero h1 {
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--t100);
+}
+.close-hero h1 .name { color: var(--green); }
+.close-hero h1 .biz { color: var(--green); }
+.close-hero .sub {
+  font-size: 17px;
+  color: var(--t40);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ── PAIN BLOCK ── */
+.pain-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 40px;
+}
+.pain-block h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--t100);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pain-block h3::before { content: '⚠'; font-size: 16px; }
+.pain-block ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pain-block li {
+  font-size: 14px;
+  color: var(--t70);
+  padding-left: 20px;
+  position: relative;
+}
+.pain-block li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+}
+
+/* ── DEMO BLOCK ── */
+.demo-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+.demo-block h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.demo-block .demo-sub {
+  font-size: 13px;
+  color: var(--t40);
+  margin-bottom: 20px;
+}
+.demo-input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.demo-input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: var(--t100);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.demo-input:focus { border-color: var(--green); }
+.demo-play-btn {
+  background: var(--green);
+  color: var(--bg);
+  border: none;
+  border-radius: 10px;
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.demo-play-btn:hover { background: var(--accent-hover); }
+.demo-play-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Waveform */
+.demo-waveform {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  height: 40px;
+  margin-top: 16px;
+}
+.demo-waveform.active { display: flex; }
+.demo-waveform span {
+  width: 3px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 2px;
+  animation: wave 0.8s ease-in-out infinite alternate;
+}
+.demo-waveform span:nth-child(2) { animation-delay: 0.1s; height: 16px; }
+.demo-waveform span:nth-child(3) { animation-delay: 0.2s; height: 24px; }
+.demo-waveform span:nth-child(4) { animation-delay: 0.3s; height: 32px; }
+.demo-waveform span:nth-child(5) { animation-delay: 0.15s; height: 20px; }
+.demo-waveform span:nth-child(6) { animation-delay: 0.25s; height: 12px; }
+.demo-waveform span:nth-child(7) { animation-delay: 0.35s; height: 28px; }
+.demo-waveform span:nth-child(8) { animation-delay: 0.05s; height: 16px; }
+
+@keyframes wave {
+  0% { transform: scaleY(0.4); }
+  100% { transform: scaleY(1); }
+}
+
+.demo-status {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--t40);
+  margin-top: 12px;
+  min-height: 18px;
+}
+
+/* ── URGENCY BLOCK ── */
+.urgency-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+.urgency-block h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.urgency-block .sub {
+  font-size: 13px;
+  color: var(--t40);
+  margin-bottom: 6px;
+}
+.slot-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0 16px;
+  flex-wrap: wrap;
+}
+.slot-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--green);
+  transition: background 0.3s;
+}
+.slot-dot.filled {
+  background: var(--green);
+  box-shadow: 0 0 8px rgba(42,157,122,0.3);
+}
+.slot-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--t40);
+  margin-top: 8px;
+}
+
+/* ── CTA ── */
+.cta-block { text-align: center; margin-bottom: 40px; }
+.cta-main {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--green);
+  color: var(--bg);
+  font-size: 17px;
+  font-weight: 700;
+  padding: 18px 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.1s;
+}
+.cta-main:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.cta-main:active { transform: translateY(0); }
+.cta-note {
+  font-size: 12px;
+  color: var(--t40);
+  margin-top: 10px;
+}
+
+.cta-alt {
+  display: block;
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--t40);
+}
+.cta-alt a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── PROOF ── */
+.proof-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 40px;
+}
+.proof-block h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.proof-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  text-align: center;
+}
+.proof-stat .num {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--green);
+}
+.proof-stat .label {
+  font-size: 11px;
+  color: var(--t40);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── FOOTER ── */
+.close-footer {
+  text-align: center;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.close-footer p {
+  font-size: 12px;
+  color: var(--t20);
+}
+.close-footer a { color: var(--t40); }
+</style>
+</head>
+<body>
+
+<div class="close-wrap">
+
+  <!-- HEADER -->
+  <div class="close-header">
+    <div class="brand">The Call Taker</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="close-hero">
+    <h1><span class="name" id="heroName">Hey</span> — Jessica is already trained on <span class="biz" id="heroBiz">your business</span>.</h1>
+    <p class="sub">Press play. Hear exactly what your customers hear when they call <span class="biz-inline" id="subBiz">your business</span> after hours.</p>
+  </div>
+
+  <!-- DEMO BLOCK — ElevenLabs via Cloudflare Worker -->
+  <div class="demo-block">
+    <h3>Hear Jessica answer as <span class="biz-inline" id="demoBiz">your business</span></h3>
+    <p class="demo-sub">Real AI. Real voice. Your business name. 3 seconds.</p>
+    <div class="demo-input-row">
+      <input class="demo-input" id="demoInput" type="text" placeholder="Your business name" maxlength="50" autocomplete="organization">
+      <button class="demo-play-btn" id="playBtn" onclick="playDemo()">▶ Play</button>
+    </div>
+    <div class="demo-waveform" id="waveform">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="demo-status" id="demoStatus"></div>
+  </div>
+
+  <!-- PAIN BLOCK — swapped by vertical -->
+  <div class="pain-block" id="painBlock">
+    <h3>What you're losing right now</h3>
+    <ul id="painList">
+      <li>Every missed call is a customer who calls your competitor instead</li>
+      <li>After-hours voicemail loses 60-80% of first-time callers</li>
+      <li>One missed job per week = $15,000–$25,000 lost per year</li>
+      <li>Customers don't leave voicemails anymore — they just hang up and call the next listing</li>
+    </ul>
+  </div>
+
+  <!-- URGENCY — founding slots -->
+  <div class="urgency-block">
+    <h3>Founding Customer Slots</h3>
+    <p class="sub">We're onboarding 20 businesses this month at founding rates.</p>
+    <div class="slot-dots" id="slotDots"></div>
+    <div class="slot-label">13 of 20 claimed — <strong>7 remaining</strong></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <a href="/pay#starter" class="cta-main" id="ctaBtn">
+      Start Free 14-Day Pilot →
+    </a>
+    <p class="cta-note">No credit card. No contract. Cancel anytime.</p>
+    <p class="cta-alt">Need the full 24/7 plan? <a href="/pay#pro">See Pro →</a></p>
+  </div>
+
+  <!-- PROOF -->
+  <div class="proof-block">
+    <h3>Jessica by the numbers</h3>
+    <div class="proof-stats">
+      <div class="proof-stat">
+        <div class="num">1.2s</div>
+        <div class="label">Avg pickup</div>
+      </div>
+      <div class="proof-stat">
+        <div class="num">98%</div>
+        <div class="label">Satisfaction</div>
+      </div>
+      <div class="proof-stat">
+        <div class="num">24/7</div>
+        <div class="label">Always on</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALL CTA -->
+  <div style="text-align:center;margin-bottom:40px;">
+    <p style="font-size:14px;color:var(--t40);margin-bottom:8px;">Want to hear Jessica live? Call right now.</p>
+    <a href="tel:6157845747" style="font-size:20px;font-weight:700;color:var(--green);">(615) 784-5747</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="close-footer">
+    <p>&copy; 2026 The Call Taker &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  // ── URL PARAMS ──
+  var params = new URLSearchParams(window.location.search);
+  var name = params.get('name') || '';
+  var biz = params.get('biz') || '';
+  var vertical = params.get('vertical') || '';
+  var plan = params.get('plan') || 'starter';
+
+  // ── Inject name ──
+  if (name) {
+    document.getElementById('heroName').textContent = 'Hey ' + name;
+  }
+
+  // ── Inject biz ──
+  if (biz) {
+    document.getElementById('heroBiz').textContent = biz;
+    document.getElementById('subBiz').textContent = biz;
+    document.getElementById('demoBiz').textContent = biz;
+    document.getElementById('demoInput').value = biz;
+    document.title = 'Jessica Is Ready for ' + biz + ' — The Call Taker';
+  }
+
+  // ── Plan CTA ──
+  var hash = plan === 'pro' ? '#pro' : '#starter';
+  document.getElementById('ctaBtn').href = '/pay' + hash;
+
+  // ── Vertical pain copy ──
+  var painCopy = {
+    locksmith: {
+      title: 'What locksmith shops lose without 24/7 answer',
+      points: [
+        'Lockout calls peak between 10 PM and 3 AM — when you\'re asleep',
+        'One missed emergency lockout = $150–$350 gone in 30 seconds',
+        'Customers locked out don\'t leave voicemails — they call the next locksmith on Google',
+        'Missing 3 after-hours calls per week = $25,000+ lost per year'
+      ]
+    },
+    hvac: {
+      title: 'What HVAC companies lose without 24/7 answer',
+      points: [
+        'AC emergencies spike at night and on weekends — your busiest call hours',
+        'One missed HVAC call = $300–$800 repair or $5,000+ install gone',
+        'Homeowners with no AC don\'t wait — they call the next company immediately',
+        'Missing 4 after-hours calls per week = $60,000+ lost per year'
+      ]
+    },
+    'water-damage': {
+      title: 'What restoration companies lose without 24/7 answer',
+      points: [
+        'Water damage calls are 90% emergencies — burst pipes, floods, storms',
+        'One missed water damage job = $2,000–$10,000 lost to a competitor',
+        'Insurance adjusters and homeowners call at all hours — they won\'t leave a voicemail',
+        'Missing 2 emergency calls per week = $100,000+ lost per year'
+      ]
+    },
+    'property-mgmt': {
+      title: 'What property managers lose without 24/7 answer',
+      points: [
+        'Tenant emergencies don\'t wait for business hours — burst pipes, lockouts, power outages',
+        'Unanswered calls lead to angry tenants, bad reviews, and lease non-renewals',
+        'One lost tenant = $3,000–$8,000 in turnover costs (vacancy + repairs + re-listing)',
+        'Missing maintenance calls causes small problems to become expensive disasters'
+      ]
+    }
+  };
+
+  // Generic fallback
+  var genericPain = {
+    title: 'What you\'re losing right now',
+    points: [
+      'Every missed call is a customer who calls your competitor instead',
+      'After-hours voicemail loses 60-80% of first-time callers',
+      'One missed job per week = $15,000–$25,000 lost per year',
+      'Customers don\'t leave voicemails anymore — they just hang up and call the next listing'
+    ]
+  };
+
+  var pain = painCopy[vertical] || genericPain;
+  var painBlock = document.getElementById('painBlock');
+  painBlock.querySelector('h3').textContent = pain.title;
+  var ul = document.getElementById('painList');
+  ul.innerHTML = '';
+  pain.points.forEach(function(p) {
+    var li = document.createElement('li');
+    li.textContent = p;
+    ul.appendChild(li);
+  });
+
+  // ── Urgency dots ──
+  var dotsContainer = document.getElementById('slotDots');
+  var filled = 13;
+  var total = 20;
+  for (var i = 0; i < total; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'slot-dot' + (i < filled ? ' filled' : '');
+    dotsContainer.appendChild(dot);
+  }
+})();
+
+// ── ELEVENLABS DEMO VIA CLOUDFLARE WORKER ──
+var WORKER_URL = 'https://jessica-demo.thecalltaker.workers.dev/demo';
+var audio = null;
+var lastBlobUrl = null;
+
+async function playDemo() {
+  var input = document.getElementById('demoInput');
+  var btn = document.getElementById('playBtn');
+  var status = document.getElementById('demoStatus');
+  var waveform = document.getElementById('waveform');
+  var biz = input.value.trim();
+
+  if (!biz) { input.focus(); return; }
+
+  // If audio exists and is playing, toggle pause
+  if (audio && !audio.paused) {
+    audio.pause();
+    waveform.classList.remove('active');
+    btn.textContent = '▶ Play';
+    status.textContent = 'Paused';
+    return;
+  }
+
+  // If audio exists and is paused (same biz), resume
+  if (audio && lastBlobUrl && audio.paused) {
+    audio.play();
+    waveform.classList.add('active');
+    btn.textContent = '⏸ Pause';
+    status.textContent = 'Playing...';
+    return;
+  }
+
+  // Fetch new audio
+  btn.disabled = true;
+  btn.textContent = '...';
+  status.textContent = 'Generating voice...';
+  waveform.classList.remove('active');
+
+  try {
+    var res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ businessName: biz })
+    });
+
+    if (!res.ok) throw new Error('Worker returned ' + res.status);
+
+    var blob = await res.blob();
+    if (lastBlobUrl) URL.revokeObjectURL(lastBlobUrl);
+    lastBlobUrl = URL.createObjectURL(blob);
+
+    if (audio) { audio.pause(); }
+    audio = new Audio(lastBlobUrl);
+
+    audio.addEventListener('ended', function() {
+      waveform.classList.remove('active');
+      btn.textContent = '↻ Replay';
+      btn.disabled = false;
+      status.textContent = 'Done — that\'s what your customers hear.';
+    });
+
+    audio.addEventListener('play', function() {
+      waveform.classList.add('active');
+      btn.textContent = '⏸ Pause';
+      status.textContent = 'Playing...';
+    });
+
+    audio.addEventListener('pause', function() {
+      if (!audio.ended) {
+        waveform.classList.remove('active');
+        btn.textContent = '▶ Play';
+        status.textContent = 'Paused';
+      }
+    });
+
+    await audio.play();
+    btn.disabled = false;
+  } catch (err) {
+    status.textContent = 'Could not load demo. Try calling (615) 784-5747 instead.';
+    btn.textContent = '▶ Play';
+    btn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>
