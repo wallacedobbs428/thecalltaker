@@ -517,5 +517,31 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 (function(){var l=false;function go(){if(!l){l=true;var s=document.createElement('script');s.src='/tct-tracking.js';document.head.appendChild(s);}}
 document.addEventListener('scroll',go,{once:true,passive:true});document.addEventListener('click',go,{once:true});})();
 </script>
+<script>
+// ── SCROLL REVEAL ──
+(function() {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function(el) { el.classList.add('visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+  els.forEach(function(el) {
+    var rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      el.classList.add('visible');
+    } else {
+      io.observe(el);
+    }
+  });
+})();
+</script>
 </body>
 </html>
