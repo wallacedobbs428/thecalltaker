@@ -916,6 +916,20 @@ a { color: inherit; text-decoration: none; }
   </div>
 </section>
 
+<!-- ===== JESSICA HOLOGRAM v3 — Gideon premium ===== -->
+<section id="jessica-hologram" style="min-height:85vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#000;">
+  <!-- Ambient glow -->
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,rgba(0,255,159,0.05) 0%,transparent 60%);pointer-events:none;"></div>
+  <!-- Bottom bloom -->
+  <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:500px;height:250px;background:radial-gradient(ellipse at 50% 100%,rgba(0,255,159,0.1) 0%,transparent 70%);filter:blur(40px);pointer-events:none;"></div>
+  <!-- Particle field -->
+  <div id="holoParticles" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;"></div>
+  <!-- Hologram image -->
+  <div style="position:relative;z-index:2;text-align:center;">
+    <img src="jessica-hologram.jpg" alt="Jessica — AI Receptionist" id="holoImg" style="width:min(85vw,520px);height:auto;object-fit:contain;will-change:transform;filter:drop-shadow(0 0 20px rgba(0,255,159,0.3)) drop-shadow(0 0 60px rgba(0,255,159,0.1));">
+  </div>
+</section>
+
 <!-- ===== CALL SESSION VIEWER ===== -->
 <section class="session-viewer-section" id="hear-it">
   <div class="container" style="text-align:center">
@@ -3101,6 +3115,82 @@ window.__tctUILoaded = true;
     apply(DEFAULTS);
   });
 });
+</script>
+
+<!-- ===== JESSICA HOLOGRAM v3 — GSAP animation ===== -->
+<script>
+(function(){
+  var img = document.getElementById('holoImg');
+  if (!img || typeof gsap === 'undefined') return;
+
+  // Serene float — 4.2s sine cycle
+  gsap.to(img, { y: -16, duration: 2.1, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+
+  // Gentle auto-rotate — oscillates Y ±8deg (not full 360)
+  gsap.to(img, { rotateY: 8, duration: 5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+
+  // Bloom pulse — glow intensity breathes
+  gsap.to(img, {
+    filter: 'drop-shadow(0 0 30px rgba(0,255,159,0.5)) drop-shadow(0 0 80px rgba(0,255,159,0.2))',
+    duration: 3, repeat: -1, yoyo: true, ease: 'sine.inOut'
+  });
+
+  // Random flicker — every 4-8s, 3 frames max
+  function flicker() {
+    gsap.delayedCall(4 + Math.random() * 4, function() {
+      gsap.to(img, { opacity: 0.4, duration: 0.05, onComplete: function() {
+        gsap.to(img, { opacity: 1, duration: 0.05, delay: 0.05, onComplete: function() {
+          gsap.to(img, { opacity: 0.65, duration: 0.04, onComplete: function() {
+            gsap.to(img, { opacity: 1, duration: 0.08 });
+          }});
+        }});
+      }});
+      flicker();
+    });
+  }
+  flicker();
+
+  // Mouse tilt — lerped, buttery
+  var tX = 0, tY = 0, cX = 0, cY = 0;
+  var isMobile = window.matchMedia('(max-width:768px)').matches;
+  if (!isMobile) {
+    document.addEventListener('mousemove', function(e) {
+      var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+      tY = ((e.clientX - cx) / cx) * 7;
+      tX = -((e.clientY - cy) / cy) * 5;
+    });
+    gsap.ticker.add(function() {
+      cX += (tX - cX) * 0.055;
+      cY += (tY - cY) * 0.055;
+      gsap.set(img, { rotateX: cX, rotateY: cY });
+    });
+  }
+
+  // Particles — 30 lightweight dots
+  var pf = document.getElementById('holoParticles');
+  if (pf) {
+    for (var i = 0; i < 30; i++) {
+      var dot = document.createElement('div');
+      var size = 1 + Math.random() * 2;
+      dot.style.cssText = 'position:absolute;width:' + size + 'px;height:' + size + 'px;border-radius:50%;background:rgba(0,255,159,' + (0.1 + Math.random() * 0.2) + ');left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;';
+      pf.appendChild(dot);
+      gsap.to(dot, {
+        y: -40 - Math.random() * 60,
+        x: (Math.random() - 0.5) * 40,
+        opacity: 0,
+        duration: 6 + Math.random() * 8,
+        repeat: -1,
+        delay: Math.random() * 6,
+        ease: 'none'
+      });
+    }
+  }
+
+  // iOS orientation fix
+  window.addEventListener('orientationchange', function() {
+    if (img) img.style.transform = 'translate3d(0,0,0)';
+  });
+})();
 </script>
 
 <script src="/shared/ui.js" defer></script>
