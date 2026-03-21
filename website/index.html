@@ -916,6 +916,279 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 </div>
 
+<!-- ═══ WORLDWIDE SECTION — global reach with SVG map ═══ -->
+<style>
+/* ═══ WORLDWIDE SECTION ═══ */
+.worldwide {
+  position: relative;
+  padding: 120px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.worldwide .noise-overlay {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 0;
+  opacity: 0.03;
+}
+.ww-headline {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.ww-headline h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 400;
+  color: var(--t100);
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  margin-bottom: 20px;
+}
+.ww-headline p {
+  font-size: 16px;
+  color: var(--t40);
+  line-height: 1.8;
+  max-width: 620px;
+  margin: 0 auto 56px;
+}
+/* Map container */
+.ww-map-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 64px;
+  z-index: 1;
+}
+.ww-map-wrap svg {
+  width: 100%;
+  height: auto;
+}
+.ww-map-wrap svg .land {
+  fill: var(--surface-2);
+  stroke: var(--border-bright);
+  stroke-width: 0.3;
+  transition: fill 0.3s;
+}
+.ww-map-wrap svg .land.highlighted {
+  fill: var(--accent);
+  fill-opacity: 0.55;
+  stroke: var(--accent);
+  stroke-opacity: 0.4;
+}
+html.light .ww-map-wrap svg .land { fill: #d4e8de; stroke: rgba(0,0,0,0.06); }
+html.light .ww-map-wrap svg .land.highlighted { fill: #00C96B; fill-opacity: 0.7; stroke: #00C96B; }
+
+/* Pulsing city dots */
+.city-dot {
+  position: absolute;
+  width: 10px; height: 10px;
+  transform: translate(-50%, -50%);
+}
+.city-dot::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: city-pulse 2s ease-in-out infinite;
+}
+.city-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: city-pulse 2s ease-in-out infinite;
+}
+@keyframes city-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.5; }
+}
+.city-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border-bright);
+  border-radius: 6px;
+  padding: 6px 10px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 5;
+}
+.city-dot:hover .city-tooltip { opacity: 1; }
+.city-tooltip-name {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--t100);
+  letter-spacing: 0.05em;
+}
+.city-tooltip-status {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+
+/* Terminal stats row */
+.ww-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 720px;
+  margin: 0 auto 56px;
+  position: relative;
+  z-index: 1;
+}
+.ww-stat {
+  background: var(--surface);
+  border: 1px solid var(--border-bright);
+  border-radius: 8px;
+  padding: 24px 20px;
+  text-align: center;
+}
+.ww-stat-num {
+  font-family: var(--mono);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.ww-stat-num::after {
+  content: '▋';
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 0.7em;
+  animation: blink 0.7s infinite;
+  opacity: 0.6;
+}
+.ww-stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--t40);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Copy block + CTA */
+.ww-copy {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.ww-copy p {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--t70);
+  font-style: italic;
+  margin-bottom: 32px;
+}
+.ww-copy p strong { color: var(--accent); font-weight: 400; }
+
+/* Mobile */
+@media(max-width:768px) {
+  .worldwide { padding: 80px 20px; }
+  .ww-stats { grid-template-columns: 1fr; gap: 12px; }
+  .city-dot { display: none; }
+}
+@media(max-width:390px) {
+  .ww-headline h2 { font-size: 1.8rem; }
+}
+</style>
+
+<section class="worldwide" id="worldwide">
+  <!-- Noise texture overlay -->
+  <svg class="noise-overlay" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><filter id="ww-noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#ww-noise)"/></svg>
+
+  <div class="ww-headline reveal">
+    <div class="sec-label">GLOBAL</div>
+    <h2>One AI. Every Business. <strong>Everywhere.</strong></h2>
+    <p>From Nashville to Tokyo. From a two-person HVAC shop in Texas to a plumbing company in London — if your business has a phone line, The Call Taker answers it.</p>
+  </div>
+
+  <!-- SVG World Map (simplified) -->
+  <div class="ww-map-wrap reveal" style="transition-delay:150ms;">
+    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="World map showing The Call Taker coverage">
+      <!-- North America -->
+      <path class="land highlighted" d="M150,80 L220,60 L260,80 L280,120 L270,160 L260,200 L240,210 L200,220 L180,200 L160,180 L140,160 L130,120 Z"/>
+      <!-- Mexico -->
+      <path class="land highlighted" d="M160,200 L200,220 L220,250 L210,270 L190,280 L170,270 L150,250 L140,220 Z"/>
+      <!-- Brazil -->
+      <path class="land highlighted" d="M260,300 L300,280 L330,290 L340,320 L330,360 L310,390 L280,400 L260,380 L250,350 L240,320 Z"/>
+      <!-- UK -->
+      <path class="land highlighted" d="M440,100 L450,90 L458,95 L456,110 L448,118 L440,112 Z"/>
+      <!-- France -->
+      <path class="land highlighted" d="M445,125 L465,118 L475,130 L470,145 L455,150 L442,140 Z"/>
+      <!-- Germany -->
+      <path class="land highlighted" d="M468,105 L485,100 L495,110 L490,128 L475,130 L465,118 Z"/>
+      <!-- Central/West Africa -->
+      <path class="land" d="M430,230 L480,220 L520,230 L540,260 L530,300 L500,320 L470,310 L440,290 L420,260 Z"/>
+      <!-- South Africa -->
+      <path class="land highlighted" d="M490,370 L520,355 L540,365 L535,390 L515,400 L495,395 Z"/>
+      <!-- India -->
+      <path class="land highlighted" d="M650,180 L680,170 L700,190 L710,220 L700,260 L680,270 L660,250 L640,220 L640,200 Z"/>
+      <!-- UAE -->
+      <path class="land highlighted" d="M600,195 L620,190 L625,200 L618,208 L605,205 Z"/>
+      <!-- Central Asia -->
+      <path class="land" d="M580,110 L640,100 L680,115 L670,140 L630,150 L590,140 Z"/>
+      <!-- Japan -->
+      <path class="land highlighted" d="M810,135 L820,125 L828,130 L825,150 L815,158 L808,148 Z"/>
+      <!-- China/East Asia -->
+      <path class="land" d="M700,110 L760,100 L800,120 L800,160 L780,180 L740,185 L710,170 L700,150 L695,130 Z"/>
+      <!-- Southeast Asia -->
+      <path class="land" d="M720,220 L760,210 L790,230 L785,260 L760,270 L730,260 L715,240 Z"/>
+      <!-- Australia -->
+      <path class="land highlighted" d="M770,340 L830,320 L870,330 L880,360 L860,390 L820,400 L780,390 L760,370 Z"/>
+      <!-- Canada (northern) -->
+      <path class="land highlighted" d="M130,50 L220,30 L280,40 L300,60 L280,80 L260,80 L220,60 L150,80 L130,70 Z"/>
+      <!-- Russia/Northern Europe -->
+      <path class="land" d="M470,60 L580,40 L700,50 L750,70 L740,90 L680,100 L580,110 L500,95 L470,80 Z"/>
+      <!-- South America (other) -->
+      <path class="land" d="M230,250 L260,240 L280,260 L280,300 L260,300 L240,320 L220,310 L210,280 Z"/>
+      <!-- East Africa -->
+      <path class="land" d="M540,260 L570,250 L590,270 L580,300 L560,320 L530,310 L530,300 Z"/>
+      <!-- Greenland -->
+      <path class="land" d="M330,20 L380,10 L400,30 L390,60 L360,65 L335,50 Z"/>
+    </svg>
+
+    <!-- City pulsing dots (positioned as % of map container) -->
+    <div class="city-dot" style="left:20%;top:42%;" aria-label="Nashville"><div class="city-tooltip"><div class="city-tooltip-name">Nashville</div><div class="city-tooltip-status">● Active</div></div></div>
+    <div class="city-dot" style="left:45%;top:22%;" aria-label="London"><div class="city-tooltip"><div class="city-tooltip-name">London</div><div class="city-tooltip-status">● Active</div></div></div>
+    <div class="city-dot" style="left:22%;top:32%;" aria-label="Toronto"><div class="city-tooltip"><div class="city-tooltip-name">Toronto</div><div class="city-tooltip-status">● Active</div></div></div>
+    <div class="city-dot" style="left:83%;top:72%;" aria-label="Sydney"><div class="city-tooltip"><div class="city-tooltip-name">Sydney</div><div class="city-tooltip-status">● Active</div></div></div>
+    <div class="city-dot" style="left:61%;top:40%;" aria-label="Dubai"><div class="city-tooltip"><div class="city-tooltip-name">Dubai</div><div class="city-tooltip-status">● Active</div></div></div>
+    <div class="city-dot" style="left:67%;top:42%;" aria-label="Mumbai"><div class="city-tooltip"><div class="city-tooltip-name">Mumbai</div><div class="city-tooltip-status">● Active</div></div></div>
+    <div class="city-dot" style="left:82%;top:29%;" aria-label="Tokyo"><div class="city-tooltip"><div class="city-tooltip-name">Tokyo</div><div class="city-tooltip-status">● Active</div></div></div>
+    <div class="city-dot" style="left:29%;top:65%;" aria-label="São Paulo"><div class="city-tooltip"><div class="city-tooltip-name">São Paulo</div><div class="city-tooltip-status">● Active</div></div></div>
+  </div>
+
+  <!-- Terminal stats -->
+  <div class="ww-stats reveal-stagger" style="transition-delay:300ms;">
+    <div class="ww-stat">
+      <div class="ww-stat-num">195+</div>
+      <div class="ww-stat-label">Countries Reached</div>
+    </div>
+    <div class="ww-stat">
+      <div class="ww-stat-num">24/7</div>
+      <div class="ww-stat-label">In Every Time Zone</div>
+    </div>
+    <div class="ww-stat">
+      <div class="ww-stat-num">Any</div>
+      <div class="ww-stat-label">Multilingual AI Ready</div>
+    </div>
+  </div>
+
+  <!-- Copy + CTA -->
+  <div class="ww-copy reveal" style="transition-delay:450ms;">
+    <p>"Your customers don't care what time zone you're in. Neither does <strong>Jessica</strong>."</p>
+    <a href="/pilot/" class="btn btn-primary"><span>Get Started — Anywhere in the World</span></a>
+  </div>
+</section>
+
 <!-- ═══ SECTION 2: THE PROBLEM — full-width split, giant stat left ═══ -->
 <section id="problem" style="display:grid;grid-template-columns:1fr 1fr;min-height:80vh;border-bottom:1px solid var(--t06);">
   <div class="reveal-left" style="display:flex;flex-direction:column;justify-content:center;padding:80px 64px;border-right:1px solid var(--t06);">
