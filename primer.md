@@ -6,7 +6,7 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 # Primer — The Call Taker
 
-> Last updated: 2026-03-19 | Rewrite this file at the start of every session.
+> Last updated: 2026-03-21 | Rewrite this file at the start of every session.
 
 ## What This Is
 
@@ -23,47 +23,42 @@ AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier 
 
 ## Current Branch & State
 
-- **Branch:** `claude/website-review-ciovZ`
-- **Base:** `master` (last commit 2026-03-17)
-- **Latest commits (March 18):** Major homepage redesign — HUD design, warm palette, Lenis smooth scroll, phone animation, floating callouts, circuit background, urgency bar, GSAP motion system
-- **Working tree:** Clean (no staged or unstaged changes)
+- **Branch:** `claude/worldwide-section-theme-toggle-uaHon`
+- **Base:** `master` (last commit 2026-03-20)
+- **Latest commit:** Added "Worldwide" section to homepage — SVG world map with highlighted countries, pulsing city dots, terminal stats, noise texture, scroll reveal. Placed between marquee and problem section.
+- **Working tree:** Clean
 
-## Homepage Design (index.html — 3,398 lines)
+## Homepage Design (index.html — ~1,543 lines)
 
-- **Color scheme:** Green accent (#00dc82) — all CSS vars (--blue, --orange, --green) map to same green
-- **Layout:** Dark theme, glassmorphism header, scroll spy, GSAP mobile menu, Lenis smooth scroll
-- **Hero:** Animated phone mockup (pure CSS/SVG, no images), circuit background, floating callouts
-- **Sections:** Hero → Industry strip → How It Works → Features → Demo → Pricing → FAQ → Final CTA → Footer
-- **Pricing:** 4-tier decoy ($19/$97/$497/$997), urgency badge with countdown to Friday deadline
+- **Color scheme:** Warm dark palette — `--bg: #0c0b0a`, green accent (#1a7a5c), amber (#c27c3a)
+- **Light mode:** Full CSS variable swap (html.light), toggle button fixed bottom-right, persists via localStorage
+- **Layout:** Dark theme, glassmorphism header, scroll progress bar, GSAP phone animation
+- **Hero:** Animated phone mockup (pure CSS/SVG, 5-state GSAP timeline), Jessica hologram section
+- **Sections:** Hero → Jessica Hologram → Marquee → **Worldwide (NEW)** → Problem → Before/After → How It Works → Demo CTA → Testimonials → Pricing → FAQ → Final CTA → Footer
+- **Worldwide section:** SVG world map, 12 highlighted countries, 8 pulsing city dots with tooltips, terminal stats (195+ / 24/7 / Any Language), noise texture overlay, "Jessica" quote + CTA
+- **Pricing:** 4-tier decoy ($19/$97/$497/$997), urgency badge
 - **Nav:** Glassmorphism header, scroll progress bar, mobile overlay menu
-- **External deps:** GSAP 3.12.5 (cdnjs), Lenis 1.1.18 (jsdelivr)
-- **Font:** Self-hosted Inter (woff2)
+- **External deps:** GSAP 3.12.5 (cdnjs), Google Fonts (Inter, DM Serif Display, JetBrains Mono)
+- **Existing scroll reveal system:** IntersectionObserver for `.reveal`, `.reveal-left`, `.reveal-right`, `.reveal-scale`, `.reveal-stagger` classes
 
 ## Website Stats
 
 - **Total pages:** ~210+ HTML files deployed
 - **Root HTML:** 41 pages
-- **Industries:** 19 pages (expanded beyond documented 13)
+- **Industries:** 19 pages
 - **Blog:** 69 posts
 - **Case Studies:** 14 + index
 - **SEO Pages:** 13 (ai-answering-service/)
-- **Pilot funnel:** 3 pages
-- **Try funnel:** 3 pages
 
 ## Known Issues (Current)
 
-1. **Urgency countdown hardcoded to March 21, 2026** — expires in 2 days, needs rolling logic
+1. **Urgency countdown may be hardcoded** — check if still referencing a past date
 2. **premium.css is empty** — loaded on every page, zero CSS rules
-3. **Schema.org prices don't match UI** — schema says $97-$997, UI has $19/$97/$497/$997
-4. **index-v2.html orphaned** — 3,398-line duplicate sitting in root
-5. **hero-phone-animation.html orphaned** — standalone test file in root
-6. **41 HTML files in root** — cluttered, many could be organized into subdirectories
-7. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live
-8. **CLAUDE.md documents 13 industries** — actual site has 19
+3. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live
+4. **CLAUDE.md documents 13 industries** — actual site has 19
 
 ## Active Priorities
 
 - **Revenue**: Get to first paid customer. $20K MRR goal
-- **Website polish**: Fix urgency countdown, clean orphaned files, schema consistency
+- **Website polish**: Worldwide section done, extend theme toggle to subpages
 - **SEO content**: Continue expanding blog with high-intent keyword posts
-- **Stripe**: NOT connected (Wallace is 16). PayPal workaround live via pay.html
