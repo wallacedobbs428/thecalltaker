@@ -11,7 +11,7 @@
 <link rel="canonical" href="https://thecalltaker.com/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
 
 <!-- Schema.org -->
 <script type="application/ld+json">
@@ -712,13 +712,25 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 </section>
 
-<!-- ===== JESSICA HOLOGRAM v3 ===== -->
-<section id="jessica-hologram" style="min-height:85vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#000;border-bottom:1px solid var(--t06);">
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 55%,rgba(0,255,159,0.05) 0%,transparent 60%);pointer-events:none;"></div>
-  <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:500px;height:250px;background:radial-gradient(ellipse at 50% 100%,rgba(0,255,159,0.1) 0%,transparent 70%);filter:blur(40px);pointer-events:none;"></div>
-  <div id="holoParticles" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;"></div>
-  <div style="position:relative;z-index:2;text-align:center;">
-    <img src="jessica-hologram.jpg" alt="Jessica AI Receptionist" id="holoImg" style="width:min(85vw,520px);height:auto;object-fit:contain;will-change:transform;filter:drop-shadow(0 0 20px rgba(0,255,159,0.3)) drop-shadow(0 0 60px rgba(0,255,159,0.1));">
+<!-- ==================== JESSICA HOLOGRAM v3 — GIDEON PREMIUM ==================== -->
+<section class="jessica-section" style="position:relative;min-height:80vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(circle at 50% 30%, #001122 0%, #000811 70%);margin:0 auto;left:0;right:0;padding:60px 24px 100px;">
+
+  <div style="position:relative;width:100%;max-width:64rem;margin:0 auto;perspective:1400px;text-align:center;">
+
+    <div id="hologram" style="position:relative;display:inline-block;margin:0 auto;will-change:transform;filter:drop-shadow(0 0 60px #00FF9F) drop-shadow(0 0 120px rgba(0,255,159,0.5));">
+      <img
+        src="jessica-hologram.jpg"
+        alt="Jessica — AI Receptionist"
+        style="width:420px;max-width:90vw;height:auto;object-fit:contain;display:block;margin:0 auto;background:transparent;"
+      />
+    </div>
+
+    <div style="position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:min(520px,90vw);height:256px;pointer-events:none;background:radial-gradient(ellipse at 50% 0%, rgba(0,255,159,0.55) 0%, transparent 70%);filter:blur(50px);opacity:0.7;"></div>
+
+    <div style="margin-top:80px;text-align:center;color:#00FF9F;font-size:clamp(12px,2vw,18px);letter-spacing:5px;font-family:'JetBrains Mono',monospace;font-weight:300;">
+      JESSICA &nbsp;&bull;&nbsp; AI RECEPTIONIST &nbsp;&bull;&nbsp; ONLINE
+    </div>
+
   </div>
 </section>
 
@@ -1081,21 +1093,79 @@ document.querySelectorAll('.faq-q').forEach(q => {
 (function(){var f=false;function l(){if(f)return;f=true;var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV';s.async=true;document.head.appendChild(s);s.onload=function(){window.dataLayer=window.dataLayer||[];function g(){dataLayer.push(arguments)}g('js',new Date());g('config','G-29LL5GPBQV');g('config','AW-17970510102');};};['scroll','click','mousemove','touchstart'].forEach(function(e){window.addEventListener(e,l,{once:true});});})();
 </script>
 
-<!-- JESSICA HOLOGRAM v3 GSAP -->
+<!-- ==================== JESSICA HOLOGRAM v3 — GIDEON SCRIPT ==================== -->
 <script>
 (function(){
-  var img=document.getElementById("holoImg");
-  if(!img||typeof gsap==="undefined")return;
-  gsap.to(img,{y:-16,duration:2.1,repeat:-1,yoyo:true,ease:"sine.inOut"});
-  gsap.to(img,{rotateY:8,duration:5,repeat:-1,yoyo:true,ease:"sine.inOut"});
-  gsap.to(img,{filter:"drop-shadow(0 0 30px rgba(0,255,159,0.5)) drop-shadow(0 0 80px rgba(0,255,159,0.2))",duration:3,repeat:-1,yoyo:true,ease:"sine.inOut"});
-  function flicker(){gsap.delayedCall(4+Math.random()*4,function(){gsap.to(img,{opacity:0.4,duration:0.05,onComplete:function(){gsap.to(img,{opacity:1,duration:0.05,delay:0.05,onComplete:function(){gsap.to(img,{opacity:0.65,duration:0.04,onComplete:function(){gsap.to(img,{opacity:1,duration:0.08});}});}});}});flicker();});}
-  flicker();
-  var tX=0,tY=0,cX=0,cY=0,mob=window.matchMedia("(max-width:768px)").matches;
-  if(!mob){document.addEventListener("mousemove",function(e){var cx=window.innerWidth/2,cy=window.innerHeight/2;tY=((e.clientX-cx)/cx)*7;tX=-((e.clientY-cy)/cy)*5;});gsap.ticker.add(function(){cX+=(tX-cX)*0.055;cY+=(tY-cY)*0.055;gsap.set(img,{rotateX:cX,rotateY:cY});});}
-  var pf=document.getElementById("holoParticles");
-  if(pf){for(var i=0;i<30;i++){var d=document.createElement("div"),sz=1+Math.random()*2;d.style.cssText="position:absolute;width:"+sz+"px;height:"+sz+"px;border-radius:50%;background:rgba(0,255,159,"+(0.1+Math.random()*0.2)+");left:"+Math.random()*100+"%;top:"+Math.random()*100+"%;";pf.appendChild(d);gsap.to(d,{y:-40-Math.random()*60,x:(Math.random()-0.5)*40,opacity:0,duration:6+Math.random()*8,repeat:-1,delay:Math.random()*6,ease:"none"});}}
-  window.addEventListener("orientationchange",function(){if(img)img.style.transform="translate3d(0,0,0)";});
+  if(typeof gsap==='undefined'){console.warn('GSAP missing');return;}
+  const h=document.getElementById('hologram');
+  if(!h)return;
+  let mx=0,my=0,tx=0,ty=0;
+
+  /* 50 particles with opacity variation */
+  (function(){
+    const s=document.querySelector('.jessica-section');
+    if(!s)return;
+    const c=document.createElement('div');
+    c.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;';
+    s.appendChild(c);
+    for(let i=0;i<50;i++){
+      const p=document.createElement('div');
+      const sz=Math.random()<0.3?3:2;
+      const op=0.3+Math.random()*0.5;
+      p.style.cssText='position:absolute;width:'+sz+'px;height:'+sz+'px;background:rgba(0,255,159,'+op+');border-radius:50%;';
+      p.style.left=(Math.random()*100)+'%';
+      p.style.top=(Math.random()*100)+'%';
+      c.appendChild(p);
+      gsap.to(p,{y:'-115vh',duration:Math.random()*25+30,repeat:-1,ease:'none',delay:Math.random()*-45});
+    }
+  })();
+
+  /* Float — 18px amplitude */
+  gsap.to(h,{y:-18,duration:4.2,ease:'sine.inOut',yoyo:true,repeat:-1});
+
+  /* Bloom breathe */
+  gsap.to(h,{filter:'drop-shadow(0 0 80px #00FF9F) drop-shadow(0 0 160px rgba(0,255,159,0.65)) drop-shadow(0 0 220px rgba(0,200,120,0.3))',duration:3,ease:'sine.inOut',yoyo:true,repeat:-1});
+
+  /* Auto Y-rotate 30s */
+  gsap.to(h,{rotationY:360,duration:30,ease:'none',repeat:-1,transformOrigin:'50% 50%',transformPerspective:1400});
+
+  /* Mouse tilt */
+  const mob=()=>window.innerWidth<700;
+  document.addEventListener('mousemove',e=>{
+    if(mob())return;
+    const r=h.getBoundingClientRect();
+    tx=((e.clientX-r.left)/r.width-0.5)*5;
+    ty=((e.clientY-r.top)/r.height-0.5)*3;
+  });
+  document.addEventListener('mouseleave',()=>{tx=0;ty=0;});
+  document.addEventListener('touchmove',e=>{
+    const t=e.touches[0],r=h.getBoundingClientRect();
+    tx=((t.clientX-r.left)/r.width-0.5)*2;
+    ty=((t.clientY-r.top)/r.height-0.5)*1.5;
+  },{passive:true});
+  document.addEventListener('touchend',()=>{tx=0;ty=0;});
+  gsap.ticker.add(()=>{
+    mx=gsap.utils.interpolate(mx,tx,0.055);
+    my=gsap.utils.interpolate(my,ty,0.055);
+    gsap.set(h,{rotateX:-my,transformPerspective:1400});
+  });
+
+  /* Flicker — drops to 70% occasionally */
+  function flicker(){
+    gsap.delayedCall(7+Math.random()*12,()=>{
+      gsap.timeline({onComplete:flicker})
+        .to(h,{opacity:0.68+Math.random()*0.08,duration:0.05})
+        .to(h,{opacity:1,duration:0.12});
+    });
+  }
+  gsap.delayedCall(5,flicker);
+
+  /* iOS fix */
+  window.addEventListener('orientationchange',()=>{
+    const s=document.querySelector('.jessica-section');
+    if(!s)return;
+    setTimeout(()=>{s.style.display='none';requestAnimationFrame(()=>{s.style.display='';});},180);
+  });
 })();
 </script>
 </body>
