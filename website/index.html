@@ -479,8 +479,9 @@ html.light .theme-toggle .icon-moon { display: none; }
 
 /* ═══ JESSICA HOLOGRAM ═══ */
 .jessica-section {
-  background: #050A12;
+  background: radial-gradient(ellipse at 50% 40%, #071018 0%, #050A12 100%);
   perspective: 1000px;
+  border-top: 1px solid rgba(0,255,255,0.06);
 }
 
 /* 3D scene container — floats up and down */
@@ -501,18 +502,36 @@ html.light .theme-toggle .icon-moon { display: none; }
   50% { transform: translateY(-14px); }
 }
 
-/* Avatar wrapper — preserves 3D for children, spins on Y */
+/* Avatar wrapper — preserves 3D for children, spins on Y, flickers */
 .holo-avatar {
   position: relative;
   width: 260px;
   height: 260px;
   transform-style: preserve-3d;
-  animation: holospinY 8s linear infinite;
+  animation: holospinY 8s linear infinite, holoFlicker 8s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 @keyframes holospinY {
   0% { transform: rotateY(0deg); }
   100% { transform: rotateY(360deg); }
+}
+
+@keyframes holoFlicker {
+  0%, 2% { opacity: 1; }
+  3% { opacity: 0.85; }
+  4%, 6% { opacity: 1; }
+  7% { opacity: 0.85; }
+  8%, 9% { opacity: 1; }
+  10% { opacity: 0.6; }
+  11%, 54% { opacity: 1; }
+  55% { opacity: 0.85; }
+  56%, 64% { opacity: 1; }
+  65% { opacity: 0.92; }
+  66%, 96% { opacity: 1; }
+  97% { opacity: 1; }
+  100% { opacity: 1; }
 }
 
 /* Circular image — the actual avatar */
@@ -528,6 +547,8 @@ html.light .theme-toggle .icon-moon { display: none; }
     0 0 60px rgba(0,255,255,0.2);
   position: relative;
   z-index: 2;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* Radial gradient overlay — pulses */
@@ -564,22 +585,49 @@ html.light .theme-toggle .icon-moon { display: none; }
   z-index: 4;
 }
 
-/* Halo ring — orbits on tilted axis */
-.holo-halo {
+/* ── Ambient particle field ── */
+.holo-particle {
   position: absolute;
-  width: 320px;
-  height: 320px;
   border-radius: 50%;
-  border: 1px solid rgba(0,255,255,0.4);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotateX(70deg);
-  animation: halo-orbit 12s linear infinite;
-  z-index: 1;
+  background: rgba(0,255,255,0.6);
   pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  animation: floatParticle var(--p-dur, 5s) var(--p-ease, ease-in-out) var(--p-delay, 0s) infinite;
+  transform: translateZ(0);
+}
+.holo-particle:nth-child(1)  { width:2px;height:2px;top:15%;left:20%;  --p-dur:4s;  --p-delay:0s; }
+.holo-particle:nth-child(2)  { width:3px;height:3px;top:70%;left:80%;  --p-dur:5.5s;--p-delay:0.4s; }
+.holo-particle:nth-child(3)  { width:2px;height:2px;top:30%;left:75%;  --p-dur:3.8s;--p-delay:1.2s; }
+.holo-particle:nth-child(4)  { width:3px;height:3px;top:80%;left:35%;  --p-dur:6s;  --p-delay:0.8s; }
+.holo-particle:nth-child(5)  { width:2px;height:2px;top:10%;left:55%;  --p-dur:4.5s;--p-delay:2.1s; }
+.holo-particle:nth-child(6)  { width:3px;height:3px;top:60%;left:10%;  --p-dur:7s;  --p-delay:1.6s; }
+.holo-particle:nth-child(7)  { width:2px;height:2px;top:45%;left:90%;  --p-dur:3.2s;--p-delay:3.4s; }
+.holo-particle:nth-child(8)  { width:3px;height:3px;top:85%;left:60%;  --p-dur:5s;  --p-delay:0.2s; }
+.holo-particle:nth-child(9)  { width:2px;height:2px;top:25%;left:40%;  --p-dur:6.5s;--p-delay:2.8s; }
+.holo-particle:nth-child(10) { width:3px;height:3px;top:55%;left:25%;  --p-dur:4.2s;--p-delay:3.9s; }
+.holo-particle:nth-child(11) { width:2px;height:2px;top:40%;left:65%;  --p-dur:5.8s;--p-delay:1.0s; }
+.holo-particle:nth-child(12) { width:3px;height:3px;top:75%;left:50%;  --p-dur:3.5s;--p-delay:2.5s; }
+
+@keyframes floatParticle {
+  0%   { opacity: 0; transform: translateY(20px) translateX(-10px); }
+  25%  { opacity: 1; }
+  50%  { transform: translateY(-40px) translateX(20px); }
+  75%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(40px) translateX(-20px); }
 }
 
-.holo-halo::before {
+/* ── Triple halo rings ── */
+.holo-ring {
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  z-index: 1;
+  transform: translateZ(0);
+}
+.holo-ring::before {
   content: '';
   position: absolute;
   width: 6px;
@@ -592,9 +640,76 @@ html.light .theme-toggle .icon-moon { display: none; }
   box-shadow: 0 0 12px rgba(0,255,255,0.8), 0 0 24px rgba(0,255,255,0.4);
 }
 
-@keyframes halo-orbit {
-  0% { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(0deg); }
+/* Ring 1 — primary */
+.holo-ring-1 {
+  width: 320px; height: 320px;
+  border: 1px solid rgba(0,255,255,0.35);
+  animation: haloOrbit1 12s linear infinite;
+  will-change: transform;
+}
+@keyframes haloOrbit1 {
+  0%   { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(0deg); }
   100% { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(360deg); }
+}
+
+/* Ring 2 — counter-rotating, offset */
+.holo-ring-2 {
+  width: 280px; height: 280px;
+  border: 1px solid rgba(0,255,255,0.2);
+  animation: haloOrbit2 18s linear infinite reverse;
+  will-change: transform;
+}
+@keyframes haloOrbit2 {
+  0%   { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(30deg); }
+  100% { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(390deg); }
+}
+
+/* Ring 3 — slow wide orbit */
+.holo-ring-3 {
+  width: 360px; height: 360px;
+  border: 1px solid rgba(0,255,255,0.12);
+  animation: haloOrbit3 25s linear infinite;
+  will-change: transform;
+}
+@keyframes haloOrbit3 {
+  0%   { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(-15deg); }
+  100% { transform: translate(-50%, -50%) rotateX(70deg) rotateZ(345deg); }
+}
+
+/* ── Ground projection shadow ── */
+.holo-ground {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(0,255,255,0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  animation: groundPulse 4s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes groundPulse {
+  0%   { transform: translateX(-50%) scale(0.95); }
+  100% { transform: translateX(-50%) scale(1.05); }
+}
+
+/* ── HUD status text ── */
+.holo-status {
+  font-family: var(--mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: rgba(0,255,255,0.6);
+  margin-top: 8px;
+  animation: statusBlink 2s ease-in-out infinite;
+}
+
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
 /* Holographic base / pedestal */
@@ -615,7 +730,6 @@ html.light .theme-toggle .icon-moon { display: none; }
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
   width: 140px;
   height: 300px;
   background: linear-gradient(180deg,
@@ -625,6 +739,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
   z-index: 0;
+  transform: translateX(-50%) translateZ(0);
 }
 
 /* Data readout lines around hologram */
@@ -876,7 +991,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 </section>
 
-<!-- ═══ JESSICA HOLOGRAM — 3D rotating avatar with hologram effects ═══ -->
+<!-- ═══ JESSICA HOLOGRAM — 11/10 cinematic hologram projection ═══ -->
 <section class="jessica-section reveal-scale" style="min-height:90vh;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;overflow:hidden;border-bottom:1px solid var(--t06);">
 
   <!-- Data readouts flanking the hologram -->
@@ -888,19 +1003,39 @@ html.light .theme-toggle .icon-moon { display: none; }
 
   <!-- 3D hologram scene -->
   <div class="holo-scene">
-    <!-- Halo ring orbiting on tilted axis -->
-    <div class="holo-halo"></div>
+    <!-- Ambient particle field -->
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
+    <div class="holo-particle"></div>
 
-    <!-- Avatar with 3D Y-axis rotation -->
+    <!-- Triple halo rings -->
+    <div class="holo-ring holo-ring-1"></div>
+    <div class="holo-ring holo-ring-2"></div>
+    <div class="holo-ring holo-ring-3"></div>
+
+    <!-- Avatar with 3D Y-axis rotation + flicker -->
     <div class="holo-avatar">
       <img src="jessica-logo.png" alt="Jessica — AI Receptionist" class="jessica-img">
     </div>
+
+    <!-- Ground projection shadow -->
+    <div class="holo-ground"></div>
   </div>
 
   <!-- Base pedestal -->
   <div class="holo-base"></div>
 
   <p style="font-family:var(--mono);font-size:11px;color:rgba(0,255,255,0.6);letter-spacing:0.25em;margin-top:28px;">JESSICA &middot; AI RECEPTIONIST &middot; ONLINE</p>
+  <div class="holo-status">[ SIGNAL ACTIVE ]</div>
 </section>
 
 <!-- ═══ SECTION 1: SCROLLING MARQUEE — industries ticker ═══ -->
