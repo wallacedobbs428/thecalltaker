@@ -21,30 +21,108 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    .audit-hero { padding: 80px 0 40px; text-align: center; }
+    /* === CSS VARIABLES === */
+    :root {
+      --bg: #07090F;
+      --surface: #0d1117;
+      --text: #ffffff;
+      --text-muted: #8b949e;
+      /* Keep legacy aliases for shared/ui-dark.css compatibility */
+      --text-primary: #ffffff;
+      --text-secondary: #8b949e;
+      --accent: #00FF88;
+      --accent-dim: rgba(0,255,136,0.08);
+      --accent-glow: rgba(0,255,136,0.2);
+      --danger: #ef4444;
+      --danger-dim: rgba(239,68,68,0.08);
+      --warning: #f59e0b;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    /* === NOISE TEXTURE === */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    @keyframes blink-cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* === SCROLL REVEAL === */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* === HERO === */
+    .audit-hero { padding: 80px 0 40px; text-align: center; position: relative; z-index: 1; }
     .audit-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(0,220,130,0.1); border: 1px solid rgba(239,68,68,0.2);
+      background: var(--accent-dim); border: 1px solid var(--accent-glow);
       border-radius: 100px; padding: 8px 20px; font-size: 0.8125rem;
-      font-weight: 600; color: #00dc82; margin-bottom: 24px;
+      font-weight: 600; color: var(--accent); margin-bottom: 24px;
     }
-    .audit-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: #00dc82; animation: pulse-dot 2s infinite; }
-    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .audit-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse-dot 2s infinite; }
     .audit-company {
-      font-size: clamp(2rem, 5vw, 3rem); font-weight: 800;
-      color: var(--text-primary); margin-bottom: 8px; line-height: 1.2;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900;
+      color: var(--text); margin-bottom: 8px; line-height: 1.1;
+      text-transform: uppercase; letter-spacing: 1px;
     }
-    .audit-subtitle { font-size: 1.125rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+    .audit-subtitle { font-size: 1.125rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
 
+    /* === TERMINAL GRADE READOUT === */
+    .grade-terminal {
+      background: var(--surface);
+      border: 1px solid var(--accent-glow);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      position: relative;
+      z-index: 1;
+    }
+    .grade-terminal .term-label {
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--accent); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .grade-terminal .term-label::before {
+      content: '>';
+      color: var(--accent);
+    }
+    .grade-terminal .term-score {
+      font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; color: var(--accent);
+      line-height: 1; display: flex; align-items: baseline; gap: 4px;
+    }
+    .grade-terminal .term-score::after {
+      content: '_';
+      animation: blink-cursor 1s step-end infinite;
+      font-size: 0.7em;
+      color: var(--accent);
+    }
+    .grade-terminal .term-verdict {
+      font-size: 0.875rem; color: var(--text-muted); margin-top: 12px;
+      border-top: 1px solid var(--border); padding-top: 12px;
+    }
+
+    /* === AUDIT CARDS === */
     .audit-card {
-      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+      background: var(--surface); border: 1px solid var(--border);
       border-radius: 16px; padding: 32px; margin-bottom: 24px;
+      position: relative; z-index: 1;
     }
     .audit-card h2 {
-      font-size: 1.25rem; font-weight: 700; color: var(--text-primary);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.35rem; font-weight: 700; color: var(--text);
+      text-transform: uppercase; letter-spacing: 1px;
       margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
     }
     .audit-card h2 .icon {
@@ -52,43 +130,79 @@
       align-items: center; justify-content: center; flex-shrink: 0;
     }
 
+    /* === FINDINGS === */
     .finding-row {
-      display: flex; align-items: flex-start; gap: 16px; padding: 16px 0;
+      display: flex; align-items: flex-start; gap: 16px; padding: 14px 0;
       border-bottom: 1px solid rgba(255,255,255,0.04);
+      position: relative;
     }
     .finding-row:last-child { border-bottom: none; }
     .finding-label { font-size: 0.875rem; color: var(--text-muted); min-width: 140px; }
-    .finding-value { font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); }
-    .finding-bad { color: #00dc82; }
-    .finding-good { color: #10b981; }
-    .finding-warn { color: #f59e0b; }
+    .finding-value { font-size: 0.9375rem; font-weight: 600; color: var(--text); }
+    /* FIX: bad = red with red left border, good = green with green left border */
+    .finding-bad {
+      color: var(--danger);
+    }
+    .finding-row:has(.finding-bad) {
+      border-left: 3px solid var(--danger);
+      padding-left: 12px;
+    }
+    .finding-good {
+      color: var(--accent);
+    }
+    .finding-row:has(.finding-good) {
+      border-left: 3px solid var(--accent);
+      padding-left: 12px;
+    }
+    .finding-warn { color: var(--warning); }
 
+    /* === COST GRID === */
     .cost-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
     .cost-item {
-      background: rgba(239,68,68,0.04); border: 1px solid rgba(0,220,130,0.1);
+      background: var(--danger-dim); border: 1px solid rgba(239,68,68,0.15);
       border-radius: 12px; padding: 24px; text-align: center;
     }
-    .cost-item.green { background: rgba(16,185,129,0.04); border-color: rgba(16,185,129,0.1); }
-    .cost-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 8px; }
-    .cost-value { font-size: 1.75rem; font-weight: 800; }
-    .cost-red { color: #00dc82; }
-    .cost-green { color: #10b981; }
-
-    .solution-card {
-      background: rgba(16,185,129,0.04); border: 1px solid rgba(16,185,129,0.15);
-      border-radius: 16px; padding: 40px; text-align: center; margin: 40px 0;
+    .cost-item.green { background: var(--accent-dim); border-color: var(--accent-glow); }
+    .cost-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--text-muted); margin-bottom: 8px;
     }
-    .solution-card h2 { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 16px; }
-    .solution-card p { font-size: 1rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto 24px; }
+    .cost-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.75rem; font-weight: 700;
+    }
+    /* FIX: red = bad (cost), green = good (savings) */
+    .cost-red { color: var(--danger); }
+    .cost-green { color: var(--accent); }
 
+    /* === SOLUTION CARD === */
+    .solution-card {
+      background: var(--accent-dim); border: 1px solid var(--accent-glow);
+      border-radius: 16px; padding: 40px; text-align: center; margin: 40px 0;
+      position: relative; z-index: 1;
+    }
+    .solution-card h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 900; color: var(--text);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;
+    }
+    .solution-card p { font-size: 1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 24px; }
+
+    /* === DEMO BOX === */
     .demo-box {
       display: inline-flex; align-items: center; gap: 12px;
-      background: rgba(16,185,129,0.08); border: 2px solid rgba(16,185,129,0.3);
+      background: var(--accent-dim); border: 2px solid var(--accent-glow);
       border-radius: 12px; padding: 16px 32px; margin-bottom: 24px;
     }
-    .demo-box .phone-number { font-size: 1.5rem; font-weight: 800; color: #10b981; }
+    .demo-box .phone-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem; font-weight: 700; color: var(--accent);
+      text-decoration: none;
+    }
     .demo-box .phone-label { font-size: 0.8125rem; color: var(--text-muted); }
 
+    /* === TIMELINE === */
     .timeline { position: relative; padding-left: 32px; margin: 24px 0; }
     .timeline::before { content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: rgba(255,255,255,0.06); }
     .timeline-item { position: relative; padding-bottom: 24px; }
@@ -96,16 +210,23 @@
     .timeline-item::before {
       content: ''; position: absolute; left: -25px; top: 6px;
       width: 12px; height: 12px; border-radius: 50%;
-      background: rgba(0,220,130,0.3); border: 2px solid #00dc82;
+      background: rgba(239,68,68,0.2); border: 2px solid var(--danger);
     }
-    .timeline-item.good::before { background: rgba(16,185,129,0.3); border-color: #10b981; }
-    .timeline-time { font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; }
-    .timeline-desc { font-size: 0.9375rem; color: var(--text-primary); }
+    .timeline-item.good::before { background: rgba(0,255,136,0.2); border-color: var(--accent); }
+    .timeline-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; font-weight: 400; color: var(--text-muted); margin-bottom: 4px;
+    }
+    .timeline-desc { font-size: 0.9375rem; color: var(--text); }
+
+    /* Social proof stats */
+    .social-stat { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; color: var(--accent); }
 
     @media (max-width: 640px) {
       .cost-grid { grid-template-columns: 1fr; }
       .finding-row { flex-direction: column; gap: 4px; }
       .finding-label { min-width: unset; }
+      .grade-terminal .term-score { font-size: 3rem; }
     }
   </style>
 <link rel="stylesheet" href="/shared/ui-dark.css">
@@ -155,11 +276,18 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
       <p class="audit-subtitle">We called <span id="company-inline">your business</span> to see what happens when a customer calls. Here's what we found.</p>
     </div>
 
+    <!-- Terminal Grade Readout -->
+    <div class="grade-terminal reveal">
+      <div class="term-label">audit_result.json</div>
+      <div class="term-score" id="gradeScore">FAIL</div>
+      <div class="term-verdict" id="gradeVerdict">// After-hours calls routed to voicemail — revenue leaking every night</div>
+    </div>
+
     <!-- What We Found -->
-    <div class="audit-card">
+    <div class="audit-card reveal">
       <h2>
         <span class="icon" style="background: rgba(0,220,130,0.1);">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00dc82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.82.28 1.67.45 2.53.5A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.07 8.82 2 2 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11z"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.82.28 1.67.45 2.53.5A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.07 8.82 2 2 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11z"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
         </span>
         Call Test Results
       </h2>
@@ -200,10 +328,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
     </div>
 
     <!-- What This Costs You -->
-    <div class="audit-card">
+    <div class="audit-card reveal">
       <h2>
         <span class="icon" style="background: rgba(0,220,130,0.1);">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00dc82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         </span>
         What This Is Costing <span id="company-cost">You</span>
       </h2>
@@ -230,7 +358,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
           62% of callers who hit voicemail never call back.
           At an average job value of <span id="avg-job">$350</span>, missing just
           <span id="missed-weekly-inline">8</span> calls per week costs
-          <strong style="color: #00dc82;" id="lost-monthly-inline">$4,200/month</strong>.
+          <strong style="color: var(--danger);" id="lost-monthly-inline">$4,200/month</strong>.
         </p>
       </div>
     </div>
@@ -273,10 +401,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
     </div>
 
     <!-- Before/After -->
-    <div class="audit-card">
+    <div class="audit-card reveal">
       <h2>
         <span class="icon" style="background: rgba(16,185,129,0.1);">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00FF88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </span>
         Before vs. After The Call Taker
       </h2>
@@ -307,19 +435,19 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
     </div>
 
     <!-- Social Proof -->
-    <div style="text-align: center; padding: 40px 0;">
-      <p style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 24px;">Trusted by HVAC companies across America</p>
+    <div class="reveal" style="text-align: center; padding: 40px 0; position: relative; z-index: 1;">
+      <p style="font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); margin-bottom: 24px;">Service businesses across America trust the call taker</p>
       <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
         <div style="text-align: center;">
-          <div style="font-size: 2rem; font-weight: 800; color: #10b981;">24/7</div>
+          <div class="social-stat">24/7</div>
           <div style="font-size: 0.8125rem; color: var(--text-muted);">Always answering</div>
         </div>
         <div style="text-align: center;">
-          <div style="font-size: 2rem; font-weight: 800; color: #10b981;">&lt;2s</div>
+          <div class="social-stat">&lt;2s</div>
           <div style="font-size: 0.8125rem; color: var(--text-muted);">Pickup time</div>
         </div>
         <div style="text-align: center;">
-          <div style="font-size: 2rem; font-weight: 800; color: #10b981;">$0</div>
+          <div class="social-stat">$0</div>
           <div style="font-size: 0.8125rem; color: var(--text-muted);">Setup fee</div>
         </div>
       </div>
@@ -408,6 +536,34 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
 
       // Page title
       document.title = 'Missed Call Audit: ' + company + ' | The Call Taker';
+
+      // Update terminal grade based on voicemail result
+      var gradeEl = document.getElementById('gradeScore');
+      var verdictEl = document.getElementById('gradeVerdict');
+      if (gradeEl && verdictEl) {
+        if (voicemail === 'no') {
+          gradeEl.textContent = 'WARN';
+          gradeEl.style.color = '#f59e0b';
+          verdictEl.textContent = '// Calls answered but no after-hours coverage — partial revenue loss detected';
+        } else if (voicemail === 'answering') {
+          gradeEl.textContent = 'WARN';
+          gradeEl.style.color = '#f59e0b';
+          verdictEl.textContent = '// Generic answering service detected — no booking or emergency handling';
+        } else {
+          gradeEl.textContent = 'FAIL';
+          verdictEl.textContent = '// After-hours calls routed to voicemail — $' + Math.round(parseInt(params.get('job') || '350') * 0.62 * parseInt(params.get('missed') || '8') * 4.33).toLocaleString() + '/mo in estimated revenue loss';
+        }
+      }
+    })();
+
+    // === SCROLL REVEAL ===
+    (function() {
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(en) {
+          if (en.isIntersecting) { en.target.classList.add('visible'); obs.unobserve(en.target); }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
     })();
   </script>
 <script src="/shared/ui-dark.js" defer></script>
