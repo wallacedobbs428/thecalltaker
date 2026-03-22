@@ -2207,7 +2207,10 @@ document.querySelectorAll('.faq-q').forEach(q => {
 // I never call in sick. And I cost thirty thousand
 // dollars less than a human hire. Your competitors
 // are losing calls right now. You won't be."
-var gideonAudio = new Audio('gideon-intro.mp3');
+var isMobileAudio = window.innerWidth <= 768;
+var gideonAudio = new Audio(
+  isMobileAudio ? 'gideon-intro-short.mp3' : 'gideon-intro.mp3'
+);
 gideonAudio.preload = 'auto';
 var audioUnlocked = false;
 
