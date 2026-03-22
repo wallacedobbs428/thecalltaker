@@ -801,6 +801,114 @@ html.light .theme-toggle .icon-moon { display: none; }
   z-index: 1;
 }
 
+/* ── FUTURISTIC ROOM WALLS ── */
+
+/* Left wall pillar — vertical tech accent */
+.g-wall-left, .g-wall-right {
+  position: absolute;
+  top: 10%;
+  width: 2px;
+  height: 70%;
+  pointer-events: none;
+  z-index: 0;
+}
+.g-wall-left {
+  left: 8%;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(0,255,159,0.08) 20%,
+    rgba(0,255,159,0.15) 50%,
+    rgba(0,255,159,0.08) 80%,
+    transparent 100%);
+  box-shadow: 0 0 15px rgba(0,255,159,0.1), 0 0 40px rgba(0,255,159,0.05);
+}
+.g-wall-right {
+  right: 8%;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(0,255,159,0.08) 20%,
+    rgba(0,255,159,0.15) 50%,
+    rgba(0,255,159,0.08) 80%,
+    transparent 100%);
+  box-shadow: 0 0 15px rgba(0,255,159,0.1), 0 0 40px rgba(0,255,159,0.05);
+}
+
+/* Wall node lights — small dots on the pillar lines */
+.g-wall-left::before, .g-wall-left::after,
+.g-wall-right::before, .g-wall-right::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00FF9F;
+  box-shadow: 0 0 8px #00FF9F, 0 0 20px rgba(0,255,159,0.5);
+}
+.g-wall-left::before, .g-wall-right::before { top: 25%; }
+.g-wall-left::after, .g-wall-right::after { top: 75%; }
+
+/* Horizontal wall accents — connect the pillars at top */
+.g-wall-top {
+  position: absolute;
+  top: 10%;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(0,255,159,0.12) 0%,
+    rgba(0,255,159,0.03) 30%,
+    transparent 50%,
+    rgba(0,255,159,0.03) 70%,
+    rgba(0,255,159,0.12) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Corner brackets — tech detail at wall intersections */
+.g-corner-tl, .g-corner-tr {
+  position: absolute;
+  top: 9%;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  z-index: 0;
+}
+.g-corner-tl {
+  left: 7.5%;
+  border-top: 1px solid rgba(0,255,159,0.2);
+  border-left: 1px solid rgba(0,255,159,0.2);
+}
+.g-corner-tr {
+  right: 7.5%;
+  border-top: 1px solid rgba(0,255,159,0.2);
+  border-right: 1px solid rgba(0,255,159,0.2);
+}
+
+/* Side status indicators — small HUD-style readouts */
+.g-side-hud {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: rgba(0,255,159,0.25);
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 0;
+  writing-mode: vertical-rl;
+}
+.g-side-hud-left {
+  left: 10%;
+  top: 35%;
+}
+.g-side-hud-right {
+  right: 10%;
+  top: 35%;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+}
+
 /* ── HOLOGRAM STAGE — centered, she IS the hero ── */
 .gideon-stage {
   position: relative;
@@ -867,31 +975,30 @@ html.light .theme-toggle .icon-moon { display: none; }
 }
 
 .g-img {
-  height: 72vh;
-  max-height: 680px;
+  height: 58vh;
+  max-height: 560px;
   width: auto;
   object-fit: contain;
   display: block;
-  /* KEY: screen blend makes black = invisible, so no rectangle */
   mix-blend-mode: screen;
   opacity: 0.92;
-  /* Edge dissolve — fades out top and bottom so she emerges from nothing */
+  /* Edge dissolve — softer at bottom, full face visible at top */
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(0,0,0,0.3) 4%,
-    rgba(0,0,0,1) 12%,
-    rgba(0,0,0,1) 82%,
-    rgba(0,0,0,0.4) 92%,
+    rgba(0,0,0,0.6) 3%,
+    rgba(0,0,0,1) 8%,
+    rgba(0,0,0,1) 80%,
+    rgba(0,0,0,0.3) 94%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(0,0,0,0.3) 4%,
-    rgba(0,0,0,1) 12%,
-    rgba(0,0,0,1) 82%,
-    rgba(0,0,0,0.4) 92%,
+    rgba(0,0,0,0.6) 3%,
+    rgba(0,0,0,1) 8%,
+    rgba(0,0,0,1) 80%,
+    rgba(0,0,0,0.3) 94%,
     transparent 100%
   );
   filter:
@@ -1001,46 +1108,65 @@ html.light .theme-toggle .icon-moon { display: none; }
   z-index: 1;
 }
 
-/* ── SPEECH — overlaid below the projection ── */
+/* ── SPEECH — below the projection, feels like she's talking ── */
 .gideon-speech {
   position: relative;
   z-index: 10;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 20px;
+}
+
+/* Speech indicator — visual connection between her and the text */
+.g-speech-indicator {
+  width: 1px;
+  height: 20px;
+  background: linear-gradient(to bottom, rgba(0,255,159,0.3), rgba(0,255,159,0.08));
+  margin: 0 auto 12px;
 }
 
 .gideon-name {
   font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
   font-weight: 700;
   color: #00FF9F;
-  letter-spacing: 12px;
+  letter-spacing: 10px;
   text-transform: uppercase;
   text-shadow: 0 0 30px rgba(0,255,159,0.8),
                0 0 60px rgba(0,255,159,0.4);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   opacity: 0;
 }
 
 .gideon-subtitle {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: rgba(0,255,159,0.35);
-  letter-spacing: 5px;
+  font-size: 0.6rem;
+  color: rgba(0,255,159,0.3);
+  letter-spacing: 4px;
   text-transform: uppercase;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
   opacity: 0;
 }
 
 .speech-bubble {
   font-family: Inter, sans-serif;
-  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
   font-weight: 300;
-  color: rgba(0,255,159,0.85);
-  line-height: 1.9;
-  min-height: 80px;
+  color: rgba(255,255,255,0.95);
+  line-height: 1.8;
+  min-height: 90px;
+  max-width: 550px;
+  margin: 0 auto;
   white-space: pre-line;
-  text-shadow: 0 0 20px rgba(0,255,159,0.3);
+  text-shadow: 0 0 25px rgba(0,255,159,0.2);
+}
+
+/* Subtle speaking pulse on the speech bubble */
+.speech-bubble.speaking {
+  animation: speakPulse 0.08s ease-in-out;
+}
+@keyframes speakPulse {
+  0%, 100% { text-shadow: 0 0 25px rgba(0,255,159,0.2); }
+  50% { text-shadow: 0 0 35px rgba(0,255,159,0.4); }
 }
 
 .g-cursor {
@@ -1165,6 +1291,16 @@ html.light .theme-toggle .icon-moon { display: none; }
   <div class="g-depth-light"></div>
   <div class="g-floor"></div>
   <div class="g-floor-glow"></div>
+
+  <!-- Futuristic room walls -->
+  <div class="g-wall-left"></div>
+  <div class="g-wall-right"></div>
+  <div class="g-wall-top"></div>
+  <div class="g-corner-tl"></div>
+  <div class="g-corner-tr"></div>
+  <div class="g-side-hud g-side-hud-left">SYS · ACTIVE · 24/7</div>
+  <div class="g-side-hud g-side-hud-right">NEURAL · ONLINE</div>
+
   <div class="g-vignette"></div>
 
   <!-- Volumetric particle field -->
@@ -1189,8 +1325,9 @@ html.light .theme-toggle .icon-moon { display: none; }
     </div>
   </div>
 
-  <!-- Speech — below the projection, part of the holographic display -->
+  <!-- Speech — below the projection, connected to her -->
   <div class="gideon-speech">
+    <div class="g-speech-indicator"></div>
     <div class="gideon-name" id="gideonName">GIDEON</div>
     <div class="gideon-subtitle">AI RECEPTIONIST · THE CALL TAKER</div>
     <div class="speech-bubble">
@@ -1606,36 +1743,41 @@ document.querySelectorAll('.faq-q').forEach(q => {
 <!-- ==================== GIDEON HERO — VOLUMETRIC HOLOGRAM JS ==================== -->
 <script>
 (function() {
-  var CHAR_SPEED   = 32;
-  var LINE_PAUSE   = 300;
-  var BLOCK_PAUSE  = 2200;
-  var CTA_DELAY    = 600;
-  var LOOP_DELAY   = 8000;
+  var CHAR_SPEED   = 28;
+  var LINE_PAUSE   = 500;
+  var BLOCK_PAUSE  = 2800;
+  var CTA_DELAY    = 800;
+  var LOOP_DELAY   = 9000;
 
-  /* Gideon speaks like she's smarter than you — confident, direct, a little cocky */
+  /* Gideon speaks directly to you — she's already ahead of you */
   var speeches = [
     { lines: [
       "Hey. I'm Gideon.",
       "I already know why you're here."
     ], pause: BLOCK_PAUSE },
     { lines: [
-      "You're losing calls right now.",
-      "Every one of them is worth",
-      "$300 to $500 to your competitor."
+      "Right now, someone is calling",
+      "your business.",
+      "Nobody's picking up."
     ], pause: BLOCK_PAUSE },
     { lines: [
-      "I don't sleep. I don't call in sick.",
-      "I answer in under two seconds.",
-      "Every. Single. Time."
+      "That call was worth $400.",
+      "It just went to your competitor.",
+      "That happens 5 times a day."
+    ], pause: BLOCK_PAUSE },
+    { lines: [
+      "I never miss a call.",
+      "I never take a day off.",
+      "I answer before the second ring."
     ], pause: BLOCK_PAUSE },
     { lines: [
       "Last night I booked 4 jobs",
-      "while the owner was asleep.",
-      "That's $1,800 he almost lost."
+      "while the owner slept.",
+      "$1,800 he would've lost without me."
     ], pause: BLOCK_PAUSE },
     { lines: [
-      "I'm ready.",
-      "Put me on your phones today."
+      "I'm ready to work for you.",
+      "Right now."
     ], pause: CTA_DELAY, showCTA: true }
   ];
 
