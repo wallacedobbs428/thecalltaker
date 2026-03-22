@@ -653,7 +653,7 @@ html.light .theme-toggle .icon-moon { display: none; }
 .mobile-bar a { color: var(--t100); font-weight: 700; font-size: 16px; text-decoration: none; }
 @media(max-width:768px) { .mobile-bar { display: block; } }
 
-/* ── GIDEON HERO ── */
+/* ── GIDEON HERO — VOLUMETRIC HOLOGRAM PROJECTION ── */
 :root {
   --hg: #00FF9F;
   --hg6: rgba(0,255,159,0.6);
@@ -666,53 +666,253 @@ html.light .theme-toggle .icon-moon { display: none; }
   min-height: 100vh;
   background: #000000;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
   opacity: 0;
 }
 
+/* ── HOLOGRAM STAGE — centered, she IS the hero ── */
+.gideon-stage {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Projection cone — light rays from base upward */
+.g-projection-cone {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.g-projection-cone::before {
+  content: '';
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 90%;
+  background: linear-gradient(
+    0deg,
+    rgba(0,255,159,0.12) 0%,
+    rgba(0,255,159,0.04) 40%,
+    transparent 80%
+  );
+  clip-path: polygon(20% 100%, 80% 100%, 100% 0%, 0% 0%);
+  filter: blur(20px);
+}
+.g-projection-cone::after {
+  content: '';
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 90%;
+  background: linear-gradient(
+    0deg,
+    rgba(0,255,159,0.08) 0%,
+    rgba(0,255,159,0.02) 50%,
+    transparent 75%
+  );
+  clip-path: polygon(30% 100%, 70% 100%, 95% 0%, 5% 0%);
+  filter: blur(8px);
+}
+
+/* The image container — NO rectangle visible */
+.g-figure {
+  position: relative;
+  z-index: 2;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.g-img {
+  height: 72vh;
+  max-height: 680px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  /* KEY: screen blend makes black = invisible, so no rectangle */
+  mix-blend-mode: screen;
+  opacity: 0.92;
+  /* Edge dissolve — fades out top and bottom so she emerges from nothing */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,0.3) 4%,
+    rgba(0,0,0,1) 12%,
+    rgba(0,0,0,1) 82%,
+    rgba(0,0,0,0.4) 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,0.3) 4%,
+    rgba(0,0,0,1) 12%,
+    rgba(0,0,0,1) 82%,
+    rgba(0,0,0,0.4) 92%,
+    transparent 100%
+  );
+  filter:
+    drop-shadow(0 0 40px rgba(0,255,159,0.6))
+    drop-shadow(0 0 80px rgba(0,255,159,0.3))
+    drop-shadow(0 0 160px rgba(0,255,159,0.15));
+  will-change: filter, opacity;
+}
+
+/* Scan lines — subtle horizontal interference */
+.g-figure::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,255,159,0.03) 2px,
+    rgba(0,255,159,0.03) 3px
+  );
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: screen;
+}
+
+/* Sweep scan line — moves top to bottom continuously */
+.g-sweep {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0,255,159,0.4) 20%,
+    rgba(0,255,159,0.8) 50%,
+    rgba(0,255,159,0.4) 80%,
+    transparent 100%
+  );
+  z-index: 4;
+  pointer-events: none;
+  animation: sweepDown 4s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes sweepDown {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+/* Projector base — concentric rings on the floor */
+.g-base {
+  position: relative;
+  width: 260px;
+  height: 40px;
+  margin-top: -20px;
+  z-index: 1;
+}
+.g-base::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center,
+    rgba(0,255,159,0.25) 0%,
+    rgba(0,255,159,0.08) 40%,
+    transparent 70%
+  );
+  filter: blur(8px);
+  animation: basePulse 2s ease-in-out infinite;
+}
+.g-base::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 28px;
+  border: 1px solid rgba(0,255,159,0.2);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0,255,159,0.15),
+              inset 0 0 20px rgba(0,255,159,0.05);
+}
+.g-base-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  height: 18px;
+  border: 1px solid rgba(0,255,159,0.15);
+  border-radius: 50%;
+}
+
+@keyframes basePulse {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Particle canvas — volumetric floating particles */
+.g-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── SPEECH — overlaid below the projection ── */
 .gideon-speech {
   position: relative;
   z-index: 10;
-  width: 45%;
-  padding: 0 0 0 7vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  text-align: center;
+  margin-top: 30px;
 }
 
 .gideon-name {
-  font-family: Inter, sans-serif;
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
   color: #00FF9F;
-  letter-spacing: 8px;
+  letter-spacing: 12px;
   text-transform: uppercase;
   text-shadow: 0 0 30px rgba(0,255,159,0.8),
                0 0 60px rgba(0,255,159,0.4);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   opacity: 0;
 }
 
 .gideon-subtitle {
-  font-family: Inter, sans-serif;
-  font-size: 0.75rem;
-  color: rgba(0,255,159,0.45);
-  letter-spacing: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(0,255,159,0.35);
+  letter-spacing: 5px;
   text-transform: uppercase;
-  margin-bottom: 48px;
+  margin-bottom: 28px;
   opacity: 0;
 }
 
 .speech-bubble {
   font-family: Inter, sans-serif;
-  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
   font-weight: 300;
-  color: rgba(255,255,255,0.92);
+  color: rgba(0,255,159,0.85);
   line-height: 1.9;
-  max-width: 480px;
-  min-height: 140px;
+  min-height: 80px;
   white-space: pre-line;
+  text-shadow: 0 0 20px rgba(0,255,159,0.3);
 }
 
 .g-cursor {
@@ -728,10 +928,11 @@ html.light .theme-toggle .icon-moon { display: none; }
 
 .gideon-cta {
   display: none;
-  margin-top: 40px;
+  margin-top: 24px;
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.5s ease, transform 0.5s ease;
+  justify-content: center;
 }
 
 .gideon-cta.visible {
@@ -748,8 +949,8 @@ html.light .theme-toggle .icon-moon { display: none; }
   color: #000000;
   font-family: Inter, sans-serif;
   font-weight: 700;
-  font-size: 0.95rem;
-  padding: 16px 36px;
+  font-size: 0.9rem;
+  padding: 14px 32px;
   border-radius: 4px;
   text-decoration: none;
   letter-spacing: 1px;
@@ -763,11 +964,11 @@ html.light .theme-toggle .icon-moon { display: none; }
 
 .btn-gideon-ghost {
   display: inline-block;
-  border: 1px solid rgba(0,255,159,0.35);
+  border: 1px solid rgba(0,255,159,0.3);
   color: #00FF9F;
   font-family: Inter, sans-serif;
-  font-size: 0.95rem;
-  padding: 16px 36px;
+  font-size: 0.9rem;
+  padding: 14px 32px;
   border-radius: 4px;
   text-decoration: none;
   transition: border-color 0.2s ease;
@@ -777,110 +978,28 @@ html.light .theme-toggle .icon-moon { display: none; }
   border-color: rgba(0,255,159,0.7);
 }
 
-.gideon-holo-wrap {
-  position: relative;
-  width: 55%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.g-beam {
-  position: absolute;
-  bottom: 8%;
-  left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  width: 340px;
-  height: 340px;
-  background: radial-gradient(ellipse at center,
-    rgba(0,255,159,0.18) 0%,
-    rgba(0,255,159,0.06) 50%,
-    transparent 70%);
-  border-radius: 50%;
-  filter: blur(18px);
-  pointer-events: none;
-}
-
-.g-rotate {
-  position: relative;
-  opacity: 0;
-  transform-style: preserve-3d;
-}
-
-.g-img {
-  height: 82vh;
-  max-height: 720px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-  mix-blend-mode: screen;
-  opacity: 0.9;
-  position: relative;
-}
-
-.g-rotate::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    rgba(0,0,0,0.15) 3px,
-    rgba(0,0,0,0.15) 4px
-  );
-  pointer-events: none;
-  z-index: 2;
-}
-
-@keyframes gFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-18px); }
-}
-
+/* ── BLOOM BREATHE ── */
 @keyframes gBloom {
   0%, 100% {
-    filter: drop-shadow(0 0 60px rgba(0,255,159,0.5))
-            drop-shadow(0 0 120px rgba(0,255,159,0.25));
+    filter: drop-shadow(0 0 40px rgba(0,255,159,0.6))
+            drop-shadow(0 0 80px rgba(0,255,159,0.3))
+            drop-shadow(0 0 160px rgba(0,255,159,0.15));
   }
   50% {
-    filter: drop-shadow(0 0 90px rgba(0,255,159,0.75))
-            drop-shadow(0 0 180px rgba(0,255,159,0.4))
-            drop-shadow(0 0 300px rgba(0,255,159,0.15));
+    filter: drop-shadow(0 0 60px rgba(0,255,159,0.8))
+            drop-shadow(0 0 120px rgba(0,255,159,0.5))
+            drop-shadow(0 0 240px rgba(0,255,159,0.25));
   }
 }
 
+/* ── MOBILE ── */
 @media (max-width: 768px) {
-  .gideon-hero {
-    flex-direction: column;
-    align-items: center;
-    padding-top: 0;
-  }
-  .gideon-holo-wrap {
-    width: 100%;
-    height: 52vh;
-    order: 1;
-  }
-  .g-img {
-    height: 48vh;
-  }
-  .gideon-speech {
-    width: 100%;
-    order: 2;
-    padding: 20px 6vw 40px;
-    align-items: center;
-    text-align: center;
-  }
-  .speech-bubble {
-    text-align: center;
-  }
-  .gideon-cta {
-    justify-content: center;
-  }
-  #gideonRotate {
-    animation: none !important;
-  }
+  .g-img { height: 55vh; }
+  .g-base { width: 180px; height: 28px; }
+  .g-base::after { width: 140px; height: 20px; }
+  .g-base-inner { width: 100px; height: 14px; }
+  .g-figure { animation: none !important; }
+  .gideon-speech { margin-top: 16px; }
 }
 
 /* ── HERO SECONDARY (original hero, now below Gideon) ── */
@@ -910,10 +1029,32 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 </nav>
 
-<!-- ==================== GIDEON HERO — FULL SCREEN PROJECTION ==================== -->
+<!-- ==================== GIDEON HERO — VOLUMETRIC HOLOGRAM PROJECTION ==================== -->
 <section class="gideon-hero">
 
-  <!-- Left: Speech -->
+  <!-- Volumetric particle field -->
+  <canvas class="g-particles" id="gParticles"></canvas>
+
+  <!-- Hologram stage — SHE is the hero -->
+  <div class="gideon-stage">
+    <!-- Projection cone light -->
+    <div class="g-projection-cone"></div>
+
+    <!-- The figure — no rectangle, dissolves into space -->
+    <div class="g-figure" id="gFigure">
+      <img src="jessica-hologram-clean.png" alt="Gideon — AI Receptionist"
+           class="g-img" id="gideonImg"/>
+      <!-- Sweep scan line -->
+      <div class="g-sweep"></div>
+    </div>
+
+    <!-- Projector base rings -->
+    <div class="g-base">
+      <div class="g-base-inner"></div>
+    </div>
+  </div>
+
+  <!-- Speech — below the projection, part of the holographic display -->
   <div class="gideon-speech">
     <div class="gideon-name" id="gideonName">GIDEON</div>
     <div class="gideon-subtitle">AI RECEPTIONIST · THE CALL TAKER</div>
@@ -921,17 +1062,8 @@ html.light .theme-toggle .icon-moon { display: none; }
       <span id="gideonSpeaks"></span><span class="g-cursor">|</span>
     </div>
     <div class="gideon-cta" id="gideonCTA">
-      <a href="/pay" class="btn-gideon">Hire Gideon Now →</a>
-      <a href="tel:6157845747" class="btn-gideon-ghost">Hear Her Answer</a>
-    </div>
-  </div>
-
-  <!-- Right: Hologram -->
-  <div class="gideon-holo-wrap">
-    <div class="g-beam"></div>
-    <div id="gideonRotate" class="g-rotate">
-      <img src="jessica-hologram-clean.png" alt="Gideon — AI Receptionist"
-           class="g-img" id="gideonImg"/>
+      <a href="/pay" class="btn-gideon">Put Me To Work →</a>
+      <a href="tel:6157845747" class="btn-gideon-ghost">Call Me Right Now</a>
     </div>
   </div>
 
@@ -1336,30 +1468,49 @@ document.querySelectorAll('.faq-q').forEach(q => {
 (function(){var f=false;function l(){if(f)return;f=true;var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV';s.async=true;document.head.appendChild(s);s.onload=function(){window.dataLayer=window.dataLayer||[];function g(){dataLayer.push(arguments)}g('js',new Date());g('config','G-29LL5GPBQV');g('config','AW-17970510102');};};['scroll','click','mousemove','touchstart'].forEach(function(e){window.addEventListener(e,l,{once:true});});})();
 </script>
 
-<!-- ==================== GIDEON HERO — FULL JS ==================== -->
+<!-- ==================== GIDEON HERO — VOLUMETRIC HOLOGRAM JS ==================== -->
 <script>
 (function() {
-  var CHAR_SPEED   = 38;
-  var LINE_PAUSE   = 380;
-  var BLOCK_PAUSE  = 1800;
-  var CTA_DELAY    = 500;
-  var LOOP_DELAY   = 7000;
+  var CHAR_SPEED   = 32;
+  var LINE_PAUSE   = 300;
+  var BLOCK_PAUSE  = 2200;
+  var CTA_DELAY    = 600;
+  var LOOP_DELAY   = 8000;
 
+  /* Gideon speaks like she's smarter than you — confident, direct, a little cocky */
   var speeches = [
-    { lines: ["Hi. I'm Gideon —", "your new AI receptionist."], pause: BLOCK_PAUSE },
-    { lines: ["I answer every call.", "Book every appointment.", "Never miss a lead."], pause: BLOCK_PAUSE },
-    { lines: ["While you're on the job —", "I'm already closing for you."], pause: BLOCK_PAUSE },
-    { lines: ["Your competitors are losing", "calls right now.", "You won't be."], pause: BLOCK_PAUSE },
-    { lines: ["I'm ready to go to work", "for your business", "right now."], pause: CTA_DELAY, showCTA: true }
+    { lines: [
+      "Hey. I'm Gideon.",
+      "I already know why you're here."
+    ], pause: BLOCK_PAUSE },
+    { lines: [
+      "You're losing calls right now.",
+      "Every one of them is worth",
+      "$300 to $500 to your competitor."
+    ], pause: BLOCK_PAUSE },
+    { lines: [
+      "I don't sleep. I don't call in sick.",
+      "I answer in under two seconds.",
+      "Every. Single. Time."
+    ], pause: BLOCK_PAUSE },
+    { lines: [
+      "Last night I booked 4 jobs",
+      "while the owner was asleep.",
+      "That's $1,800 he almost lost."
+    ], pause: BLOCK_PAUSE },
+    { lines: [
+      "I'm ready.",
+      "Put me on your phones today."
+    ], pause: CTA_DELAY, showCTA: true }
   ];
 
-  var el        = document.getElementById('gideonSpeaks');
-  var ctaEl     = document.getElementById('gideonCTA');
-  var nameEl    = document.getElementById('gideonName');
-  var heroEl    = document.querySelector('.gideon-hero');
-  var rotateEl  = document.getElementById('gideonRotate');
-  var beamEl    = document.querySelector('.g-beam');
+  var el         = document.getElementById('gideonSpeaks');
+  var ctaEl      = document.getElementById('gideonCTA');
+  var nameEl     = document.getElementById('gideonName');
+  var heroEl     = document.querySelector('.gideon-hero');
+  var figureEl   = document.getElementById('gFigure');
   var subtitleEl = document.querySelector('.gideon-subtitle');
+  var imgEl      = document.getElementById('gideonImg');
 
   if (!el || !heroEl) return;
 
@@ -1373,9 +1524,9 @@ document.querySelectorAll('.faq-q').forEach(q => {
   }
 
   async function fadeOutText() {
-    el.style.transition = 'opacity 0.35s ease';
+    el.style.transition = 'opacity 0.4s ease';
     el.style.opacity = '0';
-    await wait(380);
+    await wait(420);
     el.textContent = '';
     el.style.opacity = '1';
     el.style.transition = '';
@@ -1401,107 +1552,143 @@ document.querySelectorAll('.faq-q').forEach(q => {
       } else {
         await wait(block.pause);
         await fadeOutText();
-        await wait(200);
+        await wait(300);
       }
     }
     runSpeeches();
   }
 
-  /* Random flicker */
+  /* ── VOLUMETRIC PARTICLES ── */
+  (function() {
+    var cv = document.getElementById('gParticles');
+    if (!cv) return;
+    var ctx = cv.getContext('2d');
+    function resize() { cv.width = cv.parentElement.offsetWidth; cv.height = cv.parentElement.offsetHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    var pts = [];
+    for (var i = 0; i < 80; i++) {
+      pts.push({
+        x: Math.random() * cv.width,
+        y: Math.random() * cv.height,
+        r: 0.5 + Math.random() * 1.5,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: -0.08 - Math.random() * 0.15,
+        a: 0.1 + Math.random() * 0.4,
+        pulse: Math.random() * Math.PI * 2
+      });
+    }
+    (function tick() {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      var cx = cv.width / 2, baseY = cv.height * 0.85;
+      pts.forEach(function(p) {
+        p.x += p.vx; p.y += p.vy; p.pulse += 0.02;
+        if (p.y < -4) { p.y = baseY + Math.random() * 40; p.x = cx + (Math.random() - 0.5) * 200; }
+        if (p.x < -4) p.x = cv.width + 4;
+        if (p.x > cv.width + 4) p.x = -4;
+        var flickerA = p.a * (0.7 + 0.3 * Math.sin(p.pulse));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0,255,159,' + flickerA + ')';
+        ctx.fill();
+      });
+      requestAnimationFrame(tick);
+    })();
+  })();
+
+  /* ── HOLOGRAM FLICKER ── */
   function scheduleFlicker() {
-    var delay = 6000 + Math.random() * 12000;
     setTimeout(function() {
-      if (!rotateEl) return;
-      var img = rotateEl.querySelector('.g-img');
-      if (!img) return;
-      img.style.transition = 'opacity 0.04s';
-      img.style.opacity = (0.62 + Math.random() * 0.12).toString();
+      if (!imgEl) return;
+      imgEl.style.transition = 'opacity 0.04s';
+      imgEl.style.opacity = (0.55 + Math.random() * 0.15).toString();
       setTimeout(function() {
-        img.style.transition = 'opacity 0.1s';
-        img.style.opacity = '0.9';
+        imgEl.style.transition = 'opacity 0.12s';
+        imgEl.style.opacity = '0.92';
         scheduleFlicker();
-      }, 50 + Math.random() * 60);
-    }, delay);
+      }, 40 + Math.random() * 50);
+    }, 5000 + Math.random() * 10000);
   }
 
-  /* Chromatic aberration */
+  /* ── CHROMATIC ABERRATION ── */
   function chromaPulse() {
-    var delay = 4000 + Math.random() * 4000;
     setTimeout(function() {
-      var img = rotateEl ? rotateEl.querySelector('.g-img') : null;
-      if (!img) return;
-      img.style.filter = 'drop-shadow(-2px 0 2px rgba(255,0,80,0.4)) drop-shadow(2px 0 2px rgba(0,200,255,0.4)) drop-shadow(0 0 60px #00FF9F)';
+      if (!imgEl) return;
+      imgEl.style.filter = 'drop-shadow(-3px 0 2px rgba(255,0,80,0.5)) drop-shadow(3px 0 2px rgba(0,180,255,0.5)) drop-shadow(0 0 40px rgba(0,255,159,0.6))';
       setTimeout(function() {
-        img.style.filter = '';
+        imgEl.style.filter = '';
         chromaPulse();
-      }, 80);
-    }, delay);
+      }, 60 + Math.random() * 40);
+    }, 3000 + Math.random() * 5000);
   }
 
-  /* Entrance sequence */
+  /* ── ENTRANCE SEQUENCE ── */
   async function entrance() {
-    await wait(120);
+    await wait(200);
 
-    heroEl.style.transition = 'opacity 1.2s ease';
+    /* Black → visible */
+    heroEl.style.transition = 'opacity 1.5s ease';
     heroEl.style.opacity = '1';
 
-    if (rotateEl) {
-      rotateEl.style.transition = 'opacity 1.2s ease, transform 1.2s ease';
-      rotateEl.style.transform = 'scale(0.97)';
-      rotateEl.style.opacity = '0';
-      await wait(80);
-      rotateEl.style.opacity = '1';
-      rotateEl.style.transform = 'scale(1)';
+    await wait(600);
+
+    /* Figure scales up from nothing — like projecting */
+    if (figureEl) {
+      figureEl.style.transition = 'none';
+      figureEl.style.transform = 'scale(0.3) translateY(60px)';
+      figureEl.style.opacity = '0';
+      await wait(50);
+      figureEl.style.transition = 'opacity 1.8s ease, transform 1.8s cubic-bezier(0.16, 1, 0.3, 1)';
+      figureEl.style.opacity = '1';
+      figureEl.style.transform = 'scale(1) translateY(0)';
     }
 
-    if (beamEl) {
-      beamEl.style.transition = 'transform 0.8s ease';
-      beamEl.style.transform = 'translateX(-50%) scaleX(1)';
-    }
+    await wait(1200);
 
-    await wait(400);
-
+    /* Name types out */
     if (nameEl) {
       var fullName = nameEl.textContent;
       nameEl.textContent = '';
       nameEl.style.opacity = '1';
       for (var i = 0; i < fullName.length; i++) {
         nameEl.textContent += fullName[i];
-        await wait(50);
+        await wait(70);
       }
     }
 
-    await wait(200);
+    await wait(300);
 
     if (subtitleEl) {
-      subtitleEl.style.transition = 'opacity 0.4s ease';
+      subtitleEl.style.transition = 'opacity 0.5s ease';
       subtitleEl.style.opacity = '1';
     }
 
-    await wait(600);
+    await wait(800);
     runSpeeches();
   }
 
-  /* GSAP animations */
+  /* ── GSAP ANIMATIONS ── */
   function initGSAP() {
-    if (typeof gsap === 'undefined' || !rotateEl) return;
+    if (typeof gsap === 'undefined' || !figureEl) return;
 
-    gsap.to(rotateEl, { y: -18, duration: 4.2, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+    /* Float */
+    gsap.to(figureEl, { y: -16, duration: 4, ease: 'sine.inOut', yoyo: true, repeat: -1 });
 
+    /* Bloom breathe on the image */
+    if (imgEl) { imgEl.style.animation = 'gBloom 3.5s ease-in-out infinite'; }
+
+    /* Subtle Y sway — like a real hologram, never reveals the flat edge */
     if (window.innerWidth > 768) {
-      gsap.to(rotateEl, { rotationY: 360, duration: 30, ease: 'none', repeat: -1, transformOrigin: '50% 50%' });
+      gsap.to(figureEl, { rotationY: 8, duration: 6, ease: 'sine.inOut', yoyo: true, repeat: -1, transformOrigin: '50% 50%' });
+      gsap.to(figureEl, { rotationX: -2, duration: 8, ease: 'sine.inOut', yoyo: true, repeat: -1 });
     }
-
-    var img = rotateEl.querySelector('.g-img');
-    if (img) { img.style.animation = 'gBloom 3.2s ease-in-out infinite'; }
   }
 
-  /* Init */
+  /* ── INIT ── */
+  function init() { entrance(); initGSAP(); scheduleFlicker(); chromaPulse(); }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { entrance(); initGSAP(); scheduleFlicker(); chromaPulse(); });
-  } else {
-    entrance(); initGSAP(); scheduleFlicker(); chromaPulse();
-  }
+    document.addEventListener('DOMContentLoaded', init);
+  } else { init(); }
 })();
 </script>
 </body>
