@@ -978,7 +978,8 @@ html.light .theme-toggle .icon-moon { display: none; }
   height: 58vh;
   max-height: 560px;
   width: auto;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center 8%;
   display: block;
   mix-blend-mode: screen;
   opacity: 0.92;
@@ -1250,6 +1251,46 @@ html.light .theme-toggle .icon-moon { display: none; }
   }
 }
 
+/* ── STAT OVERLAY ── */
+.g-stat-overlay {
+  position: absolute;
+  left: 2%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.g-stat-card {
+  background: rgba(0,18,28,0.75);
+  border: 1px solid rgba(0,217,192,0.3);
+  border-radius: 6px;
+  padding: 10px 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  min-width: 160px;
+}
+
+.g-stat-label {
+  font-family: Inter, sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  color: rgba(0,217,192,0.6);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.g-stat-value {
+  font-family: Inter, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #00D9C0;
+  text-shadow: 0 0 12px rgba(0,217,192,0.6);
+}
+
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   .g-img { height: 55vh; }
@@ -1258,6 +1299,7 @@ html.light .theme-toggle .icon-moon { display: none; }
   .g-base-inner { width: 100px; height: 14px; }
   .g-figure { animation: none !important; }
   .gideon-speech { margin-top: 16px; }
+  .g-stat-overlay { display: none; }
 }
 
 /* ── HERO SECONDARY (original hero, now below Gideon) ── */
@@ -1317,7 +1359,7 @@ html.light .theme-toggle .icon-moon { display: none; }
 
     <!-- The figure — no rectangle, dissolves into space -->
     <div class="g-figure" id="gFigure">
-      <img src="jessica-hologram-clean.png" alt="Gideon — AI Receptionist"
+      <img src="gideon-hologram.png" alt="Gideon — AI Receptionist"
            class="g-img" id="gideonImg"/>
       <!-- Sweep scan line -->
       <div class="g-sweep"></div>
@@ -1326,6 +1368,22 @@ html.light .theme-toggle .icon-moon { display: none; }
     <!-- Projector base rings -->
     <div class="g-base">
       <div class="g-base-inner"></div>
+    </div>
+
+    <!-- Stat overlay — real HTML over the image -->
+    <div class="g-stat-overlay">
+      <div class="g-stat-card">
+        <div class="g-stat-label">CALLS ANSWERED</div>
+        <div class="g-stat-value">24/7/365</div>
+      </div>
+      <div class="g-stat-card">
+        <div class="g-stat-label">VS HUMAN HIRE</div>
+        <div class="g-stat-value">$32,000 saved/yr</div>
+      </div>
+      <div class="g-stat-card">
+        <div class="g-stat-label">SETUP TIME</div>
+        <div class="g-stat-value">Under 24 hours</div>
+      </div>
     </div>
   </div>
 
