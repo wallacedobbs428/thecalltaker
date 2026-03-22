@@ -664,13 +664,141 @@ html.light .theme-toggle .icon-moon { display: none; }
   position: relative;
   width: 100vw;
   min-height: 100vh;
-  background: #000000;
+  /* Not pure black — very dark blue gives atmospheric depth */
+  background: radial-gradient(ellipse 120% 80% at 50% 60%,
+    #020a0f 0%,
+    #010508 40%,
+    #000000 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   opacity: 0;
+}
+
+/* ── 3D ROOM ENVIRONMENT ── */
+
+/* Perspective floor — receding grid that creates depth */
+.g-floor {
+  position: absolute;
+  bottom: 0;
+  left: -20%;
+  width: 140%;
+  height: 50%;
+  background:
+    /* Major grid lines — X axis */
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,255,159,0.14) 0px,
+      rgba(0,255,159,0.14) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    /* Major grid lines — Y axis */
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,255,159,0.12) 0px,
+      rgba(0,255,159,0.12) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    /* Minor grid lines — X axis (subdivision) */
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,255,159,0.05) 0px,
+      rgba(0,255,159,0.05) 1px,
+      transparent 1px,
+      transparent 15px
+    ),
+    /* Minor grid lines — Y axis (subdivision) */
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,255,159,0.04) 0px,
+      rgba(0,255,159,0.04) 1px,
+      transparent 1px,
+      transparent 15px
+    );
+  transform: perspective(400px) rotateX(60deg);
+  transform-origin: center top;
+  pointer-events: none;
+  z-index: 0;
+  /* Fade floor edges — no hard borders, bleeds into darkness */
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 20%, transparent 75%);
+}
+
+/* Floor glow — reflection of Gideon's light on the floor */
+.g-floor-glow {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 280px;
+  background: radial-gradient(ellipse at center,
+    rgba(0,255,159,0.18) 0%,
+    rgba(0,255,159,0.06) 40%,
+    transparent 65%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floorGlowPulse 3.5s ease-in-out infinite;
+}
+
+@keyframes floorGlowPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Depth light — atmospheric glow behind Gideon, creates 3D space */
+.g-depth-light {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 700px;
+  background: radial-gradient(ellipse at center,
+    rgba(0,255,159,0.06) 0%,
+    rgba(0,30,40,0.15) 25%,
+    rgba(0,10,15,0.08) 50%,
+    transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ceiling hint — very faint horizontal lines at top for room feel */
+.g-ceiling {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 15%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 30px,
+    rgba(0,255,159,0.015) 30px,
+    rgba(0,255,159,0.015) 31px
+  );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+}
+
+/* Vignette — darkens edges for cinematic depth */
+.g-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 45%,
+    transparent 0%,
+    rgba(0,0,0,0.3) 60%,
+    rgba(0,0,0,0.7) 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* ── HOLOGRAM STAGE — centered, she IS the hero ── */
@@ -1031,6 +1159,13 @@ html.light .theme-toggle .icon-moon { display: none; }
 
 <!-- ==================== GIDEON HERO — VOLUMETRIC HOLOGRAM PROJECTION ==================== -->
 <section class="gideon-hero">
+
+  <!-- 3D Room environment layers -->
+  <div class="g-ceiling"></div>
+  <div class="g-depth-light"></div>
+  <div class="g-floor"></div>
+  <div class="g-floor-glow"></div>
+  <div class="g-vignette"></div>
 
   <!-- Volumetric particle field -->
   <canvas class="g-particles" id="gParticles"></canvas>
