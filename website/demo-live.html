@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hear Jessica Answer Your Calls — Live Demo | The Call Taker</title>
-<meta name="description" content="Type your business name and hear Jessica answer your calls live. No signup, no download — instant AI receptionist demo in your browser.">
+<title>Hear Gideon Answer Your Calls — Live Demo | The Call Taker</title>
+<meta name="description" content="Type your business name and hear Gideon answer your calls live. No signup, no download — instant AI receptionist demo in your browser.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://thecalltaker.com/demo-live">
 
-<meta property="og:title" content="Hear Jessica Answer Your Calls — Live">
+<meta property="og:title" content="Hear Gideon Answer Your Calls — Live">
 <meta property="og:description" content="Type your business name. In 3 seconds, hear exactly what your customers will hear.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thecalltaker.com/demo-live">
@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://thecalltaker.com/og-image.png">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hear Jessica Answer Your Calls — Live">
+<meta name="twitter:title" content="Hear Gideon Answer Your Calls — Live">
 <meta name="twitter:description" content="Type your business name. Hear your AI receptionist in 3 seconds.">
 <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
 
@@ -387,7 +387,7 @@ a { color: inherit; text-decoration: none; }
 <!-- HERO -->
 <section class="hero">
   <div class="hero-badge"><span class="hero-badge-dot"></span> Live Demo</div>
-  <h1>Hear Jessica Answer Your Business Calls</h1>
+  <h1>Hear Gideon Answer Your Business Calls</h1>
   <p>Type your business name below. In 3 seconds, hear exactly what your customers will hear when they call.</p>
 </section>
 
@@ -409,7 +409,7 @@ a { color: inherit; text-decoration: none; }
   <!-- Loading State -->
   <div class="loading-state" id="loadingState">
     <div class="loading-ring"></div>
-    <div class="loading-text">Jessica is answering...</div>
+    <div class="loading-text">Gideon is answering...</div>
     <div class="loading-sub">Generating voice in real-time</div>
   </div>
 
@@ -421,7 +421,7 @@ a { color: inherit; text-decoration: none; }
         <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
       </button>
       <div class="player-info">
-        <div class="player-name" id="playerName">Jessica — Your Business</div>
+        <div class="player-name" id="playerName">Gideon — Your Business</div>
         <div class="player-sub">AI Receptionist Demo</div>
       </div>
     </div>
@@ -438,7 +438,7 @@ a { color: inherit; text-decoration: none; }
   <!-- Error State -->
   <div class="error-state" id="errorState">
     <div class="error-msg" id="errorMsg">Something went wrong</div>
-    <div class="error-sub" id="errorSub">Call <a href="tel:+16157845747">(615) 784-5747</a> to hear Jessica live</div>
+    <div class="error-sub" id="errorSub">Call <a href="tel:+16157845747">(615) 784-5747</a> to hear Gideon live</div>
     <div style="text-align:center; margin-top:16px">
       <button class="replay-btn" id="retryBtn">Try Again</button>
     </div>
@@ -447,7 +447,7 @@ a { color: inherit; text-decoration: none; }
 
 <!-- SOCIAL PROOF -->
 <div class="proof-bar">
-  <div class="proof-count">Join <strong>2,400+</strong> businesses that tested Jessica this month</div>
+  <div class="proof-count">Join <strong>2,400+</strong> businesses that tested Gideon this month</div>
   <div class="proof-quotes">
     <div class="proof-quote active">"I couldn't tell it wasn't a real person." — HVAC owner, Nashville</div>
     <div class="proof-quote">"She booked 3 appointments her first night." — Plumber, Atlanta</div>
@@ -462,7 +462,7 @@ a { color: inherit; text-decoration: none; }
 
 <!-- CTA (revealed after audio plays) -->
 <div class="cta-reveal" id="ctaReveal">
-  <h2>Get Jessica Live on Your Phones Tonight</h2>
+  <h2>Get Gideon Live on Your Phones Tonight</h2>
   <p>14-day free pilot. No setup fee. No credit card. Takes 15 minutes to go live.</p>
   <a href="/pilot/" class="cta-primary" id="ctaBtn">
     Start Free Pilot
@@ -485,7 +485,7 @@ a { color: inherit; text-decoration: none; }
     <div class="how-step">
       <div class="how-step-num">2</div>
       <div class="how-step-text">
-        <h3>Jessica picks up in 2 seconds</h3>
+        <h3>Gideon picks up in 2 seconds</h3>
         <p>No hold music. No phone tree. She answers with your business name, every time.</p>
       </div>
     </div>
@@ -542,7 +542,7 @@ a { color: inherit; text-decoration: none; }
 <script>
 (function() {
   // === CONFIG ===
-  var WORKER_URL = 'https://jessica-demo.thecalltaker.workers.dev/demo';
+  var WORKER_URL = 'https://gideon-demo.thecalltaker.workers.dev/demo';
 
   // === ELEMENTS ===
   var input = document.getElementById('businessName');
@@ -606,7 +606,7 @@ a { color: inherit; text-decoration: none; }
     callBtn.disabled = true;
 
     // Track
-    if (typeof fbq === 'function') fbq('track', 'ViewContent', { content_name: 'jessica_demo_play' });
+    if (typeof fbq === 'function') fbq('track', 'ViewContent', { content_name: 'gideon_demo_play' });
     if (typeof gtag === 'function') gtag('event', 'demo_generated', { event_category: 'demo', business_name: biz });
 
     // Fetch audio from Cloudflare Worker
@@ -633,7 +633,7 @@ a { color: inherit; text-decoration: none; }
         if (audio) { audio.pause(); URL.revokeObjectURL(audio.src); }
         audio = new Audio(lastBlobUrl);
 
-        playerName.textContent = 'Jessica — ' + biz;
+        playerName.textContent = 'Gideon — ' + biz;
         loadingState.classList.remove('show');
         playerState.classList.add('show');
 
@@ -660,10 +660,10 @@ a { color: inherit; text-decoration: none; }
         loadingState.classList.remove('show');
         if (err && err.rate_limited) {
           errorMsg.textContent = "You've used your 3 free demos.";
-          document.getElementById('errorSub').innerHTML = 'Call <a href="tel:+16157845747">(615) 784-5747</a> to hear Jessica on your actual line';
+          document.getElementById('errorSub').innerHTML = 'Call <a href="tel:+16157845747">(615) 784-5747</a> to hear Gideon on your actual line';
         } else {
           errorMsg.textContent = err.message || 'Something went wrong';
-          document.getElementById('errorSub').innerHTML = 'Call <a href="tel:+16157845747">(615) 784-5747</a> to hear Jessica live';
+          document.getElementById('errorSub').innerHTML = 'Call <a href="tel:+16157845747">(615) 784-5747</a> to hear Gideon live';
         }
         errorState.classList.add('show');
       } finally {
