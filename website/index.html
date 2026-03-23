@@ -733,7 +733,7 @@ html.light .theme-toggle .icon-moon { display: none; }
 }
 .g-figure { position: relative; z-index: 2; transform-style: preserve-3d; will-change: transform; }
 .g-img {
-  height: 60vh; max-height: 580px; width: auto;
+  height: 52vh; max-height: 500px; width: auto;
   object-fit: cover; object-position: center 8%;
   display: block; mix-blend-mode: screen; opacity: 0.92;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 3%, black 10%, black 82%, rgba(0,0,0,0.3) 94%, transparent 100%);
@@ -767,13 +767,13 @@ html.light .theme-toggle .icon-moon { display: none; }
 .g-stat-value { font-family: Inter, sans-serif; font-size: 1rem; font-weight: 700; color: var(--accent-hover); text-shadow: 0 0 10px rgba(42,157,122,0.5); }
 
 /* ── SPEECH ── */
-.gideon-speech { position: relative; z-index: 10; text-align: center; margin-top: 16px; }
+.gideon-speech { position: relative; z-index: 10; text-align: center; margin-top: 8px; }
 .gideon-name {
   font-family: var(--mono); font-size: clamp(1.1rem, 2.2vw, 1.5rem); font-weight: 700;
   color: var(--accent-hover); letter-spacing: 10px; text-transform: uppercase;
-  text-shadow: 0 0 20px rgba(42,157,122,0.7); margin-bottom: 4px; opacity: 0;
+  text-shadow: 0 0 20px rgba(42,157,122,0.7); margin-bottom: 2px; opacity: 0;
 }
-.gideon-subtitle { font-family: var(--mono); font-size: 0.55rem; color: rgba(42,157,122,0.3); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 18px; opacity: 0; }
+.gideon-subtitle { font-family: var(--mono); font-size: 0.55rem; color: rgba(42,157,122,0.3); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; opacity: 0; }
 .speech-bubble {
   font-family: Inter, sans-serif; font-size: clamp(1.05rem, 1.6vw, 1.3rem); font-weight: 300;
   color: var(--t100); line-height: 1.8; min-height: 80px; max-width: 520px;
@@ -805,6 +805,33 @@ html.light .theme-toggle .icon-moon { display: none; }
   .g-ring { display: none; }
   .g-figure { animation: none !important; }
   .gideon-speech { margin-top: 12px; }
+}
+
+/* ── LIGHT MODE — Gideon section adapts ── */
+.light .gideon-hero {
+  background: radial-gradient(ellipse 110% 80% at 50% 55%, #0a1a22 0%, #060e14 50%, #030810 100%);
+}
+.light .g-tap-gate { background: rgba(5,15,20,0.94); }
+.light .g-floor-grid {
+  background-image:
+    linear-gradient(rgba(42,157,122,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,157,122,0.15) 1px, transparent 1px);
+}
+.light .g-ring { border-color: rgba(42,157,122,0.18); }
+.light .g-stat-card {
+  background: rgba(5,20,28,0.85);
+  border-color: rgba(42,157,122,0.3);
+}
+.light .speech-bubble { color: rgba(230,240,235,0.95); }
+.light .gideon-name { color: #3ab894; text-shadow: 0 0 20px rgba(58,184,148,0.7); }
+.light .gideon-subtitle { color: rgba(58,184,148,0.4); }
+.light .g-bg-glow {
+  background: radial-gradient(ellipse at center, rgba(42,157,122,0.08) 0%, rgba(26,122,92,0.04) 40%, transparent 70%);
+}
+/* Smooth border between Gideon dark section and light page below */
+.light .hero-secondary {
+  border-top: 1px solid rgba(42,157,122,0.15);
+  background: linear-gradient(to bottom, #0a1a22 0%, var(--bg) 120px);
 }
 
 /* ── HERO SECONDARY (original hero, now below Gideon) ── */
