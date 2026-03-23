@@ -7,87 +7,113 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'AW-17970510102');
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog &mdash; The Call Taker | HVAC Business Growth Tips</title>
+  <title>Blog &mdash; The Call Taker | AI Receptionist Tips for Service Businesses</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="description" content="Expert advice for HVAC business owners on missed calls, AI receptionists, growing revenue, and running a more profitable operation.">
+  <meta name="description" content="Expert advice for service business owners on missed calls, AI receptionists, growing revenue, and running a more profitable operation.">
   <meta name="robots" content="index, follow">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Blog &mdash; The Call Taker">
-  <meta property="og:description" content="Expert advice for HVAC business owners on missed calls, AI receptionists, and growing revenue.">
+  <meta property="og:description" content="Expert advice for service business owners on missed calls, AI receptionists, and growing revenue.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://thecalltaker.com/blog">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Blog &mdash; The Call Taker">
-  <meta name="twitter:description" content="Expert advice for HVAC business owners on missed calls, AI receptionists, and growing revenue.">
+  <meta name="twitter:description" content="Expert advice for service business owners on missed calls, AI receptionists, and growing revenue.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="canonical" href="https://thecalltaker.com/blog">
   <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Blog Index Styles */
+    .blog-hero { padding: 140px 0 60px; text-align: center; position: relative; overflow: hidden; }
+    @media (min-width: 768px) { .blog-hero { padding: 160px 0 80px; } }
+    .blog-hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, var(--green-glow) 0%, transparent 70%); pointer-events: none; opacity: 0.3; }
+
+    .blog-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 640px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .blog-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .blog-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.2s, background 0.2s; text-decoration: none; }
+    .blog-card:hover { border-color: rgba(0,220,130,0.25); background: rgba(0,220,130,0.02); }
+
+    .blog-card-tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; width: fit-content; }
+    .blog-card-tag.green { background: var(--green-dim); color: var(--green); }
+    .blog-card-tag.red { background: rgba(239,68,68,0.08); color: #ef4444; }
+    .blog-card-tag.blue { background: rgba(59,130,246,0.08); color: #3b82f6; }
+
+    .blog-card h2 { font-size: 17px; font-weight: 700; color: #fff; line-height: 1.35; letter-spacing: -0.01em; }
+    .blog-card p { font-size: 14px; color: var(--text-2); line-height: 1.6; flex: 1; }
+    .blog-card-meta { font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 8px; }
+
+    .newsletter-box { background: rgba(0,220,130,0.03); border: 1px solid rgba(0,220,130,0.12); border-radius: 16px; padding: 40px 32px; text-align: center; max-width: 640px; margin: 0 auto; }
+    .newsletter-box h3 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .newsletter-box > p { font-size: 14px; color: var(--text-2); margin-bottom: 20px; max-width: 420px; margin-left: auto; margin-right: auto; }
+    .newsletter-form { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px; }
+    .newsletter-form input[type="email"] { flex: 1; min-width: 220px; max-width: 320px; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; }
+    .newsletter-form input[type="email"]:focus { outline: none; border-color: var(--green); }
+    .newsletter-form input[type="email"]::placeholder { color: var(--text-3); }
+    .newsletter-fine { font-size: 12px; color: var(--text-3); }
+
+    .tools-grid { display: grid; grid-template-columns: 1fr; gap: 16px; max-width: 640px; margin: 0 auto; }
+    @media (min-width: 640px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-decoration: none; transition: border-color 0.2s; }
+    .tool-card:hover { border-color: rgba(0,220,130,0.2); }
+    .tool-card-icon { font-size: 28px; margin-bottom: 8px; }
+    .tool-card h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .tool-card p { font-size: 13px; color: var(--text-3); }
+  </style>
 </head>
 <body>
 
   <a href="#blog-posts" class="skip-link">Skip to articles</a>
 
-  <!-- Header -->
+  <!-- Header (matches index.html) -->
   <header class="header">
-    <div class="container header-inner">
+    <div class="header-inner">
       <a href="index.html" class="logo">
-        <div class="logo-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-          </svg>
-        </div>
+        <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
         The Call <span>Taker</span>
       </a>
-
       <nav class="nav">
         <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="index.html#pricing">Pricing</a>
         <a href="demo.html">Demo</a>
-        <a href="audit.html">Free Audit</a>
         <a href="blog.html" class="active">Blog</a>
       </nav>
-
       <a href="demo.html" class="header-cta">Book a Demo</a>
-
-      <button class="menu-toggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </header>
 
   <!-- Mobile Nav -->
   <nav class="mobile-nav">
     <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="index.html#pricing">Pricing</a>
     <a href="demo.html">Demo</a>
-    <a href="audit.html">Free Audit</a>
     <a href="blog.html" class="active">Blog</a>
     <a href="demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero" style="padding-bottom: 40px;">
-    <div class="hero-glow hero-glow-green"></div>
-    <div class="container text-center">
+  <!-- Blog Hero -->
+  <section class="blog-hero">
+    <div class="wrap" style="position: relative; z-index: 1;">
       <div class="reveal">
         <span class="section-label">The Call Taker Blog</span>
-        <h1 class="section-title" style="font-size: clamp(2.5rem, 5vw, 3.5rem); max-width: 720px; margin-left: auto; margin-right: auto;">
-          HVAC Business Growth Tips
-        </h1>
-        <p class="section-subtitle mx-auto" style="max-width: 600px; margin-top: 16px; text-align: center;">
-          Practical advice on missed calls, AI technology, and growing a more profitable HVAC operation.
+        <h1 class="section-title" style="max-width: 720px; margin: 0 auto 16px;">Grow Your Business. Answer Every Call.</h1>
+        <p class="section-desc" style="max-width: 560px; margin: 0 auto; text-align: center;">
+          Practical advice on missed calls, AI technology, and running a more profitable service business.
         </p>
       </div>
     </div>
@@ -95,31 +121,63 @@
 
   <!-- Blog Posts Grid -->
   <section class="section" id="blog-posts" style="padding-top: 0;">
-    <div class="container">
-      <div class="grid-2" style="gap: 32px;">
+    <div class="wrap">
+      <div class="blog-grid">
 
-        <!-- Post 1: Missed Call Cost -->
-        <a href="blog-missed-call-cost.html" class="card reveal" style="text-decoration: none; transition: var(--transition); border-color: transparent;" onmouseover="this.style.borderColor='rgba(16,185,129,0.2)'" onmouseout="this.style.borderColor='transparent'">
-          <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15); border-radius: 9999px; padding: 4px 12px; font-size: 0.75rem; font-weight: 600; color: var(--red-400); margin-bottom: 16px;">
-            Revenue Loss
+        <!-- Featured: Receptionist Cost vs AI -->
+        <a href="blog/receptionist-cost-vs-ai-2026.html" class="blog-card reveal">
+          <span class="blog-card-tag red">Revenue Loss</span>
+          <h2>Hiring a Receptionist in 2026: Real Costs vs AI Alternatives</h2>
+          <p>The true cost goes far beyond salary. Wages, benefits, training, turnover -- the real number is $82K/year. Compare that to $97/mo.</p>
+          <div class="blog-card-meta">
+            <span>March 2026</span>
+            <span>&middot;</span>
+            <span>12 min read</span>
           </div>
-          <h2 class="card-title" style="font-size: 1.375rem; line-height: 1.3; margin-bottom: 12px;">How Much Are Missed Calls Really Costing Your HVAC Business in 2026?</h2>
-          <p class="card-text" style="margin-bottom: 16px;">The math is brutal. Missing just 10% of calls can cost $35,700/year. At 40%, you're looking at $142,800. Here's the full breakdown.</p>
-          <div style="display: flex; align-items: center; gap: 12px; font-size: 0.8125rem; color: var(--text-muted);">
+        </a>
+
+        <!-- Why Businesses Can't Find Receptionists -->
+        <a href="blog/why-businesses-cant-find-receptionists.html" class="blog-card reveal reveal-delay-1">
+          <span class="blog-card-tag blue">Hiring Crisis</span>
+          <h2>Why Small Businesses Can't Find Good Receptionists Anymore</h2>
+          <p>Labor shortages, wage competition, and generational shifts have made hiring a reliable receptionist nearly impossible in 2026.</p>
+          <div class="blog-card-meta">
+            <span>March 2026</span>
+            <span>&middot;</span>
+            <span>10 min read</span>
+          </div>
+        </a>
+
+        <!-- AI vs Hiring -->
+        <a href="blog/ai-receptionist-vs-hiring.html" class="blog-card reveal reveal-delay-2">
+          <span class="blog-card-tag green">Comparison</span>
+          <h2>AI Receptionist vs Hiring: Which Makes More Sense?</h2>
+          <p>A side-by-side comparison with real numbers. Cost, availability, consistency, training, and scalability -- compared for small businesses.</p>
+          <div class="blog-card-meta">
+            <span>March 2026</span>
+            <span>&middot;</span>
+            <span>13 min read</span>
+          </div>
+        </a>
+
+        <!-- Missed Call Cost -->
+        <a href="blog-missed-call-cost.html" class="blog-card reveal">
+          <span class="blog-card-tag red">Revenue Loss</span>
+          <h2>How Much Are Missed Calls Really Costing Your HVAC Business in 2026?</h2>
+          <p>The math is brutal. Missing just 10% of calls can cost $35,700/year. At 40%, you are looking at $142,800.</p>
+          <div class="blog-card-meta">
             <span>February 2026</span>
             <span>&middot;</span>
             <span>8 min read</span>
           </div>
         </a>
 
-        <!-- Post 2: AI vs Answering Services -->
-        <a href="blog-ai-vs-answering.html" class="card reveal reveal-delay-1" style="text-decoration: none; transition: var(--transition); border-color: transparent;" onmouseover="this.style.borderColor='rgba(16,185,129,0.2)'" onmouseout="this.style.borderColor='transparent'">
-          <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.15); border-radius: 9999px; padding: 4px 12px; font-size: 0.75rem; font-weight: 600; color: var(--green-400); margin-bottom: 16px;">
-            Comparison
-          </div>
-          <h2 class="card-title" style="font-size: 1.375rem; line-height: 1.3; margin-bottom: 12px;">AI Receptionist vs Traditional Answering Services for HVAC: The Honest Comparison</h2>
-          <p class="card-text" style="margin-bottom: 16px;">Cost, quality, HVAC knowledge, appointment booking, consistency. We break down every factor so you can make the right call.</p>
-          <div style="display: flex; align-items: center; gap: 12px; font-size: 0.8125rem; color: var(--text-muted);">
+        <!-- AI vs Answering Services -->
+        <a href="blog-ai-vs-answering.html" class="blog-card reveal reveal-delay-1">
+          <span class="blog-card-tag green">Comparison</span>
+          <h2>AI Receptionist vs Traditional Answering Services: The Honest Comparison</h2>
+          <p>Cost, quality, HVAC knowledge, appointment booking, consistency. Every factor broken down so you can make the right call.</p>
+          <div class="blog-card-meta">
             <span>February 2026</span>
             <span>&middot;</span>
             <span>10 min read</span>
@@ -131,97 +189,96 @@
   </section>
 
   <!-- Newsletter Signup -->
-  <section class="section" style="padding-top: 0; padding-bottom: 40px;">
-    <div class="container">
-      <div class="card reveal mx-auto" style="max-width: 640px; background: rgba(16,185,129,0.03); border-color: rgba(16,185,129,0.15); text-align: center;">
-        <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.12); border-radius: 9999px; padding: 4px 14px; font-size: 0.75rem; font-weight: 600; color: var(--green-400); margin-bottom: 16px;">
-          Free Weekly Tips
-        </div>
-        <h3 style="font-size: 1.375rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">The HVAC Growth Report</h3>
-        <p style="font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 20px; max-width: 420px; margin-left: auto; margin-right: auto;">
-          One actionable growth tip every Tuesday. Join HVAC owners who are booking more jobs and making more money.
-        </p>
-        <form id="newsletter-form" style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px;">
-          <input type="email" id="newsletter-email" placeholder="Your business email" required style="flex: 1; min-width: 220px; max-width: 320px; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); color: var(--text-primary); font-size: 0.875rem; font-family: inherit;">
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="newsletter-box reveal">
+        <span class="section-label" style="margin-bottom: 12px; display: inline-block;">Free Weekly Tips</span>
+        <h3>The Service Business Growth Report</h3>
+        <p>One actionable growth tip every Tuesday. Join business owners who are booking more jobs and making more money.</p>
+        <form id="newsletter-form" class="newsletter-form">
+          <input type="email" id="newsletter-email" placeholder="Your business email" required>
           <button type="submit" class="btn btn-primary btn-md">Subscribe Free</button>
         </form>
-        <p style="font-size: 0.75rem; color: var(--text-muted);">3-minute read. No spam. Unsubscribe anytime.</p>
+        <p class="newsletter-fine">3-minute read. No spam. Unsubscribe anytime.</p>
       </div>
     </div>
   </section>
 
   <!-- Free Tools -->
-  <section class="section" style="padding-top: 0; padding-bottom: 40px;">
-    <div class="container">
-      <div class="text-center reveal" style="margin-bottom: 24px;">
-        <h2 style="font-size: 1.375rem; font-weight: 700; color: var(--text-primary);">Free Tools for HVAC Owners</h2>
+  <section class="section" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="reveal" style="text-align: center; margin-bottom: 24px;">
+        <h2 style="font-size: 20px; font-weight: 700; color: #fff;">Free Tools for Service Business Owners</h2>
       </div>
-      <div class="grid-2 reveal" style="max-width: 640px; margin: 0 auto; gap: 16px;">
-        <a href="calculator.html" class="card" style="text-decoration: none; transition: var(--transition); border-color: transparent; padding: 24px;" onmouseover="this.style.borderColor='rgba(16,185,129,0.2)'" onmouseout="this.style.borderColor='transparent'">
-          <div style="font-size: 1.75rem; margin-bottom: 8px;">&#128200;</div>
-          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Missed Call Calculator</h3>
-          <p style="font-size: 0.8125rem; color: var(--text-muted);">See how much revenue you're losing. Takes 30 seconds.</p>
+      <div class="tools-grid reveal">
+        <a href="calculator.html" class="tool-card">
+          <div class="tool-card-icon">&#128200;</div>
+          <h3>Missed Call Calculator</h3>
+          <p>See how much revenue you are losing. Takes 30 seconds.</p>
         </a>
-        <a href="compare.html" class="card" style="text-decoration: none; transition: var(--transition); border-color: transparent; padding: 24px;" onmouseover="this.style.borderColor='rgba(16,185,129,0.2)'" onmouseout="this.style.borderColor='transparent'">
-          <div style="font-size: 1.75rem; margin-bottom: 8px;">&#9878;&#65039;</div>
-          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Compare Options</h3>
-          <p style="font-size: 0.8125rem; color: var(--text-muted);">AI vs answering services vs voicemail vs hiring.</p>
+        <a href="compare.html" class="tool-card">
+          <div class="tool-card-icon">&#9878;&#65039;</div>
+          <h3>Compare Options</h3>
+          <p>AI vs answering services vs voicemail vs hiring.</p>
         </a>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="section cta-section" style="padding-top: 60px;">
-    <div class="cta-glow"></div>
-    <div class="container" style="position: relative; z-index: 1;">
-      <div class="text-center reveal">
-        <h2 class="section-title" style="font-size: clamp(2rem, 4vw, 3rem); max-width: 700px; margin-left: auto; margin-right: auto;">Want to see what your customers hear when they call?</h2>
-        <p class="section-subtitle mx-auto" style="margin-bottom: 40px; text-align: center;">
-          Get a free missed call audit. We'll call your business after hours and send you the recording.
+  <section class="section" style="padding-top: 40px;">
+    <div class="wrap">
+      <div class="reveal" style="text-align: center;">
+        <h2 class="section-title" style="max-width: 700px; margin: 0 auto 16px;">Want to see what your customers hear when they call?</h2>
+        <p class="section-desc" style="margin: 0 auto 36px; text-align: center;">
+          Get a free missed call audit. We will call your business after hours and send you the recording.
         </p>
-        <a href="audit.html" class="btn btn-primary btn-lg">
-          Get My Free Audit
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <a href="demo.html" class="btn btn-primary btn-lg">
+          Book a Demo
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
-        <p class="text-sm" style="color: var(--text-muted); margin-top: 20px;">Free. No credit card. Results in 48 hours.</p>
+        <p style="color: var(--text-3); margin-top: 16px; font-size: 13px;">Free. No credit card. Results in 48 hours.</p>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer (matches index.html) -->
   <footer class="footer">
-    <div class="container">
+    <div class="wrap">
       <div class="footer-inner">
         <div class="footer-brand">
           <a href="index.html" class="logo">
-            <div class="logo-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
-            </div>
+            <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
             The Call <span>Taker</span>
           </a>
-          <p>AI receptionist that answers every call for HVAC companies. Never lose a job to voicemail again.</p>
+          <p>AI receptionist for service businesses.</p>
         </div>
         <div class="footer-links">
           <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
           <a href="demo.html">Demo</a>
-          <a href="audit.html">Free Audit</a>
           <a href="calculator.html">Calculator</a>
-          <a href="compare.html">Compare</a>
-          <a href="blog.html">Blog</a>
-          <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="mailto:thecalltakerai@gmail.com">Contact</a>
+          <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-        <span><a href="privacy.html" style="color: var(--text-muted); transition: var(--transition);">Privacy</a> &middot; <a href="terms.html" style="color: var(--text-muted); transition: var(--transition);">Terms</a> &middot; Brentwood, TN</span>
+        <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:thecalltakerai@gmail.com" style="color:var(--text-3);">thecalltakerai@gmail.com</a></span>
       </div>
     </div>
   </footer>
 
+  <!-- Mobile Bar -->
+  <div class="sticky-mobile-bar">
+    <a href="tel:+16157845747">Call Demo Line</a>
+    <a href="demo.html" style="background: transparent; color: var(--text-2);">Book a Demo</a>
+  </div>
+
   <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script>
     (function() {
       var form = document.getElementById('newsletter-form');
@@ -242,7 +299,7 @@
           });
           if (res.ok) {
             try { fetch('https://ntfy.sh/tct-xK9mW4vR7pLd', { method: 'POST', headers: { 'Title': 'Newsletter Subscriber!', 'Tags': 'newspaper' }, body: 'New newsletter sub: ' + email }); } catch(err) {}
-            form.parentElement.innerHTML = '<div style="padding:16px 0;"><p style="font-size:1.125rem;font-weight:700;color:var(--green-400);margin-bottom:4px;">You\'re in!</p><p style="font-size:0.875rem;color:var(--text-muted);">Your first HVAC Growth Report arrives next Tuesday.</p></div>';
+            form.parentElement.innerHTML = '<div style="padding:16px 0;"><p style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:4px;">You\'re in!</p><p style="font-size:13px;color:var(--text-3);">Your first Growth Report arrives next Tuesday.</p></div>';
           }
         } catch(err) { btn.textContent = 'Subscribe Free'; btn.disabled = false; }
       });
