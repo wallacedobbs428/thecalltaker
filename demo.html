@@ -11,23 +11,23 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hear Jessica Answer for YOUR Business &mdash; The Call Taker</title>
+  <title>Hear GIDEON Answer for YOUR Business &mdash; The Call Taker</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="description" content="Type your business name, pick your industry, and hear Jessica — our AI receptionist — answer a live call for YOUR business. Call the demo line now.">
+  <meta name="description" content="Type your business name, pick your industry, and hear GIDEON — our AI receptionist — answer a live call for YOUR business. Call the demo line now.">
   <meta name="robots" content="index, follow">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Hear Jessica Answer for YOUR Business &mdash; The Call Taker">
+  <meta property="og:title" content="Hear GIDEON Answer for YOUR Business &mdash; The Call Taker">
   <meta property="og:description" content="Type your business name, pick your industry, and hear our AI receptionist answer a live call. Try it free for 14 days.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://thecalltaker.com/demo">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Hear Jessica Answer for YOUR Business &mdash; The Call Taker">
+  <meta name="twitter:title" content="Hear GIDEON Answer for YOUR Business &mdash; The Call Taker">
   <meta name="twitter:description" content="Type your business name, pick your industry, and hear our AI receptionist answer a live call. Try it free for 14 days.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,10 +39,10 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0a0a;
-      --bg-card: #111111;
+      --bg: #000;
+      --bg-card: #000111;
       --bg-card-hover: #161616;
-      --green: #22c55e;
+      --green: #00dc82;
       --green-dim: rgba(34,197,94,0.12);
       --green-glow: rgba(34,197,94,0.25);
       --blue: #3b82f6;
@@ -138,7 +138,7 @@
       border-radius: 8px;
       transition: background 0.2s;
     }
-    .header-cta:hover { background: #16a34a; }
+    .header-cta:hover { background: #00b86e; }
 
     @media (max-width: 768px) {
       .nav, .header-cta { display: none; }
@@ -268,7 +268,7 @@
     }
 
     .btn-demo:hover {
-      background: #16a34a;
+      background: #00b86e;
       box-shadow: 0 0 30px var(--green-glow);
     }
 
@@ -438,7 +438,7 @@
     .phone-mockup {
       width: 280px;
       margin: 0 auto 32px;
-      background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
+      background: linear-gradient(145deg, #000, #0f0f1a);
       border: 2px solid rgba(59,130,246,0.3);
       border-radius: 36px;
       padding: 16px 12px;
@@ -635,7 +635,7 @@
       margin-top: 2px;
     }
 
-    .transcript-speaker.jessica {
+    .transcript-speaker.GIDEON {
       background: var(--green-dim);
       color: var(--green);
       border: 1px solid rgba(34,197,94,0.25);
@@ -657,7 +657,7 @@
       margin-bottom: 4px;
     }
 
-    .transcript-name.jessica { color: var(--green); }
+    .transcript-name.GIDEON { color: var(--green); }
     .transcript-name.caller { color: var(--blue); }
 
     .transcript-text {
@@ -724,7 +724,7 @@
     }
 
     .btn-trial:hover {
-      background: #16a34a;
+      background: #00b86e;
       box-shadow: 0 0 30px var(--green-glow);
       transform: translateY(-1px);
     }
@@ -801,7 +801,7 @@
       transition: background 0.2s;
     }
 
-    .text-me-form button:hover { background: #16a34a; }
+    .text-me-form button:hover { background: #00b86e; }
 
     .text-me-success {
       display: none;
@@ -905,10 +905,14 @@
     /* ===== UTILITIES ===== */
     .hidden { display: none !important; }
   </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <!-- HEADER -->
+<!-- === NAV === -->
+<!-- NAV -->
+<!-- === NAV === -->
 <header class="header">
   <div class="header-inner">
     <a href="index.html" class="logo">
@@ -916,14 +920,23 @@
       The Call <span>Taker</span>
     </a>
     <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="index.html#features">Features</a>
-      <a href="index.html#pricing">Pricing</a>
-      <a href="demo.html" class="active">Demo</a>
+      <a href="index.html" class="active">Home</a>
+      <a href="services.html">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="demo.html">Demo</a>
     </nav>
-    <a href="pay.html" class="header-cta">Start Free Trial</a>
+    <a href="demo.html" class="header-cta">Book a Demo</a>
+    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
+
+<nav class="mobile-nav">
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="#pricing">Pricing</a>
+  <a href="demo.html">Demo</a>
+  <a href="demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
+</nav>
 
 <!-- ===== HERO + FORM ===== -->
 <section class="hero-section">
@@ -932,8 +945,8 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       Live AI Demo
     </div>
-    <h1 class="hero-title">Hear Jessica answer<br>for YOUR business</h1>
-    <p class="hero-sub">Type your business name below. We'll show you exactly what your customers will hear when Jessica picks up.</p>
+    <h1 class="hero-title">Hear GIDEON answer<br>for YOUR business</h1>
+    <p class="hero-sub">Type your business name below. We'll show you exactly what your customers will hear when GIDEON picks up.</p>
 
     <div class="demo-form-card" id="demo-form">
       <div class="form-group">
@@ -960,7 +973,7 @@
       </div>
       <button class="btn-demo" id="btn-submit" type="button">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        Hear Jessica Answer for YOUR Business
+        Hear GIDEON Answer for YOUR Business
       </button>
     </div>
   </div>
@@ -973,7 +986,7 @@
     <!-- What is The Call Taker -->
     <div class="section-label">What is The Call Taker?</div>
     <h2 class="section-title">An AI receptionist that never misses a call</h2>
-    <p class="section-desc">Jessica answers your phone 24/7, books jobs, and sounds so real your customers won't know the difference.</p>
+    <p class="section-desc">GIDEON answers your phone 24/7, books jobs, and sounds so real your customers won't know the difference.</p>
 
     <div class="features-grid">
       <div class="feature-card">
@@ -981,7 +994,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </div>
         <h3>Answers Every Call</h3>
-        <p>24/7, 365 days a year. No voicemail, no missed revenue. Jessica picks up in under 2 seconds.</p>
+        <p>24/7, 365 days a year. No voicemail, no missed revenue. GIDEON picks up in under 2 seconds.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
@@ -995,7 +1008,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
         </div>
         <h3>Live in 24 Hours</h3>
-        <p>No hardware, no training, no hassle. Forward your calls and Jessica is answering for you by tomorrow.</p>
+        <p>No hardware, no training, no hassle. Forward your calls and GIDEON is answering for you by tomorrow.</p>
       </div>
     </div>
 
@@ -1049,7 +1062,7 @@
 <section class="demo-experience" id="demo-experience">
   <div class="wrap">
 
-    <div class="ready-label">Jessica is ready to answer for <span class="biz-name" id="demo-biz-name">Your Business</span></div>
+    <div class="ready-label">GIDEON is ready to answer for <span class="biz-name" id="demo-biz-name">Your Business</span></div>
 
     <!-- Phone Mockup -->
     <div class="phone-mockup">
@@ -1072,7 +1085,7 @@
 
     <!-- Call CTA -->
     <div class="call-cta">
-      <p>Call our demo line now to hear Jessica live:</p>
+      <p>Call our demo line now to hear GIDEON live:</p>
       <a href="tel:+16157845747" class="call-cta-number">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         (615) 784-5747
@@ -1084,10 +1097,10 @@
       <div class="transcript-title">Sample Conversation Preview</div>
 
       <div class="transcript-line">
-        <div class="transcript-speaker jessica">J</div>
+        <div class="transcript-speaker GIDEON">J</div>
         <div class="transcript-bubble">
-          <div class="transcript-name jessica">Jessica</div>
-          <div class="transcript-text" id="t-line-1">"Thank you for calling Johnson's Plumbing. This is Jessica. How can I help you today?"</div>
+          <div class="transcript-name GIDEON">GIDEON</div>
+          <div class="transcript-text" id="t-line-1">"Thank you for calling Johnson's Plumbing. This is GIDEON. How can I help you today?"</div>
         </div>
       </div>
 
@@ -1100,17 +1113,17 @@
       </div>
 
       <div class="transcript-line">
-        <div class="transcript-speaker jessica">J</div>
+        <div class="transcript-speaker GIDEON">J</div>
         <div class="transcript-bubble">
-          <div class="transcript-name jessica">Jessica</div>
+          <div class="transcript-name GIDEON">GIDEON</div>
           <div class="transcript-text">"I'd be happy to help with that. Let me get you scheduled right away. Can I get your name and address?"</div>
         </div>
       </div>
 
       <div class="transcript-line">
-        <div class="transcript-speaker jessica">J</div>
+        <div class="transcript-speaker GIDEON">J</div>
         <div class="transcript-bubble">
-          <div class="transcript-name jessica">Jessica</div>
+          <div class="transcript-name GIDEON">GIDEON</div>
           <div class="transcript-text">"Perfect. I've got you down. Someone from the team will be in touch shortly to confirm the time. Is there anything else I can help with?"</div>
         </div>
       </div>
@@ -1124,8 +1137,8 @@
 <section class="bottom-cta" id="bottom-cta">
   <div class="wrap">
     <div class="cta-box">
-      <h2 class="cta-title">Ready to put Jessica to work for <span class="biz-name" id="cta-biz-name">Your Business</span>?</h2>
-      <p class="cta-sub">Jessica can be answering your calls by tomorrow.</p>
+      <h2 class="cta-title">Ready to put GIDEON to work for <span class="biz-name" id="cta-biz-name">Your Business</span>?</h2>
+      <p class="cta-sub">GIDEON can be answering your calls by tomorrow.</p>
 
       <a href="pay.html" class="btn-trial">
         Start Free 14-Day Trial
@@ -1165,42 +1178,40 @@
 </section>
 
 <!-- FOOTER -->
+<!-- === FOOTER === -->
 <footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <a href="index.html" class="logo">
-        <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-        The Call <span>Taker</span>
-      </a>
-      <p>AI receptionist for service businesses.</p>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          The Call <span>Taker</span>
+        </a>
+        <p>AI receptionist for service businesses.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="demo.html">Demo</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
+        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="demo.html">Demo</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="mailto:thecalltakerai@gmail.com">Contact</a>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-    <span>Brentwood, TN &middot; <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a></span>
   </div>
 </footer>
-
 <!-- Mobile Sticky Bar -->
+<!-- MOBILE BAR -->
 <div class="sticky-mobile-bar">
-  <a href="tel:+16157845747">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    Call Demo
-  </a>
-  <a href="pay.html" style="border-left:1px solid var(--border);">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    Free Trial
-  </a>
-</div>
-
-<script defer src="website/tct-tracking.js"></script>
+  <a href="tel:+16157845747"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
+  <a href="demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
+</div><script defer src="website/tct-tracking.js"></script>
 
 <script>
 (function() {
@@ -1276,7 +1287,7 @@
     ctaBizName.textContent  = bizName;
 
     // Transcript lines
-    tLine1.textContent = '"Thank you for calling ' + bizName + '. This is Jessica. How can I help you today?"';
+    tLine1.textContent = '"Thank you for calling ' + bizName + '. This is GIDEON. How can I help you today?"';
     tLine2.textContent = '"I need to schedule a ' + data.service + '..."';
 
     // Hide pre-submit, show demo experience + CTA
@@ -1340,5 +1351,50 @@
 })();
 </script>
 
+<script src="script.js"></script>
+
+<!-- === FLOATING WIDGET === -->
+<!-- FLOATING CALLBACK WIDGET -->
+<div class="float-cb" id="float-widget">
+  <div class="float-cb-panel" id="float-panel">
+    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
+    <p style="font-size: 12px; color: var(--text-3); margin-bottom: 14px;">Our AI will call you in under 30 seconds.</p>
+    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 10px;">
+    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Me Now</button>
+    <div id="float-success" style="display: none; text-align: center; padding: 16px 0;">
+      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
+      <p style="font-size: 12px; color: var(--text-2);">Pick up your phone.</p>
+    </div>
+  </div>
+  <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </button>
+</div>
+
+<!-- EXIT INTENT POPUP -->
+<div class="exit-overlay" id="exit-popup">
+  <div class="exit-modal">
+    <button class="exit-close" onclick="closeExitPopup()">&times;</button>
+    <div style="text-align: center;">
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;">Before you go</div>
+      <h3 style="font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px;">Get a free missed call audit</h3>
+      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">We'll call your business after hours and tell you exactly what your customers are hearing. Free. No strings.</p>
+      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px;">
+      <button class="callback-btn" onclick="requestExitCallback()">Get My Free Audit</button>
+      <div id="exit-success" style="display: none; padding: 20px 0;">
+        <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
+        <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
+      </div>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16157845747" style="color: var(--green); font-weight: 600;">(615) 784-5747</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE BAR -->
+<div class="sticky-mobile-bar">
+  <a href="tel:+16157845747"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
+  <a href="demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
 </body>
 </html>

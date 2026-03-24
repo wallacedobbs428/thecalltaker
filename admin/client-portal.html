@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17970510102');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="yD21d967IvWfANFmEZBw55ZZUWCa11fI92Mr-3wXk3s" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <title>Client View | The Call Taker</title>
+  <meta name="description" content="Individual client management view.">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    .admin-gate{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center}
+    .admin-gate-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px 40px;text-align:center;max-width:380px;width:90%}
+    .admin-gate-box h2{color:#fff;font-size:20px;font-weight:700;margin-bottom:8px}
+    .admin-gate-box p{color:var(--text-3);font-size:13px;margin-bottom:24px}
+    .admin-gate-box input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:16px;text-align:center;letter-spacing:0.1em}
+    .admin-gate-box input:focus{outline:none;border-color:#00dc82}
+    .admin-gate-box button{width:100%;padding:12px;background:#00dc82;color:#000;font-size:14px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit}
+    .admin-gate-box button:hover{background:#00f090}
+    .admin-wrap{display:none}
+    .admin-wrap.unlocked{display:flex;min-height:100vh}
+    .admin-sidebar{width:240px;background:rgba(255,255,255,0.02);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:52px;bottom:0;overflow-y:auto}
+    .admin-sidebar .sidebar-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;padding:0 20px;margin-bottom:12px}
+    .admin-sidebar a{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-3);transition:all 0.15s}
+    .admin-sidebar a:hover,.admin-sidebar a.active{color:#fff;background:rgba(255,255,255,0.04)}
+    .admin-sidebar a.active{border-left:2px solid #00dc82}
+    .admin-sidebar .sidebar-divider{height:1px;background:var(--border);margin:16px 0}
+    .admin-main{flex:1;margin-left:240px;padding:80px 32px 48px}
+    .client-header{display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap}
+    .client-avatar{width:48px;height:48px;background:rgba(0,220,130,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#00dc82}
+    .client-header h1{font-size:24px;font-weight:700;color:#fff}
+    .client-header .badge{margin-left:8px}
+    .badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600}
+    .badge-active{background:rgba(0,220,130,0.15);color:#00dc82}
+    .section-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px}
+    .section-card h3{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;margin-bottom:16px}
+    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+    .mini-stat{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+    .mini-stat .val{font-size:24px;font-weight:800;color:#00dc82}
+    .mini-stat .lbl{font-size:11px;color:var(--text-3);margin-top:4px}
+    .form-group{margin-bottom:16px}
+    .form-group label{display:block;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:6px}
+    .form-group textarea,.form-group input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit}
+    .form-group textarea{min-height:80px;resize:vertical}
+    .form-group textarea:focus,.form-group input:focus{outline:none;border-color:#00dc82}
+    .calls-table{width:100%;border-collapse:collapse}
+    .calls-table th{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+    .calls-table td{font-size:13px;color:var(--text-2);padding:10px 12px;border-bottom:1px solid var(--border)}
+    .action-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+    .action-btns button,.action-btns a{padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+    .btn-g{background:#00dc82;color:#000;border:none}
+    .btn-g:hover{background:#00f090}
+    .btn-o{background:var(--surface);color:#fff;border:1px solid var(--border)}
+    .btn-o:hover{background:var(--surface-hover)}
+    .btn-r{background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2)}
+    .empty-msg{color:var(--text-3);font-size:13px;padding:20px 0;text-align:center}
+    @media(max-width:768px){.admin-sidebar{display:none}.admin-main{margin-left:0;padding:80px 16px 32px}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        The Call <span>Taker</span>
+      </a>
+      <nav class="nav"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../index.html#pricing">Pricing</a><a href="../demo.html">Demo</a></nav>
+      <a href="../demo.html" class="header-cta">Book a Demo</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <nav class="mobile-nav"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../index.html#pricing">Pricing</a><a href="../demo.html">Demo</a><a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a></nav>
+
+  <div class="admin-gate" id="adminGate">
+    <div class="admin-gate-box">
+      <h2>Admin Access</h2>
+      <p>Enter your admin password to continue.</p>
+      <input type="password" id="adminPass" placeholder="Password" onkeydown="if(event.key==='Enter')checkAdminPass()">
+      <button onclick="checkAdminPass()">Unlock</button>
+    </div>
+  </div>
+
+  <div class="admin-wrap" id="adminContent">
+    <aside class="admin-sidebar">
+      <div class="sidebar-label">Admin</div>
+      <a href="index.html">Dashboard</a>
+      <a href="clients.html">Clients</a>
+      <a href="onboarding.html">Onboarding</a>
+      <a href="client-portal.html" class="active">Client View</a>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">Client Portals</div>
+      <a href="../client/index.html">Client Login</a>
+      <a href="../client/dashboard.html">Client Dashboard</a>
+      <a href="../client/onboarding.html">Client Onboarding</a>
+    </aside>
+    <main class="admin-main">
+      <div class="client-header">
+        <div class="client-avatar" id="clientAvatar">?</div>
+        <div>
+          <h1 id="clientName">Select a Client</h1>
+          <span class="badge badge-active" id="clientBadge" style="display:none">Active</span>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="mini-stat"><div class="val">0</div><div class="lbl">Calls This Month</div></div>
+        <div class="mini-stat"><div class="val">0</div><div class="lbl">Transferred</div></div>
+        <div class="mini-stat"><div class="val">0</div><div class="lbl">Messages Taken</div></div>
+        <div class="mini-stat"><div class="val">0s</div><div class="lbl">Avg Duration</div></div>
+      </div>
+
+      <div class="section-card">
+        <h3>Greeting Script</h3>
+        <div class="form-group"><textarea id="greetingScript" placeholder="No greeting script configured yet."></textarea></div>
+        <button class="btn-g" onclick="saveGreeting()">Save Greeting</button>
+      </div>
+
+      <div class="section-card">
+        <h3>Recent Calls</h3>
+        <table class="calls-table">
+          <thead><tr><th>Date</th><th>Caller</th><th>Duration</th><th>Outcome</th></tr></thead>
+          <tbody id="callsBody">
+            <tr><td colspan="4"><div class="empty-msg">No call records yet. Calls will appear here once the AI is live.</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-card">
+        <h3>Internal Notes</h3>
+        <div class="form-group"><textarea id="clientNotes" placeholder="Add internal notes about this client..."></textarea></div>
+        <button class="btn-g" onclick="saveNotes()">Save Notes</button>
+      </div>
+
+      <div class="action-btns">
+        <button class="btn-g" onclick="alert('Opening GHL contact...')">Open in GHL</button>
+        <button class="btn-o" onclick="alert('Sending test call...')">Send Test Call</button>
+        <a href="clients.html" class="btn-o">Back to Clients</a>
+        <button class="btn-r" onclick="if(confirm('Deactivate this client?'))alert('Client deactivated.')">Deactivate</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="../index.html" class="logo"><div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>The Call <span>Taker</span></a>
+          <p>AI receptionist for service businesses.</p>
+        </div>
+        <div class="footer-links"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../demo.html">Demo</a><a href="../calculator.html">Calculator</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Service</a><a href="mailto:wallacemdobbs@icloud.com">Contact</a><a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a></div>
+      </div>
+      <div class="footer-bottom"><span>&copy; 2026 The Call Taker. All rights reserved.</span><span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span></div>
+    </div>
+  </footer>
+
+  <div class="float-cb" id="float-widget">
+    <div class="float-cb-panel" id="float-panel">
+      <h4 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">Want us to call you?</h4>
+      <p style="font-size:12px;color:var(--text-3);margin-bottom:14px;">Our AI will call you in under 30 seconds.</p>
+      <input type="tel" id="float-phone" placeholder="Your phone number" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:8px;">
+      <input type="text" id="float-company" placeholder="Company name" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:10px;">
+      <button class="callback-btn" onclick="requestFloatCallback()" style="font-size:14px;padding:12px;">Call Me Now</button>
+      <div id="float-success" style="display:none;text-align:center;padding:16px 0;"><p style="font-size:14px;font-weight:700;color:var(--green);">Calling you now!</p><p style="font-size:12px;color:var(--text-2);">Pick up your phone.</p></div>
+    </div>
+    <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+  </div>
+
+  <script src="../script.js"></script>
+  <script>
+    function checkAdminPass(){var p=document.getElementById('adminPass').value;if(p==='TCT2026admin'){document.getElementById('adminGate').style.display='none';document.getElementById('adminContent').classList.add('unlocked');sessionStorage.setItem('tct_admin','1');}else{document.getElementById('adminPass').value='';document.getElementById('adminPass').style.borderColor='#ef4444';}}
+    if(sessionStorage.getItem('tct_admin')==='1'){document.getElementById('adminGate').style.display='none';document.getElementById('adminContent').classList.add('unlocked');}
+
+    var params=new URLSearchParams(window.location.search);
+    var clientId=params.get('client');
+    if(clientId){
+      var clients=JSON.parse(localStorage.getItem('tct_clients')||'[]');
+      var c=clients.find(function(x){return x.id===clientId;});
+      if(c){
+        document.getElementById('clientName').textContent=c.business||c.name;
+        document.getElementById('clientAvatar').textContent=(c.business||c.name).charAt(0).toUpperCase();
+        document.getElementById('clientBadge').style.display='inline-block';
+        if(c.greeting)document.getElementById('greetingScript').value=c.greeting;
+      }
+    }
+    function saveGreeting(){alert('Greeting saved.');}
+    function saveNotes(){alert('Notes saved.');}
+  </script>
+</body>
+</html>

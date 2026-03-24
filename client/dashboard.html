@@ -1,254 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17970510102');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Dashboard — The Call Taker Client Portal</title>
+  <meta name="google-site-verification" content="yD21d967IvWfANFmEZBw55ZZUWCa11fI92Mr-3wXk3s" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <title>Dashboard | The Call Taker</title>
+  <meta name="description" content="Your Call Taker client dashboard.">
+  <meta name="robots" content="noindex, nofollow">
   <style>
-    .dash-page { padding: 100px 0 60px; }
-
-    /* GIDEON Live Banner */
-    .gideon-live { display: flex; align-items: center; gap: 14px; padding: 20px 24px; background: rgba(0,220,130,0.04); border: 1px solid rgba(0,220,130,0.15); border-radius: 12px; margin-bottom: 32px; }
-    .gideon-live-pulse { width: 14px; height: 14px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green-glow), 0 0 24px var(--green-glow); animation: livePulse 2s ease-in-out infinite; flex-shrink: 0; }
-    @keyframes livePulse { 0%, 100% { box-shadow: 0 0 8px var(--green-glow); } 50% { box-shadow: 0 0 24px var(--green), 0 0 48px var(--green-glow); } }
-    .gideon-live-text { font-size: 16px; font-weight: 700; color: var(--green); }
-    .gideon-live-sub { font-size: 13px; color: var(--text-3); margin-top: 2px; }
-
-    /* Stats Grid */
-    .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 32px; }
-    @media (max-width: 640px) { .dash-stats { grid-template-columns: 1fr; } }
-    .dash-stat { background: #000; padding: 28px 24px; text-align: center; }
-    .dash-stat-value { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -0.03em; }
-    .dash-stat-label { font-size: 12px; color: var(--text-3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-
-    /* Content Grid */
-    .dash-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 32px; }
-    @media (min-width: 768px) { .dash-grid { grid-template-columns: 1fr 1fr; } }
-
-    /* Cards */
-    .dash-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; }
-    .dash-card h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .dash-card .card-sub { font-size: 13px; color: var(--text-3); margin-bottom: 20px; }
-
-    /* Plan Card */
-    .plan-current { display: flex; align-items: center; justify-content: space-between; padding: 16px; background: rgba(0,220,130,0.03); border: 1px solid rgba(0,220,130,0.12); border-radius: 10px; margin-bottom: 16px; }
-    .plan-current-name { font-size: 18px; font-weight: 700; color: #fff; }
-    .plan-current-price { font-size: 18px; font-weight: 800; color: var(--green); }
-
-    /* Greeting Preview */
-    .greeting-preview { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 16px; font-size: 14px; color: var(--text-2); line-height: 1.6; font-style: italic; margin-bottom: 16px; }
-
-    /* Hours Display */
-    .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .hours-item { padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; }
-    .hours-day { font-size: 12px; font-weight: 600; color: var(--text-3); text-transform: uppercase; }
-    .hours-time { font-size: 14px; color: #fff; margin-top: 2px; }
-
-    /* Request Form */
-    .request-form { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; margin-bottom: 40px; }
-    .request-form h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .request-form .card-sub { font-size: 13px; color: var(--text-3); margin-bottom: 20px; }
-    .request-success { display: none; text-align: center; padding: 20px 0; }
-    .request-success p { font-size: 15px; font-weight: 600; color: var(--green); }
-
-    /* Logout */
-    .dash-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-    .dash-topbar h1 { font-size: clamp(24px, 4vw, 36px); font-weight: 700; color: #fff; letter-spacing: -0.03em; }
-    .logout-btn { font-size: 13px; color: var(--text-3); cursor: pointer; transition: 0.15s; }
-    .logout-btn:hover { color: #fff; }
+    .dash-wrap{max-width:900px;margin:0 auto;padding:100px 24px 60px}
+    .gideon-bar{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:32px}
+    .gideon-pulse{width:12px;height:12px;background:#00dc82;border-radius:50%;animation:gPulse 2s ease-in-out infinite;box-shadow:0 0 8px rgba(0,220,130,0.5)}
+    @keyframes gPulse{0%,100%{box-shadow:0 0 8px rgba(0,220,130,0.5)}50%{box-shadow:0 0 20px rgba(0,220,130,0.8),0 0 40px rgba(0,220,130,0.3)}}
+    .gideon-bar .g-text{font-size:14px;font-weight:700;color:#fff;letter-spacing:0.05em}
+    .gideon-bar .g-sub{font-size:12px;color:var(--text-3)}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+    .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px}
+    .stat-card .s-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
+    .stat-card .s-value{font-size:32px;font-weight:800;color:#00dc82;letter-spacing:-0.02em}
+    .stat-card .s-sub{font-size:12px;color:var(--text-3);margin-top:4px}
+    .section-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px}
+    .section-card h3{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;margin-bottom:16px}
+    .plan-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .plan-row .plan-name{font-size:18px;font-weight:700;color:#fff}
+    .plan-row .plan-price{font-size:14px;color:var(--text-2)}
+    .upgrade-btn{padding:10px 20px;background:#00dc82;color:#000;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit}
+    .upgrade-btn:hover{background:#00f090}
+    .form-group{margin-bottom:16px}
+    .form-group label{display:block;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:6px}
+    .form-group textarea,.form-group input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit}
+    .form-group textarea{min-height:80px;resize:vertical}
+    .form-group textarea:focus,.form-group input:focus{outline:none;border-color:#00dc82}
+    .save-btn{padding:10px 20px;background:#00dc82;color:#000;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit}
+    .save-btn:hover{background:#00f090}
+    .hours-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:16px}
+    .hour-item{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:10px 12px;text-align:center}
+    .hour-item .day{font-size:12px;font-weight:600;color:#fff;margin-bottom:2px}
+    .hour-item .time{font-size:11px;color:var(--text-3)}
+    .ghost-btn{padding:10px 20px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+    .ghost-btn:hover{background:var(--surface-hover)}
+    .billing-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+    .billing-row:last-child{border-bottom:none}
+    .billing-row .b-label{color:var(--text-3)}
+    .billing-row .b-value{color:#fff;font-weight:600}
+    .signout-link{display:block;text-align:center;margin-top:32px;font-size:13px;color:var(--text-3);cursor:pointer}
+    .signout-link:hover{color:#ef4444}
   </style>
 </head>
 <body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>The Call <span>Taker</span></a>
+      <nav class="nav"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../index.html#pricing">Pricing</a><a href="../demo.html">Demo</a></nav>
+      <a href="../demo.html" class="header-cta">Book a Demo</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <nav class="mobile-nav"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../index.html#pricing">Pricing</a><a href="../demo.html">Demo</a><a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a></nav>
 
-<header class="header">
-  <div class="header-inner">
-    <a href="../index.html" class="logo">
-      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-      The Call <span>Taker</span>
-    </a>
-    <nav class="nav">
-      <a href="../index.html">Home</a>
-      <a href="../services.html">Services</a>
-      <a href="../demo.html">Demo</a>
-    </nav>
-    <a href="../demo.html" class="header-cta">Book a Demo</a>
-    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-  </div>
-</header>
-
-<nav class="mobile-nav">
-  <a href="../index.html">Home</a>
-  <a href="../services.html">Services</a>
-  <a href="../demo.html">Demo</a>
-  <a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
-</nav>
-
-<main class="dash-page">
-  <div class="wrap">
-    <!-- Top Bar -->
-    <div class="dash-topbar">
-      <h1>Your Dashboard</h1>
-      <button class="logout-btn" onclick="clientLogout()">Sign Out</button>
+  <div class="dash-wrap">
+    <div class="gideon-bar">
+      <div class="gideon-pulse"></div>
+      <div><div class="g-text">GIDEON IS LIVE</div><div class="g-sub">Your AI receptionist is answering calls 24/7</div></div>
     </div>
 
-    <!-- GIDEON Live -->
-    <div class="gideon-live reveal">
-      <div class="gideon-live-pulse"></div>
-      <div>
-        <div class="gideon-live-text">GIDEON IS LIVE</div>
-        <div class="gideon-live-sub">Your AI receptionist is answering calls right now.</div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="s-label">Calls Answered</div><div class="s-value">0</div><div class="s-sub">This month</div></div>
+      <div class="stat-card"><div class="s-label">Calls Transferred</div><div class="s-value">0</div><div class="s-sub">To your team</div></div>
+      <div class="stat-card"><div class="s-label">Messages Taken</div><div class="s-value">0</div><div class="s-sub">Voicemail replacements</div></div>
+    </div>
+
+    <div class="section-card">
+      <h3>Your Plan</h3>
+      <div class="plan-row">
+        <div><div class="plan-name">Starter Plan</div><div class="plan-price">$497/mo &middot; 24/7 AI Receptionist</div></div>
+        <button class="upgrade-btn" onclick="alert('Contact us at thecalltakerai@gmail.com to upgrade.')">Upgrade Plan</button>
       </div>
     </div>
 
-    <!-- Stats -->
-    <div class="dash-stats reveal">
-      <div class="dash-stat">
-        <div class="dash-stat-value">127</div>
-        <div class="dash-stat-label">Calls Answered</div>
-      </div>
-      <div class="dash-stat">
-        <div class="dash-stat-value">34</div>
-        <div class="dash-stat-label">Transferred</div>
-      </div>
-      <div class="dash-stat">
-        <div class="dash-stat-value">89</div>
-        <div class="dash-stat-label">Messages Taken</div>
-      </div>
+    <div class="section-card">
+      <h3>Greeting Script</h3>
+      <div class="form-group"><textarea id="clientGreeting" placeholder="Your AI's greeting script will appear here once configured."></textarea></div>
+      <button class="save-btn" onclick="alert('Change request submitted. We will update your greeting within 24 hours.')">Request Change</button>
     </div>
 
-    <!-- Grid: Plan + Greeting -->
-    <div class="dash-grid">
-      <!-- Current Plan -->
-      <div class="dash-card reveal">
-        <h3>Current Plan</h3>
-        <p class="card-sub">Your active subscription details.</p>
-        <div class="plan-current">
-          <div class="plan-current-name">Pro 24/7</div>
-          <div class="plan-current-price">$297/mo</div>
-        </div>
-        <a href="../signup.html" class="btn btn-secondary btn-md" style="width:100%; justify-content:center;">Upgrade Plan</a>
-      </div>
-
-      <!-- Greeting Script -->
-      <div class="dash-card reveal">
-        <h3>Greeting Script</h3>
-        <p class="card-sub">What callers hear when GIDEON answers.</p>
-        <div class="greeting-preview">
-          "Thank you for calling! This is our AI assistant. I can help you schedule an appointment, answer questions about our services, or connect you with our team. How can I help you today?"
-        </div>
-        <button class="btn btn-secondary btn-md" style="width:100%; justify-content:center;" onclick="document.getElementById('change-request').scrollIntoView({behavior:'smooth'})">Request Changes</button>
-      </div>
-    </div>
-
-    <!-- Business Hours -->
-    <div class="dash-card reveal" style="margin-bottom:32px;">
+    <div class="section-card">
       <h3>Business Hours</h3>
-      <p class="card-sub">GIDEON handles after-hours calls differently from business-hours calls.</p>
       <div class="hours-grid">
-        <div class="hours-item">
-          <div class="hours-day">Mon - Fri</div>
-          <div class="hours-time">8:00 AM - 5:00 PM</div>
-        </div>
-        <div class="hours-item">
-          <div class="hours-day">Saturday</div>
-          <div class="hours-time">9:00 AM - 1:00 PM</div>
-        </div>
-        <div class="hours-item">
-          <div class="hours-day">Sunday</div>
-          <div class="hours-time">Closed (AI active)</div>
-        </div>
-        <div class="hours-item">
-          <div class="hours-day">After Hours</div>
-          <div class="hours-time">AI answers all calls</div>
-        </div>
+        <div class="hour-item"><div class="day">Mon</div><div class="time">8am - 6pm</div></div>
+        <div class="hour-item"><div class="day">Tue</div><div class="time">8am - 6pm</div></div>
+        <div class="hour-item"><div class="day">Wed</div><div class="time">8am - 6pm</div></div>
+        <div class="hour-item"><div class="day">Thu</div><div class="time">8am - 6pm</div></div>
+        <div class="hour-item"><div class="day">Fri</div><div class="time">8am - 6pm</div></div>
+        <div class="hour-item"><div class="day">Sat</div><div class="time">9am - 1pm</div></div>
+        <div class="hour-item"><div class="day">Sun</div><div class="time">Closed</div></div>
       </div>
+      <button class="ghost-btn" onclick="alert('Change request submitted.')">Update Hours</button>
     </div>
 
-    <!-- Request Change Form -->
-    <div class="request-form reveal" id="change-request">
-      <h3>Request a Change</h3>
-      <p class="card-sub">Need to update your greeting, hours, or settings? Let us know.</p>
-      <div id="request-form-fields">
-        <div class="form-group">
-          <label class="form-label">What would you like to change?</label>
-          <select class="form-select" id="change-type">
-            <option value="">Select a category</option>
-            <option value="greeting">Greeting script</option>
-            <option value="hours">Business hours</option>
-            <option value="transfer">Transfer number</option>
-            <option value="plan">Plan change</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Details</label>
-          <textarea class="form-textarea" id="change-details" rows="4" placeholder="Describe the changes you need..."></textarea>
-        </div>
-        <button class="btn btn-green btn-lg" style="width:100%; justify-content:center;" onclick="submitRequest()">Submit Request</button>
-      </div>
-      <div class="request-success" id="request-success">
-        <p>Request submitted! We'll make the changes within 24 hours.</p>
-      </div>
+    <div class="section-card">
+      <h3>Submit a Change Request</h3>
+      <div class="form-group"><label>What would you like to change?</label><textarea id="changeRequest" placeholder="Describe any changes you need..."></textarea></div>
+      <button class="save-btn" onclick="alert('Request submitted. We will review within 24 hours.')">Submit Request</button>
     </div>
+
+    <div class="section-card">
+      <h3>Billing</h3>
+      <div class="billing-row"><span class="b-label">Current Plan</span><span class="b-value">Starter - $497/mo</span></div>
+      <div class="billing-row"><span class="b-label">Next Billing Date</span><span class="b-value">--</span></div>
+      <div class="billing-row"><span class="b-label">Payment Method</span><span class="b-value">--</span></div>
+      <div class="billing-row"><span class="b-label">Account Status</span><span class="b-value" style="color:#00dc82">Active</span></div>
+    </div>
+
+    <div class="signout-link" onclick="sessionStorage.removeItem('tct_client_email');window.location.href='index.html';">Sign Out</div>
   </div>
-</main>
 
-<footer class="footer">
-  <div class="wrap">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="../index.html" class="logo">
-          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          The Call <span>Taker</span>
-        </a>
-        <p>AI receptionist for service businesses.</p>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="../index.html" class="logo"><div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>The Call <span>Taker</span></a>
+          <p>AI receptionist for service businesses.</p>
+        </div>
+        <div class="footer-links"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../demo.html">Demo</a><a href="../calculator.html">Calculator</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Service</a><a href="mailto:wallacemdobbs@icloud.com">Contact</a><a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a></div>
       </div>
-      <div class="footer-links">
-        <a href="../index.html">Home</a>
-        <a href="../services.html">Services</a>
-        <a href="../demo.html">Demo</a>
-        <a href="../calculator.html">Calculator</a>
-        <a href="../privacy.html">Privacy Policy</a>
-        <a href="../terms.html">Terms of Service</a>
-        <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
-        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
-      </div>
+      <div class="footer-bottom"><span>&copy; 2026 The Call Taker. All rights reserved.</span><span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span></div>
     </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
+  </footer>
+
+  <div class="float-cb" id="float-widget">
+    <div class="float-cb-panel" id="float-panel">
+      <h4 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">Want us to call you?</h4>
+      <p style="font-size:12px;color:var(--text-3);margin-bottom:14px;">Our AI will call you in under 30 seconds.</p>
+      <input type="tel" id="float-phone" placeholder="Your phone number" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:8px;">
+      <input type="text" id="float-company" placeholder="Company name" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:10px;">
+      <button class="callback-btn" onclick="requestFloatCallback()" style="font-size:14px;padding:12px;">Call Me Now</button>
+      <div id="float-success" style="display:none;text-align:center;padding:16px 0;"><p style="font-size:14px;font-weight:700;color:var(--green);">Calling you now!</p><p style="font-size:12px;color:var(--text-2);">Pick up your phone.</p></div>
     </div>
+    <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
   </div>
-</footer>
 
-<script src="../script.js"></script>
-<script>
-(function() {
-  'use strict';
-
-  window.clientLogout = function() {
-    sessionStorage.removeItem('tct-client-email');
-    sessionStorage.removeItem('tct-client-auth');
-    window.location.href = 'index.html';
-  };
-
-  window.submitRequest = function() {
-    var type = document.getElementById('change-type').value;
-    var details = document.getElementById('change-details').value.trim();
-    if (!type || !details) {
-      alert('Please select a category and describe your change.');
-      return;
-    }
-    document.getElementById('request-form-fields').style.display = 'none';
-    document.getElementById('request-success').style.display = 'block';
-  };
-})();
-</script>
+  <script src="../script.js"></script>
 </body>
 </html>

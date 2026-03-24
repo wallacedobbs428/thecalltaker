@@ -1,451 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17970510102');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Onboarding Wizard — The Call Taker Admin</title>
+  <meta name="google-site-verification" content="yD21d967IvWfANFmEZBw55ZZUWCa11fI92Mr-3wXk3s" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <title>Admin Onboarding | The Call Taker</title>
+  <meta name="description" content="Onboard new clients to The Call Taker.">
+  <meta name="robots" content="noindex, nofollow">
   <style>
-    .gate-overlay { position: fixed; inset: 0; z-index: 9999; background: #000; display: flex; align-items: center; justify-content: center; }
-    .gate-box { text-align: center; max-width: 360px; width: 100%; padding: 0 24px; }
-    .gate-box h2 { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .gate-box p { font-size: 14px; color: var(--text-2); margin-bottom: 24px; }
-    .gate-box input { width: 100%; padding: 12px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px; text-align: center; }
-    .gate-box input:focus { outline: none; border-color: var(--green); }
-    .gate-box .error { color: #ef4444; font-size: 13px; margin-bottom: 12px; display: none; }
-
-    .admin-page { display: none; }
-    .admin-page.visible { display: block; }
-    .admin-hero { padding: 100px 0 40px; }
-    .admin-hero h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; color: #fff; letter-spacing: -0.03em; margin-bottom: 8px; }
-    .admin-hero p { font-size: 16px; color: var(--text-2); }
-
-    .admin-nav { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
-    .admin-nav a { padding: 8px 16px; font-size: 13px; font-weight: 600; color: var(--text-3); border: 1px solid var(--border); border-radius: 8px; transition: 0.15s; }
-    .admin-nav a:hover, .admin-nav a.active { color: #fff; border-color: rgba(255,255,255,0.2); background: var(--surface); }
-
-    /* Progress Bar */
-    .wizard-progress { display: flex; align-items: center; gap: 0; margin-bottom: 40px; }
-    .wizard-step-dot { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--text-3); flex-shrink: 0; transition: 0.3s; }
-    .wizard-step-dot.active { border-color: var(--green); color: var(--green); background: var(--green-dim); }
-    .wizard-step-dot.done { border-color: var(--green); background: var(--green); color: #000; }
-    .wizard-step-line { flex: 1; height: 2px; background: var(--border); transition: background 0.3s; }
-    .wizard-step-line.done { background: var(--green); }
-
-    /* Wizard Form */
-    .wizard-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 40px 32px; max-width: 640px; margin: 0 auto 40px; }
-    .wizard-card h2 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-    .wizard-card .step-desc { font-size: 14px; color: var(--text-2); margin-bottom: 28px; }
-    .wizard-step { display: none; }
-    .wizard-step.active { display: block; }
-
-    /* Plan Selector */
-    .plan-options { display: flex; flex-direction: column; gap: 12px; }
-    .plan-option { display: flex; align-items: center; gap: 14px; padding: 16px 20px; background: rgba(255,255,255,0.02); border: 2px solid var(--border); border-radius: 12px; cursor: pointer; transition: 0.2s; }
-    .plan-option:hover { border-color: rgba(255,255,255,0.15); }
-    .plan-option.selected { border-color: var(--green); background: var(--green-dim); }
-    .plan-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-    .plan-option.selected .plan-radio { border-color: var(--green); }
-    .plan-option.selected .plan-radio::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
-    .plan-info { flex: 1; }
-    .plan-info strong { font-size: 15px; color: #fff; }
-    .plan-info p { font-size: 13px; color: var(--text-3); margin-top: 2px; }
-    .plan-price { font-size: 20px; font-weight: 800; color: #fff; white-space: nowrap; }
-
-    /* Checklist */
-    .checklist { display: flex; flex-direction: column; gap: 12px; }
-    .checklist-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; font-size: 14px; color: var(--text-2); cursor: pointer; transition: 0.15s; }
-    .checklist-item:hover { background: var(--surface-hover); }
-    .checklist-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: 0.15s; }
-    .checklist-item.checked .checklist-check { background: var(--green); border-color: var(--green); }
-    .checklist-item.checked .checklist-check::after { content: ''; width: 6px; height: 10px; border: solid #000; border-width: 0 2px 2px 0; transform: rotate(45deg) translateY(-1px); }
-    .checklist-item.checked { color: #fff; }
-
-    /* Buttons Row */
-    .wizard-buttons { display: flex; gap: 12px; margin-top: 28px; }
-    .wizard-buttons .btn { flex: 1; justify-content: center; }
+    .admin-gate{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center}
+    .admin-gate-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px 40px;text-align:center;max-width:380px;width:90%}
+    .admin-gate-box h2{color:#fff;font-size:20px;font-weight:700;margin-bottom:8px}
+    .admin-gate-box p{color:var(--text-3);font-size:13px;margin-bottom:24px}
+    .admin-gate-box input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:16px;text-align:center;letter-spacing:0.1em}
+    .admin-gate-box input:focus{outline:none;border-color:#00dc82}
+    .admin-gate-box button{width:100%;padding:12px;background:#00dc82;color:#000;font-size:14px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit}
+    .admin-gate-box button:hover{background:#00f090}
+    .admin-wrap{display:none}
+    .admin-wrap.unlocked{display:flex;min-height:100vh}
+    .admin-sidebar{width:240px;background:rgba(255,255,255,0.02);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:52px;bottom:0;overflow-y:auto}
+    .admin-sidebar .sidebar-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;padding:0 20px;margin-bottom:12px}
+    .admin-sidebar a{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-3);transition:all 0.15s}
+    .admin-sidebar a:hover,.admin-sidebar a.active{color:#fff;background:rgba(255,255,255,0.04)}
+    .admin-sidebar a.active{border-left:2px solid #00dc82}
+    .admin-sidebar .sidebar-divider{height:1px;background:var(--border);margin:16px 0}
+    .admin-main{flex:1;margin-left:240px;padding:80px 32px 48px;max-width:720px}
+    .admin-header{margin-bottom:32px}
+    .admin-header h1{font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}
+    .admin-header p{font-size:14px;color:var(--text-2)}
+    .progress-bar{width:100%;height:4px;background:rgba(255,255,255,0.06);border-radius:4px;margin-bottom:40px;overflow:hidden}
+    .progress-fill{height:100%;background:#00dc82;border-radius:4px;transition:width 0.4s ease}
+    .step{display:none}
+    .step.active{display:block}
+    .step-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;margin-bottom:16px}
+    .step h2{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px}
+    .step p.desc{font-size:14px;color:var(--text-2);margin-bottom:24px}
+    .form-group{margin-bottom:20px}
+    .form-group label{display:block;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:6px}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#00dc82}
+    .form-group select{appearance:none;cursor:pointer}
+    .form-group textarea{min-height:100px;resize:vertical}
+    .step-nav{display:flex;gap:12px;margin-top:32px}
+    .step-nav .btn-back{padding:10px 20px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+    .step-nav .btn-back:hover{background:var(--surface-hover)}
+    .step-nav .btn-next{padding:10px 20px;background:#00dc82;color:#000;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+    .step-nav .btn-next:hover{background:#00f090}
+    .plan-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+    .plan-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:0.15s}
+    .plan-card:hover{border-color:rgba(255,255,255,0.15)}
+    .plan-card.selected{border-color:#00dc82;background:rgba(0,220,130,0.05)}
+    .plan-card .plan-price{font-size:28px;font-weight:800;color:#00dc82;margin-bottom:4px}
+    .plan-card .plan-name{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
+    .plan-card .plan-desc{font-size:12px;color:var(--text-3)}
+    .checklist-item{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:0.15s}
+    .checklist-item:hover{background:var(--surface-hover)}
+    .checklist-item.checked{border-color:rgba(0,220,130,0.3)}
+    .checklist-item .check-box{width:22px;height:22px;border:2px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:0.15s}
+    .checklist-item.checked .check-box{background:#00dc82;border-color:#00dc82}
+    .checklist-item.checked .check-box::after{content:'';width:6px;height:10px;border:solid #000;border-width:0 2px 2px 0;transform:rotate(45deg);margin-top:-2px}
+    .checklist-item span{font-size:14px;color:var(--text-2);font-weight:500}
+    .checklist-item.checked span{color:#fff}
+    @media(max-width:768px){.admin-sidebar{display:none}.admin-main{margin-left:0;padding:80px 16px 32px}.plan-cards{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-
-<div class="gate-overlay" id="gate">
-  <div class="gate-box">
-    <div class="logo" style="justify-content:center; margin-bottom: 24px;">
-      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-      The Call <span>Taker</span>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        The Call <span>Taker</span>
+      </a>
+      <nav class="nav">
+        <a href="../index.html">Home</a>
+        <a href="../services.html">Services</a>
+        <a href="../index.html#pricing">Pricing</a>
+        <a href="../demo.html">Demo</a>
+      </nav>
+      <a href="../demo.html" class="header-cta">Book a Demo</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
-    <h2>Admin Access</h2>
-    <p>Enter password to continue</p>
-    <div class="error" id="gate-error">Incorrect password</div>
-    <input type="password" id="gate-input" placeholder="Password" autofocus>
-    <button class="btn btn-green btn-lg" style="width:100%;" onclick="checkGate()">Enter</button>
-  </div>
-</div>
+  </header>
+  <nav class="mobile-nav">
+    <a href="../index.html">Home</a>
+    <a href="../services.html">Services</a>
+    <a href="../index.html#pricing">Pricing</a>
+    <a href="../demo.html">Demo</a>
+    <a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
+  </nav>
 
-<header class="header">
-  <div class="header-inner">
-    <a href="../index.html" class="logo">
-      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-      The Call <span>Taker</span>
-    </a>
-    <nav class="nav">
-      <a href="../index.html">Home</a>
-      <a href="../services.html">Services</a>
-      <a href="../demo.html">Demo</a>
-    </nav>
-    <a href="../demo.html" class="header-cta">Book a Demo</a>
-    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-  </div>
-</header>
-
-<nav class="mobile-nav">
-  <a href="../index.html">Home</a>
-  <a href="../services.html">Services</a>
-  <a href="../demo.html">Demo</a>
-  <a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
-</nav>
-
-<div class="admin-page" id="admin-content">
-  <div class="wrap">
-    <div class="admin-hero">
-      <h1>Onboard New Client</h1>
-      <p>Step-by-step setup wizard for new accounts.</p>
+  <div class="admin-gate" id="adminGate">
+    <div class="admin-gate-box">
+      <h2>Admin Access</h2>
+      <p>Enter your admin password to continue.</p>
+      <input type="password" id="adminPass" placeholder="Password" onkeydown="if(event.key==='Enter')checkAdminPass()">
+      <button onclick="checkAdminPass()">Unlock</button>
     </div>
+  </div>
 
-    <div class="admin-nav">
+  <div class="admin-wrap" id="adminContent">
+    <aside class="admin-sidebar">
+      <div class="sidebar-label">Admin</div>
       <a href="index.html">Dashboard</a>
       <a href="clients.html">Clients</a>
       <a href="onboarding.html" class="active">Onboarding</a>
-    </div>
+      <a href="client-portal.html">Client View</a>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">Client Portals</div>
+      <a href="../client/index.html">Client Login</a>
+      <a href="../client/dashboard.html">Client Dashboard</a>
+      <a href="../client/onboarding.html">Client Onboarding</a>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1>Onboard New Client</h1>
+        <p>Walk through the setup process step by step.</p>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
 
-    <!-- Progress Bar -->
-    <div class="wizard-progress" id="wizard-progress">
-      <div class="wizard-step-dot active" data-step="1">1</div>
-      <div class="wizard-step-line"></div>
-      <div class="wizard-step-dot" data-step="2">2</div>
-      <div class="wizard-step-line"></div>
-      <div class="wizard-step-dot" data-step="3">3</div>
-      <div class="wizard-step-line"></div>
-      <div class="wizard-step-dot" data-step="4">4</div>
-      <div class="wizard-step-line"></div>
-      <div class="wizard-step-dot" data-step="5">5</div>
-    </div>
-
-    <!-- Wizard Card -->
-    <div class="wizard-card">
-
-      <!-- Step 1: Business Info -->
-      <div class="wizard-step active" data-step="1">
+      <div class="step active" id="step1">
+        <div class="step-label">Step 1 of 5</div>
         <h2>Business Information</h2>
-        <p class="step-desc">Enter the client's basic business details.</p>
-        <div class="form-group">
-          <label class="form-label">Business Name</label>
-          <input type="text" class="form-input" id="ob-business" placeholder="e.g. Arctic Air Pros">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Contact Name</label>
-          <input type="text" class="form-input" id="ob-name" placeholder="Full name">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email</label>
-          <input type="email" class="form-input" id="ob-email" placeholder="email@business.com">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Phone</label>
-          <input type="tel" class="form-input" id="ob-phone" placeholder="(615) 555-1234">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Industry</label>
-          <select class="form-select" id="ob-industry">
+        <p class="desc">Collect the client's core details.</p>
+        <div class="form-group"><label>Business Name</label><input type="text" id="bizName" placeholder="e.g. Arctic Air Pros"></div>
+        <div class="form-group"><label>Contact Name</label><input type="text" id="contactName" placeholder="Full name"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="bizEmail" placeholder="email@example.com"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" id="bizPhone" placeholder="(555) 123-4567"></div>
+        <div class="form-group"><label>Industry</label>
+          <select id="bizIndustry">
             <option value="">Select industry</option>
-            <option value="hvac">HVAC</option>
-            <option value="plumbing">Plumbing</option>
-            <option value="electrical">Electrical</option>
-            <option value="roofing">Roofing</option>
-            <option value="dental">Dental</option>
-            <option value="medspa">Med Spa</option>
-            <option value="legal">Legal</option>
-            <option value="locksmith">Locksmith</option>
-            <option value="towing">Towing</option>
-            <option value="veterinary">Veterinary</option>
-            <option value="property-management">Property Management</option>
-            <option value="garage-door">Garage Door</option>
-            <option value="funeral">Funeral</option>
+            <option>HVAC</option><option>Plumbing</option><option>Electrical</option><option>Roofing</option>
+            <option>Dental</option><option>Med Spa</option><option>Legal</option><option>Property Management</option>
+            <option>Locksmith</option><option>Towing</option><option>Veterinary</option><option>Pest Control</option>
+            <option>Garage Door</option><option>Funeral</option><option>Other</option>
           </select>
         </div>
-        <div class="wizard-buttons">
-          <button class="btn btn-green btn-lg" onclick="wizardNext()">Continue</button>
-        </div>
+        <div class="step-nav"><button class="btn-next" onclick="goStep(2)">Continue</button></div>
       </div>
 
-      <!-- Step 2: Call Handling -->
-      <div class="wizard-step" data-step="2">
+      <div class="step" id="step2">
+        <div class="step-label">Step 2 of 5</div>
         <h2>Call Handling Preferences</h2>
-        <p class="step-desc">How should GIDEON handle this client's calls?</p>
-        <div class="form-group">
-          <label class="form-label">Greeting Style</label>
-          <select class="form-select" id="ob-greeting-style">
-            <option value="professional">Professional ("Thank you for calling...")</option>
-            <option value="friendly">Friendly ("Hey, thanks for calling!")</option>
-            <option value="urgent">Urgent Response ("We can help right away...")</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Custom Greeting Script</label>
-          <textarea class="form-textarea" id="ob-greeting" rows="3" placeholder="Thank you for calling [Business Name], this is our AI assistant. How can I help you today?"></textarea>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Transfer Number</label>
-          <input type="tel" class="form-input" id="ob-transfer" placeholder="Number to transfer hot calls to">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Business Hours</label>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-            <input type="time" class="form-input" id="ob-hours-open" value="08:00">
-            <input type="time" class="form-input" id="ob-hours-close" value="17:00">
-          </div>
-        </div>
-        <div class="wizard-buttons">
-          <button class="btn btn-secondary btn-lg" onclick="wizardPrev()">Back</button>
-          <button class="btn btn-green btn-lg" onclick="wizardNext()">Continue</button>
+        <p class="desc">How should the AI handle their calls?</p>
+        <div class="form-group"><label>Business Hours</label><input type="text" id="bizHours" placeholder="e.g. Mon-Fri 8am-6pm, Sat 9am-1pm"></div>
+        <div class="form-group"><label>Greeting Script</label><textarea id="bizGreeting" placeholder="e.g. Thank you for calling [Business]. How can I help you today?"></textarea></div>
+        <div class="form-group"><label>Transfer Number</label><input type="tel" id="bizTransfer" placeholder="Number to transfer urgent calls to"></div>
+        <div class="form-group"><label>Special Instructions</label><textarea id="bizNotes" placeholder="Any custom instructions for the AI..."></textarea></div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(1)">Back</button>
+          <button class="btn-next" onclick="goStep(3)">Continue</button>
         </div>
       </div>
 
-      <!-- Step 3: Plan Selection -->
-      <div class="wizard-step" data-step="3">
+      <div class="step" id="step3">
+        <div class="step-label">Step 3 of 5</div>
         <h2>Select Plan</h2>
-        <p class="step-desc">Choose the right plan for this client.</p>
-        <div class="plan-options" id="plan-options">
-          <div class="plan-option" data-plan="starter" onclick="selectPlan(this)">
-            <div class="plan-radio"></div>
-            <div class="plan-info">
-              <strong>Starter</strong>
-              <p>After-hours coverage. Perfect for small teams.</p>
-            </div>
-            <div class="plan-price">$97<span style="font-size:13px;font-weight:400;color:var(--text-3);">/mo</span></div>
+        <p class="desc">Choose the right plan for this client.</p>
+        <div class="plan-cards">
+          <div class="plan-card" onclick="selectPlan(this,'97')" data-plan="97">
+            <div class="plan-price">$97</div>
+            <div class="plan-name">After-Hours</div>
+            <div class="plan-desc">AI answers after hours only</div>
           </div>
-          <div class="plan-option" data-plan="pro" onclick="selectPlan(this)">
-            <div class="plan-radio"></div>
-            <div class="plan-info">
-              <strong>Pro 24/7</strong>
-              <p>Full coverage with transfers, SMS, booking.</p>
-            </div>
-            <div class="plan-price">$497<span style="font-size:13px;font-weight:400;color:var(--text-3);">/mo</span></div>
+          <div class="plan-card" onclick="selectPlan(this,'497')" data-plan="497">
+            <div class="plan-price">$497</div>
+            <div class="plan-name">Starter</div>
+            <div class="plan-desc">Full 24/7 AI receptionist</div>
           </div>
-          <div class="plan-option" data-plan="premium" onclick="selectPlan(this)">
-            <div class="plan-radio"></div>
-            <div class="plan-info">
-              <strong>Premium</strong>
-              <p>Multi-line, CRM integration, priority support.</p>
-            </div>
-            <div class="plan-price">$997<span style="font-size:13px;font-weight:400;color:var(--text-3);">/mo</span></div>
+          <div class="plan-card" onclick="selectPlan(this,'997')" data-plan="997">
+            <div class="plan-price">$997</div>
+            <div class="plan-name">Pro</div>
+            <div class="plan-desc">24/7 + advanced features</div>
           </div>
         </div>
-        <div class="wizard-buttons">
-          <button class="btn btn-secondary btn-lg" onclick="wizardPrev()">Back</button>
-          <button class="btn btn-green btn-lg" onclick="wizardNext()">Continue</button>
+        <div class="form-group"><label>Setup Fee</label><input type="text" value="$500" disabled style="opacity:0.5"></div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(2)">Back</button>
+          <button class="btn-next" onclick="goStep(4)">Continue</button>
         </div>
       </div>
 
-      <!-- Step 4: Payment -->
-      <div class="wizard-step" data-step="4">
-        <h2>Payment Confirmation</h2>
-        <p class="step-desc">Confirm payment details and send the invoice.</p>
-        <div style="background:rgba(0,220,130,0.03); border:1px solid rgba(0,220,130,0.12); border-radius:12px; padding:24px; margin-bottom:24px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-            <span style="font-size:14px; color:var(--text-2);">Client</span>
-            <span style="font-size:14px; font-weight:600; color:#fff;" id="summary-client">--</span>
+      <div class="step" id="step4">
+        <div class="step-label">Step 4 of 5</div>
+        <h2>Payment</h2>
+        <p class="desc">Send the client their payment link.</p>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px">
+          <p style="font-size:14px;color:var(--text-2);margin-bottom:16px">Send the PayPal invoice or Stripe link to the client. Once payment is confirmed, proceed to go-live.</p>
+          <div class="form-group"><label>Payment Method</label>
+            <select id="payMethod"><option>PayPal Invoice</option><option>Stripe Link</option><option>Manual/Other</option></select>
           </div>
-          <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-            <span style="font-size:14px; color:var(--text-2);">Plan</span>
-            <span style="font-size:14px; font-weight:600; color:#fff;" id="summary-plan">--</span>
-          </div>
-          <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-            <span style="font-size:14px; color:var(--text-2);">Monthly</span>
-            <span style="font-size:14px; font-weight:600; color:var(--green);" id="summary-price">--</span>
-          </div>
-          <div style="display:flex; justify-content:space-between;">
-            <span style="font-size:14px; color:var(--text-2);">Setup Fee</span>
-            <span style="font-size:14px; font-weight:600; color:#fff;">$500</span>
+          <div class="form-group"><label>Payment Status</label>
+            <select id="payStatus"><option>Pending</option><option>Paid</option></select>
           </div>
         </div>
-        <a href="https://paypal.me/thecalltaker" target="_blank" class="btn btn-green btn-lg" style="width:100%; justify-content:center; margin-bottom:12px;">Send PayPal Invoice</a>
-        <p style="font-size:12px; color:var(--text-3); text-align:center;">Or send a manual invoice via email.</p>
-        <div class="wizard-buttons">
-          <button class="btn btn-secondary btn-lg" onclick="wizardPrev()">Back</button>
-          <button class="btn btn-green btn-lg" onclick="wizardNext()">Payment Confirmed</button>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(3)">Back</button>
+          <button class="btn-next" onclick="goStep(5)">Continue</button>
         </div>
       </div>
 
-      <!-- Step 5: Go-Live Checklist -->
-      <div class="wizard-step" data-step="5">
+      <div class="step" id="step5">
+        <div class="step-label">Step 5 of 5</div>
         <h2>Go-Live Checklist</h2>
-        <p class="step-desc">Complete these items before activating the line.</p>
-        <div class="checklist" id="go-live-checklist">
-          <div class="checklist-item" onclick="toggleCheck(this)">
-            <div class="checklist-check"></div>
-            GHL contact created with correct tags
-          </div>
-          <div class="checklist-item" onclick="toggleCheck(this)">
-            <div class="checklist-check"></div>
-            Voice AI agent configured with custom greeting
-          </div>
-          <div class="checklist-item" onclick="toggleCheck(this)">
-            <div class="checklist-check"></div>
-            Call forwarding number set up
-          </div>
-          <div class="checklist-item" onclick="toggleCheck(this)">
-            <div class="checklist-check"></div>
-            Transfer number verified
-          </div>
-          <div class="checklist-item" onclick="toggleCheck(this)">
-            <div class="checklist-check"></div>
-            Test call placed and verified
-          </div>
-          <div class="checklist-item" onclick="toggleCheck(this)">
-            <div class="checklist-check"></div>
-            Welcome email sent to client
-          </div>
-          <div class="checklist-item" onclick="toggleCheck(this)">
-            <div class="checklist-check"></div>
-            Client portal credentials sent
-          </div>
-        </div>
-        <div class="wizard-buttons" style="margin-top:28px;">
-          <button class="btn btn-secondary btn-lg" onclick="wizardPrev()">Back</button>
-          <button class="btn btn-green btn-lg" onclick="finishWizard()">Activate Client</button>
+        <p class="desc">Complete each item before activating the client.</p>
+        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Voice AI agent configured with greeting</span></div>
+        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Phone number forwarding set up</span></div>
+        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>GHL contact created with correct tags</span></div>
+        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Test call completed successfully</span></div>
+        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Client portal credentials sent</span></div>
+        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Welcome email sent</span></div>
+        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Payment confirmed</span></div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(4)">Back</button>
+          <button class="btn-next" onclick="saveClient()">Activate Client</button>
         </div>
       </div>
-
-    </div>
+    </main>
   </div>
-</div>
 
-<footer class="footer">
-  <div class="wrap">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="../index.html" class="logo">
-          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          The Call <span>Taker</span>
-        </a>
-        <p>AI receptionist for service businesses.</p>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="../index.html" class="logo">
+            <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            The Call <span>Taker</span>
+          </a>
+          <p>AI receptionist for service businesses.</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../demo.html">Demo</a><a href="../calculator.html">Calculator</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Service</a><a href="mailto:wallacemdobbs@icloud.com">Contact</a><a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
       </div>
-      <div class="footer-links">
-        <a href="../index.html">Home</a>
-        <a href="../services.html">Services</a>
-        <a href="../demo.html">Demo</a>
-        <a href="../calculator.html">Calculator</a>
-        <a href="../privacy.html">Privacy Policy</a>
-        <a href="../terms.html">Terms of Service</a>
-        <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
-        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <div class="footer-bottom">
+        <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+        <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
+  </footer>
+
+  <div class="float-cb" id="float-widget">
+    <div class="float-cb-panel" id="float-panel">
+      <h4 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">Want us to call you?</h4>
+      <p style="font-size:12px;color:var(--text-3);margin-bottom:14px;">Our AI will call you in under 30 seconds.</p>
+      <input type="tel" id="float-phone" placeholder="Your phone number" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:8px;">
+      <input type="text" id="float-company" placeholder="Company name" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:10px;">
+      <button class="callback-btn" onclick="requestFloatCallback()" style="font-size:14px;padding:12px;">Call Me Now</button>
+      <div id="float-success" style="display:none;text-align:center;padding:16px 0;"><p style="font-size:14px;font-weight:700;color:var(--green);">Calling you now!</p><p style="font-size:12px;color:var(--text-2);">Pick up your phone.</p></div>
     </div>
+    <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
   </div>
-</footer>
 
-<script src="../script.js"></script>
-<script>
-(function() {
-  'use strict';
-  var PASS = 'TCT2026admin';
-  var currentStep = 1;
-  var totalSteps = 5;
-  var selectedPlan = '';
+  <script src="../script.js"></script>
+  <script>
+    function checkAdminPass(){var p=document.getElementById('adminPass').value;if(p==='TCT2026admin'){document.getElementById('adminGate').style.display='none';document.getElementById('adminContent').classList.add('unlocked');sessionStorage.setItem('tct_admin','1');}else{document.getElementById('adminPass').value='';document.getElementById('adminPass').style.borderColor='#ef4444';}}
+    if(sessionStorage.getItem('tct_admin')==='1'){document.getElementById('adminGate').style.display='none';document.getElementById('adminContent').classList.add('unlocked');}
 
-  if (sessionStorage.getItem('tct-admin') === 'true') {
-    document.getElementById('gate').style.display = 'none';
-    document.getElementById('admin-content').classList.add('visible');
-  }
-
-  document.getElementById('gate-input').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') checkGate();
-  });
-
-  window.checkGate = function() {
-    var val = document.getElementById('gate-input').value;
-    if (val === PASS) {
-      sessionStorage.setItem('tct-admin', 'true');
-      document.getElementById('gate').style.display = 'none';
-      document.getElementById('admin-content').classList.add('visible');
-    } else {
-      document.getElementById('gate-error').style.display = 'block';
-      document.getElementById('gate-input').value = '';
-      document.getElementById('gate-input').focus();
+    var currentStep=1;
+    var selectedPlan='';
+    function goStep(n){
+      document.getElementById('step'+currentStep).classList.remove('active');
+      document.getElementById('step'+n).classList.add('active');
+      currentStep=n;
+      document.getElementById('progressFill').style.width=(n*20)+'%';
     }
-  };
-
-  function updateProgress() {
-    var dots = document.querySelectorAll('.wizard-step-dot');
-    var lines = document.querySelectorAll('.wizard-step-line');
-    dots.forEach(function(dot, i) {
-      var step = i + 1;
-      dot.classList.remove('active', 'done');
-      if (step < currentStep) dot.classList.add('done');
-      else if (step === currentStep) dot.classList.add('active');
-    });
-    lines.forEach(function(line, i) {
-      line.classList.toggle('done', i + 1 < currentStep);
-    });
-    var steps = document.querySelectorAll('.wizard-step');
-    steps.forEach(function(s) {
-      s.classList.toggle('active', parseInt(s.getAttribute('data-step')) === currentStep);
-    });
-  }
-
-  window.wizardNext = function() {
-    if (currentStep === 3) {
-      // Update summary
-      var biz = document.getElementById('ob-business').value || '--';
-      var prices = { starter: '$97/mo', pro: '$497/mo', premium: '$997/mo' };
-      var names = { starter: 'Starter', pro: 'Pro 24/7', premium: 'Premium' };
-      document.getElementById('summary-client').textContent = biz;
-      document.getElementById('summary-plan').textContent = names[selectedPlan] || '--';
-      document.getElementById('summary-price').textContent = prices[selectedPlan] || '--';
+    function selectPlan(el,plan){
+      document.querySelectorAll('.plan-card').forEach(function(c){c.classList.remove('selected');});
+      el.classList.add('selected');
+      selectedPlan=plan;
     }
-    if (currentStep < totalSteps) {
-      currentStep++;
-      updateProgress();
+    function toggleCheck(el){el.classList.toggle('checked');}
+    function saveClient(){
+      var clients=JSON.parse(localStorage.getItem('tct_clients')||'[]');
+      var id='c'+Date.now();
+      clients.push({
+        id:id,
+        name:document.getElementById('contactName').value||'New Client',
+        business:document.getElementById('bizName').value||'Unknown',
+        plan:selectedPlan==='97'?'After-Hours':selectedPlan==='997'?'Pro':'Starter',
+        mrr:selectedPlan||'497',
+        status:'Active',
+        startDate:new Date().toISOString().split('T')[0],
+        email:document.getElementById('bizEmail').value,
+        phone:document.getElementById('bizPhone').value,
+        industry:document.getElementById('bizIndustry').value,
+        greeting:document.getElementById('bizGreeting').value,
+        hours:document.getElementById('bizHours').value
+      });
+      localStorage.setItem('tct_clients',JSON.stringify(clients));
+      alert('Client activated! Redirecting to client list.');
+      window.location.href='clients.html';
     }
-  };
-
-  window.wizardPrev = function() {
-    if (currentStep > 1) {
-      currentStep--;
-      updateProgress();
-    }
-  };
-
-  window.selectPlan = function(el) {
-    document.querySelectorAll('.plan-option').forEach(function(o) { o.classList.remove('selected'); });
-    el.classList.add('selected');
-    selectedPlan = el.getAttribute('data-plan');
-  };
-
-  window.toggleCheck = function(el) {
-    el.classList.toggle('checked');
-  };
-
-  window.finishWizard = function() {
-    var unchecked = document.querySelectorAll('#go-live-checklist .checklist-item:not(.checked)');
-    if (unchecked.length > 0) {
-      alert('Please complete all checklist items before activating.');
-      return;
-    }
-    alert('Client activated! GIDEON is now live for this account.');
-    window.location.href = 'clients.html';
-  };
-})();
-</script>
+  </script>
 </body>
 </html>
