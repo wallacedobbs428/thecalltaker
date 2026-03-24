@@ -1,81 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17970510102');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Clients — The Call Taker Admin</title>
+  <meta name="google-site-verification" content="yD21d967IvWfANFmEZBw55ZZUWCa11fI92Mr-3wXk3s" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <title>Client List | The Call Taker</title>
+  <meta name="description" content="Manage all Call Taker clients.">
+  <meta name="robots" content="noindex, nofollow">
   <style>
-    /* Password Gate */
-    .gate-overlay { position: fixed; inset: 0; z-index: 9999; background: #000; display: flex; align-items: center; justify-content: center; }
-    .gate-box { text-align: center; max-width: 360px; width: 100%; padding: 0 24px; }
-    .gate-box h2 { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .gate-box p { font-size: 14px; color: var(--text-2); margin-bottom: 24px; }
-    .gate-box input { width: 100%; padding: 12px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px; text-align: center; }
-    .gate-box input:focus { outline: none; border-color: var(--green); }
-    .gate-box .error { color: #ef4444; font-size: 13px; margin-bottom: 12px; display: none; }
-
-    .admin-page { display: none; }
-    .admin-page.visible { display: block; }
-    .admin-hero { padding: 100px 0 40px; }
-    .admin-hero h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; color: #fff; letter-spacing: -0.03em; margin-bottom: 8px; }
-    .admin-hero p { font-size: 16px; color: var(--text-2); }
-
-    /* Admin Nav */
-    .admin-nav { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
-    .admin-nav a { padding: 8px 16px; font-size: 13px; font-weight: 600; color: var(--text-3); border: 1px solid var(--border); border-radius: 8px; transition: 0.15s; }
-    .admin-nav a:hover, .admin-nav a.active { color: #fff; border-color: rgba(255,255,255,0.2); background: var(--surface); }
-
-    /* Search + Actions Bar */
-    .clients-toolbar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
-    .search-input { flex: 1; min-width: 200px; padding: 10px 14px 10px 36px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%2371717a' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 12px center; }
-    .search-input:focus { outline: none; border-color: var(--green); }
-    .search-input::placeholder { color: var(--text-3); }
-
-    /* Client Table */
-    .client-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 40px; }
-    .client-table { width: 100%; border-collapse: collapse; }
-    .client-table th { padding: 14px 20px; text-align: left; font-size: 12px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); }
-    .client-table td { padding: 16px 20px; font-size: 14px; color: var(--text-2); border-bottom: 1px solid var(--border); }
-    .client-table tr:last-child td { border-bottom: none; }
-    .client-table tr:hover td { background: rgba(255,255,255,0.02); }
-    .client-name { font-weight: 600; color: #fff; }
-
-    /* Status Badges */
-    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
-    .badge-active { background: var(--green-dim); color: var(--green); }
-    .badge-pilot { background: rgba(59,130,246,0.12); color: #3b82f6; }
-    .badge-churned { background: rgba(239,68,68,0.1); color: #ef4444; }
-    .badge-onboarding { background: rgba(249,115,22,0.1); color: #f97316; }
-
-    /* Responsive Table */
-    @media (max-width: 767px) {
-      .client-table th:nth-child(n+4), .client-table td:nth-child(n+4) { display: none; }
-    }
+    .admin-gate{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center}
+    .admin-gate-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px 40px;text-align:center;max-width:380px;width:90%}
+    .admin-gate-box h2{color:#fff;font-size:20px;font-weight:700;margin-bottom:8px}
+    .admin-gate-box p{color:var(--text-3);font-size:13px;margin-bottom:24px}
+    .admin-gate-box input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:16px;text-align:center;letter-spacing:0.1em}
+    .admin-gate-box input:focus{outline:none;border-color:#00dc82}
+    .admin-gate-box button{width:100%;padding:12px;background:#00dc82;color:#000;font-size:14px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit}
+    .admin-gate-box button:hover{background:#00f090}
+    .admin-wrap{display:none}
+    .admin-wrap.unlocked{display:flex;min-height:100vh}
+    .admin-sidebar{width:240px;background:rgba(255,255,255,0.02);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:52px;bottom:0;overflow-y:auto}
+    .admin-sidebar .sidebar-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;padding:0 20px;margin-bottom:12px}
+    .admin-sidebar a{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-3);transition:all 0.15s}
+    .admin-sidebar a:hover,.admin-sidebar a.active{color:#fff;background:rgba(255,255,255,0.04)}
+    .admin-sidebar a.active{border-left:2px solid #00dc82}
+    .admin-sidebar .sidebar-divider{height:1px;background:var(--border);margin:16px 0}
+    .admin-main{flex:1;margin-left:240px;padding:80px 32px 48px}
+    .admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px}
+    .admin-header h1{font-size:28px;font-weight:700;color:#fff}
+    .add-btn{padding:10px 20px;background:#00dc82;color:#000;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+    .add-btn:hover{background:#00f090}
+    .client-table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+    .client-table th{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02)}
+    .client-table td{font-size:13px;color:var(--text-2);padding:14px 16px;border-bottom:1px solid var(--border)}
+    .client-table tr:last-child td{border-bottom:none}
+    .client-table tr:hover td{background:rgba(255,255,255,0.02)}
+    .client-table .name{color:#fff;font-weight:600}
+    .badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:0.02em}
+    .badge-active{background:rgba(0,220,130,0.15);color:#00dc82}
+    .badge-trial{background:rgba(245,158,11,0.15);color:#f59e0b}
+    .badge-churned{background:rgba(239,68,68,0.15);color:#ef4444}
+    .action-link{color:#00dc82;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none}
+    .action-link:hover{text-decoration:underline}
+    .empty-state{text-align:center;padding:60px 20px;color:var(--text-3);font-size:14px}
+    .empty-state p{margin-bottom:16px}
+    @media(max-width:768px){.admin-sidebar{display:none}.admin-main{margin-left:0;padding:80px 16px 32px}.client-table{font-size:12px}.client-table th,.client-table td{padding:10px 8px}}
   </style>
 </head>
 <body>
-
-<!-- PASSWORD GATE -->
-<div class="gate-overlay" id="gate">
-  <div class="gate-box">
-    <div class="logo" style="justify-content:center; margin-bottom: 24px;">
-      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-      The Call <span>Taker</span>
-    </div>
-    <h2>Admin Access</h2>
-    <p>Enter password to continue</p>
-    <div class="error" id="gate-error">Incorrect password</div>
-    <input type="password" id="gate-input" placeholder="Password" autofocus>
-    <button class="btn btn-green btn-lg" style="width:100%;" onclick="checkGate()">Enter</button>
-  </div>
-</div>
-
+  <!-- === NAV === -->
 <header class="header">
   <div class="header-inner">
     <a href="../index.html" class="logo">
@@ -83,8 +62,9 @@
       The Call <span>Taker</span>
     </a>
     <nav class="nav">
-      <a href="../index.html">Home</a>
+      <a href="../index.html" class="active">Home</a>
       <a href="../services.html">Services</a>
+      <a href="#pricing">Pricing</a>
       <a href="../demo.html">Demo</a>
     </nav>
     <a href="../demo.html" class="header-cta">Book a Demo</a>
@@ -95,32 +75,39 @@
 <nav class="mobile-nav">
   <a href="../index.html">Home</a>
   <a href="../services.html">Services</a>
+  <a href="#pricing">Pricing</a>
   <a href="../demo.html">Demo</a>
   <a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
 </nav>
 
-<div class="admin-page" id="admin-content">
-  <div class="wrap">
-    <div class="admin-hero">
-      <h1>Client List</h1>
-      <p>All active, pilot, and past clients in one place.</p>
+<div class="admin-gate" id="adminGate">
+    <div class="admin-gate-box">
+      <h2>Admin Access</h2>
+      <p>Enter your admin password to continue.</p>
+      <input type="password" id="adminPass" placeholder="Password" onkeydown="if(event.key==='Enter')checkAdminPass()">
+      <button onclick="checkAdminPass()">Unlock</button>
     </div>
+  </div>
 
-    <div class="admin-nav">
+  <div class="admin-wrap" id="adminContent">
+    <aside class="admin-sidebar">
+      <div class="sidebar-label">Admin</div>
       <a href="index.html">Dashboard</a>
       <a href="clients.html" class="active">Clients</a>
       <a href="onboarding.html">Onboarding</a>
-    </div>
-
-    <!-- Toolbar -->
-    <div class="clients-toolbar">
-      <input type="text" class="search-input" id="client-search" placeholder="Search by name, business, or plan...">
-      <a href="onboarding.html" class="btn btn-green btn-md">+ Add Client</a>
-    </div>
-
-    <!-- Client Table -->
-    <div class="client-table-wrap reveal">
-      <table class="client-table" id="client-table">
+      <a href="client-portal.html">Client View</a>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">Client Portals</div>
+      <a href="../client/index.html">Client Login</a>
+      <a href="../client/dashboard.html">Client Dashboard</a>
+      <a href="../client/onboarding.html">Client Onboarding</a>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1>Clients</h1>
+        <a href="onboarding.html" class="add-btn">+ Add Client</a>
+      </div>
+      <table class="client-table" id="clientTable">
         <thead>
           <tr>
             <th>Name</th>
@@ -129,71 +116,24 @@
             <th>MRR</th>
             <th>Status</th>
             <th>Start Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
-        <tbody id="client-tbody">
+        <tbody id="clientBody">
           <tr>
-            <td class="client-name">Marcus Johnson</td>
-            <td>Arctic Air Pros</td>
-            <td>Pro 24/7</td>
-            <td>$297</td>
-            <td><span class="badge badge-active">Active</span></td>
-            <td>Jan 15, 2026</td>
-          </tr>
-          <tr>
-            <td class="client-name">Sarah Chen</td>
-            <td>Palmetto Comfort HVAC</td>
-            <td>Pro 24/7</td>
-            <td>$297</td>
-            <td><span class="badge badge-active">Active</span></td>
-            <td>Feb 3, 2026</td>
-          </tr>
-          <tr>
-            <td class="client-name">James Rivera</td>
-            <td>Reliable Rooter</td>
-            <td>Starter</td>
-            <td>$97</td>
-            <td><span class="badge badge-active">Active</span></td>
-            <td>Feb 18, 2026</td>
-          </tr>
-          <tr>
-            <td class="client-name">Dr. Lisa Park</td>
-            <td>Summit Dental</td>
-            <td>Pro 24/7</td>
-            <td>$297</td>
-            <td><span class="badge badge-pilot">Pilot</span></td>
-            <td>Mar 10, 2026</td>
-          </tr>
-          <tr>
-            <td class="client-name">Tom Bradley</td>
-            <td>Rapid Key Locksmith</td>
-            <td>Premium</td>
-            <td>$497</td>
-            <td><span class="badge badge-active">Active</span></td>
-            <td>Mar 1, 2026</td>
-          </tr>
-          <tr>
-            <td class="client-name">Mike Torres</td>
-            <td>Guardian Electric</td>
-            <td>Starter</td>
-            <td>$97</td>
-            <td><span class="badge badge-onboarding">Onboarding</span></td>
-            <td>Mar 20, 2026</td>
-          </tr>
-          <tr>
-            <td class="client-name">Amanda West</td>
-            <td>Precision Plumbing</td>
-            <td>Pro 24/7</td>
-            <td>$297</td>
-            <td><span class="badge badge-churned">Churned</span></td>
-            <td>Dec 8, 2025</td>
+            <td colspan="7">
+              <div class="empty-state">
+                <p>No clients yet. Add your first client to get started.</p>
+                <a href="onboarding.html" class="add-btn">+ Add Client</a>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
-    </div>
+    </main>
   </div>
-</div>
 
+  <!-- === FOOTER === -->
 <footer class="footer">
   <div class="wrap">
     <div class="footer-inner">
@@ -221,48 +161,43 @@
     </div>
   </div>
 </footer>
+<div class="float-cb" id="float-widget">
+    <div class="float-cb-panel" id="float-panel">
+      <h4 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">Want us to call you?</h4>
+      <p style="font-size:12px;color:var(--text-3);margin-bottom:14px;">Our AI will call you in under 30 seconds.</p>
+      <input type="tel" id="float-phone" placeholder="Your phone number" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:8px;">
+      <input type="text" id="float-company" placeholder="Company name" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:10px;">
+      <button class="callback-btn" onclick="requestFloatCallback()" style="font-size:14px;padding:12px;">Call Me Now</button>
+      <div id="float-success" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:14px;font-weight:700;color:var(--green);">Calling you now!</p>
+        <p style="font-size:12px;color:var(--text-2);">Pick up your phone.</p>
+      </div>
+    </div>
+    <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </button>
+  </div>
 
-<script src="../script.js"></script>
-<script>
-(function() {
-  'use strict';
-  var PASS = 'TCT2026admin';
-
-  if (sessionStorage.getItem('tct-admin') === 'true') {
-    document.getElementById('gate').style.display = 'none';
-    document.getElementById('admin-content').classList.add('visible');
-  }
-
-  document.getElementById('gate-input').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') checkGate();
-  });
-
-  window.checkGate = function() {
-    var val = document.getElementById('gate-input').value;
-    if (val === PASS) {
-      sessionStorage.setItem('tct-admin', 'true');
-      document.getElementById('gate').style.display = 'none';
-      document.getElementById('admin-content').classList.add('visible');
-    } else {
-      document.getElementById('gate-error').style.display = 'block';
-      document.getElementById('gate-input').value = '';
-      document.getElementById('gate-input').focus();
+  <script src="../script.js"></script>
+  <script>
+    function checkAdminPass(){
+      var p=document.getElementById('adminPass').value;
+      if(p==='TCT2026admin'){document.getElementById('adminGate').style.display='none';document.getElementById('adminContent').classList.add('unlocked');sessionStorage.setItem('tct_admin','1');}
+      else{document.getElementById('adminPass').value='';document.getElementById('adminPass').style.borderColor='#ef4444';}
     }
-  };
+    if(sessionStorage.getItem('tct_admin')==='1'){document.getElementById('adminGate').style.display='none';document.getElementById('adminContent').classList.add('unlocked');}
 
-  // Client Search
-  var searchInput = document.getElementById('client-search');
-  if (searchInput) {
-    searchInput.addEventListener('input', function() {
-      var q = this.value.toLowerCase();
-      var rows = document.querySelectorAll('#client-tbody tr');
-      rows.forEach(function(row) {
-        var text = row.textContent.toLowerCase();
-        row.style.display = text.includes(q) ? '' : 'none';
+    function loadClients(){
+      var clients=JSON.parse(localStorage.getItem('tct_clients')||'[]');
+      var tbody=document.getElementById('clientBody');
+      if(!clients.length)return;
+      tbody.innerHTML='';
+      clients.forEach(function(c){
+        var badgeClass=c.status==='Active'?'badge-active':c.status==='Trial'?'badge-trial':'badge-churned';
+        tbody.innerHTML+='<tr><td class="name">'+c.name+'</td><td>'+c.business+'</td><td>'+c.plan+'</td><td style="color:#00dc82;font-weight:600">$'+c.mrr+'</td><td><span class="badge '+badgeClass+'">'+c.status+'</span></td><td>'+c.startDate+'</td><td><a href="client-portal.html?client='+c.id+'" class="action-link">View</a></td></tr>';
       });
-    });
-  }
-})();
-</script>
+    }
+    loadClients();
+  </script>
 </body>
 </html>

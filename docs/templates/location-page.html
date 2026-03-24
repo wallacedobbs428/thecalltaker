@@ -52,7 +52,7 @@
       "name": "How does The Call Taker work for [VERTICAL_LOWER] companies in [STATE]?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Forward your business line to The Call Taker. Our AI receptionist Jessica answers every call in under 2 seconds, captures caller details, books appointments, and texts you a summary. She works 24/7 including nights, weekends, and holidays."
+        "text": "Forward your business line to The Call Taker. Our AI receptionist GIDEON answers every call in under 2 seconds, captures caller details, books appointments, and texts you a summary. She works 24/7 including nights, weekends, and holidays."
       }
     },
     {
@@ -68,7 +68,7 @@
       "name": "Can The Call Taker handle [VERTICAL_LOWER]-specific calls?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Jessica is trained on [VERTICAL_LOWER] industry terminology, common service requests, and emergency scenarios. She handles [JOB_WORD] calls, appointment booking, and basic FAQs specific to your business."
+        "text": "Yes. GIDEON is trained on [VERTICAL_LOWER] industry terminology, common service requests, and emergency scenarios. She handles [JOB_WORD] calls, appointment booking, and basic FAQs specific to your business."
       }
     },
     {
@@ -76,7 +76,7 @@
       "name": "How fast can I get started in [STATE]?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Same day. Forward your calls and Jessica is live within an hour. No setup fee, no training period, no scripts to write. We handle everything."
+        "text": "Same day. Forward your calls and GIDEON is live within an hour. No setup fee, no training period, no scripts to write. We handle everything."
       }
     }
   ]
@@ -91,7 +91,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --white: #000; --off-white: #0a0a0a; --light: #111; --border: rgba(255,255,255,0.08);
+  --white: #000; --off-white: #000; --light: #111; --border: rgba(255,255,255,0.08);
   --text: #fff; --text-secondary: #a1a1aa; --text-muted: #71717a;
   --green: #00dc82; --green-light: rgba(0,220,130,0.08); --green-dim: rgba(0,220,130,0.12);
   --star: #fbbf24;
@@ -156,7 +156,7 @@ a { color: inherit; text-decoration: none; }
 .faq-a-inner { padding: 0 0 24px; font-size: .95rem; color: var(--text-secondary); line-height: 1.7; }
 
 /* CTA */
-.cta-section { padding: 96px 0; text-align: center; background: linear-gradient(180deg, #000 0%, #0a0a0a 100%); }
+.cta-section { padding: 96px 0; text-align: center; background: linear-gradient(180deg, #000 0%, #000 100%); }
 .cta-section h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 900; color: #fff; margin-bottom: 16px; letter-spacing: -.02em; }
 .cta-section p { font-size: 1.05rem; color: var(--text-secondary); max-width: 520px; margin: 0 auto 32px; }
 .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
@@ -185,24 +185,51 @@ a { color: inherit; text-decoration: none; }
   .related-links { flex-direction: column; align-items: center; }
 }
 </style>
+  <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
-
-<!-- HEADER -->
-<header class="site-header">
+<!-- === NAV === -->
+<header class="header">
   <div class="header-inner">
-    <a href="/" class="logo">The Call <span>Taker</span></a>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="/#industries">Industries</a></li>
-        <li><a href="/#how-it-works">How It Works</a></li>
-        <li><a href="/#pricing">Pricing</a></li>
-        <li><a href="/#demo">Demo</a></li>
-      </ul>
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      The Call <span>Taker</span>
+    </a>
+    <nav class="nav">
+      <a href="../../index.html" class="active">Home</a>
+      <a href="../../services.html">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="../../demo.html">Demo</a>
     </nav>
-    <a href="/pilot/" class="btn btn-primary btn-sm">Start Free Pilot</a>
+    <a href="../../demo.html" class="header-cta">Book a Demo</a>
+    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
+
+<nav class="mobile-nav">
+  <a href="../../index.html">Home</a>
+  <a href="../../services.html">Services</a>
+  <a href="#pricing">Pricing</a>
+  <a href="../../demo.html">Demo</a>
+  <a href="../../demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
+</nav>
+
+
+<!-- HEADER -->
+<!-- === NAV === -->
+<header class="header">
+  <div class="header-inner">
+    <a href="../../index.html" class="logo">
+      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      The Call <span>Taker</span>
+    </a>
+    <nav class="nav">
+      <a href="../../index.html" class="active">Home</a>
+      <a href="../../services.html">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="../../demo.html">Demo</a>
+    </nav>
+
 
 <!-- HERO -->
 <section class="hero">
@@ -225,7 +252,7 @@ a { color: inherit; text-decoration: none; }
 <!-- HOW IT WORKS -->
 <section class="how-section">
   <div class="container">
-    <h2>How Jessica Works for Your [VERTICAL] Business</h2>
+    <h2>How GIDEON Works for Your [VERTICAL] Business</h2>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
@@ -234,7 +261,7 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h3>Jessica Answers</h3>
+        <h3>GIDEON Answers</h3>
         <p>Our AI receptionist picks up in under 2 seconds. She captures caller info, books appointments, and handles FAQs.</p>
       </div>
       <div class="step">
@@ -264,7 +291,7 @@ a { color: inherit; text-decoration: none; }
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a">
-          <div class="faq-a-inner">Forward your business line to The Call Taker. Our AI receptionist Jessica answers every call in under 2 seconds, captures caller details, books appointments, and texts you a summary. She works 24/7 including nights, weekends, and holidays.</div>
+          <div class="faq-a-inner">Forward your business line to The Call Taker. Our AI receptionist GIDEON answers every call in under 2 seconds, captures caller details, books appointments, and texts you a summary. She works 24/7 including nights, weekends, and holidays.</div>
         </div>
       </div>
       <div class="faq-item">
@@ -282,7 +309,7 @@ a { color: inherit; text-decoration: none; }
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a">
-          <div class="faq-a-inner">Yes. Jessica is trained on [VERTICAL_LOWER] industry terminology, common service requests, and emergency scenarios. She handles [JOB_WORD] calls, appointment booking, and basic FAQs specific to your business.</div>
+          <div class="faq-a-inner">Yes. GIDEON is trained on [VERTICAL_LOWER] industry terminology, common service requests, and emergency scenarios. She handles [JOB_WORD] calls, appointment booking, and basic FAQs specific to your business.</div>
         </div>
       </div>
       <div class="faq-item">
@@ -291,7 +318,7 @@ a { color: inherit; text-decoration: none; }
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a">
-          <div class="faq-a-inner">Same day. Forward your calls and Jessica is live within an hour. No setup fee, no training period, no scripts to write. We handle everything.</div>
+          <div class="faq-a-inner">Same day. Forward your calls and GIDEON is live within an hour. No setup fee, no training period, no scripts to write. We handle everything.</div>
         </div>
       </div>
     </div>
@@ -323,19 +350,78 @@ a { color: inherit; text-decoration: none; }
 </section>
 
 <!-- FOOTER -->
-<footer class="site-footer">
-  <div class="container">
+<!-- === FOOTER === -->
+<footer class="footer">
+  <div class="wrap">
     <div class="footer-inner">
-      <p>&copy; 2026 The Call Taker. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="/">Home</a>
-        <a href="/industries/">Industries</a>
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
+      <div class="footer-brand">
+        <a href="../../index.html" class="logo">
+          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          The Call <span>Taker</span>
+        </a>
+        <p>AI receptionist for service businesses.</p>
       </div>
+      <div class="footer-links">
+        <a href="../../index.html">Home</a>
+        <a href="../../services.html">Services</a>
+        <a href="../../demo.html">Demo</a>
+        <a href="../../calculator.html">Calculator</a>
+        <a href="../../privacy.html">Privacy Policy</a>
+        <a href="../../terms.html">Terms of Service</a>
+        <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
+        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
     </div>
   </div>
 </footer>
+<script src="../../script.js" defer></script>
 
+<!-- === FLOATING WIDGET === -->
+<!-- FLOATING CALLBACK WIDGET -->
+<div class="float-cb" id="float-widget">
+  <div class="float-cb-panel" id="float-panel">
+    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
+    <p style="font-size: 12px; color: var(--text-3); margin-bottom: 14px;">Our AI will call you in under 30 seconds.</p>
+    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 10px;">
+    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Me Now</button>
+    <div id="float-success" style="display: none; text-align: center; padding: 16px 0;">
+      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
+      <p style="font-size: 12px; color: var(--text-2);">Pick up your phone.</p>
+    </div>
+  </div>
+  <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </button>
+</div>
+
+<!-- EXIT INTENT POPUP -->
+<div class="exit-overlay" id="exit-popup">
+  <div class="exit-modal">
+    <button class="exit-close" onclick="closeExitPopup()">&times;</button>
+    <div style="text-align: center;">
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;">Before you go</div>
+      <h3 style="font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px;">Get a free missed call audit</h3>
+      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">We'll call your business after hours and tell you exactly what your customers are hearing. Free. No strings.</p>
+      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px;">
+      <button class="callback-btn" onclick="requestExitCallback()">Get My Free Audit</button>
+      <div id="exit-success" style="display: none; padding: 20px 0;">
+        <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
+        <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
+      </div>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16157845747" style="color: var(--green); font-weight: 600;">(615) 784-5747</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE BAR -->
+<div class="sticky-mobile-bar">
+  <a href="tel:+16157845747"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
+  <a href="../../demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
 </body>
 </html>

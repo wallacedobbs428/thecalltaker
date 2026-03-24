@@ -1,122 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17970510102');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Client Portal — The Call Taker</title>
+  <meta name="google-site-verification" content="yD21d967IvWfANFmEZBw55ZZUWCa11fI92Mr-3wXk3s" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <title>Client Portal | The Call Taker</title>
+  <meta name="description" content="Log in to your Call Taker client dashboard.">
+  <meta name="robots" content="noindex, nofollow">
   <style>
-    .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; position: relative; overflow: hidden; }
-    .login-page::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, var(--green-glow) 0%, transparent 70%); pointer-events: none; opacity: 0.3; }
-
-    .login-card { max-width: 400px; width: 100%; position: relative; z-index: 1; }
-    .login-brand { text-align: center; margin-bottom: 40px; }
-    .login-brand .logo { justify-content: center; margin-bottom: 16px; }
-
-    .gideon-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: var(--green-dim); border: 1px solid rgba(0,220,130,0.15); border-radius: 100px; font-size: 12px; font-weight: 700; color: var(--green); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
-    .gideon-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: gPulse 2s ease-in-out infinite; }
-    @keyframes gPulse { 0%, 100% { box-shadow: 0 0 4px var(--green-glow); } 50% { box-shadow: 0 0 12px var(--green); } }
-
-    .login-title { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.03em; margin-bottom: 6px; }
-    .login-sub { font-size: 15px; color: var(--text-2); }
-
-    .login-form { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
-    .login-form .form-group { margin-bottom: 16px; }
-    .login-form .form-group:last-of-type { margin-bottom: 24px; }
-    .login-error { color: #ef4444; font-size: 13px; text-align: center; margin-bottom: 16px; display: none; }
-
-    .login-footer { text-align: center; margin-top: 24px; font-size: 13px; color: var(--text-3); }
-    .login-footer a { color: var(--green); font-weight: 500; }
+    .portal-hero{padding:160px 0 100px;text-align:center;position:relative;overflow:hidden}
+    .portal-hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(0,220,130,0.25) 0%,transparent 70%);pointer-events:none;opacity:0.4}
+    .portal-hero .label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;margin-bottom:16px}
+    .portal-hero h1{font-size:clamp(32px,5vw,48px);font-weight:700;color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:12px}
+    .portal-hero p{font-size:16px;color:var(--text-2);max-width:440px;margin:0 auto 40px;line-height:1.6}
+    .login-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px 36px;max-width:400px;margin:0 auto;text-align:left}
+    .login-card h2{font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+    .login-card .sub{font-size:13px;color:var(--text-3);margin-bottom:24px}
+    .form-group{margin-bottom:16px}
+    .form-group label{display:block;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:6px}
+    .form-group input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit}
+    .form-group input:focus{outline:none;border-color:#00dc82}
+    .login-btn{width:100%;padding:14px;background:#00dc82;color:#000;font-size:14px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit;margin-top:8px}
+    .login-btn:hover{background:#00f090}
+    .login-error{display:none;font-size:13px;color:#ef4444;margin-top:12px;text-align:center}
+    .help-link{display:block;text-align:center;margin-top:20px;font-size:13px;color:var(--text-3)}
+    .help-link a{color:#00dc82;font-weight:600}
+    .help-link a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        The Call <span>Taker</span>
+      </a>
+      <nav class="nav"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../index.html#pricing">Pricing</a><a href="../demo.html">Demo</a></nav>
+      <a href="../demo.html" class="header-cta">Book a Demo</a>
+      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <nav class="mobile-nav"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../index.html#pricing">Pricing</a><a href="../demo.html">Demo</a><a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a></nav>
 
-<header class="header">
-  <div class="header-inner">
-    <a href="../index.html" class="logo">
-      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-      The Call <span>Taker</span>
-    </a>
-    <nav class="nav">
-      <a href="../index.html">Home</a>
-      <a href="../services.html">Services</a>
-      <a href="../demo.html">Demo</a>
-    </nav>
-    <a href="../demo.html" class="header-cta">Book a Demo</a>
-    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <section class="portal-hero">
+    <div class="wrap">
+      <div class="label">Client Portal</div>
+      <h1>Your AI Receptionist Is Live</h1>
+      <p>Log in to view your call analytics, update your greeting, and manage your account.</p>
+      <div class="login-card">
+        <h2>Sign In</h2>
+        <div class="sub">Enter your email and PIN to access your dashboard.</div>
+        <div class="form-group"><label>Email Address</label><input type="email" id="loginEmail" placeholder="you@yourbusiness.com"></div>
+        <div class="form-group"><label>PIN</label><input type="password" id="loginPin" placeholder="4-digit PIN" maxlength="6"></div>
+        <button class="login-btn" onclick="clientLogin()">Sign In</button>
+        <div class="login-error" id="loginError">Invalid email or PIN. Please try again.</div>
+        <div class="help-link">Need help? <a href="mailto:thecalltakerai@gmail.com">Contact support</a></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="../index.html" class="logo"><div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>The Call <span>Taker</span></a>
+          <p>AI receptionist for service businesses.</p>
+        </div>
+        <div class="footer-links"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../demo.html">Demo</a><a href="../calculator.html">Calculator</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Service</a><a href="mailto:wallacemdobbs@icloud.com">Contact</a><a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a></div>
+      </div>
+      <div class="footer-bottom"><span>&copy; 2026 The Call Taker. All rights reserved.</span><span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span></div>
+    </div>
+  </footer>
+
+  <div class="float-cb" id="float-widget">
+    <div class="float-cb-panel" id="float-panel">
+      <h4 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">Want us to call you?</h4>
+      <p style="font-size:12px;color:var(--text-3);margin-bottom:14px;">Our AI will call you in under 30 seconds.</p>
+      <input type="tel" id="float-phone" placeholder="Your phone number" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:8px;">
+      <input type="text" id="float-company" placeholder="Company name" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:10px;">
+      <button class="callback-btn" onclick="requestFloatCallback()" style="font-size:14px;padding:12px;">Call Me Now</button>
+      <div id="float-success" style="display:none;text-align:center;padding:16px 0;"><p style="font-size:14px;font-weight:700;color:var(--green);">Calling you now!</p><p style="font-size:12px;color:var(--text-2);">Pick up your phone.</p></div>
+    </div>
+    <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
   </div>
-</header>
 
-<nav class="mobile-nav">
-  <a href="../index.html">Home</a>
-  <a href="../services.html">Services</a>
-  <a href="../demo.html">Demo</a>
-  <a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
-</nav>
-
-<main class="login-page">
-  <div class="login-card">
-    <div class="login-brand">
-      <div class="gideon-badge">
-        <div class="gideon-badge-dot"></div>
-        Powered by GIDEON
-      </div>
-      <h1 class="login-title">Client Portal</h1>
-      <p class="login-sub">Sign in to manage your AI receptionist.</p>
-    </div>
-
-    <div class="login-form">
-      <div class="login-error" id="login-error">Invalid email or PIN. Please try again.</div>
-      <div class="form-group">
-        <label class="form-label">Email Address</label>
-        <input type="email" class="form-input" id="login-email" placeholder="you@yourbusiness.com">
-      </div>
-      <div class="form-group">
-        <label class="form-label">PIN</label>
-        <input type="password" class="form-input" id="login-pin" placeholder="4-digit PIN" maxlength="4" inputmode="numeric">
-      </div>
-      <button class="btn btn-green btn-lg" style="width:100%; justify-content:center;" onclick="handleLogin()">Sign In</button>
-    </div>
-
-    <div class="login-footer">
-      <p>Don't have an account? <a href="../demo.html">Get started</a></p>
-      <p style="margin-top:8px;">Need help? <a href="mailto:thecalltakerai@gmail.com">Contact support</a></p>
-    </div>
-  </div>
-</main>
-
-<script src="../script.js"></script>
-<script>
-(function() {
-  'use strict';
-
-  document.getElementById('login-pin').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') handleLogin();
-  });
-  document.getElementById('login-email').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') document.getElementById('login-pin').focus();
-  });
-
-  window.handleLogin = function() {
-    var email = document.getElementById('login-email').value.trim();
-    var pin = document.getElementById('login-pin').value.trim();
-
-    if (!email || !pin) {
-      document.getElementById('login-error').style.display = 'block';
-      return;
+  <script src="../script.js"></script>
+  <script>
+    function clientLogin(){
+      var email=document.getElementById('loginEmail').value;
+      var pin=document.getElementById('loginPin').value;
+      if(email&&pin){
+        sessionStorage.setItem('tct_client_email',email);
+        window.location.href='dashboard.html';
+      }else{
+        document.getElementById('loginError').style.display='block';
+      }
     }
-
-    // Store session and redirect to dashboard
-    sessionStorage.setItem('tct-client-email', email);
-    sessionStorage.setItem('tct-client-auth', 'true');
-    window.location.href = 'dashboard.html';
-  };
-})();
-</script>
+    document.getElementById('loginPin').addEventListener('keydown',function(e){if(e.key==='Enter')clientLogin();});
+  </script>
 </body>
 </html>
