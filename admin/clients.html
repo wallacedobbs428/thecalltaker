@@ -1,60 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17970510102');</script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="yD21d967IvWfANFmEZBw55ZZUWCa11fI92Mr-3wXk3s" />
+  <meta name="description" content="Manage all Call Taker clients — search, filter, and view status.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Clients — Admin — The Call Taker</title>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
-  <title>Client List | The Call Taker</title>
-  <meta name="description" content="Manage all Call Taker clients.">
-  <meta name="robots" content="noindex, nofollow">
   <style>
-    .admin-gate{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center}
-    .admin-gate-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px 40px;text-align:center;max-width:380px;width:90%}
-    .admin-gate-box h2{color:#fff;font-size:20px;font-weight:700;margin-bottom:8px}
-    .admin-gate-box p{color:var(--text-3);font-size:13px;margin-bottom:24px}
-    .admin-gate-box input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:16px;text-align:center;letter-spacing:0.1em}
-    .admin-gate-box input:focus{outline:none;border-color:#00dc82}
-    .admin-gate-box button{width:100%;padding:12px;background:#00dc82;color:#000;font-size:14px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit}
-    .admin-gate-box button:hover{background:#00f090}
-    .admin-wrap{display:none}
-    .admin-wrap.unlocked{display:flex;min-height:100vh}
-    .admin-sidebar{width:240px;background:rgba(255,255,255,0.02);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:52px;bottom:0;overflow-y:auto}
-    .admin-sidebar .sidebar-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;padding:0 20px;margin-bottom:12px}
-    .admin-sidebar a{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-3);transition:all 0.15s}
-    .admin-sidebar a:hover,.admin-sidebar a.active{color:#fff;background:rgba(255,255,255,0.04)}
-    .admin-sidebar a.active{border-left:2px solid #00dc82}
-    .admin-sidebar .sidebar-divider{height:1px;background:var(--border);margin:16px 0}
-    .admin-main{flex:1;margin-left:240px;padding:80px 32px 48px}
-    .admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:16px}
-    .admin-header h1{font-size:28px;font-weight:700;color:#fff}
-    .add-btn{padding:10px 20px;background:#00dc82;color:#000;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-    .add-btn:hover{background:#00f090}
-    .client-table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-    .client-table th{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02)}
-    .client-table td{font-size:13px;color:var(--text-2);padding:14px 16px;border-bottom:1px solid var(--border)}
-    .client-table tr:last-child td{border-bottom:none}
-    .client-table tr:hover td{background:rgba(255,255,255,0.02)}
-    .client-table .name{color:#fff;font-weight:600}
-    .badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:0.02em}
-    .badge-active{background:rgba(0,220,130,0.15);color:#00dc82}
-    .badge-trial{background:rgba(245,158,11,0.15);color:#f59e0b}
-    .badge-churned{background:rgba(239,68,68,0.15);color:#ef4444}
-    .action-link{color:#00dc82;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none}
-    .action-link:hover{text-decoration:underline}
-    .empty-state{text-align:center;padding:60px 20px;color:var(--text-3);font-size:14px}
-    .empty-state p{margin-bottom:16px}
-    @media(max-width:768px){.admin-sidebar{display:none}.admin-main{margin-left:0;padding:80px 16px 32px}.client-table{font-size:12px}.client-table th,.client-table td{padding:10px 8px}}
+    body { background: #000; color: #fff; font-family: 'Inter', -apple-system, sans-serif; margin: 0; }
+    .admin-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .admin-gate p { color: #a1a1aa; font-size: 1rem; }
+    .admin-wrap { max-width: 1200px; margin: 0 auto; padding: 100px 24px 60px; }
+    .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
+    .admin-header h1 { font-size: 1.75rem; font-weight: 700; margin: 0; }
+    .admin-header h1 span { color: #00dc82; }
+    .sidebar-nav { display: flex; gap: 12px; flex-wrap: wrap; }
+    .sidebar-nav a { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 20px; color: #fff; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: background 0.2s; }
+    .sidebar-nav a:hover, .sidebar-nav a.active { background: #00dc82; color: #000; font-weight: 600; border-color: #00dc82; }
+    .section-label { color: #00dc82; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .search-bar { width: 100%; max-width: 400px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #fff; padding: 10px 14px; border-radius: 6px; font-size: 0.9rem; font-family: inherit; margin-bottom: 24px; }
+    .search-bar::placeholder { color: #71717a; }
+    .clients-table { width: 100%; border-collapse: collapse; }
+    .clients-table th { background: rgba(255,255,255,0.06); color: #a1a1aa; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 12px 16px; text-align: left; }
+    .clients-table td { border-bottom: 1px solid rgba(255,255,255,0.08); color: #fff; padding: 14px 16px; font-size: 0.9rem; }
+    .clients-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .badge-green { background: rgba(0,220,130,0.12); color: #00dc82; }
+    .badge-amber { background: rgba(245,158,11,0.12); color: #f59e0b; }
+    .badge-red { background: rgba(239,68,68,0.12); color: #ef4444; }
+    .view-link { color: #00dc82; text-decoration: none; font-weight: 500; font-size: 0.85rem; }
+    .view-link:hover { text-decoration: underline; }
+    .table-wrap { overflow-x: auto; }
   </style>
 </head>
 <body>
-  <!-- === NAV === -->
+
 <header class="header">
   <div class="header-inner">
     <a href="../index.html" class="logo">
@@ -62,9 +56,9 @@
       The Call <span>Taker</span>
     </a>
     <nav class="nav">
-      <a href="../index.html" class="active">Home</a>
+      <a href="../index.html">Home</a>
       <a href="../services.html">Services</a>
-      <a href="#pricing">Pricing</a>
+      <a href="../index.html#pricing">Pricing</a>
       <a href="../demo.html">Demo</a>
     </nav>
     <a href="../demo.html" class="header-cta">Book a Demo</a>
@@ -75,65 +69,89 @@
 <nav class="mobile-nav">
   <a href="../index.html">Home</a>
   <a href="../services.html">Services</a>
-  <a href="#pricing">Pricing</a>
+  <a href="../index.html#pricing">Pricing</a>
   <a href="../demo.html">Demo</a>
   <a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
 </nav>
 
-<div class="admin-gate" id="adminGate">
-    <div class="admin-gate-box">
-      <h2>Admin Access</h2>
-      <p>Enter your admin password to continue.</p>
-      <input type="password" id="adminPass" placeholder="Password" onkeydown="if(event.key==='Enter')checkAdminPass()">
-      <button onclick="checkAdminPass()">Unlock</button>
-    </div>
-  </div>
+<div id="admin-gate" class="admin-gate">
+  <p>Authenticating...</p>
+</div>
 
-  <div class="admin-wrap" id="adminContent">
-    <aside class="admin-sidebar">
-      <div class="sidebar-label">Admin</div>
-      <a href="index.html">Dashboard</a>
-      <a href="clients.html" class="active">Clients</a>
-      <a href="onboarding.html">Onboarding</a>
-      <a href="client-portal.html">Client View</a>
-      <div class="sidebar-divider"></div>
-      <div class="sidebar-label">Client Portals</div>
-      <a href="../client/index.html">Client Login</a>
-      <a href="../client/dashboard.html">Client Dashboard</a>
-      <a href="../client/onboarding.html">Client Onboarding</a>
-    </aside>
-    <main class="admin-main">
-      <div class="admin-header">
-        <h1>Clients</h1>
-        <a href="onboarding.html" class="add-btn">+ Add Client</a>
+<div id="admin-content" style="display:none;">
+  <div class="admin-wrap">
+    <div class="admin-header">
+      <h1>Client <span>Management</span></h1>
+      <div class="sidebar-nav">
+        <a href="index.html">Dashboard</a>
+        <a href="clients.html" class="active">Clients</a>
+        <a href="onboarding.html">Onboarding</a>
+        <a href="client-portal.html">Client Portal</a>
       </div>
-      <table class="client-table" id="clientTable">
+    </div>
+
+    <div class="section-label">All Clients</div>
+    <input type="text" class="search-bar" id="client-search" placeholder="Search by name, business, or industry...">
+
+    <div class="table-wrap">
+      <table class="clients-table" id="clients-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Business</th>
+            <th>Business Name</th>
+            <th>Contact</th>
+            <th>Industry</th>
             <th>Plan</th>
-            <th>MRR</th>
             <th>Status</th>
-            <th>Start Date</th>
-            <th>Actions</th>
+            <th>Action</th>
           </tr>
         </thead>
-        <tbody id="clientBody">
+        <tbody id="clients-tbody">
           <tr>
-            <td colspan="7">
-              <div class="empty-state">
-                <p>No clients yet. Add your first client to get started.</p>
-                <a href="onboarding.html" class="add-btn">+ Add Client</a>
-              </div>
-            </td>
+            <td>Arctic Air Pros</td>
+            <td>Marcus Thompson</td>
+            <td>HVAC</td>
+            <td>Starter — $497/mo</td>
+            <td><span class="badge badge-green">Active</span></td>
+            <td><a href="client-portal.html?client=arctic-air" class="view-link">View</a></td>
+          </tr>
+          <tr>
+            <td>Palmetto Comfort</td>
+            <td>David Chen</td>
+            <td>HVAC</td>
+            <td>Pro — $997/mo</td>
+            <td><span class="badge badge-green">Active</span></td>
+            <td><a href="client-portal.html?client=palmetto" class="view-link">View</a></td>
+          </tr>
+          <tr>
+            <td>Reliable Rooter</td>
+            <td>Sarah Mitchell</td>
+            <td>Plumbing</td>
+            <td>Starter — $497/mo</td>
+            <td><span class="badge badge-amber">Onboarding</span></td>
+            <td><a href="client-portal.html?client=reliable-rooter" class="view-link">View</a></td>
+          </tr>
+          <tr>
+            <td>Precision Plumbing</td>
+            <td>Mike Rodriguez</td>
+            <td>Plumbing</td>
+            <td>Starter — $497/mo</td>
+            <td><span class="badge badge-green">Active</span></td>
+            <td><a href="client-portal.html?client=precision-plumbing" class="view-link">View</a></td>
+          </tr>
+          <tr>
+            <td>Rapid Key Locksmith</td>
+            <td>James Wilson</td>
+            <td>Locksmith</td>
+            <td>Pro — $997/mo</td>
+            <td><span class="badge badge-red">Paused</span></td>
+            <td><a href="client-portal.html?client=rapid-key" class="view-link">View</a></td>
           </tr>
         </tbody>
       </table>
-    </main>
+    </div>
   </div>
+</div>
 
-  <!-- === FOOTER === -->
 <footer class="footer">
   <div class="wrap">
     <div class="footer-inner">
@@ -161,43 +179,70 @@
     </div>
   </div>
 </footer>
+
+<!-- FLOATING CALLBACK WIDGET -->
 <div class="float-cb" id="float-widget">
-    <div class="float-cb-panel" id="float-panel">
-      <h4 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">Want us to call you?</h4>
-      <p style="font-size:12px;color:var(--text-3);margin-bottom:14px;">Our AI will call you in under 30 seconds.</p>
-      <input type="tel" id="float-phone" placeholder="Your phone number" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:8px;">
-      <input type="text" id="float-company" placeholder="Company name" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:10px;">
-      <button class="callback-btn" onclick="requestFloatCallback()" style="font-size:14px;padding:12px;">Call Me Now</button>
-      <div id="float-success" style="display:none;text-align:center;padding:16px 0;">
-        <p style="font-size:14px;font-weight:700;color:var(--green);">Calling you now!</p>
-        <p style="font-size:12px;color:var(--text-2);">Pick up your phone.</p>
-      </div>
+  <div class="float-cb-panel" id="float-panel">
+    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
+    <p style="font-size: 12px; color: var(--text-3); margin-bottom: 14px;">Our AI will call you in under 30 seconds.</p>
+    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 10px;">
+    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Me Now</button>
+    <div id="float-success" style="display: none; text-align: center; padding: 16px 0;">
+      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
+      <p style="font-size: 12px; color: var(--text-2);">Pick up your phone.</p>
     </div>
-    <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    </button>
   </div>
+  <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </button>
+</div>
 
-  <script src="../script.js"></script>
-  <script>
-    function checkAdminPass(){
-      var p=document.getElementById('adminPass').value;
-      if(p==='TCT2026admin'){document.getElementById('adminGate').style.display='none';document.getElementById('adminContent').classList.add('unlocked');sessionStorage.setItem('tct_admin','1');}
-      else{document.getElementById('adminPass').value='';document.getElementById('adminPass').style.borderColor='#ef4444';}
-    }
-    if(sessionStorage.getItem('tct_admin')==='1'){document.getElementById('adminGate').style.display='none';document.getElementById('adminContent').classList.add('unlocked');}
+<!-- EXIT INTENT POPUP -->
+<div class="exit-overlay" id="exit-popup">
+  <div class="exit-modal">
+    <button class="exit-close" onclick="closeExitPopup()">&times;</button>
+    <div style="text-align: center;">
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;">Before you go</div>
+      <h3 style="font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px;">Get a free missed call audit</h3>
+      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">We'll call your business after hours and tell you exactly what your customers are hearing. Free. No strings.</p>
+      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px;">
+      <button class="callback-btn" onclick="requestExitCallback()">Get My Free Audit</button>
+      <div id="exit-success" style="display: none; padding: 20px 0;">
+        <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
+        <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
+      </div>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16157845747" style="color: var(--green); font-weight: 600;">(615) 784-5747</a></p>
+    </div>
+  </div>
+</div>
 
-    function loadClients(){
-      var clients=JSON.parse(localStorage.getItem('tct_clients')||'[]');
-      var tbody=document.getElementById('clientBody');
-      if(!clients.length)return;
-      tbody.innerHTML='';
-      clients.forEach(function(c){
-        var badgeClass=c.status==='Active'?'badge-active':c.status==='Trial'?'badge-trial':'badge-churned';
-        tbody.innerHTML+='<tr><td class="name">'+c.name+'</td><td>'+c.business+'</td><td>'+c.plan+'</td><td style="color:#00dc82;font-weight:600">$'+c.mrr+'</td><td><span class="badge '+badgeClass+'">'+c.status+'</span></td><td>'+c.startDate+'</td><td><a href="client-portal.html?client='+c.id+'" class="action-link">View</a></td></tr>';
-      });
-    }
-    loadClients();
-  </script>
+<!-- MOBILE BAR -->
+<div class="sticky-mobile-bar">
+  <a href="tel:+16157845747"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
+  <a href="../demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
+</div>
+
+<script src="../script.js"></script>
+<script>
+(function() {
+  var pass = prompt('Enter admin password:');
+  if (pass !== 'TCT2026admin') {
+    document.getElementById('admin-gate').innerHTML = '<p style="color:#ef4444;">Access denied.</p>';
+    return;
+  }
+  document.getElementById('admin-gate').style.display = 'none';
+  document.getElementById('admin-content').style.display = 'block';
+
+  document.getElementById('client-search').addEventListener('input', function() {
+    var q = this.value.toLowerCase();
+    var rows = document.querySelectorAll('#clients-tbody tr');
+    rows.forEach(function(row) {
+      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+})();
+</script>
 </body>
 </html>

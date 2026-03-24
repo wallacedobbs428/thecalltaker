@@ -1,303 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17970510102');</script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="yD21d967IvWfANFmEZBw55ZZUWCa11fI92Mr-3wXk3s" />
+  <meta name="description" content="Onboard a new client to The Call Taker — 5-step wizard.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Client Onboarding — Admin — The Call Taker</title>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
-  <title>Admin Onboarding | The Call Taker</title>
-  <meta name="description" content="Onboard new clients to The Call Taker.">
-  <meta name="robots" content="noindex, nofollow">
   <style>
-    .admin-gate{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center}
-    .admin-gate-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px 40px;text-align:center;max-width:380px;width:90%}
-    .admin-gate-box h2{color:#fff;font-size:20px;font-weight:700;margin-bottom:8px}
-    .admin-gate-box p{color:var(--text-3);font-size:13px;margin-bottom:24px}
-    .admin-gate-box input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:16px;text-align:center;letter-spacing:0.1em}
-    .admin-gate-box input:focus{outline:none;border-color:#00dc82}
-    .admin-gate-box button{width:100%;padding:12px;background:#00dc82;color:#000;font-size:14px;font-weight:600;border:none;border-radius:8px;cursor:pointer;font-family:inherit}
-    .admin-gate-box button:hover{background:#00f090}
-    .admin-wrap{display:none}
-    .admin-wrap.unlocked{display:flex;min-height:100vh}
-    .admin-sidebar{width:240px;background:rgba(255,255,255,0.02);border-right:1px solid var(--border);padding:24px 0;position:fixed;top:52px;bottom:0;overflow-y:auto}
-    .admin-sidebar .sidebar-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;padding:0 20px;margin-bottom:12px}
-    .admin-sidebar a{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--text-3);transition:all 0.15s}
-    .admin-sidebar a:hover,.admin-sidebar a.active{color:#fff;background:rgba(255,255,255,0.04)}
-    .admin-sidebar a.active{border-left:2px solid #00dc82}
-    .admin-sidebar .sidebar-divider{height:1px;background:var(--border);margin:16px 0}
-    .admin-main{flex:1;margin-left:240px;padding:80px 32px 48px;max-width:720px}
-    .admin-header{margin-bottom:32px}
-    .admin-header h1{font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}
-    .admin-header p{font-size:14px;color:var(--text-2)}
-    .progress-bar{width:100%;height:4px;background:rgba(255,255,255,0.06);border-radius:4px;margin-bottom:40px;overflow:hidden}
-    .progress-fill{height:100%;background:#00dc82;border-radius:4px;transition:width 0.4s ease}
-    .step{display:none}
-    .step.active{display:block}
-    .step-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;margin-bottom:16px}
-    .step h2{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px}
-    .step p.desc{font-size:14px;color:var(--text-2);margin-bottom:24px}
-    .form-group{margin-bottom:20px}
-    .form-group label{display:block;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:6px}
-    .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit}
-    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#00dc82}
-    .form-group select{appearance:none;cursor:pointer}
-    .form-group textarea{min-height:100px;resize:vertical}
-    .step-nav{display:flex;gap:12px;margin-top:32px}
-    .step-nav .btn-back{padding:10px 20px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
-    .step-nav .btn-back:hover{background:var(--surface-hover)}
-    .step-nav .btn-next{padding:10px 20px;background:#00dc82;color:#000;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
-    .step-nav .btn-next:hover{background:#00f090}
-    .plan-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-    .plan-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:0.15s}
-    .plan-card:hover{border-color:rgba(255,255,255,0.15)}
-    .plan-card.selected{border-color:#00dc82;background:rgba(0,220,130,0.05)}
-    .plan-card .plan-price{font-size:28px;font-weight:800;color:#00dc82;margin-bottom:4px}
-    .plan-card .plan-name{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
-    .plan-card .plan-desc{font-size:12px;color:var(--text-3)}
-    .checklist-item{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;transition:0.15s}
-    .checklist-item:hover{background:var(--surface-hover)}
-    .checklist-item.checked{border-color:rgba(0,220,130,0.3)}
-    .checklist-item .check-box{width:22px;height:22px;border:2px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:0.15s}
-    .checklist-item.checked .check-box{background:#00dc82;border-color:#00dc82}
-    .checklist-item.checked .check-box::after{content:'';width:6px;height:10px;border:solid #000;border-width:0 2px 2px 0;transform:rotate(45deg);margin-top:-2px}
-    .checklist-item span{font-size:14px;color:var(--text-2);font-weight:500}
-    .checklist-item.checked span{color:#fff}
-    @media(max-width:768px){.admin-sidebar{display:none}.admin-main{margin-left:0;padding:80px 16px 32px}.plan-cards{grid-template-columns:1fr}}
+    body { background: #000; color: #fff; font-family: 'Inter', -apple-system, sans-serif; margin: 0; }
+    .admin-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .admin-gate p { color: #a1a1aa; font-size: 1rem; }
+    .admin-wrap { max-width: 800px; margin: 0 auto; padding: 100px 24px 60px; }
+    .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
+    .admin-header h1 { font-size: 1.75rem; font-weight: 700; margin: 0; }
+    .admin-header h1 span { color: #00dc82; }
+    .sidebar-nav { display: flex; gap: 12px; flex-wrap: wrap; }
+    .sidebar-nav a { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 20px; color: #fff; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: background 0.2s; }
+    .sidebar-nav a:hover, .sidebar-nav a.active { background: #00dc82; color: #000; font-weight: 600; border-color: #00dc82; }
+    .section-label { color: #00dc82; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    .progress-bar { display: flex; gap: 8px; margin-bottom: 40px; }
+    .progress-step { flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.08); transition: background 0.3s; }
+    .progress-step.active { background: #00dc82; box-shadow: 0 0 8px rgba(0,220,130,0.25); }
+    .step-indicator { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .step-indicator span { font-size: 0.75rem; color: #71717a; }
+    .step-indicator span.active { color: #00dc82; font-weight: 600; }
+    .wizard-step { display: none; }
+    .wizard-step.active { display: block; }
+    .wizard-step h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+    .wizard-step p.desc { font-size: 0.9rem; color: #a1a1aa; margin-bottom: 24px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.8rem; color: #a1a1aa; margin-bottom: 6px; font-weight: 500; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #fff; padding: 10px 14px; border-radius: 6px; font-size: 0.9rem; font-family: inherit; box-sizing: border-box; }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .form-group select { appearance: none; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn-row { display: flex; gap: 12px; margin-top: 32px; }
+    .btn-next { background: #00dc82; color: #000; font-weight: 600; border-radius: 6px; padding: 10px 20px; border: none; cursor: pointer; font-size: 0.9rem; font-family: inherit; }
+    .btn-back { border: 1px solid rgba(255,255,255,0.08); color: #fff; background: transparent; border-radius: 6px; padding: 10px 20px; cursor: pointer; font-size: 0.9rem; font-family: inherit; }
+    .btn-next:hover { opacity: 0.9; }
+    .btn-back:hover { background: rgba(255,255,255,0.06); }
+    .success-box { text-align: center; padding: 60px 20px; }
+    .success-box h2 { color: #00dc82; font-size: 1.5rem; margin-bottom: 12px; }
+    .success-box p { color: #a1a1aa; font-size: 1rem; }
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="header-inner">
-      <a href="../index.html" class="logo">
-        <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-        The Call <span>Taker</span>
-      </a>
-      <nav class="nav">
-        <a href="../index.html">Home</a>
-        <a href="../services.html">Services</a>
-        <a href="../index.html#pricing">Pricing</a>
-        <a href="../demo.html">Demo</a>
-      </nav>
-      <a href="../demo.html" class="header-cta">Book a Demo</a>
-      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
-  </header>
-  <nav class="mobile-nav">
-    <a href="../index.html">Home</a>
-    <a href="../services.html">Services</a>
-    <a href="../index.html#pricing">Pricing</a>
-    <a href="../demo.html">Demo</a>
-    <a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
-  </nav>
 
-  <div class="admin-gate" id="adminGate">
-    <div class="admin-gate-box">
-      <h2>Admin Access</h2>
-      <p>Enter your admin password to continue.</p>
-      <input type="password" id="adminPass" placeholder="Password" onkeydown="if(event.key==='Enter')checkAdminPass()">
-      <button onclick="checkAdminPass()">Unlock</button>
-    </div>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      The Call <span>Taker</span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../demo.html">Demo</a>
+    </nav>
+    <a href="../demo.html" class="header-cta">Book a Demo</a>
+    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
+</header>
 
-  <div class="admin-wrap" id="adminContent">
-    <aside class="admin-sidebar">
-      <div class="sidebar-label">Admin</div>
-      <a href="index.html">Dashboard</a>
-      <a href="clients.html">Clients</a>
-      <a href="onboarding.html" class="active">Onboarding</a>
-      <a href="client-portal.html">Client View</a>
-      <div class="sidebar-divider"></div>
-      <div class="sidebar-label">Client Portals</div>
-      <a href="../client/index.html">Client Login</a>
-      <a href="../client/dashboard.html">Client Dashboard</a>
-      <a href="../client/onboarding.html">Client Onboarding</a>
-    </aside>
-    <main class="admin-main">
-      <div class="admin-header">
-        <h1>Onboard New Client</h1>
-        <p>Walk through the setup process step by step.</p>
+<nav class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="../services.html">Services</a>
+  <a href="../index.html#pricing">Pricing</a>
+  <a href="../demo.html">Demo</a>
+  <a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
+</nav>
+
+<div id="admin-gate" class="admin-gate">
+  <p>Authenticating...</p>
+</div>
+
+<div id="admin-content" style="display:none;">
+  <div class="admin-wrap">
+    <div class="admin-header">
+      <h1>Client <span>Onboarding</span></h1>
+      <div class="sidebar-nav">
+        <a href="index.html">Dashboard</a>
+        <a href="clients.html">Clients</a>
+        <a href="onboarding.html" class="active">Onboarding</a>
+        <a href="client-portal.html">Client Portal</a>
       </div>
-      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+    </div>
 
-      <div class="step active" id="step1">
-        <div class="step-label">Step 1 of 5</div>
-        <h2>Business Information</h2>
-        <p class="desc">Collect the client's core details.</p>
-        <div class="form-group"><label>Business Name</label><input type="text" id="bizName" placeholder="e.g. Arctic Air Pros"></div>
-        <div class="form-group"><label>Contact Name</label><input type="text" id="contactName" placeholder="Full name"></div>
-        <div class="form-group"><label>Email</label><input type="email" id="bizEmail" placeholder="email@example.com"></div>
-        <div class="form-group"><label>Phone</label><input type="tel" id="bizPhone" placeholder="(555) 123-4567"></div>
-        <div class="form-group"><label>Industry</label>
-          <select id="bizIndustry">
+    <div class="step-indicator" id="step-indicator">
+      <span class="active">1. Business Info</span>
+      <span>2. Contact</span>
+      <span>3. Plan</span>
+      <span>4. AI Config</span>
+      <span>5. Review</span>
+    </div>
+    <div class="progress-bar" id="progress-bar">
+      <div class="progress-step active"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+    </div>
+
+    <!-- Step 1: Business Info -->
+    <div class="wizard-step active" id="step-1">
+      <h2>Business Information</h2>
+      <p class="desc">Enter the client's business details to get started.</p>
+      <div class="form-group">
+        <label>Business Name</label>
+        <input type="text" id="ob-biz-name" placeholder="e.g. Arctic Air Pros">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Industry</label>
+          <select id="ob-industry">
             <option value="">Select industry</option>
-            <option>HVAC</option><option>Plumbing</option><option>Electrical</option><option>Roofing</option>
-            <option>Dental</option><option>Med Spa</option><option>Legal</option><option>Property Management</option>
-            <option>Locksmith</option><option>Towing</option><option>Veterinary</option><option>Pest Control</option>
-            <option>Garage Door</option><option>Funeral</option><option>Other</option>
+            <option>HVAC</option>
+            <option>Roofing</option>
+            <option>Plumbing</option>
+            <option>Electrical</option>
+            <option>Dental</option>
+            <option>Med Spa</option>
+            <option>Legal</option>
+            <option>Property Management</option>
+            <option>Restoration</option>
+            <option>Locksmith</option>
+            <option>Veterinary</option>
+            <option>Garage Door</option>
+            <option>Towing</option>
           </select>
         </div>
-        <div class="step-nav"><button class="btn-next" onclick="goStep(2)">Continue</button></div>
-      </div>
-
-      <div class="step" id="step2">
-        <div class="step-label">Step 2 of 5</div>
-        <h2>Call Handling Preferences</h2>
-        <p class="desc">How should the AI handle their calls?</p>
-        <div class="form-group"><label>Business Hours</label><input type="text" id="bizHours" placeholder="e.g. Mon-Fri 8am-6pm, Sat 9am-1pm"></div>
-        <div class="form-group"><label>Greeting Script</label><textarea id="bizGreeting" placeholder="e.g. Thank you for calling [Business]. How can I help you today?"></textarea></div>
-        <div class="form-group"><label>Transfer Number</label><input type="tel" id="bizTransfer" placeholder="Number to transfer urgent calls to"></div>
-        <div class="form-group"><label>Special Instructions</label><textarea id="bizNotes" placeholder="Any custom instructions for the AI..."></textarea></div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goStep(1)">Back</button>
-          <button class="btn-next" onclick="goStep(3)">Continue</button>
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" id="ob-location" placeholder="City, State">
         </div>
       </div>
-
-      <div class="step" id="step3">
-        <div class="step-label">Step 3 of 5</div>
-        <h2>Select Plan</h2>
-        <p class="desc">Choose the right plan for this client.</p>
-        <div class="plan-cards">
-          <div class="plan-card" onclick="selectPlan(this,'97')" data-plan="97">
-            <div class="plan-price">$97</div>
-            <div class="plan-name">After-Hours</div>
-            <div class="plan-desc">AI answers after hours only</div>
-          </div>
-          <div class="plan-card" onclick="selectPlan(this,'497')" data-plan="497">
-            <div class="plan-price">$497</div>
-            <div class="plan-name">Starter</div>
-            <div class="plan-desc">Full 24/7 AI receptionist</div>
-          </div>
-          <div class="plan-card" onclick="selectPlan(this,'997')" data-plan="997">
-            <div class="plan-price">$997</div>
-            <div class="plan-name">Pro</div>
-            <div class="plan-desc">24/7 + advanced features</div>
-          </div>
-        </div>
-        <div class="form-group"><label>Setup Fee</label><input type="text" value="$500" disabled style="opacity:0.5"></div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goStep(2)">Back</button>
-          <button class="btn-next" onclick="goStep(4)">Continue</button>
-        </div>
+      <div class="form-group">
+        <label>Business Phone</label>
+        <input type="tel" id="ob-biz-phone" placeholder="(555) 123-4567">
       </div>
-
-      <div class="step" id="step4">
-        <div class="step-label">Step 4 of 5</div>
-        <h2>Payment</h2>
-        <p class="desc">Send the client their payment link.</p>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px">
-          <p style="font-size:14px;color:var(--text-2);margin-bottom:16px">Send the PayPal invoice or Stripe link to the client. Once payment is confirmed, proceed to go-live.</p>
-          <div class="form-group"><label>Payment Method</label>
-            <select id="payMethod"><option>PayPal Invoice</option><option>Stripe Link</option><option>Manual/Other</option></select>
-          </div>
-          <div class="form-group"><label>Payment Status</label>
-            <select id="payStatus"><option>Pending</option><option>Paid</option></select>
-          </div>
-        </div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goStep(3)">Back</button>
-          <button class="btn-next" onclick="goStep(5)">Continue</button>
-        </div>
-      </div>
-
-      <div class="step" id="step5">
-        <div class="step-label">Step 5 of 5</div>
-        <h2>Go-Live Checklist</h2>
-        <p class="desc">Complete each item before activating the client.</p>
-        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Voice AI agent configured with greeting</span></div>
-        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Phone number forwarding set up</span></div>
-        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>GHL contact created with correct tags</span></div>
-        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Test call completed successfully</span></div>
-        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Client portal credentials sent</span></div>
-        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Welcome email sent</span></div>
-        <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Payment confirmed</span></div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goStep(4)">Back</button>
-          <button class="btn-next" onclick="saveClient()">Activate Client</button>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <a href="../index.html" class="logo">
-            <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-            The Call <span>Taker</span>
-          </a>
-          <p>AI receptionist for service businesses.</p>
-        </div>
-        <div class="footer-links">
-          <a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../demo.html">Demo</a><a href="../calculator.html">Calculator</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Service</a><a href="mailto:wallacemdobbs@icloud.com">Contact</a><a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-        <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
+      <div class="btn-row">
+        <button class="btn-next" onclick="goStep(2)">Next Step</button>
       </div>
     </div>
-  </footer>
 
-  <div class="float-cb" id="float-widget">
-    <div class="float-cb-panel" id="float-panel">
-      <h4 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">Want us to call you?</h4>
-      <p style="font-size:12px;color:var(--text-3);margin-bottom:14px;">Our AI will call you in under 30 seconds.</p>
-      <input type="tel" id="float-phone" placeholder="Your phone number" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:8px;">
-      <input type="text" id="float-company" placeholder="Company name" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:10px;">
-      <button class="callback-btn" onclick="requestFloatCallback()" style="font-size:14px;padding:12px;">Call Me Now</button>
-      <div id="float-success" style="display:none;text-align:center;padding:16px 0;"><p style="font-size:14px;font-weight:700;color:var(--green);">Calling you now!</p><p style="font-size:12px;color:var(--text-2);">Pick up your phone.</p></div>
+    <!-- Step 2: Contact -->
+    <div class="wizard-step" id="step-2">
+      <h2>Primary Contact</h2>
+      <p class="desc">Who is the main point of contact for this account?</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="ob-first" placeholder="First name">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="ob-last" placeholder="Last name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="ob-email" placeholder="owner@business.com">
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" id="ob-phone" placeholder="(555) 123-4567">
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(1)">Back</button>
+        <button class="btn-next" onclick="goStep(3)">Next Step</button>
+      </div>
     </div>
-    <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+
+    <!-- Step 3: Plan -->
+    <div class="wizard-step" id="step-3">
+      <h2>Select Plan</h2>
+      <p class="desc">Choose the pricing plan for this client.</p>
+      <div class="form-group">
+        <label>Plan</label>
+        <select id="ob-plan">
+          <option value="">Select plan</option>
+          <option value="starter">Starter — $497/mo (HVAC, Plumbing, Electrical)</option>
+          <option value="pro">Pro — $997/mo (All industries)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Setup Fee</label>
+        <input type="text" value="$500 one-time" disabled style="opacity:0.6;">
+      </div>
+      <div class="form-group">
+        <label>Billing Start Date</label>
+        <input type="date" id="ob-billing-start">
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(2)">Back</button>
+        <button class="btn-next" onclick="goStep(4)">Next Step</button>
+      </div>
+    </div>
+
+    <!-- Step 4: AI Config -->
+    <div class="wizard-step" id="step-4">
+      <h2>AI Configuration</h2>
+      <p class="desc">Configure GIDEON for this client's business.</p>
+      <div class="form-group">
+        <label>Business Hours</label>
+        <input type="text" id="ob-hours" placeholder="e.g. Mon-Fri 8am-6pm, Sat 9am-1pm">
+      </div>
+      <div class="form-group">
+        <label>Services Offered (comma separated)</label>
+        <input type="text" id="ob-services" placeholder="e.g. AC Repair, Furnace Install, Duct Cleaning">
+      </div>
+      <div class="form-group">
+        <label>Custom Greeting</label>
+        <textarea id="ob-greeting" placeholder="e.g. Thank you for calling Arctic Air Pros! How can we help you today?"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Call Forwarding Number</label>
+        <input type="tel" id="ob-forward" placeholder="Number to forward urgent calls to">
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(3)">Back</button>
+        <button class="btn-next" onclick="goStep(5)">Review &amp; Submit</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Review -->
+    <div class="wizard-step" id="step-5">
+      <h2>Review &amp; Confirm</h2>
+      <p class="desc">Double-check everything before activating this client.</p>
+      <div id="review-summary" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;margin-bottom:24px;">
+        <p style="color:#a1a1aa;font-size:0.85rem;">Loading summary...</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="goStep(4)">Back</button>
+        <button class="btn-next" onclick="submitOnboarding()">Activate Client</button>
+      </div>
+    </div>
+
+    <!-- Success -->
+    <div class="wizard-step" id="step-success">
+      <div class="success-box">
+        <h2>Client Activated</h2>
+        <p>GIDEON is now configured and ready to answer calls for this client.</p>
+        <div class="btn-row" style="justify-content:center;margin-top:24px;">
+          <a href="clients.html" class="btn-next" style="text-decoration:none;">View All Clients</a>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <script src="../script.js"></script>
-  <script>
-    function checkAdminPass(){var p=document.getElementById('adminPass').value;if(p==='TCT2026admin'){document.getElementById('adminGate').style.display='none';document.getElementById('adminContent').classList.add('unlocked');sessionStorage.setItem('tct_admin','1');}else{document.getElementById('adminPass').value='';document.getElementById('adminPass').style.borderColor='#ef4444';}}
-    if(sessionStorage.getItem('tct_admin')==='1'){document.getElementById('adminGate').style.display='none';document.getElementById('adminContent').classList.add('unlocked');}
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">
+          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          The Call <span>Taker</span>
+        </a>
+        <p>AI receptionist for service businesses.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../services.html">Services</a>
+        <a href="../demo.html">Demo</a>
+        <a href="../calculator.html">Calculator</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
+        <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
+        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
+    </div>
+  </div>
+</footer>
 
-    var currentStep=1;
-    var selectedPlan='';
-    function goStep(n){
-      document.getElementById('step'+currentStep).classList.remove('active');
-      document.getElementById('step'+n).classList.add('active');
-      currentStep=n;
-      document.getElementById('progressFill').style.width=(n*20)+'%';
-    }
-    function selectPlan(el,plan){
-      document.querySelectorAll('.plan-card').forEach(function(c){c.classList.remove('selected');});
-      el.classList.add('selected');
-      selectedPlan=plan;
-    }
-    function toggleCheck(el){el.classList.toggle('checked');}
-    function saveClient(){
-      var clients=JSON.parse(localStorage.getItem('tct_clients')||'[]');
-      var id='c'+Date.now();
-      clients.push({
-        id:id,
-        name:document.getElementById('contactName').value||'New Client',
-        business:document.getElementById('bizName').value||'Unknown',
-        plan:selectedPlan==='97'?'After-Hours':selectedPlan==='997'?'Pro':'Starter',
-        mrr:selectedPlan||'497',
-        status:'Active',
-        startDate:new Date().toISOString().split('T')[0],
-        email:document.getElementById('bizEmail').value,
-        phone:document.getElementById('bizPhone').value,
-        industry:document.getElementById('bizIndustry').value,
-        greeting:document.getElementById('bizGreeting').value,
-        hours:document.getElementById('bizHours').value
-      });
-      localStorage.setItem('tct_clients',JSON.stringify(clients));
-      alert('Client activated! Redirecting to client list.');
-      window.location.href='clients.html';
-    }
-  </script>
+<!-- FLOATING CALLBACK WIDGET -->
+<div class="float-cb" id="float-widget">
+  <div class="float-cb-panel" id="float-panel">
+    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
+    <p style="font-size: 12px; color: var(--text-3); margin-bottom: 14px;">Our AI will call you in under 30 seconds.</p>
+    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 10px;">
+    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Me Now</button>
+    <div id="float-success" style="display: none; text-align: center; padding: 16px 0;">
+      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
+      <p style="font-size: 12px; color: var(--text-2);">Pick up your phone.</p>
+    </div>
+  </div>
+  <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </button>
+</div>
+
+<!-- EXIT INTENT POPUP -->
+<div class="exit-overlay" id="exit-popup">
+  <div class="exit-modal">
+    <button class="exit-close" onclick="closeExitPopup()">&times;</button>
+    <div style="text-align: center;">
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;">Before you go</div>
+      <h3 style="font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px;">Get a free missed call audit</h3>
+      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">We'll call your business after hours and tell you exactly what your customers are hearing. Free. No strings.</p>
+      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px;">
+      <button class="callback-btn" onclick="requestExitCallback()">Get My Free Audit</button>
+      <div id="exit-success" style="display: none; padding: 20px 0;">
+        <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
+        <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
+      </div>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16157845747" style="color: var(--green); font-weight: 600;">(615) 784-5747</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE BAR -->
+<div class="sticky-mobile-bar">
+  <a href="tel:+16157845747"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
+  <a href="../demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
+</div>
+
+<script src="../script.js"></script>
+<script>
+(function() {
+  var pass = prompt('Enter admin password:');
+  if (pass !== 'TCT2026admin') {
+    document.getElementById('admin-gate').innerHTML = '<p style="color:#ef4444;">Access denied.</p>';
+    return;
+  }
+  document.getElementById('admin-gate').style.display = 'none';
+  document.getElementById('admin-content').style.display = 'block';
+})();
+
+var currentStep = 1;
+function goStep(n) {
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step-' + n).classList.add('active');
+  var bars = document.querySelectorAll('#progress-bar .progress-step');
+  var labels = document.querySelectorAll('#step-indicator span');
+  bars.forEach(function(b, i) { b.classList.toggle('active', i < n); });
+  labels.forEach(function(l, i) { l.classList.toggle('active', i < n); });
+  if (n === 5) buildReview();
+}
+
+function buildReview() {
+  var html = '<table style="width:100%;font-size:0.85rem;">';
+  var fields = [
+    ['Business', 'ob-biz-name'], ['Industry', 'ob-industry'], ['Location', 'ob-location'],
+    ['Business Phone', 'ob-biz-phone'], ['Contact', 'ob-first'], ['Email', 'ob-email'],
+    ['Plan', 'ob-plan'], ['Hours', 'ob-hours'], ['Services', 'ob-services']
+  ];
+  fields.forEach(function(f) {
+    var val = document.getElementById(f[1]) ? document.getElementById(f[1]).value : '';
+    html += '<tr><td style="padding:8px 0;color:#a1a1aa;width:140px;">' + f[0] + '</td><td style="padding:8px 0;color:#fff;">' + (val || '—') + '</td></tr>';
+  });
+  html += '</table>';
+  document.getElementById('review-summary').innerHTML = html;
+}
+
+function submitOnboarding() {
+  document.getElementById('step-5').classList.remove('active');
+  document.getElementById('step-success').classList.add('active');
+  var bars = document.querySelectorAll('#progress-bar .progress-step');
+  bars.forEach(function(b) { b.classList.add('active'); });
+}
+</script>
 </body>
 </html>
