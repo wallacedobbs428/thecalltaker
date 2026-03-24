@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal | The Call Taker Admin</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { font-family: 'Inter', -apple-system, sans-serif; background: #000; color: #fff; }
+.admin-wrap { max-width: 900px; margin: 100px auto 60px; padding: 0 24px; }
+.client-header { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 32px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+.client-name { font-size: 1.5rem; font-weight: 700; }
+.badge { padding: 4px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+.badge-active { background: rgba(0,220,130,0.12); color: #00dc82; }
+.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 24px; text-align: center; }
+.stat-num { font-size: 2rem; font-weight: 700; color: #00dc82; }
+.stat-label { font-size: 0.875rem; color: #a1a1aa; margin-top: 4px; }
+.section { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+.section h3 { font-size: 0.875rem; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+textarea { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #fff; padding: 12px; border-radius: 6px; font-family: inherit; resize: vertical; }
+table { width: 100%; border-collapse: collapse; }
+th { background: rgba(255,255,255,0.06); color: #a1a1aa; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 10px 14px; text-align: left; }
+td { border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 14px; color: #fff; font-size: 0.875rem; }
+.btn-row { display: flex; gap: 12px; margin-top: 24px; }
+.btn-cta { background: #00dc82; color: #000; font-weight: 600; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-family: inherit; }
+.btn-warn { background: rgba(239,68,68,0.12); border: 1px solid #ef4444; color: #ef4444; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-family: inherit; }
+.btn-ghost { border: 1px solid rgba(255,255,255,0.08); color: #fff; background: transparent; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-family: inherit; }
+.no-client { text-align: center; padding: 80px 24px; color: #a1a1aa; }
+.no-client a { color: #00dc82; }
+</style>
+</head>
+<body style="overflow-x:hidden">
+<script>if(prompt("Password")!=="TCT2026admin"){document.body.innerHTML="<p style=\"color:#fff;text-align:center;margin-top:40vh\">Access denied.</p>";}</script>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      The Call <span>Taker</span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../demo.html">Demo</a>
+    </nav>
+    <a href="../demo.html" class="header-cta">Book a Demo</a>
+    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="admin-wrap">
+  <div id="no-client" class="no-client" style="display:none;">
+    <h2>No client selected</h2>
+    <p>Return to <a href="clients.html">client list</a> and select a client.</p>
+  </div>
+
+  <div id="client-view">
+    <div class="client-header">
+      <div>
+        <div class="client-name" id="client-name">Loading...</div>
+        <div style="color:#a1a1aa;font-size:0.875rem;margin-top:4px;">Starter Plan — $497/mo</div>
+      </div>
+      <span class="badge badge-active">Active</span>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Calls Today</div></div>
+      <div class="stat-card"><div class="stat-num">67</div><div class="stat-label">Calls This Week</div></div>
+      <div class="stat-card"><div class="stat-num">248</div><div class="stat-label">Calls This Month</div></div>
+    </div>
+
+    <div class="section">
+      <h3>Greeting Script</h3>
+      <textarea rows="3" readonly>Thank you for calling. This is GIDEON, your AI assistant. How can I help you today?</textarea>
+    </div>
+
+    <div class="section">
+      <h3>Recent Calls</h3>
+      <table>
+        <tr><th>Date</th><th>Duration</th><th>Type</th><th>Outcome</th></tr>
+        <tr><td>Mar 22</td><td>2:34</td><td>Inbound</td><td>Booked</td></tr>
+        <tr><td>Mar 22</td><td>1:12</td><td>Inbound</td><td>Info request</td></tr>
+        <tr><td>Mar 21</td><td>3:45</td><td>Inbound</td><td>Booked</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h3>Internal Notes</h3>
+      <textarea rows="4" placeholder="Add notes about this client..."></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-cta">Upgrade Plan</button>
+      <button class="btn-ghost">Send Invoice</button>
+      <button class="btn-warn">Cancel Client</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">
+          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          The Call <span>Taker</span>
+        </a>
+        <p>AI receptionist for service businesses.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../services.html">Services</a>
+        <a href="../demo.html">Demo</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
+        <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+      <span>Brentwood, TN</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const client = params.get('client');
+if (!client) {
+  document.getElementById('no-client').style.display = 'block';
+  document.getElementById('client-view').style.display = 'none';
+} else {
+  document.getElementById('client-name').textContent = decodeURIComponent(client);
+}
+</script>
+<script src="../script.js"></script>
+</body>
+</html>
