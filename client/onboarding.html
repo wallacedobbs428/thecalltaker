@@ -1,215 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17970510102');</script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="yD21d967IvWfANFmEZBw55ZZUWCa11fI92Mr-3wXk3s" />
+  <meta name="description" content="Complete your onboarding with The Call Taker — set up GIDEON for your business.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Onboarding — The Call Taker</title>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
-  <title>Get Started | The Call Taker</title>
-  <meta name="description" content="Set up your AI receptionist in minutes.">
-  <meta name="robots" content="noindex, nofollow">
   <style>
-    .onb-wrap{max-width:640px;margin:0 auto;padding:120px 24px 60px}
-    .onb-header{text-align:center;margin-bottom:40px}
-    .onb-header .label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;margin-bottom:12px}
-    .onb-header h1{font-size:28px;font-weight:700;color:#fff;margin-bottom:8px}
-    .onb-header p{font-size:14px;color:var(--text-2)}
-    .progress-track{width:100%;height:4px;background:rgba(255,255,255,0.06);border-radius:4px;margin-bottom:40px;overflow:hidden}
-    .progress-fill{height:100%;background:#00dc82;border-radius:4px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1)}
-    .step{opacity:0;display:none;transition:opacity 0.4s ease}
-    .step.active{opacity:1;display:block}
-    .step-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px}
-    .step-num{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00dc82;margin-bottom:12px}
-    .step-card h2{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px}
-    .step-card .desc{font-size:14px;color:var(--text-2);margin-bottom:24px;line-height:1.6}
-    .form-group{margin-bottom:16px}
-    .form-group label{display:block;font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:6px}
-    .form-group input,.form-group textarea,.form-group select{width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit}
-    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:#00dc82}
-    .form-group textarea{min-height:100px;resize:vertical}
-    .form-group select{appearance:none;cursor:pointer}
-    .hours-toggle{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:16px}
-    .day-toggle{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:10px 4px;text-align:center;cursor:pointer;transition:0.15s}
-    .day-toggle:hover{border-color:rgba(255,255,255,0.15)}
-    .day-toggle.on{border-color:#00dc82;background:rgba(0,220,130,0.08)}
-    .day-toggle .d-name{font-size:11px;font-weight:700;color:#fff;margin-bottom:4px}
-    .day-toggle .d-time{font-size:10px;color:var(--text-3)}
-    .day-toggle.on .d-time{color:#00dc82}
-    .preview-box{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:12px;min-height:60px}
-    .preview-box .preview-label{font-size:11px;font-weight:600;color:var(--text-3);margin-bottom:8px}
-    .preview-box .preview-text{font-size:14px;color:#a1a1aa;font-style:italic;line-height:1.6}
-    .test-phone{font-size:clamp(24px,4vw,36px);font-weight:800;color:#00dc82;letter-spacing:-0.02em;text-align:center;margin:24px 0;display:block;text-decoration:none}
-    .test-phone:hover{color:#00f090}
-    .test-note{font-size:13px;color:var(--text-3);text-align:center;line-height:1.5}
-    .success-icon{width:64px;height:64px;background:rgba(0,220,130,0.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
-    .success-icon svg{width:32px;height:32px;color:#00dc82}
-    .success-text{text-align:center}
-    .success-text h2{font-size:28px;font-weight:800;color:#fff;margin-bottom:8px}
-    .success-text p{font-size:14px;color:var(--text-2);line-height:1.6;margin-bottom:24px}
-    .your-number{font-size:20px;font-weight:700;color:#00dc82;text-align:center;padding:16px;background:rgba(0,220,130,0.08);border:1px solid rgba(0,220,130,0.2);border-radius:10px;margin-bottom:20px}
-    .step-nav{display:flex;gap:12px;margin-top:28px}
-    .btn-back{padding:10px 20px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
-    .btn-back:hover{background:var(--surface-hover)}
-    .btn-next{padding:10px 20px;background:#00dc82;color:#000;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;flex:1}
-    .btn-next:hover{background:#00f090}
-    .btn-dash{display:inline-flex;padding:12px 24px;background:#00dc82;color:#000;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;justify-content:center}
-    .btn-dash:hover{background:#00f090}
-    @media(max-width:640px){.hours-toggle{grid-template-columns:repeat(4,1fr)}}
+    body { background: #000; color: #fff; font-family: 'Inter', -apple-system, sans-serif; margin: 0; }
+    .ob-wrap { max-width: 700px; margin: 0 auto; padding: 100px 24px 60px; }
+    .ob-header { text-align: center; margin-bottom: 40px; }
+    .ob-header h1 { font-size: 1.75rem; font-weight: 700; margin: 0 0 8px; }
+    .ob-header h1 span { color: #00dc82; }
+    .ob-header p { font-size: 0.9rem; color: #a1a1aa; margin: 0; }
+    .progress-bar { display: flex; gap: 8px; margin-bottom: 12px; }
+    .progress-step { flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.08); transition: background 0.4s; }
+    .progress-step.active { background: #00dc82; box-shadow: 0 0 8px rgba(0,220,130,0.25); }
+    .step-labels { display: flex; justify-content: space-between; margin-bottom: 40px; }
+    .step-labels span { font-size: 0.7rem; color: #71717a; transition: color 0.3s; }
+    .step-labels span.active { color: #00dc82; font-weight: 600; }
+    .wizard-step { display: none; }
+    .wizard-step.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .wizard-step h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
+    .wizard-step p.desc { font-size: 0.9rem; color: #a1a1aa; margin-bottom: 24px; line-height: 1.6; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.8rem; color: #a1a1aa; margin-bottom: 6px; font-weight: 500; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #fff; padding: 10px 14px; border-radius: 6px; font-size: 0.9rem; font-family: inherit; box-sizing: border-box; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #00dc82; box-shadow: 0 0 0 3px rgba(0,220,130,0.12); }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: #71717a; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn-row { display: flex; gap: 12px; margin-top: 32px; }
+    .btn-next { background: #00dc82; color: #000; font-weight: 600; border-radius: 6px; padding: 12px 24px; border: none; cursor: pointer; font-size: 0.95rem; font-family: inherit; }
+    .btn-back { border: 1px solid rgba(255,255,255,0.08); color: #fff; background: transparent; border-radius: 6px; padding: 12px 24px; cursor: pointer; font-size: 0.95rem; font-family: inherit; }
+    .btn-next:hover { opacity: 0.9; }
+    .btn-back:hover { background: rgba(255,255,255,0.06); }
+    .success-screen { text-align: center; padding: 60px 20px; }
+    .checkmark-circle { width: 80px; height: 80px; border-radius: 50%; background: rgba(0,220,130,0.12); border: 2px solid #00dc82; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; animation: scaleIn 0.5s ease; }
+    @keyframes scaleIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .checkmark-circle svg { width: 40px; height: 40px; animation: drawCheck 0.6s ease 0.3s both; }
+    @keyframes drawCheck { from { stroke-dashoffset: 50; opacity: 0; } to { stroke-dashoffset: 0; opacity: 1; } }
+    .checkmark-circle svg path { stroke-dasharray: 50; stroke-dashoffset: 50; animation: drawCheck 0.6s ease 0.3s forwards; }
+    .success-screen h2 { font-size: 1.5rem; font-weight: 700; color: #00dc82; margin-bottom: 12px; }
+    .success-screen p { font-size: 1rem; color: #a1a1aa; line-height: 1.6; margin-bottom: 8px; }
+    .tip-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 20px; margin: 24px auto; max-width: 400px; }
+    .tip-box h4 { font-size: 0.8rem; color: #00dc82; margin: 0 0 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .tip-box p { font-size: 0.85rem; color: #a1a1aa; margin: 0; }
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="header-inner">
-      <a href="../index.html" class="logo"><div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>The Call <span>Taker</span></a>
-      <nav class="nav"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../index.html#pricing">Pricing</a><a href="../demo.html">Demo</a></nav>
-      <a href="../demo.html" class="header-cta">Book a Demo</a>
-      <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-    </div>
-  </header>
-  <nav class="mobile-nav"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../index.html#pricing">Pricing</a><a href="../demo.html">Demo</a><a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a></nav>
 
-  <div class="onb-wrap">
-    <div class="onb-header">
-      <div class="label">Getting Started</div>
-      <h1>Set Up Your AI Receptionist</h1>
-      <p>Five quick steps and you are live. Takes about 3 minutes.</p>
-    </div>
-    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+<header class="header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      The Call <span>Taker</span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html">Home</a>
+      <a href="../services.html">Services</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../demo.html">Demo</a>
+    </nav>
+    <a href="../demo.html" class="header-cta">Book a Demo</a>
+    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
 
-    <!-- Step 1: Welcome -->
-    <div class="step active" id="step1">
-      <div class="step-card">
-        <div class="step-num">Step 1 of 5</div>
-        <h2>Welcome! Confirm Your Info</h2>
-        <div class="desc">Let us make sure we have the right details for your business.</div>
-        <div class="form-group"><label>Business Name</label><input type="text" id="obBizName" placeholder="Your Business Name"></div>
-        <div class="form-group"><label>Your Name</label><input type="text" id="obName" placeholder="Full name"></div>
-        <div class="form-group"><label>Industry</label>
-          <select id="obIndustry"><option value="">Select your industry</option><option>HVAC</option><option>Plumbing</option><option>Electrical</option><option>Roofing</option><option>Dental</option><option>Med Spa</option><option>Legal</option><option>Property Management</option><option>Locksmith</option><option>Towing</option><option>Veterinary</option><option>Other</option></select>
-        </div>
-        <div class="form-group"><label>Main Business Phone</label><input type="tel" id="obPhone" placeholder="(555) 123-4567"></div>
-        <div class="step-nav"><button class="btn-next" onclick="goStep(2)">Continue</button></div>
+<nav class="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="../services.html">Services</a>
+  <a href="../index.html#pricing">Pricing</a>
+  <a href="../demo.html">Demo</a>
+  <a href="../demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
+</nav>
+
+<div class="ob-wrap">
+  <div class="ob-header">
+    <h1>Set Up <span>GIDEON</span></h1>
+    <p>Let's get your AI receptionist ready in under 5 minutes.</p>
+  </div>
+
+  <div class="progress-bar" id="progress-bar">
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+  </div>
+  <div class="step-labels" id="step-labels">
+    <span class="active">Business</span>
+    <span>Hours</span>
+    <span>Services</span>
+    <span>Greeting</span>
+    <span>Done</span>
+  </div>
+
+  <!-- Step 1: Business -->
+  <div class="wizard-step active" id="step-1">
+    <h2>Tell us about your business</h2>
+    <p class="desc">This helps GIDEON answer calls the way your customers expect.</p>
+    <div class="form-group">
+      <label>Business Name</label>
+      <input type="text" id="co-name" placeholder="e.g. Thompson Plumbing">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Industry</label>
+        <select id="co-industry">
+          <option value="">Select</option>
+          <option>HVAC</option>
+          <option>Plumbing</option>
+          <option>Electrical</option>
+          <option>Roofing</option>
+          <option>Dental</option>
+          <option>Med Spa</option>
+          <option>Legal</option>
+          <option>Locksmith</option>
+          <option>Property Management</option>
+          <option>Veterinary</option>
+          <option>Towing</option>
+          <option>Garage Door</option>
+          <option>Restoration</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" id="co-location" placeholder="City, State">
       </div>
     </div>
-
-    <!-- Step 2: Hours -->
-    <div class="step" id="step2">
-      <div class="step-card">
-        <div class="step-num">Step 2 of 5</div>
-        <h2>Set Your Business Hours</h2>
-        <div class="desc">Tap each day to toggle it on or off. The AI answers 24/7, but this helps us know when to transfer calls vs take messages.</div>
-        <div class="hours-toggle">
-          <div class="day-toggle on" onclick="toggleDay(this)"><div class="d-name">Mon</div><div class="d-time">8a-6p</div></div>
-          <div class="day-toggle on" onclick="toggleDay(this)"><div class="d-name">Tue</div><div class="d-time">8a-6p</div></div>
-          <div class="day-toggle on" onclick="toggleDay(this)"><div class="d-name">Wed</div><div class="d-time">8a-6p</div></div>
-          <div class="day-toggle on" onclick="toggleDay(this)"><div class="d-name">Thu</div><div class="d-time">8a-6p</div></div>
-          <div class="day-toggle on" onclick="toggleDay(this)"><div class="d-name">Fri</div><div class="d-time">8a-6p</div></div>
-          <div class="day-toggle" onclick="toggleDay(this)"><div class="d-name">Sat</div><div class="d-time">Closed</div></div>
-          <div class="day-toggle" onclick="toggleDay(this)"><div class="d-name">Sun</div><div class="d-time">Closed</div></div>
-        </div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goStep(1)">Back</button>
-          <button class="btn-next" onclick="goStep(3)">Continue</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 3: Greeting -->
-    <div class="step" id="step3">
-      <div class="step-card">
-        <div class="step-num">Step 3 of 5</div>
-        <h2>Customize Your Greeting</h2>
-        <div class="desc">This is what callers hear when the AI picks up. Make it sound like your business.</div>
-        <div class="form-group"><label>Greeting Script</label><textarea id="obGreeting" placeholder="Thank you for calling [Your Business]. How can I help you today?" oninput="updatePreview()"></textarea></div>
-        <div class="preview-box">
-          <div class="preview-label">Live Preview</div>
-          <div class="preview-text" id="greetingPreview">Thank you for calling [Your Business]. How can I help you today?</div>
-        </div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goStep(2)">Back</button>
-          <button class="btn-next" onclick="goStep(4)">Continue</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 4: Test Call -->
-    <div class="step" id="step4">
-      <div class="step-card">
-        <div class="step-num">Step 4 of 5</div>
-        <h2>Test Your AI Receptionist</h2>
-        <div class="desc">Call the number below to hear your AI in action. Try asking it questions a real customer would ask.</div>
-        <a href="tel:+16157845747" class="test-phone">(615) 784-5747</a>
-        <div class="test-note">Call now and talk to the AI. Ask about pricing, hours, or scheduling. When you are done, click Continue.</div>
-        <div class="step-nav">
-          <button class="btn-back" onclick="goStep(3)">Back</button>
-          <button class="btn-next" onclick="goStep(5)">I Called — Continue</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 5: You're Live -->
-    <div class="step" id="step5">
-      <div class="step-card">
-        <div class="success-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-        </div>
-        <div class="success-text">
-          <h2>You Are Live!</h2>
-          <p>Your AI receptionist is now answering calls for your business. Every call gets picked up. Every customer gets helped. No more voicemail.</p>
-        </div>
-        <div class="your-number" id="yourNumber">Your AI Line: (615) 784-5747</div>
-        <p style="font-size:13px;color:var(--text-3);text-align:center;margin-bottom:24px">Forward your business line to this number, or use it as your primary after-hours line.</p>
-        <div style="text-align:center"><a href="dashboard.html" class="btn-dash">Go to Your Dashboard</a></div>
-      </div>
+    <div class="btn-row">
+      <button class="btn-next" onclick="goStep(2)">Continue</button>
     </div>
   </div>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <a href="../index.html" class="logo"><div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>The Call <span>Taker</span></a>
-          <p>AI receptionist for service businesses.</p>
-        </div>
-        <div class="footer-links"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../demo.html">Demo</a><a href="../calculator.html">Calculator</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Service</a><a href="mailto:wallacemdobbs@icloud.com">Contact</a><a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a></div>
-      </div>
-      <div class="footer-bottom"><span>&copy; 2026 The Call Taker. All rights reserved.</span><span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span></div>
+  <!-- Step 2: Hours -->
+  <div class="wizard-step" id="step-2">
+    <h2>When are you open?</h2>
+    <p class="desc">GIDEON takes calls 24/7 — but it helps to know when your team is available.</p>
+    <div class="form-group">
+      <label>Weekday Hours</label>
+      <input type="text" id="co-weekday" placeholder="e.g. 8:00 AM - 6:00 PM">
     </div>
-  </footer>
-
-  <div class="float-cb" id="float-widget">
-    <div class="float-cb-panel" id="float-panel">
-      <h4 style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">Want us to call you?</h4>
-      <p style="font-size:12px;color:var(--text-3);margin-bottom:14px;">Our AI will call you in under 30 seconds.</p>
-      <input type="tel" id="float-phone" placeholder="Your phone number" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:8px;">
-      <input type="text" id="float-company" placeholder="Company name" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;margin-bottom:10px;">
-      <button class="callback-btn" onclick="requestFloatCallback()" style="font-size:14px;padding:12px;">Call Me Now</button>
-      <div id="float-success" style="display:none;text-align:center;padding:16px 0;"><p style="font-size:14px;font-weight:700;color:var(--green);">Calling you now!</p><p style="font-size:12px;color:var(--text-2);">Pick up your phone.</p></div>
+    <div class="form-group">
+      <label>Saturday Hours</label>
+      <input type="text" id="co-saturday" placeholder="e.g. 9:00 AM - 1:00 PM or Closed">
     </div>
-    <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></button>
+    <div class="form-group">
+      <label>Sunday Hours</label>
+      <input type="text" id="co-sunday" placeholder="e.g. Closed">
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(1)">Back</button>
+      <button class="btn-next" onclick="goStep(3)">Continue</button>
+    </div>
   </div>
 
-  <script src="../script.js"></script>
-  <script>
-    var currentStep=1;
-    function goStep(n){
-      document.getElementById('step'+currentStep).classList.remove('active');
-      document.getElementById('step'+n).classList.add('active');
-      currentStep=n;
-      document.getElementById('progressFill').style.width=(n*20)+'%';
-      window.scrollTo({top:0,behavior:'smooth'});
-    }
-    function toggleDay(el){el.classList.toggle('on');var t=el.querySelector('.d-time');if(el.classList.contains('on')){t.textContent='8a-6p';}else{t.textContent='Closed';}}
-    function updatePreview(){
-      var val=document.getElementById('obGreeting').value;
-      document.getElementById('greetingPreview').textContent=val||'Thank you for calling [Your Business]. How can I help you today?';
-    }
-  </script>
+  <!-- Step 3: Services -->
+  <div class="wizard-step" id="step-3">
+    <h2>What services do you offer?</h2>
+    <p class="desc">GIDEON will mention these when booking appointments and answering questions.</p>
+    <div class="form-group">
+      <label>Services (comma separated)</label>
+      <textarea id="co-services" placeholder="e.g. AC Repair, Furnace Installation, Duct Cleaning, Emergency Service"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Service Area</label>
+      <input type="text" id="co-area" placeholder="e.g. Nashville metro, within 30 miles">
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(2)">Back</button>
+      <button class="btn-next" onclick="goStep(4)">Continue</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Greeting -->
+  <div class="wizard-step" id="step-4">
+    <h2>Customize your greeting</h2>
+    <p class="desc">This is the first thing callers will hear. Make it yours.</p>
+    <div class="form-group">
+      <label>Phone Greeting</label>
+      <textarea id="co-greeting" placeholder="e.g. Thank you for calling Thompson Plumbing! I can help you schedule a service, get a quote, or answer any questions about our work."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Emergency Forward Number (optional)</label>
+      <input type="tel" id="co-forward" placeholder="Number for urgent after-hours calls">
+    </div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(3)">Back</button>
+      <button class="btn-next" onclick="goStep(5)">Finish Setup</button>
+    </div>
+  </div>
+
+  <!-- Step 5: Success -->
+  <div class="wizard-step" id="step-5">
+    <div class="success-screen">
+      <div class="checkmark-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00dc82" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <h2>You're All Set</h2>
+      <p>GIDEON is now configured for your business.</p>
+      <p>Your AI receptionist is live and answering calls 24/7.</p>
+      <div class="tip-box">
+        <h4>What Happens Next</h4>
+        <p>Forward your business line to your new GIDEON number. We'll send setup instructions to your email within the hour.</p>
+      </div>
+      <div class="btn-row" style="justify-content:center;margin-top:24px;">
+        <a href="dashboard.html" class="btn-next" style="text-decoration:none;">Go to Dashboard</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo">
+          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          The Call <span>Taker</span>
+        </a>
+        <p>AI receptionist for service businesses.</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../services.html">Services</a>
+        <a href="../demo.html">Demo</a>
+        <a href="../calculator.html">Calculator</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
+        <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
+        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CALLBACK WIDGET -->
+<div class="float-cb" id="float-widget">
+  <div class="float-cb-panel" id="float-panel">
+    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
+    <p style="font-size: 12px; color: var(--text-3); margin-bottom: 14px;">Our AI will call you in under 30 seconds.</p>
+    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 10px;">
+    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Me Now</button>
+    <div id="float-success" style="display: none; text-align: center; padding: 16px 0;">
+      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
+      <p style="font-size: 12px; color: var(--text-2);">Pick up your phone.</p>
+    </div>
+  </div>
+  <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </button>
+</div>
+
+<!-- EXIT INTENT POPUP -->
+<div class="exit-overlay" id="exit-popup">
+  <div class="exit-modal">
+    <button class="exit-close" onclick="closeExitPopup()">&times;</button>
+    <div style="text-align: center;">
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;">Before you go</div>
+      <h3 style="font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px;">Get a free missed call audit</h3>
+      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">We'll call your business after hours and tell you exactly what your customers are hearing. Free. No strings.</p>
+      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px;">
+      <button class="callback-btn" onclick="requestExitCallback()">Get My Free Audit</button>
+      <div id="exit-success" style="display: none; padding: 20px 0;">
+        <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
+        <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
+      </div>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16157845747" style="color: var(--green); font-weight: 600;">(615) 784-5747</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE BAR -->
+<div class="sticky-mobile-bar">
+  <a href="tel:+16157845747"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
+  <a href="../demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
+</div>
+
+<script src="../script.js"></script>
+<script>
+var currentStep = 1;
+function goStep(n) {
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step-' + n).classList.add('active');
+  var bars = document.querySelectorAll('#progress-bar .progress-step');
+  var labels = document.querySelectorAll('#step-labels span');
+  bars.forEach(function(b, i) { b.classList.toggle('active', i < n); });
+  labels.forEach(function(l, i) { l.classList.toggle('active', i < n); });
+}
+</script>
 </body>
 </html>
