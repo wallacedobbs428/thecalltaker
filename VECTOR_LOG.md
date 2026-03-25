@@ -134,7 +134,7 @@ File: `outreach/hot-lead-sequence-v1.md`
 
 Build this as a GHL workflow. Enroll all 35 hot leads. The copy is written — every SMS, every email, every voicemail drop. Touch 1 fires in 5 minutes. The only thing between you and booked demos is hitting "activate."
 
-If you can't build the GHL workflow yourself, forward the file to Mills and have him build it. But it goes live today. Not tomorrow. Today.
+If you can't build the GHL workflow yourself, handle it directly. But it goes live today. Not tomorrow. Today.
 
 ### 2. Walk into 5 Nashville businesses with the leave-behind (Revenue impact: HIGH)
 The one-pager copy and 15-second script are in `outreach/hot-lead-sequence-v1.md` at the bottom.
