@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Call Taker — Hear It Live</title>
+<meta name="robots" content="noindex">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.container {
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+}
+.badge {
+  display: inline-block;
+  background: rgba(74, 222, 128, 0.1);
+  color: #4ade80;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+h1 {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+h1 span { color: #4ade80; }
+.sub {
+  color: #888;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 32px;
+}
+.demo-box {
+  background: #111;
+  border: 2px solid #222;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.demo-label {
+  font-size: 13px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.demo-number {
+  font-size: 36px;
+  font-weight: 800;
+  color: #4ade80;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.demo-number a {
+  color: #4ade80;
+  text-decoration: none;
+}
+.demo-hint {
+  font-size: 13px;
+  color: #555;
+}
+.divider {
+  color: #333;
+  font-size: 13px;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #222;
+}
+.form-box {
+  background: #111;
+  border: 2px solid #222;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.form-box h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.form-sub {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+input {
+  width: 100%;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 10px;
+  outline: none;
+  -webkit-appearance: none;
+}
+input:focus { border-color: #4ade80; }
+input::placeholder { color: #444; }
+button {
+  width: 100%;
+  background: #4ade80;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 4px;
+}
+button:hover { background: #22c55e; }
+.trust {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.trust-item {
+  text-align: center;
+}
+.trust-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+}
+.trust-label {
+  font-size: 11px;
+  color: #555;
+}
+.fine {
+  color: #333;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.price-tag {
+  display: inline-block;
+  background: rgba(96, 165, 250, 0.1);
+  color: #60a5fa;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  margin-top: 16px;
+}
+</style>
+
+<!-- GHL tracking -->
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var source = params.get('utm_source') || params.get('fbclid') ? 'facebook' : 'direct';
+  var fbclid = params.get('fbclid') || '';
+
+  window._tctData = { source: source, fbclid: fbclid, landed: new Date().toISOString() };
+})();
+</script>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="badge">14 Day Free Pilot. No Card.</div>
+
+  <h1>Hear your new receptionist <span>answer a call live.</span></h1>
+
+  <p class="sub">Call the number below. She picks up in under 2 seconds. Then decide if you want her answering your business phones 24/7.</p>
+
+  <div class="demo-box">
+    <div class="demo-label">Call right now. Takes 30 seconds.</div>
+    <div class="demo-number"><a href="tel:+16157845747">(615) 784-5747</a></div>
+    <div class="demo-hint">Tap to call on mobile</div>
+  </div>
+
+  <div class="divider">or get a callback in 60 seconds</div>
+
+  <div class="form-box">
+    <h2>We'll call you instead</h2>
+    <p class="form-sub">Drop your number. Wallace calls you back in under 60 seconds and walks you through a live demo on your business.</p>
+
+    <form id="lead-form" onsubmit="return submitLead(event)">
+      <input type="text" id="name" name="name" placeholder="Your name" required>
+      <input type="tel" id="phone" name="phone" placeholder="Phone number" required>
+      <input type="text" id="company" name="company" placeholder="Business name">
+      <button type="submit">Call Me In 60 Seconds</button>
+    </form>
+
+    <div class="price-tag">Founding rate: $264/mo after free pilot</div>
+  </div>
+
+  <div class="trust">
+    <div class="trust-item">
+      <div class="trust-num">&lt;2s</div>
+      <div class="trust-label">Answer Time</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num">24/7</div>
+      <div class="trust-label">Always On</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num">$264</div>
+      <div class="trust-label">Per Month</div>
+    </div>
+  </div>
+
+  <p class="fine">No credit card. No contract. Free 14 day pilot on your real business calls. Cancel anytime.</p>
+
+</div>
+
+<script>
+function submitLead(e) {
+  e.preventDefault();
+
+  var name = document.getElementById('name').value.trim();
+  var phone = document.getElementById('phone').value.trim();
+  var company = document.getElementById('company').value.trim();
+
+  if (!name || !phone) return false;
+
+  // Clean phone
+  var cleanPhone = phone.replace(/[^\d]/g, '');
+  if (cleanPhone.length === 10) cleanPhone = '+1' + cleanPhone;
+  else if (cleanPhone.length === 11 && cleanPhone[0] === '1') cleanPhone = '+' + cleanPhone;
+
+  var btn = document.querySelector('button');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  // Send to GHL via API
+  fetch('https://services.leadconnectorhq.com/contacts/', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
+      'Content-Type': 'application/json',
+      'Version': '2021-07-28'
+    },
+    body: JSON.stringify({
+      locationId: 'tQb9YmrGDrdVUJYPKrsY',
+      firstName: name.split(' ')[0],
+      lastName: name.split(' ').slice(1).join(' ') || '',
+      phone: cleanPhone,
+      companyName: company,
+      source: 'fb-ad-landing',
+      tags: ['fb-lead', 'callback-requested', 'go-page']
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    // Send ntfy alert to Wallace
+    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+      method: 'POST',
+      headers: {
+        'Title': 'FB LEAD: ' + name + ' wants a callback',
+        'Priority': '5',
+        'Tags': 'phone,dollar',
+        'Actions': 'view, Call ' + name + ', tel:' + cleanPhone
+      },
+      body: name + ' at ' + (company || 'unknown') + '\nPhone: ' + phone + '\n\nFrom Facebook ad. Call them NOW.'
+    });
+
+    // Show success
+    document.getElementById('lead-form').innerHTML =
+      '<div style="text-align:center;padding:20px 0;">' +
+      '<div style="font-size:40px;margin-bottom:10px;">&#9989;</div>' +
+      '<div style="font-size:20px;font-weight:700;margin-bottom:8px;">Got it. Wallace is calling you now.</div>' +
+      '<div style="color:#666;font-size:14px;">While you wait, hear the AI receptionist live:</div>' +
+      '<div style="margin-top:12px;"><a href="tel:+16157845747" style="color:#4ade80;font-size:24px;font-weight:700;text-decoration:none;">(615) 784-5747</a></div>' +
+      '</div>';
+  })
+  .catch(function() {
+    btn.textContent = 'Call Me In 60 Seconds';
+    btn.disabled = false;
+    alert('Something went wrong. Call us directly at (615) 784-5747');
+  });
+
+  return false;
+}
+</script>
+
+</body>
+</html>
