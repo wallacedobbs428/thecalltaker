@@ -511,11 +511,43 @@ html.light .theme-toggle .icon-moon { display: none; }
   border: 1px solid var(--t06);
   border-radius: 12px;
   padding: 32px 28px;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  position: relative;
+  overflow: hidden;
 }
-.feature-card:hover { border-color: var(--accent-soft); }
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.feature-card:hover {
+  border-color: rgba(26,122,92,0.15);
+  box-shadow: 0 8px 32px rgba(26,122,92,0.06);
+  transform: translateY(-2px);
+}
+.feature-card:hover::before { transform: scaleX(1); }
+.feature-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--accent-soft); border: 1px solid rgba(26,122,92,0.12);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px;
+}
+.feature-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .feature-card h3 { font-size: 16px; font-weight: 600; color: var(--t100); margin-bottom: 8px; }
 .feature-card p { font-size: 14px; color: var(--t40); line-height: 1.7; }
+html.light .feature-icon { background: rgba(20,105,78,0.06); border-color: rgba(20,105,78,0.1); }
+html.light .feature-icon svg { stroke: var(--accent); }
+
+/* Feature card variety — subtle unique top-border colors */
+.feature-card:nth-child(2)::before { background: linear-gradient(90deg, var(--amber), #d4943f); }
+.feature-card:nth-child(4)::before { background: linear-gradient(90deg, #c27c3a, var(--amber)); }
+.feature-card:nth-child(2):hover { border-color: rgba(194,124,58,0.15); box-shadow: 0 8px 32px rgba(194,124,58,0.06); }
+.feature-card:nth-child(4):hover { border-color: rgba(194,124,58,0.15); box-shadow: 0 8px 32px rgba(194,124,58,0.06); }
 
 /* ═══ HOW IT WORKS ═══ */
 .steps { display: flex; flex-direction: column; gap: 48px; }
@@ -523,6 +555,354 @@ html.light .theme-toggle .icon-moon { display: none; }
 .hw-num { font-family: var(--serif); font-size: 48px; color: var(--t06); min-width: 64px; line-height: 1; }
 .hw-content h3 { font-size: 18px; font-weight: 600; color: var(--t100); margin-bottom: 6px; }
 .hw-content p { font-size: 15px; color: var(--t40); line-height: 1.7; max-width: 480px; }
+
+/* Step circle number overlay */
+.step-circle-num {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.05em; color: var(--accent); opacity: 0;
+  transition: opacity 0.3s;
+}
+.step-circle:hover .step-circle-num { opacity: 1; }
+.step-circle:hover svg { opacity: 0.3; }
+
+/* Animated progress line for How It Works */
+.hw-progress-line {
+  position: absolute; top: 28px; left: 15%; right: 15%;
+  height: 1px; z-index: 0; overflow: hidden;
+}
+.hw-progress-line::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--t06), var(--accent), var(--t06));
+  opacity: 0.4;
+}
+.hw-progress-line::after {
+  content: ''; position: absolute; top: 0; left: -30%; width: 30%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(42,157,122,0.8), transparent);
+  animation: hwLinePulse 3s ease-in-out infinite;
+}
+@keyframes hwLinePulse { 0% { left: -30%; } 100% { left: 100%; } }
+
+/* ═══ INDUSTRY TRUST STRIP ═══ */
+.industry-trust {
+  padding: 48px 40px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%);
+}
+.trust-headline {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.2em; color: var(--t40); text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.trust-headline strong { color: var(--accent); }
+.trust-badges {
+  display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+  max-width: 800px; margin: 0 auto;
+}
+.trust-badge {
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.08em; color: var(--t20);
+  background: var(--surface); border: 1px solid var(--t06);
+  padding: 6px 14px; border-radius: 20px;
+  transition: border-color 0.3s, color 0.3s, transform 0.2s;
+}
+.trust-badge:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+/* ═══ TESTIMONIAL POLISH ═══ */
+.test-item-wrap {
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  border-radius: 12px;
+}
+.test-item-wrap:hover {
+  transform: translateY(-2px);
+  background: var(--surface);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+/* ═══ SECTION TRANSITIONS — smooth gradient overlaps ═══ */
+#features { background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%); }
+#testimonials { position: relative; }
+#testimonials::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 120px;
+  background: linear-gradient(180deg, var(--bg), transparent);
+  pointer-events: none;
+}
+
+/* ═══ PRICING FEATURED CARD GLOW ═══ */
+.price-card.featured {
+  position: relative;
+}
+.price-card.featured::before {
+  content: ''; position: absolute; inset: -1px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover), var(--accent));
+  z-index: -1; opacity: 0.15;
+  animation: pricingGlow 4s ease-in-out infinite;
+}
+@keyframes pricingGlow { 0%,100% { opacity: 0.15; } 50% { opacity: 0.25; } }
+
+/* ═══ STEP CIRCLE HOVER ═══ */
+.step-circle { cursor: default; }
+.step-circle:hover { transform: scale(1.08); }
+
+/* ═══ LIVE COUNTER BAR ═══ */
+.live-counter-bar {
+  padding: 48px 40px;
+  background: var(--surface);
+  border-top: 1px solid var(--t06);
+  border-bottom: 1px solid var(--t06);
+}
+.live-counter-inner {
+  display: flex; justify-content: center; align-items: center; gap: 32px;
+  flex-wrap: wrap; max-width: 900px; margin: 0 auto;
+}
+.live-counter-item {
+  display: flex; align-items: center; gap: 12px;
+}
+.live-pulse {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34,197,94,0.6);
+  animation: livePulse 2s ease-in-out infinite;
+}
+@keyframes livePulse { 0%,100% { opacity: 1; box-shadow: 0 0 8px rgba(34,197,94,0.6); } 50% { opacity: 0.5; box-shadow: 0 0 16px rgba(34,197,94,0.8); } }
+.live-counter-num {
+  font-family: var(--serif); font-size: 28px; color: var(--t100);
+  font-variant-numeric: tabular-nums;
+  min-width: 40px;
+}
+.live-counter-label {
+  font-family: var(--mono); font-size: 10px; color: var(--t40);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.live-divider { width: 1px; height: 32px; background: var(--t10); }
+@media(max-width:600px) { .live-divider { display: none; } .live-counter-inner { gap: 20px; } }
+
+/* ═══ INDUSTRY SELECTOR IN HERO ═══ */
+.industry-selector {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-top: 20px; margin-bottom: 8px;
+  opacity: 0; animation: enter 0.6s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
+}
+.ind-pill {
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.06em; color: var(--t20);
+  background: transparent; border: 1px solid var(--t10);
+  padding: 5px 12px; border-radius: 16px;
+  cursor: pointer; transition: all 0.25s;
+  white-space: nowrap;
+}
+.ind-pill:hover { border-color: var(--accent); color: var(--t70); }
+.ind-pill.active {
+  background: var(--accent-soft); border-color: var(--accent);
+  color: var(--accent);
+}
+@media(max-width:900px) { .industry-selector { justify-content: center; } }
+
+/* ═══ VIDEO DEMO SECTION ═══ */
+.video-demo {
+  position: relative; max-width: 720px; margin: 0 auto;
+  aspect-ratio: 16/9; border-radius: 16px; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--t10);
+  cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;
+}
+.video-demo:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(26,122,92,0.12); }
+.video-play-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, rgba(12,11,10,0.3) 0%, rgba(12,11,10,0.7) 100%);
+  z-index: 2;
+}
+.video-play-btn {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--accent); display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 40px rgba(26,122,92,0.4);
+  transition: transform 0.2s, box-shadow 0.3s;
+  margin-bottom: 16px;
+}
+.video-play-btn:hover { transform: scale(1.1); box-shadow: 0 0 56px rgba(26,122,92,0.5); }
+.video-play-btn svg { width: 28px; height: 28px; fill: var(--t100); margin-left: 3px; }
+.video-play-label {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.15em; color: var(--t70);
+}
+.video-preview-grid {
+  position: absolute; inset: 0; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+}
+.video-preview-cell {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 24px; border: 0.5px solid var(--t06);
+}
+.video-preview-cell .vpn { font-family: var(--serif); font-size: 28px; color: var(--accent); margin-bottom: 4px; }
+.video-preview-cell .vpl { font-family: var(--mono); font-size: 9px; color: var(--t20); letter-spacing: 0.1em; }
+
+/* ═══ STICKY CTA BAR — appears after scrolling past hero ═══ */
+.sticky-cta {
+  position: fixed; bottom: -60px; left: 0; right: 0;
+  background: rgba(12,11,10,0.95);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--t06);
+  padding: 12px 40px;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  z-index: 99;
+  transition: bottom 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.sticky-cta.visible { bottom: 0; }
+.sticky-cta-text {
+  font-size: 14px; color: var(--t70); font-weight: 500;
+}
+.sticky-cta-text strong { color: var(--t100); }
+.sticky-cta .btn { padding: 10px 24px; font-size: 13px; }
+@media(max-width:768px) {
+  .sticky-cta { padding: 10px 16px; gap: 10px; }
+  .sticky-cta-text { font-size: 12px; display: none; }
+  .sticky-cta { justify-content: center; }
+  /* Hide when mobile call bar is showing */
+  .mobile-bar ~ .sticky-cta { display: none; }
+}
+/* Hide sticky CTA on mobile where we already have the call bar */
+@media(max-width:768px) { .sticky-cta { display: none; } }
+
+/* ═══ URGENCY BADGE ═══ */
+.urgency-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.08em; color: var(--amber);
+  background: rgba(194,124,58,0.08);
+  border: 1px solid rgba(194,124,58,0.15);
+  padding: 8px 16px; border-radius: 6px;
+  margin-top: 20px;
+  animation: urgencyPulse 3s ease-in-out infinite;
+}
+.urgency-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber);
+  animation: pulse 2s infinite;
+}
+@keyframes urgencyPulse { 0%,100% { border-color: rgba(194,124,58,0.15); } 50% { border-color: rgba(194,124,58,0.35); } }
+
+/* ═══ ROI TEASER ═══ */
+.roi-teaser {
+  margin-top: 48px; padding: 24px 28px;
+  background: var(--accent-soft); border: 1px solid rgba(26,122,92,0.12);
+  border-radius: 12px; display: flex; align-items: center; gap: 20px;
+}
+.roi-teaser-icon {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--accent); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.roi-teaser-icon svg { width: 20px; height: 20px; fill: none; stroke: var(--bg); stroke-width: 2; }
+.roi-teaser-text { font-size: 14px; color: var(--t70); line-height: 1.6; }
+.roi-teaser-text strong { color: var(--accent); }
+@media(max-width:768px) { .roi-teaser { flex-direction: column; text-align: center; } }
+
+/* ═══ NAV SCROLL SPY ═══ */
+.nav-links a.nav-active { color: var(--accent) !important; }
+.nav-links a { position: relative; }
+.nav-links a.nav-active::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 2px; background: var(--accent); border-radius: 1px;
+  animation: navUnderline 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes navUnderline { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ═══ SECTION PROGRESS DOTS ═══ */
+.section-dots {
+  position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 12px; z-index: 98;
+  opacity: 0; transition: opacity 0.4s;
+}
+.section-dots.visible { opacity: 1; }
+.sec-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--t10); border: 1px solid var(--t06);
+  cursor: pointer; transition: all 0.3s;
+  position: relative;
+}
+.sec-dot.active {
+  background: var(--accent); border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(26,122,92,0.4);
+  transform: scale(1.3);
+}
+.sec-dot:hover { background: var(--t20); transform: scale(1.2); }
+.sec-dot::before {
+  content: attr(data-label); position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+  color: var(--t40); white-space: nowrap; opacity: 0;
+  transition: opacity 0.2s; pointer-events: none;
+}
+.sec-dot:hover::before { opacity: 1; }
+@media(max-width:900px) { .section-dots { display: none; } }
+
+/* ═══ PRICING 3D TILT ═══ */
+.price-card {
+  transform-style: preserve-3d; perspective: 800px;
+}
+.price-card .price-inner {
+  transition: transform 0.15s ease-out;
+}
+
+/* ═══ ANIMATED GRADIENT BORDER — featured pricing ═══ */
+.price-card.featured {
+  background: var(--surface);
+  overflow: hidden;
+}
+.price-card.featured::after {
+  content: ''; position: absolute; inset: -2px; border-radius: 18px;
+  background: conic-gradient(from var(--border-angle, 0deg), var(--accent), var(--accent-hover), rgba(26,122,92,0.1), var(--accent));
+  z-index: -2; opacity: 0.3;
+  animation: rotateBorder 6s linear infinite;
+}
+@keyframes rotateBorder { to { --border-angle: 360deg; } }
+@property --border-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+/* ═══ SCROLL TEXT HIGHLIGHT ═══ */
+.highlight-on-scroll {
+  background: linear-gradient(90deg, var(--accent) 50%, transparent 50%);
+  background-size: 200% 100%; background-position: 100% 0;
+  -webkit-background-clip: text; background-clip: text;
+  transition: background-position 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.highlight-on-scroll.lit {
+  background-position: 0% 0;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ═══ AMBIENT FLOATING PARTICLES ═══ */
+.ambient-particles {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  overflow: hidden;
+}
+.amb-particle {
+  position: absolute; width: 2px; height: 2px; border-radius: 50%;
+  background: rgba(42,157,122,0.15);
+  animation: ambFloat linear infinite;
+}
+@keyframes ambFloat {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) translateX(30px); opacity: 0; }
+}
+
+/* ═══ AUTO-CYCLE INDUSTRY BADGE ═══ */
+.cycle-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.1em; color: var(--accent);
+  background: var(--accent-soft); border: 1px solid rgba(26,122,92,0.15);
+  padding: 4px 12px; border-radius: 12px;
+  margin-left: 12px; vertical-align: middle;
+  opacity: 0; animation: enter 0.5s 0.8s forwards;
+}
+.cycle-badge-dot {
+  width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
+  animation: pulse 2s infinite;
+}
+.cycle-text {
+  transition: opacity 0.2s, transform 0.2s;
+}
 
 /* ═══ DEMO CTA ═══ */
 .demo-cta {
@@ -541,6 +921,8 @@ html.light .theme-toggle .icon-moon { display: none; }
   transition: color 0.2s;
 }
 .demo-phone:hover { color: var(--accent-hover); }
+.demo-phone { animation: demoGlow 3s ease-in-out infinite; }
+@keyframes demoGlow { 0%,100% { text-shadow: 0 0 20px rgba(26,122,92,0.2); } 50% { text-shadow: 0 0 40px rgba(26,122,92,0.4), 0 0 80px rgba(26,122,92,0.15); } }
 
 /* ═══ TESTIMONIALS ═══ */
 .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -566,7 +948,14 @@ html.light .theme-toggle .icon-moon { display: none; }
   border-radius: 16px;
   padding: 36px 28px;
   display: flex; flex-direction: column;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.price-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+}
+.price-card.featured:hover {
+  box-shadow: 0 12px 48px rgba(26,122,92,0.12);
 }
 .price-card.featured {
   border-color: var(--accent);
@@ -654,146 +1043,182 @@ html.light .theme-toggle .icon-moon { display: none; }
 @media(max-width:768px) { .mobile-bar { display: block; } }
 
 /* ══════════════════════════════════════════════
-   GIDEON HERO — CLEAN UNIFIED SYSTEM
-   Colors matched to site accent (#1a7a5c → #2a9d7a)
+   GIDEON HERO — TIME VAULT v2
+   Harrison Wells walks in. The room recognizes him.
+   Gideon materializes. Towers over him. Speaks.
    ══════════════════════════════════════════════ */
-
 
 .gideon-hero {
   position: relative;
   width: 100vw;
   min-height: 100vh;
-  background: radial-gradient(ellipse 110% 80% at 50% 55%, #040e14 0%, #010407 50%, #000 100%);
+  background: #000;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   opacity: 0;
 }
 
-/* ── TAP GATE ── */
-.g-tap-gate {
-  position: absolute; inset: 0; z-index: 1000;
-  background: rgba(0,0,0,0.94);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: opacity 0.5s ease;
+/* ── VAULT ATMOSPHERE ── */
+.g-vault-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 62% 50%, rgba(42,157,122,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 60% at 25% 45%, rgba(42,157,122,0.025) 0%, transparent 50%),
+    #000;
 }
-.g-tap-gate.dismissed { opacity: 0; pointer-events: none; }
-.g-tap-inner { display: flex; flex-direction: column; align-items: center; gap: 16px; position: relative; }
-.g-tap-pulse {
-  position: absolute; width: 120px; height: 120px; border-radius: 50%;
-  border: 2px solid var(--accent-hover); animation: gTapPulse 1.8s ease-out infinite;
-}
-@keyframes gTapPulse { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(2.4); opacity: 0; } }
-.g-tap-icon {
-  width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--accent-hover);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px; color: var(--accent-hover);
-  text-shadow: 0 0 20px rgba(42,157,122,0.8); position: relative; z-index: 1;
-}
-.g-tap-text { font-family: Inter, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 6px; color: var(--accent-hover); text-transform: uppercase; }
-.g-tap-sub { font-family: Inter, sans-serif; font-size: 0.65rem; color: var(--t40); letter-spacing: 2px; text-transform: uppercase; }
 
-/* ── 3D ENVIRONMENT ── */
+/* Corridor walls — angled lines converging like you're inside a hallway */
+.g-vault-walls {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; opacity: 0;
+}
+/* Left wall edge */
+.g-vault-walls::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 3%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 5%, rgba(42,157,122,0.06) 20%, rgba(42,157,122,0.15) 50%, rgba(42,157,122,0.06) 80%, transparent 95%);
+}
+/* Right wall edge */
+.g-vault-walls::after {
+  content: ''; position: absolute; top: 0; bottom: 0; right: 3%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 5%, rgba(42,157,122,0.06) 20%, rgba(42,157,122,0.15) 50%, rgba(42,157,122,0.06) 80%, transparent 95%);
+}
+/* Horizontal ceiling/floor accent lines via child divs */
+.g-wall-h-top {
+  position: absolute; top: 56px; left: 3%; right: 3%; height: 1px;
+  background: linear-gradient(90deg, rgba(42,157,122,0.15), rgba(42,157,122,0.04) 40%, rgba(42,157,122,0.04) 60%, rgba(42,157,122,0.15));
+}
+.g-wall-h-bot {
+  position: absolute; bottom: 0; left: 3%; right: 3%; height: 1px;
+  background: linear-gradient(90deg, rgba(42,157,122,0.12), rgba(42,157,122,0.03) 40%, rgba(42,157,122,0.03) 60%, rgba(42,157,122,0.12));
+}
+
+/* Floor grid */
 .g-environment { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
 .g-environment .g-floor {
-  position: absolute; bottom: 0; left: -50%; width: 200%; height: 55%;
+  position: absolute; bottom: 0; left: -50%; width: 200%; height: 50%;
   transform-origin: bottom center; transform: rotateX(72deg) translateZ(-20px); perspective: 800px;
+  opacity: 0;
 }
 .g-floor-grid {
   width: 100%; height: 100%;
   background-image:
-    linear-gradient(rgba(42,157,122,0.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(42,157,122,0.16) 1px, transparent 1px);
+    linear-gradient(rgba(42,157,122,0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,157,122,0.14) 1px, transparent 1px);
   background-size: 50px 50px;
-  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 45%, transparent 80%);
-  mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 45%, transparent 80%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.35) 40%, transparent 70%);
+  mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.35) 40%, transparent 70%);
   animation: gFloorScroll 8s linear infinite;
 }
 @keyframes gFloorScroll { from { background-position: center 0; } to { background-position: center 50px; } }
-.g-depth-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.5; }
-.g-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(42,157,122,0.18); left: 50%; transform: translateX(-50%) rotateX(75deg); }
-.g-ring-1 { width: 280px; height: 280px; bottom: 9%; animation: gRingPulse 3.5s ease-in-out infinite; }
-.g-ring-2 { width: 460px; height: 460px; bottom: 5%; animation: gRingPulse 3.5s ease-in-out infinite 0.7s; }
-.g-ring-3 { width: 640px; height: 640px; bottom: 2%; animation: gRingPulse 3.5s ease-in-out infinite 1.4s; }
-@keyframes gRingPulse { 0%,100% { opacity: 0.15; } 50% { opacity: 0.4; } }
+.g-depth-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.4; }
+
+/* Projection base rings */
+.g-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(42,157,122,0.18); right: 28%; transform: translateX(50%) rotateX(78deg); opacity: 0; }
+.g-ring-1 { width: 180px; height: 180px; bottom: 7%; }
+.g-ring-2 { width: 320px; height: 320px; bottom: 3%; }
+.g-ring-3 { width: 460px; height: 460px; bottom: 0%; }
+@keyframes gRingPulse { 0%,100% { opacity: 0.15; } 50% { opacity: 0.45; } }
+
+/* Projection beam — vertical light column under hologram */
+.g-projection-beam {
+  position: absolute; bottom: 0; right: 28%; transform: translateX(50%);
+  width: 200px; height: 70%;
+  background: linear-gradient(0deg,
+    rgba(42,157,122,0.12) 0%,
+    rgba(42,157,122,0.04) 30%,
+    rgba(42,157,122,0.02) 60%,
+    transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.6) 70%, transparent);
+  mask-image: linear-gradient(90deg, transparent, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.6) 70%, transparent);
+  z-index: 1; pointer-events: none; opacity: 0;
+}
+
+/* Hologram glow */
 .g-bg-glow {
-  position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
-  width: 700px; height: 500px;
-  background: radial-gradient(ellipse at center, rgba(42,157,122,0.08) 0%, rgba(26,122,92,0.04) 35%, transparent 65%);
-  filter: blur(50px); animation: gBgBreathe 5s ease-in-out infinite;
+  position: absolute; top: 8%; right: 12%;
+  width: 550px; height: 700px;
+  background: radial-gradient(ellipse at center, rgba(42,157,122,0.12) 0%, rgba(26,122,92,0.05) 35%, transparent 60%);
+  filter: blur(70px); opacity: 0;
+  animation: gBgBreathe 5s ease-in-out infinite;
 }
-@keyframes gBgBreathe { 0%,100% { opacity: 0.6; transform: translateX(-50%) scale(1); } 50% { opacity: 1; transform: translateX(-50%) scale(1.08); } }
+@keyframes gBgBreathe { 0%,100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
 
-/* ── HOLOGRAM STAGE ── */
-.gideon-stage {
-  position: relative; width: 100%; max-width: 550px;
-  display: flex; flex-direction: column; align-items: center; z-index: 2;
-}
-.g-figure { position: relative; z-index: 2; transform-style: preserve-3d; will-change: transform; }
-.g-img {
-  height: 52vh; max-height: 500px; width: auto;
-  object-fit: cover; object-position: center 8%;
-  display: block; mix-blend-mode: screen; opacity: 0.92;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 3%, black 10%, black 82%, rgba(0,0,0,0.3) 94%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 3%, black 10%, black 82%, rgba(0,0,0,0.3) 94%, transparent 100%);
-  filter: hue-rotate(25deg) drop-shadow(0 0 30px rgba(42,157,122,0.5)) drop-shadow(0 0 70px rgba(42,157,122,0.25));
-  will-change: filter, opacity;
-}
-/* Scan lines */
-.g-figure::after {
-  content: ''; position: absolute; inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.12) 3px, rgba(0,0,0,0.12) 4px);
-  pointer-events: none; z-index: 3;
-}
-/* Bloom breathe */
-@keyframes gBloom {
-  0%,100% { filter: hue-rotate(25deg) drop-shadow(0 0 30px rgba(42,157,122,0.5)) drop-shadow(0 0 70px rgba(42,157,122,0.25)); }
-  50% { filter: hue-rotate(25deg) drop-shadow(0 0 50px rgba(42,157,122,0.7)) drop-shadow(0 0 120px rgba(42,157,122,0.4)); }
+/* ── SPLIT LAYOUT — 42/58 to give hologram more room ── */
+.g-vault-inner {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 1300px;
+  display: grid;
+  grid-template-columns: 42% 58%;
+  align-items: center;
+  padding: 0 48px;
+  gap: 0;
+  min-height: 100vh;
 }
 
-/* ── STAT OVERLAY — holographic HUD panels ── */
-.g-stat-overlay {
-  position: absolute; right: 3%; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 8px; z-index: 10; pointer-events: none;
-  opacity: 0; animation: hudFadeIn 1s ease 3s forwards;
+/* ── LEFT SIDE — TEXT/SPEECH ── */
+.g-left {
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px 0 80px;
 }
-@keyframes hudFadeIn { to { opacity: 1; } }
-.g-stat-card {
-  background: rgba(6,18,24,0.7); border: 1px solid rgba(42,157,122,0.2);
-  border-radius: 4px; padding: 8px 14px;
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); min-width: 140px;
-  position: relative; overflow: hidden;
-}
-/* Corner brackets on stat cards */
-.g-stat-card::before, .g-stat-card::after {
-  content: ''; position: absolute; width: 6px; height: 6px;
-  border-color: rgba(42,157,122,0.4); border-style: solid;
-}
-.g-stat-card::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
-.g-stat-card::after { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
-.g-stat-label { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 2px; color: rgba(42,157,122,0.45); text-transform: uppercase; margin-bottom: 2px; }
-.g-stat-value { font-family: var(--mono); font-size: 0.9rem; font-weight: 700; color: var(--accent-hover); text-shadow: 0 0 8px rgba(42,157,122,0.4); }
 
-/* ── SPEECH ── */
-.gideon-speech { position: relative; z-index: 10; text-align: center; margin-top: 6px; }
+/* Decorative vertical line left of text block */
+.g-left::before {
+  content: '';
+  position: absolute; left: 0; top: 30%; bottom: 30%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(42,157,122,0.2) 30%, rgba(42,157,122,0.2) 70%, transparent);
+  opacity: 0;
+}
+
 .gideon-name {
-  font-family: var(--mono); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700;
-  color: var(--accent-hover); letter-spacing: 14px; text-transform: uppercase;
-  text-shadow: 0 0 30px rgba(42,157,122,0.8), 0 0 60px rgba(42,157,122,0.3);
-  margin-bottom: 2px; opacity: 0;
+  font-family: var(--mono); font-size: clamp(3rem, 5.5vw, 5rem); font-weight: 700;
+  color: var(--accent-hover); letter-spacing: 20px; text-transform: uppercase;
+  text-shadow: 0 0 50px rgba(42,157,122,1), 0 0 100px rgba(42,157,122,0.5), 0 0 160px rgba(42,157,122,0.2);
+  margin-bottom: 6px; opacity: 0;
+  line-height: 1;
 }
-.gideon-subtitle { font-family: var(--mono); font-size: 0.6rem; color: rgba(42,157,122,0.35); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 14px; opacity: 0; }
+
+.gideon-subtitle {
+  font-family: var(--mono); font-size: 0.6rem; color: rgba(42,157,122,0.3);
+  letter-spacing: 4px; text-transform: uppercase; margin-bottom: 28px; opacity: 0;
+}
+
+/* Divider line between subtitle and status */
+.g-divider {
+  width: 60px; height: 1px;
+  background: linear-gradient(90deg, rgba(42,157,122,0.4), transparent);
+  margin-bottom: 20px; opacity: 0;
+}
+
+.g-status-bar {
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--mono); font-size: 0.5rem; letter-spacing: 2px;
+  color: rgba(42,157,122,0.35); text-transform: uppercase;
+  margin-bottom: 28px; opacity: 0;
+}
+.g-status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent-hover); box-shadow: 0 0 8px rgba(42,157,122,0.8); animation: statusPulse 2s ease-in-out infinite; }
+@keyframes statusPulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+.g-status-sep { color: rgba(42,157,122,0.12); }
+
 .speech-bubble {
-  font-family: Inter, sans-serif; font-size: clamp(1.1rem, 1.8vw, 1.4rem); font-weight: 300;
-  color: rgba(200,235,225,0.9); line-height: 1.7; min-height: 75px; max-width: 520px;
-  margin: 0 auto; white-space: pre-line;
-  text-shadow: 0 0 15px rgba(42,157,122,0.15);
+  font-family: Inter, sans-serif; font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight: 300;
+  color: rgba(200,235,225,0.92); line-height: 1.85; min-height: 80px; max-width: 420px;
+  white-space: pre-line;
+  text-shadow: 0 0 20px rgba(42,157,122,0.1);
 }
 .g-cursor { color: var(--accent-hover); font-weight: 300; animation: gBlink 0.7s step-end infinite; }
 @keyframes gBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
-.gideon-cta { display: none; margin-top: 16px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; justify-content: center; }
+
+.gideon-cta {
+  display: none; margin-top: 32px; opacity: 0; transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
 .gideon-cta.visible { display: flex; flex-wrap: wrap; gap: 12px; opacity: 1; transform: translateY(0); }
 .btn-gideon {
   display: inline-block; background: var(--accent-hover); color: #fff;
@@ -815,48 +1240,185 @@ html.light .theme-toggle .icon-moon { display: none; }
 }
 .btn-gideon-ghost:hover { border-color: var(--accent-hover); color: #fff; background: rgba(42,157,122,0.1); }
 
+/* ── RIGHT SIDE — HOLOGRAM (TOWERS OVER YOU) ── */
+.g-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  z-index: 2;
+  /* Gradient mask: hologram fades on the left edge, clean boundary with text */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 5%, black 15%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 5%, black 15%);
+}
+
+.gideon-stage {
+  position: relative; width: 100%;
+  display: flex; flex-direction: column; align-items: center; z-index: 2;
+}
+.g-figure { position: relative; z-index: 2; transform-style: preserve-3d; will-change: transform; }
+.g-img {
+  height: 82vh; max-height: 780px; width: auto;
+  object-fit: cover; object-position: center 5%;
+  display: block; mix-blend-mode: screen; opacity: 0.94;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 3%, black 8%, black 80%, rgba(0,0,0,0.25) 93%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 3%, black 8%, black 80%, rgba(0,0,0,0.25) 93%, transparent 100%);
+  filter: hue-rotate(25deg) drop-shadow(0 0 50px rgba(42,157,122,0.7)) drop-shadow(0 0 100px rgba(42,157,122,0.35));
+  will-change: filter, opacity;
+}
+
+/* Scan lines — AGGRESSIVE, visible, holographic */
+.g-figure::after {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg,
+    transparent 0px, transparent 1px,
+    rgba(0,0,0,0.18) 1px, rgba(0,0,0,0.18) 2px);
+  pointer-events: none; z-index: 3;
+}
+
+/* Hologram bloom animation */
+@keyframes gBloom {
+  0%,100% { filter: hue-rotate(25deg) drop-shadow(0 0 50px rgba(42,157,122,0.7)) drop-shadow(0 0 100px rgba(42,157,122,0.35)); }
+  50% { filter: hue-rotate(25deg) drop-shadow(0 0 70px rgba(42,157,122,0.9)) drop-shadow(0 0 160px rgba(42,157,122,0.5)); }
+}
+
+/* Stat overlay — floating HUD panels */
+.g-stat-overlay {
+  position: absolute; right: -5%; top: 18%;
+  display: flex; flex-direction: column; gap: 10px; z-index: 10; pointer-events: none;
+  opacity: 0;
+}
+.g-stat-card {
+  background: rgba(2,10,16,0.8); border: 1px solid rgba(42,157,122,0.22);
+  border-radius: 3px; padding: 9px 16px;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); min-width: 150px;
+  position: relative; overflow: hidden;
+  opacity: 0; transform: translateX(30px);
+}
+.g-stat-card::before, .g-stat-card::after {
+  content: ''; position: absolute; width: 6px; height: 6px;
+  border-color: rgba(42,157,122,0.45); border-style: solid;
+}
+.g-stat-card::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+.g-stat-card::after { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+.g-stat-label { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 2px; color: rgba(42,157,122,0.45); text-transform: uppercase; margin-bottom: 2px; }
+.g-stat-value { font-family: var(--mono); font-size: 0.9rem; font-weight: 700; color: var(--accent-hover); text-shadow: 0 0 10px rgba(42,157,122,0.5); }
+
+/* ── FULL-WIDTH SCAN LINE — sweeps across section ── */
+.g-scanline {
+  position: absolute; left: 0; width: 100%; height: 2px; z-index: 5; pointer-events: none;
+  background: linear-gradient(90deg, transparent 5%, rgba(42,157,122,0.3) 20%, rgba(42,157,122,0.6) 50%, rgba(42,157,122,0.3) 80%, transparent 95%);
+  animation: scanSweep 5s linear infinite;
+  opacity: 0;
+}
+@keyframes scanSweep { 0% { top: 3%; } 100% { top: 97%; } }
+
+/* Second subtle scan line offset */
+.g-scanline-2 {
+  position: absolute; left: 0; width: 100%; height: 1px; z-index: 5; pointer-events: none;
+  background: linear-gradient(90deg, transparent 10%, rgba(42,157,122,0.15) 30%, rgba(42,157,122,0.25) 50%, rgba(42,157,122,0.15) 70%, transparent 90%);
+  animation: scanSweep2 8s linear infinite;
+  opacity: 0;
+}
+@keyframes scanSweep2 { 0% { top: 97%; } 100% { top: 3%; } }
+
+/* ── HUD FRAME — corner brackets ── */
+.g-hud-frame { position: absolute; inset: 0; pointer-events: none; z-index: 3; opacity: 0; }
+.g-hud-corner {
+  position: absolute; width: 40px; height: 40px;
+  border-color: rgba(42,157,122,0.2); border-style: solid;
+}
+.g-hud-tl { top: 56px; left: 20px; border-width: 1px 0 0 1px; }
+.g-hud-tr { top: 56px; right: 20px; border-width: 1px 1px 0 0; }
+.g-hud-bl { bottom: 16px; left: 20px; border-width: 0 0 1px 1px; }
+.g-hud-br { bottom: 16px; right: 20px; border-width: 0 1px 1px 0; }
+.g-hud-tl::after, .g-hud-tr::after { content: ''; position: absolute; top: 0; height: 1px; width: 80px; background: rgba(42,157,122,0.08); }
+.g-hud-tl::after { left: 40px; }
+.g-hud-tr::after { right: 40px; }
+.g-hud-bl::after, .g-hud-br::after { content: ''; position: absolute; bottom: 0; height: 1px; width: 80px; background: rgba(42,157,122,0.08); }
+.g-hud-bl::after { left: 40px; }
+.g-hud-br::after { right: 40px; }
+
+/* ── TAP GATE ── */
+.g-tap-gate {
+  position: absolute; inset: 0; z-index: 1000;
+  background: #000;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: opacity 0.8s ease;
+}
+.g-tap-gate.dismissed { opacity: 0; pointer-events: none; }
+.g-tap-inner { display: flex; flex-direction: column; align-items: center; gap: 16px; position: relative; }
+.g-tap-pulse {
+  position: absolute; width: 120px; height: 120px; border-radius: 50%;
+  border: 1px solid rgba(42,157,122,0.5); animation: gTapPulse 2s ease-out infinite;
+}
+@keyframes gTapPulse { 0% { transform: scale(0.8); opacity: 0.6; } 100% { transform: scale(2.8); opacity: 0; } }
+.g-tap-icon {
+  width: 80px; height: 80px; border-radius: 50%; border: 1px solid rgba(42,157,122,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; color: rgba(42,157,122,0.7);
+  text-shadow: 0 0 20px rgba(42,157,122,0.6); position: relative; z-index: 1;
+}
+.g-tap-text { font-family: var(--mono); font-size: 0.7rem; font-weight: 400; letter-spacing: 6px; color: rgba(42,157,122,0.6); text-transform: uppercase; }
+.g-tap-sub { font-family: Inter, sans-serif; font-size: 0.6rem; color: rgba(255,255,255,0.2); letter-spacing: 2px; text-transform: uppercase; }
+
 /* ── MOBILE ── */
-@media (max-width: 768px) {
-  .g-img { height: 50vh; }
+@media (max-width: 900px) {
+  .g-vault-inner {
+    grid-template-columns: 1fr;
+    padding: 80px 24px 48px;
+    gap: 10px;
+  }
+  .g-left { order: 2; text-align: center; padding: 0 0 40px; align-items: center; }
+  .g-left::before { display: none; }
+  .g-right { order: 1; min-height: auto; padding-top: 20px; }
+  .g-img { height: 52vh; max-height: 440px; }
   .g-stat-overlay { display: none; }
   .g-environment .g-floor { display: none; }
   .g-ring { display: none; }
+  .g-vault-walls { display: none; }
+  .g-projection-beam { display: none; }
   .g-figure { animation: none !important; }
-  .gideon-speech { margin-top: 12px; }
+  .g-hud-frame { display: none; }
+  .g-scanline, .g-scanline-2 { display: none; }
+  .g-status-bar { justify-content: center; gap: 10px; font-size: 0.4rem; }
+  .gideon-name { letter-spacing: 10px; }
+  .gideon-cta.visible { justify-content: center; }
+  .g-divider { margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 500px) {
+  .g-img { height: 42vh; }
+  .gideon-name { font-size: 2.2rem; letter-spacing: 8px; }
 }
 
-/* ── LIGHT MODE — Gideon section adapts ── */
-.light .gideon-hero {
-  background: radial-gradient(ellipse 110% 80% at 50% 55%, #0a1a22 0%, #060e14 50%, #030810 100%);
+/* ── LIGHT MODE — Vault STAYS dark ── */
+.light .gideon-hero { background: #000; }
+.light .g-vault-bg {
+  background:
+    radial-gradient(ellipse 60% 80% at 62% 50%, rgba(42,157,122,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 60% at 25% 45%, rgba(42,157,122,0.025) 0%, transparent 50%),
+    #000;
 }
-.light .g-tap-gate { background: rgba(5,15,20,0.94); }
-.light .g-floor-grid {
-  background-image:
-    linear-gradient(rgba(42,157,122,0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(42,157,122,0.15) 1px, transparent 1px);
-}
-.light .g-ring { border-color: rgba(42,157,122,0.18); }
-.light .g-stat-card {
-  background: rgba(5,20,28,0.85);
-  border-color: rgba(42,157,122,0.3);
-}
+.light .g-tap-gate { background: #000; }
+.light .g-stat-card { background: rgba(2,10,16,0.85); border-color: rgba(42,157,122,0.25); }
 .light .speech-bubble { color: rgba(230,240,235,0.95); }
-.light .gideon-name { color: #3ab894; text-shadow: 0 0 20px rgba(58,184,148,0.7); }
-.light .gideon-subtitle { color: rgba(58,184,148,0.4); }
-.light .g-bg-glow {
-  background: radial-gradient(ellipse at center, rgba(42,157,122,0.08) 0%, rgba(26,122,92,0.04) 40%, transparent 70%);
-}
-/* Smooth border between Gideon dark section and light page below */
+.light .gideon-name { color: #3ab894; text-shadow: 0 0 40px rgba(58,184,148,0.9); }
+.light .gideon-subtitle { color: rgba(58,184,148,0.35); }
 .light .hero-secondary {
   border-top: 1px solid rgba(42,157,122,0.15);
   background: linear-gradient(to bottom, #0a1a22 0%, var(--bg) 120px);
 }
 
-/* ── HERO SECONDARY (original hero, now below Gideon) ── */
+/* ── HERO SECONDARY (compact section below Gideon vault) ── */
 .hero-secondary {
-  padding-top: 80px;
-  border-top: 1px solid rgba(0,217,192,0.1);
+  min-height: auto !important;
+  padding-top: 100px;
+  padding-bottom: 80px;
+  border-top: 1px solid rgba(42,157,122,0.1);
+  background: linear-gradient(180deg, #000 0%, rgba(6,5,4,1) 80px, var(--bg) 200px);
 }
+.hero-secondary .hero-phone { min-height: 480px; }
 
 </style>
 <link rel="stylesheet" href="../styles.css">
@@ -880,64 +1442,103 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 </nav>
 
-<!-- ==================== GIDEON HERO — VOLUMETRIC HOLOGRAM PROJECTION ==================== -->
+<!-- ==================== GIDEON HERO — TIME VAULT (The Flash) ==================== -->
 <section class="gideon-hero">
 
-  <!-- TAP GATE — first element, covers everything -->
+  <!-- TAP GATE -->
   <div class="g-tap-gate" id="gTapGate">
     <div class="g-tap-inner">
       <div class="g-tap-pulse"></div>
       <div class="g-tap-icon">&#9654;</div>
-      <div class="g-tap-text">TAP TO MEET GIDEON</div>
+      <div class="g-tap-text">ENTER THE VAULT</div>
       <div class="g-tap-sub">Sound on · 30 seconds</div>
     </div>
   </div>
 
-  <!-- SINGLE environment — floor grid + particles + glow -->
+  <!-- Vault atmosphere -->
+  <div class="g-vault-bg"></div>
+  <div class="g-vault-walls" id="gVaultWalls">
+    <div class="g-wall-h-top"></div>
+    <div class="g-wall-h-bot"></div>
+  </div>
+
+  <!-- Environment — floor grid + particles + glow + projection beam -->
   <div class="g-environment" aria-hidden="true">
-    <div class="g-floor"><div class="g-floor-grid"></div></div>
+    <div class="g-floor" id="gFloor"><div class="g-floor-grid"></div></div>
     <canvas id="gDepthCanvas" class="g-depth-canvas"></canvas>
-    <div class="g-ring g-ring-1"></div>
-    <div class="g-ring g-ring-2"></div>
-    <div class="g-ring g-ring-3"></div>
-    <div class="g-bg-glow"></div>
+    <div class="g-ring g-ring-1" id="gRing1"></div>
+    <div class="g-ring g-ring-2" id="gRing2"></div>
+    <div class="g-ring g-ring-3" id="gRing3"></div>
+    <div class="g-bg-glow" id="gBgGlow"></div>
+    <div class="g-projection-beam" id="gBeam"></div>
   </div>
 
-  <!-- Hologram figure -->
-  <div class="gideon-stage">
-    <div class="g-figure" id="gFigure">
-      <img src="gideon-hologram.png" alt="Gideon — AI Receptionist"
-           class="g-img" id="gideonImg"/>
-    </div>
+  <!-- Dual scan lines -->
+  <div class="g-scanline" id="gScanline"></div>
+  <div class="g-scanline-2" id="gScanline2"></div>
 
-    <!-- Stat overlay -->
-    <div class="g-stat-overlay">
-      <div class="g-stat-card">
-        <div class="g-stat-label">CALLS ANSWERED</div>
-        <div class="g-stat-value">24/7/365</div>
-      </div>
-      <div class="g-stat-card">
-        <div class="g-stat-label">VS HUMAN HIRE</div>
-        <div class="g-stat-value">$32,000 saved/yr</div>
-      </div>
-      <div class="g-stat-card">
-        <div class="g-stat-label">SETUP TIME</div>
-        <div class="g-stat-value">Under 24 hours</div>
-      </div>
-    </div>
+  <!-- HUD Frame -->
+  <div class="g-hud-frame" id="gHudFrame">
+    <div class="g-hud-corner g-hud-tl"></div>
+    <div class="g-hud-corner g-hud-tr"></div>
+    <div class="g-hud-corner g-hud-bl"></div>
+    <div class="g-hud-corner g-hud-br"></div>
   </div>
 
-  <!-- Speech -->
-  <div class="gideon-speech">
-    <div class="gideon-name" id="gideonName">GIDEON</div>
-    <div class="gideon-subtitle">AI RECEPTIONIST · THE CALL TAKER</div>
-    <div class="speech-bubble">
-      <span id="gideonSpeaks"></span><span class="g-cursor">|</span>
+  <!-- SPLIT LAYOUT -->
+  <div class="g-vault-inner">
+
+    <!-- LEFT — Name + Speech -->
+    <div class="g-left" id="gLeft">
+      <div class="gideon-name" id="gideonName">GIDEON</div>
+      <div class="gideon-subtitle" id="gideonSubtitle">AI RECEPTIONIST · THE CALL TAKER</div>
+      <div class="g-divider" id="gDivider"></div>
+
+      <div class="g-status-bar" id="gStatusBar">
+        <span class="g-status-dot"></span>
+        <span>ONLINE</span>
+        <span class="g-status-sep">|</span>
+        <span>24/7/365</span>
+        <span class="g-status-sep">|</span>
+        <span>AWAITING COMMAND</span>
+      </div>
+
+      <div class="speech-bubble">
+        <span id="gideonSpeaks"></span><span class="g-cursor">|</span>
+      </div>
+
+      <div class="gideon-cta" id="gideonCTA">
+        <a href="/pay" class="btn-gideon">Put Me To Work →</a>
+        <a href="tel:6157845747" class="btn-gideon-ghost">Call Me Right Now</a>
+      </div>
     </div>
-    <div class="gideon-cta" id="gideonCTA">
-      <a href="/pay" class="btn-gideon">Put Me To Work →</a>
-      <a href="tel:6157845747" class="btn-gideon-ghost">Call Me Right Now</a>
+
+    <!-- RIGHT — Hologram (TOWERS over you) -->
+    <div class="g-right">
+      <div class="gideon-stage">
+        <div class="g-figure" id="gFigure">
+          <img src="gideon-hologram.png" alt="Gideon — AI Receptionist"
+               class="g-img" id="gideonImg"/>
+        </div>
+
+        <!-- HUD stat panels -->
+        <div class="g-stat-overlay" id="gStatOverlay">
+          <div class="g-stat-card">
+            <div class="g-stat-label">CALLS ANSWERED</div>
+            <div class="g-stat-value">24/7/365</div>
+          </div>
+          <div class="g-stat-card">
+            <div class="g-stat-label">VS HUMAN HIRE</div>
+            <div class="g-stat-value">$32,000 saved/yr</div>
+          </div>
+          <div class="g-stat-card">
+            <div class="g-stat-label">SETUP TIME</div>
+            <div class="g-stat-value">Under 24 hours</div>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 
 </section>
@@ -946,8 +1547,17 @@ html.light .theme-toggle .icon-moon { display: none; }
 <section class="hero hero-secondary" id="hero">
   <div class="hero-copy">
     <div class="eyebrow"><span class="blink"></span>SYSTEM ACTIVE</div>
-    <h1>It's 2 AM.<br>Your phone rings.<br><strong>Gideon answers.</strong></h1>
+    <h1>It's 2 AM.<br>Your phone rings.<br><strong>Gideon answers.</strong><span class="cycle-badge"><span class="cycle-badge-dot"></span><span class="cycle-text" id="cycleText">HVAC</span></span></h1>
     <p class="hero-sub">Watch a real call happen. From the <strong>first ring</strong> to a <strong>booked appointment</strong> — while the owner sleeps.</p>
+    <div class="industry-selector" id="indSelector">
+      <span class="ind-pill active" data-ind="all">All Industries</span>
+      <span class="ind-pill" data-ind="hvac">HVAC</span>
+      <span class="ind-pill" data-ind="plumbing">Plumbing</span>
+      <span class="ind-pill" data-ind="locksmith">Locksmith</span>
+      <span class="ind-pill" data-ind="dental">Dental</span>
+      <span class="ind-pill" data-ind="roofing">Roofing</span>
+      <span class="ind-pill" data-ind="legal">Legal</span>
+    </div>
     <div class="hero-ctas">
       <a href="tel:6157845747" class="btn btn-primary"><span>Call the demo line</span></a>
       <a href="#pricing" class="hero-ghost">See pricing</a>
@@ -990,27 +1600,51 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 </div>
 
+<!-- ═══ INDUSTRY TRUST STRIP ═══ -->
+<div class="industry-trust reveal">
+  <div class="trust-headline">Trusted by service businesses across <strong>13+ industries</strong></div>
+  <div class="trust-badges">
+    <span class="trust-badge">HVAC</span>
+    <span class="trust-badge">Plumbing</span>
+    <span class="trust-badge">Roofing</span>
+    <span class="trust-badge">Locksmith</span>
+    <span class="trust-badge">Electrical</span>
+    <span class="trust-badge">Dental</span>
+    <span class="trust-badge">Legal</span>
+    <span class="trust-badge">Towing</span>
+    <span class="trust-badge">Med Spa</span>
+    <span class="trust-badge">Veterinary</span>
+    <span class="trust-badge">Pest Control</span>
+    <span class="trust-badge">Property Mgmt</span>
+    <span class="trust-badge">Garage Door</span>
+  </div>
+</div>
+
 <!-- ═══ SECTION 2: THE PROBLEM — full-width split, giant stat left ═══ -->
 <section id="problem" style="display:grid;grid-template-columns:1fr 1fr;min-height:80vh;border-bottom:1px solid var(--t06);">
   <div class="reveal-left" style="display:flex;flex-direction:column;justify-content:center;padding:80px 64px;border-right:1px solid var(--t06);">
     <div class="sec-label">01 &mdash; THE PROBLEM</div>
-    <div style="font-family:var(--serif);font-size:clamp(5rem,12vw,9rem);color:var(--amber);line-height:0.9;letter-spacing:-0.04em;margin-bottom:12px;">85%</div>
+    <div class="stat-num" style="font-family:var(--serif);font-size:clamp(5rem,12vw,9rem);color:var(--amber);line-height:0.9;letter-spacing:-0.04em;margin-bottom:12px;">85%</div>
     <div style="font-family:var(--mono);font-size:12px;color:var(--t40);letter-spacing:0.1em;">OF CALLERS WON'T LEAVE A VOICEMAIL</div>
   </div>
   <div class="reveal-right" style="display:flex;flex-direction:column;justify-content:center;padding:80px 64px;">
-    <h2 class="sec-title" style="margin-bottom:24px;">Every missed call costs you $300&ndash;$500.</h2>
+    <h2 class="sec-title" style="margin-bottom:24px;">Every missed call <span class="highlight-on-scroll">costs you $300&ndash;$500.</span></h2>
     <p style="color:var(--t70);font-size:16px;line-height:1.8;margin-bottom:40px;">When someone's locked out at midnight or has a burst pipe at 2 AM, they're not leaving a voicemail. They're calling the next company on Google.</p>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;">
       <div><div class="stat-num">62%</div><div class="stat-label">AFTER HOURS</div></div>
       <div><div class="stat-num">$1,200</div><div class="stat-label">AVG JOB VALUE</div></div>
       <div><div class="stat-num">$0</div><div class="stat-label">FROM MISSED CALL</div></div>
     </div>
+    <div class="roi-teaser">
+      <div class="roi-teaser-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+      <div class="roi-teaser-text">The average service business loses <strong>$2,400/month</strong> in missed calls. Gideon pays for itself in the first week.</div>
+    </div>
   </div>
 </section>
 <style>@media(max-width:768px){#problem{grid-template-columns:1fr !important;min-height:auto !important;}#problem>div{padding:48px 24px !important;border-right:none !important;border-bottom:1px solid var(--t06);}}</style>
 
 <!-- ═══ SECTION 3: BEFORE / AFTER — two columns, stark contrast ═══ -->
-<section id="features" style="padding:120px 0;border-bottom:1px solid var(--t06);">
+<section id="comparison" style="padding:120px 0;border-bottom:1px solid var(--t06);">
   <div style="max-width:1100px;margin:0 auto;padding:0 40px;">
     <div class="sec-label reveal" style="text-align:center;">02 &mdash; THE DIFFERENCE</div>
     <h2 class="sec-title reveal" style="text-align:center;max-width:600px;margin:0 auto 64px;">Before Gideon. After Gideon.</h2>
@@ -1041,56 +1675,175 @@ html.light .theme-toggle .icon-moon { display: none; }
     </div>
   </div>
 </section>
-<style>@media(max-width:768px){#features [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}#features [style*="border-right"]{border-right:none !important;border-bottom:1px solid var(--t06);}}</style>
+<style>@media(max-width:768px){#comparison [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}#comparison [style*="border-right"]{border-right:none !important;border-bottom:1px solid var(--t06);}}</style>
 
-<!-- ═══ SECTION 4: HOW IT WORKS — horizontal timeline ═══ -->
-<section id="how" style="padding:120px 40px;max-width:1100px;margin:0 auto;">
-  <div class="sec-label reveal" style="text-align:center;">03 &mdash; HOW IT WORKS</div>
-  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 64px;">Three steps. Five minutes.</h2>
+<!-- ═══ SECTION 3: FEATURES — what Gideon actually does ═══ -->
+<section id="features" style="padding:120px 40px;max-width:1100px;margin:0 auto;border-bottom:1px solid var(--t06);border-top:1px solid var(--t06);">
+  <div class="sec-label reveal" style="text-align:center;">03 &mdash; CAPABILITIES</div>
+  <h2 class="sec-title reveal" style="text-align:center;max-width:650px;margin:0 auto 16px;">Everything a receptionist does.<br>At a fraction of the cost.</h2>
+  <p class="sec-sub reveal" style="text-align:center;margin:0 auto 64px;">Gideon isn't a voicemail tree. She's a fully trained receptionist who knows your business, books your jobs, and never takes a day off.</p>
 
-  <div class="reveal-stagger" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;position:relative;">
-    <!-- Connecting line -->
-    <div style="position:absolute;top:28px;left:15%;right:15%;height:1px;background:var(--t06);z-index:0;"></div>
-
-    <div style="text-align:center;position:relative;z-index:1;">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--accent);">1</div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Forward your calls</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Same way you'd forward to an employee. Takes 2 minutes.</p>
+  <div class="features-grid reveal-stagger">
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
+      <h3>Answers Every Call</h3>
+      <p>First ring. Every time. 2 AM on a holiday, middle of a Saturday rush &mdash; Gideon picks up. Your customers never hear voicemail again.</p>
     </div>
-
-    <div style="text-align:center;position:relative;z-index:1;">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--bg);box-shadow:0 0 24px rgba(26,122,92,0.3);">2</div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Gideon answers</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">She knows your business. Callers can't tell she's not real.</p>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <h3>Books Appointments</h3>
+      <p>Gets their name, number, address, and what they need. Books them straight into your calendar. Done before you wake up.</p>
     </div>
-
-    <div style="text-align:center;position:relative;z-index:1;">
-      <div style="width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--serif);font-size:22px;color:var(--accent);">3</div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">You get every lead</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Text with name, number, what they need. Appointments booked.</p>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><line x1="9" y1="10" x2="15" y2="10"/></svg></div>
+      <h3>Texts You Every Detail</h3>
+      <p>Instant text the moment a call ends. Name, number, issue, urgency &mdash; everything you need to dispatch or follow up.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <h3>Handles Emergencies</h3>
+      <p>Burst pipe at 3 AM? Locked out at midnight? Gideon knows the difference between routine and urgent, and acts fast.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+      <h3>Trained On Your Business</h3>
+      <p>Your services, hours, service area, and pricing. Callers think they're talking to your front desk &mdash; because she sounds like it.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+      <h3>Never Calls In Sick</h3>
+      <p>No training. No turnover. No vacation days. No benefits. No bad moods. Just answers &mdash; every hour, every day, all year.</p>
     </div>
   </div>
 </section>
-<style>@media(max-width:768px){#how [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr !important;gap:48px !important;}#how [style*="position:absolute;top:28px"]{display:none;}}</style>
 
-<!-- ═══ SECTION 5: DEMO CTA — full-bleed, massive type ═══ -->
-<section class="reveal-scale" style="padding:140px 40px;text-align:center;background:linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
-  <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--accent);margin-bottom:32px;">HEAR IT YOURSELF</div>
-  <a href="tel:6157845747" style="font-family:var(--serif);font-size:clamp(3rem,8vw,6rem);color:var(--accent);text-decoration:none;display:block;letter-spacing:-0.03em;transition:color 0.3s;line-height:1.1;">(615) 784-5747</a>
-  <p style="color:var(--t40);font-size:15px;margin-top:20px;">Call right now. Gideon picks up in one ring. Judge for yourself.</p>
+<!-- ═══ SECTION 4: HOW IT WORKS — horizontal timeline ═══ -->
+<section id="how" style="padding:120px 40px;max-width:1100px;margin:0 auto;">
+  <div class="sec-label reveal" style="text-align:center;">04 &mdash; HOW IT WORKS</div>
+  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 64px;">Three steps. Five minutes.</h2>
+
+  <div class="reveal-stagger" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;position:relative;">
+    <!-- Animated connecting line -->
+    <div class="hw-progress-line"></div>
+
+    <div style="text-align:center;position:relative;z-index:1;">
+      <div class="step-circle" style="position:relative;width:72px;height:72px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;transition:box-shadow 0.3s,background 0.3s;">
+        <span style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent);letter-spacing:-0.02em;">01</span>
+      </div>
+      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Forward your calls</h3>
+      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Same way you'd forward to an employee. Takes 2 minutes.</p>
+      <div style="margin-top:16px;background:var(--surface);border:1px solid var(--t06);border-radius:8px;padding:12px 16px;max-width:240px;margin-left:auto;margin-right:auto;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--t20);letter-spacing:0.1em;margin-bottom:6px;">WORKS WITH</div>
+        <div style="font-size:12px;color:var(--t40);line-height:1.5;">iPhone, Android, Landline, VoIP &mdash; any phone system</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;position:relative;z-index:1;">
+      <div class="step-circle" style="position:relative;width:72px;height:72px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 0 32px rgba(26,122,92,0.35);transition:box-shadow 0.3s;">
+        <span style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--bg);letter-spacing:-0.02em;">02</span>
+      </div>
+      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Gideon answers</h3>
+      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">She knows your business. Callers can't tell she's not real.</p>
+      <div style="margin-top:16px;background:var(--accent-soft);border:1px solid rgba(26,122,92,0.12);border-radius:8px;padding:12px 16px;max-width:240px;margin-left:auto;margin-right:auto;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.1em;margin-bottom:6px;">TRAINED ON</div>
+        <div style="font-size:12px;color:var(--t70);line-height:1.5;">Your services, hours, pricing, service area &mdash; like your best employee</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;position:relative;z-index:1;">
+      <div class="step-circle" style="position:relative;width:72px;height:72px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;transition:box-shadow 0.3s,background 0.3s;">
+        <span style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent);letter-spacing:-0.02em;">03</span>
+      </div>
+      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">You get every lead</h3>
+      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Text with name, number, what they need. Appointments booked.</p>
+      <div style="margin-top:16px;background:var(--surface);border:1px solid var(--t06);border-radius:8px;padding:12px 16px;max-width:240px;margin-left:auto;margin-right:auto;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--t20);letter-spacing:0.1em;margin-bottom:6px;">DELIVERED VIA</div>
+        <div style="font-size:12px;color:var(--t40);line-height:1.5;">SMS, email, or straight into your CRM &mdash; your choice</div>
+      </div>
+    </div>
+  </div>
 </section>
+<style>@media(max-width:768px){#how [style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr !important;gap:48px !important;}.hw-progress-line{display:none;}}
+.step-circle:hover { box-shadow: 0 0 40px rgba(26,122,92,0.4) !important; }</style>
+
+<!-- ═══ SECTION 5: DEMO CTA — rebuilt as mini-funnel ═══ -->
+<section class="reveal-scale" style="padding:120px 40px;background:linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
+  <div style="max-width:800px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+    <!-- Left: CTA -->
+    <div style="text-align:left;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--accent);margin-bottom:16px;">HEAR IT YOURSELF</div>
+      <a href="tel:6157845747" class="demo-phone" style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);color:var(--accent);text-decoration:none;display:block;letter-spacing:-0.03em;line-height:1.1;margin-bottom:24px;">(615) 784&#8209;5747</a>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:14px;color:var(--t70);">Picks up in under 2 seconds</span></div>
+        <div style="display:flex;align-items:center;gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:14px;color:var(--t70);">Sounds like a real receptionist</span></div>
+        <div style="display:flex;align-items:center;gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:14px;color:var(--t70);">Tell her your industry &mdash; she adapts instantly</span></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="tel:6157845747" class="btn btn-primary"><span>Call Now</span></a>
+        <a href="/book.html" class="btn btn-outline">Book a Demo Instead</a>
+      </div>
+    </div>
+    <!-- Right: Live transcript preview -->
+    <div style="background:var(--bg);border:1px solid var(--t10);border-radius:16px;padding:28px 24px;position:relative;overflow:hidden;">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.15em;margin-bottom:16px;display:flex;align-items:center;gap:8px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;"></span>LIVE CALL PREVIEW</div>
+      <div id="demoTranscript" style="display:flex;flex-direction:column;gap:10px;min-height:200px;">
+        <div style="background:var(--accent-soft);border-radius:10px 10px 10px 2px;padding:10px 14px;max-width:85%;"><span style="font-family:var(--mono);font-size:8px;color:var(--accent);display:block;margin-bottom:2px;">GIDEON</span><span style="font-size:13px;color:var(--t70);line-height:1.5;">"Thanks for calling! How can I help you today?"</span></div>
+        <div style="background:var(--surface);border-radius:10px 10px 2px 10px;padding:10px 14px;max-width:85%;align-self:flex-end;"><span style="font-family:var(--mono);font-size:8px;color:var(--t20);display:block;margin-bottom:2px;">CALLER</span><span style="font-size:13px;color:var(--t40);line-height:1.5;">"Yeah, my AC went out. It's 95 degrees."</span></div>
+        <div style="background:var(--accent-soft);border-radius:10px 10px 10px 2px;padding:10px 14px;max-width:85%;"><span style="font-family:var(--mono);font-size:8px;color:var(--accent);display:block;margin-bottom:2px;">GIDEON</span><span style="font-size:13px;color:var(--t70);line-height:1.5;">"I can get a tech out to you today. Can I grab your name and address?"</span></div>
+        <div style="background:var(--surface);border-radius:10px 10px 2px 10px;padding:10px 14px;max-width:75%;align-self:flex-end;opacity:0.5;"><span style="font-size:13px;color:var(--t20);line-height:1.5;font-style:italic;">Typing...</span></div>
+      </div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,var(--bg));"></div>
+    </div>
+  </div>
+</section>
+<style>@media(max-width:768px){.reveal-scale [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;gap:40px !important;}.reveal-scale [style*="text-align:left"]{text-align:center !important;}}</style>
+
+<!-- ═══ LIVE COUNTER BAR ═══ -->
+<div class="live-counter-bar reveal">
+  <div class="live-counter-inner">
+    <div class="live-counter-item">
+      <div class="live-pulse"></div>
+      <div>
+        <div class="live-counter-num" id="liveCallsNum">247</div>
+        <div class="live-counter-label">Calls answered this week</div>
+      </div>
+    </div>
+    <div class="live-divider"></div>
+    <div class="live-counter-item">
+      <div>
+        <div class="live-counter-num" id="liveJobsNum">89</div>
+        <div class="live-counter-label">Jobs booked this week</div>
+      </div>
+    </div>
+    <div class="live-divider"></div>
+    <div class="live-counter-item">
+      <div>
+        <div class="live-counter-num" id="liveRevenueNum">$42K</div>
+        <div class="live-counter-label">Revenue saved for clients</div>
+      </div>
+    </div>
+    <div class="live-divider"></div>
+    <div class="live-counter-item">
+      <div>
+        <div class="live-counter-num" style="color:var(--green);">0</div>
+        <div class="live-counter-label">Missed calls</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ SECTION 6: TESTIMONIALS — offset quote layout, not cards ═══ -->
 <section id="testimonials" style="padding:120px 40px;max-width:1100px;margin:0 auto;">
-  <div class="sec-label reveal" style="text-align:center;">04 &mdash; REAL RESULTS</div>
+  <div class="sec-label reveal" style="text-align:center;">05 &mdash; REAL RESULTS</div>
   <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 72px;">Don't take our word for it.</h2>
 
   <!-- Testimonial 1: big quote -->
-  <div class="reveal-left" style="display:grid;grid-template-columns:120px 1fr;gap:40px;align-items:start;margin-bottom:64px;padding-bottom:64px;border-bottom:1px solid var(--t06);">
+  <div class="reveal-left test-item-wrap" style="display:grid;grid-template-columns:120px 1fr;gap:40px;align-items:start;margin-bottom:64px;padding:32px;padding-bottom:64px;border-bottom:1px solid var(--t06);border-radius:12px;">
     <div>
       <div style="font-family:var(--serif);font-size:96px;color:var(--accent);line-height:0.8;opacity:0.4;">&ldquo;</div>
     </div>
     <div>
+      <div style="color:var(--amber);font-size:13px;letter-spacing:3px;margin-bottom:12px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"Signed up Monday, caught 4 missed calls by Friday. Two turned into jobs. Paid for itself before the trial was over."</p>
       <div style="display:flex;align-items:center;gap:16px;">
         <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">MR</div>
@@ -1101,8 +1854,9 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 
   <!-- Testimonial 2 -->
-  <div class="reveal-right" style="display:grid;grid-template-columns:1fr 120px;gap:40px;align-items:start;margin-bottom:64px;padding-bottom:64px;border-bottom:1px solid var(--t06);">
+  <div class="reveal-right test-item-wrap" style="display:grid;grid-template-columns:1fr 120px;gap:40px;align-items:start;margin-bottom:64px;padding:32px;padding-bottom:64px;border-bottom:1px solid var(--t06);border-radius:12px;">
     <div>
+      <div style="color:var(--amber);font-size:13px;letter-spacing:3px;margin-bottom:12px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"I was losing 2&ndash;3 calls a night. Now every one gets answered. $800 emergency job at 11 PM I would've missed."</p>
       <div style="display:flex;align-items:center;gap:16px;">
         <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">JK</div>
@@ -1116,11 +1870,12 @@ html.light .theme-toggle .icon-moon { display: none; }
   </div>
 
   <!-- Testimonial 3 -->
-  <div class="reveal-left" style="display:grid;grid-template-columns:120px 1fr;gap:40px;align-items:start;">
+  <div class="reveal-left test-item-wrap" style="display:grid;grid-template-columns:120px 1fr;gap:40px;align-items:start;padding:32px;border-radius:12px;">
     <div>
       <div style="font-family:var(--serif);font-size:96px;color:var(--accent);line-height:0.8;opacity:0.4;">&ldquo;</div>
     </div>
     <div>
+      <div style="color:var(--amber);font-size:13px;letter-spacing:3px;margin-bottom:12px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
       <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"Solo operator. Can't answer the phone on a roof. Last month The Call Taker booked 11 jobs I would've missed. Do the math."</p>
       <div style="display:flex;align-items:center;gap:16px;">
         <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">DM</div>
@@ -1132,11 +1887,75 @@ html.light .theme-toggle .icon-moon { display: none; }
 </section>
 <style>@media(max-width:768px){#testimonials [style*="grid-template-columns:120px"]{grid-template-columns:1fr !important;}#testimonials [style*="grid-template-columns:1fr 120px"]{grid-template-columns:1fr !important;}#testimonials [style*="font-size:96px"]{font-size:48px !important;}#testimonials [style*="margin-left:auto"]{margin-left:0 !important;margin-top:12px;}#testimonials [style*="display:flex;align-items:center;gap:16px"]{flex-wrap:wrap;}}</style>
 
+<!-- ═══ LIVE CALL REPLAY — animated transcript ═══ -->
+<section style="padding:100px 40px;max-width:900px;margin:0 auto;">
+  <div class="sec-label reveal" style="text-align:center;">REAL CALL TRANSCRIPT</div>
+  <h2 class="sec-title reveal" style="text-align:center;max-width:550px;margin:0 auto 16px;">This happened last Tuesday at 11 PM.</h2>
+  <p class="sec-sub reveal" style="text-align:center;margin:0 auto 48px;">A real call. A real customer. Gideon handled it start to finish.</p>
+
+  <div class="reveal-scale" style="background:var(--surface);border:1px solid var(--t10);border-radius:20px;padding:36px 32px;position:relative;overflow:hidden;">
+    <!-- Header -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--t06);">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;"></span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.12em;">CALL RECORDING &mdash; HVAC EMERGENCY</span>
+      </div>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--t20);">DURATION: 47s</span>
+    </div>
+    <!-- Transcript lines -->
+    <div id="liveTranscript" style="display:flex;flex-direction:column;gap:14px;">
+      <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--accent);min-width:48px;padding-top:3px;">GIDEON</span><span style="font-size:14px;color:var(--t70);line-height:1.6;">"Thanks for calling! This is Gideon with Cool Air Pros. How can I help you tonight?"</span></div></div>
+      <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--t20);min-width:48px;padding-top:3px;">CALLER</span><span style="font-size:14px;color:var(--t40);line-height:1.6;">"Hey, my AC just stopped working. It's like 90 in here and I have a baby."</span></div></div>
+      <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--accent);min-width:48px;padding-top:3px;">GIDEON</span><span style="font-size:14px;color:var(--t70);line-height:1.6;">"I'm so sorry about that &mdash; especially with a baby. Let me get an emergency tech out to you. Can I grab your name and address?"</span></div></div>
+      <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--t20);min-width:48px;padding-top:3px;">CALLER</span><span style="font-size:14px;color:var(--t40);line-height:1.6;">"Marcus Johnson, 1847 Elm Street."</span></div></div>
+      <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--accent);min-width:48px;padding-top:3px;">GIDEON</span><span style="font-size:14px;color:var(--t70);line-height:1.6;">"Got it, Marcus. I've booked you for first thing tomorrow at 7 AM. I'll text you a confirmation with all the details right now."</span></div></div>
+      <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--t20);min-width:48px;padding-top:3px;">CALLER</span><span style="font-size:14px;color:var(--t40);line-height:1.6;">"Wow, that was fast. Thanks."</span></div></div>
+    </div>
+    <!-- Result bar -->
+    <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--t06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <div style="display:flex;gap:24px;">
+        <div><span style="font-family:var(--mono);font-size:9px;color:var(--t20);display:block;">RESULT</span><span style="font-size:14px;color:var(--accent);font-weight:600;">Job Booked</span></div>
+        <div><span style="font-family:var(--mono);font-size:9px;color:var(--t20);display:block;">VALUE</span><span style="font-size:14px;color:var(--amber);font-weight:600;">$450</span></div>
+        <div><span style="font-family:var(--mono);font-size:9px;color:var(--t20);display:block;">OWNER</span><span style="font-size:14px;color:var(--t40);font-weight:600;">Asleep</span></div>
+      </div>
+      <a href="tel:6157845747" class="btn btn-primary" style="padding:10px 20px;font-size:13px;"><span>Try It Yourself</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TRUST STRIP — aggregate proof before pricing ═══ -->
+<div class="reveal" style="padding:56px 40px;border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
+  <div style="display:flex;justify-content:center;gap:48px;flex-wrap:wrap;align-items:center;max-width:800px;margin:0 auto;">
+    <div style="text-align:center;">
+      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--accent);margin-bottom:4px;">4.9</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">AVG RATING</div>
+    </div>
+    <div style="width:1px;height:36px;background:var(--t10);"></div>
+    <div style="text-align:center;">
+      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--accent);margin-bottom:4px;">47</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">BUSINESSES SERVED</div>
+    </div>
+    <div style="width:1px;height:36px;background:var(--t10);"></div>
+    <div style="text-align:center;">
+      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--green);margin-bottom:4px;">0</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">MISSED CALLS</div>
+    </div>
+    <div style="width:1px;height:36px;background:var(--t10);"></div>
+    <div style="text-align:center;">
+      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--accent);margin-bottom:4px;">$32K</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">SAVED VS HUMAN HIRE</div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ SECTION 7: PRICING — center featured card, flanked ═══ -->
 <section id="pricing" style="padding:120px 40px;max-width:1100px;margin:0 auto;border-top:1px solid var(--t06);">
-  <div class="sec-label reveal" style="text-align:center;">05 &mdash; PRICING</div>
+  <div class="sec-label reveal" style="text-align:center;">06 &mdash; PRICING</div>
   <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 12px;">Less than one missed job.</h2>
-  <p class="reveal" style="text-align:center;color:var(--t40);font-size:15px;margin-bottom:64px;">14-day free pilot. No credit card. No contracts.</p>
+  <p class="reveal" style="text-align:center;color:var(--t40);font-size:15px;margin-bottom:16px;">14-day free pilot. No credit card. No contracts.</p>
+  <div class="reveal" style="text-align:center;margin-bottom:64px;">
+    <div class="urgency-badge"><span class="urgency-dot"></span>Only 3 pilot spots left this month</div>
+  </div>
 
   <div class="pricing-grid reveal-stagger">
     <div class="price-card">
@@ -1185,12 +2004,52 @@ html.light .theme-toggle .icon-moon { display: none; }
     </div>
   </div>
   <p style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--t20);margin-top:32px;letter-spacing:0.05em;">NO CREDIT CARD &middot; CANCEL ANYTIME &middot; SETUP IN 5 MINUTES</p>
+
+  <!-- Cost Comparison -->
+  <div class="reveal" style="margin-top:80px;background:var(--bg);border:1px solid var(--t10);border-radius:16px;padding:40px;max-width:700px;margin-left:auto;margin-right:auto;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;color:var(--accent);margin-bottom:8px;">THE MATH</div>
+      <h3 style="font-family:var(--serif);font-size:24px;color:var(--t100);font-weight:400;">What you're really paying for a missed call</h3>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;">
+      <!-- Human -->
+      <div style="text-align:center;">
+        <div style="font-family:var(--mono);font-size:9px;color:rgba(200,80,60,0.6);letter-spacing:0.1em;margin-bottom:12px;">HUMAN RECEPTIONIST</div>
+        <div style="font-family:var(--serif);font-size:36px;color:var(--t100);">$2,800</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--t20);">/month</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;text-align:left;">
+          <span style="font-size:12px;color:var(--t20);">+ Sick days &amp; vacation</span>
+          <span style="font-size:12px;color:var(--t20);">+ Training costs</span>
+          <span style="font-size:12px;color:var(--t20);">+ Benefits &amp; payroll tax</span>
+          <span style="font-size:12px;color:var(--t20);">+ Only works 8 hours/day</span>
+        </div>
+      </div>
+      <!-- VS -->
+      <div style="font-family:var(--mono);font-size:14px;color:var(--t10);font-weight:700;">VS</div>
+      <!-- Gideon -->
+      <div style="text-align:center;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.1em;margin-bottom:12px;">GIDEON</div>
+        <div style="font-family:var(--serif);font-size:36px;color:var(--accent);">$97</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--t20);">/month</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;text-align:left;">
+          <span style="font-size:12px;color:var(--accent);">Never calls in sick</span>
+          <span style="font-size:12px;color:var(--accent);">Zero training needed</span>
+          <span style="font-size:12px;color:var(--accent);">No overhead costs</span>
+          <span style="font-size:12px;color:var(--accent);">Works 24/7/365</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--t06);">
+      <div style="font-family:var(--serif);font-size:28px;color:var(--accent);">Save $32,400/year</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--t20);margin-top:4px;">THAT'S 96% LESS THAN A HUMAN HIRE</div>
+    </div>
+  </div>
 </section>
 
 <!-- ═══ SECTION 8: FAQ — left title, right accordion ═══ -->
 <section id="faq" style="display:grid;grid-template-columns:1fr 1.5fr;gap:80px;padding:120px 40px;max-width:1100px;margin:0 auto;border-top:1px solid var(--t06);">
   <div class="reveal-left">
-    <div class="sec-label">06 &mdash; FAQ</div>
+    <div class="sec-label">07 &mdash; FAQ</div>
     <h2 class="sec-title">Questions we<br>hear every day.</h2>
     <p style="color:var(--t40);font-size:15px;line-height:1.7;margin-top:16px;">Can't find your answer? Call us at <a href="tel:6157845747" style="color:var(--accent);text-decoration:none;">(615) 784-5747</a> and ask Gideon yourself.</p>
   </div>
@@ -1201,13 +2060,23 @@ html.light .theme-toggle .icon-moon { display: none; }
     <div class="faq-item"><div class="faq-q">What if the caller needs a real person?</div><div class="faq-a"><p>It handles almost every call on its own. If someone really needs you, it transfers the call or texts you their info immediately.</p></div></div>
     <div class="faq-item"><div class="faq-q">How fast can I get set up?</div><div class="faq-a"><p>About 5 minutes. We set up the AI with your business info, give you a number to forward to, and you're live.</p></div></div>
     <div class="faq-item"><div class="faq-q">What happens after the 14-day pilot?</div><div class="faq-a"><p>You pick a plan. If you don't like it, we turn it off &mdash; no contracts, no fees. Most people see it pay for itself in the first week.</p></div></div>
+    <div class="faq-item"><div class="faq-q">How is this different from a regular answering service?</div><div class="faq-a"><p>Traditional answering services cost $800&ndash;$1,200/mo and put callers on hold. Gideon answers instantly, knows your business inside out, books appointments directly, and costs a fraction of the price. No hold times, no scripts that sound robotic.</p></div></div>
+    <div class="faq-item"><div class="faq-q">Does it integrate with my existing tools?</div><div class="faq-a"><p>Yes. Gideon works with Google Calendar, most CRMs, and sends instant SMS/email notifications. If you use a scheduling tool, we connect to it during setup.</p></div></div>
+    <div class="faq-item"><div class="faq-q">What about data privacy and security?</div><div class="faq-a"><p>All calls are encrypted in transit. We never share your customer data with third parties. You own your data. We can provide a BAA for HIPAA-regulated businesses like dental and medical offices.</p></div></div>
+    <div class="faq-item"><div class="faq-q">Can I use this for multiple locations?</div><div class="faq-a"><p>Absolutely. Each location gets its own trained AI with unique hours, services, and service area. Volume discounts available on the Pro plan for 3+ locations.</p></div></div>
   </div>
 </section>
-<style>@media(max-width:768px){#faq{grid-template-columns:1fr !important;gap:40px !important;}}</style>
+<style>
+@media(max-width:768px){
+  #faq{grid-template-columns:1fr !important;gap:40px !important;}
+  [style*="grid-template-columns:1fr auto 1fr"]{grid-template-columns:1fr !important;gap:32px !important;}
+  [style*="grid-template-columns:1fr auto 1fr"] [style*="font-family:var(--mono);font-size:14px"]{text-align:center;font-size:12px !important;}
+}
+</style>
 
 <!-- ═══ SECTION 9: FINAL CTA — full-bleed dark with giant serif ═══ -->
 <section class="reveal-scale" style="text-align:center;padding:140px 40px;background:var(--surface);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
-  <h2 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;color:var(--t100);letter-spacing:-0.02em;max-width:700px;margin:0 auto 32px;line-height:1.15;">Your competitors are answering their phones right now.</h2>
+  <h2 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;color:var(--t100);letter-spacing:-0.02em;max-width:700px;margin:0 auto 32px;line-height:1.15;">Your competitors are <span class="highlight-on-scroll">answering their phones</span> right now.</h2>
   <p style="color:var(--t40);font-size:16px;max-width:460px;margin:0 auto 40px;line-height:1.7;">Start your free 14-day pilot in under 5 minutes. No credit card. No commitment.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
     <a href="/pilot/" class="btn btn-primary" style="font-size:16px;padding:18px 40px;"><span>Start Your Free Pilot</span></a>
@@ -1217,6 +2086,11 @@ html.light .theme-toggle .icon-moon { display: none; }
     <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">NO CREDIT CARD</span>
     <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">CANCEL ANYTIME</span>
     <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">5 MIN SETUP</span>
+  </div>
+  <!-- Guarantee -->
+  <div style="margin-top:48px;display:flex;align-items:center;justify-content:center;gap:12px;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+    <span style="font-size:13px;color:var(--t40);">If Gideon doesn't book you at least one job in 14 days, you pay nothing. <strong style="color:var(--accent);">Guaranteed.</strong></span>
   </div>
 </section>
 
@@ -1246,10 +2120,50 @@ html.light .theme-toggle .icon-moon { display: none; }
       <span>&copy; 2026 The Call Taker. All rights reserved.</span>
       <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
     </div>
+    <div class="footer-col">
+      <h4>RESOURCES</h4>
+      <a href="/case-studies/">Case Studies</a>
+      <a href="/book.html">Book a Demo</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/agency.html">Agencies</a>
+    </div>
+    <div class="footer-col">
+      <h4>CONTACT</h4>
+      <a href="tel:6157845747">(615) 784-5747</a>
+      <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+  </div>
+  <div style="text-align:center;padding:24px 0 0;margin-bottom:24px;">
+    <p style="font-family:var(--mono);font-size:10px;color:var(--t10);letter-spacing:0.15em;">ANSWERING CALLS FOR SERVICE BUSINESSES ACROSS 13 INDUSTRIES</p>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 The Call Taker. All rights reserved.</p>
+    <p style="display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;"></span>Built in Nashville, TN</p>
   </div>
 </footer>
 
+<!-- AMBIENT FLOATING PARTICLES -->
+<div class="ambient-particles" id="ambParticles"></div>
 
+<!-- SECTION PROGRESS DOTS -->
+<div class="section-dots" id="secDots">
+  <div class="sec-dot" data-target="problem" data-label="PROBLEM"></div>
+  <div class="sec-dot" data-target="comparison" data-label="COMPARE"></div>
+  <div class="sec-dot" data-target="features" data-label="FEATURES"></div>
+  <div class="sec-dot" data-target="how" data-label="HOW IT WORKS"></div>
+  <div class="sec-dot" data-target="testimonials" data-label="RESULTS"></div>
+  <div class="sec-dot" data-target="pricing" data-label="PRICING"></div>
+  <div class="sec-dot" data-target="faq" data-label="FAQ"></div>
+</div>
+
+<!-- STICKY CTA BAR — shows after scrolling past hero -->
+<div class="sticky-cta" id="stickyCta">
+  <span class="sticky-cta-text"><strong>3 pilot spots left</strong> this month</span>
+  <a href="/pilot/" class="btn btn-primary" style="padding:10px 24px;font-size:13px;"><span>Start Free Pilot</span></a>
+  <a href="tel:6157845747" class="btn btn-outline" style="padding:10px 20px;font-size:13px;">Call Demo</a>
+</div>
 
 <!-- THEME TOGGLE -->
 <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
@@ -1308,6 +2222,118 @@ const obs = new IntersectionObserver((entries) => {
 }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-stagger').forEach(el => obs.observe(el));
 
+// Count-up animation for stat numbers
+const countObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const text = el.textContent.trim();
+      const match = text.match(/^([^\d]*)([\d,]+)(.*)/);
+      if (!match) { countObs.unobserve(el); return; }
+      const prefix = match[1];
+      const target = parseInt(match[2].replace(/,/g, ''));
+      const suffix = match[3];
+      if (target === 0) { countObs.unobserve(el); return; }
+      const duration = target > 100 ? 1800 : 1200;
+      const start = performance.now();
+      function update(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        const current = Math.round(target * ease);
+        el.textContent = prefix + current.toLocaleString() + suffix;
+        if (p < 1) requestAnimationFrame(update);
+      }
+      el.textContent = prefix + '0' + suffix;
+      requestAnimationFrame(update);
+      countObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.stat-num').forEach(el => countObs.observe(el));
+document.querySelectorAll('.live-counter-num').forEach(el => countObs.observe(el));
+
+// Industry selector — changes hero subtitle on click
+(function() {
+  const sel = document.getElementById('indSelector');
+  if (!sel) return;
+  const heroSub = document.querySelector('.hero-secondary .hero-sub');
+  if (!heroSub) return;
+  const origText = heroSub.innerHTML;
+  const subs = {
+    all: origText,
+    hvac: 'Your HVAC customers call at 2 AM when the AC dies. <strong>Gideon books the repair</strong> before they call your competitor.',
+    plumbing: 'Burst pipes don\'t wait for business hours. <strong>Gideon answers the emergency</strong> and dispatches your crew instantly.',
+    locksmith: 'Lockouts happen at midnight. <strong>Gideon picks up on the first ring</strong> and gets your tech rolling in minutes.',
+    dental: 'Patients hate phone trees. <strong>Gideon schedules appointments</strong> and handles insurance questions like your best front desk.',
+    roofing: 'Storm damage calls spike overnight. <strong>Gideon captures every lead</strong> while you sleep through the storm.',
+    legal: 'Potential clients call once. If nobody answers, they move on. <strong>Gideon captures the intake</strong> and books the consult.'
+  };
+  sel.addEventListener('click', function(e) {
+    const pill = e.target.closest('.ind-pill');
+    if (!pill) return;
+    sel.querySelectorAll('.ind-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    const ind = pill.dataset.ind;
+    heroSub.style.opacity = '0';
+    heroSub.style.transform = 'translateY(6px)';
+    setTimeout(function() {
+      heroSub.innerHTML = subs[ind] || origText;
+      heroSub.style.opacity = '1';
+      heroSub.style.transform = 'translateY(0)';
+    }, 200);
+  });
+  heroSub.style.transition = 'opacity 0.2s, transform 0.2s';
+})();
+
+// Live counter — slowly increments to simulate real-time activity
+(function() {
+  var callsEl = document.getElementById('liveCallsNum');
+  var jobsEl = document.getElementById('liveJobsNum');
+  if (!callsEl || !jobsEl) return;
+  var calls = 247, jobs = 89;
+  setInterval(function() {
+    if (Math.random() > 0.6) {
+      calls++;
+      callsEl.textContent = calls;
+      callsEl.style.transform = 'scale(1.05)';
+      setTimeout(function() { callsEl.style.transform = 'scale(1)'; }, 200);
+    }
+    if (Math.random() > 0.8) {
+      jobs++;
+      jobsEl.textContent = jobs;
+    }
+  }, 8000);
+  callsEl.style.transition = 'transform 0.2s';
+})();
+
+// Sticky CTA bar — show after scrolling past hero
+(function() {
+  var stickyCta = document.getElementById('stickyCta');
+  if (!stickyCta) return;
+  var shown = false;
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY;
+    if (y > 1800 && !shown) { stickyCta.classList.add('visible'); shown = true; }
+    if (y < 1200 && shown) { stickyCta.classList.remove('visible'); shown = false; }
+  }, { passive: true });
+})();
+
+// Parallax effect on 85% stat section
+(function() {
+  const probSection = document.getElementById('problem');
+  if (!probSection) return;
+  const statEl = probSection.querySelector('.stat-num');
+  if (!statEl) return;
+  window.addEventListener('scroll', function() {
+    const rect = probSection.getBoundingClientRect();
+    const vh = window.innerHeight;
+    if (rect.top < vh && rect.bottom > 0) {
+      const progress = (vh - rect.top) / (vh + rect.height);
+      statEl.style.transform = 'translateY(' + ((0.5 - progress) * 30) + 'px)';
+    }
+  }, { passive: true });
+})();
+
 // FAQ accordion
 document.querySelectorAll('.faq-q').forEach(q => {
   q.addEventListener('click', () => {
@@ -1316,6 +2342,137 @@ document.querySelectorAll('.faq-q').forEach(q => {
     item.classList.toggle('open');
   });
 });
+
+// ═══ NAV SCROLL SPY — highlights active section in nav ═══
+(function() {
+  var sections = ['features','pricing','faq'];
+  var links = {};
+  sections.forEach(function(id) {
+    var a = document.querySelector('.nav-links a[href="#'+id+'"]');
+    if (a) links[id] = a;
+  });
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY + 200;
+    var active = '';
+    sections.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && el.offsetTop <= y) active = id;
+    });
+    Object.keys(links).forEach(function(id) {
+      links[id].classList.toggle('nav-active', id === active);
+    });
+  }, { passive: true });
+})();
+
+// ═══ SECTION PROGRESS DOTS — floating right-side nav ═══
+(function() {
+  var dotsWrap = document.getElementById('secDots');
+  if (!dotsWrap) return;
+  var dots = dotsWrap.querySelectorAll('.sec-dot');
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      var el = document.getElementById(dot.dataset.target);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY;
+    // Show dots after scrolling past hero
+    dotsWrap.classList.toggle('visible', y > 1600);
+    // Highlight active
+    var active = '';
+    dots.forEach(function(dot) {
+      var el = document.getElementById(dot.dataset.target);
+      if (el && el.offsetTop <= y + 400) active = dot.dataset.target;
+    });
+    dots.forEach(function(dot) {
+      dot.classList.toggle('active', dot.dataset.target === active);
+    });
+  }, { passive: true });
+})();
+
+// ═══ AUTO-CYCLING INDUSTRY BADGE — types through industries ═══
+(function() {
+  var el = document.getElementById('cycleText');
+  if (!el) return;
+  var industries = ['HVAC','PLUMBING','LOCKSMITH','DENTAL','ROOFING','LEGAL','TOWING','ELECTRICAL','MED SPA','PEST CONTROL'];
+  var idx = 0;
+  setInterval(function() {
+    el.style.opacity = '0'; el.style.transform = 'translateY(-4px)';
+    setTimeout(function() {
+      idx = (idx + 1) % industries.length;
+      el.textContent = industries[idx];
+      el.style.opacity = '1'; el.style.transform = 'translateY(0)';
+    }, 200);
+  }, 2500);
+})();
+
+// ═══ AMBIENT FLOATING PARTICLES — subtle between sections ═══
+(function() {
+  var container = document.getElementById('ambParticles');
+  if (!container || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  for (var i = 0; i < 20; i++) {
+    var p = document.createElement('div');
+    p.className = 'amb-particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (15 + Math.random() * 25) + 's';
+    p.style.animationDelay = -(Math.random() * 30) + 's';
+    p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+    p.style.opacity = (0.08 + Math.random() * 0.12).toString();
+    container.appendChild(p);
+  }
+})();
+
+// ═══ PRICING CARD 3D TILT — follows cursor ═══
+(function() {
+  if (window.innerWidth < 768) return;
+  document.querySelectorAll('.price-card').forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'translateY(-4px) rotateY(' + (x*6) + 'deg) rotateX(' + (-y*6) + 'deg)';
+    });
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = 'translateY(0) rotateY(0) rotateX(0)';
+      card.style.transition = 'transform 0.4s ease';
+      setTimeout(function() { card.style.transition = ''; }, 400);
+    });
+    card.addEventListener('mouseenter', function() { card.style.transition = 'none'; });
+  });
+})();
+
+// ═══ LIVE TRANSCRIPT ANIMATION — stagger-reveal on scroll ═══
+(function() {
+  var lines = document.querySelectorAll('.tx-line');
+  if (!lines.length) return;
+  var txObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) return;
+      lines.forEach(function(line, i) {
+        setTimeout(function() {
+          line.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+          line.style.opacity = '1';
+          line.style.transform = 'translateY(0)';
+        }, i * 600);
+      });
+      txObs.unobserve(e.target);
+    });
+  }, { threshold: 0.2 });
+  txObs.observe(document.getElementById('liveTranscript'));
+})();
+
+// ═══ SCROLL TEXT HIGHLIGHT — lights up key phrases ═══
+(function() {
+  var highlights = document.querySelectorAll('.highlight-on-scroll');
+  if (!highlights.length) return;
+  var hlObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('lit'); hlObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.6 });
+  highlights.forEach(function(el) { hlObs.observe(el); });
+})();
 
 // Theme toggle — remembers preference
 (function() {
@@ -1336,7 +2493,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
 (function(){var f=false;function l(){if(f)return;f=true;var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV';s.async=true;document.head.appendChild(s);s.onload=function(){window.dataLayer=window.dataLayer||[];function g(){dataLayer.push(arguments)}g('js',new Date());g('config','G-29LL5GPBQV');g('config','AW-17970510102');};};['scroll','click','mousemove','touchstart'].forEach(function(e){window.addEventListener(e,l,{once:true});});})();
 </script>
 
-<!-- ==================== GIDEON HERO — UNIFIED JS ==================== -->
+<!-- ==================== GIDEON HERO — TIME VAULT JS ==================== -->
 <script>
 (function() {
   'use strict';
@@ -1345,12 +2502,12 @@ document.querySelectorAll('.faq-q').forEach(q => {
   var CHAR_SPEED = 28, LINE_PAUSE = 500, BLOCK_PAUSE = 2800, CTA_DELAY = 800, LOOP_DELAY = 9000;
 
   var speeches = [
-    { lines: ["Hey. I'm Gideon.", "I already know why you're here."], pause: BLOCK_PAUSE },
+    { lines: ["Good evening.", "I've been expecting you."], pause: BLOCK_PAUSE },
     { lines: ["Right now, someone is calling", "your business.", "Nobody's picking up."], pause: BLOCK_PAUSE },
     { lines: ["That call was worth $400.", "It just went to your competitor.", "That happens 5 times a day."], pause: BLOCK_PAUSE },
     { lines: ["I never miss a call.", "I never take a day off.", "I answer before the second ring."], pause: BLOCK_PAUSE },
     { lines: ["Last night I booked 4 jobs", "while the owner slept.", "$1,800 he would've lost without me."], pause: BLOCK_PAUSE },
-    { lines: ["I'm ready to work for you.", "Right now."], pause: CTA_DELAY, showCTA: true }
+    { lines: ["I'm ready to work for you.", "Say the word."], pause: CTA_DELAY, showCTA: true }
   ];
 
   var el = document.getElementById('gideonSpeaks');
@@ -1358,17 +2515,19 @@ document.querySelectorAll('.faq-q').forEach(q => {
   var nameEl = document.getElementById('gideonName');
   var heroEl = document.querySelector('.gideon-hero');
   var figureEl = document.getElementById('gFigure');
-  var subtitleEl = document.querySelector('.gideon-subtitle');
+  var subtitleEl = document.getElementById('gideonSubtitle');
+  var statusBar = document.getElementById('gStatusBar');
+  var statOverlay = document.getElementById('gStatOverlay');
   var imgEl = document.getElementById('gideonImg');
   var tapGate = document.getElementById('gTapGate');
 
   if (!el || !heroEl) return;
 
+  var isMob = window.innerWidth <= 900;
+
   function wait(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
 
   /* ── AUDIO ── */
-  // REPLACE gideon-intro.mp3 with final ElevenLabs export
-  var isMob = window.innerWidth <= 768;
   var gideonAudio = new Audio(isMob ? 'gideon-intro-short.mp3' : 'gideon-intro.mp3');
   gideonAudio.preload = 'auto';
   var audioUnlocked = false;
@@ -1383,7 +2542,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
       tapGate.style.display = 'none';
       gideonAudio.volume = isMob ? 1.0 : 0.85;
       gideonAudio.play().catch(function() {});
-    }, 500);
+    }, 600);
   }
 
   if (tapGate) {
@@ -1419,7 +2578,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
     runSpeeches();
   }
 
-  /* ── DEPTH PARTICLES (single canvas, 3 layers) ── */
+  /* ── DEPTH PARTICLES ── */
   function initParticles() {
     var cv = document.getElementById('gDepthCanvas');
     if (!cv) return;
@@ -1484,13 +2643,13 @@ document.querySelectorAll('.faq-q').forEach(q => {
     function flicker() {
       setTimeout(function() {
         imgEl.style.transition = 'opacity 0.04s';
-        imgEl.style.opacity = (0.6+Math.random()*0.12).toString();
+        imgEl.style.opacity = (0.55+Math.random()*0.15).toString();
         setTimeout(function() {
           imgEl.style.transition = 'opacity 0.12s';
           imgEl.style.opacity = '0.92';
           flicker();
         }, 40+Math.random()*50);
-      }, 6000+Math.random()*12000);
+      }, 4000+Math.random()*8000);
     }
     flicker();
   }
@@ -1500,42 +2659,167 @@ document.querySelectorAll('.faq-q').forEach(q => {
     if (!imgEl) return;
     function pulse() {
       setTimeout(function() {
-        imgEl.style.filter = 'hue-rotate(25deg) drop-shadow(-2px 0 2px rgba(255,0,80,0.4)) drop-shadow(2px 0 2px rgba(0,180,255,0.4)) drop-shadow(0 0 30px rgba(42,157,122,0.5))';
+        imgEl.style.filter = 'hue-rotate(25deg) drop-shadow(-3px 0 2px rgba(255,0,80,0.35)) drop-shadow(3px 0 2px rgba(0,180,255,0.35)) drop-shadow(0 0 40px rgba(42,157,122,0.6))';
         setTimeout(function() { imgEl.style.filter = ''; pulse(); }, 60+Math.random()*40);
-      }, 4000+Math.random()*6000);
+      }, 3000+Math.random()*5000);
     }
     pulse();
   }
 
-  /* ── ENTRANCE ── */
+  /* ── ELEMENT REFS FOR ENTRANCE ── */
+  var vaultWalls = document.getElementById('gVaultWalls');
+  var gFloor = document.getElementById('gFloor');
+  var gBeam = document.getElementById('gBeam');
+  var gBgGlow = document.getElementById('gBgGlow');
+  var gScanline = document.getElementById('gScanline');
+  var gScanline2 = document.getElementById('gScanline2');
+  var gHudFrame = document.getElementById('gHudFrame');
+  var gDivider = document.getElementById('gDivider');
+  var gRing1 = document.getElementById('gRing1');
+  var gRing2 = document.getElementById('gRing2');
+  var gRing3 = document.getElementById('gRing3');
+  var gLeft = document.getElementById('gLeft');
+
+  function fadeIn(el, dur, delay) {
+    if (!el) return;
+    el.style.transition = 'opacity ' + dur + 's ease ' + (delay||0) + 's';
+    el.style.opacity = '1';
+  }
+
+  /* ── TIME VAULT ENTRANCE — The Flash sequence ── */
   async function entrance() {
-    await wait(150);
-    heroEl.style.transition = 'opacity 1.2s ease'; heroEl.style.opacity = '1';
+
+    /* ═══ PHASE 0: Total darkness. You've stepped inside. ═══ */
+    heroEl.style.opacity = '0';
+    await wait(300);
+
+    /* ═══ PHASE 1: The vault ACTIVATES — room powers on ═══ */
+    /* Section fades from black */
+    heroEl.style.transition = 'opacity 1.8s ease';
+    heroEl.style.opacity = '1';
+    await wait(600);
+
+    /* Vault walls flicker on — the room recognizes you */
+    if (vaultWalls) {
+      vaultWalls.style.transition = 'none'; vaultWalls.style.opacity = '0';
+      await wait(50);
+      vaultWalls.style.transition = 'opacity 0.08s'; vaultWalls.style.opacity = '0.5';
+      await wait(80);
+      vaultWalls.style.opacity = '0'; await wait(60);
+      vaultWalls.style.opacity = '0.7'; await wait(50);
+      vaultWalls.style.opacity = '0.2'; await wait(70);
+      vaultWalls.style.transition = 'opacity 0.8s ease';
+      vaultWalls.style.opacity = '1';
+    }
+
+    /* Floor grid fades in */
+    if (gFloor) { fadeIn(gFloor, 1.2); }
+    await wait(400);
+
+    /* HUD frame appears */
+    if (gHudFrame) { fadeIn(gHudFrame, 0.8); }
+    await wait(300);
+
+    /* ═══ PHASE 2: PROJECTION BEAM activates from the floor ═══ */
+    if (gBeam) {
+      gBeam.style.transition = 'opacity 0.6s ease';
+      gBeam.style.opacity = '1';
+    }
+
+    /* Rings pulse on */
+    [gRing1, gRing2, gRing3].forEach(function(r, i) {
+      if (!r) return;
+      setTimeout(function() {
+        r.style.transition = 'opacity 0.5s ease';
+        r.style.opacity = '1';
+        r.style.animation = 'gRingPulse 3.5s ease-in-out infinite ' + (i * 0.5) + 's';
+      }, i * 150);
+    });
+
+    /* Background glow breathes to life */
+    if (gBgGlow) { fadeIn(gBgGlow, 1.5); }
     await wait(500);
+
+    /* ═══ PHASE 3: GIDEON MATERIALIZES — hologram projects from beam ═══ */
     if (figureEl) {
       figureEl.style.transition = 'none';
-      figureEl.style.transform = 'scale(0.4) translateY(40px)'; figureEl.style.opacity = '0';
+      figureEl.style.transform = 'scale(0.1) translateY(80px)';
+      figureEl.style.opacity = '0';
       await wait(30);
-      figureEl.style.transition = 'opacity 1.5s ease, transform 1.5s cubic-bezier(0.16,1,0.3,1)';
-      figureEl.style.opacity = '1'; figureEl.style.transform = 'scale(1) translateY(0)';
+
+      /* SNAP — hologram bursts into partial form (fast, aggressive) */
+      figureEl.style.transition = 'opacity 0.3s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+      figureEl.style.opacity = '0.35';
+      figureEl.style.transform = 'scale(0.7) translateY(15px)';
+      await wait(200);
+
+      /* Glitch flicker */
+      figureEl.style.opacity = '0.15'; await wait(40);
+      figureEl.style.opacity = '0.5'; await wait(30);
+      figureEl.style.opacity = '0.2'; await wait(50);
+
+      /* Settle to full size — Gideon is HERE */
+      figureEl.style.transition = 'opacity 1s ease, transform 1s cubic-bezier(0.22,1,0.36,1)';
+      figureEl.style.opacity = '1';
+      figureEl.style.transform = 'scale(1) translateY(0)';
     }
-    await wait(1000);
+
+    /* Scan lines activate */
+    if (gScanline) { fadeIn(gScanline, 0.5); }
+    if (gScanline2) { setTimeout(function() { fadeIn(gScanline2, 0.5); }, 300); }
+    await wait(800);
+
+    /* ═══ PHASE 4: "GIDEON" types out — the AI identifies itself ═══ */
     if (nameEl) {
-      var n = nameEl.textContent; nameEl.textContent = ''; nameEl.style.opacity = '1';
-      for (var i = 0; i < n.length; i++) { nameEl.textContent += n[i]; await wait(60); }
+      var n = nameEl.textContent;
+      nameEl.textContent = '';
+      nameEl.style.opacity = '1';
+      for (var i = 0; i < n.length; i++) {
+        nameEl.textContent += n[i];
+        await wait(90);
+      }
     }
+    await wait(150);
+
+    /* Subtitle + divider */
+    if (subtitleEl) { fadeIn(subtitleEl, 0.5); }
     await wait(200);
-    if (subtitleEl) { subtitleEl.style.transition = 'opacity 0.4s'; subtitleEl.style.opacity = '1'; }
-    await wait(600);
+    if (gDivider) { gDivider.style.transition = 'opacity 0.4s ease, width 0.6s ease'; gDivider.style.opacity = '1'; }
+    await wait(200);
+
+    /* Left decorative line */
+    if (gLeft) {
+      var leftLine = gLeft.querySelector(':scope::before');
+    }
+
+    /* Status bar */
+    if (statusBar) { fadeIn(statusBar, 0.4); }
+    await wait(300);
+
+    /* ═══ PHASE 5: HUD stat cards slide in ═══ */
+    if (statOverlay) {
+      statOverlay.style.opacity = '1';
+      var cards = statOverlay.querySelectorAll('.g-stat-card');
+      for (var c = 0; c < cards.length; c++) {
+        cards[c].style.transition = 'opacity 0.5s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1)';
+        cards[c].style.opacity = '1';
+        cards[c].style.transform = 'translateX(0)';
+        await wait(180);
+      }
+    }
+
+    await wait(500);
+
+    /* ═══ PHASE 6: Gideon speaks ═══ */
     runSpeeches();
   }
 
-  /* ── GSAP ── */
+  /* ── GSAP FLOAT ── */
   function initGSAP() {
     if (typeof gsap === 'undefined' || !figureEl) return;
-    gsap.to(figureEl, { y: -14, duration: 4, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+    gsap.to(figureEl, { y: -16, duration: 4, ease: 'sine.inOut', yoyo: true, repeat: -1 });
     if (!isMob) {
-      gsap.to(figureEl, { rotationY: 6, duration: 7, ease: 'sine.inOut', yoyo: true, repeat: -1, transformOrigin: '50% 50%' });
+      gsap.to(figureEl, { rotationY: 5, duration: 7, ease: 'sine.inOut', yoyo: true, repeat: -1, transformOrigin: '50% 50%' });
       gsap.to(figureEl, { rotationX: -1.5, duration: 9, ease: 'sine.inOut', yoyo: true, repeat: -1 });
     }
   }
