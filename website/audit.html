@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Missed Call Audit — The Call Taker</title>
+<meta name="description" content="Find out how much revenue your business loses to missed calls. Free audit with real Google data in 30 seconds.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#080a08;color:#e6f5eb;font-family:'Inter',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:#2a9d7a;text-decoration:none}
+.wrap{max-width:720px;margin:0 auto;padding:40px 24px}
+
+/* NAV */
+.nav{padding:16px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(42,157,122,0.08)}
+.nav-logo{font-size:18px;font-weight:600;color:#e6f5eb;text-decoration:none}
+.nav-logo span{color:#2a9d7a}
+.nav-cta{font-size:13px;font-weight:600;background:#2a9d7a;color:#080a08;padding:8px 20px;border-radius:6px;text-decoration:none}
+
+/* HERO */
+.hero{text-align:center;padding:80px 0 48px}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:#2a9d7a;margin-bottom:20px;text-shadow:0 0 20px rgba(42,157,122,0.3)}
+.hero h1{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:600;line-height:1.2;margin-bottom:16px;color:#e6f5eb}
+.hero p{font-size:16px;color:rgba(230,245,235,0.6);max-width:500px;margin:0 auto;line-height:1.7}
+
+/* FORM */
+.form-card{background:#0f1510;border:1px solid rgba(42,157,122,0.12);border-radius:16px;padding:36px 32px;margin-bottom:48px}
+.form-row{margin-bottom:20px}
+.form-row label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;color:rgba(42,157,122,0.6);margin-bottom:8px;text-transform:uppercase}
+.form-row input,.form-row select{width:100%;background:#080a08;border:1px solid rgba(42,157,122,0.15);border-radius:8px;padding:14px 16px;color:#e6f5eb;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+.form-row input:focus,.form-row select:focus{border-color:#2a9d7a}
+.form-row select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%232a9d7a' stroke-width='2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+.form-row select option{background:#0f1510;color:#e6f5eb}
+.submit-btn{width:100%;background:#2a9d7a;color:#080a08;border:none;padding:16px;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;transition:background 0.2s,transform 0.1s;letter-spacing:0.5px}
+.submit-btn:hover{background:#3ab894}
+.submit-btn:active{transform:scale(0.98)}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+
+/* LOADING */
+.loading{display:none;text-align:center;padding:60px 0}
+.loading.show{display:block}
+.loading-pulse{width:60px;height:60px;border-radius:50%;border:3px solid rgba(42,157,122,0.15);border-top-color:#2a9d7a;animation:spin 1s linear infinite;margin:0 auto 24px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:15px;color:rgba(230,245,235,0.6);min-height:24px;transition:opacity 0.3s}
+
+/* REPORT */
+.report{display:none;margin-top:48px}
+.report.show{display:block}
+.report-header{text-align:center;padding:32px 0;border-bottom:1px solid rgba(42,157,122,0.12);margin-bottom:32px}
+.report-header h2{font-size:14px;font-family:'JetBrains Mono',monospace;letter-spacing:3px;color:#2a9d7a;margin-bottom:12px}
+.report-header h3{font-size:clamp(1.4rem,4vw,2rem);font-weight:600;color:#e6f5eb}
+.report-header p{font-size:13px;color:rgba(230,245,235,0.4);margin-top:8px}
+
+.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:32px}
+.stat-box{background:#0f1510;border:1px solid rgba(42,157,122,0.08);border-radius:10px;padding:20px;text-align:center}
+.stat-box .num{font-size:28px;font-weight:700;color:#e6f5eb;font-family:'JetBrains Mono',monospace}
+.stat-box .label{font-size:10px;color:rgba(230,245,235,0.4);letter-spacing:1px;margin-top:6px;font-family:'JetBrains Mono',monospace}
+
+.loss-box{background:linear-gradient(135deg,rgba(42,157,122,0.08),rgba(42,157,122,0.02));border:2px solid rgba(42,157,122,0.2);border-radius:16px;padding:40px;text-align:center;margin-bottom:32px}
+.loss-box .label{font-size:13px;color:rgba(230,245,235,0.5);margin-bottom:12px}
+.loss-box .amount{font-size:clamp(2.5rem,8vw,4rem);font-weight:700;color:#2a9d7a;font-family:'JetBrains Mono',monospace;text-shadow:0 0 40px rgba(42,157,122,0.3)}
+.loss-box .annual{font-size:16px;color:rgba(230,245,235,0.6);margin-top:8px}
+
+.review-callout{background:rgba(200,60,60,0.06);border:1px solid rgba(200,60,60,0.15);border-radius:10px;padding:16px 20px;margin-bottom:12px;font-size:14px;color:rgba(230,245,235,0.7);line-height:1.6;font-style:italic}
+.competitor-alert{background:rgba(212,148,63,0.08);border:1px solid rgba(212,148,63,0.2);border-radius:10px;padding:16px 20px;margin:24px 0;font-size:14px;color:#d4943f;line-height:1.6}
+
+.gideon-box{background:#0f1510;border:1px solid rgba(42,157,122,0.15);border-radius:16px;padding:32px;text-align:center;margin:32px 0}
+.gideon-box p{font-size:15px;color:rgba(230,245,235,0.7);line-height:1.7;margin-bottom:8px}
+.gideon-box .highlight{color:#2a9d7a;font-weight:600}
+.gideon-box .roi{font-size:32px;font-weight:700;color:#2a9d7a;margin:16px 0;font-family:'JetBrains Mono',monospace}
+
+.cta-final{display:block;width:100%;background:#2a9d7a;color:#080a08;padding:18px;border-radius:10px;font-size:16px;font-weight:700;text-align:center;text-decoration:none;margin-top:32px;transition:background 0.2s}
+.cta-final:hover{background:#3ab894}
+
+.footer{text-align:center;padding:48px 0 24px;font-size:12px;color:rgba(230,245,235,0.2)}
+@media(max-width:600px){.stat-row{grid-template-columns:1fr}.wrap{padding:24px 16px}.form-card{padding:24px 20px}.nav{padding:14px 20px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">The Call<span>Taker</span></a>
+  <a href="/pilot/" class="nav-cta">Start Free Pilot</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">FREE AUDIT</div>
+    <h1>What Is Your Phone Actually Costing You?</h1>
+    <p>Enter your business below. We'll pull your data and show you the real number in 30 seconds. Free.</p>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card" id="formCard">
+    <div class="form-row">
+      <label>Business Name</label>
+      <input type="text" id="bizName" placeholder="e.g. Martinez Plumbing">
+    </div>
+    <div class="form-row">
+      <label>City</label>
+      <input type="text" id="bizCity" placeholder="e.g. Houston, TX">
+    </div>
+    <div class="form-row">
+      <label>Industry</label>
+      <select id="bizIndustry">
+        <option value="">Select your industry</option>
+        <option value="hvac">HVAC</option>
+        <option value="plumbing">Plumbing</option>
+        <option value="roofing">Roofing</option>
+        <option value="locksmith">Locksmith</option>
+        <option value="dental">Dental</option>
+        <option value="legal">Law Firm</option>
+        <option value="electrician">Electrician</option>
+        <option value="pest_control">Pest Control</option>
+        <option value="auto_repair">Auto Repair</option>
+        <option value="landscaping">Landscaping</option>
+        <option value="cleaning">Cleaning Service</option>
+        <option value="contractor">Contractor / Remodeling</option>
+        <option value="property_management">Property Management</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Send Me The Full Report</label>
+      <input type="email" id="bizEmail" placeholder="you@business.com">
+    </div>
+    <button class="submit-btn" id="submitBtn" onclick="runAudit()">Run My Audit &rarr;</button>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="loading-pulse"></div>
+    <div class="loading-text" id="loadingText">Pulling your Google Business Profile...</div>
+  </div>
+
+  <!-- REPORT -->
+  <div class="report" id="report">
+    <div class="report-header">
+      <h2>CALLER DEMAND MAP</h2>
+      <h3 id="reportBiz"></h3>
+      <p id="reportLocation"></p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box"><div class="num" id="rCalls">—</div><div class="label">EST. MONTHLY CALLS</div></div>
+      <div class="stat-box"><div class="num" id="rMissed">—</div><div class="label">GOING UNANSWERED</div></div>
+      <div class="stat-box"><div class="num" id="rJobVal">—</div><div class="label">AVG JOB VALUE</div></div>
+    </div>
+
+    <div class="loss-box">
+      <div class="label">MONTHLY REVENUE LEAVING YOUR BUSINESS RIGHT NOW</div>
+      <div class="amount" id="rMonthlyLoss">—</div>
+      <div class="annual">Annually: <strong id="rAnnualLoss">—</strong></div>
+    </div>
+
+    <div id="reviewSection"></div>
+    <div id="competitorSection"></div>
+
+    <div class="gideon-box">
+      <p>GIDEON would have answered all <span class="highlight" id="rMissed2">0</span> of those calls.</p>
+      <p>At your close rate, that's an estimated <span class="highlight" id="rCaptured">$0</span> in revenue per month.</p>
+      <p>GIDEON costs <span class="highlight">$497/month</span>.</p>
+      <div class="roi">Return on day one: <span id="rROI">0</span>x</div>
+    </div>
+
+    <a class="cta-final" id="ctaDemo" href="tel:6157845747">Hear GIDEON Answer as Your Business &rarr;</a>
+  </div>
+
+  <div class="footer">&copy; 2026 The Call Taker. Nashville, TN.</div>
+</div>
+
+<script>
+const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:3847'
+  : 'http://localhost:3847'; // Update to production URL when deployed
+
+const loadingMsgs = [
+  'Pulling your Google Business Profile...',
+  'Scanning your reviews for missed call signals...',
+  'Checking your competitors...',
+  'Running the numbers...',
+  'Building your report...'
+];
+
+function $(id) { return document.getElementById(id); }
+function fmt(n) { return '$' + n.toLocaleString(); }
+
+async function runAudit() {
+  const name = $('bizName').value.trim();
+  const city = $('bizCity').value.trim();
+  const industry = $('bizIndustry').value;
+  const email = $('bizEmail').value.trim();
+
+  if (!name || !city || !industry) {
+    alert('Please fill in your business name, city, and industry.');
+    return;
+  }
+
+  // Show loading
+  $('formCard').style.display = 'none';
+  $('loading').classList.add('show');
+  $('submitBtn').disabled = true;
+
+  // Cycle loading messages
+  let msgIdx = 0;
+  const msgInterval = setInterval(() => {
+    msgIdx = (msgIdx + 1) % loadingMsgs.length;
+    const el = $('loadingText');
+    el.style.opacity = '0';
+    setTimeout(() => { el.textContent = loadingMsgs[msgIdx]; el.style.opacity = '1'; }, 300);
+  }, 3000);
+
+  try {
+    const resp = await fetch(API + '/generate-audit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ businessName: name, city, industry, email })
+    });
+    const data = await resp.json();
+
+    clearInterval(msgInterval);
+    $('loading').classList.remove('show');
+
+    if (data.error) {
+      alert('Something went wrong: ' + data.error);
+      $('formCard').style.display = 'block';
+      $('submitBtn').disabled = false;
+      return;
+    }
+
+    renderReport(data);
+  } catch (e) {
+    clearInterval(msgInterval);
+    $('loading').classList.remove('show');
+    // Fallback: generate client-side estimate
+    renderFallback(name, city, industry);
+  }
+}
+
+function renderReport(d) {
+  $('reportBiz').textContent = d.businessName;
+  $('reportLocation').textContent = `${d.city} — ${d.industryLabel}`;
+  $('rCalls').textContent = d.estimatedMonthlyCalls;
+  $('rMissed').textContent = `${d.missedCalls} (${d.missedCallRate}%)`;
+  $('rJobVal').textContent = fmt(d.averageJobValue);
+  $('rMonthlyLoss').textContent = fmt(d.monthlyRevenueLoss);
+  $('rAnnualLoss').textContent = fmt(d.annualRevenueLoss);
+  $('rMissed2').textContent = d.missedCalls;
+  $('rCaptured').textContent = fmt(d.capturedRevenue);
+  $('rROI').textContent = d.roiMultiplier;
+
+  // Reviews
+  const revSection = $('reviewSection');
+  revSection.innerHTML = '';
+  if (d.missedCallReviews && d.missedCallReviews.length > 0) {
+    d.missedCallReviews.forEach(r => {
+      revSection.innerHTML += `<div class="review-callout">"${r.text.slice(0, 200)}"</div>`;
+    });
+  }
+
+  // Competitor alert
+  const compSection = $('competitorSection');
+  compSection.innerHTML = '';
+  if (d.competitor247) {
+    compSection.innerHTML = `<div class="competitor-alert">&#9888; ${d.competitor247.name} — your top competitor — appears to have 24/7 call coverage. Every call you miss goes to them first.</div>`;
+  }
+
+  // Demo link
+  $('ctaDemo').href = `/demo/?business=${encodeURIComponent(d.businessName)}`;
+
+  $('report').classList.add('show');
+  $('report').scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderFallback(name, city, industry) {
+  // Client-side estimate when server is unavailable
+  const benchmarks = {hvac:{v:3500,r:0.62,l:'HVAC'},plumbing:{v:387,r:0.62,l:'Plumbing'},roofing:{v:9400,r:0.58,l:'Roofing'},locksmith:{v:5000,r:0.65,l:'Locksmith'},dental:{v:850,r:0.54,l:'Dental'},legal:{v:4200,r:0.54,l:'Law Firm'},electrician:{v:1400,r:0.61,l:'Electrician'},pest_control:{v:380,r:0.60,l:'Pest Control'},auto_repair:{v:620,r:0.61,l:'Auto Repair'},landscaping:{v:2100,r:0.63,l:'Landscaping'},cleaning:{v:280,r:0.64,l:'Cleaning'},contractor:{v:12000,r:0.59,l:'Contractor'},property_management:{v:1800,r:0.58,l:'Property Mgmt'}};
+  const b = benchmarks[industry] || benchmarks.hvac;
+  const calls = 80;
+  const missed = Math.round(calls * b.r);
+  const loss = Math.round(missed * b.v * 0.20 * 0.85);
+
+  renderReport({
+    businessName: name, city, industryLabel: b.l,
+    estimatedMonthlyCalls: calls, missedCalls: missed, missedCallRate: Math.round(b.r*100),
+    averageJobValue: b.v, monthlyRevenueLoss: loss, annualRevenueLoss: loss*12,
+    capturedRevenue: loss, roiMultiplier: parseFloat((loss/497).toFixed(1)),
+    missedCallReviews: [], competitor247: null
+  });
+}
+</script>
+</body>
+</html>
