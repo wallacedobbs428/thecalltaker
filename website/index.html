@@ -2802,10 +2802,12 @@ document.querySelectorAll('.faq-q').forEach(q => {
   async function runSpeeches() {
     for (var i = 0; i < speeches.length; i++) {
       var b = speeches[i];
+      startSpeakingMotion(); /* GIDEON moves when talking */
       for (var j = 0; j < b.lines.length; j++) {
         if (j > 0) { el.textContent += '\n'; await wait(LINE_PAUSE); }
         await typeText(b.lines[j]);
       }
+      stopSpeakingMotion(); /* GIDEON stills between blocks */
       if (b.showCTA) {
         await wait(CTA_DELAY); ctaEl.style.display = 'flex'; await wait(30);
         ctaEl.classList.add('visible'); await wait(LOOP_DELAY);
@@ -3052,18 +3054,121 @@ document.querySelectorAll('.faq-q').forEach(q => {
     runSpeeches();
   }
 
-  /* ── GSAP FLOAT ── */
+  /* ── GSAP MOVEMENT — Flash Gideon style: alive, breathing, reactive ── */
+  var gsapTimeline = null;
+  var isSpeakingNow = false;
+
   function initGSAP() {
     if (typeof gsap === 'undefined' || !figureEl) return;
-    gsap.to(figureEl, { y: -16, duration: 4, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+
+    /* BREATHING — constant rhythmic scale pulse like a living being */
+    gsap.to(figureEl, {
+      scaleX: 1.015, scaleY: 1.02,
+      duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1,
+      transformOrigin: '50% 40%'
+    });
+
+    /* FLOATING — slow vertical hover */
+    gsap.to(figureEl, {
+      y: -20, duration: 3.5, ease: 'sine.inOut', yoyo: true, repeat: -1
+    });
+
     if (!isMob) {
-      gsap.to(figureEl, { rotationY: 5, duration: 7, ease: 'sine.inOut', yoyo: true, repeat: -1, transformOrigin: '50% 50%' });
-      gsap.to(figureEl, { rotationX: -1.5, duration: 9, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+      /* HEAD TURN — slow side-to-side like scanning the room */
+      gsap.to(figureEl, {
+        rotationY: 8, duration: 6, ease: 'sine.inOut', yoyo: true, repeat: -1,
+        transformOrigin: '50% 30%'
+      });
+
+      /* HEAD TILT — subtle forward lean like paying attention */
+      gsap.to(figureEl, {
+        rotationX: -3, duration: 8, ease: 'sine.inOut', yoyo: true, repeat: -1
+      });
+
+      /* WEIGHT SHIFT — subtle horizontal sway */
+      gsap.to(figureEl, {
+        x: 6, duration: 5, ease: 'sine.inOut', yoyo: true, repeat: -1
+      });
     }
   }
 
+  /* SPEAKING ANIMATION — triggers when typewriter is active */
+  function startSpeakingMotion() {
+    if (!figureEl || typeof gsap === 'undefined' || isSpeakingNow) return;
+    isSpeakingNow = true;
+
+    /* Head nods while speaking — like Flash Gideon emphasizing points */
+    gsapTimeline = gsap.timeline({ repeat: -1, yoyo: true });
+    gsapTimeline.to(figureEl, {
+      rotationX: -5, rotationY: 3, duration: 0.8, ease: 'power1.inOut'
+    });
+    gsapTimeline.to(figureEl, {
+      rotationX: -1, rotationY: -4, duration: 1.0, ease: 'power1.inOut'
+    });
+    gsapTimeline.to(figureEl, {
+      rotationX: -4, rotationY: 1, duration: 0.7, ease: 'power1.inOut'
+    });
+
+    /* Glow intensifies when speaking */
+    if (imgEl) {
+      imgEl.style.transition = 'filter 0.3s ease';
+      imgEl.style.filter = 'hue-rotate(25deg) drop-shadow(0 0 80px rgba(42,157,122,1)) drop-shadow(0 0 160px rgba(42,157,122,0.6)) brightness(1.12)';
+    }
+
+    figureEl.classList.add('speaking');
+  }
+
+  function stopSpeakingMotion() {
+    if (!isSpeakingNow) return;
+    isSpeakingNow = false;
+    if (gsapTimeline) { gsapTimeline.kill(); gsapTimeline = null; }
+
+    /* Return to resting glow */
+    if (imgEl) {
+      imgEl.style.filter = '';
+    }
+
+    figureEl.classList.remove('speaking');
+  }
+
+  /* HOLOGRAPHIC INTERFERENCE — random aggressive displacement */
+  function initHoloInterference() {
+    if (!figureEl || !imgEl || isMob) return;
+
+    function glitch() {
+      var delay = 3000 + Math.random() * 6000;
+      setTimeout(function() {
+        /* RGB split — chromatic displacement */
+        var dx = (Math.random() > 0.5 ? 1 : -1) * (3 + Math.random() * 5);
+        imgEl.style.transition = 'none';
+        imgEl.style.filter = 'hue-rotate(25deg) drop-shadow(' + dx + 'px 0 2px rgba(255,20,80,0.5)) drop-shadow(' + (-dx) + 'px 0 2px rgba(0,180,255,0.5)) drop-shadow(0 0 40px rgba(42,157,122,0.6))';
+
+        /* Horizontal displacement */
+        figureEl.style.transition = 'none';
+        figureEl.style.marginLeft = (dx * 2) + 'px';
+
+        /* Snap back */
+        setTimeout(function() {
+          figureEl.style.transition = 'margin-left 0.15s ease';
+          figureEl.style.marginLeft = '0px';
+          imgEl.style.transition = 'filter 0.2s ease';
+          imgEl.style.filter = '';
+        }, 50 + Math.random() * 40);
+
+        /* Second micro-glitch */
+        setTimeout(function() {
+          imgEl.style.opacity = (0.4 + Math.random() * 0.3).toString();
+          setTimeout(function() { imgEl.style.opacity = '0.94'; }, 30);
+        }, 100 + Math.random() * 80);
+
+        glitch();
+      }, delay);
+    }
+    glitch();
+  }
+
   /* ── INIT ── */
-  function init() { entrance(); initParticles(); initGaze(); initFlicker(); initChroma(); initGSAP(); }
+  function init() { entrance(); initParticles(); initGaze(); initFlicker(); initGSAP(); initHoloInterference(); }
   if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
 })();
 </script>
