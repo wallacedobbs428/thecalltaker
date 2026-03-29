@@ -6,64 +6,80 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 # Primer — The Call Taker
 
-> Last updated: 2026-03-19 | Rewrite this file at the start of every session.
+> Last updated: 2026-03-29 | Rewrite this file at the start of every session.
 
 ## What This Is
 
-AI Receptionist SaaS for service businesses. $19/$97/$497/$997/mo plans (4-tier decoy pricing). 14-day free pilot. Demo line: (615) 784-5747. Built by Wallace Dobbs (16yo founder, @moneymaker99). Mills (co-founder) handles demos and closing alongside Wallace.
+AI Receptionist SaaS for service businesses. $97/$497/$997/mo pricing (3-tier). 14-day free pilot. Demo line: (615) 784-5747. Built by Wallace Dobbs (16yo founder, @moneymaker99). Mills (co-founder) handles code, voice agent, GHL, integrations. William is OUT of the business as of Mar 21.
 
 ## Architecture
 
-- **This repo** (`/home/user/thecalltaker/`): Website (GitHub Pages), lead tools, dashboard, agent configs, sales assets
-- **Ops repo** (`~/thecalltaker-ops/`): 4 AI engines (Max, Ben, Sam, Donny), 40+ ops scripts, state files, logs — all on launchd on a Mac
-- **Voice AI**: GHL Voice AI agent (universal demo). Demo line: (615) 784-5747
-- **CRM**: GoHighLevel (GHL). All contacts, conversations, pipelines
-- **Notifications**: ntfy.sh (5 topics: urgent, sales, system, activity, william)
+- **This repo** (`~/Desktop/thecalltaker/`): Website (GitHub Pages), lead tools, dashboard, video ads, sales assets
+- **Ops repo** (`~/thecalltaker-ops/`): 15+ AI agents, 222+ launchd services, workflow engine, vector pipeline, signal processor — all on launchd on a Mac
+- **Voice AI**: GHL Voice AI agent (universal demo), character name GIDEON (NOT Jessica). Demo line: (615) 784-5747
+- **CRM**: GoHighLevel (GHL). 6,595 contacts, 54 oracle-hot leads. API KEY CURRENTLY OFFLINE (switching payment)
+- **Notifications**: ntfy.sh (5 topics: urgent, sales, system, activity, william) + Telegram bot
 - **Deployment**: GitHub Pages via `.github/workflows/deploy.yml` — triggers on `website/**` changes to `main`
 
 ## Current Branch & State
 
-- **Branch:** `claude/website-review-ciovZ`
-- **Base:** `master` (last commit 2026-03-17)
-- **Latest commits (March 18):** Major homepage redesign — HUD design, warm palette, Lenis smooth scroll, phone animation, floating callouts, circuit background, urgency bar, GSAP motion system
-- **Working tree:** Clean (no staged or unstaged changes)
+- **Branch:** `main`
+- **Working tree:** check with `git status`
+- **CRITICAL:** Never `git add -A` — video-ad/node_modules has 137MB files that get rejected by GitHub. Always add specific files.
 
-## Homepage Design (index.html — 3,398 lines)
+## Homepage (website/index.html)
 
-- **Color scheme:** Green accent (#00dc82) — all CSS vars (--blue, --orange, --green) map to same green
-- **Layout:** Dark theme, glassmorphism header, scroll spy, GSAP mobile menu, Lenis smooth scroll
-- **Hero:** Animated phone mockup (pure CSS/SVG, no images), circuit background, floating callouts
-- **Sections:** Hero → Industry strip → How It Works → Features → Demo → Pricing → FAQ → Final CTA → Footer
-- **Pricing:** 4-tier decoy ($19/$97/$497/$997), urgency badge with countdown to Friday deadline
-- **Nav:** Glassmorphism header, scroll progress bar, mobile overlay menu
-- **External deps:** GSAP 3.12.5 (cdnjs), Lenis 1.1.18 (jsdelivr)
-- **Font:** Self-hosted Inter (woff2)
+- **Color scheme:** Green accent (#00dc82) on black (#0a0a0a)
+- **Hero:** Holographic GIDEON with typewriter captions + animated phone mockup
+- **GIDEON captions (updated Mar 28):** "Hey. I'm GIDEON." → "#1 AI answering service" → "answering every call" → "book, text, qualify" → "ready to make you rich" → "call our demo line"
+- **Audio:** gideon-intro.mp3 + gideon-intro-short.mp3 (needs re-recording to match new captions)
+- **Pricing:** 3-tier ($97/$497/$997), founding rate $264 on go.html
+- **External deps:** GSAP 3.12.5 (cdnjs)
+- **Font:** Inter (Google Fonts)
+
+## Video Ad System (video-ad/)
+
+- **Framework:** Remotion (React-based video generation)
+- **Campaign:** "The $300 Ghost" — missed call pain point
+- **Compositions:**
+  - TheGhost30 (30s master) + TheGhost15 (15s cutdown)
+  - 3 hook variants: Aggressive, Authority, Curiosity
+  - 3 aspect ratios per composition: 9:16 Reel, 4:5 Feed, 1:1 Square
+- **Rendered output:** video-ad/out/ — 6 MP4 files ready to upload
+  - ghost-30s-reel.mp4, ghost-30s-feed.mp4, ghost-30s-square.mp4
+  - ghost-15s-reel.mp4, ghost-15s-feed.mp4, ghost-15s-square.mp4
+- **Scenes:** HookScene, PainScene, AnchorScene, ProofScene, CTAScene
+- **Components:** AnimatedText, Background, EndCard, PhoneMockup
+- **Launch protocol:** 72-HOUR-LAUNCH-PROTOCOL.md (FB Ads phased rollout)
+- **Publish playbook:** PUBLISH-PLAYBOOK.md (upload order, captions, targeting)
+- **DO NOT** commit video-ad/node_modules/ — contains 137MB Chrome binary + 109MB webpack cache
 
 ## Website Stats
 
-- **Total pages:** ~210+ HTML files deployed
-- **Root HTML:** 41 pages
-- **Industries:** 19 pages (expanded beyond documented 13)
-- **Blog:** 69 posts
-- **Case Studies:** 14 + index
-- **SEO Pages:** 13 (ai-answering-service/)
-- **Pilot funnel:** 3 pages
-- **Try funnel:** 3 pages
+- **Total pages:** ~220+ HTML files deployed
+- **Key new pages (Mar 28-29, Mills):**
+  - ai-answering-service-small-business.html (SEO landing)
+  - ghl-answering-service.html (GHL integration page)
+  - never-miss-a-call.html (pain-point landing)
+  - vs-ruby-receptionists.html (Ruby comparison)
+  - vs-smith-ai.html (Smith.ai comparison)
+  - demo/carolina-locksmith.html (personalized demo)
+  - we-use-it.html (self-use case study with live stats)
 
-## Known Issues (Current)
+## Key Rules
 
-1. **Urgency countdown hardcoded to March 21, 2026** — expires in 2 days, needs rolling logic
-2. **premium.css is empty** — loaded on every page, zero CSS rules
-3. **Schema.org prices don't match UI** — schema says $97-$997, UI has $19/$97/$497/$997
-4. **index-v2.html orphaned** — 3,398-line duplicate sitting in root
-5. **hero-phone-animation.html orphaned** — standalone test file in root
-6. **41 HTML files in root** — cluttered, many could be organized into subdirectories
-7. **Stripe not connected** — Wallace is 16, PayPal/Venmo workaround live
-8. **CLAUDE.md documents 13 industries** — actual site has 19
+- AI character name is **GIDEON** (never Jessica, never "the AI")
+- No dashes in any outreach copy
+- No "AI receptionist" in subject lines (confirmed dead approach)
+- All writes go to ~/thecalltaker-ops/ for scripts, ~/Desktop/thecalltaker/website/ for web pages
+- Never commit video-ad/node_modules/ or any file over 100MB
+- Sign off as Wallace in all outreach
+- Update CLAUDE.md before every git commit
 
 ## Active Priorities
 
-- **Revenue**: Get to first paid customer. $20K MRR goal
-- **Website polish**: Fix urgency countdown, clean orphaned files, schema consistency
-- **SEO content**: Continue expanding blog with high-intent keyword posts
-- **Stripe**: NOT connected (Wallace is 16). PayPal workaround live via pay.html
+- **Revenue**: $0 MRR, 0 paying customers. Pipeline velocity $54.58/day
+- **GHL API**: Offline (switching payment). When back: activate workflow engine, pre-call warmer, 15 micro-campaigns
+- **Stripe**: Live account but secret key expired. Products not yet created
+- **Video ads**: "The $300 Ghost" rendered and ready. Needs FB Ads upload per PUBLISH-PLAYBOOK.md
+- **New GIDEON audio**: Captions updated, audio file needs re-recording to match

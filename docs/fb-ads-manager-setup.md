@@ -134,7 +134,7 @@ Before clicking Publish on the campaign:
 | Budget | $50/day CBO |
 | Audience | US, 25-65+, service business interests |
 | Placements | FB Feed + IG Feed only |
-| Pixel ID | YOUR_PIXEL_ID (replace in Events Manager) |
+| Pixel ID | 2129562004253413 (replace in Events Manager) |
 | Lead form | More Volume, 5 fields |
 | Thank you link | thecalltaker.com/book |
 | Privacy link | thecalltaker.com/privacy |

@@ -52,17 +52,17 @@ def run():
         f"Run: python3 ops/inject-meta-pixel.py\nMissing: {', '.join(missing_pixel[:5])}" if missing_pixel else ""
     )
 
-    # Check for YOUR_PIXEL_ID placeholder
+    # Check for 2129562004253413 placeholder
     placeholder_count = 0
     for f in html_files:
         content = f.read_text(errors='ignore')
-        if 'YOUR_PIXEL_ID' in content:
+        if '2129562004253413' in content:
             placeholder_count += 1
     check(
         "Pixel ID replaced (not placeholder)",
         placeholder_count == 0,
-        f"{placeholder_count} files still have YOUR_PIXEL_ID placeholder" if placeholder_count else "All pixel IDs set",
-        "Replace YOUR_PIXEL_ID with your actual Pixel ID from Meta Events Manager → Data Sources → Web → Pixel ID"
+        f"{placeholder_count} files still have 2129562004253413 placeholder" if placeholder_count else "All pixel IDs set",
+        "Replace 2129562004253413 with your actual Pixel ID from Meta Events Manager → Data Sources → Web → Pixel ID"
     )
 
     # 2. Check Lead event on thank-you page

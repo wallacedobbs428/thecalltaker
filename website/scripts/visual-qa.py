@@ -56,7 +56,7 @@ for filepath in sorted(html_files):
         warnings.append(f'WARN [{rel}]: no container or max-width — content may stretch')
 
     # 4. Placeholder text left in (skip TODO/FIXME in code comments)
-    critical_placeholders = ['YOUR_WEBHOOK_ID', 'YOUR_PIXEL_ID', 'lorem ipsum']
+    critical_placeholders = ['YOUR_WEBHOOK_ID', '2129562004253413', 'lorem ipsum']
     code_placeholders = ['TODO', 'FIXME']
     for ph in critical_placeholders:
         if ph.lower() in content.lower():
