@@ -110,7 +110,7 @@
   if (!callBar) {
     callBar = document.createElement('a');
     callBar.className = 'mobile-call-bar';
-    callBar.href = 'tel:+16157845747';
+    callBar.href = 'tel:+16292699697';
     callBar.innerHTML =
       '<div class="call-bar-main">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
@@ -118,7 +118,7 @@
         '</svg>' +
         'Call Our AI Demo' +
       '</div>' +
-      '<span style="font-size:.75rem;font-weight:500;opacity:.85">(615) 784-5747 \u2014 Hear it live</span>';
+      '<span style="font-size:.75rem;font-weight:500;opacity:.85">(629) 269-9697 \u2014 Hear it live</span>';
     document.body.appendChild(callBar);
   }
 

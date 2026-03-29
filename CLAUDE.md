@@ -36,7 +36,7 @@ Read the full output before doing anything. Treat this as ground truth for the c
 
 # The Call Taker — System Documentation
 
-> AI Receptionist SaaS for service businesses. $97/$297/$497/mo. Demo line: (615) 784-5747
+> AI Receptionist SaaS for service businesses. $97/$297/$497/mo. Demo line: (629) 269-9697
 > Built and run by Wallace Dobbs (@moneymaker99)
 
 ## Architecture Overview
@@ -291,7 +291,7 @@ All in `ops/config.py` with environment variable fallbacks:
 - **Speed fix (Feb 27):** Prompt 925→160 words (v3), responsiveness 0.8→1.0, greeting 16→10 words, removed mid-call data extraction actions + knowledge base. 7 Bland.ai test calls run. Anti-repeat + digit readback workarounds deployed. Full audit: `~/Desktop/voice-agent-speed-fix/CALL-AUDIT.md`
 - **Pain-first closer (March 2):** v5 prompt (~263 words). Closer now simulates pain ("imagine nobody picked up — $300-500 job gone"), revenue anchor ("$2K-10K/mo in missed calls"), scarcity ("3 businesses this month"), price anchor ("$97/mo, less than one missed job"). Team detection section compressed to save words.
 - **GHL latency:** Info collection turns: 2-4.5s. Complex turns: 5-13s. GHL has no model selection, no max_tokens, no response_length setting. All available levers maxed.
-- **Demo line rule:** Demo line (615) 784-5747 = ALWAYS universal demo prompt. Client lines = industry-specific prompts. NEVER overwrite the demo line with a single-industry prompt.
+- **Demo line rule:** Demo line (629) 269-9697 = ALWAYS universal demo prompt. Client lines = industry-specific prompts. NEVER overwrite the demo line with a single-industry prompt.
 - **Industry prompts (for clients):** Locksmith, HVAC, Water Damage — all in `~/Desktop/voice-agent-speed-fix/industry-prompts/`. Universal demo prompt also there.
 - **Platform comparison:** Retell.ai recommended for voice layer (~600ms latency, 7.5x faster than GHL). Full analysis: `~/Desktop/voice-agent-speed-fix/PLATFORM-COMPARISON.md`
 - **Retell agent:** Also updated to universal demo. Agent ID: `agent_5acbcae27d34f7f82f1355e546`, LLM: `llm_c1d92953d343725223ebc9ae02ec`. BLOCKED: needs payment card for phone number ($2/mo).
