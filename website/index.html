@@ -2804,9 +2804,8 @@ document.querySelectorAll('.faq-q').forEach(q => {
     tapGate.addEventListener('click', unlockAndPlay);
     tapGate.addEventListener('touchend', function(e) { e.preventDefault(); unlockAndPlay(); }, { passive: false });
   }
-  if (!isMob) {
-    setTimeout(function() { if (!audioUnlocked) unlockAndPlay(); }, 2500);
-  }
+  /* Auto-dismiss tap gate after 1.3s — don't block cold traffic */
+  setTimeout(function() { if (!audioUnlocked) unlockAndPlay(); }, 1300);
 
   /* ── TYPEWRITER ── */
   async function typeText(text) {
