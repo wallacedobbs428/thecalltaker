@@ -70,6 +70,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2129562004253413');
 fbq('track', 'PageView');
+fbq('track', 'ViewContent', {content_name: 'pricing', content_category: 'pricing_page'});
 </script>
 <noscript>
 <img height="1" width="1" style="display:none"
@@ -267,6 +268,12 @@ try {
 } catch(e) {}
 
 function trackCheckout(plan) {
+  // Meta Pixel - InitiateCheckout + Lead
+  if (typeof fbq !== 'undefined') {
+    var value = plan === 'premium' ? 997 : plan === 'full-247' ? 497 : 97;
+    fbq('track', 'InitiateCheckout', {value: value, currency: 'USD', content_name: plan});
+    fbq('track', 'Lead', {content_name: plan, content_category: 'pricing_checkout'});
+  }
   // Google Ads conversion tracking
   if (typeof gtag !== 'undefined') {
     gtag('event', 'conversion', {

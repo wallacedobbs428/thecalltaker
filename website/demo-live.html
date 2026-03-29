@@ -3,6 +3,18 @@
 <head>
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17970510102');</script>
+  <!-- Meta Pixel -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2129562004253413');
+  fbq('track', 'PageView');
+  fbq('track', 'ViewContent', {content_name: 'demo-live', content_category: 'demo'});
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2129562004253413&ev=PageView&noscript=1"/></noscript>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hear GIDEON Answer as Your Business — Live Demo</title>
@@ -198,6 +210,12 @@
         timer.textContent = m + ':' + s.toString().padStart(2, '0');
         if (seconds <= 0) { clearInterval(interval); timer.textContent = 'Expired'; }
       }, 1000);
+
+      // Fire Meta pixel events
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', {content_name: name, content_category: 'demo_request'});
+        fbq('trackCustom', 'DemoRequested', {business_name: name});
+      }
 
       try {
         fetch('http://localhost:3848/webhook', {
