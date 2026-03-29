@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Demo for Carolina Locksmith — The Call Taker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #080a08;
+      color: #e8ece8;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 24px 40px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(42, 157, 122, 0.15);
+      border: 1px solid rgba(42, 157, 122, 0.3);
+      color: #2a9d7a;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 100px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .greeting {
+      font-size: 20px;
+      color: #a0a8a0;
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+
+    h1 {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 0%, #2a9d7a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #8a928a;
+      max-width: 560px;
+      margin: 0 auto 40px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(42, 157, 122, 0.08) 0%, rgba(42, 157, 122, 0.02) 100%);
+      border: 1px solid rgba(42, 157, 122, 0.2);
+      border-radius: 16px;
+      padding: 32px;
+      margin: 0 auto 40px;
+      max-width: 480px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #6a726a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 48px;
+      font-weight: 800;
+      color: #ff4d4d;
+      margin-bottom: 8px;
+    }
+
+    .stat-context {
+      font-size: 15px;
+      color: #8a928a;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 480px;
+      margin: 0 auto 48px;
+    }
+
+    .info-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+    }
+
+    .info-item .label {
+      font-size: 12px;
+      color: #6a726a;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
+    }
+
+    .info-item .value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e8ece8;
+    }
+
+    .cta-section {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+      text-align: center;
+    }
+
+    .cta-primary {
+      display: block;
+      background: #2a9d7a;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 18px 32px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .cta-primary:hover {
+      background: #238b6b;
+      transform: translateY(-2px);
+    }
+
+    .cta-phone {
+      font-size: 28px;
+      font-weight: 800;
+      color: #2a9d7a;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .cta-subtext {
+      font-size: 14px;
+      color: #6a726a;
+      margin-bottom: 32px;
+    }
+
+    .cta-secondary {
+      display: inline-block;
+      background: transparent;
+      color: #2a9d7a;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border: 2px solid rgba(42, 157, 122, 0.4);
+      border-radius: 12px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .cta-secondary:hover {
+      border-color: #2a9d7a;
+      background: rgba(42, 157, 122, 0.08);
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: rgba(42, 157, 122, 0.3);
+      margin: 32px auto;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: #4a524a;
+      font-size: 13px;
+    }
+
+    footer a {
+      color: #2a9d7a;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 32px; }
+      .stat-value { font-size: 36px; }
+      .info-grid { grid-template-columns: 1fr; }
+      .hero { padding: 40px 20px 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="badge">Custom Demo</div>
+    <p class="greeting">Hi Greg, this is a custom demo for Carolina Locksmith</p>
+    <h1>Stop Losing $8,400 Every Month to Missed Calls</h1>
+    <p class="subtitle">Locksmith businesses miss 60-80% of their calls. GIDEON answers every one in under 2 seconds.</p>
+  </div>
+
+  <div style="max-width: 720px; margin: 0 auto; padding: 0 24px;">
+    <div class="stat-card">
+      <div class="stat-label">Estimated Monthly Revenue Lost</div>
+      <div class="stat-value">$8,400</div>
+      <div class="stat-context">Based on industry data for Locksmith businesses with a 60-80% missed call rate</div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="label">Business</div>
+        <div class="value">Carolina Locksmith</div>
+      </div>
+      <div class="info-item">
+        <div class="label">Industry</div>
+        <div class="value">Locksmith</div>
+      </div>
+      <div class="info-item">
+        <div class="label">Hours</div>
+        <div class="value">24/7 Emergency Service</div>
+      </div>
+      <div class="info-item">
+        <div class="label">Your Phone</div>
+        <div class="value">(919) 608-3694</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <p style="color: #8a928a; font-size: 15px; margin-bottom: 16px;">Hear GIDEON answer as your business right now</p>
+    <a href="tel:+16157845747" class="cta-primary">
+      <span class="cta-phone">(615) 784-5747</span>
+      Call to hear GIDEON answer as Carolina Locksmith
+    </a>
+    <p class="cta-subtext">Live demo line, available 24/7</p>
+
+    <div class="divider"></div>
+
+    <a href="https://thecalltaker.com/book" class="cta-secondary">Start Your Free 14-Day Pilot</a>
+    <p style="color: #6a726a; font-size: 13px; margin-top: 12px;">No credit card. No contracts. Cancel anytime.</p>
+  </div>
+
+  <footer>
+    Powered by <a href="https://thecalltaker.com">The Call Taker</a>
+  </footer>
+
+</body>
+</html>
