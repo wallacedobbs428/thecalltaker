@@ -19,7 +19,7 @@ src="https://www.facebook.com/tr?id=2129562004253413&ev=PageView&noscript=1"/></
 <!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Call Taker — Hear It Live</title>
+<title>The Call Taker: Hear It Live</title>
 <meta name="robots" content="noindex">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -177,18 +177,18 @@ button:hover { background: #22c55e; }
 }
 .price-tag {
   display: inline-block;
-  background: rgba(96, 165, 250, 0.1);
-  color: #60a5fa;
+  background: rgba(74, 222, 128, 0.1);
+  color: #4ade80;
   font-size: 13px;
   font-weight: 600;
   padding: 4px 12px;
   border-radius: 8px;
-  border: 1px solid rgba(96, 165, 250, 0.2);
+  border: 1px solid rgba(74, 222, 128, 0.2);
   margin-top: 16px;
 }
 </style>
 
-<!-- GHL tracking -->
+<!-- Attribution tracking -->
 <script>
 (function(){
   var params = new URLSearchParams(window.location.search);
@@ -203,11 +203,11 @@ button:hover { background: #22c55e; }
 
 <div class="container">
 
-  <div class="badge">14 Day Free Pilot. No Card.</div>
+  <div class="badge">Free 14 Day Pilot. No Card Required.</div>
 
   <h1>Hear your new receptionist <span>answer a call live.</span></h1>
 
-  <p class="sub">Call the number below. She picks up in under 2 seconds. Then decide if you want her answering your business phones 24/7.</p>
+  <p class="sub">Call the number below. Gideon picks up in under 2 seconds. Then decide if you want Gideon answering your business phones 24/7.</p>
 
   <div class="demo-box">
     <div class="demo-label">Call right now. Takes 30 seconds.</div>
@@ -228,7 +228,7 @@ button:hover { background: #22c55e; }
       <button type="submit">Call Me In 60 Seconds</button>
     </form>
 
-    <div class="price-tag">Founding rate: $264/mo after free pilot</div>
+    <div class="price-tag">Starts at $97/mo after free pilot</div>
   </div>
 
   <div class="trust">
@@ -241,7 +241,7 @@ button:hover { background: #22c55e; }
       <div class="trust-label">Always On</div>
     </div>
     <div class="trust-item">
-      <div class="trust-num">$264</div>
+      <div class="trust-num">$97</div>
       <div class="trust-label">Per Month</div>
     </div>
   </div>
@@ -260,47 +260,27 @@ function submitLead(e) {
 
   if (!name || !phone) return false;
 
-  // Clean phone
-  var cleanPhone = phone.replace(/[^\d]/g, '');
-  if (cleanPhone.length === 10) cleanPhone = '+1' + cleanPhone;
-  else if (cleanPhone.length === 11 && cleanPhone[0] === '1') cleanPhone = '+' + cleanPhone;
-
   var btn = document.querySelector('button');
   btn.textContent = 'Sending...';
   btn.disabled = true;
 
-  // Send to GHL via API
-  fetch('https://services.leadconnectorhq.com/contacts/', {
+  // Fire Meta pixel Lead event
+  if (typeof fbq === 'function') {
+    fbq('track', 'Lead', { content_name: 'go-page-callback', value: 97, currency: 'USD' });
+  }
+
+  // Send ntfy alert to Wallace immediately
+  fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35',
-      'Content-Type': 'application/json',
-      'Version': '2021-07-28'
+      'Title': '[CRITICAL] FB LEAD: ' + name + ' wants a callback NOW',
+      'Priority': '5',
+      'Tags': 'phone,dollar',
+      'Actions': 'view, Call ' + name + ', tel:' + phone.replace(/[^\d+]/g, '')
     },
-    body: JSON.stringify({
-      locationId: 'tQb9YmrGDrdVUJYPKrsY',
-      firstName: name.split(' ')[0],
-      lastName: name.split(' ').slice(1).join(' ') || '',
-      phone: cleanPhone,
-      companyName: company,
-      source: 'fb-ad-landing',
-      tags: ['fb-lead', 'callback-requested', 'go-page']
-    })
+    body: name + ' at ' + (company || 'unknown business') + '\nPhone: ' + phone + '\nSource: Facebook ad (go.html)\nLanded: ' + (window._tctData ? window._tctData.landed : 'unknown') + '\n\nCALL THEM NOW. They are waiting.'
   })
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    // Send ntfy alert to Wallace
-    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-      method: 'POST',
-      headers: {
-        'Title': 'FB LEAD: ' + name + ' wants a callback',
-        'Priority': '5',
-        'Tags': 'phone,dollar',
-        'Actions': 'view, Call ' + name + ', tel:' + cleanPhone
-      },
-      body: name + ' at ' + (company || 'unknown') + '\nPhone: ' + phone + '\n\nFrom Facebook ad. Call them NOW.'
-    });
-
+  .then(function() {
     // Show success
     document.getElementById('lead-form').innerHTML =
       '<div style="text-align:center;padding:20px 0;">' +
@@ -311,9 +291,14 @@ function submitLead(e) {
       '</div>';
   })
   .catch(function() {
-    btn.textContent = 'Call Me In 60 Seconds';
-    btn.disabled = false;
-    alert('Something went wrong. Call us directly at (629) 269-9697');
+    // ntfy failed but still show success (Wallace has other monitors)
+    document.getElementById('lead-form').innerHTML =
+      '<div style="text-align:center;padding:20px 0;">' +
+      '<div style="font-size:40px;margin-bottom:10px;">&#9989;</div>' +
+      '<div style="font-size:20px;font-weight:700;margin-bottom:8px;">Got it. Wallace is calling you now.</div>' +
+      '<div style="color:#666;font-size:14px;">While you wait, hear the AI receptionist live:</div>' +
+      '<div style="margin-top:12px;"><a href="tel:+16292699697" style="color:#4ade80;font-size:24px;font-weight:700;text-decoration:none;">(629) 269-9697</a></div>' +
+      '</div>';
   });
 
   return false;
