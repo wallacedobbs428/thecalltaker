@@ -55,7 +55,7 @@
         window.location.href = '/demo-showcase.html';
       }
     }},
-    { id: 'call', type: 'action', label: 'Call the AI', desc: '(629) 269-9697 — live 24/7', icon: 'phone', action: function() { window.location.href = 'tel:+16292699697'; }}
+    { id: 'call', type: 'action', label: 'Call the AI', desc: '(615) 784-5747 — live 24/7', icon: 'phone', action: function() { window.location.href = 'tel:+16157845747'; }}
   ];
 
   var icons = {

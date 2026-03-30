@@ -36,7 +36,7 @@ Read the full output before doing anything. Treat this as ground truth for the c
 
 # The Call Taker — System Documentation
 
-> AI Receptionist SaaS for service businesses. $97/$297/$497/mo. Demo line: (629) 269-9697
+> AI Receptionist SaaS for service businesses. $97/$497/$997/mo. Demo line: (615) 784-5747
 > Built and run by Wallace Dobbs (@moneymaker99)
 
 ## Architecture Overview
@@ -157,7 +157,7 @@ from tct_common import *
 
 ### API Credentials
 All in `ops/config.py` with environment variable fallbacks:
-- **GHL:** `pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35` (env: `TCT_GHL_API_KEY`)
+- **GHL:** `pit-4edc2eb9-ba18-4066-ad42-0e2280b023bb` (env: `TCT_GHL_API_KEY`)
 - **Bland.ai:** `org_e0d7505641638621fc1c02564ed065b7048d83678de74f1d2725fedf18bea03fa821105788d98c879fe969` (env: `TCT_BLAND_API_KEY`)
 - **Lemlist:** `1884b87d8e73813f479b4764dc0e1294` (env: `TCT_LEMLIST_API_KEY`)
 - **GHL Location ID:** `tQb9YmrGDrdVUJYPKrsY`
@@ -298,7 +298,7 @@ All in `ops/config.py` with environment variable fallbacks:
 - **API:** PATCH `/voice-ai/agents/{id}?locationId=` (plural "agents"), GET `/voice-ai/agents?locationId=` to list
 - PATCH endpoint needs `locationId` in query string, not body
 - Demo breaks character after ~1 min to pitch The Call Taker and collect prospect info
-- If asked about pricing: "$97/mo after-hours, $297/mo full 24/7, no contracts"
+- If asked about pricing: "$97/mo after-hours, $497/mo Starter, no contracts"
 - **GHL bugs (workarounds deployed):** TTS repeat loop → "Never repeat yourself" instruction (Call 7: 0 repeats). Phone number glitches → digit readback instruction (Call 7: clean in 2s). Variable latency → GHL platform limit, no fix available.
 
 ### Monitoring & Alerting
@@ -439,10 +439,10 @@ Shared file at `ops/contact-registry.json`. All engines read/write through `tct_
 
 ### Core Pages (in `website/`)
 - `index.html` — homepage with industry selector + premium nav (glassmorphism, scroll spy, GSAP mobile menu) + cursor effects
-- `signup.html` — 3-step purchase flow ($97/$297/$497)
+- `signup.html` — 3-step purchase flow ($97/$497/$997)
 - `calculator.html` — ROI calculator (lead capture + war room alert)
 - `book.html` — demo booking (GHL calendar embed, ID: h4IlzccZ1m3JprEQqpMJ)
-- `checkout.html` — $97/$297/$497 plan checkout (routes to /pilot/ until Stripe connected)
+- `checkout.html` — $97/$497/$997 plan checkout (routes to /pilot/ until Stripe connected)
 - `demo-showcase.html` — live demo line showcase
 - `your-results.html` — 30-day results simulator (shareable URL)
 - `your-audit.html` — personalized audit reports (noindex)
