@@ -509,7 +509,7 @@ html.light .theme-toggle .icon-moon { display: none; }
 .marquee { overflow: hidden; }
 .marquee-track {
   display: flex; gap: 24px; white-space: nowrap;
-  animation: scroll-marquee 30s linear infinite;
+  animation: scroll-marquee 12s linear infinite;
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.15em;
@@ -1684,7 +1684,25 @@ html.light .feature-icon svg { stroke: var(--accent); }
 
 <!-- ═══ INDUSTRY TRUST STRIP ═══ -->
 <div class="industry-trust reveal">
-  <div class="trust-headline">Trusted by service businesses across <strong>13+ industries</strong></div>
+  <div class="trust-headline">Built for the businesses that can't afford to miss a call</div>
+  <div class="trust-stats" style="display:flex;justify-content:center;gap:48px;margin-bottom:28px;flex-wrap:wrap;">
+    <div style="text-align:center;">
+      <div style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--accent);">13+</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--t30);letter-spacing:0.1em;">INDUSTRIES SERVED</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-family:var(--serif);font-size:28px;font-weight:700;color:#fff;">&lt;2s</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--t30);letter-spacing:0.1em;">AVG ANSWER TIME</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-family:var(--serif);font-size:28px;font-weight:700;color:#fff;">24/7</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--t30);letter-spacing:0.1em;">ALWAYS ON</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--accent);">$0</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--t30);letter-spacing:0.1em;">MISSED CALL COST</div>
+    </div>
+  </div>
   <div class="trust-badges">
     <span class="trust-badge">HVAC</span>
     <span class="trust-badge">Plumbing</span>
@@ -2586,15 +2604,16 @@ document.querySelectorAll('.faq-q').forEach(q => {
   'use strict';
 
   /* ── CONFIG ── */
-  var CHAR_SPEED = 28, LINE_PAUSE = 500, BLOCK_PAUSE = 2800, CTA_DELAY = 800, LOOP_DELAY = 9000;
+  var CHAR_SPEED = 22, LINE_PAUSE = 350, BLOCK_PAUSE = 1800, CTA_DELAY = 600, LOOP_DELAY = 7000;
 
   var speeches = [
-    { lines: ["Hey. I'm GIDEON."], pause: BLOCK_PAUSE },
-    { lines: ["I'm your receptionist.", "24 hours a day, 7 days a week."], pause: BLOCK_PAUSE },
-    { lines: ["While you're on a job, asleep, or just busy,", "I'm answering every single call", "your business gets."], pause: BLOCK_PAUSE },
-    { lines: ["I book the appointment. I get their info.", "I text you everything before you", "even check your phone."], pause: BLOCK_PAUSE },
-    { lines: ["I'm ready to work for your business", "and make you rich."], pause: BLOCK_PAUSE },
-    { lines: ["If you are, call our demo line now", "to try me out."], pause: CTA_DELAY, showCTA: true }
+    { lines: ["Hey. I'm GIDEON."], pause: 1200 },
+    { lines: ["I'm your 24/7 receptionist."], pause: 1400 },
+    { lines: ["While you're on a job, asleep, or just busy,", "I answer every call your business gets."], pause: BLOCK_PAUSE },
+    { lines: ["I book the appointment.", "Get their name, number, and what they need.", "Then text you everything instantly."], pause: BLOCK_PAUSE },
+    { lines: ["Your customers think they're talking", "to your front desk."], pause: 1400 },
+    { lines: ["I'm ready to make your phone", "your biggest money maker."], pause: BLOCK_PAUSE },
+    { lines: ["Call the demo line right now", "and hear me for yourself."], pause: CTA_DELAY, showCTA: true }
   ];
 
   var el = document.getElementById('gideonSpeaks');
@@ -2805,8 +2824,17 @@ document.querySelectorAll('.faq-q').forEach(q => {
     tapGate.addEventListener('click', unlockAndPlay);
     tapGate.addEventListener('touchend', function(e) { e.preventDefault(); unlockAndPlay(); }, { passive: false });
   }
-  /* Auto-dismiss tap gate after 1.3s — don't block cold traffic */
-  setTimeout(function() { if (!audioUnlocked) unlockAndPlay(); }, 1300);
+  /* Hologram itself is also clickable for audio (after gate auto-dismisses) */
+  if (heroEl) {
+    heroEl.addEventListener('click', function() { if (!audioUnlocked) unlockAndPlay(); });
+  }
+  /* Auto-dismiss tap gate after 1.3s — visual only, no audio (browser blocks autoplay without click) */
+  setTimeout(function() {
+    if (!audioUnlocked) {
+      tapGate.classList.add('dismissed');
+      setTimeout(function() { tapGate.style.display = 'none'; }, 600);
+    }
+  }, 1300);
 
   /* ── TYPEWRITER ── */
   async function typeText(text) {
