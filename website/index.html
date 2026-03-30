@@ -2806,17 +2806,38 @@ document.querySelectorAll('.faq-q').forEach(q => {
     requestAnimationFrame(tick);
   }
 
+  var audioPlaying = false;
+  function tryPlayAudio() {
+    if (audioPlaying) return;
+    setupAudioAnalyzer();
+    if (audioCtx) audioCtx.resume().catch(function(){});
+    gideonAudio.volume = isMob ? 1.0 : 0.85;
+    gideonAudio.play().then(function() {
+      audioPlaying = true;
+      startReactiveLoop();
+    }).catch(function() {
+      /* Autoplay blocked — play on next user touch/click anywhere */
+      function retryOnce() {
+        gideonAudio.play().then(function() {
+          audioPlaying = true;
+          setupAudioAnalyzer();
+          if (audioCtx) audioCtx.resume().catch(function(){});
+          startReactiveLoop();
+        }).catch(function(){});
+        document.removeEventListener('click', retryOnce);
+        document.removeEventListener('touchstart', retryOnce);
+      }
+      document.addEventListener('click', retryOnce, { once: true });
+      document.addEventListener('touchstart', retryOnce, { once: true });
+    });
+  }
   function unlockAndPlay() {
     if (audioUnlocked) return;
     audioUnlocked = true;
-    setupAudioAnalyzer();
-    if (audioCtx) audioCtx.resume().catch(function(){});
     tapGate.classList.add('dismissed');
     setTimeout(function() {
       tapGate.style.display = 'none';
-      gideonAudio.volume = isMob ? 1.0 : 0.85;
-      gideonAudio.play().catch(function() {});
-      startReactiveLoop();
+      tryPlayAudio();
     }, 600);
   }
 
@@ -2828,13 +2849,8 @@ document.querySelectorAll('.faq-q').forEach(q => {
   if (heroEl) {
     heroEl.addEventListener('click', function() { if (!audioUnlocked) unlockAndPlay(); });
   }
-  /* Auto-dismiss tap gate after 1.3s — visual only, no audio (browser blocks autoplay without click) */
-  setTimeout(function() {
-    if (!audioUnlocked) {
-      tapGate.classList.add('dismissed');
-      setTimeout(function() { tapGate.style.display = 'none'; }, 600);
-    }
-  }, 1300);
+  /* Auto-dismiss tap gate after 1.3s — don't block cold traffic */
+  setTimeout(function() { if (!audioUnlocked) unlockAndPlay(); }, 1300);
 
   /* ── TYPEWRITER ── */
   async function typeText(text) {
