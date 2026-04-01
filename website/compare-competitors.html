@@ -49,9 +49,9 @@
     "name": "The Call Taker",
     "applicationCategory": "BusinessApplication",
     "offers": [
-      {"@type": "Offer", "name": "After-Hours Starter", "price": "97", "priceCurrency": "USD"},
-      {"@type": "Offer", "name": "Full 24/7", "price": "297", "priceCurrency": "USD"},
-      {"@type": "Offer", "name": "Premium", "price": "497", "priceCurrency": "USD"}
+      {"@type": "Offer", "name": "After-Hours", "price": "97", "priceCurrency": "USD"},
+      {"@type": "Offer", "name": "Full 24/7", "price": "497", "priceCurrency": "USD"},
+      {"@type": "Offer", "name": "Premium", "price": "997", "priceCurrency": "USD"}
     ]
   }
 }
@@ -288,7 +288,7 @@ src="https://www.facebook.com/tr?id=2129562004253413&ev=PageView&noscript=1"/>
   <div class="container">
     <div class="hero-badge">Competitor Comparison</div>
     <h1>Stop Overpaying for Someone<br>to <span class="green">Answer Your Phone</span></h1>
-    <p class="subtitle">Ruby charges $2.19/minute. Smith.ai charges $8/call. AnswerConnect charges $1.50/minute. You're bleeding money every time the phone rings. There's a better way.</p>
+    <p class="subtitle">Ruby charges per minute. Smith.ai charges per call. AnswerConnect charges $2.95/min in overages. A business with 50 calls/month pays $300+ with them. With us? $97 flat. No surprises.</p>
     <div class="hero-ctas">
       <a href="/try-live.html" class="btn-primary">Hear It Live</a>
       <a href="/book.html" class="btn-secondary">Start Free 14-Day Pilot</a>
@@ -330,9 +330,9 @@ src="https://www.facebook.com/tr?id=2129562004253413&ev=PageView&noscript=1"/>
         <tbody>
           <tr>
             <td>Monthly Price</td>
-            <td class="tct-col"><span class="price-big">$497/mo</span><span class="price-note">flat rate, unlimited</span></td>
-            <td class="loser">$449+<span class="price-note">per-min billing</span></td>
-            <td class="loser">$292+<span class="price-note">per-call billing</span></td>
+            <td class="tct-col"><span class="price-big">From $97/mo</span><span class="price-note">flat rate, no per-call fees</span></td>
+            <td class="loser">$245+<span class="price-note">+ per-minute overages</span></td>
+            <td class="loser">$95+<span class="price-note">+ $4.25 per call</span></td>
             <td>Free &ndash; $299<span class="price-note">limited features</span></td>
             <td>Free tier<span class="price-note">basic only</span></td>
             <td class="loser">$325+<span class="price-note">per-min billing</span></td>
@@ -340,8 +340,8 @@ src="https://www.facebook.com/tr?id=2129562004253413&ev=PageView&noscript=1"/>
           <tr>
             <td>Per-Minute / Per-Call Fee</td>
             <td class="tct-col winner">NONE</td>
-            <td class="x">$1.89 &ndash; $2.19/min</td>
-            <td class="x">$6 &ndash; $8/call</td>
+            <td class="x">$1.89 &ndash; $2.19/min overage</td>
+            <td class="x">$3.75 &ndash; $4.25/call after plan</td>
             <td class="check">None</td>
             <td class="check">None</td>
             <td class="x">$1.50/min</td>
@@ -441,6 +441,80 @@ src="https://www.facebook.com/tr?id=2129562004253413&ev=PageView&noscript=1"/>
     </div>
   </div>
 </section>
+
+<!-- ═══ COST CALCULATOR ═══ -->
+<section class="table-section" id="calculator" style="padding-top:40px">
+  <div class="container">
+    <h2>See How Much You'd <span class="green">Actually Pay</span></h2>
+    <p class="subtitle">Enter your monthly call volume. Watch the math do the talking.</p>
+
+    <div style="max-width:600px;margin:0 auto 48px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:32px">
+      <label style="display:block;font-size:.9rem;color:rgba(255,255,255,.5);margin-bottom:8px">How many calls does your business get per month?</label>
+      <input type="range" id="callSlider" min="10" max="200" value="50" style="width:100%;accent-color:#00dc82;margin-bottom:8px">
+      <div style="text-align:center;font-size:2rem;font-weight:800;color:#00dc82;margin-bottom:24px"><span id="callCount">50</span> calls/month</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="background:rgba(0,220,130,.06);border:1px solid rgba(0,220,130,.2);border-radius:12px;padding:20px;text-align:center">
+          <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-bottom:4px">The Call Taker</div>
+          <div style="font-size:1.8rem;font-weight:800;color:#00dc82" id="tctPrice">$97</div>
+          <div style="font-size:.75rem;color:rgba(255,255,255,.4)">flat, always</div>
+        </div>
+        <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:20px;text-align:center">
+          <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-bottom:4px">Smith.ai</div>
+          <div style="font-size:1.8rem;font-weight:800;color:#ef4444" id="smithPrice">$308</div>
+          <div style="font-size:.75rem;color:rgba(255,255,255,.4)">$95 base + $4.25/call</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
+        <div style="background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.1);border-radius:12px;padding:20px;text-align:center">
+          <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-bottom:4px">Ruby</div>
+          <div style="font-size:1.8rem;font-weight:800;color:#ef4444" id="rubyPrice">$464</div>
+          <div style="font-size:.75rem;color:rgba(255,255,255,.4)">$245 base + per-min overages</div>
+        </div>
+        <div style="background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.1);border-radius:12px;padding:20px;text-align:center">
+          <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-bottom:4px">AnswerConnect</div>
+          <div style="font-size:1.8rem;font-weight:800;color:#ef4444" id="acPrice">$620</div>
+          <div style="font-size:.75rem;color:rgba(255,255,255,.4)">$325 base + $2.95/min</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:24px;font-size:1.1rem;font-weight:700;color:#00dc82" id="savingsText">You'd save $211/mo vs Smith.ai alone</div>
+    </div>
+
+    <div style="text-align:center">
+      <a href="/book.html" class="btn-primary">Start Your Free 14-Day Pilot</a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var s=document.getElementById('callSlider'),
+      cc=document.getElementById('callCount'),
+      tp=document.getElementById('tctPrice'),
+      sp=document.getElementById('smithPrice'),
+      rp=document.getElementById('rubyPrice'),
+      ap=document.getElementById('acPrice'),
+      sv=document.getElementById('savingsText');
+  s.addEventListener('input',function(){
+    var c=parseInt(s.value);
+    cc.textContent=c;
+    // TCT: flat $97 for after-hours, $497 for 24/7
+    var tct=c<=60?97:497;
+    // Smith.ai AI: $95 base + $4.25/call (30 included, then overage)
+    var smith=95+Math.max(0,c-30)*4.25;
+    // Ruby: $245 base + ~$2/min avg, 2min avg call = $4/call overage after 50min (~25 calls)
+    var ruby=245+Math.max(0,c-25)*4.38;
+    // AnswerConnect: $325 base (100 min included) + $2.95/min, 2min avg call
+    var ac=325+Math.max(0,(c*2)-100)*2.95;
+    tp.textContent='$'+tct;
+    sp.textContent='$'+Math.round(smith);
+    rp.textContent='$'+Math.round(ruby);
+    ap.textContent='$'+Math.round(ac);
+    var savings=Math.round(smith-tct);
+    sv.textContent=savings>0?'You\'d save $'+savings+'/mo vs Smith.ai alone':'Same price as Smith.ai';
+  });
+})();
+</script>
 
 <!-- ═══ WHY NOT HIRE A RECEPTIONIST? ═══ -->
 <section class="recept-section" id="receptionist">
