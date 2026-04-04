@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard | The Call Taker</title>
+<meta name="description" content="Your Call Taker client dashboard. View call stats, jobs booked, and ROI in real time.">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "The Call Taker Client Portal",
+  "url": "https://thecalltaker.com/portal/",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Client dashboard for The Call Taker AI receptionist. View call analytics, jobs booked, and ROI.",
+  "provider": {
+    "@type": "Organization",
+    "name": "The Call Taker",
+    "url": "https://thecalltaker.com",
+    "telephone": "+16157845747"
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "lowPrice": "97",
+    "highPrice": "997",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+
+<style>
+/* ═══════════════════════════════════════════
+   THE CALL TAKER — CLIENT PORTAL v1
+   Premium SaaS dashboard. Dark + Light themes.
+   Zero dependencies. Pure HTML/CSS/JS.
+   ═══════════════════════════════════════════ */
+
+/* ── RESET ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── DESIGN TOKENS ── */
+:root {
+  --bg: #080a08;
+  --surface: #0f1510;
+  --surface-2: #141e16;
+  --surface-3: #192420;
+  --border: rgba(42,157,122,0.08);
+  --border-bright: rgba(42,157,122,0.15);
+  --border-solid: #1a2b20;
+  --t100: rgba(230,245,235,1);
+  --t70: rgba(230,245,235,0.78);
+  --t40: rgba(230,245,235,0.5);
+  --t20: rgba(230,245,235,0.28);
+  --t10: rgba(230,245,235,0.14);
+  --accent: #2a9d7a;
+  --accent-hover: #3ab894;
+  --accent-soft: rgba(42,157,122,0.12);
+  --accent-glow: rgba(42,157,122,0.06);
+  --accent-dim: rgba(42,157,122,0.18);
+  --amber: #d4943f;
+  --amber-soft: rgba(212,148,63,0.12);
+  --red: #d94f4f;
+  --red-soft: rgba(217,79,79,0.12);
+  --green-bright: #3ab894;
+  --green-soft: rgba(58,184,148,0.12);
+  --chart-bar: #2a9d7a;
+  --chart-bar-hover: #3ab894;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+  --shadow-glow: 0 0 40px rgba(42,157,122,0.06), 0 0 80px rgba(42,157,122,0.03);
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-sm: 8px;
+  --radius-xs: 6px;
+}
+
+/* ── LIGHT THEME ── */
+[data-theme="light"] {
+  --bg: #f4f6f5;
+  --surface: #ffffff;
+  --surface-2: #f0f3f1;
+  --surface-3: #e8ece9;
+  --border: rgba(42,157,122,0.1);
+  --border-bright: rgba(42,157,122,0.2);
+  --border-solid: #d8e0db;
+  --t100: #0a1a10;
+  --t70: rgba(10,26,16,0.78);
+  --t40: rgba(10,26,16,0.48);
+  --t20: rgba(10,26,16,0.24);
+  --t10: rgba(10,26,16,0.1);
+  --accent: #228a67;
+  --accent-hover: #1d7a5b;
+  --accent-soft: rgba(34,138,103,0.08);
+  --accent-glow: rgba(34,138,103,0.04);
+  --accent-dim: rgba(34,138,103,0.12);
+  --amber-soft: rgba(212,148,63,0.08);
+  --red-soft: rgba(217,79,79,0.08);
+  --green-soft: rgba(58,184,148,0.08);
+  --chart-bar: #228a67;
+  --chart-bar-hover: #1d7a5b;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-glow: 0 0 40px rgba(42,157,122,0.04);
+}
+
+/* ── BASE ── */
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-soft) transparent;
+}
+html::-webkit-scrollbar { width: 6px; }
+html::-webkit-scrollbar-track { background: transparent; }
+html::-webkit-scrollbar-thumb { background: var(--accent-soft); border-radius: 3px; }
+
+body {
+  background: var(--bg);
+  color: var(--t100);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.2;
+  mix-blend-mode: overlay;
+}
+
+[data-theme="light"] body::after { opacity: 0.06; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ── CONTAINER ── */
+.portal-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── GLASSMORPHISM MIXIN ── */
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-card);
+}
+
+/* ═══ NAV ═══ */
+.portal-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8,10,8,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+
+[data-theme="light"] .portal-nav {
+  background: rgba(255,255,255,0.92);
+}
+
+.portal-nav-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  gap: 16px;
+}
+
+.portal-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.portal-logo {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--t100);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.portal-logo span { color: var(--accent); }
+
+.portal-nav-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-bright);
+}
+
+.portal-nav-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--t40);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.portal-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.portal-client-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--t70);
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .portal-client-name { display: block; }
+}
+
+.theme-toggle {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-xs);
+  background: var(--surface-2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--t40);
+  transition: all 0.2s;
+}
+.theme-toggle:hover {
+  color: var(--t100);
+  border-color: var(--accent);
+}
+.theme-toggle svg { width: 16px; height: 16px; }
+
+.portal-support-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.portal-support-link:hover { color: var(--accent-hover); }
+.portal-support-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ═══ MAIN CONTENT ═══ */
+.portal-main {
+  padding: 32px 0 80px;
+}
+
+/* ═══ WELCOME HEADER ═══ */
+.welcome-header {
+  margin-bottom: 32px;
+}
+
+.welcome-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.welcome-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 400;
+  color: var(--t100);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.welcome-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.welcome-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--t40);
+  letter-spacing: 0.02em;
+}
+
+.plan-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--border-bright);
+}
+
+.plan-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.plan-badge.pro {
+  background: rgba(212,148,63,0.1);
+  color: var(--amber);
+  border-color: rgba(212,148,63,0.2);
+}
+.plan-badge.pro::before { background: var(--amber); }
+
+/* ═══ STATS GRID ═══ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.stat-card:hover {
+  border-color: var(--border-bright);
+  box-shadow: var(--shadow-glow);
+}
+
+.stat-card:hover::before { opacity: 1; }
+
+.stat-card-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--t40);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.stat-card-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 700;
+  color: var(--t100);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-card-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 100px;
+}
+
+.stat-card-change.up {
+  color: var(--green-bright);
+  background: var(--green-soft);
+}
+
+.stat-card-change.down {
+  color: var(--red);
+  background: var(--red-soft);
+}
+
+.stat-card-change svg {
+  width: 10px;
+  height: 10px;
+}
+
+.stat-card-sub {
+  font-size: 12px;
+  color: var(--t40);
+  margin-top: 4px;
+}
+
+/* ── Stat card icon accent ── */
+.stat-card-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.stat-card-icon svg { width: 18px; height: 18px; }
+
+.stat-card-icon.amber {
+  background: var(--amber-soft);
+  color: var(--amber);
+}
+
+/* ═══ TWO COLUMN LAYOUT ═══ */
+.portal-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 900px) {
+  .portal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ═══ CALL ACTIVITY FEED ═══ */
+.feed-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.feed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.feed-header-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--t40);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.feed-header-live {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+.feed-header-live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(42,157,122,0.4); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(42,157,122,0); }
+}
+
+.feed-list {
+  list-style: none;
+}
+
+.feed-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+.feed-item:last-child { border-bottom: none; }
+.feed-item:hover { background: var(--surface-2); }
+
+.feed-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.feed-dot.answered { background: var(--accent); box-shadow: 0 0 8px rgba(42,157,122,0.3); }
+.feed-dot.transferred { background: var(--amber); box-shadow: 0 0 8px rgba(212,148,63,0.3); }
+.feed-dot.booked { background: var(--green-bright); box-shadow: 0 0 8px rgba(58,184,148,0.4); }
+.feed-dot.voicemail { background: var(--t20); }
+
+.feed-info {
+  min-width: 0;
+}
+
+.feed-caller {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--t100);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feed-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--t40);
+}
+
+.feed-outcome {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.feed-outcome.booked {
+  color: var(--green-bright);
+  background: var(--green-soft);
+}
+.feed-outcome.info {
+  color: var(--t40);
+  background: var(--surface-2);
+}
+.feed-outcome.transfer {
+  color: var(--amber);
+  background: var(--amber-soft);
+}
+.feed-outcome.voicemail {
+  color: var(--t20);
+  background: var(--surface-2);
+}
+
+.feed-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--t40);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.feed-duration {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--t20);
+}
+
+.feed-footer {
+  padding: 14px 24px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.feed-footer a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  transition: color 0.2s;
+}
+.feed-footer a:hover { color: var(--accent-hover); }
+
+/* ═══ WEEKLY CHART ═══ */
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.chart-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--t40);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 160px;
+  padding-bottom: 28px;
+  position: relative;
+}
+
+.chart-bars::before {
+  content: '';
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+.chart-bar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.chart-bar {
+  width: 100%;
+  max-width: 40px;
+  border-radius: 4px 4px 0 0;
+  background: var(--chart-bar);
+  position: relative;
+  transition: background 0.2s, box-shadow 0.2s;
+  cursor: default;
+  min-height: 4px;
+}
+
+.chart-bar:hover {
+  background: var(--chart-bar-hover);
+  box-shadow: 0 0 16px rgba(42,157,122,0.2);
+}
+
+.chart-bar-tooltip {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--t100);
+  background: var(--surface-2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-bright);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.chart-bar:hover .chart-bar-tooltip { opacity: 1; }
+
+.chart-bar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--t40);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ═══ ACCOUNT DETAILS ═══ */
+.account-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.account-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--t40);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.account-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.account-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.account-row-label {
+  font-size: 13px;
+  color: var(--t40);
+}
+
+.account-row-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--t100);
+  text-align: right;
+}
+
+.account-row-value.active {
+  color: var(--accent);
+}
+
+.account-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+.account-forwarding {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.account-forwarding-label {
+  font-size: 11px;
+  color: var(--t40);
+  margin-bottom: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.account-forwarding-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  user-select: all;
+}
+
+.account-note {
+  font-size: 12px;
+  color: var(--t40);
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+.account-note a {
+  color: var(--accent);
+  font-weight: 500;
+}
+.account-note a:hover { color: var(--accent-hover); }
+
+/* ═══ REFERRAL CARD ═══ */
+.referral-card {
+  background: var(--surface);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.referral-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover), var(--accent));
+}
+
+.referral-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.referral-icon svg { width: 20px; height: 20px; }
+
+.referral-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 20px;
+  color: var(--t100);
+  margin-bottom: 8px;
+}
+
+.referral-text {
+  font-size: 14px;
+  color: var(--t70);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.referral-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  padding: 10px 18px;
+  background: var(--accent-soft);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: all;
+}
+.referral-link:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+/* ═══ FOOTER ═══ */
+.portal-footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  text-align: center;
+}
+
+.portal-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--t20);
+}
+
+.portal-footer-inner a {
+  color: var(--t40);
+  transition: color 0.2s;
+}
+.portal-footer-inner a:hover { color: var(--accent); }
+
+.portal-footer-support {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--t20);
+}
+.portal-footer-support a { color: var(--accent); }
+.portal-footer-support a:hover { color: var(--accent-hover); }
+
+/* ═══ ENTRY ANIMATIONS ═══ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.anim-fade-up {
+  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-d1 { animation-delay: 0.05s; }
+.anim-d2 { animation-delay: 0.1s; }
+.anim-d3 { animation-delay: 0.15s; }
+.anim-d4 { animation-delay: 0.2s; }
+.anim-d5 { animation-delay: 0.25s; }
+.anim-d6 { animation-delay: 0.3s; }
+.anim-d7 { animation-delay: 0.35s; }
+.anim-d8 { animation-delay: 0.4s; }
+.anim-d9 { animation-delay: 0.45s; }
+.anim-d10 { animation-delay: 0.5s; }
+
+/* ═══ CHART BAR ENTRY ═══ */
+@keyframes growBar {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+.chart-bar {
+  transform-origin: bottom;
+  animation: growBar 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.chart-bar-group:nth-child(1) .chart-bar { animation-delay: 0.1s; }
+.chart-bar-group:nth-child(2) .chart-bar { animation-delay: 0.15s; }
+.chart-bar-group:nth-child(3) .chart-bar { animation-delay: 0.2s; }
+.chart-bar-group:nth-child(4) .chart-bar { animation-delay: 0.25s; }
+.chart-bar-group:nth-child(5) .chart-bar { animation-delay: 0.3s; }
+.chart-bar-group:nth-child(6) .chart-bar { animation-delay: 0.35s; }
+.chart-bar-group:nth-child(7) .chart-bar { animation-delay: 0.4s; }
+
+/* ═══ FEED ITEM STAGGER ═══ */
+.feed-item {
+  animation: fadeIn 0.3s ease both;
+}
+.feed-item:nth-child(1) { animation-delay: 0.15s; }
+.feed-item:nth-child(2) { animation-delay: 0.2s; }
+.feed-item:nth-child(3) { animation-delay: 0.25s; }
+.feed-item:nth-child(4) { animation-delay: 0.3s; }
+.feed-item:nth-child(5) { animation-delay: 0.35s; }
+.feed-item:nth-child(6) { animation-delay: 0.4s; }
+.feed-item:nth-child(7) { animation-delay: 0.45s; }
+.feed-item:nth-child(8) { animation-delay: 0.5s; }
+
+/* ═══ NUMBER COUNT-UP (JS driven) ═══ */
+.counting { opacity: 0.6; }
+
+/* ═══ PRINT STYLES ═══ */
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  body::after { display: none !important; }
+  .portal-nav { position: static; background: #fff !important; border-bottom: 2px solid #000; }
+  .theme-toggle { display: none !important; }
+  .portal-support-link { color: #000 !important; }
+  .portal-logo span { color: #000 !important; }
+  .stat-card, .feed-card, .chart-card, .account-card, .referral-card {
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+  .stat-card::before { display: none; }
+  .stat-card-value, .feed-caller, .account-row-value { color: #000 !important; }
+  .stat-card-label, .feed-number, .feed-time, .chart-title, .account-title,
+  .account-row-label, .welcome-date, .portal-nav-label { color: #555 !important; }
+  .stat-card-change.up { color: #047857 !important; background: #ecfdf5 !important; }
+  .chart-bar { background: #047857 !important; }
+  .feed-dot.answered, .feed-dot.booked { background: #047857 !important; }
+  .feed-dot.transferred { background: #b45309 !important; }
+  .feed-outcome.booked { color: #047857 !important; background: #ecfdf5 !important; }
+  .feed-outcome.transfer { color: #b45309 !important; background: #fef3c7 !important; }
+  .plan-badge { background: #ecfdf5 !important; color: #047857 !important; border-color: #a7f3d0 !important; }
+  .referral-card::before { background: #047857 !important; }
+  .account-forwarding { background: #f3f4f6 !important; }
+  .account-forwarding-code { color: #047857 !important; }
+  .portal-footer { border-top: 1px solid #ccc; }
+  .portal-footer-inner, .portal-footer-support { color: #999 !important; }
+  .anim-fade-up, .feed-item, .chart-bar {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  @page { margin: 0.75in; }
+}
+
+/* ═══ RESPONSIVE REFINEMENTS ═══ */
+@media (max-width: 640px) {
+  .portal-nav { padding: 0 16px; }
+  .portal-nav-inner { height: 48px; }
+  .portal-nav-divider, .portal-nav-label { display: none; }
+  .portal-wrap { padding: 0 16px; }
+  .portal-main { padding: 24px 0 60px; }
+  .welcome-title { font-size: 22px; }
+  .stat-card { padding: 18px; }
+  .stat-card-value { font-size: 28px; }
+  .stat-card-icon { width: 30px; height: 30px; top: 16px; right: 16px; }
+  .stat-card-icon svg { width: 14px; height: 14px; }
+  .feed-item { grid-template-columns: auto 1fr auto; padding: 12px 16px; }
+  .feed-time { display: none; }
+  .feed-header { padding: 16px; }
+  .feed-footer { padding: 12px 16px; }
+  .chart-card { padding: 18px; }
+  .chart-bars { height: 120px; }
+  .account-card { padding: 18px; }
+  .referral-card { padding: 20px 18px; }
+}
+
+@media (max-width: 400px) {
+  .feed-outcome { font-size: 10px; padding: 2px 6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="portal-nav">
+  <div class="portal-nav-inner">
+    <div class="portal-nav-left">
+      <a href="https://thecalltaker.com" class="portal-logo">The Call <span>Taker</span></a>
+      <div class="portal-nav-divider"></div>
+      <span class="portal-nav-label">Client Portal</span>
+    </div>
+    <div class="portal-nav-right">
+      <span class="portal-client-name" id="navClientName"></span>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" title="Toggle theme">
+        <svg id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="themeIconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="tel:+16157845747" class="portal-support-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call Support
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main class="portal-main">
+  <div class="portal-wrap">
+
+    <!-- ── WELCOME HEADER ── -->
+    <div class="welcome-header anim-fade-up">
+      <div class="welcome-row">
+        <div>
+          <h1 class="welcome-title" id="welcomeTitle">Welcome back, <span id="businessName">Loading...</span></h1>
+          <div class="welcome-meta">
+            <span class="welcome-date" id="currentDate"></span>
+            <span class="plan-badge" id="planBadge"><span id="planName">Starter</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STATS GRID ── -->
+    <div class="stats-grid">
+
+      <div class="stat-card anim-fade-up anim-d2">
+        <div class="stat-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="stat-card-label">Calls Answered</div>
+        <div class="stat-card-value" data-count-to="" id="statCalls">0</div>
+        <div>
+          <span class="stat-card-change up" id="statCallsChange">
+            <svg viewBox="0 0 10 10"><path d="M5 1L9 6H1L5 1Z" fill="currentColor"/></svg>
+            <span id="statCallsChangeVal">+0%</span>
+          </span>
+          <span class="stat-card-sub">vs last month</span>
+        </div>
+      </div>
+
+      <div class="stat-card anim-fade-up anim-d3">
+        <div class="stat-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+        </div>
+        <div class="stat-card-label">Jobs Booked</div>
+        <div class="stat-card-value" data-count-to="" id="statJobs">0</div>
+        <div>
+          <span class="stat-card-change up" id="statJobsChange">
+            <svg viewBox="0 0 10 10"><path d="M5 1L9 6H1L5 1Z" fill="currentColor"/></svg>
+            <span id="statJobsChangeVal">+0%</span>
+          </span>
+          <span class="stat-card-sub" id="statJobsValue">est. $0 revenue</span>
+        </div>
+      </div>
+
+      <div class="stat-card anim-fade-up anim-d4">
+        <div class="stat-card-icon amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="stat-card-label">Missed Calls Saved</div>
+        <div class="stat-card-value" data-count-to="" id="statSaved">0</div>
+        <div>
+          <span class="stat-card-sub" id="statSavedNote">Would have gone to voicemail without GIDEON</span>
+        </div>
+      </div>
+
+      <div class="stat-card anim-fade-up anim-d5">
+        <div class="stat-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="stat-card-label">ROI</div>
+        <div class="stat-card-value" id="statROI">0x</div>
+        <div>
+          <span class="stat-card-sub" id="statROISub">return on your plan</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── TWO COLUMN: FEED + CHART ── -->
+    <div class="portal-grid">
+
+      <!-- Call Activity Feed -->
+      <div class="feed-card anim-fade-up anim-d6">
+        <div class="feed-header">
+          <span class="feed-header-title">Recent Calls</span>
+          <span class="feed-header-live">GIDEON Active</span>
+        </div>
+        <ul class="feed-list" id="feedList">
+          <!-- Populated by JS -->
+        </ul>
+        <div class="feed-footer">
+          <a href="#">View all calls &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Weekly Chart -->
+      <div class="chart-card anim-fade-up anim-d7">
+        <div class="chart-title">Calls This Week</div>
+        <div class="chart-bars" id="chartBars">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Account Details -->
+        <div class="account-card" style="margin-top: 24px; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; background: var(--surface-2);">
+          <div class="account-title">Account Details</div>
+          <div class="account-rows">
+            <div class="account-row">
+              <span class="account-row-label">Plan</span>
+              <span class="account-row-value" id="accountPlan">Starter $497/mo</span>
+            </div>
+            <div class="account-divider"></div>
+            <div class="account-row">
+              <span class="account-row-label">Status</span>
+              <span class="account-row-value active" id="accountStatus">Active</span>
+            </div>
+            <div class="account-divider"></div>
+            <div class="account-row">
+              <span class="account-row-label">Next billing</span>
+              <span class="account-row-value" id="accountBilling">Apr 15, 2026</span>
+            </div>
+            <div class="account-divider"></div>
+            <div class="account-row">
+              <span class="account-row-label">GIDEON uptime</span>
+              <span class="account-row-value active" id="accountUptime">99.9%</span>
+            </div>
+          </div>
+          <div class="account-forwarding" style="margin-top: 16px;">
+            <div class="account-forwarding-label">Forwarding Code</div>
+            <div class="account-forwarding-code">*21*6157845747#</div>
+          </div>
+          <p class="account-note" style="margin-top: 14px;">
+            Need to change your plan? Call <a href="tel:+16157845747">(615) 784-5747</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── REFERRAL CARD ── -->
+    <div class="referral-card anim-fade-up anim-d9">
+      <div class="referral-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="referral-title">Get your next month free</div>
+      <p class="referral-text">
+        Know another business owner who hates missing calls? Send them our way and your next month is on us. No forms, no hoops. Just share the link.
+      </p>
+      <span class="referral-link" id="referralLink" title="Click to copy">thecalltaker.com/start</span>
+    </div>
+
+  </div>
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="portal-footer">
+  <div class="portal-wrap">
+    <div class="portal-footer-inner">
+      <span>Powered by</span>
+      <a href="https://thecalltaker.com"><strong>The Call Taker</strong></a>
+    </div>
+    <p class="portal-footer-support">
+      Questions? Call <a href="tel:+16157845747">(615) 784-5747</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   CLIENT PORTAL — DATA + LOGIC
+   All data in variables at top for easy API swap.
+   ═══════════════════════════════════════════ */
+
+// ── PLACEHOLDER DATA (replace with GHL API calls) ──
+const PORTAL_DATA = {
+  business_name: "Palmetto Comfort HVAC",
+  plan: "starter",        // "after_hours" | "starter" | "pro"
+  plan_price: 497,
+  plan_label: "Starter",
+  status: "active",
+  next_billing: "2026-04-15",
+  uptime: 99.9,
+
+  // Stats (current month)
+  calls_answered: 147,
+  calls_change: 23,       // percent vs last month
+  jobs_booked: 38,
+  jobs_change: 18,
+  avg_job_value: 285,     // dollars
+  missed_calls_saved: 54,
+  roi_multiplier: 21.8,   // X times return
+
+  // Weekly chart (last 7 days, most recent last)
+  weekly: [
+    { day: "Mon", calls: 18 },
+    { day: "Tue", calls: 24 },
+    { day: "Wed", calls: 21 },
+    { day: "Thu", calls: 29 },
+    { day: "Fri", calls: 32 },
+    { day: "Sat", calls: 14 },
+    { day: "Sun", calls: 9 },
+  ],
+
+  // Recent calls feed
+  recent_calls: [
+    { time: "2:14 PM",  caller: "James Mitchell",     phone: "(615) 555-8821", duration: "3:42", outcome: "booked" },
+    { time: "1:47 PM",  caller: "Sarah Chen",          phone: "(615) 555-3304", duration: "2:18", outcome: "booked" },
+    { time: "12:55 PM", caller: "Rodriguez Plumbing",   phone: "(629) 555-6712", duration: "1:05", outcome: "info" },
+    { time: "11:30 AM", caller: "Mark Thompson",        phone: "(615) 555-9940", duration: "4:11", outcome: "booked" },
+    { time: "10:08 AM", caller: "Lisa Nguyen",           phone: "(931) 555-2278", duration: "0:45", outcome: "transfer" },
+    { time: "9:22 AM",  caller: "David Park",           phone: "(615) 555-1190", duration: "2:56", outcome: "booked" },
+    { time: "8:45 AM",  caller: "Unknown Caller",       phone: "(629) 555-0043", duration: "0:22", outcome: "info" },
+    { time: "7:12 AM",  caller: "Emergency AC Repair",  phone: "(615) 555-7731", duration: "5:03", outcome: "booked" },
+  ],
+};
+
+// ── FORMAT HELPERS ──
+function formatCurrency(n) {
+  return '$' + n.toLocaleString();
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function getTodayFormatted() {
+  const d = new Date();
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+}
+
+const PLAN_MAP = {
+  after_hours: { label: "After Hours", price: 97, className: "" },
+  starter:     { label: "Starter",     price: 497, className: "" },
+  pro:         { label: "Pro",         price: 997, className: "pro" },
+};
+
+// ── POPULATE PAGE ──
+function renderPortal(data) {
+  const plan = PLAN_MAP[data.plan] || PLAN_MAP.starter;
+
+  // Nav client name
+  document.getElementById('navClientName').textContent = data.business_name;
+
+  // Welcome
+  document.getElementById('businessName').textContent = data.business_name;
+  document.getElementById('currentDate').textContent = getTodayFormatted();
+
+  // Plan badge
+  const badge = document.getElementById('planBadge');
+  document.getElementById('planName').textContent = plan.label;
+  if (plan.className) badge.classList.add(plan.className);
+
+  // Stats with count-up
+  countUp('statCalls', data.calls_answered);
+  countUp('statJobs', data.jobs_booked);
+  countUp('statSaved', data.missed_calls_saved);
+
+  // Change indicators
+  renderChange('statCallsChange', 'statCallsChangeVal', data.calls_change);
+  renderChange('statJobsChange', 'statJobsChangeVal', data.jobs_change);
+
+  // Jobs revenue estimate
+  const estRevenue = data.jobs_booked * data.avg_job_value;
+  document.getElementById('statJobsValue').textContent = 'est. ' + formatCurrency(estRevenue) + ' revenue';
+
+  // ROI
+  animateROI('statROI', data.roi_multiplier);
+  document.getElementById('statROISub').textContent = 'return on your ' + formatCurrency(plan.price) + '/mo plan';
+
+  // Account details
+  document.getElementById('accountPlan').textContent = plan.label + ' ' + formatCurrency(plan.price) + '/mo';
+  document.getElementById('accountStatus').textContent = data.status.charAt(0).toUpperCase() + data.status.slice(1);
+  document.getElementById('accountBilling').textContent = formatDate(data.next_billing);
+  document.getElementById('accountUptime').textContent = data.uptime + '%';
+
+  // Feed
+  renderFeed(data.recent_calls);
+
+  // Chart
+  renderChart(data.weekly);
+}
+
+// ── COUNT-UP ANIMATION ──
+function countUp(elementId, target) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const duration = 1200;
+  const start = performance.now();
+  const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  el.classList.add('counting');
+
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = ease(progress);
+    const current = Math.round(eased * target);
+    el.textContent = current.toLocaleString();
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      el.textContent = target.toLocaleString();
+      el.classList.remove('counting');
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+function animateROI(elementId, target) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const duration = 1400;
+  const start = performance.now();
+  const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = ease(progress);
+    const current = (eased * target).toFixed(1);
+    el.textContent = current + 'x';
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      el.textContent = target.toFixed(1) + 'x';
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+// ── CHANGE INDICATOR ──
+function renderChange(wrapperId, valId, pct) {
+  const wrapper = document.getElementById(wrapperId);
+  const valEl = document.getElementById(valId);
+  if (!wrapper || !valEl) return;
+
+  if (pct >= 0) {
+    wrapper.className = 'stat-card-change up';
+    wrapper.querySelector('svg').innerHTML = '<path d="M5 1L9 6H1L5 1Z" fill="currentColor"/>';
+    valEl.textContent = '+' + pct + '%';
+  } else {
+    wrapper.className = 'stat-card-change down';
+    wrapper.querySelector('svg').innerHTML = '<path d="M5 9L9 4H1L5 9Z" fill="currentColor"/>';
+    valEl.textContent = pct + '%';
+  }
+}
+
+// ── CALL FEED ──
+function renderFeed(calls) {
+  const list = document.getElementById('feedList');
+  if (!list) return;
+  list.innerHTML = '';
+
+  calls.forEach(function(call) {
+    const li = document.createElement('li');
+    li.className = 'feed-item';
+
+    const dotClass = call.outcome === 'booked' ? 'booked' :
+                     call.outcome === 'transfer' ? 'transferred' :
+                     call.outcome === 'voicemail' ? 'voicemail' : 'answered';
+
+    const outcomeLabel = call.outcome === 'booked' ? 'Booked' :
+                         call.outcome === 'transfer' ? 'Transfer' :
+                         call.outcome === 'voicemail' ? 'VM' : 'Info';
+
+    const outcomeClass = call.outcome === 'booked' ? 'booked' :
+                         call.outcome === 'transfer' ? 'transfer' :
+                         call.outcome === 'voicemail' ? 'voicemail' : 'info';
+
+    li.innerHTML = '<div class="feed-dot ' + dotClass + '"></div>' +
+      '<div class="feed-info">' +
+        '<div class="feed-caller">' + escapeHtml(call.caller) + '</div>' +
+        '<div class="feed-number">' + escapeHtml(call.phone) + ' &middot; ' + escapeHtml(call.duration) + '</div>' +
+      '</div>' +
+      '<span class="feed-outcome ' + outcomeClass + '">' + outcomeLabel + '</span>' +
+      '<div class="feed-time">' + escapeHtml(call.time) + '</div>';
+
+    list.appendChild(li);
+  });
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ── WEEKLY CHART ──
+function renderChart(weekly) {
+  const container = document.getElementById('chartBars');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const maxCalls = Math.max.apply(null, weekly.map(function(d) { return d.calls; }));
+
+  weekly.forEach(function(day) {
+    const pct = maxCalls > 0 ? (day.calls / maxCalls) * 100 : 0;
+    const group = document.createElement('div');
+    group.className = 'chart-bar-group';
+
+    group.innerHTML = '<div class="chart-bar" style="height: ' + pct + '%;">' +
+        '<span class="chart-bar-tooltip">' + day.calls + ' calls</span>' +
+      '</div>' +
+      '<span class="chart-bar-label">' + day.day + '</span>';
+
+    container.appendChild(group);
+  });
+}
+
+// ── THEME TOGGLE ──
+function initTheme() {
+  const saved = localStorage.getItem('tct-portal-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'dark');
+
+  document.documentElement.setAttribute('data-theme', theme);
+  updateThemeIcons(theme);
+
+  document.getElementById('themeToggle').addEventListener('click', function() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('tct-portal-theme', next);
+    updateThemeIcons(next);
+  });
+}
+
+function updateThemeIcons(theme) {
+  document.getElementById('themeIconSun').style.display = theme === 'dark' ? 'block' : 'none';
+  document.getElementById('themeIconMoon').style.display = theme === 'light' ? 'block' : 'none';
+}
+
+// ── REFERRAL COPY ──
+function initReferral() {
+  const el = document.getElementById('referralLink');
+  if (!el) return;
+  el.addEventListener('click', function() {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText('https://thecalltaker.com/start').then(function() {
+        el.textContent = 'Copied!';
+        setTimeout(function() { el.textContent = 'thecalltaker.com/start'; }, 2000);
+      });
+    }
+  });
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', function() {
+  initTheme();
+  renderPortal(PORTAL_DATA);
+  initReferral();
+});
+</script>
+
+</body>
+</html>

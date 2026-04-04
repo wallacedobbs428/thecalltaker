@@ -1847,8 +1847,42 @@ html.light .theme-toggle .icon-moon { display: none; }
         return res.json();
       })
       .then(function(data) {
+        var contactId = data.contact ? data.contact.id : null;
+
+        // Create pipeline opportunity
+        if (contactId) {
+          fetch('https://services.leadconnectorhq.com/opportunities/', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + API_KEY,
+              'Content-Type': 'application/json',
+              'Version': '2021-07-28'
+            },
+            body: JSON.stringify({
+              pipelineId: 'KhFDURSwBi2fn416BnGf',
+              locationId: LOCATION_ID,
+              name: bizName + ' - ' + (plan === 'pro' ? 'Pro' : plan === 'starter' ? 'Starter' : 'After-Hours'),
+              stageId: '8285b2c9-9ca3-415f-a57b-ae458045aab4',
+              contactId: contactId,
+              status: 'open',
+              monetaryValue: plan === 'pro' ? 997 : (plan === 'starter' ? 497 : 97)
+            })
+          }).catch(function() {});
+        }
+
+        // Send ntfy alert to Wallace
+        fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+          method: 'POST',
+          headers: {
+            'Title': 'NEW PILOT SIGNUP: ' + bizName,
+            'Priority': 'urgent',
+            'Tags': 'money_with_wings'
+          },
+          body: yourName + ' at ' + bizName + ' (' + industry + ') just signed up for ' + plan + ' plan via thecalltaker.com/start. Phone: ' + phone + '. CALL THEM NOW.'
+        }).catch(function() {});
+
         // Success
-        showSuccess(bizName);
+        showSuccess(bizName, plan);
 
         // Track StartTrial event
         if (typeof fbq === 'function') {
@@ -1862,11 +1896,15 @@ html.light .theme-toggle .icon-moon { display: none; }
       })
       .catch(function(err) {
         console.error('GHL error:', err);
-        // Still show success (we don't want the user to feel like they failed)
-        // The contact will be created manually
-        showSuccess(bizName);
+        // Still show success + ntfy alert
+        showSuccess(bizName, plan);
 
-        // Track anyway
+        fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+          method: 'POST',
+          headers: { 'Title': 'PILOT SIGNUP (API error): ' + bizName, 'Priority': 'high' },
+          body: yourName + ' at ' + bizName + ' signed up but GHL API failed. Create contact manually. Phone: ' + phone + ' Email: ' + email
+        }).catch(function() {});
+
         if (typeof fbq === 'function') {
           fbq('track', 'StartTrial', {
             content_name: plan,
@@ -1877,10 +1915,23 @@ html.light .theme-toggle .icon-moon { display: none; }
     });
   }
 
-  function showSuccess(bizName) {
+  // Stripe payment links by plan
+  var STRIPE_LINKS = {
+    'after-hours': 'https://buy.stripe.com/4gM00j7HG816fbO6Y3b3q03',
+    'starter': 'https://buy.stripe.com/6oU8wP4vu3KQfbObejb3q04',
+    'pro': 'https://buy.stripe.com/4gM8wPbXWgxCaVy3LRb3q05'
+  };
+
+  function showSuccess(bizName, plan) {
     submitBtn.classList.remove('loading');
     // Update business name in success state
     successBiz.textContent = bizName;
+    // Add Stripe payment link
+    var payLink = document.getElementById('paymentLink');
+    if (payLink && STRIPE_LINKS[plan]) {
+      payLink.href = STRIPE_LINKS[plan];
+      payLink.style.display = 'inline-flex';
+    }
     // Hide form, show success
     formWrap.style.display = 'none';
     successState.classList.add('active');
