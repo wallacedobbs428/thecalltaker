@@ -209,6 +209,37 @@ button:hover { background: #22c55e; }
   border: 1px solid rgba(74, 222, 128, 0.2);
   margin-top: 16px;
 }
+
+/* MOBILE OPTIMIZATION */
+@media(max-width:600px) {
+  h1 { font-size: 26px; }
+  .demo-number { font-size: 28px; }
+  .demo-box { padding: 20px; }
+  .form-box { padding: 20px; }
+  body { padding-bottom: 70px; }
+}
+.mobile-call-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #4ade80;
+  padding: 14px;
+  text-align: center;
+  z-index: 9999;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+}
+.mobile-call-bar a {
+  color: #000;
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
+  display: block;
+}
+@media(max-width:600px) {
+  .mobile-call-bar { display: block; }
+}
 </style>
 
 <!-- Attribution tracking -->
@@ -360,5 +391,9 @@ function submitLead(e) {
 }
 </script>
 
+
+<div class="mobile-call-bar">
+  <a href="tel:+16157845747" onclick="if(typeof fbq!=='undefined')fbq('track','Lead');">Call Demo Now: (615) 784-5747</a>
+</div>
 </body>
 </html>
