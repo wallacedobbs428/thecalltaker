@@ -291,7 +291,7 @@ All in `ops/config.py` with environment variable fallbacks:
 - **Speed fix (Feb 27):** Prompt 925→160 words (v3), responsiveness 0.8→1.0, greeting 16→10 words, removed mid-call data extraction actions + knowledge base. 7 Bland.ai test calls run. Anti-repeat + digit readback workarounds deployed. Full audit: `~/Desktop/voice-agent-speed-fix/CALL-AUDIT.md`
 - **Pain-first closer (March 2):** v5 prompt (~263 words). Closer now simulates pain ("imagine nobody picked up — $300-500 job gone"), revenue anchor ("$2K-10K/mo in missed calls"), scarcity ("3 businesses this month"), price anchor ("$97/mo, less than one missed job"). Team detection section compressed to save words.
 - **GHL latency:** Info collection turns: 2-4.5s. Complex turns: 5-13s. GHL has no model selection, no max_tokens, no response_length setting. All available levers maxed.
-- **Demo line rule:** Demo line (629) 269-9697 = ALWAYS universal demo prompt. Client lines = industry-specific prompts. NEVER overwrite the demo line with a single-industry prompt.
+- **Demo line rule:** Demo line (615) 784-5747 = ALWAYS universal demo prompt. Client lines = industry-specific prompts. NEVER overwrite the demo line with a single-industry prompt.
 - **Industry prompts (for clients):** Locksmith, HVAC, Water Damage — all in `~/Desktop/voice-agent-speed-fix/industry-prompts/`. Universal demo prompt also there.
 - **Platform comparison:** Retell.ai recommended for voice layer (~600ms latency, 7.5x faster than GHL). Full analysis: `~/Desktop/voice-agent-speed-fix/PLATFORM-COMPARISON.md`
 - **Retell agent:** Also updated to universal demo. Agent ID: `agent_5acbcae27d34f7f82f1355e546`, LLM: `llm_c1d92953d343725223ebc9ae02ec`. BLOCKED: needs payment card for phone number ($2/mo).
@@ -442,7 +442,7 @@ Shared file at `ops/contact-registry.json`. All engines read/write through `tct_
 - `signup.html` — 3-step purchase flow ($97/$497/$997)
 - `calculator.html` — ROI calculator (lead capture + war room alert)
 - `book.html` — demo booking (GHL calendar embed, ID: h4IlzccZ1m3JprEQqpMJ)
-- `checkout.html` — $97/$497/$997 plan checkout (routes to /pilot/ until Stripe connected)
+- `checkout.html` — $97/$497/$997 plan checkout (Stripe LIVE — payment links active)
 - `demo-showcase.html` — live demo line showcase
 - `your-results.html` — 30-day results simulator (shareable URL)
 - `your-audit.html` — personalized audit reports (noindex)
@@ -627,8 +627,8 @@ max-engine.py catches replies → donny-engine.py closes
 - Uses same pain/scarcity messaging as Voice AI prompt + demo followup engine
 
 ## Known Issues / TODOs
-1. **Stripe not connected** — needs parent/guardian (Wallace is 16). Setup guide sent via ntfy.
-2. **stripe-webhook-handler.py** — signature verification is stubbed out (returns True). When Stripe is connected, implement HMAC-SHA256 verification.
+1. ~~Stripe not connected~~ — **STRIPE IS LIVE + WORKING** (tested Apr 4 2026). Dad owns account. Key in ~/.zshrc. 5 payment links active. DO NOT say expired without testing.
+2. **stripe-webhook-handler.py** — signature verification is stubbed out (returns True). Implement HMAC-SHA256 verification.
 3. **reply-monitor** service has exit code 1 — check `launchctl list | grep reply-monitor` and restart if needed.
 4. **Gmail SMTP passwords** are in plaintext in `gmail-sender.py`. Move to environment variables when possible.
 5. **Meta Ads** — Ad Account ID 25895456013410801, needs API token from developers.facebook.com.

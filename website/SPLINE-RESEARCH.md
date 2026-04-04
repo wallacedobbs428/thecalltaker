@@ -296,7 +296,7 @@ PRICING SECTION
 
 DEMO SECTION
 ├── "Call our demo line" CTA
-├── Phone number: (629) 269-9697
+├── Phone number: (615) 784-5747
 ├── Audio waveform animation (CSS/Canvas)
 └── GSAP scroll-triggered
 

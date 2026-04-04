@@ -21,7 +21,7 @@ Drop a real MP3 file (>5 seconds) and the console auto-detects it:
 - **Quality:** Clean audio, no background noise, no PII (use fake names/numbers)
 
 ### Steps
-1. Record a call to the demo line: (629) 269-9697
+1. Record a call to the demo line: (615) 784-5747
 2. Say something like "I need an emergency plumber" or "My AC isn't working"
 3. Let the AI respond through booking confirmation (~60s call)
 4. Trim to the best 15-second segment

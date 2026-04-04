@@ -121,7 +121,7 @@
 |--------|----------|----------|
 | "No contracts. Cancel anytime." | Yes | Homepage pricing, pilot page, signup FAQ |
 | "14-day free pilot. No credit card." | Yes | Homepage badge, every CTA, pilot page hero |
-| Demo line (629) 269-9697 clickable | Yes | Header, hero, demo section, FAQ, footer, checkout, pilot page |
+| Demo line (615) 784-5747 clickable | Yes | Header, hero, demo section, FAQ, footer, checkout, pilot page |
 | Real stats from dashboard | Partial | Pilot page has numbers but they're hardcoded |
 | Professional footer with address | Yes | "Nashville, TN" / "Brentwood, TN" |
 | No lorem ipsum or placeholder text | Yes | Clean |

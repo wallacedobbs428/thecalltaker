@@ -110,7 +110,7 @@
           '<li>Live in under 10 minutes</li>' +
         '</ul>' +
         '<div class="tpb-actions">' +
-          '<a href="/pilot/" class="tpb-btn tpb-btn-primary">Start Free Pilot</a>' +
+          '<a href="/start" class="tpb-btn tpb-btn-primary">Start Free Pilot</a>' +
           '<a href="#pricing" class="tpb-btn tpb-btn-secondary">See Plans & Pricing</a>' +
         '</div>' +
       '</div>';
