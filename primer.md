@@ -6,7 +6,7 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 # Primer — The Call Taker
 
-> Last updated: 2026-03-29 | Rewrite this file at the start of every session.
+> Last updated: 2026-04-04 | Rewrite this file at the start of every session.
 
 ## What This Is
 
@@ -23,48 +23,41 @@ AI Receptionist SaaS for service businesses. $97/$497/$997/mo pricing (3-tier). 
 
 ## Current Branch & State
 
-- **Branch:** `main`
-- **Working tree:** check with `git status`
+- **Branch:** `claude/install-claude-ads-skill-OpXvk` (feature branch for ads skill install)
+- **Working tree:** clean after ads skill commit
 - **CRITICAL:** Never `git add -A` — video-ad/node_modules has 137MB files that get rejected by GitHub. Always add specific files.
+
+## Claude Code Skills
+
+- **`/ads` skill installed (Apr 4, 2026)** — personal (`~/.claude/skills/ads/`) + project (`.claude/skills/ads/`)
+- **7 commands:** `/ads audit`, `/ads meta`, `/ads google`, `/ads creative`, `/ads budget`, `/ads plan`, `/ads competitor`
+- Pre-loaded with: Meta Ad Account ID (25895456013410801), all 17 target industries, 56 metros, pricing tiers, LTV model, creative assets, competitor data
+- No API credentials connected yet — Meta needs API token from developers.facebook.com
 
 ## Homepage (website/index.html)
 
 - **Color scheme:** Green accent (#00dc82) on black (#0a0a0a)
 - **Hero:** Holographic GIDEON with typewriter captions + animated phone mockup
-- **GIDEON captions (updated Mar 28):** "Hey. I'm GIDEON." → "#1 AI answering service" → "answering every call" → "book, text, qualify" → "ready to make you rich" → "call our demo line"
+- **GIDEON captions:** "Hey. I'm GIDEON." → "#1 AI answering service" → "answering every call" → "book, text, qualify" → "ready to make you rich" → "call our demo line"
 - **Audio:** gideon-intro.mp3 + gideon-intro-short.mp3 (needs re-recording to match new captions)
 - **Pricing:** 3-tier ($97/$497/$997), founding rate $264 on go.html
 - **External deps:** GSAP 3.12.5 (cdnjs)
 - **Font:** Inter (Google Fonts)
+- **Recent (Apr 4):** Meta Pixel conversion events added, broken callback forms fixed
 
 ## Video Ad System (video-ad/)
 
 - **Framework:** Remotion (React-based video generation)
 - **Campaign:** "The $300 Ghost" — missed call pain point
-- **Compositions:**
-  - TheGhost30 (30s master) + TheGhost15 (15s cutdown)
-  - 3 hook variants: Aggressive, Authority, Curiosity
-  - 3 aspect ratios per composition: 9:16 Reel, 4:5 Feed, 1:1 Square
-- **Rendered output:** video-ad/out/ — 6 MP4 files ready to upload
-  - ghost-30s-reel.mp4, ghost-30s-feed.mp4, ghost-30s-square.mp4
-  - ghost-15s-reel.mp4, ghost-15s-feed.mp4, ghost-15s-square.mp4
-- **Scenes:** HookScene, PainScene, AnchorScene, ProofScene, CTAScene
-- **Components:** AnimatedText, Background, EndCard, PhoneMockup
+- **Rendered output:** video-ad/out/ — 6 MP4 files (30s+15s x 3 aspect ratios)
 - **Launch protocol:** 72-HOUR-LAUNCH-PROTOCOL.md (FB Ads phased rollout)
 - **Publish playbook:** PUBLISH-PLAYBOOK.md (upload order, captions, targeting)
-- **DO NOT** commit video-ad/node_modules/ — contains 137MB Chrome binary + 109MB webpack cache
+- **DO NOT** commit video-ad/node_modules/ — contains 137MB Chrome binary
 
 ## Website Stats
 
 - **Total pages:** ~220+ HTML files deployed
-- **Key new pages (Mar 28-29, Mills):**
-  - ai-answering-service-small-business.html (SEO landing)
-  - ghl-answering-service.html (GHL integration page)
-  - never-miss-a-call.html (pain-point landing)
-  - vs-ruby-receptionists.html (Ruby comparison)
-  - vs-smith-ai.html (Smith.ai comparison)
-  - demo/carolina-locksmith.html (personalized demo)
-  - we-use-it.html (self-use case study with live stats)
+- **Key pages:** ai-answering-service-small-business.html, ghl-answering-service.html, never-miss-a-call.html, vs-ruby-receptionists.html, vs-smith-ai.html, demo/carolina-locksmith.html, we-use-it.html
 
 ## Key Rules
 
@@ -79,7 +72,7 @@ AI Receptionist SaaS for service businesses. $97/$497/$997/mo pricing (3-tier). 
 ## Active Priorities
 
 - **Revenue**: $0 MRR, 0 paying customers. Pipeline velocity $54.58/day
+- **Meta Ads**: Ad Account ID 25895456013410801. "The $300 Ghost" rendered and ready. `/ads` skill installed. Needs API token from developers.facebook.com + PUBLISH-PLAYBOOK.md execution
 - **GHL API**: Offline (switching payment). When back: activate workflow engine, pre-call warmer, 15 micro-campaigns
 - **Stripe**: Live account but secret key expired. Products not yet created
-- **Video ads**: "The $300 Ghost" rendered and ready. Needs FB Ads upload per PUBLISH-PLAYBOOK.md
 - **New GIDEON audio**: Captions updated, audio file needs re-recording to match
