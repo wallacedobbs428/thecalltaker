@@ -6,7 +6,7 @@ Alias to open this repo: `site` (cd ~/Desktop/thecalltaker/website)
 
 ## Stack
 - GitHub Pages — static HTML only, no build step, no npm
-- 93 HTML pages, plain HTML/CSS/JS
+- 128+ HTML pages, plain HTML/CSS/JS
 - Font: Inter (global)
 - Colors: Green/black (homepage). 37 industry/blog pages still have OLD blue/red — do not match those, update them to green/black when touched.
 - GSAP 3.12.5 loaded via CDN for hologram animations
