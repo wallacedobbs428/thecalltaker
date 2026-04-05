@@ -7,7 +7,7 @@
   'use strict';
 
   // === CONFIG ===
-  var AUDIO_SRC = '/assets/demo/jessica-demo.wav';
+  var AUDIO_SRC = '/assets/demo/gideon-demo.wav';
   var PILOT_URL = '/pilot/';
   var DEFAULT_BIZ = 'Your Business';
   var GHL_LOCATION = 'tQb9YmrGDrdVUJYPKrsY';
@@ -15,7 +15,7 @@
   // === TRANSCRIPT (dynamic — {BIZ} replaced at runtime) ===
   function getTranscript(biz) {
     return [
-      { speaker: 'AI', text: 'Thank you for calling ' + biz + ', this is Jessica speaking\u2014how can I help you today?', start: 0.5, end: 4.0 },
+      { speaker: 'AI', text: 'Thank you for calling ' + biz + ', this is GIDEON speaking\u2014how can I help you today?', start: 0.5, end: 4.0 },
       { speaker: 'Caller', text: 'Hey, my AC just quit on me and it\u2019s gotta be close to a hundred degrees in here. I\u2019ve got two little kids.', start: 5.0, end: 8.5 },
       { speaker: 'AI', text: 'Oh no, I\u2019m so sorry. Let\u2019s get someone out to you right away. Can I grab your address?', start: 8.5, end: 11.5 },
       { speaker: 'Caller', text: 'Yeah, it\u2019s 142 Oak Street in Nashville. It\u2019s a Trane unit, about eight years old.', start: 11.5, end: 14.5 },

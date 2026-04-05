@@ -9,7 +9,7 @@
 ## IMMEDIATE (0 min after payment-received tag)
 
 ```
-Welcome to The Call Taker, {first_name}. Jessica goes live on your phones today. I'll call you personally within the hour to get everything set up. -Wallace
+Welcome to The Call Taker, {first_name}. GIDEON goes live on your phones today. I'll call you personally within the hour to get everything set up. -Wallace
 ```
 
 **GHL action:** Send SMS → contact phone
@@ -21,7 +21,7 @@ Welcome to The Call Taker, {first_name}. Jessica goes live on your phones today.
 **GHL condition:** Contact does NOT have tag `setup-complete`
 
 ```
-Hey {first_name} — Wallace here. Calling you now to get Jessica live. If you miss me, here's the setup link: thecalltaker.com/setup — takes 5 minutes. -Wallace
+Hey {first_name} — Wallace here. Calling you now to get GIDEON live. If you miss me, here's the setup link: thecalltaker.com/setup — takes 5 minutes. -Wallace
 ```
 
 **GHL action:** Send SMS → contact phone + Create Task "Call {first_name} NOW — setup incomplete"
@@ -33,11 +33,11 @@ Hey {first_name} — Wallace here. Calling you now to get Jessica live. If you m
 **GHL condition:** Contact does NOT have tag `setup-complete`
 
 ```
-{first_name} — quick check. Did you get a chance to forward your after-hours number? One step and Jessica is live tonight. Reply DONE when it's set up. -Wallace
+{first_name} — quick check. Did you get a chance to forward your after-hours number? One step and GIDEON is live tonight. Reply DONE when it's set up. -Wallace
 ```
 
 **GHL action:** Send SMS → contact phone
-**Reply handler:** If reply contains DONE/done/yes → add tag `setup-complete` → send "You're live. Jessica is answering your phones right now. Sleep well tonight. -Wallace"
+**Reply handler:** If reply contains DONE/done/yes → add tag `setup-complete` → send "You're live. GIDEON is answering your phones right now. Sleep well tonight. -Wallace"
 
 ---
 
@@ -46,7 +46,7 @@ Hey {first_name} — Wallace here. Calling you now to get Jessica live. If you m
 **GHL condition:** Contact HAS tag `setup-complete`
 
 ```
-Hey {first_name} — first night check-in. How many calls did Jessica answer? Log in at thecalltaker.com/dashboard to see the full report. -Wallace
+Hey {first_name} — first night check-in. How many calls did GIDEON answer? Log in at thecalltaker.com/dashboard to see the full report. -Wallace
 ```
 
 **GHL action:** Send SMS → contact phone
@@ -58,7 +58,7 @@ Hey {first_name} — first night check-in. How many calls did Jessica answer? Lo
 **GHL condition:** Contact HAS tag `setup-complete`
 
 ```
-{first_name} — 3 days in. Jessica has answered {calls_answered} calls that would've gone to voicemail. Just wanted you to know it's working. -Wallace
+{first_name} — 3 days in. GIDEON has answered {calls_answered} calls that would've gone to voicemail. Just wanted you to know it's working. -Wallace
 ```
 
 **GHL action:** Send SMS → contact phone (pull call count from pilot state or Sam engine)
