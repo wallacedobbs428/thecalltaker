@@ -1,10 +1,52 @@
+# robots.txt for thecalltaker.com
+# Updated: 2026-04-05
+
 User-agent: *
 Allow: /
-Disallow: /dashboard/
-Disallow: /toolkit/
-Disallow: /your-audit.html
-Disallow: /checkout.html
-Disallow: /portal.html
-Disallow: /shopper-reports/
 
+# Block admin/internal paths
+Disallow: /admin/
+Disallow: /api/
+Disallow: /checkout/
+Disallow: /_next/
+Disallow: /tmp/
+
+# Block duplicate content paths
+Disallow: /*?utm_*
+Disallow: /*?ref=*
+Disallow: /*?fbclid=*
+Disallow: /*?gclid=*
+
+# Sitemap
 Sitemap: https://thecalltaker.com/sitemap.xml
+
+# Crawl-delay (optional, be generous to Googlebot)
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 30
+
+# Allow AI crawlers to index content (improves GEO visibility)
+User-agent: GPTBot
+Allow: /
+Allow: /blog/
+Allow: /industries/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Anthropic-ai
+Allow: /
