@@ -6,7 +6,7 @@ Confirm you are in the correct repo before touching any files. Wrong repo = wast
 
 # Primer — The Call Taker
 
-> Last updated: 2026-03-29 | Rewrite this file at the start of every session.
+> Last updated: 2026-04-06 | Rewrite this file at the start of every session.
 
 ## What This Is
 
@@ -23,48 +23,40 @@ AI Receptionist SaaS for service businesses. $97/$497/$997/mo pricing (3-tier). 
 
 ## Current Branch & State
 
-- **Branch:** `main`
-- **Working tree:** check with `git status`
+- **Branch:** `claude/build-pitch-page-cRb2S`
+- **Working tree:** clean after commit
+- **Latest commit:** Rebuilt demo/index.html as full pitch page (913 lines, 12 sections)
 - **CRITICAL:** Never `git add -A` — video-ad/node_modules has 137MB files that get rejected by GitHub. Always add specific files.
 
 ## Homepage (website/index.html)
 
-- **Color scheme:** Green accent (#00dc82) on black (#0a0a0a)
-- **Hero:** Holographic GIDEON with typewriter captions + animated phone mockup
-- **GIDEON captions (updated Mar 28):** "Hey. I'm GIDEON." → "#1 AI answering service" → "answering every call" → "book, text, qualify" → "ready to make you rich" → "call our demo line"
-- **Audio:** gideon-intro.mp3 + gideon-intro-short.mp3 (needs re-recording to match new captions)
+- **Color scheme:** Green accent (#2a9d7a / #3ab894) on black (#080a08)
+- **Hero:** GIDEON hologram vault + secondary hero with phone animation
+- **Design system:** CSS vars (--bg, --surface, --accent, --t100/70/40/20/10/06), scroll reveal animations, feature cards, pricing cards, FAQ accordion
 - **Pricing:** 3-tier ($97/$497/$997), founding rate $264 on go.html
-- **External deps:** GSAP 3.12.5 (cdnjs)
+- **External deps:** GSAP 3.12.5 (cdnjs for homepage only)
 - **Font:** Inter (Google Fonts)
+- **3,360 lines** — production homepage
+
+## Demo Page (website/demo/index.html) — REBUILT Apr 6
+
+- **913 lines** — full pitch page matching homepage design exactly
+- **Sections (12):** Hero with demo console, stats row, problem (85% stat split), before/after comparison, 6 feature cards, 3-step how-it-works, demo CTA with live transcript, live counter bar, 3-tier pricing + cost comparison, 10-question FAQ, final CTA with guarantee, footer
+- **Includes:** Meta Pixel, Google Ads tag, tct-tracking.js, shared/demo-console.css+js, tct-intent.js, tct-convert.js
+- **Features:** Scroll reveal animations, FAQ accordion, nav scroll spy, theme toggle (light/dark), exit-intent popup, mobile call bar, industry-aware URL param (?industry=hvac)
+- **Self-contained:** All CSS inline, no GSAP dependency (unlike homepage)
 
 ## Video Ad System (video-ad/)
 
 - **Framework:** Remotion (React-based video generation)
 - **Campaign:** "The $300 Ghost" — missed call pain point
-- **Compositions:**
-  - TheGhost30 (30s master) + TheGhost15 (15s cutdown)
-  - 3 hook variants: Aggressive, Authority, Curiosity
-  - 3 aspect ratios per composition: 9:16 Reel, 4:5 Feed, 1:1 Square
 - **Rendered output:** video-ad/out/ — 6 MP4 files ready to upload
-  - ghost-30s-reel.mp4, ghost-30s-feed.mp4, ghost-30s-square.mp4
-  - ghost-15s-reel.mp4, ghost-15s-feed.mp4, ghost-15s-square.mp4
-- **Scenes:** HookScene, PainScene, AnchorScene, ProofScene, CTAScene
-- **Components:** AnimatedText, Background, EndCard, PhoneMockup
-- **Launch protocol:** 72-HOUR-LAUNCH-PROTOCOL.md (FB Ads phased rollout)
-- **Publish playbook:** PUBLISH-PLAYBOOK.md (upload order, captions, targeting)
-- **DO NOT** commit video-ad/node_modules/ — contains 137MB Chrome binary + 109MB webpack cache
+- **DO NOT** commit video-ad/node_modules/ — contains 137MB Chrome binary
 
 ## Website Stats
 
 - **Total pages:** ~220+ HTML files deployed
-- **Key new pages (Mar 28-29, Mills):**
-  - ai-answering-service-small-business.html (SEO landing)
-  - ghl-answering-service.html (GHL integration page)
-  - never-miss-a-call.html (pain-point landing)
-  - vs-ruby-receptionists.html (Ruby comparison)
-  - vs-smith-ai.html (Smith.ai comparison)
-  - demo/carolina-locksmith.html (personalized demo)
-  - we-use-it.html (self-use case study with live stats)
+- **Key pages:** index.html (homepage), demo/index.html (pitch page), go.html (ad landing), pay.html (pricing), demo-live.html (ElevenLabs live demo)
 
 ## Key Rules
 
@@ -82,4 +74,4 @@ AI Receptionist SaaS for service businesses. $97/$497/$997/mo pricing (3-tier). 
 - **GHL API**: Offline (switching payment). When back: activate workflow engine, pre-call warmer, 15 micro-campaigns
 - **Stripe**: Live account but secret key expired. Products not yet created
 - **Video ads**: "The $300 Ghost" rendered and ready. Needs FB Ads upload per PUBLISH-PLAYBOOK.md
-- **New GIDEON audio**: Captions updated, audio file needs re-recording to match
+- **Demo pitch page**: DONE — full rebuild pushed to claude/build-pitch-page-cRb2S
