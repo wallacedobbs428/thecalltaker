@@ -4,10 +4,18 @@ UPDATE JESSICA PROMPT — The Call Taker
 ======================================
 Deploys the v9 anti-squeaky natural voice prompt to the GHL Voice AI agent.
 
+Voice: Uses ElevenLabs "Rachel" (21m00Tcm4TlvDq8ikWAM) — the same class of voice
+GoHighLevel uses for polished public demos (e.g. +1-888-732-4197). GHL does not
+publish that line's internal voice UUID; Rachel matches the standard catalog
+sound most agencies use to mirror it. Audition in Voice AI → Library → Rachel.
+
 Usage:
-  python3 update-jessica-prompt.py deploy   — Push v9 prompt + voice settings to GHL
-  python3 update-jessica-prompt.py current  — Show current prompt from GHL
-  python3 update-jessica-prompt.py test     — Dry run (print what would be sent)
+  python3 update-jessica-prompt.py deploy              — Demo line agent (default IDs in file / env)
+  python3 update-jessica-prompt.py deploy-to <locationId> <agentId>  — Any sub-account (e.g. American Surgical)
+  python3 update-jessica-prompt.py deploy-surgical      — Same as deploy-to using TCT_SURGICAL_LOCATION_ID + TCT_SURGICAL_AGENT_ID
+  python3 update-jessica-prompt.py current            — Show current prompt from GHL (demo agent)
+  python3 update-jessica-prompt.py test                 — Dry run (print what would be sent)
+  python3 update-jessica-prompt.py fallback <name>      — jessica_deep | rachel | bella | elli
 """
 
 import sys
@@ -64,25 +72,26 @@ RULES:
 
 V9_WELCOME = "Thanks for calling The Call Taker — this is Jessica. Tell me what kind of business you run, and I will show you how I handle your calls."
 
-# ─── Voice Settings ───────────────────────────────────────────────────────────
-# Deep, warm female voice — eliminates squeaky/tinny sound
-V9_VOICE_SETTINGS = {
-    "voiceId": "lxYfHSkYm1EzQzGhdbfc",  # Jessica deep variant (ElevenLabs)
+# ─── Voice Settings — GHL-style (Rachel) ──────────────────────────────────────
+# Matches GoHighLevel's public Voice AI demo tone (+1-888-732-4197 class of sound).
+# Import by Voice ID in GHL if needed: Voice AI → Library → search Rachel, or paste ID.
+GHL_STYLE_VOICE = {
+    "voiceId": "21m00Tcm4TlvDq8ikWAM",  # Rachel — ElevenLabs; standard GHL-demo-adjacent female
     "responsiveness": 1.0,
-    # ElevenLabs-specific settings (if supported by GHL API)
     "voiceSettings": {
-        "stability": 0.75,
-        "similarityBoost": 0.85,
-        "speakingRate": 0.95,
-        "pitch": -1,
+        "stability": 0.5,
+        "similarityBoost": 0.75,
+        "speakingRate": 1.0,
+        "pitch": 0,
     },
 }
 
-# Fallback voices if Jessica deep still sounds squeaky
+# Previous default + alternates (CLI: fallback <name>)
 FALLBACK_VOICES = {
-    "rachel": "21m00Tcm4TlvDq8ikWAM",    # Most natural female ElevenLabs voice
-    "bella": "EXAVITQu4vr4xnSDxMaL",      # Young, warm, extremely natural
-    "elli": "MF3mGyEYCl7XYWbV9V6O",       # Calm, smooth, professional
+    "jessica_deep": "lxYfHSkYm1EzQzGhdbfc",  # Warmer/deeper Jessica variant (v9 original)
+    "rachel": "21m00Tcm4TlvDq8ikWAM",
+    "bella": "EXAVITQu4vr4xnSDxMaL",
+    "elli": "MF3mGyEYCl7XYWbV9V6O",
 }
 
 
@@ -100,8 +109,10 @@ def get_current_agent():
     return resp.json()
 
 
-def update_agent(prompt, welcome_message, voice_settings):
+def update_agent(prompt, welcome_message, voice_settings, agent_id=None, location_id=None):
     """Update voice AI agent prompt, voice, and settings."""
+    aid = agent_id or AGENT_ID
+    lid = location_id or GHL_LOCATION_ID
     body = {
         "prompt": prompt,
         "welcomeMessage": welcome_message,
@@ -113,9 +124,9 @@ def update_agent(prompt, welcome_message, voice_settings):
         body["voiceSettings"] = voice_settings["voiceSettings"]
 
     resp = requests.patch(
-        f"{GHL_BASE_URL}/voice-ai/agents/{AGENT_ID}",
+        f"{GHL_BASE_URL}/voice-ai/agents/{aid}",
         headers=HEADERS,
-        params={"locationId": GHL_LOCATION_ID},
+        params={"locationId": lid},
         json=body,
         timeout=30,
     )
@@ -140,24 +151,46 @@ def cmd_current():
 
 
 def cmd_deploy():
-    """Deploy v9 prompt + voice settings to GHL."""
-    print("Deploying v9 anti-squeaky natural voice prompt...")
+    """Deploy v9 prompt + GHL-style Rachel voice to the default demo Voice AI agent."""
+    print("Deploying v9 prompt + GHL-style voice (Rachel / enterprise demo class)...")
     print(f"Prompt length: {len(V9_PROMPT)} chars / ~{len(V9_PROMPT.split())} words")
     print(f"Welcome: {V9_WELCOME}")
-    print(f"Voice ID: {V9_VOICE_SETTINGS['voiceId']} (Jessica deep variant)")
-    print(f"Pitch: -1 | Rate: 0.95 | Stability: 0.75 | Similarity: 0.85")
+    print(f"Voice ID: {GHL_STYLE_VOICE['voiceId']} (Rachel — matches typical GHL public demo tone)")
+    print(f"Pitch: 0 | Rate: 1.0 | Stability: 0.5 | Similarity: 0.75")
     print()
 
-    success = update_agent(V9_PROMPT, V9_WELCOME, V9_VOICE_SETTINGS)
+    success = update_agent(V9_PROMPT, V9_WELCOME, GHL_STYLE_VOICE)
     if success:
-        print("SUCCESS — v9 prompt + voice settings deployed to Jessica.")
-        print(f"Test it now: call {os.environ.get('DEMO_LINE', '(615) 784-5747')}")
+        print("SUCCESS — v9 prompt + Rachel voice deployed to demo Voice AI agent.")
+        print(f"Test demo line: call {os.environ.get('DEMO_LINE', '(615) 784-5747')}")
         print()
-        print("If still squeaky after testing:")
-        print("  1. Try Rachel voice: python3 update-jessica-prompt.py fallback rachel")
-        print("  2. Try Bella voice:  python3 update-jessica-prompt.py fallback bella")
+        print("Prefer the deeper Jessica variant?  python3 update-jessica-prompt.py fallback jessica_deep")
+        print("Other alternates:  fallback bella | fallback elli")
     else:
         print("FAILED — check API key and agent ID.")
+
+
+def cmd_deploy_to(location_id, agent_id):
+    """Deploy same prompt + GHL-style voice to another location (e.g. American Surgical)."""
+    print(f"Deploying v9 + Rachel voice to location={location_id} agent={agent_id} ...")
+    success = update_agent(V9_PROMPT, V9_WELCOME, GHL_STYLE_VOICE, agent_id=agent_id, location_id=location_id)
+    if success:
+        print("SUCCESS — Voice AI agent updated. Place a test call from GHL → Test Your Agent.")
+    else:
+        print("FAILED — check API key, location ID, and agent ID (must be Voice AI agent in that sub-account).")
+
+
+def cmd_deploy_surgical():
+    """Deploy using TCT_SURGICAL_LOCATION_ID + TCT_SURGICAL_AGENT_ID from environment."""
+    lid = os.environ.get("TCT_SURGICAL_LOCATION_ID", "").strip()
+    aid = os.environ.get("TCT_SURGICAL_AGENT_ID", "").strip()
+    if not lid or not aid:
+        print("Set both in your shell or .zprofile:")
+        print("  export TCT_SURGICAL_LOCATION_ID='...'   # American Surgical sub-account")
+        print("  export TCT_SURGICAL_AGENT_ID='...'       # Voice AI agent id from AI Agents → Voice AI")
+        print("Or run:  python3 update-jessica-prompt.py deploy-to <locationId> <agentId>")
+        sys.exit(1)
+    cmd_deploy_to(lid, aid)
 
 
 def cmd_fallback(voice_name):
@@ -169,8 +202,15 @@ def cmd_fallback(voice_name):
         return
 
     voice_id = FALLBACK_VOICES[voice_name]
-    settings = dict(V9_VOICE_SETTINGS)
+    settings = dict(GHL_STYLE_VOICE)
     settings["voiceId"] = voice_id
+    if voice_name == "jessica_deep":
+        settings["voiceSettings"] = {
+            "stability": 0.75,
+            "similarityBoost": 0.85,
+            "speakingRate": 0.95,
+            "pitch": -1,
+        }
     print(f"Deploying v9 prompt with fallback voice: {voice_name} ({voice_id})...")
 
     success = update_agent(V9_PROMPT, V9_WELCOME, settings)
@@ -186,8 +226,8 @@ def cmd_test():
     print("=== DRY RUN — v9 Anti-Squeaky Prompt ===")
     print(f"Agent ID: {AGENT_ID}")
     print(f"Location ID: {GHL_LOCATION_ID}")
-    print(f"Voice ID: {V9_VOICE_SETTINGS['voiceId']} (Jessica deep)")
-    print(f"Pitch: -1 | Rate: 0.95 | Stability: 0.75 | Similarity: 0.85")
+    print(f"Voice ID: {GHL_STYLE_VOICE['voiceId']} (Rachel / GHL demo class)")
+    print(f"Pitch: 0 | Rate: 1.0 | Stability: 0.5 | Similarity: 0.75")
     print(f"Prompt length: {len(V9_PROMPT)} chars / ~{len(V9_PROMPT.split())} words")
     print(f"\n--- Welcome Message ---\n{V9_WELCOME}")
     print(f"\n--- System Prompt ---\n{V9_PROMPT}")
@@ -195,19 +235,26 @@ def cmd_test():
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: update-jessica-prompt.py <deploy|current|test|fallback [voice]>")
+        print("Usage: update-jessica-prompt.py <deploy|deploy-to|deploy-surgical|current|test|fallback>")
         sys.exit(1)
 
     cmd = sys.argv[1].lower()
     if cmd == "deploy":
         cmd_deploy()
+    elif cmd == "deploy-to":
+        if len(sys.argv) < 4:
+            print("Usage: update-jessica-prompt.py deploy-to <locationId> <agentId>")
+            sys.exit(1)
+        cmd_deploy_to(sys.argv[2], sys.argv[3])
+    elif cmd == "deploy-surgical":
+        cmd_deploy_surgical()
     elif cmd == "current":
         cmd_current()
     elif cmd == "test":
         cmd_test()
     elif cmd == "fallback":
         if len(sys.argv) < 3:
-            print("Usage: update-jessica-prompt.py fallback <rachel|bella|elli>")
+            print("Usage: update-jessica-prompt.py fallback <jessica_deep|rachel|bella|elli>")
             sys.exit(1)
         cmd_fallback(sys.argv[2])
     else:

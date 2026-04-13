@@ -1,41 +1,45 @@
 # Jessica Voice AI Prompt — v9 (Anti-Squeaky / Deep Natural Tone)
 
-**Agent:** The Call Taker - Demo Line
+**Agent:** The Call Taker - Demo Line (and client sub-accounts via `deploy-to`)
 **Phone:** (615) 784-5747
-**Voice ID:** lxYfHSkYm1EzQzGhdbfc (Jessica — deep, warm ElevenLabs female)
+**Voice ID:** `21m00Tcm4TlvDq8ikWAM` (**Rachel** — ElevenLabs; GHL enterprise-demo class)
 **Responsiveness:** 1.0 (maximum)
 **Platform:** GHL Voice AI
 **Word Count:** ~240 words (shorter = fewer pitch spikes)
-**Version Date:** March 15, 2026
+**Version Date:** April 13, 2026
+
+### Why Rachel (not a literal “copy” of +1-888-732-4197)
+
+GoHighLevel does **not** publish the internal Voice AI / ElevenLabs ID used on their public demo line **+1 (888) 732-4197**. In practice, their marketing line uses the **same engine** (ElevenLabs-class voices inside GHL’s catalog). **Rachel** is the default “premium American female” voice installers and GHL tutorials use to match that polished phone-demo sound. Deploy with `ops/update-jessica-prompt.py deploy`.
+
+To A/B by ear: GHL → **AI Agents** → **Voice AI** → open agent → **Voice** → compare **Voice In-use** with Library → **Rachel** (or paste Voice ID above in custom import).
 
 ---
 
 ## Voice Settings (GHL Voice AI)
 
-| Setting | Old Value | New Value | Why |
-|---------|-----------|-----------|-----|
-| Voice ID | w9rPM8AIZle60Nbpw7nl | lxYfHSkYm1EzQzGhdbfc | Deeper, warmer Jessica variant. Less nasal, less squeaky |
-| Speaking Rate | 1.0 (default) | 0.95 | Slightly slower — sounds human, not rushed |
-| Pitch | 0 (default) | -1 | Drops pitch one notch — eliminates squeaky high register |
-| Stability | default | 0.75 | Keeps voice consistent without robotic stiffness |
-| Similarity Boost | default | 0.85 | High fidelity to source voice without artifacts |
+| Setting | Prior (v9 original) | Current | Why |
+|---------|---------------------|---------|-----|
+| Voice ID | lxYfHSkYm1EzQzGhdbfc (Jessica deep) | **21m00Tcm4TlvDq8ikWAM** (Rachel) | Aligns with GHL-style public demo / enterprise tone |
+| Speaking Rate | 0.95 | **1.0** | Natural pacing for Rachel on phone codec |
+| Pitch | -1 | **0** | Rachel’s native register; avoids over-darkening |
+| Stability | 0.75 | **0.5** | Typical ElevenLabs balance for conversational AI |
+| Similarity Boost | 0.85 | **0.75** | Standard clarity on telephony |
 | Responsiveness | 1.0 | 1.0 | No change — already maxed |
 | Mid-call actions | NONE | NONE | No change — latency killer |
 | Knowledge base | NONE | NONE | No change — latency killer |
-| After-call action | Extract name | Extract name, email, company | Captures prospect info |
-| End-call workflow | 6e7084f1-... | 6e7084f1-... | No change |
 
 ### ElevenLabs Voice Selection Notes
 
-**Selected:** `lxYfHSkYm1EzQzGhdbfc` — Jessica (deep variant)
-- Warm, calm, confident American woman
-- Lower register — no squeaky spikes on short words
-- Sounds like a front desk at a premium medical office
+**Primary (deployed):** `21m00Tcm4TlvDq8ikWAM` — **Rachel**
+- Calm, professional American female — closest public-catalog match to typical GHL demo lines
 
-**Fallback options if still squeaky:**
-1. Rachel — `21m00Tcm4TlvDq8ikWAM` — most popular natural female voice
-2. Bella — `EXAVITQu4vr4xnSDxMaL` — young, warm, extremely natural
-3. Elli — `MF3mGyEYCl7XYWbV9V6O` — calm, smooth, professional
+**Alternate — previous TCT default (deeper / warmer):**
+- Jessica deep — `lxYfHSkYm1EzQzGhdbfc` — `python3 update-jessica-prompt.py fallback jessica_deep`
+
+**Other fallbacks:**
+1. Bella — `EXAVITQu4vr4xnSDxMaL` — young, warm, extremely natural
+2. Elli — `MF3mGyEYCl7XYWbV9V6O` — calm, smooth, professional
 
 **Voices to avoid:**
 - Any voice labeled "neural" or "standard" — robotic and tinny

@@ -75,9 +75,8 @@ API credentials are stored in `/Users/moneymaker99/Desktop/thecalltaker/.env`
 
 **AI Voice Agent:**
 - Active on +16157845747
-- Voice: Matthew - Casual American Man (Male, Southern)
-- Persona: "Matt"
-- Prompt configured for HVAC receptionist
+- Voice: ElevenLabs **Rachel** (`21m00Tcm4TlvDq8ikWAM`) — same class of voice as GHL’s public Voice AI demos (e.g. +1-888-732-4197); deploy via `ops/update-jessica-prompt.py deploy`
+- Persona: **Jessica** (universal demo receptionist — v9 prompt)
 - Post-call notifications to wallacemdobbs@icloud.com
 
 **Staff User:**
