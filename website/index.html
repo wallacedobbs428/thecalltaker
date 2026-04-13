@@ -1285,8 +1285,9 @@ html.light .feature-icon svg { stroke: var(--accent); }
 
 .gideon-subtitle {
   font-family: 'Rajdhani', var(--mono); font-size: 0.72rem; font-weight: 600;
-  color: rgba(0, 232, 255, 0.42); letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92); letter-spacing: 0.28em; text-transform: uppercase;
   margin-bottom: 28px; opacity: 0;
+  text-shadow: 0 0 28px rgba(0, 232, 255, 0.35), 0 1px 2px rgba(0,0,0,0.5);
 }
 
 /* Divider line between subtitle and status */
@@ -1299,22 +1300,34 @@ html.light .feature-icon svg { stroke: var(--accent); }
 .g-status-bar {
   display: flex; align-items: center; gap: 16px;
   font-family: var(--mono); font-size: 0.75rem; letter-spacing: 3px;
-  color: rgba(42,157,122,0.6); text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85); text-transform: uppercase;
   margin-bottom: 28px; opacity: 0;
-  text-shadow: 0 0 12px rgba(42,157,122,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.45), 0 0 18px rgba(42,157,122,0.25);
 }
 .g-status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-hover); box-shadow: 0 0 12px rgba(42,157,122,0.9); animation: statusPulse 2s ease-in-out infinite; }
 @keyframes statusPulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
-.g-status-sep { color: rgba(42,157,122,0.25); }
+.g-status-sep { color: rgba(255, 255, 255, 0.35); }
 
+/* Gideon dialogue — high-contrast white on vault; slide wrapper for motion */
 .speech-bubble {
-  font-family: Inter, sans-serif; font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight: 300;
-  color: var(--t100); line-height: 1.85; min-height: 80px; max-width: 420px;
+  font-family: Inter, sans-serif; font-size: clamp(1.1rem, 1.6vw, 1.35rem); font-weight: 400;
+  color: #ffffff; line-height: 1.85; min-height: 80px; max-width: 420px;
   white-space: pre-line;
-  text-shadow: 0 0 20px rgba(42,157,122,0.1);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.55), 0 0 32px rgba(255,255,255,0.08);
 }
-.g-cursor { color: var(--accent-hover); font-weight: 300; animation: gBlink 0.7s step-end infinite; }
+.g-speech-slide-wrap {
+  display: block;
+  min-height: 5.4em;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+.g-cursor { color: #7ae8ff; font-weight: 300; animation: gBlink 0.7s step-end infinite; text-shadow: 0 0 12px rgba(0,232,255,0.5); }
 @keyframes gBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .g-left { transition: none !important; }
+  .g-speech-slide-wrap { transition: none !important; }
+}
 
 .gideon-cta {
   display: none; margin-top: 32px; opacity: 0; transform: translateY(10px);
@@ -1665,7 +1678,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 0 36px rgba(0, 232, 255, 0.3));
 }
-.light .gideon-subtitle { color: rgba(0, 232, 255, 0.45); }
+.light .gideon-subtitle { color: rgba(255, 255, 255, 0.88); text-shadow: 0 1px 2px rgba(0,0,0,0.25); }
 .light .hero-secondary {
   border-top: 1px solid rgba(42,157,122,0.15);
   background: linear-gradient(to bottom, #0a1a22 0%, var(--bg) 120px);
@@ -1774,7 +1787,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
       </div>
 
       <div class="speech-bubble">
-        <span id="gideonSpeaks"></span><span class="g-cursor">|</span>
+        <span class="g-speech-slide-wrap" id="gideonSpeechWrap"><span id="gideonSpeaks"></span></span><span class="g-cursor" aria-hidden="true">|</span>
       </div>
 
       <div class="gideon-cta" id="gideonCTA">
@@ -2812,12 +2825,13 @@ document.querySelectorAll('.faq-q').forEach(q => {
     { lines: ["I'm your 24/7 receptionist."], pause: 1400 },
     { lines: ["While you're on a job, asleep, or just busy,", "I answer every call your business gets."], pause: BLOCK_PAUSE },
     { lines: ["I book the appointment.", "Get their name, number, and what they need.", "Then text you everything instantly."], pause: BLOCK_PAUSE },
-    { lines: ["Your customers think they're talking", "to your front desk."], pause: 1400 },
+    { lines: ["Your customers think they're talking", "to a front desk—not a voicemail tree."], pause: 1600 },
     { lines: ["I'm ready to make your phone", "your biggest money maker."], pause: BLOCK_PAUSE },
     { lines: ["Call the demo line right now", "and hear me for yourself."], pause: CTA_DELAY, showCTA: true }
   ];
 
   var el = document.getElementById('gideonSpeaks');
+  var speechWrap = document.getElementById('gideonSpeechWrap');
   var ctaEl = document.getElementById('gideonCTA');
   var nameEl = document.getElementById('gideonName');
   var heroEl = document.querySelector('.gideon-hero');
@@ -2829,6 +2843,8 @@ document.querySelectorAll('.faq-q').forEach(q => {
   var tapGate = document.getElementById('gTapGate');
 
   if (!el || !heroEl) return;
+
+  var prefersReducedMotion = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var isMob = window.innerWidth <= 900;
 
@@ -3059,8 +3075,29 @@ document.querySelectorAll('.faq-q').forEach(q => {
     for (var i = 0; i < text.length; i++) { el.textContent += text[i]; await wait(CHAR_SPEED); }
   }
   async function fadeOutText() {
-    el.style.transition = 'opacity 0.4s'; el.style.opacity = '0';
-    await wait(420); el.textContent = ''; el.style.opacity = '1'; el.style.transition = '';
+    if (prefersReducedMotion) {
+      el.textContent = '';
+      return;
+    }
+    var wrap = speechWrap;
+    if (wrap) {
+      wrap.style.transition = 'transform 0.55s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.48s ease';
+      wrap.style.transform = 'translateY(-18px)';
+      wrap.style.opacity = '0';
+      await wait(500);
+      el.textContent = '';
+      wrap.style.transition = 'none';
+      wrap.style.transform = 'translateY(24px)';
+      wrap.style.opacity = '0';
+      await wait(40);
+      wrap.style.transition = 'transform 0.68s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.52s ease';
+      wrap.style.transform = 'translateY(0)';
+      wrap.style.opacity = '1';
+      await wait(80);
+    } else {
+      el.style.transition = 'opacity 0.4s'; el.style.opacity = '0';
+      await wait(420); el.textContent = ''; el.style.opacity = '1'; el.style.transition = '';
+    }
   }
   async function runSpeeches() {
     for (var i = 0; i < speeches.length; i++) {
@@ -3272,7 +3309,21 @@ document.querySelectorAll('.faq-q').forEach(q => {
     if (gScanline2) { setTimeout(function() { fadeIn(gScanline2, 0.5); }, 300); }
     await wait(800);
 
-    /* ═══ PHASE 4: "GIDEON" types out — the AI identifies itself ═══ */
+    /* ═══ PHASE 4: Left column slides in (premium horizontal reveal) ═══ */
+    if (gLeft && !prefersReducedMotion) {
+      gLeft.style.transform = 'translateX(-40px)';
+      gLeft.style.opacity = '0';
+      gLeft.style.transition = 'none';
+      await wait(40);
+      gLeft.style.transition = 'opacity 0.95s ease, transform 1.05s cubic-bezier(0.22, 1, 0.36, 1)';
+      gLeft.style.opacity = '1';
+      gLeft.style.transform = 'translateX(0)';
+    } else if (gLeft) {
+      gLeft.style.opacity = '1';
+    }
+    await wait(280);
+
+    /* ═══ PHASE 4b: "GIDEON" types out — the AI identifies itself ═══ */
     if (nameEl) {
       var n = nameEl.textContent;
       nameEl.textContent = '';
