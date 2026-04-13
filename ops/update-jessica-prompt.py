@@ -109,19 +109,27 @@ def get_current_agent():
     return resp.json()
 
 
-def update_agent(prompt, welcome_message, voice_settings, agent_id=None, location_id=None):
-    """Update voice AI agent prompt, voice, and settings."""
+def update_agent(prompt, welcome_message, voice_settings, agent_id=None, location_id=None, update_voice_id=True):
+    """Update voice AI agent prompt, voice, and settings.
+
+    GHL API (2021-04-15) expects **agentPrompt** (not prompt). ElevenLabs tuning
+    (stability, pitch, etc.) is set in the GHL UI; PATCH rejects voiceSettings.
+
+    If *update_voice_id* is True and the API returns invalid voice id (e.g. Rachel
+    not yet imported under My Voices), retries with prompt+welcome only so the
+    account keeps its current voice.
+
+    Returns (success: bool, voice_changed: bool).
+    """
     aid = agent_id or AGENT_ID
     lid = location_id or GHL_LOCATION_ID
     body = {
-        "prompt": prompt,
+        "agentPrompt": prompt,
         "welcomeMessage": welcome_message,
         "responsiveness": voice_settings.get("responsiveness", 1.0),
-        "voiceId": voice_settings.get("voiceId"),
     }
-    # Include voice tuning settings if GHL supports them
-    if "voiceSettings" in voice_settings:
-        body["voiceSettings"] = voice_settings["voiceSettings"]
+    if update_voice_id and voice_settings.get("voiceId"):
+        body["voiceId"] = voice_settings["voiceId"]
 
     resp = requests.patch(
         f"{GHL_BASE_URL}/voice-ai/agents/{aid}",
@@ -130,10 +138,14 @@ def update_agent(prompt, welcome_message, voice_settings, agent_id=None, locatio
         json=body,
         timeout=30,
     )
+    if resp.status_code == 400 and "voice id is invalid" in (resp.text or "").lower() and update_voice_id:
+        print("Note: Target voice ID not registered on this GHL agency — deploying prompt + welcome only. In GHL: Voice AI → your agent → Voice → import ElevenLabs `21m00Tcm4TlvDq8ikWAM` (Rachel) or pick Rachel from Library, then re-run deploy.")
+        ok, _ = update_agent(prompt, welcome_message, voice_settings, agent_id=aid, location_id=lid, update_voice_id=False)
+        return (ok, False)
     if resp.status_code != 200:
         print(f"Error updating agent: {resp.status_code} — {resp.text[:200]}")
-        return False
-    return True
+        return (False, False)
+    return (True, bool(body.get("voiceId")))
 
 
 def cmd_current():
@@ -143,11 +155,11 @@ def cmd_current():
         return
     data = agent.get("agent", agent)
     print("=== Current Voice AI Agent ===")
-    print(f"Name: {data.get('name', 'N/A')}")
+    print(f"Name: {data.get('agentName', data.get('name', 'N/A'))}")
     print(f"Responsiveness: {data.get('responsiveness', 'N/A')}")
     print(f"Voice ID: {data.get('voiceId', 'N/A')}")
     print(f"\n--- Welcome Message ---\n{data.get('welcomeMessage', 'N/A')}")
-    print(f"\n--- System Prompt ---\n{data.get('prompt', 'N/A')}")
+    print(f"\n--- System Prompt ---\n{data.get('agentPrompt', data.get('prompt', 'N/A'))}")
 
 
 def cmd_deploy():
@@ -159,9 +171,12 @@ def cmd_deploy():
     print(f"Pitch: 0 | Rate: 1.0 | Stability: 0.5 | Similarity: 0.75")
     print()
 
-    success = update_agent(V9_PROMPT, V9_WELCOME, GHL_STYLE_VOICE)
+    success, voice_changed = update_agent(V9_PROMPT, V9_WELCOME, GHL_STYLE_VOICE)
     if success:
-        print("SUCCESS — v9 prompt + Rachel voice deployed to demo Voice AI agent.")
+        if voice_changed:
+            print("SUCCESS — v9 prompt + Rachel voice (21m00Tcm4TlvDq8ikWAM) applied to demo Voice AI agent.")
+        else:
+            print("SUCCESS — v9 prompt + welcome deployed. Voice unchanged (import Rachel in GHL or re-run after adding voice).")
         print(f"Test demo line: call {os.environ.get('DEMO_LINE', '(615) 784-5747')}")
         print()
         print("Prefer the deeper Jessica variant?  python3 update-jessica-prompt.py fallback jessica_deep")
@@ -173,7 +188,7 @@ def cmd_deploy():
 def cmd_deploy_to(location_id, agent_id):
     """Deploy same prompt + GHL-style voice to another location (e.g. American Surgical)."""
     print(f"Deploying v9 + Rachel voice to location={location_id} agent={agent_id} ...")
-    success = update_agent(V9_PROMPT, V9_WELCOME, GHL_STYLE_VOICE, agent_id=agent_id, location_id=location_id)
+    success, voice_changed = update_agent(V9_PROMPT, V9_WELCOME, GHL_STYLE_VOICE, agent_id=agent_id, location_id=location_id)
     if success:
         print("SUCCESS — Voice AI agent updated. Place a test call from GHL → Test Your Agent.")
     else:
@@ -204,16 +219,9 @@ def cmd_fallback(voice_name):
     voice_id = FALLBACK_VOICES[voice_name]
     settings = dict(GHL_STYLE_VOICE)
     settings["voiceId"] = voice_id
-    if voice_name == "jessica_deep":
-        settings["voiceSettings"] = {
-            "stability": 0.75,
-            "similarityBoost": 0.85,
-            "speakingRate": 0.95,
-            "pitch": -1,
-        }
     print(f"Deploying v9 prompt with fallback voice: {voice_name} ({voice_id})...")
 
-    success = update_agent(V9_PROMPT, V9_WELCOME, settings)
+    success, _ = update_agent(V9_PROMPT, V9_WELCOME, settings)
     if success:
         print(f"SUCCESS — v9 prompt deployed with {voice_name} voice.")
         print(f"Test it now: call {os.environ.get('DEMO_LINE', '(615) 784-5747')}")
