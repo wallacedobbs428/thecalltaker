@@ -65,9 +65,34 @@
   <link rel="canonical" href="https://thecalltaker.com/calculator">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
+    body { position: relative; }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 90% 60% at 50% -15%, rgba(0, 220, 130, 0.07), transparent 55%),
+        radial-gradient(ellipse 50% 45% at 100% 0%, rgba(0, 232, 255, 0.05), transparent 50%),
+        radial-gradient(ellipse 40% 50% at 0% 100%, rgba(124, 58, 237, 0.04), transparent 45%);
+    }
+    body > * { position: relative; z-index: 1; }
+    .calc-futuristic-wrap {
+      position: relative;
+      border-radius: 20px;
+      padding: 2px;
+      background: linear-gradient(135deg, rgba(0, 232, 255, 0.25), rgba(0, 220, 130, 0.15), rgba(0, 232, 255, 0.1));
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 232, 255, 0.06);
+    }
+    .calc-futuristic-wrap .calc-inner {
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 40px;
+      border: 1px solid rgba(0, 232, 255, 0.08);
+    }
+    .section-label { font-family: 'JetBrains Mono', monospace !important; letter-spacing: 0.2em !important; color: rgba(0, 232, 255, 0.75) !important; text-shadow: 0 0 20px rgba(0, 232, 255, 0.2); }
     .calc-step { display: none; animation: fadeSlide 0.4s ease; }
     .calc-step.active { display: block; }
     @keyframes fadeSlide { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -141,7 +166,8 @@
 <!-- CALCULATOR -->
 <section class="section" id="calculator-start" style="padding-top: 0;">
   <div class="wrap">
-    <div class="reveal" style="max-width: 640px; margin: 0 auto; background: rgba(0,220,130,0.02); border: 1px solid rgba(0,220,130,0.1); border-radius: 16px; padding: 40px;">
+    <div class="reveal calc-futuristic-wrap" style="max-width: 640px; margin: 0 auto;">
+      <div class="calc-inner">
 
       <!-- Progress Bar -->
       <div class="calc-progress">
@@ -266,6 +292,7 @@
           <a href="tel:+16157845747" style="display: inline-block; font-size: 20px; font-weight: 800; color: var(--green);">(615) 784-5747</a>
           <p style="font-size: 12px; color: var(--text-3); margin-top: 4px;">GIDEON picks up 24/7. Try it.</p>
         </div>
+      </div>
       </div>
     </div>
 
