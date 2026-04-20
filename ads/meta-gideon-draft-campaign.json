@@ -1,0 +1,132 @@
+{
+  "status": "draft_only",
+  "phone_numbers_canonical": {
+    "_comment": "Must match thecalltaker-ops config/phone-numbers-canonical.json and voice-prompts/demo-line.json",
+    "primary_demo_e164": "+16292699697",
+    "primary_demo_display": "(629) 269-9697",
+    "legacy_ghl_demo_display": "(615) 784-5747",
+    "rule_new_ads_and_landing": "Use +16292699697 only for CALL NOW and hear-it CTAs. Do not put legacy 615 demo on new creative."
+  },
+  "campaign": {
+    "name": "TCT | Gideon | Lead Gen | Draft | 2026-04",
+    "objective": "LEADS",
+    "conversion_location": "WEBSITE",
+    "optimization_event": "Lead",
+    "landing_page": "https://thecalltaker.com/",
+    "placeholders": {
+      "answer_rate": "[BLAND_ANSWER_RATE]",
+      "booking_rate": "[BLAND_BOOKING_RATE]",
+      "savings": "[BLAND_SAVINGS]",
+      "avg_call_duration": "[BLAND_AVG_CALL_DURATION]",
+      "response_time": "[BLAND_RESPONSE_TIME]",
+      "missed_call_reduction": "[BLAND_MISSED_CALL_REDUCTION]"
+    }
+  },
+  "adsets": [
+    {
+      "name": "Core | Service Owners",
+      "budget_daily_usd": 60,
+      "bid_strategy": "highest_volume",
+      "targeting": {
+        "age_min": 28,
+        "age_max": 60,
+        "geo": "United States",
+        "interests": [
+          "HVAC",
+          "Plumbing",
+          "Roofing",
+          "Locksmith",
+          "Electrical contractor",
+          "Towing",
+          "Property management",
+          "Dental practice management",
+          "Chiropractic",
+          "Law firm",
+          "Housecall Pro",
+          "Jobber",
+          "ServiceTitan",
+          "QuickBooks"
+        ],
+        "behaviors": [
+          "Business Page Admins",
+          "Facebook Page Admins",
+          "Engaged Shoppers",
+          "Small business owners"
+        ]
+      }
+    },
+    {
+      "name": "Retargeting | Visitors + Watchers",
+      "budget_daily_usd": 25,
+      "bid_strategy": "highest_volume",
+      "targeting": {
+        "custom_audiences": [
+          "Website Visitors 30d",
+          "Video Viewers 50pct 30d",
+          "Lead Form Opens 30d"
+        ],
+        "exclusions": [
+          "Existing Customers",
+          "Internal Team"
+        ]
+      }
+    },
+    {
+      "name": "Lookalike | Qualified Leads",
+      "budget_daily_usd": 15,
+      "bid_strategy": "highest_volume",
+      "targeting": {
+        "lookalikes": [
+          "Qualified Demo Signups 1pct",
+          "Won Customers 1pct"
+        ],
+        "exclusions": [
+          "Existing Customers",
+          "Internal Team"
+        ]
+      }
+    }
+  ],
+  "ads": [
+    {
+      "name": "Never Miss Another Call",
+      "headline": "Never Miss Another Call Again",
+      "primary_text": "A missed call is usually a missed customer. Gideon answers your phones 24/7, sounds professional, books jobs, handles emergencies, and texts you every detail instantly. Final launch proof will use [BLAND_ANSWER_RATE] and [BLAND_BOOKING_RATE].",
+      "description": "24/7 answering, booking, triage, and owner text alerts.",
+      "cta": "LEARN_MORE",
+      "utm_content": "hook_never_miss_call_video"
+    },
+    {
+      "name": "Your Best Front Desk, Always On",
+      "headline": "Your Front Desk Never Sleeps",
+      "primary_text": "Gideon gives your business instant phone coverage without payroll, training, sick days, or turnover. Final launch proof will use [BLAND_SAVINGS] and [BLAND_MISSED_CALL_REDUCTION].",
+      "description": "Premium call coverage without staffing chaos.",
+      "cta": "SIGN_UP",
+      "utm_content": "hook_front_desk_always_on"
+    },
+    {
+      "name": "Emergency Calls Need An Answer",
+      "headline": "Emergency Calls Need An Answer",
+      "primary_text": "Burst pipe. Broken AC. Locked out. Urgent patient call. Gideon responds instantly, handles urgency correctly, and gets the next step moving fast. Final launch proof will use [BLAND_AVG_CALL_DURATION] and [BLAND_ANSWER_RATE].",
+      "description": "Smart triage for high-intent callers.",
+      "cta": "BOOK_NOW",
+      "utm_content": "hook_emergency_triage"
+    },
+    {
+      "name": "Voicemail Is Costing You Money",
+      "headline": "Voicemail Is Costing You Money",
+      "primary_text": "Most owners do not have a lead problem. They have a phone-coverage problem. Gideon stops the leak by answering every ring and moving the conversation forward. Final launch proof will use [BLAND_BOOKING_RATE] and [BLAND_MISSED_CALL_REDUCTION].",
+      "description": "Turn unanswered rings into booked revenue.",
+      "cta": "LEARN_MORE",
+      "utm_content": "hook_revenue_leak_fix"
+    },
+    {
+      "name": "Hear Gideon Live",
+      "headline": "Hear Gideon Answer A Call Live",
+      "primary_text": "Call (629) 269-9697 — hear Gideon answer like a premium receptionist, then claim a free pilot for your business. Final launch proof will use [BLAND_RESPONSE_TIME] and [BLAND_SAVINGS].",
+      "description": "Call the demo. Then start the pilot.",
+      "cta": "CALL_NOW",
+      "utm_content": "hook_hear_gideon_live"
+    }
+  ]
+}
