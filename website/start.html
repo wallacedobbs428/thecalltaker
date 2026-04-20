@@ -83,7 +83,7 @@
     "operatingSystem": "Web",
     "description": "AI receptionist that answers calls 24/7, books appointments automatically, and never misses a lead.",
     "url": "https://thecalltaker.com",
-    "telephone": "+16157845747",
+    "telephone": "+16292699697",
     "offers": [
       {
         "@type": "Offer",
@@ -1298,7 +1298,7 @@ html.light .theme-toggle .icon-moon { display: none; }
     <a href="/">Home</a>
     <a href="/industries.html">Industries</a>
     <a href="/case-studies/">Case Studies</a>
-    <a href="tel:6157845747" class="nav-cta">Call Demo: (615) 784-5747</a>
+    <a href="tel:+16292699697" class="nav-cta">Call Demo: (629) 269-9697</a>
   </div>
 </nav>
 
@@ -1510,7 +1510,7 @@ html.light .theme-toggle .icon-moon { display: none; }
         <div class="fwd-step-num">1</div>
         <div class="fwd-step-text">
           Pick up your business phone and dial:
-          <br><span class="fwd-code">*21*6157845747#</span>
+          <br><span class="fwd-code">*21*6292699697#</span>
         </div>
       </div>
 
@@ -1529,7 +1529,7 @@ html.light .theme-toggle .icon-moon { display: none; }
       </div>
     </div>
 
-    <p class="success-help">Need help? Call Wallace directly: <a href="tel:6157845747">(615) 784-5747</a></p>
+    <p class="success-help">Need help? Call Wallace directly: <a href="tel:+16292699697">(629) 269-9697</a></p>
     <p class="success-help">Or email us: <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a></p>
 
     <p class="success-trial-note">YOUR 14 DAY FREE TRIAL STARTS NOW. WE'LL CHECK IN ON DAY 7.</p>
@@ -1626,7 +1626,7 @@ html.light .theme-toggle .icon-moon { display: none; }
     </div>
     <div class="footer-col">
       <h4>CONTACT</h4>
-      <a href="tel:6157845747">(615) 784-5747</a>
+      <a href="tel:+16292699697">(629) 269-9697</a>
       <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a>
       <a href="/privacy.html">Privacy Policy</a>
       <a href="/terms.html">Terms of Service</a>
@@ -1649,7 +1649,7 @@ html.light .theme-toggle .icon-moon { display: none; }
 
 <!-- MOBILE CALL BAR -->
 <div class="mobile-bar">
-  <a href="tel:6157845747">Call Gideon Now: (615) 784-5747</a>
+  <a href="tel:+16292699697">Call Gideon Now: (629) 269-9697</a>
 </div>
 
 <!-- ═══════════════════════════════════════════════
@@ -1659,10 +1659,8 @@ html.light .theme-toggle .icon-moon { display: none; }
 (function() {
   'use strict';
 
-  // ═══ GHL API CONFIG ═══
-  var GHL_API = 'https://services.leadconnectorhq.com/contacts/';
-  var API_KEY = 'pit-a40dc8f0-e0cc-4bc0-b276-ab8c34afdf61';
-  var LOCATION_ID = 'tQb9YmrGDrdVUJYPKrsY';
+  // ═══ Lead intake endpoint ═══
+  var LEAD_ENDPOINT = 'https://call-taker-os.vercel.app/api/public/lead';
 
   // ═══ SCROLL PROGRESS BAR ═══
   var progressBar = document.getElementById('scrollProgress');
@@ -1764,7 +1762,7 @@ html.light .theme-toggle .icon-moon { display: none; }
     return valid;
   }
 
-  // ═══ FORMAT PHONE FOR GHL ═══
+  // ═══ FORMAT PHONE FOR lead intake ═══
   function formatPhone(val) {
     var digits = val.replace(/\D/g, '');
     if (digits.length === 10) return '+1' + digits;
@@ -1820,56 +1818,32 @@ html.light .theme-toggle .icon-moon { display: none; }
       // Loading state
       submitBtn.classList.add('loading');
 
-      // Build GHL contact payload
+      // Build lead payload
       var payload = {
         firstName: yourName.split(' ')[0] || yourName,
         lastName: yourName.split(' ').slice(1).join(' ') || '',
         email: email,
         phone: phone,
-        companyName: bizName,
-        locationId: LOCATION_ID,
+        company: bizName,
         tags: ['pilot-signup', 'self-serve', industry, planNames[plan] || plan, 'start-page'],
-        source: 'Start Page Self-Serve'
+        source: 'Start Page Self-Serve',
+        page: window.location.pathname,
+        notes: 'Selected plan: ' + (plan === 'pro' ? 'Pro' : plan === 'starter' ? 'Starter' : 'After-Hours')
       };
 
-      // Create GHL contact
-      fetch(GHL_API, {
+      // Submit through the server-side lead endpoint
+      fetch(LEAD_ENDPOINT, {
         method: 'POST',
         headers: {
-          'Authorization': 'Bearer ' + API_KEY,
-          'Content-Type': 'application/json',
-          'Version': '2021-07-28'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       })
       .then(function(res) {
-        if (!res.ok) throw new Error('GHL API error: ' + res.status);
+        if (!res.ok) throw new Error('Lead intake error: ' + res.status);
         return res.json();
       })
-      .then(function(data) {
-        var contactId = data.contact ? data.contact.id : null;
-
-        // Create pipeline opportunity
-        if (contactId) {
-          fetch('https://services.leadconnectorhq.com/opportunities/', {
-            method: 'POST',
-            headers: {
-              'Authorization': 'Bearer ' + API_KEY,
-              'Content-Type': 'application/json',
-              'Version': '2021-07-28'
-            },
-            body: JSON.stringify({
-              pipelineId: 'KhFDURSwBi2fn416BnGf',
-              locationId: LOCATION_ID,
-              name: bizName + ' - ' + (plan === 'pro' ? 'Pro' : plan === 'starter' ? 'Starter' : 'After-Hours'),
-              stageId: '8285b2c9-9ca3-415f-a57b-ae458045aab4',
-              contactId: contactId,
-              status: 'open',
-              monetaryValue: plan === 'pro' ? 997 : (plan === 'starter' ? 497 : 97)
-            })
-          }).catch(function() {});
-        }
-
+      .then(function() {
         // Send ntfy alert to Wallace
         fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
           method: 'POST',
@@ -1895,14 +1869,14 @@ html.light .theme-toggle .icon-moon { display: none; }
         }
       })
       .catch(function(err) {
-        console.error('GHL error:', err);
+        console.error('CRM error:', err);
         // Still show success + ntfy alert
         showSuccess(bizName, plan);
 
         fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
           method: 'POST',
           headers: { 'Title': 'PILOT SIGNUP (API error): ' + bizName, 'Priority': 'high' },
-          body: yourName + ' at ' + bizName + ' signed up but GHL API failed. Create contact manually. Phone: ' + phone + ' Email: ' + email
+          body: yourName + ' at ' + bizName + ' signed up but CRM API failed. Create contact manually. Phone: ' + phone + ' Email: ' + email
         }).catch(function() {});
 
         if (typeof fbq === 'function') {

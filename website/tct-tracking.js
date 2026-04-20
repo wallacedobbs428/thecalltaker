@@ -61,7 +61,7 @@
   })();
 
   /**
-   * Returns GHL-compatible tag array from attribution data.
+   * Returns lead-intake tags from attribution data.
    * e.g. ['source-google', 'medium-cpc', 'campaign-spring25', 'gclid']
    */
   window.getTctAttributionTags = function() {
@@ -84,7 +84,7 @@
   };
 
   /**
-   * Returns a full attribution string for GHL contact notes.
+   * Returns a full attribution string for lead notes.
    */
   window.getTctAttributionNotes = function() {
     try {
@@ -109,9 +109,7 @@
   // C. Lead Capture Popup
   // =========================================================================
   var POPUP_DELAY = 15000; // 15 seconds
-  var GHL_API_BASE = 'https://services.leadconnectorhq.com';
-  var GHL_API_KEY = 'GHL_KEY_REMOVED_USE_SERVER_PROXY';
-  var GHL_LOCATION_ID = 'tQb9YmrGDrdVUJYPKrsY';
+  var LEAD_ENDPOINT = 'https://call-taker-os.vercel.app/api/public/lead';
 
   var INDUSTRIES = [
     { value: 'hvac', label: 'HVAC' },
@@ -413,22 +411,22 @@
 
       var baseTags = ['website-popup', 'missed-call-report', 'industry-' + industry];
       var attrTags = typeof getTctAttributionTags === 'function' ? getTctAttributionTags() : [];
+      var notes = typeof getTctAttributionNotes === 'function' ? getTctAttributionNotes() : '';
       var payload = {
         firstName: firstName,
         email: email,
         phone: phone,
         companyName: companyName,
-        locationId: GHL_LOCATION_ID,
         tags: baseTags.concat(attrTags),
-        source: 'Website Popup - Missed Call Report'
+        source: 'Website Popup - Missed Call Report',
+        page: window.location.pathname,
+        notes: notes
       };
 
-      fetch(GHL_API_BASE + '/contacts/', {
+      fetch(LEAD_ENDPOINT, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + GHL_API_KEY,
-          'Version': '2021-07-28'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       })
@@ -436,23 +434,7 @@
         if (!response.ok) throw new Error('Request failed');
         return response.json();
       })
-      .then(function(data) {
-        // Post attribution notes to contact
-        var contactId = data.contact ? data.contact.id : null;
-        if (contactId && typeof getTctAttributionNotes === 'function') {
-          var notes = getTctAttributionNotes();
-          if (notes) {
-            fetch(GHL_API_BASE + '/contacts/' + contactId + '/notes', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + GHL_API_KEY,
-                'Version': '2021-07-28'
-              },
-              body: JSON.stringify({ body: notes })
-            }).catch(function(){});
-          }
-        }
+      .then(function() {
         // Track conversion
         if (typeof gtag === 'function') {
           gtag('event', 'lead_form_submit', {

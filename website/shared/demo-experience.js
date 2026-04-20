@@ -419,7 +419,7 @@
     track('demo_text_me_clicked', { phone: cleaned, business_name: bizName });
     trackMeta('Lead', { content_name: 'demo_text_me', value: 0 });
 
-    // Send to GHL via API (create/update contact)
+    // Send through the server-side lead intake endpoint
     try {
       var ghlData = {
         phone: cleaned,
@@ -430,15 +430,20 @@
       if (bizName !== DEFAULT_BIZ) {
         ghlData.companyName = bizName;
       }
-      // Fire and forget — GHL contact creation
-      fetch('https://services.leadconnectorhq.com/contacts/', {
+      // Fire and forget — server-side intake endpoint
+      fetch('https://call-taker-os.vercel.app/api/public/lead', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer GHL_KEY_REMOVED_USE_SERVER_PROXY',
-          'Version': '2021-07-28'
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(Object.assign({ locationId: GHL_LOCATION }, ghlData))
+        body: JSON.stringify({
+          source: 'website-demo',
+          page: window.location.pathname,
+          phone: cleaned,
+          company: bizName !== DEFAULT_BIZ ? bizName : '',
+          tags: ['demo-text-me', 'website-demo'],
+          notes: 'Requested text-back from the demo experience.'
+        })
       }).catch(function() {});
     } catch(e) {}
 

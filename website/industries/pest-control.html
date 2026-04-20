@@ -39,7 +39,7 @@
     "@type": "Organization",
     "name": "The Call Taker",
     "url": "https://thecalltaker.com",
-    "telephone": "+16157845747",
+    "telephone": "+16292699697",
     "founder": {
       "@type": "Person",
       "name": "Wallace Dobbs"
@@ -390,7 +390,7 @@ a { color: inherit; text-decoration: none; }
   <div class="hero-badge">Pest Control Industry</div>
   <h1>Stop Losing Emergency Pest Calls to Voicemail</h1>
   <p class="subtitle">When someone finds termites or a wasp nest, they're not leaving a voicemail. They're calling every pest control company until someone picks up. At $250 average per treatment, those calls add up fast.</p>
-  <a href="tel:+16157845747" class="hero-cta">(615) 784-5747</a>
+  <a href="tel:+16292699697" class="hero-cta">(629) 269-9697</a>
   <div class="hero-cta-sub">Call our demo line right now -- hear what your customers would hear</div>
 </div>
 
@@ -582,7 +582,7 @@ a { color: inherit; text-decoration: none; }
     <div class="demo-cta-card">
       <h2>Hear What Your Pest Control Customers Would Hear</h2>
       <p>Call our demo line right now -- it's live 24/7. Hear the virtual receptionist handle an emergency pest call in real time.</p>
-      <a href="tel:+16157845747" class="hero-cta">(615) 784-5747</a>
+      <a href="tel:+16292699697" class="hero-cta">(629) 269-9697</a>
       <span class="cta-or">-- or --</span>
       <a href="#book" class="scroll-link">Book a 15-Minute Demo Below</a>
     </div>
@@ -594,7 +594,7 @@ a { color: inherit; text-decoration: none; }
     <p class="section-sub">We'll show you exactly how the receptionist handles emergency pest calls, treatment bookings, and seasonal overflow for your specific business.</p>
     <div class="calendar-embed">
       <iframe
-        src="https://api.leadconnectorhq.com/widget/booking/h4IlzccZ1m3JprEQqpMJ"
+        src="https://thecalltaker.com/demo.html"
         title="Book a Demo - The Call Taker Pest Control"
         scrolling="no"
         loading="lazy"
@@ -736,36 +736,23 @@ function submitFallbackForm(e) {
   if (message) notes += "\nMessage: " + message;
   if (company) notes += "\nCompany: " + company;
 
-  fetch("https://services.leadconnectorhq.com/contacts/", {
+  fetch("https://call-taker-os.vercel.app/api/public/lead", {
     method: "POST",
     headers: {
-      "Authorization": "Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35",
-      "Version": "2021-07-28",
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      locationId: "tQb9YmrGDrdVUJYPKrsY",
       firstName: firstName,
       lastName: lastName,
       email: email,
       phone: phone,
       companyName: company,
       tags: tags,
-      source: "Industry Page - " + industry
+      source: "Industry Page - " + industry,
+      page: window.location.pathname,
+      notes: notes
     })
-  }).then(function(r) { return r.json(); }).then(function(data) {
-    var cid = data.contact ? data.contact.id : null;
-    if (cid) {
-      fetch("https://services.leadconnectorhq.com/contacts/" + cid + "/notes", {
-        method: "POST",
-        headers: {
-          "Authorization": "Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35",
-          "Version": "2021-07-28",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ body: notes })
-      }).catch(function(){});
-    }
+  }).then(function(r) { return r.json(); }).then(function() {
     fetch("https://ntfy.sh/tct-urgent-Hk9UOEZR", {
       method: "POST",
       headers: {
@@ -775,11 +762,11 @@ function submitFallbackForm(e) {
       },
       body: "Name: " + name + "\nCompany: " + company + "\nPhone: " + phone + "\nEmail: " + email + "\nIndustry: " + industry + "\nPlan: " + (plan || "N/A") + "\nTime: " + (time || "N/A")
     }).catch(function(){});
-    form.innerHTML = "<div style=\"text-align:center;padding:2rem\"><h3 style=\"color:var(--green);margin-bottom:.5rem\">Request Received!</h3><p style=\"color:var(--text-2)\">We'll reach out within the hour to schedule your demo.</p><p style=\"margin-top:1rem\"><a href=\"tel:+16157845747\" style=\"color:var(--green);font-weight:700\">Or call now: (615) 784-5747</a></p></div>";
+    form.innerHTML = "<div style=\"text-align:center;padding:2rem\"><h3 style=\"color:var(--green);margin-bottom:.5rem\">Request Received!</h3><p style=\"color:var(--text-2)\">We'll reach out within the hour to schedule your demo.</p><p style=\"margin-top:1rem\"><a href=\"tel:+16292699697\" style=\"color:var(--green);font-weight:700\">Or call now: (629) 269-9697</a></p></div>";
   }).catch(function() {
     btn.textContent = origText;
     btn.disabled = false;
-    alert("Something went wrong. Please call us at (615) 784-5747.");
+    alert("Something went wrong. Please call us at (629) 269-9697.");
   });
 
   if (typeof gtag === "function") gtag("event", "demo_request", { event_category: "conversion", industry: industry });
@@ -840,14 +827,14 @@ function submitFallbackForm(e) {
         <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
         <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
       </div>
-      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16157845747" style="color: var(--green); font-weight: 600;">(615) 784-5747</a></p>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16292699697" style="color: var(--green); font-weight: 600;">(629) 269-9697</a></p>
     </div>
   </div>
 </div>
 
 <!-- MOBILE BAR -->
 <div class="sticky-mobile-bar">
-  <a href="tel:+16157845747"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
+  <a href="tel:+16292699697"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
   <a href="../demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
 </body>
 </html>
