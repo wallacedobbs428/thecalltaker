@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client dashboard | The Call Taker</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #111b2e;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --accent: #22d3ee;
+      --accent-dim: rgba(34, 211, 238, 0.15);
+      --danger: #f87171;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(34,211,238,0.12), transparent), var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    header { margin-bottom: 2rem; }
+    h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+    .sub { color: var(--muted); margin-top: 0.35rem; font-size: 0.95rem; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .card h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.5rem; }
+    .stat { font-size: 1.75rem; font-weight: 700; color: var(--accent); }
+    .stat small { font-size: 0.9rem; color: var(--muted); font-weight: 500; }
+    .banner {
+      background: var(--accent-dim);
+      border: 1px solid rgba(34, 211, 238, 0.35);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+    .err {
+      background: rgba(248, 113, 113, 0.1);
+      border-color: rgba(248, 113, 113, 0.4);
+      color: #fecaca;
+    }
+    a.cta {
+      display: inline-block;
+      margin-top: 1.25rem;
+      background: var(--accent);
+      color: #0b1220;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    a.cta:hover { filter: brightness(1.05); }
+    footer { margin-top: 3rem; font-size: 0.8rem; color: var(--muted); }
+    .mono { font-family: ui-monospace, monospace; font-size: 0.75rem; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Call performance</h1>
+      <p class="sub">Private dashboard — The Call Taker</p>
+    </header>
+    <div id="banner" class="banner" style="display:none"></div>
+    <div id="main"></div>
+    <footer>
+      Questions? <a href="https://thecalltaker.com/book.html" style="color:var(--accent)">Book a call</a> · Demo line <a href="tel:+16292699697" style="color:var(--accent)">(629) 269-9697</a>
+    </footer>
+  </div>
+  <script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get("token");
+  var banner = document.getElementById("banner");
+  var main = document.getElementById("main");
+
+  function showBanner(cls, text) {
+    banner.className = "banner " + (cls || "");
+    banner.textContent = text;
+    banner.style.display = "block";
+  }
+
+  if (!token || !/^[a-f0-9]{48}$/i.test(token)) {
+    showBanner("err", "Missing or invalid link. Open the dashboard URL from your welcome email (it includes ?token=…).");
+    return;
+  }
+
+  showBanner("", "Loading your numbers…");
+
+  fetch("data/" + encodeURIComponent(token) + ".json", { cache: "no-store" })
+    .then(function (r) {
+      if (!r.ok) throw new Error("notfound");
+      return r.json();
+    })
+    .then(function (d) {
+      banner.style.display = "none";
+      var planLabel = d.plan_label || "Plan";
+      var industry = d.industry_label || "";
+      main.innerHTML =
+        '<div class="grid">' +
+        '<div class="card"><h2>Company</h2><div class="stat" style="font-size:1.1rem;color:var(--text)">' +
+        escapeHtml(d.company_name || "") +
+        "</div></div>" +
+        '<div class="card"><h2>Plan</h2><div class="stat" style="font-size:1.1rem;color:var(--text)">' +
+        escapeHtml(planLabel) +
+        " <small>$" +
+        Number(d.plan_price || 0) +
+        "/mo</small></div></div>" +
+        '<div class="card"><h2>Industry model</h2><div class="stat" style="font-size:1rem;color:var(--text)">' +
+        escapeHtml(industry) +
+        "</div></div>" +
+        '<div class="card"><h2>Calls handled</h2><div class="stat">' +
+        (d.total_calls != null ? d.total_calls : "—") +
+        "</div></div>" +
+        '<div class="card"><h2>This week</h2><div class="stat">' +
+        (d.calls_this_week != null ? d.calls_this_week : "—") +
+        "</div></div>" +
+        '<div class="card"><h2>ROI (modeled)</h2><div class="stat">' +
+        (d.roi_multiple != null ? d.roi_multiple + "×" : "—") +
+        "</div></div>" +
+        "</div>" +
+        '<p class="sub" style="margin-top:1.25rem">Last updated: ' +
+        escapeHtml((d.generated_at || "").replace("T", " ").slice(0, 19)) +
+        " UTC</p>" +
+        '<a class="cta" href="https://thecalltaker.com/book.html">Talk to Wallace</a>';
+    })
+    .catch(function () {
+      showBanner(
+        "err",
+        "Dashboard data is not deployed yet, or the snapshot has not run. Wallace: set Supabase env vars, run `python3 ops/client-portal-api.py snapshot`, then deploy `website/client-portal/data/` with this site."
+      );
+    });
+
+  function escapeHtml(s) {
+    var t = document.createTextNode(String(s));
+    var p = document.createElement("p");
+    p.appendChild(t);
+    return p.innerHTML;
+  }
+})();
+  </script>
+</body>
+</html>
