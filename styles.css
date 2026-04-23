@@ -28,7 +28,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ---- NAV ---- */
 .header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(0,0,0,0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
 .header.scrolled { background: rgba(0,0,0,0.85); }
-.header-inner { display: flex; align-items: center; justify-content: space-between; height: 52px; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 52px; max-width: 1100px; margin: 0 auto; padding: 0 max(24px, env(safe-area-inset-right, 0px)) 0 max(24px, env(safe-area-inset-left, 0px)); }
 .logo { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
 .logo-icon { width: 24px; height: 24px; background: var(--green); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
 .logo-icon svg { width: 13px; height: 13px; }
@@ -67,12 +67,41 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .btn-green:hover { background: #00f090; }
 
 /* ---- HERO ---- */
-.hero { padding: 140px 0 100px; text-align: center; position: relative; overflow: hidden; }
+.hero { padding: 140px max(20px, env(safe-area-inset-left, 0px)) 100px max(20px, env(safe-area-inset-right, 0px)); text-align: center; position: relative; overflow: hidden; }
 @media (min-width: 768px) { .hero { padding: 180px 0 120px; } }
+
+/* Dev-tool landing polish: faint grid + glow (inspired by modern API brands, not a copy). */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 55% at 50% 20%, black 15%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 20%, black 15%, transparent 70%);
+  pointer-events: none;
+  opacity: 0.45;
+}
 
 .hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 600px; background: radial-gradient(ellipse, var(--green-glow) 0%, transparent 70%); pointer-events: none; opacity: 0.4; }
 
 .hero-label { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: var(--green-dim); border: 1px solid rgba(0,220,130,0.15); border-radius: 100px; font-size: 12px; font-weight: 600; color: var(--green); letter-spacing: 0.02em; margin-bottom: 32px; }
+
+.hero-stack-strip { margin: -20px auto 28px; max-width: 520px; }
+.hero-stack-line {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.35);
+  text-transform: lowercase;
+}
 
 .hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 700; color: #fff; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 20px; }
 .hero h1 .gradient { background: linear-gradient(135deg, var(--green) 0%, #00a8ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
