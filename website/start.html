@@ -1419,7 +1419,7 @@ html.light .theme-toggle .icon-moon { display: none; }
         <div class="form-row">
           <div class="form-group">
             <label class="form-label" for="phone">Business Phone</label>
-            <input type="tel" id="phone" name="phone" class="form-input" placeholder="(615) 555-1234" required autocomplete="tel">
+            <input type="tel" id="phone" name="phone" class="form-input" placeholder="(629) 555-1234" required autocomplete="tel">
             <div class="form-error-msg">Please enter a valid phone number</div>
           </div>
           <div class="form-group">
@@ -1720,6 +1720,31 @@ html.light .theme-toggle .icon-moon { display: none; }
       card.querySelector('input[type="radio"]').checked = true;
     });
   });
+
+  // ═══ PLAN PRESELECT FROM URL ═══
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var plan = params.get('plan');
+    if (!plan) return;
+    var normalized = plan.toLowerCase();
+    var aliases = {
+      'after-hours': 'after-hours',
+      'afterhours': 'after-hours',
+      'starter': 'starter',
+      'full-247': 'starter',
+      'full247': 'starter',
+      'pro': 'pro',
+      'premium': 'pro'
+    };
+    var target = aliases[normalized];
+    if (!target) return;
+    var card = document.querySelector('.plan-card[data-plan="' + target + '"]');
+    if (!card) return;
+    planCards.forEach(function(c) { c.classList.remove('selected'); });
+    card.classList.add('selected');
+    var radio = card.querySelector('input[type="radio"]');
+    if (radio) radio.checked = true;
+  })();
 
   // ═══ PHONE NUMBER FORMATTING ═══
   var phoneInput = document.getElementById('phone');

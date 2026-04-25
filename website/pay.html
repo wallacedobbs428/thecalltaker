@@ -167,7 +167,7 @@ Try it right now. Call our demo line: <a href="tel:+16292699697">(629) 269-9697<
 <li>Call summaries & transcripts</li>
 <li>Setup in 24 hours</li>
 </ul>
-<a href="#" class="cta cta-secondary" id="link-97" onclick="trackCheckout('after-hours')">Start Free 14-Day Pilot</a>
+<a href="start.html?plan=after-hours" class="cta cta-secondary" id="link-97" onclick="trackCheckout('after-hours')">Start Free 14-Day Pilot</a>
 </div>
 
 <!-- Full 24/7 $497/mo -->
@@ -188,7 +188,7 @@ Try it right now. Call our demo line: <a href="tel:+16292699697">(629) 269-9697<
 <li>Priority setup in 12 hours</li>
 <li>Weekly performance reports</li>
 </ul>
-<a href="#" class="cta cta-primary" id="link-297" onclick="trackCheckout('full-247')">Start Free 14-Day Pilot</a>
+<a href="start.html?plan=starter" class="cta cta-primary" id="link-497" onclick="trackCheckout('full-247')">Start Free 14-Day Pilot</a>
 </div>
 
 <!-- Pro $997/mo -->
@@ -209,7 +209,7 @@ Try it right now. Call our demo line: <a href="tel:+16292699697">(629) 269-9697<
 <li>Custom AI training on your business</li>
 <li>Same-day setup</li>
 </ul>
-<a href="#" class="cta cta-premium" id="link-997" onclick="trackCheckout('premium')">Start Free 14-Day Pilot</a>
+<a href="start.html?plan=pro" class="cta cta-premium" id="link-997" onclick="trackCheckout('premium')">Start Free 14-Day Pilot</a>
 </div>
 </div>
 
@@ -256,36 +256,11 @@ Try it right now. Call our demo line: <a href="tel:+16292699697">(629) 269-9697<
 </div>
 
 <script>
-// Payment link configuration — UPDATE THESE when Stripe products are created
 const PAYMENT_LINKS = {
-  'after-hours': '', // Stripe Payment Link URL for $97/mo
-  'full-247': '',    // Stripe Payment Link URL for $997/mo
-  'premium': '',     // Stripe Payment Link URL for $997/mo
+  'after-hours': 'start.html?plan=after-hours',
+  'full-247': 'start.html?plan=starter',
+  'premium': 'start.html?plan=pro',
 };
-
-// Try to load Stripe links from stored config
-try {
-  fetch('file:///Users/moneymaker99/thecalltaker-ops/ops/stripe-products.json')
-    .then(r => r.json())
-    .then(data => {
-      if (data.links) {
-        Object.entries(data.links).forEach(([name, url]) => {
-          if (name.includes('After-Hours') && url) {
-            document.getElementById('link-97').href = url;
-            PAYMENT_LINKS['after-hours'] = url;
-          }
-          if (name.includes('Full 24/7') && url) {
-            document.getElementById('link-497').href = url;
-            PAYMENT_LINKS['full-247'] = url;
-          }
-          if (name.includes('Premium') && url) {
-            document.getElementById('link-997').href = url;
-            PAYMENT_LINKS['premium'] = url;
-          }
-        });
-      }
-    }).catch(() => {});
-} catch(e) {}
 
 function trackCheckout(plan) {
   // Meta Pixel - InitiateCheckout + Lead
@@ -307,8 +282,8 @@ function trackCheckout(plan) {
   if (link) {
     window.location.href = link;
   } else {
-    // Fallback: book a demo call
-    window.location.href = 'https://thecalltaker.com/book';
+    // Fallback: land on the correct plan preselected instead of a generic detour
+    window.location.href = PAYMENT_LINKS[plan] || 'start.html';
   }
 }
 </script>
