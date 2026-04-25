@@ -419,31 +419,21 @@
     track('demo_text_me_clicked', { phone: cleaned, business_name: bizName });
     trackMeta('Lead', { content_name: 'demo_text_me', value: 0 });
 
-    // Send through the server-side lead intake endpoint
+    // Send to live operator intake
     try {
-      var ghlData = {
+      var leadData = {
         phone: cleaned,
         tags: ['demo-text-me', 'website-demo'],
         source: 'website-demo',
-        customField: []
+        page: window.location.pathname
       };
       if (bizName !== DEFAULT_BIZ) {
-        ghlData.companyName = bizName;
+        leadData.company = bizName;
       }
-      // Fire and forget — server-side intake endpoint
-      fetch('https://call-taker-os.vercel.app/api/public/lead', {
+      fetch('https://thecalltaker.vercel.app/api/public/lead', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          source: 'website-demo',
-          page: window.location.pathname,
-          phone: cleaned,
-          company: bizName !== DEFAULT_BIZ ? bizName : '',
-          tags: ['demo-text-me', 'website-demo'],
-          notes: 'Requested text-back from the demo experience.'
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leadData)
       }).catch(function() {});
     } catch(e) {}
 
