@@ -166,7 +166,7 @@ a{text-decoration:none;color:inherit}
 
 
 <div class="urgency" id="urgencyBar">
-  <span id="spots-counter">7</span> Founding Customer Spots · Closes Friday March 21 · <span class="timer" id="countdown"></span>
+  <span id="spots-counter">7</span> April pilot spots available · Same-day setup available now · <span class="timer" id="countdown"></span>
 </div>
 
 <!-- Header -->
@@ -289,35 +289,19 @@ a{text-decoration:none;color:inherit}
 <!-- Scripts -->
 <script src="tct-tracking.js"></script>
 <script>
-// Countdown timer — Friday March 21, 2026 11:59 PM CT
+// Availability banner
 // Wallace: change spotsLeft when a customer pays (edit this number)
 (function(){
   var spotsLeft=7;
-  var deadline=new Date('2026-03-21T23:59:00-06:00').getTime();
   var el=document.getElementById('countdown');
   var bar=document.getElementById('urgencyBar');
   var spotsEl=document.getElementById('spots-counter');
   if(spotsEl)spotsEl.textContent=spotsLeft;
   function update(){
-    var now=Date.now();
-    var diff=deadline-now;
-    if(diff<=0){
-      el.textContent='';
-      bar.classList.add('expired');
-      bar.innerHTML='<span style="font-size:14px">Waitlist Open — Next cohort pricing: $97/$497/$997 + $500 setup fee</span>';
-      document.querySelectorAll('.cta-green,.cta-white,.cta-amber').forEach(function(b){
-        if(b.href&&b.href.includes('paypal')){b.textContent='Join Waitlist';b.href='mailto:wallacemdobbs@icloud.com?subject=Waitlist';}
-      });
-      return;
-    }
-    var d=Math.floor(diff/86400000);
-    var h=Math.floor((diff%86400000)/3600000);
-    var m=Math.floor((diff%3600000)/60000);
-    var s=Math.floor((diff%60000)/1000);
-    el.textContent=d+'d '+h+'h '+m+'m '+s+'s remaining';
+    el.textContent='Live this week';
   }
   update();
-  setInterval(update,1000);
+  setInterval(update,60000);
 })();
 
 // Track plan clicks

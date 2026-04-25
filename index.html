@@ -1669,7 +1669,7 @@
     if (cleanPhone.length === 10) cleanPhone = '+1' + cleanPhone;
     else if (cleanPhone.length === 11 && cleanPhone[0] === '1') cleanPhone = '+' + cleanPhone;
 
-    return fetch('/api/public/lead', {
+    return fetch('https://thecalltaker.vercel.app/api/public/lead', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
