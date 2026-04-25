@@ -1,0 +1,100 @@
+{
+  "version": "2026-04-26",
+  "canonical_demo_number": {
+    "e164": "+16292699697",
+    "display": "(629) 269-9697"
+  },
+  "campaign_name": "TCT | Month 1 | Meta + Creatify | 2026-04-26",
+  "cold_traffic_default_landing": "https://thecalltaker.com/",
+  "variants": [
+    {
+      "id": "m1-call-founder-01",
+      "hook_family": "hear_gideon_live",
+      "format": "founder_direct",
+      "source_script": "ads/scripts/script-04-try-it-now.md",
+      "cta": "CALL_NOW",
+      "landing": "tel:+16292699697",
+      "utm_content": "m1_call_founder_01",
+      "goal": "call intent"
+    },
+    {
+      "id": "m1-call-ui-01",
+      "hook_family": "hear_gideon_live",
+      "format": "ui_demo",
+      "source_script": "ads/scripts/script-04-try-it-now.md",
+      "cta": "CALL_NOW",
+      "landing": "tel:+16292699697",
+      "utm_content": "m1_call_ui_01",
+      "goal": "call intent"
+    },
+    {
+      "id": "m1-missed-hvac-01",
+      "hook_family": "missed_revenue",
+      "format": "scenario_vertical",
+      "source_script": "ads/scripts/script-01-missed-call.md",
+      "cta": "LEARN_MORE",
+      "landing": "https://thecalltaker.com/",
+      "utm_content": "m1_missed_hvac_01",
+      "goal": "cold engagement"
+    },
+    {
+      "id": "m1-missed-roofing-01",
+      "hook_family": "missed_revenue",
+      "format": "scenario_vertical",
+      "source_script": "ads/scripts/script-01-missed-call.md",
+      "cta": "LEARN_MORE",
+      "landing": "https://thecalltaker.com/",
+      "utm_content": "m1_missed_roofing_01",
+      "goal": "cold engagement"
+    },
+    {
+      "id": "m1-price-97-01",
+      "hook_family": "price_anchor",
+      "format": "comparison_fastcut",
+      "source_script": "ads/scripts/script-05-what-97-buys.md",
+      "cta": "SIGN_UP",
+      "landing": "https://thecalltaker.com/start.html?plan=after-hours",
+      "utm_content": "m1_price_97_01",
+      "goal": "pilot signup"
+    },
+    {
+      "id": "m1-starter-ops-01",
+      "hook_family": "front_desk_replacement",
+      "format": "ops_comparison",
+      "source_script": "ads/scripts/script-02-side-by-side.md",
+      "cta": "SIGN_UP",
+      "landing": "https://thecalltaker.com/start.html?plan=starter",
+      "utm_content": "m1_starter_ops_01",
+      "goal": "pilot signup"
+    },
+    {
+      "id": "m1-owner-night-01",
+      "hook_family": "owner_peace",
+      "format": "cinematic_story",
+      "source_script": "ads/scripts/script-03-owners-night.md",
+      "cta": "LEARN_MORE",
+      "landing": "https://thecalltaker.com/",
+      "utm_content": "m1_owner_night_01",
+      "goal": "retarget pool"
+    },
+    {
+      "id": "m1-emergency-01",
+      "hook_family": "emergency_triage",
+      "format": "fast_cut_urgency",
+      "source_script": "ads/meta-gideon-draft-package-2026-04-19.md",
+      "cta": "BOOK_NOW",
+      "landing": "https://thecalltaker.com/book.html",
+      "utm_content": "m1_emergency_01",
+      "goal": "high-intent consult"
+    }
+  ],
+  "controls": {
+    "call_ladder": "m1-call-founder-01",
+    "signup_ladder": "m1-price-97-01"
+  },
+  "rotation_rules": {
+    "max_live_variants_per_ladder": 3,
+    "min_runtime_hours": 48,
+    "change_one_variable_only": true
+  }
+}
