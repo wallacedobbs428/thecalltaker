@@ -61,7 +61,7 @@
   })();
 
   /**
-   * Returns lead-intake tags from attribution data.
+   * Returns GHL-compatible tag array from attribution data.
    * e.g. ['source-google', 'medium-cpc', 'campaign-spring25', 'gclid']
    */
   window.getTctAttributionTags = function() {
@@ -84,7 +84,7 @@
   };
 
   /**
-   * Returns a full attribution string for lead notes.
+   * Returns a full attribution string for GHL contact notes.
    */
   window.getTctAttributionNotes = function() {
     try {
@@ -109,8 +109,6 @@
   // C. Lead Capture Popup
   // =========================================================================
   var POPUP_DELAY = 15000; // 15 seconds
-  var LEAD_ENDPOINT = 'https://call-taker-os.vercel.app/api/public/lead';
-
   var INDUSTRIES = [
     { value: 'hvac', label: 'HVAC' },
     { value: 'roofing', label: 'Roofing' },
@@ -411,23 +409,20 @@
 
       var baseTags = ['website-popup', 'missed-call-report', 'industry-' + industry];
       var attrTags = typeof getTctAttributionTags === 'function' ? getTctAttributionTags() : [];
-      var notes = typeof getTctAttributionNotes === 'function' ? getTctAttributionNotes() : '';
       var payload = {
         firstName: firstName,
         email: email,
         phone: phone,
-        companyName: companyName,
-        tags: baseTags.concat(attrTags),
-        source: 'Website Popup - Missed Call Report',
+        company: companyName,
         page: window.location.pathname,
-        notes: notes
+        tags: baseTags.concat(attrTags),
+        source: 'website-popup-missed-call-report',
+        notes: typeof getTctAttributionNotes === 'function' ? getTctAttributionNotes() : ''
       };
 
-      fetch(LEAD_ENDPOINT, {
+      fetch('https://thecalltaker.vercel.app/api/public/lead', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       })
       .then(function(response) {

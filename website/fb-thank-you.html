@@ -279,16 +279,9 @@
 <!-- GHL tracking pixel + tag fire -->
 <script>
 (function() {
-  // Fire fb-thank-you-viewed tag via GHL webhook
-  // This is picked up by the sprint enrollment workflow
   try {
     var params = new URLSearchParams(window.location.search);
     var contactId = params.get('cid') || params.get('contact_id') || '';
-    if (contactId) {
-      // Pixel fire to track page view
-      var img = new Image();
-      img.src = 'https://services.leadconnectorhq.com/contacts/' + contactId + '/track?locationId=tQb9YmrGDrdVUJYPKrsY&event=fb-thank-you-viewed';
-    }
     // Store for attribution
     if (window.sessionStorage) {
       sessionStorage.setItem('tct_fb_thankyou', JSON.stringify({

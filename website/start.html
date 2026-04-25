@@ -83,7 +83,7 @@
     "operatingSystem": "Web",
     "description": "AI receptionist that answers calls 24/7, books appointments automatically, and never misses a lead.",
     "url": "https://thecalltaker.com",
-    "telephone": "+16292699697",
+    "telephone": "+16157845747",
     "offers": [
       {
         "@type": "Offer",
@@ -1298,7 +1298,7 @@ html.light .theme-toggle .icon-moon { display: none; }
     <a href="/">Home</a>
     <a href="/industries.html">Industries</a>
     <a href="/case-studies/">Case Studies</a>
-    <a href="tel:+16292699697" class="nav-cta">Call Demo: (629) 269-9697</a>
+    <a href="tel:6157845747" class="nav-cta">Call Demo: (615) 784-5747</a>
   </div>
 </nav>
 
@@ -1510,7 +1510,7 @@ html.light .theme-toggle .icon-moon { display: none; }
         <div class="fwd-step-num">1</div>
         <div class="fwd-step-text">
           Pick up your business phone and dial:
-          <br><span class="fwd-code">*21*6292699697#</span>
+          <br><span class="fwd-code">*21*6157845747#</span>
         </div>
       </div>
 
@@ -1529,7 +1529,7 @@ html.light .theme-toggle .icon-moon { display: none; }
       </div>
     </div>
 
-    <p class="success-help">Need help? Call Wallace directly: <a href="tel:+16292699697">(629) 269-9697</a></p>
+    <p class="success-help">Need help? Call Wallace directly: <a href="tel:6157845747">(615) 784-5747</a></p>
     <p class="success-help">Or email us: <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a></p>
 
     <p class="success-trial-note">YOUR 14 DAY FREE TRIAL STARTS NOW. WE'LL CHECK IN ON DAY 7.</p>
@@ -1626,7 +1626,7 @@ html.light .theme-toggle .icon-moon { display: none; }
     </div>
     <div class="footer-col">
       <h4>CONTACT</h4>
-      <a href="tel:+16292699697">(629) 269-9697</a>
+      <a href="tel:6157845747">(615) 784-5747</a>
       <a href="mailto:thecalltakerai@gmail.com">thecalltakerai@gmail.com</a>
       <a href="/privacy.html">Privacy Policy</a>
       <a href="/terms.html">Terms of Service</a>
@@ -1649,7 +1649,7 @@ html.light .theme-toggle .icon-moon { display: none; }
 
 <!-- MOBILE CALL BAR -->
 <div class="mobile-bar">
-  <a href="tel:+16292699697">Call Gideon Now: (629) 269-9697</a>
+  <a href="tel:6157845747">Call Gideon Now: (615) 784-5747</a>
 </div>
 
 <!-- ═══════════════════════════════════════════════
@@ -1658,9 +1658,6 @@ html.light .theme-toggle .icon-moon { display: none; }
 <script>
 (function() {
   'use strict';
-
-  // ═══ Lead intake endpoint ═══
-  var LEAD_ENDPOINT = 'https://call-taker-os.vercel.app/api/public/lead';
 
   // ═══ SCROLL PROGRESS BAR ═══
   var progressBar = document.getElementById('scrollProgress');
@@ -1762,7 +1759,7 @@ html.light .theme-toggle .icon-moon { display: none; }
     return valid;
   }
 
-  // ═══ FORMAT PHONE FOR lead intake ═══
+  // ═══ FORMAT PHONE FOR GHL ═══
   function formatPhone(val) {
     var digits = val.replace(/\D/g, '');
     if (digits.length === 10) return '+1' + digits;
@@ -1818,21 +1815,19 @@ html.light .theme-toggle .icon-moon { display: none; }
       // Loading state
       submitBtn.classList.add('loading');
 
-      // Build lead payload
       var payload = {
         firstName: yourName.split(' ')[0] || yourName,
         lastName: yourName.split(' ').slice(1).join(' ') || '',
         email: email,
         phone: phone,
         company: bizName,
-        tags: ['pilot-signup', 'self-serve', industry, planNames[plan] || plan, 'start-page'],
-        source: 'Start Page Self-Serve',
         page: window.location.pathname,
-        notes: 'Selected plan: ' + (plan === 'pro' ? 'Pro' : plan === 'starter' ? 'Starter' : 'After-Hours')
+        tags: ['pilot-signup', 'self-serve', industry, planNames[plan] || plan, 'start-page'],
+        source: 'start-page-self-serve',
+        notes: 'Plan: ' + plan + ' | Industry: ' + industry
       };
 
-      // Submit through the server-side lead endpoint
-      fetch(LEAD_ENDPOINT, {
+      fetch('https://thecalltaker.vercel.app/api/public/lead', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -1869,14 +1864,14 @@ html.light .theme-toggle .icon-moon { display: none; }
         }
       })
       .catch(function(err) {
-        console.error('CRM error:', err);
+        console.error('Lead intake error:', err);
         // Still show success + ntfy alert
         showSuccess(bizName, plan);
 
         fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
           method: 'POST',
           headers: { 'Title': 'PILOT SIGNUP (API error): ' + bizName, 'Priority': 'high' },
-          body: yourName + ' at ' + bizName + ' signed up but CRM API failed. Create contact manually. Phone: ' + phone + ' Email: ' + email
+          body: yourName + ' at ' + bizName + ' signed up but GHL API failed. Create contact manually. Phone: ' + phone + ' Email: ' + email
         }).catch(function() {});
 
         if (typeof fbq === 'function') {
