@@ -1,0 +1,132 @@
+{
+  "window": {
+    "start": "2026-04-26",
+    "end": "2026-06-25",
+    "total_budget_usd": 2000,
+    "days": 61,
+    "average_daily_budget_usd": 32.79
+  },
+  "campaigns": [
+    {
+      "name": "TCT | Month 1-2 | Cold | Call Now | 2026-04-26",
+      "cta_family": "CALL_NOW",
+      "budget_type": "advantage_plus_campaign_budget",
+      "placements": "advantage_plus",
+      "primary_kpi": "qualified_call_intent"
+    },
+    {
+      "name": "TCT | Month 1-2 | Cold | Start Free Pilot | 2026-04-26",
+      "cta_family": "START_FREE_PILOT",
+      "budget_type": "advantage_plus_campaign_budget",
+      "placements": "advantage_plus",
+      "primary_kpi": "cost_per_lead"
+    }
+  ],
+  "variants": [
+    {
+      "id": "m1-call-founder-01",
+      "role": "control",
+      "campaign": "CALL_NOW",
+      "total_budget_usd": 540,
+      "phase1_daily_budget_usd": 10,
+      "landing_url": "https://thecalltaker.com/?utm_source=meta&utm_medium=paid_social&utm_campaign=tct_2k_launch_2026_04_26&utm_content=m1-call-founder-01&utm_term=call_proof"
+    },
+    {
+      "id": "m1-call-ui-01",
+      "role": "challenger",
+      "campaign": "CALL_NOW",
+      "total_budget_usd": 260,
+      "phase1_daily_budget_usd": 7,
+      "landing_url": "https://thecalltaker.com/try-live.html?utm_source=meta&utm_medium=paid_social&utm_campaign=tct_2k_launch_2026_04_26&utm_content=m1-call-ui-01&utm_term=call_proof"
+    },
+    {
+      "id": "m1-price-97-01",
+      "role": "control",
+      "campaign": "START_FREE_PILOT",
+      "total_budget_usd": 540,
+      "phase1_daily_budget_usd": 10,
+      "landing_url": "https://thecalltaker.com/start.html?plan=after-hours&utm_source=meta&utm_medium=paid_social&utm_campaign=tct_2k_launch_2026_04_26&utm_content=m1-price-97-01&utm_term=price_anchor"
+    },
+    {
+      "id": "m1-starter-ops-01",
+      "role": "challenger",
+      "campaign": "START_FREE_PILOT",
+      "total_budget_usd": 260,
+      "phase1_daily_budget_usd": 7,
+      "landing_url": "https://thecalltaker.com/start.html?plan=starter&utm_source=meta&utm_medium=paid_social&utm_campaign=tct_2k_launch_2026_04_26&utm_content=m1-starter-ops-01&utm_term=operations_relief"
+    },
+    {
+      "id": "m1-owner-night-01",
+      "role": "reserve_challenger",
+      "campaign": "START_FREE_PILOT",
+      "total_budget_usd": 200,
+      "landing_url": "https://thecalltaker.com/?utm_source=meta&utm_medium=paid_social&utm_campaign=tct_2k_launch_2026_04_26&utm_content=m1-owner-night-01&utm_term=owner_relief"
+    },
+    {
+      "id": "m1-emergency-01",
+      "role": "reserve_challenger",
+      "campaign": "START_FREE_PILOT",
+      "total_budget_usd": 200,
+      "landing_url": "https://thecalltaker.com/start.html?plan=pro&utm_source=meta&utm_medium=paid_social&utm_campaign=tct_2k_launch_2026_04_26&utm_content=m1-emergency-01&utm_term=emergency_pain"
+    }
+  ],
+  "phases": [
+    {
+      "name": "phase_1_hook_test",
+      "start": "2026-04-26",
+      "end": "2026-05-05",
+      "total_budget_usd": 340,
+      "daily_budget_usd": 34,
+      "live_variants": [
+        "m1-call-founder-01",
+        "m1-call-ui-01",
+        "m1-price-97-01",
+        "m1-starter-ops-01"
+      ]
+    },
+    {
+      "name": "phase_2_replacement_and_consolidation",
+      "start": "2026-05-06",
+      "end": "2026-05-19",
+      "total_budget_usd": 460,
+      "live_variants_rule": "keep best call and signup ads, replace weaker pair with reserve challengers"
+    },
+    {
+      "name": "phase_3_scale",
+      "start": "2026-05-20",
+      "end": "2026-06-25",
+      "total_budget_usd": 1200,
+      "live_variants_max": 3,
+      "budget_split": {
+        "best_ad": "45%",
+        "second_best_ad": "30%",
+        "third_best_ad": "15%",
+        "fresh_duplicate_or_reserve": "10%"
+      }
+    }
+  ],
+  "kill_rules": {
+    "minimum_review_thresholds": {
+      "impressions": 3000,
+      "spend_usd": 60
+    },
+    "green": {
+      "link_ctr_min": 1.5,
+      "landing_page_to_lead_rate_min": 8,
+      "cpl_max_usd": 35
+    },
+    "yellow": {
+      "link_ctr_min": 1.0,
+      "link_ctr_max": 1.5,
+      "landing_page_to_lead_rate_min": 5,
+      "landing_page_to_lead_rate_max": 8,
+      "cpl_min_usd": 35,
+      "cpl_max_usd": 50
+    },
+    "red": {
+      "link_ctr_max": 1.0,
+      "landing_page_to_lead_rate_max": 5,
+      "cpl_min_usd": 50
+    }
+  }
+}
