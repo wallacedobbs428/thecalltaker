@@ -68,7 +68,7 @@
 
 **Text overlay:**
 - Main: `"I'm 16. Call This."` — Inter Black, 72px, white
-- Phone number: `"(615) 784-5747"` — Inter Black, 56px, `#00dc82` on dark pill
+- Phone number: `"(629) 269-9697"` — Inter Black, 56px, `#00dc82` on dark pill
 
 **Color treatment:** Raw, slightly warm. NO professional color grading — the amateur feel IS the appeal. Natural lighting.
 

@@ -124,7 +124,7 @@
 | 0-1 | **BLACK + TEXT** | Pure black, single stat/question fades in | Silence or single sound effect |
 | 1-3 | **HOOK** | Pattern interrupt visual (phone ringing, notification) | Hook sound (ding, ring, buzz) |
 | 3-8 | **AGITATE** | Show the pain — missed call, empty desk, voicemail | Tense music builds, VO describes pain |
-| 8-15 | **SOLUTION** | Jessica answering, appointment being booked | Music shifts positive, VO introduces product |
+| 8-15 | **SOLUTION** | Gideon answering, appointment being booked | Music shifts positive, VO introduces product |
 | 15-22 | **PROOF** | Stats on screen, before/after comparison | VO delivers numbers, music peaks |
 | 22-27 | **OFFER** | Demo line number, pilot offer, pricing | VO: "Call this number right now" |
 | 27-30 | **CTA** | Full-screen CTA bar, phone number, button | Music fades, VO: final directive |
@@ -165,7 +165,7 @@
 | SFX | Usage | Timing |
 |-----|-------|--------|
 | Phone ring (iPhone default) | Hook — missed call scenario | Second 0-2 |
-| Notification ding | Jessica booking appointment | Solution reveal |
+| Notification ding | Gideon booking appointment | Solution reveal |
 | Cash register "ka-ching" | Revenue stat reveal | Proof section |
 | Whoosh | Text overlay entrance | Every text animation |
 | Click/tap | CTA button appearance | Second 27 |
@@ -183,7 +183,7 @@
 - Accent dot: green `#00dc82` dot after "Taker"
 
 ### Demo Line Number
-- Phone number: `(615) 784-5747`
+- Phone number: `(629) 269-9697`
 - Always displayed in Inter Black, 72px minimum
 - Green background bar (`#00dc82`) with black text for maximum contrast
 - Appears at second 22 and stays through end

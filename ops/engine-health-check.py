@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 THE CALL TAKER — Engine Health Check
-Checks all launchd services, script existence, state files, and API connectivity.
+Checks key launchd services, script existence, and state files.
 Run: python3 ~/thecalltaker/ops/engine-health-check.py
 """
 
@@ -10,6 +10,11 @@ import os
 import json
 import time
 from datetime import datetime
+
+# Prefer the consolidated ops repo when present.
+OPS_DIR = os.path.expanduser("~/thecalltaker-ops/ops")
+if not os.path.isdir(OPS_DIR):
+    OPS_DIR = os.path.expanduser("~/thecalltaker/ops")
 
 # All services that should be running
 SERVICES = {
@@ -33,7 +38,7 @@ SERVICES = {
         "schedule": "6x daily",
         "critical": False
     },
-    "com.thecalltaker.stripe-webhook": {
+    "com.thecalltaker.ops.webhook": {
         "script": "stripe-webhook-handler.py",
         "schedule": "Always-on (KeepAlive)",
         "critical": True
@@ -63,9 +68,17 @@ SERVICES = {
         "schedule": "Always-on (KeepAlive)",
         "critical": True
     },
+    "com.thecalltaker.demo-booking-run": {
+        "script": "demo-booking-engine.py",
+        "schedule": "Every 15 min",
+        "critical": True
+    },
+    "com.thecalltaker.demo-booking-remind": {
+        "script": "demo-booking-engine.py",
+        "schedule": "Every 30 min",
+        "critical": False
+    },
 }
-
-OPS_DIR = os.path.expanduser("~/thecalltaker/ops")
 
 def check_launchd_status(label):
     """Check if a launchd service is loaded and running."""

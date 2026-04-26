@@ -1,7 +1,7 @@
 # The Call Taker — Video Ad Creative Strategy
 
 > Prepared: 2026-03-18
-> Product: AI Receptionist | $97/mo | Demo: (615) 784-5747
+> Product: AI Receptionist | $97/mo | Demo: (629) 269-9697
 > Target: Service business owners aged 35-60
 > Platforms: Facebook/Instagram Reels + Stories (9:16) + Feed (1:1)
 > Budget: $5/day per ad → scale winners to $50/day
@@ -31,7 +31,7 @@
 2. Show the dollar amount lost (makes it concrete)
 3. Show the competitor who got the job instead (fear of loss)
 4. Transition: "Unless..." or "But what if..."
-5. Show Jessica answering, booking, confirming
+5. Show Gideon answering, booking, confirming
 6. Show the result: money booked while sleeping
 
 ### Format C: Social Proof / Testimonial Style
@@ -66,7 +66,7 @@
 │          │ Red color tones. Tension music.            │
 ├──────────┼──────────────────────────────────────────┤
 │ SEC 8-15 │ INTRODUCE THE SOLUTION                   │
-│          │ "But what if..." → Jessica answers        │
+│          │ "But what if..." → Gideon answers        │
 │          │ Show her booking, confirming, texting      │
 │          │ Green color tones. Music shifts positive.  │
 ├──────────┼──────────────────────────────────────────┤
@@ -74,10 +74,10 @@
 │          │ Before/after comparison                    │
 │          │ "$2,400 booked while you slept"           │
 │          │ 730 hours for $97/mo                      │
-│          │ Demo line plays Jessica answering live     │
+│          │ Demo line plays Gideon answering live     │
 ├──────────┼──────────────────────────────────────────┤
 │ SEC 22-27│ THE OFFER                                │
-│          │ Demo line: (615) 784-5747                 │
+│          │ Demo line: (629) 269-9697                 │
 │          │ "Call right now. She'll answer in 2 sec." │
 │          │ Free 14-day pilot. No card.               │
 ├──────────┼──────────────────────────────────────────┤
@@ -190,7 +190,7 @@ CAMPAIGN: TCT - Video Ads - [Vertical]
 
 ## 5. VERTICAL-SPECIFIC ANGLES
 
-| Vertical | Pain Point | Dollar Amount | Time Trigger | Jessica Line |
+| Vertical | Pain Point | Dollar Amount | Time Trigger | Gideon Line |
 |----------|-----------|---------------|-------------|-------------|
 | Roofing | Storm damage jobs lost | $1,200/job | 11pm storm season | "I'll get a crew out first thing tomorrow" |
 | HVAC | Emergency AC/heat calls | $350/repair | Saturday 9pm | "I'll schedule a technician for tomorrow at 8 AM" |
@@ -207,7 +207,7 @@ CAMPAIGN: TCT - Video Ads - [Vertical]
 
 ### Audience Segments
 
-1. **Demo Line Callers** — Highest intent. Retarget with Script 4 (social proof) and Script 5 (price anchor). These people have HEARD Jessica — now close them.
+1. **Demo Line Callers** — Highest intent. Retarget with Script 4 (social proof) and Script 5 (price anchor). These people have HEARD Gideon — now close them.
 
 2. **Video Viewers (75%+)** — Watched most of the ad but didn't act. Retarget with different script (don't show same ad). Add urgency ("Only 3 pilot spots left").
 

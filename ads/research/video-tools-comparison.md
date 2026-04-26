@@ -114,7 +114,7 @@
 
 **InVideo AI:** Generates full videos from text prompts, but quality is YouTube-tier, not ad-tier. $25/mo. Limited API.
 
-**ElevenLabs:** Not a video tool — it's the voice layer. Generate Wallace's VO or Jessica's voice for $5-22/mo. API is excellent. Pair with Kling for complete video+voice pipeline.
+**ElevenLabs:** Not a video tool — it's the voice layer. Generate Wallace's VO or Gideon's voice for $5-22/mo. API is excellent. Pair with Kling for complete video+voice pipeline.
 
 ---
 
