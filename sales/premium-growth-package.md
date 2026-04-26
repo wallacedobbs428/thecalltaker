@@ -158,19 +158,19 @@ Growth Package clients get:
 
 ## IMPLEMENTATION (What Wallace/Mills Actually Set Up)
 
-### In GoHighLevel:
+### In legacy CRM:
 1. **Missed Call Text-Back:** Create workflow — Trigger: Missed Call → Wait 60s → Send SMS
 2. **Review Booster:** Create workflow — Trigger: Opportunity moved to "Job Complete" → Wait 2hr → Send SMS with review link → Wait 24hr → Send reminder
 3. **Lead Follow-Up:** Create workflow — Trigger: Contact tagged "unconverted" → 7-step drip (texts + emails) over 14 days
-4. **Seasonal Campaigns:** Create saved SMS templates → Schedule as campaigns in GHL → Run quarterly
+4. **Seasonal Campaigns:** Create saved SMS templates → Schedule as campaigns in legacy CRM → Run quarterly
 
 ### Monthly Report:
-- Pull from GHL dashboard (calls, appointments, pipeline)
+- Pull from legacy CRM dashboard (calls, appointments, pipeline)
 - Use the template at onboarding/monthly-report-template.md
 - Schedule 15-min Zoom call
 
 ### Timeline to launch:
-- Can be set up in GHL in 2-3 hours per client
+- Can be set up in legacy CRM in 2-3 hours per client
 - Go live same week as the client requests it
 
 ---

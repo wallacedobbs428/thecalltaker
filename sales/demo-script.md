@@ -40,7 +40,7 @@
 
 > "While you're on the call, I'm going to watch everything come through on our end — the call log, the customer info it captures, the appointment it books, the text it sends. When you're done, I'll walk you through all of it."
 
-> "Ready? Here's the number: (615) 784-5747. Go ahead and call it right now. I'll stay on the line — just put me on hold or mute me while you call."
+> "Ready? Here's the number: (629) 269-9697. Go ahead and call it right now. I'll stay on the line — just put me on hold or mute me while you call."
 
 **Important:** Let them make the call. Don't rush them. This is the most powerful part of the demo — they're experiencing it as a customer.
 

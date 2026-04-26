@@ -54,7 +54,7 @@ Download and add as a custom thumbnail in Instagram.
 
 "Now watch this."
 
-*[Cut to phone screen. You dial (615) 784-5747. It picks up immediately. The AI answers professionally, asks about the issue, starts booking.]*
+*[Cut to phone screen. You dial (629) 269-9697. It picks up immediately. The AI answers professionally, asks about the issue, starts booking.]*
 
 *[Text overlay: "The Call Taker -- AI Receptionist for HVAC"]*
 
@@ -65,7 +65,7 @@ Download and add as a custom thumbnail in Instagram.
 "This is The Call Taker. It's an AI receptionist built for HVAC companies. Picks up every call. 24/7. $297 a month. Call that number yourself and try it -- link in bio."
 
 ### Suggested Caption
-I called 5 HVAC companies after hours. 4 out of 5 sent me straight to voicemail. Those are real customers calling with real emergencies -- and they just called someone else. The Call Taker answers every call, 24/7. No voicemail. No missed revenue. Call our demo: (615) 784-5747 or tap the link in bio.
+I called 5 HVAC companies after hours. 4 out of 5 sent me straight to voicemail. Those are real customers calling with real emergencies -- and they just called someone else. The Call Taker answers every call, 24/7. No voicemail. No missed revenue. Call our demo: (629) 269-9697 or tap the link in bio.
 
 ### Hashtags
 #HVAC #HVACbusiness #HVACowner #HVAClife #missedcalls #smallbusiness #AIreceptionist #TheCallTaker #secretshopper #HVACcontractor #businessgrowth #customerservice #afterhours #nevermissthecall
@@ -119,7 +119,7 @@ I called 5 HVAC companies after hours. 4 out of 5 sent me straight to voicemail.
 "The Call Taker. AI receptionist for HVAC. $297 a month. Link in bio to see it live."
 
 ### Suggested Caption
-LEFT: What your customers hear right now (voicemail that 80% of people hang up on). RIGHT: What they could hear with The Call Taker (an AI receptionist that books the appointment on the spot). Same phone call. One loses the customer, one books a $400 job. Which one is your company? Demo: (615) 784-5747. Link in bio.
+LEFT: What your customers hear right now (voicemail that 80% of people hang up on). RIGHT: What they could hear with The Call Taker (an AI receptionist that books the appointment on the spot). Same phone call. One loses the customer, one books a $400 job. Which one is your company? Demo: (629) 269-9697. Link in bio.
 
 ### Hashtags
 #HVAC #HVACbusiness #HVACcontractor #customerexperience #missedcalls #voicemail #AIreceptionist #TheCallTaker #sidebyside #beforeandafter #smallbusinesstips #HVACowner #HVAClife #phonecalls #bookedandbusy
@@ -174,12 +174,12 @@ LEFT: What your customers hear right now (voicemail that 80% of people hang up o
 
 "The Call Taker is an AI receptionist that answers every call your HVAC company gets. 24 hours a day. 7 days a week. It costs $297 a month. You do the math on the ROI."
 
-*[Text overlay: "thecalltaker.com | Demo: (615) 784-5747"]*
+*[Text overlay: "thecalltaker.com | Demo: (629) 269-9697"]*
 
 "Link in bio. Or just call the demo number right now and hear it for yourself."
 
 ### Suggested Caption
-Let's do the math. 8 missed calls/week x 50% booking rate x $250 avg ticket x 52 weeks = $52,000+ per year in lost revenue. Not because you're bad at HVAC. Because nobody answered the phone. The Call Taker is an AI receptionist that answers every call 24/7 for $297/mo. Do the math on that ROI. Demo: (615) 784-5747. Link in bio.
+Let's do the math. 8 missed calls/week x 50% booking rate x $250 avg ticket x 52 weeks = $52,000+ per year in lost revenue. Not because you're bad at HVAC. Because nobody answered the phone. The Call Taker is an AI receptionist that answers every call 24/7 for $297/mo. Do the math on that ROI. Demo: (629) 269-9697. Link in bio.
 
 ### Hashtags
 #HVAC #HVACbusiness #HVACowner #missedrevenue #lostrevenue #businessmath #smallbusinesstips #AIreceptionist #TheCallTaker #HVACcontractor #HVAClife #phonecalls #ROI #businessgrowth #moneyleft #servicecompany
@@ -224,12 +224,12 @@ Let's do the math. 8 missed calls/week x 50% booking rate x $250 avg ticket x 52
 
 *[Hold up phone showing the number]*
 
-"(615) 784-5747. Call it. Talk to it. See for yourself."
+"(629) 269-9697. Call it. Talk to it. See for yourself."
 
 *[Text overlay: "thecalltaker.com | Link in bio"]*
 
 ### Suggested Caption
-$297/mo. Every call answered. 24/7/365. No voicemail. No missed leads. No hold music. Just an AI receptionist that sounds human, asks the right questions, and books the appointment. One missed call on a Saturday night costs you more than 3 months of this. Try the demo yourself: (615) 784-5747. Link in bio.
+$297/mo. Every call answered. 24/7/365. No voicemail. No missed leads. No hold music. Just an AI receptionist that sounds human, asks the right questions, and books the appointment. One missed call on a Saturday night costs you more than 3 months of this. Try the demo yourself: (629) 269-9697. Link in bio.
 
 ### Hashtags
 #HVAC #HVACbusiness #TheCallTaker #AIreceptionist #HVACowner #nevermissacall #smallbusiness #297amonth #HVACcontractor #phoneanswering #24x7 #HVAClife #businesstools #servicebusiness #customerservice #growthtools
@@ -272,7 +272,7 @@ $297/mo. Every call answered. 24/7/365. No voicemail. No missed leads. No hold m
 
 "If you're an HVAC company owner or you know one -- check it out."
 
-*[Text overlay: "(615) 784-5747 -- Call the demo"]*
+*[Text overlay: "(629) 269-9697 -- Call the demo"]*
 
 "Call that number and hear it yourself. Or hit the link in my bio."
 
@@ -281,7 +281,7 @@ $297/mo. Every call answered. 24/7/365. No voicemail. No missed leads. No hold m
 "I built this because these guys deserve to get paid for every customer that calls them. Not just the ones they happen to pick up."
 
 ### Suggested Caption
-I'm Wallace Dobbs from Brentwood, TN. I built The Call Taker because I watched too many great HVAC companies lose customers for the dumbest reason possible -- nobody answered the phone. Not because they didn't care. Because they were in an attic or under a house actually doing the work. The Call Taker is an AI receptionist that makes sure every call gets answered, every customer gets helped, and every job gets booked. $297/mo. Call the demo: (615) 784-5747. Link in bio. This is just the beginning.
+I'm Wallace Dobbs from Brentwood, TN. I built The Call Taker because I watched too many great HVAC companies lose customers for the dumbest reason possible -- nobody answered the phone. Not because they didn't care. Because they were in an attic or under a house actually doing the work. The Call Taker is an AI receptionist that makes sure every call gets answered, every customer gets helped, and every job gets booked. $297/mo. Call the demo: (629) 269-9697. Link in bio. This is just the beginning.
 
 ### Hashtags
 #HVAC #HVACbusiness #founderstory #startup #TheCallTaker #AIreceptionist #HVACowner #HVACcontractor #BrentwoodTN #Tennessee #smallbusiness #entrepreneurlife #builtsomething #HVAClife #nevermissthecall #techstartup #servicebusiness

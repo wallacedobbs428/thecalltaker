@@ -7,16 +7,16 @@
 
 ## TEMPLATE 1: MISSED REVENUE
 
-**Subject:** Jessica is live on [Business Name] — test her now
+**Subject:** Gideon is live on [Business Name] — test her now
 
 Hey [First Name],
 
-Jessica is answering your phones starting tonight.
+Gideon is answering your phones starting tonight.
 
 Before anything else — test her yourself. Call [their business number] from a different phone and say "[vertical request, e.g., I need an AC repair estimate]." She'll handle the whole thing in under 60 seconds.
 
 Here's your 14-day trial:
-- Jessica answers every call — nights, weekends, holidays
+- Gideon answers every call — nights, weekends, holidays
 - Appointments go straight into your calendar
 - You get a text notification for every booking
 
@@ -31,13 +31,13 @@ I'll check in with you in a few days. Text me anytime — I respond in minutes.
 
 ## TEMPLATE 2: AFTER-HOURS
 
-**Subject:** Jessica is answering your after-hours calls starting tonight
+**Subject:** Gideon is answering your after-hours calls starting tonight
 
 Hey [First Name],
 
-Jessica goes live on your phones tonight.
+Gideon goes live on your phones tonight.
 
-Here's what changes: when someone calls [Business Name] at 10 PM with a [vertical emergency, e.g., burst pipe], Jessica picks up on the first ring, gets their info, and books the job. No more voicemails. No more lost calls.
+Here's what changes: when someone calls [Business Name] at 10 PM with a [vertical emergency, e.g., burst pipe], Gideon picks up on the first ring, gets their info, and books the job. No more voicemails. No more lost calls.
 
 Test her right now — call [their business number] and say "[vertical request]." She handles the whole call.
 
@@ -59,7 +59,7 @@ I'll check in this week. Text me anytime.
 
 Hey [First Name],
 
-No interviews. No payroll. No sick days. Jessica is live on [Business Name] starting tonight.
+No interviews. No payroll. No sick days. Gideon is live on [Business Name] starting tonight.
 
 She handles what used to take a full-time hire:
 - Answers every call — even when you're on a job
@@ -90,5 +90,5 @@ Text me if you need anything — I'm fast.
   - Locksmith: "I'm locked out"
   - Towing: "My car broke down"
   - Pest control: "I found mice in my garage"
-- **Send from:** thecalltakerai@gmail.com or GHL
+- **Send from:** thecalltakerai@gmail.com or legacy CRM
 - **Timing:** Within 1 hour of close — this kills buyer's remorse
