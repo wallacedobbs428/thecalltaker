@@ -43,12 +43,12 @@
 - **Music:** Key change — dark → bright electronic
 
 ### SECOND 10-15 | JESSICA ANSWERS
-- **Visual:** Same bedroom, same phone, same time. But this time — the call connects. Split screen or overlay shows a clean UI: "Jessica — AI Receptionist" answering. Chat bubbles appear showing the conversation:
-  - Jessica: "Thank you for calling [Company], this is Jessica..."
+- **Visual:** Same bedroom, same phone, same time. But this time — the call connects. Split screen or overlay shows a clean UI: "Gideon — AI Receptionist" answering. Chat bubbles appear showing the conversation:
+  - Gideon: "Thank you for calling [Company], this is Gideon..."
   - Caller: "We just had a tree come through our roof..."
-  - Jessica: "I'm so sorry to hear that. Let me get a crew scheduled for first thing tomorrow morning."
-- **Text overlay:** `"Jessica answered in 1.2 seconds"` — Inter Bold, 44px, `#00dc82` (green), bottom third
-- **Audio:** Notification ding when Jessica answers
+  - Gideon: "I'm so sorry to hear that. Let me get a crew scheduled for first thing tomorrow morning."
+- **Text overlay:** `"Gideon answered in 1.2 seconds"` — Inter Bold, 44px, `#00dc82` (green), bottom third
+- **Audio:** Notification ding when Gideon answers
 - **Music:** Upbeat, modern electronic (BPM: 120), rising energy
 
 ### SECOND 15-20 | THE BOOKING
@@ -62,10 +62,10 @@
 ### SECOND 20-25 | THE OFFER
 - **Visual:** Clean dark background. The Call Taker logo fades in. Then the demo line number appears large.
 - **Text overlay:**
-  - `"Hear Jessica answer right now"` — Inter Bold, 52px, white
-  - `"(615) 784-5747"` — Inter Black, 72px, `#00dc82` on dark pill
+  - `"Hear Gideon answer right now"` — Inter Bold, 52px, white
+  - `"(629) 269-9697"` — Inter Black, 72px, `#00dc82` on dark pill
   - `"Free 14-day pilot · No card required"` — Inter Medium, 36px, `#a3a3a3`
-- **Audio:** VO: "Call this number right now. Jessica will answer in under 2 seconds."
+- **Audio:** VO: "Call this number right now. Gideon will answer in under 2 seconds."
 - **Music:** Resolving, energy maintaining
 
 ### SECOND 25-30 | CTA BAR
@@ -90,7 +90,7 @@
 [3-8]   "That call? That was twelve hundred dollars...
          walking away from your business."
 
-[8-15]  "But with Jessica — your AI receptionist —
+[8-15]  "But with Gideon — your AI receptionist —
          that call gets answered in under two seconds.
          Even at 11 PM on a Saturday."
 
@@ -99,7 +99,7 @@
          already on your calendar."
 
 [20-25] "Call this number right now.
-         Jessica will answer. Live. In under two seconds."
+         Gideon will answer. Live. In under two seconds."
 
 [25-30] "Ninety-seven dollars a month.
          That's less than one missed call."
@@ -140,7 +140,7 @@ Position: 160px above bottom edge, centered, dark pill background.
 |---------|-----------|-----------|
 | Hook text | "Last night at 11pm..." | "$1,200. Gone." |
 | Dollar amount | $1,200 (roofing) | $800 (general) |
-| CTA | "Tap to Call Jessica Now" | "Hear Her Answer — Call Now" |
+| CTA | "Tap to Call Gideon Now" | "Hear Her Answer — Call Now" |
 | End offer | "$97/mo" | "Free 14-Day Pilot" |
 
 ---

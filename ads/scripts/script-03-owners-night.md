@@ -2,7 +2,7 @@
 
 > Vertical: Universal (any service business) | Length: 30s | Format: 9:16 Reels
 > Tone: Cinematic, emotional, aspirational
-> Goal: Make them feel the anxiety of missed calls, then the peace of Jessica
+> Goal: Make them feel the anxiety of missed calls, then the peace of Gideon
 
 ---
 
@@ -48,13 +48,13 @@
 
 ### SECOND 11-18 | THE JESSICA VERSION
 - **Visual:** Same night. Same bedroom. Same phone. But now there's a subtle green glow on the screen. Clock: 12:15 AM — phone lights up, but instead of "Missed Call" it shows:
-  - "Jessica answered — Emergency lockout"
+  - "Gideon answered — Emergency lockout"
   - "Appointment booked: Tomorrow 7 AM"
   Clock: 1:30 AM —
-  - "Jessica answered — AC not working"
+  - "Gideon answered — AC not working"
   - "Appointment booked: Tomorrow 9 AM"
   Clock: 3:45 AM —
-  - "Jessica answered — Pipe burst"
+  - "Gideon answered — Pipe burst"
   - "Emergency dispatch confirmed"
   The owner sleeps peacefully through all three. Green notification badges stack up.
 - **Text overlay:**
@@ -78,10 +78,10 @@
 ### SECOND 22-27 | THE OFFER
 - **Visual:** Clean dark background. Phone number prominent.
 - **Text overlay:**
-  - `"Meet Jessica"` — Inter Bold, 56px, white
-  - `"(615) 784-5747"` — Inter Black, 72px, `#00dc82`
+  - `"Meet Gideon"` — Inter Bold, 56px, white
+  - `"(629) 269-9697"` — Inter Black, 72px, `#00dc82`
   - `"Your AI receptionist that never sleeps"` — Inter Medium, 36px, `#a3a3a3`
-- **Audio:** VO: "Call six-one-five, seven-eight-four, fifty-seven-forty-seven. Meet Jessica. She answers every call so you can actually sleep."
+- **Audio:** VO: "Call six-one-five, seven-eight-four, fifty-seven-forty-seven. Meet Gideon. She answers every call so you can actually sleep."
 - **Music:** Confident resolution
 
 ### SECOND 27-30 | CTA
@@ -113,7 +113,7 @@
          Booked before your alarm went off."
 
 [22-27] "Call six-one-five, seven-eight-four, fifty-seven-forty-seven.
-         Meet Jessica. She answers every call so you can actually sleep."
+         Meet Gideon. She answers every call so you can actually sleep."
 
 [27-30] "Free for fourteen days.
          Because you deserve to sleep."
@@ -158,4 +158,4 @@ Word-by-word highlight. Green on active word. Captions only appear during VO sec
 | Dollar amount | $2,400 (3 jobs) | $800 (1 big job) |
 | Industry framing | Universal (mixed jobs) | Single vertical (all HVAC) |
 | Emotional hook | Anxiety → relief | FOMO → aspiration |
-| CTA | "Try Jessica Free" | "Sleep Better Tonight" |
+| CTA | "Try Gideon Free" | "Sleep Better Tonight" |

@@ -40,7 +40,7 @@
 - **Music:** Dead stop.
 
 ### SECOND 9-15 | THE REVEAL
-- **Visual:** Clean, cinematic. A phone ringing. Jessica answering. Text builds on screen, one line at a time:
+- **Visual:** Clean, cinematic. A phone ringing. Gideon answering. Text builds on screen, one line at a time:
   - Line 1: `"730 hours"` — Inter Black, 80px, `#00dc82`, center
   - Line 2: `"of an AI receptionist"` — Inter Bold, 52px, white
   - Line 3: `"who never misses a call"` — Inter Bold, 52px, white
@@ -49,7 +49,7 @@
 - **Music:** Warm, confident electronic fades in. The hero reveal.
 
 ### SECOND 15-20 | WHAT JESSICA DOES
-- **Visual:** Fast-cut montage of Jessica's capabilities, each with a green checkmark animation:
+- **Visual:** Fast-cut montage of Gideon's capabilities, each with a green checkmark animation:
   - ✅ "Answers every call in under 2 seconds"
   - ✅ "Books appointments automatically"
   - ✅ "Sends follow-up texts"
@@ -63,16 +63,16 @@
 ### SECOND 20-23 | THE MATH
 - **Visual:** Clean calculation on screen, each element appearing:
   - `"1 missed call = $200 - $1,500 lost"` — `#ef4444`
-  - `"Jessica = $97/month"` — `#00dc82`
+  - `"Gideon = $97/month"` — `#00dc82`
   - `"ROI:"` then a big number animating: `"2,000% +"` — Inter Black, 96px, `#00dc82`
-- **Audio:** VO: "One missed call costs you two hundred to fifteen hundred dollars. Jessica costs ninety-seven. Do the math."
+- **Audio:** VO: "One missed call costs you two hundred to fifteen hundred dollars. Gideon costs ninety-seven. Do the math."
 - **Music:** Peak — driving, rhythmic
 
 ### SECOND 23-27 | THE DEMO
 - **Visual:** Phone number appears large. Clean dark background with green accent.
 - **Text overlay:**
   - `"Hear her answer your call"` — Inter Bold, 52px, white
-  - `"(615) 784-5747"` — Inter Black, 80px, `#00dc82`
+  - `"(629) 269-9697"` — Inter Black, 80px, `#00dc82`
   - `"Right now. Go ahead."` — Inter Medium, 40px, `#a3a3a3`
 - **Audio:** VO: "Don't believe me? Call this number right now. She'll answer in under two seconds."
 - **Music:** Confident, resolving
@@ -107,7 +107,7 @@
 
 [20-23] "One missed call costs you two hundred
          to fifteen hundred dollars.
-         Jessica costs ninety-seven. Do the math."
+         Gideon costs ninety-seven. Do the math."
 
 [23-27] "Don't believe me?
          Call this number right now.

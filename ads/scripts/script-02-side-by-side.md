@@ -25,17 +25,17 @@
 ### SECOND 3-6 | THE DIVERGENCE
 - **Visual:**
   - LEFT: Phone rings 4 times → goes to voicemail. Voicemail greeting plays. Caller hangs up immediately.
-  - RIGHT: Ring once → Jessica answers: "Thank you for calling [HVAC Co], this is Jessica. How can I help?"
+  - RIGHT: Ring once → Gideon answers: "Thank you for calling [HVAC Co], this is Gideon. How can I help?"
 - **Text overlay:**
   - LEFT: `"Ring... ring... ring... voicemail"` — Inter SemiBold, 40px, `#ef4444`, typewriter effect
   - RIGHT: `"Answered in 1.2 seconds"` — Inter SemiBold, 40px, `#00dc82`
-- **Audio:** Left side: voicemail beep. Right side: Jessica's voice.
+- **Audio:** Left side: voicemail beep. Right side: Gideon's voice.
 - **Music:** Subtle tension on left, warmth on right. Split-channel audio.
 
 ### SECOND 6-10 | THE OUTCOME
 - **Visual:**
   - LEFT: Phone screen shows notification: "Voicemail from Unknown (0:03)". Three-second hang-up. Nothing happens.
-  - RIGHT: Chat UI shows Jessica booking: "Tomorrow 8 AM confirmed. I'll send you a text with the details."
+  - RIGHT: Chat UI shows Gideon booking: "Tomorrow 8 AM confirmed. I'll send you a text with the details."
 - **Text overlay:**
   - LEFT: `"$350 job — gone"` — Inter Black, 64px, `#ef4444`, center of left half
   - RIGHT: `"$350 job — booked"` — Inter Black, 64px, `#00dc82`, center of right half
@@ -59,18 +59,18 @@
 - **Music:** Energy building
 
 ### SECOND 15-20 | ZOOM INTO SOLUTION
-- **Visual:** LEFT side slides away. RIGHT side expands to full screen. Clean view of Jessica's UI — calendar filling up with appointments, texts going out automatically.
+- **Visual:** LEFT side slides away. RIGHT side expands to full screen. Clean view of Gideon's UI — calendar filling up with appointments, texts going out automatically.
 - **Text overlay:**
-  - `"Jessica works 24/7"` — Inter Bold, 56px, white
+  - `"Gideon works 24/7"` — Inter Bold, 56px, white
   - `"No sick days. No overtime. No missed calls."` — Inter SemiBold, 40px, `#a3a3a3`
-- **Audio:** VO: "Jessica never sleeps. Never takes a break. Never sends a call to voicemail."
+- **Audio:** VO: "Gideon never sleeps. Never takes a break. Never sends a call to voicemail."
 - **Music:** Peak — confident, forward-moving
 
 ### SECOND 20-25 | THE OFFER
 - **Visual:** Clean dark background. Large phone number.
 - **Text overlay:**
-  - `"Call Jessica right now"` — Inter Bold, 56px, white
-  - `"(615) 784-5747"` — Inter Black, 72px, `#00dc82`
+  - `"Call Gideon right now"` — Inter Bold, 56px, white
+  - `"(629) 269-9697"` — Inter Black, 72px, `#00dc82`
   - `"She'll answer before you blink"` — Inter Medium, 36px, `#a3a3a3`
 - **Audio:** VO: "Call six-one-five, seven-eight-four, fifty-seven-forty-seven. She'll answer before the second ring."
 - **Music:** Resolving
@@ -101,7 +101,7 @@
 [10-15] "That's fourteen hundred dollars...
          in just one week."
 
-[15-20] "Jessica never sleeps. Never takes a break.
+[15-20] "Gideon never sleeps. Never takes a break.
          Never sends a call to voicemail."
 
 [20-25] "Call six-one-five, seven-eight-four, fifty-seven-forty-seven.
@@ -145,4 +145,4 @@ Word-by-word highlight style. Green active word. Bottom-center pill.
 | Hook | "Saturday. 9 PM." | "Your phone rang at 9 PM last Saturday." |
 | Dollar amount | $350 (HVAC) | $500 (plumbing emergency) |
 | Split style | Hard vertical line | Diagonal split |
-| CTA | "Start Your Free Pilot" | "Try Jessica Free for 14 Days" |
+| CTA | "Start Your Free Pilot" | "Try Gideon Free for 14 Days" |

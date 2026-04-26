@@ -1,5 +1,5 @@
 /**
- * Jessica Demo — Cloudflare Worker
+ * Gideon Demo — Cloudflare Worker
  * Proxies ElevenLabs TTS API for live voice demo on thecalltaker.com
  *
  * Endpoint: POST /demo
@@ -58,7 +58,7 @@ function sanitizeBusinessName(name) {
 }
 
 function buildScript(businessName) {
-  return `Thank you for calling ${businessName}, this is Jessica! We're so glad you reached out. I can help you schedule an appointment, answer questions about our services, or connect you with the right person. What can I help you with today?`;
+  return `Thank you for calling ${businessName}, this is Gideon! We're so glad you reached out. I can help you schedule an appointment, answer questions about our services, or connect you with the right person. What can I help you with today?`;
 }
 
 export default {
