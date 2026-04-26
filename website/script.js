@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  const LEAD_ENDPOINT = 'https://call-taker-os.vercel.app/api/public/lead';
+  const LEAD_ENDPOINT = 'https://thecalltaker.vercel.app/api/public/lead';
 
   function normalizePhone(value) {
     const digits = String(value || '').replace(/\D/g, '');
@@ -104,7 +104,8 @@
   // and exit popup HTML injected across all pages.
 
   window.toggleFloatPanel = function(){
-    document.getElementById('float-panel').classList.toggle('open');
+    var panel = document.getElementById('float-panel');
+    if (panel) panel.classList.toggle('open');
   };
 
   window.requestFloatCallback = function(){
