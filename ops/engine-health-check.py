@@ -1,208 +1,240 @@
 #!/usr/bin/env python3
 """
-THE CALL TAKER — Engine Health Check
-Checks key launchd services, script existence, and state files.
-Run: python3 ~/thecalltaker/ops/engine-health-check.py
+THE CALL TAKER — Morning System Health Check
+
+Current-source-of-truth diagnostic for the live stack:
+  - Production CTOS/app health
+  - Public funnel preflight
+  - Local booking/payment listeners
+  - Critical launchd agents for booking flows
+  - Legacy launchd/engine drift (demoted to context, not primary truth)
+
+Run:
+  python3 ~/thecalltaker/ops/engine-health-check.py
 """
 
-import subprocess
-import os
+from __future__ import annotations
+
 import json
-import time
-from datetime import datetime
+import os
+import subprocess
+import sys
+import urllib.error
+import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
 
-# Prefer the consolidated ops repo when present.
-OPS_DIR = os.path.expanduser("~/thecalltaker-ops/ops")
-if not os.path.isdir(OPS_DIR):
-    OPS_DIR = os.path.expanduser("~/thecalltaker/ops")
 
-# All services that should be running
-SERVICES = {
-    "com.thecalltaker.hot-lead-converter": {
-        "script": "hot-lead-converter.py",
-        "schedule": "Every 15 min",
-        "critical": True
-    },
-    "com.thecalltaker.blast-engine-v2": {
-        "script": "blast-engine-v2.py",
-        "schedule": "3x daily (9am, 1pm, 5pm)",
-        "critical": True
-    },
-    "com.thecalltaker.outbound-sms": {
-        "script": "outbound-sms-engine.py",
-        "schedule": "2x daily (10am, 4pm)",
-        "critical": True
-    },
-    "com.thecalltaker.storm-chaser-v2": {
-        "script": "storm-chaser-v2.py",
-        "schedule": "6x daily",
-        "critical": False
-    },
-    "com.thecalltaker.ops.webhook": {
-        "script": "stripe-webhook-handler.py",
-        "schedule": "Always-on (KeepAlive)",
-        "critical": True
-    },
-    "com.thecalltaker.payment-reminder": {
-        "script": "payment-reminder-engine.py",
-        "schedule": "2x daily (9am, 5pm)",
-        "critical": False
-    },
-    "com.thecalltaker.dm-tracker": {
-        "script": "dm-tracker.py",
-        "schedule": "Daily 8am",
-        "critical": False
-    },
-    "com.thecalltaker.lead-dashboard": {
-        "script": "lead-dashboard-api.py",
-        "schedule": "Every 10 min",
-        "critical": False
-    },
-    "com.thecalltaker.blast-sms-followup": {
-        "script": "blast-sms-followup.py",
-        "schedule": "2x daily (11am, 3pm)",
-        "critical": False
-    },
-    "com.thecalltaker.demo-webhook": {
-        "script": "demo-booked-webhook.py",
-        "schedule": "Always-on (KeepAlive)",
-        "critical": True
-    },
-    "com.thecalltaker.demo-booking-run": {
-        "script": "demo-booking-engine.py",
-        "schedule": "Every 15 min",
-        "critical": True
-    },
-    "com.thecalltaker.demo-booking-remind": {
-        "script": "demo-booking-engine.py",
-        "schedule": "Every 30 min",
-        "critical": False
-    },
+ROOT = Path.home() / "thecalltaker"
+OPS_REPO = Path.home() / "thecalltaker-ops"
+OPS_DIR = OPS_REPO / "ops" if (OPS_REPO / "ops").is_dir() else ROOT / "ops"
+REPORT_PATH = OPS_DIR / "health-check-report.json"
+
+APP_HEALTH_URL = "https://thecalltaker.vercel.app/api/health"
+STRIPE_WEBHOOK_HEALTH_URL = "http://127.0.0.1:8787/health"
+DEMO_WEBHOOK_HEALTH_URL = "http://127.0.0.1:5089/health"
+
+CRITICAL_AGENTS = [
+    ("Stripe webhook listener", "com.thecalltaker.ops.webhook"),
+    ("Demo webhook listener", "com.thecalltaker.demo-webhook"),
+    ("Demo booking run", "com.thecalltaker.demo-booking-run"),
+    ("Demo booking reminder", "com.thecalltaker.demo-booking-remind"),
+]
+
+LEGACY_SERVICES = {
+    "com.thecalltaker.hot-lead-converter": "hot-lead-converter.py",
+    "com.thecalltaker.blast-engine-v2": "blast-engine-v2.py",
+    "com.thecalltaker.outbound-sms": "outbound-sms-engine.py",
+    "com.thecalltaker.storm-chaser-v2": "storm-chaser-v2.py",
+    "com.thecalltaker.payment-reminder": "payment-reminder-engine.py",
+    "com.thecalltaker.dm-tracker": "dm-tracker.py",
+    "com.thecalltaker.lead-dashboard": "lead-dashboard-api.py",
+    "com.thecalltaker.blast-sms-followup": "blast-sms-followup.py",
 }
 
-def check_launchd_status(label):
-    """Check if a launchd service is loaded and running."""
-    try:
-        result = subprocess.run(
-            ["launchctl", "list"],
-            capture_output=True, text=True, timeout=10
-        )
-        for line in result.stdout.strip().split("\n"):
-            if label in line:
-                parts = line.split("\t")
-                pid = parts[0] if parts[0] != "-" else None
-                exit_code = parts[1] if len(parts) > 1 else "?"
-                return {"loaded": True, "pid": pid, "exit_code": exit_code}
-        return {"loaded": False, "pid": None, "exit_code": None}
-    except Exception:
-        return {"loaded": False, "pid": None, "exit_code": "error"}
 
-def check_script_exists(script_name):
-    """Check if the Python script file exists."""
-    path = os.path.join(OPS_DIR, script_name)
-    return os.path.exists(path)
-
-def check_state_file(script_name):
-    """Check if state file exists and is recent."""
-    state_name = script_name.replace(".py", "-state.json")
-    path = os.path.join(OPS_DIR, state_name)
-    if not os.path.exists(path):
-        return {"exists": False, "age_hours": None, "size": 0}
-    stat = os.stat(path)
-    age_hours = (time.time() - stat.st_mtime) / 3600
-    return {"exists": True, "age_hours": round(age_hours, 1), "size": stat.st_size}
-
-def run_health_check():
-    """Run full health check across all services."""
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"\n{'='*60}")
-    print(f"  THE CALL TAKER — ENGINE HEALTH CHECK")
+def _print_header() -> None:
+    now = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S")
+    print("\n" + "=" * 60)
+    print("  THE CALL TAKER — MORNING SYSTEM HEALTH CHECK")
     print(f"  {now}")
-    print(f"{'='*60}\n")
+    print("=" * 60 + "\n")
 
-    total = len(SERVICES)
-    healthy = 0
-    warnings = 0
-    critical_failures = 0
-    results = []
 
-    for label, info in SERVICES.items():
-        status = check_launchd_status(label)
-        script_ok = check_script_exists(info["script"])
-        state = check_state_file(info["script"])
+def _check(label: str, ok: bool, detail: str = "", tone: str = "primary") -> dict:
+    status = "PASS" if ok else "FAIL"
+    icon = "✅" if ok else ("⚠️" if tone == "legacy" else "❌")
+    line = f"[{status}] {label}"
+    if detail:
+        line += f" — {detail}"
+    print(f"{icon} {line}")
+    return {"label": label, "status": status, "detail": detail, "tone": tone}
 
-        # Determine health
-        if not script_ok:
-            health = "MISSING"
-            icon = "\u274c"
-        elif not status["loaded"]:
-            health = "NOT LOADED"
-            icon = "\u26a0\ufe0f"
-        elif status["exit_code"] and status["exit_code"] not in ("0", "-", "?"):
-            health = f"EXIT CODE {status['exit_code']}"
-            icon = "\u274c"
-        elif status["pid"]:
-            health = "RUNNING"
-            icon = "\u2705"
-            healthy += 1
-        else:
-            health = "LOADED (waiting)"
-            icon = "\u2705"
-            healthy += 1
 
-        if health in ("MISSING",) or (health.startswith("EXIT") and info["critical"]):
-            critical_failures += 1
-        elif health in ("NOT LOADED",):
-            warnings += 1
+def _run(cmd: list[str], timeout: float = 30.0) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
 
-        result = {
-            "label": label.replace("com.thecalltaker.", ""),
-            "health": health,
-            "icon": icon,
-            "script": info["script"],
-            "schedule": info["schedule"],
-            "critical": info["critical"],
-            "state_exists": state["exists"],
-            "state_age": state["age_hours"],
-        }
-        results.append(result)
 
-        # Print status line
-        crit_tag = " [CRITICAL]" if info["critical"] else ""
-        state_info = ""
-        if state["exists"]:
-            state_info = f" | state: {state['age_hours']}h ago"
-        print(f"  {icon} {result['label']:30s} {health:20s}{crit_tag}{state_info}")
-        print(f"     Schedule: {info['schedule']}")
-
-    # Summary
-    print(f"\n{'='*60}")
-    print(f"  SUMMARY: {healthy}/{total} healthy | {warnings} warnings | {critical_failures} critical failures")
-    print(f"{'='*60}")
-
-    if critical_failures > 0:
-        print(f"\n  ACTION REQUIRED: {critical_failures} critical service(s) need attention!")
-        print(f"  Run: bash ~/thecalltaker/ops/activate-all-engines.sh")
-
-    # Save report
-    report = {
-        "timestamp": now,
-        "total": total,
-        "healthy": healthy,
-        "warnings": warnings,
-        "critical_failures": critical_failures,
-        "services": results
-    }
-    report_path = os.path.join(OPS_DIR, "health-check-report.json")
+def _launchd_loaded(label: str) -> bool:
     try:
-        with open(report_path, "w") as f:
-            json.dump(report, f, indent=2)
-        print(f"\n  Report saved: {report_path}")
-    except Exception as e:
-        print(f"\n  Could not save report: {e}")
+        out = subprocess.check_output(["launchctl", "list"], text=True, stderr=subprocess.DEVNULL)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return False
+    return label in out
 
-    print()
-    return report
+
+def _http_json(url: str, timeout: float = 5.0) -> tuple[bool, str, dict | None]:
+    try:
+        req = urllib.request.Request(url, method="GET")
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            body = resp.read(4000).decode("utf-8", errors="replace")
+            parsed = json.loads(body) if body else None
+            return resp.status == 200, f"HTTP {resp.status}", parsed
+    except urllib.error.HTTPError as e:
+        return False, f"HTTP {e.code}", None
+    except Exception as e:
+        return False, str(e)[:200], None
+
+
+def check_production_app(results: list[dict]) -> bool:
+    ok, detail, payload = _http_json(APP_HEALTH_URL, timeout=8.0)
+    if ok and isinstance(payload, dict):
+        status = payload.get("status", "unknown")
+        build_sha = str(payload.get("build_sha", "dev"))[:7]
+        crons = payload.get("crons", {})
+        stale = []
+        if isinstance(crons, dict):
+            for cron_name, row in crons.items():
+                if isinstance(row, dict) and row.get("stale"):
+                    stale.append(cron_name)
+        detail = f"status={status} build={build_sha}"
+        if stale:
+            detail += f" stale={','.join(stale[:3])}"
+        results.append(_check("Production app health", status == "ok", detail))
+        return status == "ok"
+    results.append(_check("Production app health", False, detail))
+    return False
+
+
+def check_public_preflight(results: list[dict]) -> bool:
+    script = ROOT / "ops" / "ads-preflight.sh"
+    proc = _run(["zsh", str(script)], timeout=30.0)
+    ok = proc.returncode == 0
+    detail = "legacy patterns clean + public pages reachable" if ok else "public preflight failed"
+    results.append(_check("Public funnel preflight", ok, detail))
+    return ok
+
+
+def check_local_listener(url: str, label: str, results: list[dict]) -> bool:
+    ok, detail, payload = _http_json(url, timeout=3.0)
+    if ok and isinstance(payload, dict):
+        status = payload.get("status", "ok")
+        service = payload.get("service", label)
+        detail = f"{service} {status}"
+        results.append(_check(label, True, detail))
+        return True
+    results.append(_check(label, False, detail))
+    return False
+
+
+def check_critical_agents(results: list[dict]) -> tuple[int, int]:
+    passed = 0
+    total = 0
+    for label, plist in CRITICAL_AGENTS:
+        total += 1
+        ok = _launchd_loaded(plist)
+        results.append(_check(label, ok, "loaded in launchctl" if ok else "not loaded"))
+        if ok:
+            passed += 1
+    return passed, total
+
+
+def check_booking_payment(results: list[dict]) -> bool:
+    script = OPS_REPO / "ops" / "booking-payment-health-check.py"
+    proc = _run(["python3", str(script)], timeout=45.0)
+    ok = proc.returncode == 0
+    report_path = OPS_REPO / "reports" / "booking-payment-health.json"
+    detail = "8/8 healthy" if ok else "see booking-payment-health.json"
+    if report_path.is_file():
+        try:
+            data = json.loads(report_path.read_text(encoding="utf-8"))
+            detail = f"{data.get('passed', '?')}/{data.get('total', '?')} healthy"
+        except Exception:
+            pass
+    results.append(_check("Booking/payment stack", ok, detail))
+    return ok
+
+
+def check_legacy_drift(results: list[dict]) -> tuple[int, int]:
+    present = 0
+    total = len(LEGACY_SERVICES)
+    for label, script_name in LEGACY_SERVICES.items():
+        script_path = OPS_DIR / script_name
+        if script_path.exists():
+            present += 1
+    ok = present == total
+    detail = f"{present}/{total} legacy scripts still present"
+    results.append(_check("Legacy engine inventory", ok, detail, tone="legacy"))
+    return present, total
+
+
+def write_report(report: dict) -> None:
+    REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    REPORT_PATH.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+
+
+def main() -> int:
+    _print_header()
+
+    results: list[dict] = []
+    production_ok = check_production_app(results)
+    preflight_ok = check_public_preflight(results)
+    stripe_listener_ok = check_local_listener(
+        STRIPE_WEBHOOK_HEALTH_URL, "Local Stripe webhook listener", results
+    )
+    demo_listener_ok = check_local_listener(
+        DEMO_WEBHOOK_HEALTH_URL, "Local demo webhook listener", results
+    )
+    critical_agents_passed, critical_agents_total = check_critical_agents(results)
+    booking_ok = check_booking_payment(results)
+    legacy_present, legacy_total = check_legacy_drift(results)
+
+    core_checks = [
+        production_ok,
+        preflight_ok,
+        stripe_listener_ok,
+        demo_listener_ok,
+        critical_agents_passed == critical_agents_total,
+        booking_ok,
+    ]
+    core_healthy = sum(1 for item in core_checks if item)
+    core_total = len(core_checks)
+
+    print("\n" + "=" * 60)
+    print(f"  CORE STACK: {core_healthy}/{core_total} healthy")
+    print(f"  CRITICAL AGENTS: {critical_agents_passed}/{critical_agents_total} loaded")
+    print(f"  LEGACY INVENTORY: {legacy_present}/{legacy_total} scripts present")
+    print("=" * 60)
+
+    if core_healthy == core_total:
+        print("\n  LIVE CALL TAKER STACK IS GREEN.")
+    else:
+        print("\n  ACTION REQUIRED: one or more current-stack checks are failing.")
+
+    report = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "core_healthy": core_healthy,
+        "core_total": core_total,
+        "critical_agents_loaded": critical_agents_passed,
+        "critical_agents_total": critical_agents_total,
+        "legacy_scripts_present": legacy_present,
+        "legacy_scripts_total": legacy_total,
+        "checks": results,
+    }
+    write_report(report)
+    print(f"\n  Report saved: {REPORT_PATH}\n")
+    return 0 if core_healthy == core_total else 1
+
 
 if __name__ == "__main__":
-    run_health_check()
+    sys.exit(main())
