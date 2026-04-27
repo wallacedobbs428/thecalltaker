@@ -25,7 +25,7 @@ We'll check in with you tomorrow to see how it's going!
 
 - This is a milestone moment. The tone should be celebratory and exciting.
 - Only send after verifying call forwarding is actually working — place a test call to their business number and confirm the AI picks up.
-- GHL automation tag trigger: `live`
+- legacy CRM automation tag trigger: `live`
 - The `live` tag also triggers the youre-live-email.md (full welcome package) and starts the check-in sequence (24hr-checkin.md at +24h, review-request.md at +14d, 1week-checkin.md at +7d, 1month-review.md at +30d).
 - Dashboard link should show their call activity once live.
 - The "we'll check in tomorrow" sets the expectation for 24hr-checkin.md.

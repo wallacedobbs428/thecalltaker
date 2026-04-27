@@ -30,7 +30,7 @@ How fast does this happen? Your AI will be live within 2 hours of submitting the
 If you have any questions along the way, we're right here:
 
 📧 wallacemdobbs@icloud.com
-📞 (615) 784-5747
+📞 (629) 269-9697
 🌐 thecalltaker.com
 
 Talk soon,
@@ -41,7 +41,7 @@ Wallace & Mills — The Call Taker Team
 
 - Send within 5 minutes of payment confirmation — speed matters for first impression.
 - The intake form link must be live and working before this email is activated.
-- GHL automation tag trigger: `payment-confirmed`
+- legacy CRM automation tag trigger: `payment-confirmed`
 - This email pairs with the welcome SMS (welcome-sms.md). SMS fires first, email follows within 5 minutes.
 - If the client doesn't submit the intake form within 24 hours, a separate follow-up sequence should nudge them (not covered in this template).
 - Sign-off uses both names to reinforce the small-team, personal feel.

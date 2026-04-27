@@ -6,7 +6,7 @@ Total time: ~1-2 hours from payment to live.
 
 ## FIRST 5 MINUTES
 
-- [ ] **Step 1: Add them to GHL** -- Create contact, add tags "payment-confirmed" + their industry + their plan
+- [ ] **Step 1: Add them to legacy CRM** -- Create contact, add tags "payment-confirmed" + their industry + their plan
   - [How to do this](01-add-client-to-ghl.md)
 
 - [ ] **Step 2: Send the intake form** -- Text them the form link so they fill out their business info
@@ -14,7 +14,7 @@ Total time: ~1-2 hours from payment to live.
 
 ## ONCE THEY SUBMIT THE INTAKE FORM (usually 10-30 min)
 
-- [ ] **Step 3: Set up their AI voice agent** -- Create their custom receptionist in GHL
+- [ ] **Step 3: Set up their AI voice agent** -- Create their custom receptionist in legacy CRM
   - [How to do this](03-setup-voice-agent.md) + grab their [industry script](voice-scripts/)
 
 - [ ] **Step 4: Buy + assign their phone number** -- Get them a local number
@@ -47,6 +47,6 @@ Auto-messages fire (welcome, check-ins scheduled). If automations aren't built y
 
 [Daily operations guide](08-daily-operations.md)
 
-## DON'T KNOW HOW TO DO SOMETHING IN GHL?
+## DON'T KNOW HOW TO DO SOMETHING IN legacy CRM?
 
-[GHL quick reference](10-ghl-how-to.md)
+[legacy CRM quick reference](10-ghl-how-to.md)

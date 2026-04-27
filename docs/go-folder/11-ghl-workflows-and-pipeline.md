@@ -1,6 +1,6 @@
-# GHL Workflows & Pipeline Setup — Click-by-Click Guide
+# legacy CRM Workflows & Pipeline Setup — Click-by-Click Guide
 
-> **Who this is for:** Wallace and Mills. No GHL experience assumed.
+> **Who this is for:** Wallace and Mills. No legacy CRM experience assumed.
 > **What this does:** Sets up a 13-stage client lifecycle pipeline and 7 automated workflows so that when a client pays, every follow-up message, check-in, and internal alert fires automatically.
 > **Login:** [app.gohighlevel.com](https://app.gohighlevel.com)
 > **Location ID:** tQb9YmrGDrdVUJYPKrsY
@@ -183,7 +183,7 @@ How fast does this happen? Your AI will be live within 2 hours of submitting the
 If you have any questions along the way, we're right here:
 
 Email: wallacemdobbs@icloud.com
-Phone: (615) 784-5747
+Phone: (629) 269-9697
 Web: thecalltaker.com
 
 Talk soon,
@@ -197,7 +197,7 @@ Quick reminder — fill out your setup form so we can get your AI live: https://
 
 #### Click-by-Click: Build This Workflow
 
-1. In GHL, look at the **left sidebar**. Find and click **"Automation"** (it has a lightning bolt icon). You might also see it called "Workflows" in some GHL versions.
+1. In legacy CRM, look at the **left sidebar**. Find and click **"Automation"** (it has a lightning bolt icon). You might also see it called "Workflows" in some legacy CRM versions.
 
 2. You'll land on the Automations/Workflows page. Click the **"+ Create Workflow"** button in the top-right corner.
 
@@ -260,15 +260,15 @@ Quick reminder — fill out your setup form so we can get your AI live: https://
     **Option B — Use "Internal Notification" action:**
     - If you see an "Internal Notification" or "Send Notification" action, click it.
     - Set the notification text to: `New client! {{contact.full_name}} just paid`
-    - This sends an in-app notification inside GHL (not a phone push notification). You'll still want Option A for phone alerts.
+    - This sends an in-app notification inside legacy CRM (not a phone push notification). You'll still want Option A for phone alerts.
 
-    > **Use both** if you want — the webhook sends a phone push via ntfy, and the internal notification shows up inside GHL.
+    > **Use both** if you want — the webhook sends a phone push via ntfy, and the internal notification shows up inside legacy CRM.
 
 18. **Turn the workflow ON.** Look at the **top-right area** of the workflow builder. You'll see a toggle switch or a "Publish" / "Save & Publish" button. Click it to activate the workflow. The toggle should turn green or the status should say "Active" or "Published."
 
 19. Click **"Save"** if there's a separate save button.
 
-**This workflow is now live.** Whenever you add the tag `payment-confirmed` to a contact in GHL, this entire sequence fires automatically.
+**This workflow is now live.** Whenever you add the tag `payment-confirmed` to a contact in legacy CRM, this entire sequence fires automatically.
 
 ---
 
@@ -307,7 +307,7 @@ Got it! We're building your AI receptionist now. This usually takes about an hou
 
 6. **Add Send SMS action:** Click **"+"**, select **"Send SMS"**, paste the SMS text from above, save.
 
-7. **Add Move Pipeline Stage action:** Click **"+"** below the SMS. Look for an action called **"Update Opportunity"** or **"Pipeline Stage Change"** or **"Move to Pipeline Stage."** The exact name varies by GHL version. Click it.
+7. **Add Move Pipeline Stage action:** Click **"+"** below the SMS. Look for an action called **"Update Opportunity"** or **"Pipeline Stage Change"** or **"Move to Pipeline Stage."** The exact name varies by legacy CRM version. Click it.
    - **Pipeline:** Select **"Client Lifecycle"** from the dropdown.
    - **Stage:** Select **"Intake Form Submitted"** from the dropdown.
    - If it asks about creating a new opportunity vs. updating existing: choose **"Update Existing Opportunity"** (you want to move their existing card, not create a duplicate).
@@ -353,7 +353,7 @@ Call it a few times, ask it anything a customer would. Once you're happy, we'll 
 ```
 
 > **IMPORTANT:** Before this workflow fires, you must manually replace `[AI PHONE NUMBER]` with the client's actual AI phone number. You can either:
-> - Store their AI number in a GHL custom field (e.g., `{{contact.ai_phone_number}}`) and use that variable, OR
+> - Store their AI number in a legacy CRM custom field (e.g., `{{contact.ai_phone_number}}`) and use that variable, OR
 > - Send this SMS manually instead of through the workflow, since each client has a different number.
 
 #### Click-by-Click: Build This Workflow
@@ -433,7 +433,7 @@ IF SOMETHING SEEMS OFF:
 - Call your own number and test it anytime
 - Text or email us and we'll adjust anything on the fly:
   Email: wallacemdobbs@icloud.com
-  Phone: (615) 784-5747
+  Phone: (629) 269-9697
 
 We'll check in with you tomorrow and again at the 1-week mark. If you need anything before then, just reply to this email.
 
@@ -556,7 +556,7 @@ A FEW QUESTIONS:
 
 If everything's running smooth, great — no need to reply. We'll keep monitoring from our end.
 
-If there's anything you want adjusted, just reply to this email or text us at (615) 784-5747 and we'll make changes same-day.
+If there's anything you want adjusted, just reply to this email or text us at (629) 269-9697 and we'll make changes same-day.
 
 Thanks for trusting us with your calls,
 Wallace & Mills — The Call Taker Team
@@ -634,11 +634,11 @@ And if you've got a specific result you've noticed — like fewer missed calls o
 
 ## SECTION 3: How to Build Any Workflow (Generic Walkthrough)
 
-This section covers the general process for creating any workflow in GHL. Reference this whenever you need to build something new beyond the 7 workflows above.
+This section covers the general process for creating any workflow in legacy CRM. Reference this whenever you need to build something new beyond the 7 workflows above.
 
 ### Step 1: Find the Automations Section
 
-1. Log in to GHL at **app.gohighlevel.com**.
+1. Log in to legacy CRM at **app.gohighlevel.com**.
 2. Look at the **left sidebar** (vertical menu on the left).
 3. Click **"Automation"** — it has a **lightning bolt** icon.
 4. You'll see a list of all existing workflows. Active ones have a green toggle; inactive ones have a gray toggle.
@@ -648,7 +648,7 @@ This section covers the general process for creating any workflow in GHL. Refere
 1. Click **"+ Create Workflow"** in the top-right corner.
 2. You'll see two options:
    - **Start from Scratch** — blank workflow, you build everything.
-   - **Use a Recipe/Template** — GHL has pre-built templates for common tasks. These can save time but you usually need to customize them.
+   - **Use a Recipe/Template** — legacy CRM has pre-built templates for common tasks. These can save time but you usually need to customize them.
 3. Click **"Start from Scratch"**, then **"Continue"** (or **"Create"**).
 4. Click the workflow name at the top of the screen to rename it. Use a clear, descriptive name.
 
@@ -662,11 +662,11 @@ The trigger is what starts the workflow. Click the trigger box at the top of the
 |----------------------------|------------------------------------------------------------------|-----------------------------------------|
 | **Contact Tag (Added)**    | When a specific tag is added to a contact                       | `payment-confirmed` tag added           |
 | **Contact Tag (Removed)**  | When a specific tag is removed from a contact                   | `active-client` removed (they churned)  |
-| **Form Submitted**         | When a contact fills out a GHL form                              | Intake form submitted                   |
+| **Form Submitted**         | When a contact fills out a legacy CRM form                              | Intake form submitted                   |
 | **Appointment Status**     | When an appointment status changes (booked, confirmed, etc.)    | Demo call booked                        |
 | **Pipeline Stage Changed** | When an opportunity moves to a specific pipeline stage           | Moved to "Live / Active"                |
-| **Contact Created**        | When a new contact is created in GHL                             | New lead added                          |
-| **Inbound Webhook**        | When an external system sends a POST request to a GHL webhook   | Stripe payment notification             |
+| **Contact Created**        | When a new contact is created in legacy CRM                             | New lead added                          |
+| **Inbound Webhook**        | When an external system sends a POST request to a legacy CRM webhook   | Stripe payment notification             |
 | **Date/Time**              | At a specific time on a recurring schedule                       | Every Monday at 9 AM                    |
 
 **How to configure a trigger:**
@@ -693,11 +693,11 @@ Actions are the steps that happen after the trigger fires. Click the **"+"** bel
 | **Update Opportunity**      | Moves an opportunity to a different pipeline stage                              |
 | **Create Opportunity**      | Creates a new opportunity (card) in a pipeline                                 |
 | **Webhook**                 | Sends an HTTP request to an external URL (used for ntfy notifications)         |
-| **Internal Notification**   | Sends a notification inside GHL to a specific user                             |
+| **Internal Notification**   | Sends a notification inside legacy CRM to a specific user                             |
 | **If/Else**                 | Creates a branch — if a condition is true, go one path; if false, go another  |
 | **Go To**                   | Jumps to another step in the workflow (for loops)                               |
 | **Update Contact Field**    | Changes a custom field value on the contact                                    |
-| **Assign User**             | Assigns a GHL user to the contact                                              |
+| **Assign User**             | Assigns a legacy CRM user to the contact                                              |
 
 **How to configure an action:**
 1. Click **"+"** to add a new step.
@@ -762,7 +762,7 @@ Actions are the steps that happen after the trigger fires. Click the **"+"** bel
 
 ## SECTION 4: Tags Reference
 
-Tags are labels you attach to contacts in GHL. They're used to trigger workflows, segment contacts, and track where each client is in your process. Here's every tag used in The Call Taker system and what it means.
+Tags are labels you attach to contacts in legacy CRM. They're used to trigger workflows, segment contacts, and track where each client is in your process. Here's every tag used in The Call Taker system and what it means.
 
 ### Lifecycle Tags (Client Status)
 
@@ -915,7 +915,7 @@ CLIENT APPROVES, FORWARDING IS SET UP
 
 **"The email didn't send"**
 - Does the contact have an email address?
-- Is your sending email/domain configured in GHL? Go to Settings (gear icon) > Email Services.
+- Is your sending email/domain configured in legacy CRM? Go to Settings (gear icon) > Email Services.
 
 **"The pipeline stage didn't update"**
 - Does the contact have an opportunity in the Client Lifecycle pipeline? The "Update Opportunity" action can only move existing opportunities — it can't create one from scratch. If they don't have an opportunity yet, add one manually first (go to Opportunities, click "+ Add" in the appropriate stage).

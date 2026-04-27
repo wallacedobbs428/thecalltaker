@@ -1,12 +1,12 @@
 # Step 5: Set Up Call Forwarding
 
-This isn't something you do in GHL. This is something the CLIENT does on their phone or through their phone provider. Your job is to send them the right instructions.
+This isn't something you do in legacy CRM. This is something the CLIENT does on their phone or through their phone provider. Your job is to send them the right instructions.
 
 ---
 
 ## First: Ask the client what phone carrier they use
 
-Send them this text from GHL Conversations (or from your personal phone):
+Send them this text from legacy CRM Conversations (or from your personal phone):
 
 ```
 Quick question -- what phone carrier or phone system do you use for your business line? (AT&T, Verizon, T-Mobile, Google Voice, RingCentral, landline, etc.)
@@ -94,7 +94,7 @@ Replace `[AI NUMBER]` with the actual AI phone number you bought in Step 4 (e.g.
 3. Tap or click the **"Calls"** tab
 4. Under **"Call forwarding"**, tap **"Add a forwarding number"** or **"Add linked number"**
 5. Enter the AI phone number: `[AI NUMBER]`
-6. Google will send a verification code to that number -- you'll need to retrieve it from the GHL call log or have someone answer. (If this is tricky, call Google Voice support or just forward at the carrier level instead.)
+6. Google will send a verification code to that number -- you'll need to retrieve it from the legacy CRM call log or have someone answer. (If this is tricky, call Google Voice support or just forward at the carrier level instead.)
 7. Once verified, make sure the toggle next to the AI number is **ON**
 
 ---

@@ -1,12 +1,12 @@
 # Step 2: Send the Intake Form
 
-The client is in GHL. Now you need their business info (hours, services, how they want calls handled) before you can build their AI agent. The intake form collects all of this.
+The client is in legacy CRM. Now you need their business info (hours, services, how they want calls handled) before you can build their AI agent. The intake form collects all of this.
 
 ---
 
 ## Click-by-click: Send the form link via SMS
 
-1. In GHL, look at the **left sidebar** and click the **chat bubble icon** labeled **"Conversations"**
+1. In legacy CRM, look at the **left sidebar** and click the **chat bubble icon** labeled **"Conversations"**
 2. You'll see a list of conversations. In the **search bar at the top**, type the client's name or phone number
 3. Click on their conversation to open it
 4. At the bottom of the conversation, you'll see a message input box. Above it or next to it, there are channel tabs: **SMS**, **Email**, **WhatsApp**, etc.
@@ -34,7 +34,7 @@ People get busy. Don't let this stall your onboarding.
 
 ### After 30 minutes -- no submission
 
-Go back to their conversation in GHL and send this:
+Go back to their conversation in legacy CRM and send this:
 
 ```
 Hey [FIRST NAME], just checking in -- did you get a chance to fill out the setup form? The sooner we get your info, the sooner your AI starts catching calls: https://thecalltaker.com/onboarding/intake.html
@@ -63,7 +63,7 @@ This happens a lot. Don't get frustrated. Here's how to handle it:
    - Whether they have an on-call tech for emergencies
    - Whether the AI should give pricing info or not
    - Their service area (cities, zip codes, or radius)
-   - A name for the AI receptionist (or just use "Jessica")
+   - A name for the AI receptionist (or just use "Gideon")
 
 ---
 
@@ -71,13 +71,13 @@ This happens a lot. Don't get frustrated. Here's how to handle it:
 
 The intake form at `https://thecalltaker.com/onboarding/intake.html` submits data via webhook. Here's how to find it:
 
-**Option A: Check their GHL contact profile**
+**Option A: Check their legacy CRM contact profile**
 1. Go to **Contacts** (person icon in left sidebar)
 2. Search for the client
 3. Click their name
 4. Look in the **Activity** tab or **Notes** section -- the form data may appear as a note or activity entry (depends on how the webhook is set up)
 
-**Option B: Check GHL form submissions**
+**Option B: Check legacy CRM form submissions**
 1. Click the **gear icon** at the bottom of the left sidebar to go to **Settings**
 2. In the left panel, look for **"Integrations"** or **"Webhooks"**
 3. Click it and look for recent incoming webhook data from the intake form

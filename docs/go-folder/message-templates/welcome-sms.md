@@ -17,9 +17,9 @@ Hey [FIRST NAME]! Payment received — welcome to The Call Taker! 🎉 We're pum
 
 ## Usage Notes
 
-- Send immediately upon payment confirmation in GHL.
+- Send immediately upon payment confirmation in legacy CRM.
 - This is the very first touchpoint after purchase — tone should be high-energy and reassuring.
 - If payment comes in after business hours, the SMS still sends immediately. The 2-hour SLA begins when they submit the intake form, not when they pay.
-- GHL automation tag trigger: `payment-confirmed`
+- legacy CRM automation tag trigger: `payment-confirmed`
 - Ensure the welcome email (welcome-email.md) fires within 5 minutes of this SMS.
 - Character count: ~243 characters (fits in 2 SMS segments).

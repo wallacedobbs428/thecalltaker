@@ -1,8 +1,8 @@
-# GHL Quick Reference — How to Do Stuff
+# legacy CRM Quick Reference — How to Do Stuff
 
-Step-by-step instructions for every common GHL task. If you're wondering "how do I do X in GHL?", it's in here.
+Step-by-step instructions for every common legacy CRM task. If you're wondering "how do I do X in legacy CRM?", it's in here.
 
-**GHL Login:** [app.gohighlevel.com](https://app.gohighlevel.com)
+**legacy CRM Login:** [app.gohighlevel.com](https://app.gohighlevel.com)
 **Location ID:** tQb9YmrGDrdVUJYPKrsY
 
 ---
@@ -98,9 +98,9 @@ When the same person appears as two different contacts (e.g., one from a call an
    - It might be under a **three-dot menu** (top right of the profile)
    - Or it might be a button labeled **"Merge Contact"** or **"Find Duplicates"**
 4. Click **"Merge"**
-5. GHL will ask you to **search for the duplicate contact** — type their name or phone number
+5. legacy CRM will ask you to **search for the duplicate contact** — type their name or phone number
 6. Select the duplicate from the results
-7. GHL will show you a **comparison of both contacts** — which fields to keep from each
+7. legacy CRM will show you a **comparison of both contacts** — which fields to keep from each
 8. For each field (name, email, phone, etc.), choose which version to keep (or keep both if applicable)
 9. Click **"Merge"** or **"Confirm"**
 10. The two contacts become one, with the combined information and history
@@ -450,7 +450,7 @@ Managing the automated processes that send notifications, tag contacts, etc.
 4. The workflow will stop running. No new triggers will fire. (Contacts already in the workflow may still complete their current step.)
 
 **Quick toggle from the list (if available):**
-Some versions of GHL show a toggle switch right in the workflow list without needing to open it. If you see a toggle next to the workflow name, you can click it directly.
+Some versions of legacy CRM show a toggle switch right in the workflow list without needing to open it. If you see a toggle next to the workflow name, you can click it directly.
 
 ---
 
@@ -562,22 +562,22 @@ Here's what every icon in the left sidebar does, from top to bottom:
 | Card | Payments | Invoices, subscriptions, payment links |
 | Gear | Settings | Everything else — phone numbers, AI agents, integrations, team, billing |
 
-**Note:** Your sidebar might look slightly different depending on your GHL plan and what's been enabled. If you don't see an option, it might be collapsed — look for a **"..."** or **"More"** option at the bottom of the sidebar.
+**Note:** Your sidebar might look slightly different depending on your legacy CRM plan and what's been enabled. If you don't see an option, it might be collapsed — look for a **"..."** or **"More"** option at the bottom of the sidebar.
 
 ---
 
 ## Keyboard Shortcuts (If You Want to Be Faster)
 
-GHL doesn't have many keyboard shortcuts, but these browser shortcuts help:
+legacy CRM doesn't have many keyboard shortcuts, but these browser shortcuts help:
 
 | Shortcut | What It Does |
 |----------|-------------|
 | Cmd+R (Mac) / F5 (PC) | Refresh the page |
 | Cmd+F (Mac) / Ctrl+F (PC) | Search on the current page (useful for finding text in long agent scripts) |
-| Cmd+Shift+N (Mac) / Ctrl+Shift+N (PC) | Open incognito window (useful when GHL is acting up) |
+| Cmd+Shift+N (Mac) / Ctrl+Shift+N (PC) | Open incognito window (useful when legacy CRM is acting up) |
 | Cmd+T (Mac) / Ctrl+T (PC) | Open a new browser tab |
 | Cmd+L (Mac) / Ctrl+L (PC) | Jump to browser address bar |
 
 ---
 
-That's the whole reference. Bookmark this page. When you need to do something in GHL and can't remember how, come here first.
+That's the whole reference. Bookmark this page. When you need to do something in legacy CRM and can't remember how, come here first.

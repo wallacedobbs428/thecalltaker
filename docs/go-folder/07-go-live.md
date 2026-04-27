@@ -6,7 +6,7 @@ All 3 tests passed. Call forwarding is set up. Time to flip the switch and make 
 
 ## 1. Confirm with the client
 
-Open GHL > **Conversations** (chat bubble in left sidebar) > find the client.
+Open legacy CRM > **Conversations** (chat bubble in left sidebar) > find the client.
 
 Send this text (SMS):
 
@@ -47,9 +47,9 @@ Once they confirm forwarding is done:
 
 ---
 
-## 4. Tag them as "live" in GHL
+## 4. Tag them as "live" in legacy CRM
 
-1. In GHL, click **"Contacts"** (person icon in left sidebar)
+1. In legacy CRM, click **"Contacts"** (person icon in left sidebar)
 2. Search for the client and click on their name
 3. Scroll down to the **"Tags"** section on their profile
 4. Click inside the tags field and type: `live` -- press **Enter**
@@ -64,7 +64,7 @@ Once they confirm forwarding is done:
 
 ## 5. Move them in the pipeline (if you have one set up)
 
-If you've built a pipeline in GHL:
+If you've built a pipeline in legacy CRM:
 
 1. In the left sidebar, click **"Opportunities"** (it might show as a dollar sign icon or "Pipeline")
 2. Find the pipeline called "Client Lifecycle" or whatever you named it
@@ -78,11 +78,11 @@ If you've built a pipeline in GHL:
 
 ### Automated (if automations are built)
 
-If you've built a GHL automation that triggers when the `live` tag is added, the welcome messages should fire automatically. Check Conversations to see if they went out.
+If you've built a legacy CRM automation that triggers when the `live` tag is added, the welcome messages should fire automatically. Check Conversations to see if they went out.
 
 ### Manual (if automations aren't built yet)
 
-**Send this SMS** from GHL Conversations:
+**Send this SMS** from legacy CRM Conversations:
 
 ```
 You're LIVE! Every call to your business number is now answered by your AI receptionist 24/7. You'll get a text every time a new lead comes in.
@@ -96,7 +96,7 @@ Try it right now -- call your own number and hear your AI answer!
 
 ### From your personal phone
 
-Also send a personal text from your own phone (NOT from GHL -- this feels more personal):
+Also send a personal text from your own phone (NOT from legacy CRM -- this feels more personal):
 
 ```
 Hey [FIRST NAME], it's [your name] from The Call Taker. You're all set! Try calling your own number right now and you'll hear your AI answer. Let me know if you want anything tweaked. Welcome aboard!
@@ -128,13 +128,13 @@ Bookmark these -- you can check call activity, update settings, and reach us any
 
 ## 8. Set up check-in reminders
 
-The client needs to hear from you after going live. Set these reminders for yourself (phone alarm, calendar event, or GHL task):
+The client needs to hear from you after going live. Set these reminders for yourself (phone alarm, calendar event, or legacy CRM task):
 
 - **24 hours after go-live:** Text them asking how it's going, if any calls came in yet
 - **1 week after go-live:** Review call volume, ask if they're happy, handle any tweaks
 - **1 month after go-live:** Full performance review -- how many calls, how many leads captured, are they getting value
 
-If GHL automations handle these, great. If not, set a phone alarm right now so you don't forget.
+If legacy CRM automations handle these, great. If not, set a phone alarm right now so you don't forget.
 
 **24-hour check-in message** (send tomorrow):
 
@@ -157,7 +157,7 @@ Here's what should be true right now:
 - [ ] Client's business phone forwards to their AI number
 - [ ] AI answers with the correct business name and greeting
 - [ ] AI correctly handles service calls, emergencies, and general questions
-- [ ] Client is tagged `live` + `active-client` in GHL
+- [ ] Client is tagged `live` + `active-client` in legacy CRM
 - [ ] Client received "you're live" text and email
 - [ ] Client received personal welcome text from you
 - [ ] Client has their dashboard and portal links
@@ -169,4 +169,4 @@ Here's what should be true right now:
 
 - Daily: Check the [Daily Operations Guide](08-daily-operations.md) every morning
 - If issues come up: [Troubleshooting Guide](09-troubleshooting.md)
-- Need to look something up in GHL: [GHL Quick Reference](10-ghl-how-to.md)
+- Need to look something up in legacy CRM: [legacy CRM Quick Reference](10-ghl-how-to.md)

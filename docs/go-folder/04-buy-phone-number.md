@@ -6,9 +6,9 @@ The AI agent exists but has no phone number. Nobody can call it yet. This step g
 
 ## Click-by-click: Buy a phone number
 
-1. In GHL, click the **gear icon** at the bottom of the left sidebar to open **Settings**
+1. In legacy CRM, click the **gear icon** at the bottom of the left sidebar to open **Settings**
 2. In the Settings left panel, look for **"Phone Numbers"** -- it might be listed under a group called "LC Phone" or "Phone System" or "Business Info". Click it.
-3. You'll see a list of phone numbers already in the system (the demo line (615) 784-5747 should be there).
+3. You'll see a list of phone numbers already in the system (the demo line (629) 269-9697 should be there).
 4. Click the **"+ Add Number"** button in the top-right area. It might say "Buy Number" or "Purchase Number" or "Add Phone Number".
 5. A dialog/panel will appear with a search field. This is where you search for available numbers.
 6. In the search field, type the client's **area code**:
@@ -28,7 +28,7 @@ The AI agent exists but has no phone number. Nobody can call it yet. This step g
 
 ## Click-by-click: Assign the number to the AI agent
 
-Now you need to tell GHL that this phone number should be answered by the AI agent you built in Step 3.
+Now you need to tell legacy CRM that this phone number should be answered by the AI agent you built in Step 3.
 
 12. Stay in Settings. In the left panel, click **"Conversation AI"** (same place you went in Step 3).
 13. You'll see your list of AI agents. Find the one you just created for this client (it should say "[Business Name] - Receptionist").

@@ -2,7 +2,7 @@
 
 When something breaks, find the problem below and follow the fix. Every fix is click-by-click.
 
-**GHL Login:** [app.gohighlevel.com](https://app.gohighlevel.com)
+**legacy CRM Login:** [app.gohighlevel.com](https://app.gohighlevel.com)
 **Location ID:** tQb9YmrGDrdVUJYPKrsY
 
 ---
@@ -48,7 +48,7 @@ An agent can be "Active" but if no phone number is connected to it, calls won't 
 
 ### Check C: Is Call Forwarding Still Active on the Client's End?
 
-Even if everything is perfect in GHL, if the client's phone company isn't forwarding calls to us, nothing will work.
+Even if everything is perfect in legacy CRM, if the client's phone company isn't forwarding calls to us, nothing will work.
 
 1. Call the **client's business phone number** from your personal phone
 2. Listen to what happens:
@@ -146,7 +146,7 @@ Notifications are sent by automated workflows. If the workflow got turned off, n
 
 ## Problem 5: Contact Was Created but No Tags Applied
 
-A new contact appeared in GHL but they don't have the right tags (like `demo-request` or `water-damage` or the client's vertical tag).
+A new contact appeared in legacy CRM but they don't have the right tags (like `demo-request` or `water-damage` or the client's vertical tag).
 
 ### Fix: Manually Add Tags
 
@@ -255,9 +255,9 @@ You are a friendly, natural-sounding receptionist. Speak casually and warmly, li
 
 ---
 
-## Problem 8: GHL Won't Load / 403 Error / Cloudflare Error
+## Problem 8: legacy CRM Won't Load / 403 Error / Cloudflare Error
 
-You're trying to access GHL and getting an error page instead of the app.
+You're trying to access legacy CRM and getting an error page instead of the app.
 
 ### If This Happens in a Web Browser:
 
@@ -269,17 +269,17 @@ You're trying to access GHL and getting an error page instead of the app.
    - Chrome: Cmd+Shift+N
    - Safari: Cmd+Shift+N
 4. **Try a different browser** entirely (if you're in Safari, try Chrome, or vice versa)
-5. **Check if GHL is down for everyone:** Go to [status.gohighlevel.com](https://status.gohighlevel.com) or search Twitter for "GoHighLevel down"
+5. **Check if legacy CRM is down for everyone:** Go to [status.gohighlevel.com](https://status.gohighlevel.com) or search Twitter for "legacy CRM down"
 
 ### If This Happens with API Calls (Python/Code):
 
-This is a **Cloudflare block**. GHL's Cloudflare protection blocks requests that look like bots.
+This is a **Cloudflare block**. legacy CRM's Cloudflare protection blocks requests that look like bots.
 
-**The fix:** Every API call to GHL MUST include a custom User-Agent header.
+**The fix:** Every API call to legacy CRM MUST include a custom User-Agent header.
 
 ```python
 headers = {
-    "Authorization": "Bearer pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35",
+    "Authorization": "Bearer REMOVED_SECRET",
     "User-Agent": "TheCallTaker/1.0",
     "Content-Type": "application/json"
 }
@@ -289,7 +289,7 @@ headers = {
 
 If you're using `curl`, add the header:
 ```bash
-curl -H "Authorization: Bearer YOUR_KEY" -H "User-Agent: TheCallTaker/1.0" https://services.leadconnectorhq.com/...
+curl -H "Authorization: Bearer YOUR_KEY" -H "User-Agent: TheCallTaker/1.0" https://crm-disabled.invalid/...
 ```
 
 ---
@@ -321,7 +321,7 @@ If dragging keeps failing, just change the stage from inside the card:
 If nothing works:
 1. Try a different browser
 2. Clear your cache (see Problem 8 instructions)
-3. If still broken, GHL might be having issues — check [status.gohighlevel.com](https://status.gohighlevel.com)
+3. If still broken, legacy CRM might be having issues — check [status.gohighlevel.com](https://status.gohighlevel.com)
 
 ---
 
@@ -414,7 +414,7 @@ When something's broken and you don't know what, run through this:
 [ ] Notification workflow is Active (Automations)
 [ ] Contact has correct tags (Contacts → click contact → Tags)
 [ ] Client's phone/email is correct in their profile
-[ ] GHL is not down (status.gohighlevel.com)
+[ ] legacy CRM is not down (status.gohighlevel.com)
 [ ] API calls include User-Agent header (for code issues)
 ```
 

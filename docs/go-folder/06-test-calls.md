@@ -10,7 +10,7 @@ Have these things ready:
 
 - [ ] The **AI phone number** from Step 4 (this is the number you call)
 - [ ] The client's **intake form** open so you can check if the AI is saying the right stuff
-- [ ] Your **personal phone** (use this to make the calls -- NOT the client's number, NOT a GHL number)
+- [ ] Your **personal phone** (use this to make the calls -- NOT the client's number, NOT a legacy CRM number)
 - [ ] A pen/paper or notes app to write down anything that's wrong
 
 ---
@@ -50,7 +50,7 @@ This tests the normal everyday scenario -- someone calls because they need a ser
 ### Checklist -- ALL of these must pass
 
 - [ ] AI greeted with the **correct business name** (not "The Call Taker", not another client's name)
-- [ ] AI used the **correct receptionist name** (Jessica, Sarah, whatever they chose)
+- [ ] AI used the **correct receptionist name** (Gideon, Sarah, whatever they chose)
 - [ ] AI asked for your **name**
 - [ ] AI asked for your **phone number**
 - [ ] AI asked for your **address or location**
@@ -61,7 +61,7 @@ This tests the normal everyday scenario -- someone calls because they need a ser
 
 ### After the call
 
-1. Open GHL in your browser
+1. Open legacy CRM in your browser
 2. In the left sidebar, click **"Contacts"** (person icon)
 3. In the search bar, type **"John Smith"**
 4. If the contact was created, click on it and check:
@@ -107,7 +107,7 @@ This tests how the AI handles urgent situations. The AI needs to stay calm, be r
 
 ### After the call
 
-1. Go to GHL > Contacts > search "Jane Doe"
+1. Go to legacy CRM > Contacts > search "Jane Doe"
 2. Check that the contact was created with the right info
 3. Check if an emergency/urgent notification was sent (if automations exist for this)
 
@@ -147,7 +147,7 @@ Don't panic. Here's how to fix it:
 
 1. **Write down exactly what went wrong.** Be specific: "AI said business hours were 9-5 but they're actually 8-6" or "AI forgot to ask for phone number" or "AI said [BUSINESS NAME] instead of the actual name."
 
-2. Open GHL: click the **gear icon** > **Settings** > **Conversation AI**
+2. Open legacy CRM: click the **gear icon** > **Settings** > **Conversation AI**
 
 3. Find the client's agent in the list and **click on it** to open the settings
 
@@ -172,7 +172,7 @@ Don't panic. Here's how to fix it:
 
 After all tests pass, delete the fake contacts so they don't clutter the system:
 
-1. Go to GHL > **Contacts** (person icon in left sidebar)
+1. Go to legacy CRM > **Contacts** (person icon in left sidebar)
 2. Search for **"John Smith"**
 3. Click on the contact
 4. Look for a **"Delete"** option -- it might be:

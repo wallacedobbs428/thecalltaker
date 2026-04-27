@@ -23,7 +23,7 @@ Want me to walk you through it right now, or would you rather do a quick call? J
 
 - Send after completing 3 internal test calls that cover: a standard service inquiry, an after-hours call, and an edge case (e.g., wrong number or unusual request).
 - The 3-test standard is our QA bar. Do not send this message until all 3 pass cleanly.
-- GHL automation tag trigger: `tests-passed`
+- legacy CRM automation tag trigger: `tests-passed`
 - Offer both self-service and guided options for call forwarding. Most clients prefer a quick walkthrough.
 - Common forwarding instructions by carrier:
   - **AT&T / T-Mobile**: Dial `*61*[AI PHONE NUMBER]#` then press call

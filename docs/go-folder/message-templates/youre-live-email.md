@@ -45,7 +45,7 @@ Know another business owner who's tired of missing calls? Refer them to The Call
 We'll be checking in with you over the next few weeks to make sure everything's running perfectly. And if you ever need anything at all:
 
 📧 wallacemdobbs@icloud.com
-📞 (615) 784-5747
+📞 (629) 269-9697
 🌐 thecalltaker.com
 
 Welcome to the future of answering your phone.
@@ -56,7 +56,7 @@ Wallace & Mills — The Call Taker Team
 ## Usage Notes
 
 - This is the most important email in the onboarding sequence. It should feel like a celebration.
-- GHL automation tag trigger: `live`
+- legacy CRM automation tag trigger: `live`
 - Sends alongside the youre-live-sms.md. The SMS is the quick hit; this email is the full package.
 - The customer portal link must be active and showing their data before this email goes out.
 - The referral offer is soft — no hard sell, just a mention. It gets reinforced in later emails (1week-checkin.md, 1month-review.md).

@@ -39,7 +39,7 @@ After a full month of data, this is a great time to fine-tune:
 - Want to change how your AI handles specific types of calls?
 - Notification preferences working well?
 
-Just reply to this email or text us at (615) 784-5747. We'll make any changes same-day.
+Just reply to this email or text us at (629) 269-9697. We'll make any changes same-day.
 
 WANT TO DO EVEN MORE?
 
@@ -65,16 +65,16 @@ Looking forward to another great month,
 Wallace & Mills — The Call Taker Team
 
 📧 wallacemdobbs@icloud.com
-📞 (615) 784-5747
+📞 (629) 269-9697
 ```
 
 ## Usage Notes
 
 - This is a data-driven retention email. The numbers do the selling.
-- GHL automation: schedule to send 30 days after `live` tag is applied.
+- legacy CRM automation: schedule to send 30 days after `live` tag is applied.
 - **Before sending**: The stat placeholders ([TOTAL_CALLS], [LEADS_CAPTURED], [AFTER_HOURS_CALLS]) must be populated with real data from the client's call logs. Do not send this email with placeholder text.
 - Data sources for stats:
-  - Total calls: GHL contact activity log filtered by AI phone number
+  - Total calls: legacy CRM contact activity log filtered by AI phone number
   - Leads captured: Contacts created with client's tag in the past 30 days
   - After-hours calls: Calls received outside client's stated business hours
 - The conditional upsell section should only be included for Starter ($497/mo) clients. Pro clients ($997/mo) should get the email without that section.

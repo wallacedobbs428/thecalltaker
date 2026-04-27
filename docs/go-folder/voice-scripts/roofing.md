@@ -3,7 +3,7 @@
 ## Agent Setup
 - Agent Name: [BUSINESS NAME] - Receptionist
 - AI Name: [AI NAME]
-- Voice: Keep default (Jessica voice)
+- Voice: Keep default (Gideon voice)
 
 ## Script (paste this into the agent instructions field)
 

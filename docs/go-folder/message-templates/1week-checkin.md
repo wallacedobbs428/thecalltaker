@@ -25,7 +25,7 @@ By now your AI receptionist has been answering calls for 7 days straight — nig
 
 WE'RE HAPPY TO TWEAK ANYTHING
 
-Seriously — the first week is when we fine-tune everything. Just reply to this email or text us at (615) 784-5747 and tell us what you want changed. No charge, no hassle. It's part of the service.
+Seriously — the first week is when we fine-tune everything. Just reply to this email or text us at (629) 269-9697 and tell us what you want changed. No charge, no hassle. It's part of the service.
 
 Common week-1 tweaks our clients request:
 - "Can the AI mention our current promotion?"
@@ -47,13 +47,13 @@ Talk soon,
 Wallace & Mills — The Call Taker Team
 
 📧 wallacemdobbs@icloud.com
-📞 (615) 784-5747
+📞 (629) 269-9697
 ```
 
 ## Usage Notes
 
 - This is the retention-critical email. Week 1 is when clients either settle in or start having doubts. Proactive check-in prevents churn.
-- GHL automation: schedule to send 7 days after `live` tag is applied.
+- legacy CRM automation: schedule to send 7 days after `live` tag is applied.
 - The "common tweaks" section is intentional — it normalizes making changes and encourages clients to engage rather than silently get frustrated.
 - If the client replies with any issues, prioritize response time. Treat week-1 issues as urgent.
 - If the client doesn't reply at all, follow up with a quick SMS 2 days later: "Hey [FIRST NAME], just checking — did you see our email? Everything running smooth with your AI?"

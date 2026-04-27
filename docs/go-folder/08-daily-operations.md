@@ -2,7 +2,7 @@
 
 Everything you need to do every day to keep The Call Taker running smooth. This should take about 15 minutes once you get the rhythm down.
 
-**GHL Login:** [app.gohighlevel.com](https://app.gohighlevel.com)
+**legacy CRM Login:** [app.gohighlevel.com](https://app.gohighlevel.com)
 **Location ID:** tQb9YmrGDrdVUJYPKrsY
 
 ---
@@ -32,7 +32,7 @@ These are push notifications from our bots — new leads, form submissions, erro
 
 ---
 
-### Step 2: Review Missed Calls in GHL (3 min)
+### Step 2: Review Missed Calls in legacy CRM (3 min)
 
 Any call that came in and didn't get answered needs your attention.
 
@@ -326,7 +326,7 @@ So you know when to worry and when things are fine:
 Before you close the laptop:
 
 1. Quick scan of ntfy for anything that came in during the day
-2. Make sure no unread conversations are sitting in GHL
+2. Make sure no unread conversations are sitting in legacy CRM
 3. Check that all AI agents still show "Active"
 4. If anything needs attention tomorrow, send yourself a note in the war room topic:
    ```

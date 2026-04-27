@@ -21,7 +21,7 @@ If you want us to tweak anything — the greeting, how it says your business nam
 
 - This is a high-value touchpoint. The first 24 hours determine whether a client feels confident or anxious about the service.
 - Keep it casual and personal — this should read like a text from a friend, not a support ticket.
-- GHL automation: schedule to send exactly 24 hours after `live` tag is applied.
+- legacy CRM automation: schedule to send exactly 24 hours after `live` tag is applied.
 - Common adjustments clients request after day 1:
   - Change the greeting wording
   - Adjust name pronunciation

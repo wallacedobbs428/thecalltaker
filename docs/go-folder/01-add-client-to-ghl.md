@@ -1,6 +1,6 @@
-# Step 1: Add Client to GHL
+# Step 1: Add Client to legacy CRM
 
-You just got paid. First thing: get this person into GHL as a contact so the system knows they exist.
+You just got paid. First thing: get this person into legacy CRM as a contact so the system knows they exist.
 
 ---
 
@@ -56,7 +56,7 @@ You just got paid. First thing: get this person into GHL as a contact so the sys
 1. You should see the new contact appear in your contacts list.
 2. Click on their name to open their profile.
 3. Check that all 3 tags are showing under their profile.
-4. If the onboarding automation is already built in GHL, a welcome text should fire within 60 seconds. To check:
+4. If the onboarding automation is already built in legacy CRM, a welcome text should fire within 60 seconds. To check:
    - In the **left sidebar**, click the **chat bubble icon** labeled **"Conversations"**
    - Find the client in the conversation list (search by name or phone)
    - Look for an automated welcome message

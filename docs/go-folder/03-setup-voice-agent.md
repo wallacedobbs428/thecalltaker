@@ -28,16 +28,16 @@ If the voice script for their industry doesn't exist yet, use the HVAC one as a 
 
 ---
 
-## Click-by-click: Create the AI agent in GHL
+## Click-by-click: Create the AI agent in legacy CRM
 
 ### Get to the Conversation AI settings
 
-1. Open GHL in your browser: **app.gohighlevel.com**
+1. Open legacy CRM in your browser: **app.gohighlevel.com**
 2. Make sure you're in the correct location (top-left dropdown should say "The Call Taker")
 3. Look at the **bottom of the left sidebar** for the **gear icon** -- click it to open **Settings**
 4. You're now in the Settings page. Look at the **left panel** (inside Settings, there's another sidebar menu)
 5. Scroll down or look for a section called **"Conversation AI"** -- it might be listed under a group called "AI" or "Phone" or "Business Tools". Click **"Conversation AI"**
-6. You should see a page that lists AI agents. You might see "Jessica" or the demo agent already there.
+6. You should see a page that lists AI agents. You might see "Gideon" or the demo agent already there.
 
 ### Create a new agent
 
@@ -64,7 +64,7 @@ This is the most important part. The instructions field tells the AI exactly how
 
 12. **Select and copy the ENTIRE script** from the voice script file (Ctrl+A, Ctrl+C on Windows, or Cmd+A, Cmd+C on Mac).
 
-13. **Paste it** into the Agent Instructions field in GHL (click inside the field, then Ctrl+V or Cmd+V).
+13. **Paste it** into the Agent Instructions field in legacy CRM (click inside the field, then Ctrl+V or Cmd+V).
 
 14. **Now you have to replace every [BRACKET] placeholder with the client's real info.** This is where mistakes happen, so go slow.
 
@@ -73,7 +73,7 @@ This is the most important part. The instructions field tells the AI exactly how
     | Placeholder | Replace with | Where to find it |
     |------------|-------------|-----------------|
     | `[BUSINESS NAME]` | Their exact business name, e.g., "Palmetto Comfort" | Intake form, "Business Name" field |
-    | `[AI NAME]` | The name they want the AI to use, e.g., "Jessica", "Sarah", "Emma" | Intake form. If they left it blank, use **"Jessica"** |
+    | `[AI NAME]` | The name they want the AI to use, e.g., "Gideon", "Sarah", "Emma" | Intake form. If they left it blank, use **"Gideon"** |
     | `[SERVICES]` | Comma-separated list of their services | Intake form, "Services" field. Example: "AC repair, heating installation, duct cleaning, maintenance plans" |
     | `[BUSINESS HOURS]` | Their hours in spoken format | Intake form. Example: "Monday through Friday 8 AM to 5 PM, Saturday 9 AM to 1 PM, closed Sundays" |
     | `[CALLBACK TIME]` | How fast they promise to call back | Intake form. Example: "within 15 minutes" or "within 30 minutes" or "within the hour" |
@@ -98,7 +98,7 @@ This is the most important part. The instructions field tells the AI exactly how
     - **"Voice Selection"**
     It might be near the top, bottom, or in an "Advanced Settings" section.
 
-17. Our default voice is Voice ID: `w9rPM8AIZle60Nbpw7nl` -- this is what Jessica uses on the demo line. Keep this same voice unless the client specifically requested a different voice (male voice, different accent, etc.).
+17. Our default voice is Voice ID: `w9rPM8AIZle60Nbpw7nl` -- this is what Gideon uses on the demo line. Keep this same voice unless the client specifically requested a different voice (male voice, different accent, etc.).
 
 18. If you can see a voice dropdown, select the matching voice. If you see a text field for Voice ID, paste: `w9rPM8AIZle60Nbpw7nl`
 
@@ -118,7 +118,7 @@ This is the most important part. The instructions field tells the AI exactly how
 Hey, thanks for calling [BUSINESS NAME], this is [AI NAME] -- how can I help you today?
 ```
 
-Example: "Hey, thanks for calling Palmetto Comfort, this is Jessica -- how can I help you today?"
+Example: "Hey, thanks for calling Palmetto Comfort, this is Gideon -- how can I help you today?"
 
 ### Save everything
 
@@ -158,7 +158,7 @@ Some clients will be furious if the AI quotes prices they didn't approve. If the
 If you pick "Chat" instead of "Inbound Call", the agent will handle website chat, not phone calls. Make sure you select **"Inbound Call"**.
 
 **Not saving.**
-Click Save. Then click the agent again to make sure your changes are actually there. GHL sometimes doesn't save if there's a validation error you didn't notice.
+Click Save. Then click the agent again to make sure your changes are actually there. legacy CRM sometimes doesn't save if there's a validation error you didn't notice.
 
 ---
 
