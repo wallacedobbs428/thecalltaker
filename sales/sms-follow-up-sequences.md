@@ -45,7 +45,7 @@ Keep every message under 160 characters when possible. Tone: casual, direct, fri
 
 ### Text 3 — Send Day 5
 
-> {FirstName} — if a demo doesn't work for your schedule, just call the AI yourself and see it in action: (615) 784-5747. It'll blow your mind. Talk soon.
+> {FirstName} — if a demo doesn't work for your schedule, just call the AI yourself and see it in action: (629) 269-9697. It'll blow your mind. Talk soon.
 
 ---
 
@@ -67,7 +67,7 @@ Keep every message under 160 characters when possible. Tone: casual, direct, fri
 
 ### Text 4 — Send Day 14
 
-> Hey {FirstName}, want to hear The Call Taker in action? Call the demo line right now: (615) 784-5747. Pretend you need an AC repair. Takes 2 min. No pressure.
+> Hey {FirstName}, want to hear The Call Taker in action? Call the demo line right now: (629) 269-9697. Pretend you need an AC repair. Takes 2 min. No pressure.
 
 ---
 
@@ -103,7 +103,7 @@ Keep every message under 160 characters when possible. Tone: casual, direct, fri
 
 ### Text 3 — Send 5 days after Text 2
 
-> Last one from me {FirstName}. If you ever want to see what missing calls are costing you, just dial (615) 784-5747 and test the AI yourself. I'm here when you're ready.
+> Last one from me {FirstName}. If you ever want to see what missing calls are costing you, just dial (629) 269-9697 and test the AI yourself. I'm here when you're ready.
 
 ---
 
@@ -123,5 +123,5 @@ Keep every message under 160 characters when possible. Tone: casual, direct, fri
 - **Timing:** Send between 9am-7pm in the prospect's local time zone. Never text before 8am or after 8pm.
 - **Replies:** If a prospect replies to ANY text in a sequence, stop the automated sequence and switch to live conversation.
 - **Opt-out:** If anyone replies STOP, remove them immediately. Compliance is non-negotiable.
-- **Demo line:** (615) 784-5747 is the secret weapon. Getting them to call it themselves does more selling than any text ever will.
+- **Demo line:** (629) 269-9697 is the secret weapon. Getting them to call it themselves does more selling than any text ever will.
 - **Character counts:** Most messages above are under 160 characters. A few run slightly over and will send as two SMS segments — that is acceptable for high-value messages.

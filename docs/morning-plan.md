@@ -5,7 +5,7 @@
 
 ## 🔥 WHAT'S RUNNING RIGHT NOW
 - **300 Instagram DMs** going out to HVAC owners (ColdDMs campaign live)
-- **AI demo line** live at (615) 784-5747
+- **AI demo line** live at (629) 269-9697
 - **Lead nurture workflow** published — auto follow-up on new leads
 - **Website** live at thecalltaker.com
 
@@ -15,7 +15,7 @@
 
 ### 8:00 AM — Recon (5 min)
 - [ ] Open ColdDMs inbox — check for replies
-- [ ] Open GHL dashboard — check for new contacts or demo bookings
+- [ ] Open legacy CRM dashboard — check for new contacts or demo bookings
 - [ ] Check email for any demo line call notifications
 
 ### 9:00 AM — Secret Shopper Calls (1 hour)
@@ -24,7 +24,7 @@
 - [ ] Open `sales/hvac-lead-list.md` — 27 HVAC companies in Middle TN
 - [ ] Call 10-15 of them
 - [ ] Track every result in `sales/secret-shopper-template.md`
-- [ ] Voicemail = hot prospect. Add to GHL with tag `voicemail-detected`
+- [ ] Voicemail = hot prospect. Add to legacy CRM with tag `voicemail-detected`
 
 ### 10:00 AM — Cold Emails (30 min)
 > For every company that went to voicemail:
@@ -32,13 +32,13 @@
 - [ ] Open `sales/cold-email-sequence.md`
 - [ ] Send Email 1 — subject: "I called [Company Name] last night..."
 - [ ] Personalize with company name + city
-- [ ] Log in GHL with tag `cold-outreach`
+- [ ] Log in legacy CRM with tag `cold-outreach`
 
 ### All Day — ColdDMs Replies
 | They say... | You say... |
 |-------------|-----------|
-| "Tell me more" | Call (615) 784-5747 right now and hear it yourself |
-| "How much?" | Starts at $297/mo, no contract. But call the demo first — (615) 784-5747 |
+| "Tell me more" | Call (629) 269-9697 right now and hear it yourself |
+| "How much?" | Starts at $297/mo, no contract. But call the demo first — (629) 269-9697 |
 | "Not interested" | No worries, good luck! (move on) |
 | "This is cool" | Book a 15-min demo — I'll walk you through exactly how it works for your shop |
 
@@ -47,7 +47,7 @@
 ## 🔧 WALLACE'S 3 TASKS
 1. **Enable HTTPS** — GitHub repo Settings → Pages → check "Enforce HTTPS"
 2. **Set up Stripe** — stripe.com → create 2 products ($297 Starter, $497 Professional) → get payment links
-3. **Paste email templates** — copy from `docs/ghl-email-templates.md` into GHL email builder
+3. **Paste email templates** — copy from `docs/ghl-email-templates.md` into legacy CRM email builder
 
 ---
 

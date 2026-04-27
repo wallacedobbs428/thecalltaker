@@ -218,7 +218,7 @@ Lately I've been testing an AI receptionist that answers 24/7 and books calls ri
 What's working for your shop?
 ```
 
-**This is the softest sell in the batch.** The AI receptionist mention is casual and framed as something Wallace is personally using, not selling. If anyone asks "which one are you using?", reply: "It's called The Call Taker. I actually helped build it because nothing else on the market did what I needed. Want me to send you the info?" Then DM with the demo line: (615) 784-5747.
+**This is the softest sell in the batch.** The AI receptionist mention is casual and framed as something Wallace is personally using, not selling. If anyone asks "which one are you using?", reply: "It's called The Call Taker. I actually helped build it because nothing else on the market did what I needed. Want me to send you the info?" Then DM with the demo line: (629) 269-9697.
 
 ---
 
@@ -254,7 +254,7 @@ Then continue with Posts 2 and 9 in weeks 5-6, mixing into groups you haven't po
 - **Reply to every comment on your posts.** Engagement breeds more engagement.
 - **When someone expresses interest, DM them within 1 hour.** Speed matters.
 - **Your DM opener after interest:** "Hey [name], saw your comment on my post. Happy to share what I've been doing for after-hours calls. You got a sec?"
-- **If they want to learn more:** "Easiest thing is to just call the demo line and hear it yourself: (615) 784-5747. It'll answer like it would for one of my HVAC clients. Then we can jump on a quick call if you want to talk about setting it up for your shop."
+- **If they want to learn more:** "Easiest thing is to just call the demo line and hear it yourself: (629) 269-9697. It'll answer like it would for one of my HVAC clients. Then we can jump on a quick call if you want to talk about setting it up for your shop."
 
 ---
 

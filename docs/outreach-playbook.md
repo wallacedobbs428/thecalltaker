@@ -1,7 +1,7 @@
 # The Call Taker — Outreach Playbook
 
 > Wallace's ready-to-use playbook for cold outreach, objection handling, follow-ups, and closing.
-> Demo line: (615) 784-5747 | Pricing: $97/mo after-hours, $297/mo full 24/7, $497/mo premium
+> Demo line: (629) 269-9697 | Pricing: $97/mo after-hours, $297/mo full 24/7, $497/mo premium
 > Free 14-day pilot — no credit card, no contracts, cancel anytime.
 
 ---
@@ -22,7 +22,7 @@ Keep it casual. Sound like a real person, not a company.
 > so i set up an hvac company in phoenix with an AI that answers their calls 24/7. they went from missing 40% of calls to missing zero. booked $14k more in the first month
 
 **Day 5 — Scarcity**
-> last thing from me — i only have 3 pilot spots left this month for hvac companies. 14 days free, no card needed. if you wanna try it just call (615) 784-5747 and hear it yourself
+> last thing from me — i only have 3 pilot spots left this month for hvac companies. 14 days free, no card needed. if you wanna try it just call (629) 269-9697 and hear it yourself
 
 ---
 
@@ -35,7 +35,7 @@ Keep it casual. Sound like a real person, not a company.
 > talked to a solo plumber in tampa who was missing like half his after-hours calls. set him up with an AI receptionist and his revenue went up 72% in 2 months. wild
 
 **Day 5 — Scarcity**
-> hey just following up one more time — got 3 free pilot spots left for plumbing companies this month. 14 days, no card, no risk. call (615) 784-5747 if you wanna hear what it sounds like
+> hey just following up one more time — got 3 free pilot spots left for plumbing companies this month. 14 days, no card, no risk. call (629) 269-9697 if you wanna hear what it sounds like
 
 ---
 
@@ -48,7 +48,7 @@ Keep it casual. Sound like a real person, not a company.
 > set up a dental office with an AI receptionist that answers every call, books appointments, answers insurance questions. they stopped losing patients to the practice down the street
 
 **Day 5 — Scarcity**
-> last message from me — i have 3 pilot spots open for dental practices. 14 days free, no card. you can call (615) 784-5747 right now and talk to the AI yourself. takes 30 seconds
+> last message from me — i have 3 pilot spots open for dental practices. 14 days free, no card. you can call (629) 269-9697 right now and talk to the AI yourself. takes 30 seconds
 
 ---
 
@@ -61,7 +61,7 @@ Keep it casual. Sound like a real person, not a company.
 > worked with a roofing company that was missing tons of calls during storm season. AI receptionist picks up every single call now, books inspections, texts them the details. they said it's like having a full-time receptionist for $97/mo
 
 **Day 5 — Scarcity**
-> hey one last time — got 3 pilot spots left this month. 14 days free, your AI answers every call 24/7. call (615) 784-5747 to hear it live. no pressure either way
+> hey one last time — got 3 pilot spots left this month. 14 days free, your AI answers every call 24/7. call (629) 269-9697 to hear it live. no pressure either way
 
 ---
 
@@ -74,7 +74,7 @@ Keep it casual. Sound like a real person, not a company.
 > set up a locksmith in nashville with an AI that answers every call — even 3am lockouts. his emergency revenue went up 65%. the AI gets the address, dispatches him, texts the customer. all automatic
 
 **Day 5 — Scarcity**
-> final message — 3 pilot spots left this month for locksmiths. 14 days free, no card needed. call (615) 784-5747 and test it yourself. if you don't like it, just don't keep it. easy
+> final message — 3 pilot spots left this month for locksmiths. 14 days free, no card needed. call (629) 269-9697 and test it yourself. if you don't like it, just don't keep it. easy
 
 ---
 
@@ -100,7 +100,7 @@ totally get that. but real quick — how much is one missed call worth to you? f
 yeah most people do. but here's the thing — 80% of callers hang up on voicemail and call the next company. they don't leave a message, they just bounce. the AI actually talks to them, gets their info, books the appointment. voicemail just loses you the job.
 
 **Close:**
-> call my demo line real quick and see the difference — (615) 784-5747. takes 30 seconds.
+> call my demo line real quick and see the difference — (629) 269-9697. takes 30 seconds.
 
 ---
 
@@ -110,14 +110,14 @@ yeah most people do. but here's the thing — 80% of callers hang up on voicemai
 no worries at all. just curious though — are you answering every single call that comes in right now? if you are, you don't need me. but if calls are slipping through, that's money walking out. either way no pressure.
 
 **Close:**
-> if anything changes, the demo line is (615) 784-5747. you can hear it anytime.
+> if anything changes, the demo line is (629) 269-9697. you can hear it anytime.
 
 ---
 
 ### 4. "Send me info"
 
 **What to say:**
-yeah for sure i can send something over. but honestly the fastest way to get it is to just call (615) 784-5747 — it's a live demo, you'll talk to the AI for like 60 seconds and you'll know right away if it's for you. way better than reading a PDF.
+yeah for sure i can send something over. but honestly the fastest way to get it is to just call (629) 269-9697 — it's a live demo, you'll talk to the AI for like 60 seconds and you'll know right away if it's for you. way better than reading a PDF.
 
 **Close:**
 > try the demo line and i'll follow up tomorrow to see what you thought?
@@ -130,7 +130,7 @@ yeah for sure i can send something over. but honestly the fastest way to get it 
 totally, when works best? morning or afternoon? i just want to make sure i catch you because i only have 3 pilot spots this month and they go fast.
 
 **Close:**
-> i'll call you [day/time]. in the meantime call (615) 784-5747 if you're curious — it's live 24/7.
+> i'll call you [day/time]. in the meantime call (629) 269-9697 if you're curious — it's live 24/7.
 
 ---
 
@@ -150,7 +150,7 @@ that's awesome, most companies can't say that. but what happens after 5pm? weeke
 yeah so basically i built an AI receptionist that answers your business phone 24/7. it sounds like a real person, books appointments, answers questions, texts you the details. service businesses use it so they stop missing calls and losing jobs. it's $97/mo for after-hours or $297 for 24/7.
 
 **Close:**
-> fastest way to understand it is to call (615) 784-5747 — you'll talk to it live. takes 30 seconds.
+> fastest way to understand it is to call (629) 269-9697 — you'll talk to it live. takes 30 seconds.
 
 ---
 
@@ -200,7 +200,7 @@ Just wanted to check — did you end up solving that? Most [INDUSTRY] companies 
 
 I've got a free 14-day pilot running right now. AI answers your phone 24/7, books jobs, texts you the details. No card, no contract.
 
-If you want to hear it, call (615) 784-5747.
+If you want to hear it, call (629) 269-9697.
 
 — Wallace
 
@@ -234,7 +234,7 @@ An AI receptionist costs $97/mo and catches every single one of those calls. It 
 
 I built this thing and I'm offering 14-day free pilots right now. No card. No risk.
 
-Call (615) 784-5747 to hear it live, or just reply and I'll set you up.
+Call (629) 269-9697 to hear it live, or just reply and I'll set you up.
 
 — Wallace
 
@@ -268,7 +268,7 @@ I've reached out a few times about the AI receptionist and haven't heard back, s
 
 Totally fine. I'm going to close out your file on my end.
 
-If anything changes — you start missing calls, lose a big job because nobody picked up, whatever — just call (615) 784-5747 or reply to this email. I'll get you set up same day.
+If anything changes — you start missing calls, lose a big job because nobody picked up, whatever — just call (629) 269-9697 or reply to this email. I'll get you set up same day.
 
 Good luck with the business.
 
@@ -332,7 +332,7 @@ Key points to mention:
 > "alright [NAME], you're locked in. i'll have everything built by tomorrow and you'll get a text from me with next steps. if you have any questions before then, just text me. sound good?"
 
 After the call:
-1. Tag them `pilot-signup` in GHL immediately
+1. Tag them `pilot-signup` in legacy CRM immediately
 2. The onboarding engine auto-fires (welcome email, welcome SMS, setup instructions)
 3. Build their AI prompt that night
 4. Text them the forwarding number next morning

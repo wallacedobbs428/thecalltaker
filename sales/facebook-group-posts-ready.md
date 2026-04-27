@@ -92,7 +92,7 @@
 
 **If someone asks about the one company that had the system:**
 
-> That was actually us. We set up an AI receptionist called The Call Taker. It answers every call, asks the right diagnostic questions, and books the appointment right into our calendar. $297/mo. If you want to hear what it sounds like, call our demo line: (615) 784-5747. Serious game changer.
+> That was actually us. We set up an AI receptionist called The Call Taker. It answers every call, asks the right diagnostic questions, and books the appointment right into our calendar. $297/mo. If you want to hear what it sounds like, call our demo line: (629) 269-9697. Serious game changer.
 
 ---
 
@@ -112,7 +112,7 @@
 
 **If someone asks what you ended up doing:**
 
-> I actually went a completely different direction. Found an AI receptionist built specifically for HVAC companies. It answers calls 24/7, knows how to ask the right questions about the customer's system and issue, and books appointments directly. $297/month. No call-outs, no training, no PTO. DM me and I'll send you the details -- or you can call the demo and hear it yourself: (615) 784-5747.
+> I actually went a completely different direction. Found an AI receptionist built specifically for HVAC companies. It answers calls 24/7, knows how to ask the right questions about the customer's system and issue, and books appointments directly. $297/month. No call-outs, no training, no PTO. DM me and I'll send you the details -- or you can call the demo and hear it yourself: (629) 269-9697.
 
 ---
 
@@ -156,7 +156,7 @@
 
 **If someone asks how you fixed it:**
 
-> We set up an AI receptionist that answers every call live -- no voicemail, no hold music, no "leave a message." It handles the intake, asks about their system and the issue, and books the appointment. Customers think they're talking to our office. It's called The Call Taker, and it's $297/month. DM me for details or call the demo: (615) 784-5747.
+> We set up an AI receptionist that answers every call live -- no voicemail, no hold music, no "leave a message." It handles the intake, asks about their system and the issue, and books the appointment. Customers think they're talking to our office. It's called The Call Taker, and it's $297/month. DM me for details or call the demo: (629) 269-9697.
 
 ---
 
@@ -226,13 +226,13 @@
 
 > Hey [name]! Appreciate you reaching out. So The Call Taker is an AI receptionist built specifically for HVAC companies. It answers every call 24/7, asks the right qualifying questions (system type, issue, address, etc.), and books the appointment right into your calendar. It's $297/month flat -- no per-call fees, no contracts.
 >
-> Best way to see it in action is to call our demo line: (615) 784-5747. Give it a try and you'll hear exactly what your customers would experience.
+> Best way to see it in action is to call our demo line: (629) 269-9697. Give it a try and you'll hear exactly what your customers would experience.
 >
 > If you like what you hear, I can get you set up this week. Sound good?
 
 **When someone is skeptical in the comments:**
 
-> Totally fair to be skeptical -- I was too at first. Honestly the best thing I can say is just call the demo line and judge for yourself: (615) 784-5747. It takes 60 seconds and you'll know right away whether it's legit or not. No pressure either way.
+> Totally fair to be skeptical -- I was too at first. Honestly the best thing I can say is just call the demo line and judge for yourself: (629) 269-9697. It takes 60 seconds and you'll know right away whether it's legit or not. No pressure either way.
 
 **When someone says "I just use voicemail":**
 

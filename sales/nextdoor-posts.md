@@ -31,7 +31,7 @@
 
 **If someone replies asking for details:**
 
-> Hey [name]! Thanks for reaching out. It's called The Call Taker -- it's an AI receptionist I built specifically for service businesses. It answers every call 24/7, asks the right questions, and books the appointment right into your calendar. $297/month flat. If you want to hear what it sounds like, call our demo line: (615) 784-5747. Happy to chat more anytime -- we're right here in Brentwood!
+> Hey [name]! Thanks for reaching out. It's called The Call Taker -- it's an AI receptionist I built specifically for service businesses. It answers every call 24/7, asks the right questions, and books the appointment right into your calendar. $297/month flat. If you want to hear what it sounds like, call our demo line: (629) 269-9697. Happy to chat more anytime -- we're right here in Brentwood!
 
 ---
 
@@ -56,7 +56,7 @@
 
 **If a homeowner says "my HVAC guy is great but terrible at answering":**
 
-> That's super common! Most HVAC owners are amazing at the work but just can't be on the phone and on the job at the same time. If you ever want to pass along my info to them, I'd appreciate it -- I built a system that solves exactly this problem. It's called The Call Taker. They can check it out at thecalltaker.com or call our demo at (615) 784-5747. You'd be doing them a huge favor honestly.
+> That's super common! Most HVAC owners are amazing at the work but just can't be on the phone and on the job at the same time. If you ever want to pass along my info to them, I'd appreciate it -- I built a system that solves exactly this problem. It's called The Call Taker. They can check it out at thecalltaker.com or call our demo at (629) 269-9697. You'd be doing them a huge favor honestly.
 
 **If an HVAC owner sees the post and replies:**
 
@@ -102,13 +102,13 @@
 >
 > If you're a local service business owner and this sounds like something you deal with, my door is always open. I'm right here in Brentwood and I'd love to help.
 >
-> And if you're a homeowner who has a great HVAC company or contractor that you love, feel free to pass along my info to them -- thecalltaker.com or (615) 784-5747 for a demo. You'd be helping them out more than you know.
+> And if you're a homeowner who has a great HVAC company or contractor that you love, feel free to pass along my info to them -- thecalltaker.com or (629) 269-9697 for a demo. You'd be helping them out more than you know.
 >
 > - Wallace Dobbs
 
 **If someone replies with interest:**
 
-> Hey [name]! Really appreciate that. I'd love to tell you more about it. The short version: The Call Taker is an AI receptionist that answers your business calls 24/7, talks to the customer naturally, asks the right questions, and books the appointment. It's $297/month with no contracts. Best way to see it is to just call the demo line: (615) 784-5747. Shoot me a message anytime!
+> Hey [name]! Really appreciate that. I'd love to tell you more about it. The short version: The Call Taker is an AI receptionist that answers your business calls 24/7, talks to the customer naturally, asks the right questions, and books the appointment. It's $297/month with no contracts. Best way to see it is to just call the demo line: (629) 269-9697. Shoot me a message anytime!
 
 ---
 
@@ -141,7 +141,7 @@
 
 **If an HVAC owner messages you:**
 
-> Hey! I totally get it -- peak season is brutal on the phones. The Call Taker is an AI receptionist I built that answers all your calls 24/7. When you're slammed and can't pick up, it handles the call, qualifies the customer, and books the appointment right into your system. $297/month flat, no matter how many calls come in. Call our demo to hear it yourself: (615) 784-5747. Happy to chat more anytime.
+> Hey! I totally get it -- peak season is brutal on the phones. The Call Taker is an AI receptionist I built that answers all your calls 24/7. When you're slammed and can't pick up, it handles the call, qualifies the customer, and books the appointment right into your system. $297/month flat, no matter how many calls come in. Call our demo to hear it yourself: (629) 269-9697. Happy to chat more anytime.
 
 **If a homeowner tags their HVAC company:**
 

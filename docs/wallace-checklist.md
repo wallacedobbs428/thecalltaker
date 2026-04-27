@@ -4,14 +4,14 @@
 
 ---
 
-## PRIORITY 1: SET UP GHL CORE FEATURES
+## PRIORITY 1: SET UP legacy CRM CORE FEATURES
 
 ### 1. Configure the "Book a Demo" Calendar (DONE — configured via API: Mon-Fri 9am-5pm, Sat 10am-2pm CST)
 ☑ Set your availability hours
-  📍 Where: GHL → Calendars → "Book a Demo - The Call Taker"
+  📍 Where: legacy CRM → Calendars → "Book a Demo - The Call Taker"
   ⏱ Time: 5 minutes
   💡 Why: Prospects need to see available time slots when booking
-  🔑 What you need: GHL login (wallacemdobbs@icloud.com)
+  🔑 What you need: legacy CRM login (wallacemdobbs@icloud.com)
   Steps:
   1. Log into app.gohighlevel.com
   2. Go to Calendars → "Book a Demo - The Call Taker"
@@ -21,24 +21,24 @@
   6. Copy the booking link — this is what demo buttons will link to
 
 ### 2. Get the Calendar Embed Code and Update Website (DONE — calendar embed live on demo page)
-☑ Embed GHL calendar on demo page
-  📍 Where: GHL → Calendars → Booking Widget → Copy embed code
+☑ Embed legacy CRM calendar on demo page
+  📍 Where: legacy CRM → Calendars → Booking Widget → Copy embed code
   ⏱ Time: 5 minutes
   💡 Why: Lets prospects book demos directly from your website
-  🔑 What you need: GHL login
+  🔑 What you need: legacy CRM login
   Steps:
-  1. In GHL, go to Calendars → "Book a Demo" → Booking Widget
+  1. In legacy CRM, go to Calendars → "Book a Demo" → Booking Widget
   2. Copy the iframe/script embed code
   3. Send the embed code to your developer to add to the demo page
 
-### 3. Configure AI Voice Agent (DONE — live on +1 615-784-5747, HVAC prompt configured)
-☑ Set up Conversation AI in GHL
-  📍 Where: GHL → Conversation AI
+### 3. Configure AI Voice Agent (DONE — live on +1 629-269-9697, HVAC prompt configured)
+☑ Set up Conversation AI in legacy CRM
+  📍 Where: legacy CRM → Conversation AI
   ⏱ Time: 30-60 minutes
   💡 Why: This IS the product you're selling — AI answering calls
-  🔑 What you need: GHL login, may need upgraded GHL plan
+  🔑 What you need: legacy CRM login, may need upgraded legacy CRM plan
   Steps:
-  1. In GHL, go to Settings → Conversation AI
+  1. In legacy CRM, go to Settings → Conversation AI
   2. Create a new AI bot
   3. Set it to handle inbound calls
   4. Train it with HVAC-specific knowledge (use the intake form as a guide)
@@ -47,13 +47,13 @@
   7. Once working, this becomes your demo line
 
 ### 4. Populate Email Templates with Copy
-☐ Paste email content into GHL templates
-  📍 Where: GHL → Marketing → Emails
+☐ Paste email content into legacy CRM templates
+  📍 Where: legacy CRM → Marketing → Emails
   ⏱ Time: 30 minutes
   💡 Why: Templates are created but empty — need the actual copy
-  🔑 What you need: GHL login
+  🔑 What you need: legacy CRM login
   Steps:
-  1. Open each template in GHL's email builder
+  1. Open each template in legacy CRM's email builder
   2. Copy the corresponding email content from:
      - sales/cold-email-sequence.md → Cold Outreach emails 1-3
      - onboarding/welcome-email-sequence.md → Welcome emails 1-5
@@ -64,16 +64,16 @@
 
 ## PRIORITY 3: SET UP BILLING
 
-### 5. Create Stripe Account and Connect to GHL
+### 5. Create Stripe Account and Connect to legacy CRM
 ☐ Set up payment processing
-  📍 Where: stripe.com → GHL → Payments
+  📍 Where: stripe.com → legacy CRM → Payments
   ⏱ Time: 20 minutes
   💡 Why: Can't charge clients without billing
   🔑 What you need: Bank account info, SSN/EIN for Stripe verification
   Steps:
   1. Go to stripe.com and create an account
   2. Complete identity verification
-  3. In GHL → Settings → Payments → Connect Stripe
+  3. In legacy CRM → Settings → Payments → Connect Stripe
   4. Follow the Stripe Connect flow
   5. Set up your pricing products in Stripe matching your tiers
 
@@ -92,11 +92,11 @@
   2. Call them between 6pm-9pm or on weekends
   3. Log each result in the secret shopper template
   4. The voicemail ones are your prospects
-  5. Add them as contacts in GHL with tag "voicemail-detected"
+  5. Add them as contacts in legacy CRM with tag "voicemail-detected"
 
 ### 7. Start Cold Outreach
 ☐ Email and call HVAC companies that went to voicemail
-  📍 Where: Phone + GHL email
+  📍 Where: Phone + legacy CRM email
   ⏱ Time: Ongoing — aim for 10 outreaches per day
   💡 Why: This is how you get to 45 paying clients
   🔑 What you need: Your phone, cold-call-script.md, cold-email-sequence.md
@@ -104,7 +104,7 @@
   1. Start with your voicemail-detected leads
   2. Send Email 1 (Pain) from cold-email-sequence.md
   3. Follow up with a call using cold-call-script.md
-  4. Log everything in GHL with appropriate tags
+  4. Log everything in legacy CRM with appropriate tags
   5. Book demos for interested prospects
 
 ### 8. Run Your First Demo
@@ -116,7 +116,7 @@
 
 ### 9. Close and Onboard Clients
 ☐ Sign agreement, collect payment, set them up
-  📍 Where: GHL + Phone
+  📍 Where: legacy CRM + Phone
   ⏱ Time: 2 hours total
   💡 Why: First revenue!
   🔑 What you need: client-agreement-template.md, new-client-intake-form.md, onboarding-steps.md

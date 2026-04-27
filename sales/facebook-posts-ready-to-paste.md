@@ -76,7 +76,7 @@ That first company? Great reviews. 4.8 stars. Been in business 15 years. Didn't 
 
 This is the problem I've been working on. I built an AI receptionist that picks up every call — weekends, nights, holidays. It answers questions about your services, books appointments, and sounds like a real person.
 
-If you want to hear it, call (615) 784-5747. It's live right now. On a Saturday.
+If you want to hear it, call (629) 269-9697. It's live right now. On a Saturday.
 
 Not trying to sell anyone in the comments. Just sharing what I've been working on. If it's useful to you, my DMs are open.
 
@@ -146,7 +146,7 @@ I'm not posting this to shame anyone. Running an HVAC company is hard and you ca
 
 If you were one of the companies I called tonight and you want to know what your customers are hearing, DM me. I'll tell you exactly what happened on your end. No charge.
 
-Demo line if you want to hear what it sounds like: (615) 784-5747
+Demo line if you want to hear what it sounds like: (629) 269-9697
 
 ——————————————————
 
@@ -162,7 +162,7 @@ the demo line.
 ## QUICK REFERENCE
 
 Wallace's phone: (615) 653-9004
-Demo line: (615) 784-5747
+Demo line: (629) 269-9697
 Website: thecalltaker.com
 Price: $297/mo
 Location: Brentwood, TN

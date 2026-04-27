@@ -36,7 +36,7 @@ Want to know how many calls your HVAC company is actually missing? We'll test yo
 **Text:**
 Here's what happens when an HVAC company uses The Call Taker: A homeowner's AC breaks at 11 PM on a Saturday. They call. Instead of voicemail, they get a friendly AI receptionist that books a service appointment for first thing Sunday morning. By the time the owner checks his phone, the job is already on the schedule. That's the difference between losing a customer and locking one in.
 
-**CTA Button:** Call Now -> (615) 784-5747
+**CTA Button:** Call Now -> (629) 269-9697
 **Image suggestion:** Split-screen graphic. Left side: dark, frustrated homeowner on phone with "VOICEMAIL" text. Right side: bright, relieved homeowner with "APPOINTMENT BOOKED" text. The Call Taker logo in the center dividing the two.
 
 ---
@@ -46,11 +46,11 @@ Here's what happens when an HVAC company uses The Call Taker: A homeowner's AC b
 **Type:** Event
 **Title:** Live Demo - Hear The Call Taker in Action
 **Text:**
-Curious what an AI receptionist sounds like? Don't take our word for it - call our demo line right now and experience it yourself. Call (615) 784-5747 and pretend you're a homeowner with a broken AC. See how it handles your call, books an appointment, and captures your info. Available 24/7. Takes 2 minutes.
+Curious what an AI receptionist sounds like? Don't take our word for it - call our demo line right now and experience it yourself. Call (629) 269-9697 and pretend you're a homeowner with a broken AC. See how it handles your call, books an appointment, and captures your info. Available 24/7. Takes 2 minutes.
 
 **Event date:** Ongoing (set to current month, refresh monthly)
-**CTA Button:** Call Now -> (615) 784-5747
-**Image suggestion:** Bold text on a clean background: "Call (615) 784-5747 and hear your new receptionist." Subtext: "Live AI demo. Try it right now." Phone icon graphic. Brand colors.
+**CTA Button:** Call Now -> (629) 269-9697
+**Image suggestion:** Bold text on a clean background: "Call (629) 269-9697 and hear your new receptionist." Subtext: "Live AI demo. Try it right now." Phone icon graphic. Brand colors.
 
 ---
 
@@ -117,9 +117,9 @@ We're running free call-handling audits for HVAC companies this month. Here's wh
 
 **Type:** What's New
 **Text:**
-The math is simple. One missed HVAC call = $500-$1,500 in lost revenue. The Call Taker costs $297/month. If it catches even ONE call you would have missed, it pays for itself. Most HVAC companies miss 15-25 calls per month. You do the math. Try calling our demo line at (615) 784-5747 and hear what your customers will experience. Takes 2 minutes.
+The math is simple. One missed HVAC call = $500-$1,500 in lost revenue. The Call Taker costs $297/month. If it catches even ONE call you would have missed, it pays for itself. Most HVAC companies miss 15-25 calls per month. You do the math. Try calling our demo line at (629) 269-9697 and hear what your customers will experience. Takes 2 minutes.
 
-**CTA Button:** Call Now -> (615) 784-5747
+**CTA Button:** Call Now -> (629) 269-9697
 **Image suggestion:** Calculator or simple math equation graphic: "1 missed call ($1,200) > 1 month of The Call Taker ($297)." Bold numbers, clean layout. Green for revenue, red for missed. ROI-focused.
 
 ---

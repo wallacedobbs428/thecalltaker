@@ -4,13 +4,13 @@
 **Price:** $297/mo
 **Website:** thecalltaker.com
 **Free Audit:** thecalltaker.com/audit.html
-**Demo Line:** (615) 784-5747
+**Demo Line:** (629) 269-9697
 **Sender:** Wallace Dobbs
 
 All messages written to sound like a real person texting. Most kept under 160 characters. No marketing speak. No emojis.
 
 **MMS IMAGE — ATTACH TO ALL HVAC SMS:**
-When sending via GHL or any SMS platform that supports MMS, attach this image:
+When sending via legacy CRM or any SMS platform that supports MMS, attach this image:
 `https://thecalltaker.com/images/hvac-hero.jpg`
 Alt text: "Never Miss a Call. Never Miss Revenue. — The Call Taker"
 This converts SMS to MMS automatically. Image shows before the text body.
@@ -50,7 +50,7 @@ Pick ONE per prospect. Match the angle to what you know about them.
 ---
 
 ### Text E: The Demo Dare
-> Hey this is Wallace. Call 615-784-5747 right now. It's an AI receptionist I built for HVAC companies. Takes 30 seconds to hear what your callers would get.
+> Hey this is Wallace. Call 629-269-9697 right now. It's an AI receptionist I built for HVAC companies. Takes 30 seconds to hear what your callers would get.
 
 **Characters:** 156
 
@@ -75,7 +75,7 @@ Space these 3-4 days apart. If nothing after all three, send the breakup text an
 ---
 
 ### Follow-Up 3 (Day 12)
-> Last one from me. If you ever want to see how AI handles your HVAC calls, the offer stands. 615-784-5747. Good luck this season.
+> Last one from me. If you ever want to see how AI handles your HVAC calls, the offer stands. 629-269-9697. Good luck this season.
 
 **Characters:** 128
 
@@ -100,7 +100,7 @@ Send one of these immediately after hanging up from the voicemail. The voicemail
 ---
 
 ### Post-Voicemail Text 3
-> Just left you a message. I'm Wallace, I built The Call Taker for HVAC companies. Call this number to hear it live: 615-784-5747
+> Just left you a message. I'm Wallace, I built The Call Taker for HVAC companies. Call this number to hear it live: 629-269-9697
 
 **Characters:** 134
 

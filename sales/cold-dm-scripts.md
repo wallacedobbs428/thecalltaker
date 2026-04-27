@@ -79,7 +79,7 @@ Use when their profile or posts show they're busy/growing fast.
 
 ## DM 5: The Follow-Up (Send 3-4 days after any of the above)
 
-> Hey [First Name] -- just following up. No pressure at all. If you want to hear what the AI sounds like, just call (615) 784-5747. It'll answer like a real receptionist. Takes 30 seconds.
+> Hey [First Name] -- just following up. No pressure at all. If you want to hear what the AI sounds like, just call (629) 269-9697. It'll answer like a real receptionist. Takes 30 seconds.
 >
 > Either way, hope business is going well!
 
@@ -108,14 +108,14 @@ When you see business owners posting in Facebook groups about being busy, stress
 ## Response Handling
 
 ### If they say "Sure, send me the demo" or "How does it work?"
-> Awesome! Call this number right now: (615) 784-5747. It'll answer as a sample business so you can hear how it sounds.
+> Awesome! Call this number right now: (629) 269-9697. It'll answer as a sample business so you can hear how it sounds.
 >
 > After you try it, let me know what you think. I can set one up for [Company Name] in about 48 hours.
 
 ### If they say "How much?"
 > Starter is $497/mo for HVAC, plumbing, and electrical. Pro is $997/mo for dental, legal, roofing, med spa, and property management. $500 one-time setup. Flat rate, no per-minute fees, no contracts. 7-day free trial.
 >
-> But honestly, try the demo first: (615) 784-5747. If you're not impressed, no hard feelings.
+> But honestly, try the demo first: (629) 269-9697. If you're not impressed, no hard feelings.
 
 ### If they say "Not interested" or leave you on read
 Don't reply. Wait 2-3 weeks, then try a different angle or move on. Never send more than one follow-up.
@@ -146,7 +146,7 @@ Don't reply. Wait 2-3 weeks, then try a different angle or move on. Never send m
 ## Pro Tips
 
 1. **Always personalize.** Mention their company name, city, or something from their profile. Generic DMs get ignored.
-2. **Lead with the demo line.** Don't try to explain AI over text. Just get them to call (615) 784-5747. The product sells itself.
+2. **Lead with the demo line.** Don't try to explain AI over text. Just get them to call (629) 269-9697. The product sells itself.
 3. **Don't sell in the DM.** Your only goal is to get them to try the demo. That's it.
 4. **Track everything.** Keep a spreadsheet: Name, Company, Platform, Date Sent, Response, Demo Completed, Follow-up Date.
 5. **Best times to DM:** Early morning (6-7am) before they start jobs, or evening (7-9pm) when they're done for the day.

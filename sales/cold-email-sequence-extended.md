@@ -75,7 +75,7 @@ You wake up Wednesday morning and there's a $400 job already booked before your 
 
 That's not a sales pitch. That's what The Call Taker does every single night. For $297/month.
 
-Call the demo line yourself and hear it: (615) 784-5747
+Call the demo line yourself and hear it: (629) 269-9697
 
 -- Wallace
 
@@ -108,7 +108,7 @@ Hearing the voicemail version is a little painful when you realize that's what Y
 
 Reply "send it" and I'll shoot the video over.
 
-Or skip the video and just hear the AI yourself -- call the demo line: (615) 784-5747. Takes 60 seconds. No signup. No pitch. Just call and talk to it.
+Or skip the video and just hear the AI yourself -- call the demo line: (629) 269-9697. Takes 60 seconds. No signup. No pitch. Just call and talk to it.
 
 -- Wallace
 
@@ -133,7 +133,7 @@ I'll assume you're good with how things are. Voicemail's handling it. Customers 
 
 If that ever changes -- if you wake up some Monday and realize you missed five calls over the weekend and each one was a $400 job -- here's everything in one place:
 
-- **Hear the AI yourself:** (615) 784-5747
+- **Hear the AI yourself:** (629) 269-9697
 - **Book a demo:** https://thecalltaker.com/demo.html
 - **Free after-hours audit:** https://thecalltaker.com/audit.html
 
@@ -186,7 +186,7 @@ Good luck this season, [First Name]. I mean that.
 - **If they reply to the breakup email:** This is your hottest lead. Breakup emails convert 2-3x higher than any other email. Respond within 30 minutes. Be warm, not desperate.
 - **If they reply "send it" to Email 6:** Send the Loom video. Record it once using loom-video-script.md and reuse for every prospect. Keep it under 2 minutes.
 - **If they request the audit (Email 4):** Run it using secret-shopper-template.md and send them missed-call-audit-report.md.
-- **If no reply after all 7:** Mark as "cold -- completed sequence" in GHL. Wait 60 days. Try one more touchpoint -- cold call (cold-call-script.md) or text (sms-follow-up-sequences.md). If still nothing, move on. Some people aren't ready yet.
+- **If no reply after all 7:** Mark as "cold -- completed sequence" in legacy CRM. Wait 60 days. Try one more touchpoint -- cold call (cold-call-script.md) or text (sms-follow-up-sequences.md). If still nothing, move on. Some people aren't ready yet.
 
 ### Key Reminders
 - If you say Email 7 is your last email, make it your last email. Your word is your brand.

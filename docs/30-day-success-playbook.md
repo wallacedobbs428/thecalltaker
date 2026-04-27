@@ -10,23 +10,23 @@
 
 | Task | How | Done? |
 |------|-----|-------|
-| Jessica configured and tested | 3 test calls, fix issues | [ ] |
+| Gideon configured and tested | 3 test calls, fix issues | [ ] |
 | Phone forwarding active | Confirmed on call with customer | [ ] |
 | Welcome SMS sent | Auto: onboarding-engine | [ ] |
 | Welcome Email #1 sent | Auto: onboarding-engine | [ ] |
-| GHL tags applied | `new-customer`, `in-trial`, `[plan]-plan`, `[vertical]` | [ ] |
-| GHL task created | "Configure Jessica for [business]" | [ ] |
+| legacy CRM tags applied | `new-customer`, `in-trial`, `[plan]-plan`, `[vertical]` | [ ] |
+| legacy CRM task created | "Configure Gideon for [business]" | [ ] |
 | ntfy alert fired | "NEW CUSTOMER" to urgent topic | [ ] |
 | Day 7 + Day 30 calls booked | On Wallace's calendar | [ ] |
 
 **Welcome Email #1 — "You're in, here's what happens next"**
 
-Subject: Jessica is live — here's what to expect
+Subject: Gideon is live — here's what to expect
 
 Body:
 > Hey [First Name],
 >
-> Jessica is officially answering your phones. Here's what you need to know:
+> Gideon is officially answering your phones. Here's what you need to know:
 >
 > 1. **Test her yourself** — call your business number from a different phone. Try "I need a [service] appointment" and hear her handle it.
 > 2. **Check your bookings** — every call she books shows up in [calendar tool]. You'll also get a text notification.
@@ -43,7 +43,7 @@ Body:
 **Owner:** onboarding-engine (auto SMS) + Wallace (respond to replies)
 
 **SMS to customer:**
-> "Hey [first name], how are the calls going? Anything Jessica should handle differently? I can tweak her script in 5 minutes."
+> "Hey [first name], how are the calls going? Anything Gideon should handle differently? I can tweak her script in 5 minutes."
 
 **What you're looking for:**
 - Complaints about wrong bookings → fix routing rules
@@ -60,7 +60,7 @@ Body:
 **Owner:** Wallace (15-min call) + onboarding-engine (auto SMS + ntfy)
 
 **SMS to customer (auto):**
-> "Hey [first name], this week Jessica handled [X] calls for [business]. Quick 15-min tuning call this week — when works?"
+> "Hey [first name], this week Gideon handled [X] calls for [business]. Quick 15-min tuning call this week — when works?"
 
 **Tuning call agenda (15 min):**
 1. "How's it going overall?" (2 min — let them talk)
@@ -71,19 +71,19 @@ Body:
 
 **First Wins Email — send after the tuning call:**
 
-Subject: Your first week with Jessica — the numbers
+Subject: Your first week with Gideon — the numbers
 
 Body:
 > Hey [First Name],
 >
-> Here's what Jessica did for [Business Name] this week:
+> Here's what Gideon did for [Business Name] this week:
 >
 > - **[X] calls answered** (including [Y] after hours)
 > - **[Z] appointments booked**
 > - **Estimated revenue captured: $[amount]**
 > - **Longest call: [duration]** — she handled it start to finish
 >
-> [One specific win — e.g., "Tuesday at 9:47 PM, Jessica booked a $600 emergency repair that would have gone to voicemail."]
+> [One specific win — e.g., "Tuesday at 9:47 PM, Gideon booked a $600 emergency repair that would have gone to voicemail."]
 >
 > We tweaked [specific thing] on our tuning call today. She'll be even sharper this week.
 >
@@ -104,12 +104,12 @@ Body:
 - "Can I cancel?" → ask what's not working, try to fix it on the spot
 - "Sounds good" → great, confirm payment method is set up
 - No reply → follow up Day 12 with a direct text from Wallace
-- Price objection → "Jessica caught [X] calls worth $[Y] this week alone. She pays for herself in one job."
+- Price objection → "Gideon caught [X] calls worth $[Y] this week alone. She pays for herself in one job."
 
 **ntfy to Wallace:** "Trial ending in 4 days: [customer name] — confirm payment method"
 
 **Day 12 manual fallback (if no Day 10 reply):**
-> Text from Wallace: "Hey [first name], just checking — everything good with Jessica? Your trial wraps up [date]. Happy to hop on a 5-min call if you have any questions."
+> Text from Wallace: "Hey [first name], just checking — everything good with Gideon? Your trial wraps up [date]. Happy to hop on a 5-min call if you have any questions."
 
 ---
 
@@ -118,7 +118,7 @@ Body:
 **Owner:** onboarding-engine (auto SMS + tags)
 
 **SMS to customer:**
-> "Hey [first name], your trial is done and Jessica is officially part of your team. First invoice goes out [billing date]. Any questions, I'm a text away."
+> "Hey [first name], your trial is done and Gideon is officially part of your team. First invoice goes out [billing date]. Any questions, I'm a text away."
 
 **Tag changes:**
 - Add: `trial-complete`, `paying-customer`
@@ -134,10 +134,10 @@ Body:
 
 **Owner:** Wallace (manual text)
 
-Find ONE specific job Jessica caught that the customer would have missed. Pull it from GHL call recordings or booking history.
+Find ONE specific job Gideon caught that the customer would have missed. Pull it from legacy CRM call recordings or booking history.
 
 **Text to customer:**
-> "Hey [first name] — just pulled your logs. Tuesday at 8:47 PM, Jessica booked a [job type] for [caller name] at [address]. That's a $[amount] job that would've gone to voicemail. She's been doing that [X] times this week."
+> "Hey [first name] — just pulled your logs. Tuesday at 8:47 PM, Gideon booked a [job type] for [caller name] at [address]. That's a $[amount] job that would've gone to voicemail. She's been doing that [X] times this week."
 
 **Why this matters:** This is the single most powerful retention move. A specific dollar amount tied to a specific call they can verify. Makes the monthly fee feel like a bargain.
 
@@ -152,21 +152,21 @@ Find ONE specific job Jessica caught that the customer would have missed. Pull i
 **Value review call agenda (15 min):**
 1. "How's the last month been?" (2 min)
 2. Show the numbers: total calls, after-hours calls, bookings, estimated revenue (5 min)
-3. "What's one thing Jessica could do better?" (3 min — take notes, fix it)
+3. "What's one thing Gideon could do better?" (3 min — take notes, fix it)
 4. If on Starter: soft Pro upgrade float (3 min)
 5. "Know anyone else who'd benefit from this?" — referral ask (2 min)
 
 **Pro upgrade float (Starter customers only):**
-> "So Jessica's been catching your after-hours calls. A lot of our clients find that the overflow during business hours is just as valuable — when you're on a job and can't answer, she picks up instead of voicemail. That's the Pro plan at $997/mo. Want to test it for a week?"
+> "So Gideon's been catching your after-hours calls. A lot of our clients find that the overflow during business hours is just as valuable — when you're on a job and can't answer, she picks up instead of voicemail. That's the Pro plan at $997/mo. Want to test it for a week?"
 
 **Month 1 Report Email — send after the call:**
 
-Subject: Your first month with Jessica — full report
+Subject: Your first month with Gideon — full report
 
 Body:
 > Hey [First Name],
 >
-> One month in. Here's what Jessica did for [Business Name]:
+> One month in. Here's what Gideon did for [Business Name]:
 >
 > - **[X] total calls answered**
 > - **[Y] after-hours calls caught**
@@ -186,7 +186,7 @@ Body:
 
 | Frequency | Action |
 |-----------|--------|
-| Monthly | Quick text check-in: "Everything smooth with Jessica?" |
+| Monthly | Quick text check-in: "Everything smooth with Gideon?" |
 | Monthly | Pull one specific win and text it to them (Day 21 style) |
 | Quarterly | 15-min review call with updated numbers |
 | Quarterly | Referral ask: "Know anyone who'd benefit?" |
@@ -199,7 +199,7 @@ Body:
 
 | Signal | Action |
 |--------|--------|
-| Customer turns off forwarding | Text: "Noticed Jessica hasn't gotten calls — everything ok?" |
+| Customer turns off forwarding | Text: "Noticed Gideon hasn't gotten calls — everything ok?" |
 | 3+ days no calls (was getting calls) | Check forwarding, check carrier |
 | "Cancel" or "refund" in any message | Call them within 1 hour. Fix or save. |
 | Payment fails | Text payment link same day. Follow up 48hr. Pause at 7 days. |

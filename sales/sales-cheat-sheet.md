@@ -46,7 +46,7 @@
 > "$297 a month, flat rate. No per-minute charges, no contracts. If your average job is $350, we pay for ourselves with ONE job we save you from going to voicemail."
 
 **2. "We already have an answering service."**
-> "How much are you paying? Most answering services charge $0.75-$1.50 per minute and don't know HVAC. Our AI answers in under 2 seconds, actually books appointments, and costs way less. Want to hear the difference? Call (615) 784-5747 right now."
+> "How much are you paying? Most answering services charge $0.75-$1.50 per minute and don't know HVAC. Our AI answers in under 2 seconds, actually books appointments, and costs way less. Want to hear the difference? Call (629) 269-9697 right now."
 
 **3. "We don't miss that many calls."**
 > "That's what most owners say. Then we run the free audit and find they're missing 25-40% after hours. Let me run a free audit — no pitch, just data. If your numbers are good, I'll be the first to say you don't need us."
@@ -61,9 +61,9 @@
 
 ## DEMO LINE
 
-**Call it live with every prospect:** (615) 784-5747
+**Call it live with every prospect:** (629) 269-9697
 
-> "While we're talking, go ahead and call this number — (615) 784-5747. It's our live demo line. It'll answer as a sample HVAC company. Ask it anything. Try to stump it. That's what your customers would hear instead of voicemail."
+> "While we're talking, go ahead and call this number — (629) 269-9697. It's our live demo line. It'll answer as a sample HVAC company. Ask it anything. Try to stump it. That's what your customers would hear instead of voicemail."
 
 ---
 
@@ -78,7 +78,7 @@
 
 ## CONTACT INFO
 
-- **Demo line:** (615) 784-5747
+- **Demo line:** (629) 269-9697
 - **Wallace's cell/text:** (615) 653-9004
 - **Email:** wallacemdobbs@icloud.com
 - **Website:** thecalltaker.com

@@ -150,7 +150,7 @@ Just reply with a day/time and I'll be there.
 
 — Wallace Dobbs
 Brentwood, TN
-(615) 784-5747
+(629) 269-9697
 
 ---
 
@@ -192,7 +192,7 @@ I'll keep this short — last email from me.
 
 I've been trying to get 10 minutes with you because I genuinely think what I built would help [Company Name]. But I get it, you're busy running a business.
 
-The offer stands: I'm right here in Brentwood. Whenever you want to see it, just text me at (615) 784-5747 and I'll swing by.
+The offer stands: I'm right here in Brentwood. Whenever you want to see it, just text me at (629) 269-9697 and I'll swing by.
 
 No pitch, no pressure — just a quick look at something new.
 

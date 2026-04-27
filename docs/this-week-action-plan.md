@@ -13,7 +13,7 @@ Morning (8-9am):
 Midday (10am-12pm):
 - Manually text the top 5 using the Day 0 SMS from docs/outreach-playbook.md
 - Personalize each one — use their name, their industry, their city
-- After sending, tag each one `wallace-texted` in GHL
+- After sending, tag each one `wallace-texted` in legacy CRM
 
 Afternoon (1-3pm):
 - Post 20 comments on HVAC/plumbing/dental Instagram accounts in Nashville + Memphis + Atlanta
@@ -28,7 +28,7 @@ Evening (6-8pm):
 ## Tuesday — Follow Up + Expand
 
 Morning (8-9am):
-- Check GHL for any email opens or reply notifications
+- Check legacy CRM for any email opens or reply notifications
 - Anyone who opened but didn't respond → send Day 2 SMS (social proof message from playbook)
 
 Midday (10am-12pm):
@@ -54,7 +54,7 @@ Morning (8-9am):
 Midday (10am-12pm):
 - Anyone from Mon/Tue who replied positively → call them personally
 - Use the closing script from docs/outreach-playbook.md Section 4
-- Goal: book at least 1 demo call or get 1 person to call (615) 784-5747
+- Goal: book at least 1 demo call or get 1 person to call (629) 269-9697
 
 Afternoon (1-3pm):
 - Send Day 2 SMS (social proof) to Tuesday's batch (leads #6-10)
@@ -71,7 +71,7 @@ Morning (8-10am):
 - Call EVERY lead who replied to any SMS or email — don't text, CALL
 - Use the closing script from docs/outreach-playbook.md
 - If they're interested: collect their info (business name, phone, industry, hours)
-- If they say "send info": redirect to demo line (615) 784-5747
+- If they say "send info": redirect to demo line (629) 269-9697
 
 Midday (11am-1pm):
 - Follow up with anyone who called the demo line but didn't text PILOT
@@ -84,7 +84,7 @@ Afternoon (2-4pm):
 - 20 Instagram comments
 
 Evening:
-- If someone said yes → tag them `pilot-signup` in GHL immediately
+- If someone said yes → tag them `pilot-signup` in legacy CRM immediately
 - The pilot onboarding engine auto-fires welcome sequence
 
 ## Friday — Close or Free Pilot Push
@@ -121,7 +121,7 @@ Sunday:
 
 ## Daily Habits (Every Single Day)
 
-- [ ] Check GHL for new replies/opens (morning + evening)
+- [ ] Check legacy CRM for new replies/opens (morning + evening)
 - [ ] 20 Instagram comments on target industry accounts
 - [ ] Respond to every reply within 15 minutes
 - [ ] Log who you contacted and what happened
@@ -144,7 +144,7 @@ Sunday:
 - Outreach blaster: `python3 max/outreach-blaster.py send`
 - Outreach copy: `docs/outreach-playbook.md`
 - Email sequences: `docs/email-sequences.md`
-- Demo line: (615) 784-5747
+- Demo line: (629) 269-9697
 - Closing script: Section 4 of outreach-playbook.md
 - Objection handlers: Section 2 of outreach-playbook.md
 
