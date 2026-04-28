@@ -116,6 +116,12 @@ def check_production_app(results: list[dict]) -> bool:
         detail = f"status={status} build={build_sha}"
         if stale:
             detail += f" stale={','.join(stale[:3])}"
+        workforce = payload.get("workforce", {})
+        if isinstance(workforce, dict):
+            if workforce.get("workflow_events_ok") is False:
+                detail += " workflow-events=broken"
+            elif workforce.get("workflow_events_24h") is not None:
+                detail += f" workflow-events-24h={workforce.get('workflow_events_24h')}"
         results.append(_check("Production app health", status == "ok", detail))
         return status == "ok"
     results.append(_check("Production app health", False, detail))
