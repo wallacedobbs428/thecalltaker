@@ -51,6 +51,8 @@ LEGACY_SERVICES = {
     "com.thecalltaker.lead-dashboard": "lead-dashboard-api.py",
     "com.thecalltaker.blast-sms-followup": "blast-sms-followup.py",
 }
+OUTREACH_AUDIT_SCRIPT = OPS_REPO / "ops" / "outreach-engine-audit.py"
+OUTREACH_AUDIT_REPORT = OPS_REPO / "ops" / "outreach-engine-report.json"
 
 
 def _print_header() -> None:
@@ -178,6 +180,32 @@ def check_legacy_drift(results: list[dict]) -> tuple[int, int]:
     return present, total
 
 
+def check_outreach_engines(results: list[dict]) -> tuple[int, int, int]:
+    if not OUTREACH_AUDIT_SCRIPT.is_file():
+        results.append(_check("Outreach engine audit", False, "audit script missing"))
+        return 0, 0, 0
+
+    _run(["python3", str(OUTREACH_AUDIT_SCRIPT)], timeout=30.0)
+    if not OUTREACH_AUDIT_REPORT.is_file():
+        results.append(_check("Outreach engine audit", False, "report missing"))
+        return 0, 0, 0
+
+    try:
+        data = json.loads(OUTREACH_AUDIT_REPORT.read_text(encoding="utf-8"))
+    except Exception:
+        results.append(_check("Outreach engine audit", False, "report unreadable"))
+        return 0, 0, 0
+
+    fresh = int(data.get("active_fresh", 0))
+    stale = int(data.get("active_stale", 0))
+    missing = int(data.get("active_missing", 0))
+    total = int(data.get("active_total", 0))
+    ok = stale == 0 and missing == 0 and total > 0
+    detail = f"{fresh}/{total} fresh, {stale} stale, {missing} missing"
+    results.append(_check("Outreach engine audit", ok, detail))
+    return fresh, stale, missing
+
+
 def write_report(report: dict) -> None:
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
@@ -197,6 +225,7 @@ def main() -> int:
     )
     critical_agents_passed, critical_agents_total = check_critical_agents(results)
     booking_ok = check_booking_payment(results)
+    outreach_fresh, outreach_stale, outreach_missing = check_outreach_engines(results)
     legacy_present, legacy_total = check_legacy_drift(results)
 
     core_checks = [
@@ -206,6 +235,7 @@ def main() -> int:
         demo_listener_ok,
         critical_agents_passed == critical_agents_total,
         booking_ok,
+        outreach_stale == 0 and outreach_missing == 0 and outreach_fresh > 0,
     ]
     core_healthy = sum(1 for item in core_checks if item)
     core_total = len(core_checks)
@@ -227,6 +257,9 @@ def main() -> int:
         "core_total": core_total,
         "critical_agents_loaded": critical_agents_passed,
         "critical_agents_total": critical_agents_total,
+        "outreach_fresh": outreach_fresh,
+        "outreach_stale": outreach_stale,
+        "outreach_missing": outreach_missing,
         "legacy_scripts_present": legacy_present,
         "legacy_scripts_total": legacy_total,
         "checks": results,
