@@ -57,6 +57,10 @@ LEGACY_AUDIT_SCRIPT = ROOT / "ops" / "legacy-engine-audit.py"
 LEGACY_AUDIT_REPORT = OPS_REPO / "ops" / "legacy-engine-report.json"
 NTFY_TRUST_AUDIT_SCRIPT = ROOT / "ops" / "ntfy-trust-audit.py"
 NTFY_TRUST_AUDIT_REPORT = OPS_REPO / "ops" / "ntfy-trust-report.json"
+PRODUCTION_WORKFORCE = {
+    "workflow_events_ok": None,
+    "workflow_events_24h": None,
+}
 
 
 def _print_header() -> None:
@@ -118,6 +122,8 @@ def check_production_app(results: list[dict]) -> bool:
             detail += f" stale={','.join(stale[:3])}"
         workforce = payload.get("workforce", {})
         if isinstance(workforce, dict):
+            PRODUCTION_WORKFORCE["workflow_events_ok"] = workforce.get("workflow_events_ok")
+            PRODUCTION_WORKFORCE["workflow_events_24h"] = workforce.get("workflow_events_24h")
             if workforce.get("workflow_events_ok") is False:
                 detail += " workflow-events=broken"
             elif workforce.get("workflow_events_24h") is not None:
@@ -314,6 +320,8 @@ def main() -> int:
         "outreach_fresh": outreach_fresh,
         "outreach_stale": outreach_stale,
         "outreach_missing": outreach_missing,
+        "workflow_events_ok": PRODUCTION_WORKFORCE.get("workflow_events_ok"),
+        "workflow_events_24h": PRODUCTION_WORKFORCE.get("workflow_events_24h"),
         "legacy_engines_total": legacy_report.get("engines_total", 0),
         "legacy_blocked_legacy_crm": legacy_report.get("blocked_legacy_crm", 0),
         "legacy_blocked_stale_path": legacy_report.get("blocked_stale_path", 0),
