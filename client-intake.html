@@ -1885,26 +1885,6 @@
     }
 
     /* ========================================
-       NTFY NOTIFICATION
-       ======================================== */
-    async function sendNtfyNotification(data) {
-      try {
-        await fetch('https://ntfy.sh/' + CONFIG.ntfyTopic, {
-          method: 'POST',
-          headers: {
-            'Title': 'New Intake Form Submitted!',
-            'Priority': 'high',
-            'Tags': 'clipboard,green_circle'
-          },
-          body: 'New intake form submitted by ' + data.businessName + '\nOwner: ' + data.ownerName + '\nPhone: ' + data.ownerCell + '\nEmail: ' + data.businessEmail + '\nServices: ' + data.services.join(', ')
-        });
-      } catch (e) {
-        // Non-critical, don't block submission
-        console.warn('ntfy notification failed:', e);
-      }
-    }
-
-    /* ========================================
        SUBMIT FORM
        ======================================== */
     async function submitForm() {
@@ -1921,8 +1901,8 @@
         // Create CRM contact
         await createGHLContact(data);
 
-        // Send ntfy notification
-        await sendNtfyNotification(data);
+        // Browser-side ntfy is disabled. Server-side systems decide which
+        // saved records deserve notifications.
 
         // Small delay for polish
         await new Promise(r => setTimeout(r, 800));

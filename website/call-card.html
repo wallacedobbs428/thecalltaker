@@ -375,8 +375,8 @@ function markClosed(){
     wrap.appendChild(p);
   }
   setTimeout(function(){wrap.innerHTML=''},3000);
-  // Fire ntfy
-  fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR',{method:'POST',body:'FIRST DOLLAR CLOSED!\nWallace marked a deal as closed from the battle card.\nCheck GHL for payment-received tag.\nTimestamp: '+new Date().toLocaleString(),headers:{'Title':'FIRST DOLLAR CLOSED','Priority':'urgent','Tags':'moneybag,tada,rotating_light'}}).catch(function(){});
+  // Browser-side ntfy removed. Closed-deal alerts must come from a trusted
+  // backend/operator action so phone notifications cannot be spoofed.
 }
 </script>
   <script src="script.js" defer></script>

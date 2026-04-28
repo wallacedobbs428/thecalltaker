@@ -510,14 +510,7 @@
         });
 
         if (res.ok) {
-          // Push notification
-          try {
-            fetch('https://ntfy.sh/tct-xK9mW4vR7pLd', {
-              method: 'POST',
-              headers: { 'Title': 'Partner Application!', 'Priority': 'high', 'Tags': 'handshake,money_with_wings' },
-              body: 'PARTNER APPLICATION: ' + data.firstName + ' ' + data.lastName + ' from ' + data.companyName + ' (' + data.partnerType + ') — Phone: ' + data.phone + ' — Email: ' + data.email + ' — Customer base: ' + data.customerBase
-            });
-          } catch(e) {}
+          // NTFY is handled server-side by CTOS after the partner lead is saved.
 
           // Conversion tracking
           if (typeof fbq === 'function') {

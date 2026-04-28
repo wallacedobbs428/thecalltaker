@@ -1649,19 +1649,12 @@
 
   // === CALLBACK FUNCTIONS ===
   function sendCallback(phone, company, source) {
-    var industry = currentIndustry;
-    return fetch('https://ntfy.sh/tct-callback-Hk3mQ7wP', {
-      method: 'POST',
-      body: phone + '|' + company + '|' + source + '|' + industry
-    });
+    return submitLead(phone, company, ['website-callback', 'high-intent', source], 'go-page-callback');
   }
 
   function sendWarRoom(title, body) {
-    fetch('https://ntfy.sh/tct-warroom-Kx7mN9pQ', {
-      method: 'POST',
-      headers: { 'Title': title, 'Priority': 'urgent', 'Tags': 'rotating_light,phone' },
-      body: body
-    });
+    // Browser-side ntfy was removed. The CTOS intake API sends any action-worthy
+    // callback alert only after the lead is saved server-side.
   }
 
   function submitLead(phone, company, tags, source) {
@@ -1669,7 +1662,7 @@
     if (cleanPhone.length === 10) cleanPhone = '+1' + cleanPhone;
     else if (cleanPhone.length === 11 && cleanPhone[0] === '1') cleanPhone = '+' + cleanPhone;
 
-    return fetch('https://thecalltaker.vercel.app/api/public/lead', {
+    return fetch('/api/public/lead', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -1698,7 +1691,6 @@
       var ind = INDUSTRIES[currentIndustry];
       sendWarRoom('CALLBACK: ' + (company || phone) + ' (' + ind.name + ')',
         'Phone: ' + phone + '\nCompany: ' + company + '\nIndustry: ' + ind.name + '\nPricing tier: $' + ind.price + '/mo\nSource: Homepage callback\n\nBland.ai calling them NOW!');
-      await submitLead(phone, company, ['website-callback', 'bland-ai', 'high-intent'], 'website-hero');
 
       document.getElementById('cb-form').style.display = 'none';
       document.getElementById('cb-success').style.display = 'block';
@@ -1720,7 +1712,6 @@
     try {
       await sendCallback(phone, company, 'floating-widget');
       sendWarRoom('FLOAT CALLBACK: ' + (company || phone), 'Phone: ' + phone + '\nCompany: ' + company + '\nIndustry: ' + INDUSTRIES[currentIndustry].name);
-      await submitLead(phone, company, ['floating-widget', 'website-callback', 'high-intent'], 'floating-widget');
       document.getElementById('float-phone').parentElement.querySelectorAll('input, button').forEach(function(el) { el.style.display = 'none'; });
       document.getElementById('float-success').style.display = 'block';
     } catch(e) {}
@@ -1737,7 +1728,6 @@
     try {
       await sendCallback(phone, company, 'exit-intent');
       sendWarRoom('EXIT INTENT: ' + (company || phone), 'Phone: ' + phone + '\nCompany: ' + company + '\nIndustry: ' + INDUSTRIES[currentIndustry].name + '\n\nThey were LEAVING and still gave their number!');
-      await submitLead(phone, company, ['exit-intent', 'website-callback', 'high-intent'], 'exit-intent');
 
       document.getElementById('exit-phone').style.display = 'none';
       document.getElementById('exit-company').style.display = 'none';

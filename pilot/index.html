@@ -481,23 +481,7 @@ async function submitPilot(e) {
     });
   } catch(err) {}
 
-  // War room alert
-  try {
-    fetch('https://ntfy.sh/tct-warroom-Kx7mN9pQ', {
-      method: 'POST',
-      headers: { 'Title': 'PILOT SIGNUP: ' + company, 'Priority': 'urgent', 'Tags': 'rotating_light,fire' },
-      body: 'Company: ' + company + '\nName: ' + first + ' ' + last + '\nEmail: ' + email + '\nPhone: ' + formattedPhone + '\nIndustry: ' + industry + '\n\nACTION: Call them NOW to start onboarding!'
-    });
-  } catch(err) {}
-
-  // Also notify main topic
-  try {
-    fetch('https://ntfy.sh/tct-xK9mW4vR7pLd', {
-      method: 'POST',
-      headers: { 'Title': 'Pilot Signup: ' + company, 'Priority': 'high', 'Tags': 'rocket' },
-      body: first + ' | ' + email + ' | ' + formattedPhone + ' | ' + industry
-    });
-  } catch(err) {}
+  // NTFY is handled server-side by CTOS after the pilot lead is saved.
 
   // Show success
   document.getElementById('p-company-name').textContent = company;

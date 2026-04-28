@@ -1279,20 +1279,7 @@
         }
       });
 
-      try {
-        await fetch('https://ntfy.sh/' + CONFIG.ntfyTopic, {
-          method: 'POST',
-          headers: {
-            'Title': activeClient.name + ' - Onboarding Update',
-            'Priority': 'default',
-            'Tags': 'clipboard'
-          },
-          body: activeClient.name + ' - ' + doneChecks.length + '/' + allChecks.length + ' steps complete\nLatest: ' + latestItem
-        });
-        showToast('Notification sent!');
-      } catch (err) {
-        showToast('Failed to send notification');
-      }
+      showToast('Progress saved locally. Browser-side ntfy updates are disabled.');
     }
 
     /* ========================================

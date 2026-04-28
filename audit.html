@@ -448,14 +448,7 @@
 
         if (res.ok) {
           // Conversion tracking fires on thank-you.html (avoids redirect race condition)
-          // Push notification
-          try {
-            fetch('https://ntfy.sh/tct-xK9mW4vR7pLd', {
-              method: 'POST',
-              headers: { 'Title': 'New FREE AUDIT Request!', 'Priority': 'urgent', 'Tags': 'eyes,fire' },
-              body: 'FREE AUDIT: ' + data.firstName + ' ' + data.lastName + ' from ' + data.companyName + ' — Phone: ' + data.phone + ' — Email: ' + data.email + ' — After hours: ' + data.afterHours
-            });
-          } catch(e) {}
+          // NTFY is handled server-side by CTOS after the audit lead is saved.
           // Redirect to thank-you page for conversion tracking
           window.location.href = 'thank-you.html';
         } else {

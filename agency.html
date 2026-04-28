@@ -685,7 +685,7 @@ async function submitApplication() {
       phone: ghlPhone,
       company: companyName,
       tags: ['agency-target', 'agency-lead', 'white-label', 'partner-inquiry'],
-      source: 'Agency Landing Page',
+      source: 'partner-application',
       page: window.location.pathname,
       notes: [
         website ? 'Website: ' + website : '',
@@ -707,26 +707,7 @@ async function submitApplication() {
       console.error('lead intake error:', errText);
     }
 
-    // War room alert
-    const alertBody = [
-      'Agency: ' + companyName,
-      'Contact: ' + firstName + ' ' + lastName,
-      'Email: ' + email,
-      'Phone: ' + phone,
-      website ? 'Website: ' + website : '',
-      numClients ? 'Planned Clients: ' + numClients : '',
-      industries.length ? 'Industries: ' + industries.join(', ') : ''
-    ].filter(Boolean).join('\n');
-
-    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-      method: 'POST',
-      headers: {
-        'Title': 'NEW AGENCY APPLICATION',
-        'Priority': '5',
-        'Tags': 'briefcase,fire'
-      },
-      body: alertBody
-    }).catch(e => console.error('ntfy error:', e));
+    // NTFY is handled server-side by CTOS after the partner lead is saved.
 
     // Google Ads conversion
     if (typeof gtag === 'function') {

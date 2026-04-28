@@ -55,6 +55,8 @@ OUTREACH_AUDIT_SCRIPT = OPS_REPO / "ops" / "outreach-engine-audit.py"
 OUTREACH_AUDIT_REPORT = OPS_REPO / "ops" / "outreach-engine-report.json"
 LEGACY_AUDIT_SCRIPT = ROOT / "ops" / "legacy-engine-audit.py"
 LEGACY_AUDIT_REPORT = OPS_REPO / "ops" / "legacy-engine-report.json"
+NTFY_TRUST_AUDIT_SCRIPT = ROOT / "ops" / "ntfy-trust-audit.py"
+NTFY_TRUST_AUDIT_REPORT = OPS_REPO / "ops" / "ntfy-trust-report.json"
 
 
 def _print_header() -> None:
@@ -169,6 +171,25 @@ def check_booking_payment(results: list[dict]) -> bool:
     return ok
 
 
+def check_ntfy_trust(results: list[dict]) -> bool:
+    if not NTFY_TRUST_AUDIT_SCRIPT.is_file():
+        results.append(_check("NTFY trust audit", False, "audit script missing"))
+        return False
+
+    proc = _run(["python3", str(NTFY_TRUST_AUDIT_SCRIPT)], timeout=30.0)
+    ok = proc.returncode == 0
+    detail = "public browser files cannot post directly to ntfy"
+    if NTFY_TRUST_AUDIT_REPORT.is_file():
+        try:
+            data = json.loads(NTFY_TRUST_AUDIT_REPORT.read_text(encoding="utf-8"))
+            detail = f"{data.get('violations_total', '?')} browser-side direct posts"
+        except Exception:
+            detail = "report unreadable"
+            ok = False
+    results.append(_check("NTFY trust audit", ok, detail))
+    return ok
+
+
 def check_legacy_drift(results: list[dict]) -> dict:
     if not LEGACY_AUDIT_SCRIPT.is_file():
         results.append(_check("Legacy engine audit", False, "audit script missing", tone="legacy"))
@@ -244,6 +265,7 @@ def main() -> int:
     )
     critical_agents_passed, critical_agents_total = check_critical_agents(results)
     booking_ok = check_booking_payment(results)
+    ntfy_trust_ok = check_ntfy_trust(results)
     outreach_fresh, outreach_stale, outreach_missing = check_outreach_engines(results)
     legacy_report = check_legacy_drift(results)
 
@@ -254,6 +276,7 @@ def main() -> int:
         demo_listener_ok,
         critical_agents_passed == critical_agents_total,
         booking_ok,
+        ntfy_trust_ok,
         outreach_stale == 0 and outreach_missing == 0 and outreach_fresh > 0,
     ]
     core_healthy = sum(1 for item in core_checks if item)
