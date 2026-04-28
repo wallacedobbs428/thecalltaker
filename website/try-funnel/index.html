@@ -566,31 +566,19 @@
           leadBody.notes = 'gclid=' + gclid;
         }
 
-        await fetch('https://thecalltaker.vercel.app/api/public/lead', {
+        var leadResponse = await fetch('https://thecalltaker.vercel.app/api/public/lead', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(leadBody)
         });
-      } catch(e) {}
 
-      // War room alert
-      try {
-        await fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-          method: 'POST',
-          headers: {
-            'Title': 'NEW TRY FUNNEL SIGNUP: ' + data.company,
-            'Priority': 'urgent',
-            'Tags': 'rotating_light,dollar,zap'
-          },
-          body: 'Company: ' + data.company +
-                '\nName: ' + data.firstName + ' ' + (data.lastName || '') +
-                '\nEmail: ' + data.email +
-                '\nPhone: ' + data.phone +
-                '\nIndustry: ' + data.industry +
-                '\nPlan: After-Hours Starter ($97/mo)' +
-                '\n\nACTION: Call them within 24hrs to set up!'
-        });
-      } catch(e) {}
+        if (!leadResponse.ok) {
+          throw new Error('Lead save failed');
+        }
+      } catch(e) {
+        alert('We could not save your signup right now. Please call (629) 269-9697.');
+        return;
+      }
 
       // Google Ads conversion
       if (typeof gtag === 'function') {

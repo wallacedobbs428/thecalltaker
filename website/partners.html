@@ -534,15 +534,6 @@
         });
 
         if (res.ok) {
-          // Push notification
-          try {
-            fetch('https://ntfy.sh/tct-activity-cn1Aqa85', {
-              method: 'POST',
-              headers: { 'Title': 'Partner Application!', 'Priority': 'high', 'Tags': 'handshake,money_with_wings' },
-              body: 'PARTNER APPLICATION: ' + data.firstName + ' ' + data.lastName + ' from ' + data.companyName + ' (' + data.partnerType + ') — Phone: ' + data.phone + ' — Email: ' + data.email + ' — Customer base: ' + data.customerBase
-            });
-          } catch(e) {}
-
           // Conversion tracking
           if (typeof fbq === 'function') {
             fbq('track', 'Lead', { content_name: 'Partner Application', content_category: 'partner' });

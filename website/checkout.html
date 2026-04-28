@@ -511,14 +511,6 @@
   }
 
   function trackCheckout(e) {
-    var p = PLANS[selectedPlan];
-    // Send war room alert
-    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-      method: 'POST',
-      headers: { 'Title': 'CHECKOUT CLICK: ' + p.name + ' $' + p.price, 'Priority': 'urgent', 'Tags': 'money_with_wings' },
-      body: 'Someone clicked Start Free Pilot for ' + p.name + ' ($' + p.price + '/mo). Redirecting to signup.'
-    }).catch(function(){});
-
     // Show payment options for returning visitors
     document.getElementById('payment-options').style.display = 'block';
   }
@@ -526,12 +518,6 @@
   function payWithPayPal(e) {
     e.preventDefault();
     var p = PLANS[selectedPlan];
-    // War room alert for PayPal payment
-    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-      method: 'POST',
-      headers: { 'Title': 'PAYPAL PAYMENT: ' + p.name + ' $' + p.price, 'Priority': 'urgent', 'Tags': 'dollar,fire' },
-      body: 'Someone clicked PAY WITH PAYPAL for ' + p.name + ' ($' + p.price + '/mo)! Check PayPal NOW.'
-    }).catch(function(){});
     window.open(p.paypal, '_blank');
   }
 

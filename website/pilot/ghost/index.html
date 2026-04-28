@@ -859,31 +859,19 @@ a { color: inherit; text-decoration: none; }
         }
       }
 
-      await fetch('https://thecalltaker.vercel.app/api/public/lead', {
+      var leadResponse = await fetch('https://thecalltaker.vercel.app/api/public/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(leadBody)
       });
-    } catch(e) {}
 
-    try {
-      await fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-        method: 'POST',
-        headers: {
-          'Title': 'NEW PILOT SIGNUP (Ghost Ad): ' + data.company,
-          'Priority': 'urgent',
-          'Tags': 'rocket,rotating_light,fire'
-        },
-        body: 'Company: ' + data.company +
-              '\nName: ' + data.firstName + ' ' + (data.lastName || '') +
-              '\nEmail: ' + data.email +
-              '\nPhone: ' + data.phone +
-              '\nIndustry: ' + data.industry +
-              '\nSource: Ghost Video Landing Page' +
-              '\nURL: ' + window.location.href +
-              '\n\nACTION: Call them within 1 hour to set up forwarding!'
-      });
-    } catch(e) {}
+      if (!leadResponse.ok) {
+        throw new Error('Lead save failed');
+      }
+    } catch(e) {
+      alert('We could not save your pilot signup right now. Please call (629) 269-9697.');
+      return;
+    }
 
     if (typeof gtag === 'function') {
       gtag('event', 'conversion', { send_to: 'AW-17970510102/pilot_signup' });
@@ -977,7 +965,6 @@ document.addEventListener('click', function(e) {
       // Fire event
       if (typeof tctTrack === 'function') tctTrack('tct_ghost_cta_escalated', {});
       if (typeof gtag === 'function') gtag('event', 'tct_ghost_cta_escalated');
-      try { navigator.sendBeacon('https://ntfy.sh/tct-activity-cn1Aqa85', '[VB] Ghost CTA Escalated | 40% scroll | ' + window.location.href); } catch(e) {}
       window.removeEventListener('scroll', onScroll);
     }
   }
@@ -1000,7 +987,6 @@ document.addEventListener('click', function(e) {
     }
     if (typeof tctTrack === 'function') tctTrack('tct_ghost_exit_intent', {});
     if (typeof gtag === 'function') gtag('event', 'tct_ghost_exit_intent');
-    try { navigator.sendBeacon('https://ntfy.sh/tct-activity-cn1Aqa85', '[VB] Ghost Exit Intent | ' + window.location.href); } catch(e) {}
     document.removeEventListener('mouseout', onLeave);
   }
   document.addEventListener('mouseout', onLeave);
@@ -1020,7 +1006,6 @@ document.addEventListener('click', function(e) {
     }
     if (typeof tctTrack === 'function') tctTrack('tct_ghost_phone_attention', {});
     if (typeof gtag === 'function') gtag('event', 'tct_ghost_phone_attention');
-    try { navigator.sendBeacon('https://ntfy.sh/tct-activity-cn1Aqa85', '[VB] Ghost Phone Pulse | 15s idle | ' + window.location.href); } catch(e) {}
   }, 15000);
   // Cancel if CTA clicked before 15s
   document.addEventListener('click', function(e) {
@@ -1049,10 +1034,6 @@ document.addEventListener('click', function(e) {
     if (typeof gtag === 'function') {
       gtag('event', 'tct_ghost_lp_view', { utm_source: src });
     }
-    // Beacon to ntfy ACTIVITY
-    try {
-      navigator.sendBeacon('https://ntfy.sh/tct-activity-cn1Aqa85', '[VB] Ghost LP View | src=' + src + ' | ' + window.location.href);
-    } catch(e) {}
   }
 })();
 </script>

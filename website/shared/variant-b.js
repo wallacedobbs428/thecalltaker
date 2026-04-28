@@ -1,8 +1,9 @@
 /* ============================================
    THE CALL TAKER — Variant B Flag + Intent Tracker
    Loaded ONLY on money pages: /, /signup, /calculator, /pilot
-   Sets variant flag, tracks CTA/call/SMS clicks,
-   beacons high-intent events to ntfy ACTIVITY.
+   Sets variant flag and tracks CTA/call/SMS clicks.
+   Browser-side ntfy activity beacons were removed because they created
+   low-signal notification spam without adding operational leverage.
    ============================================ */
 (function () {
   'use strict';
@@ -11,7 +12,6 @@
 
   var PAGE = (window.location.pathname.split('/').pop() || 'index.html').replace('.html', '') || 'index';
   var isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  var NTFY_ACTIVITY = 'https://ntfy.sh/tct-activity-cn1Aqa85';
   var dayKey = new Date().toISOString().slice(0, 10);
 
   // ── Lightweight tracking ──
@@ -30,25 +30,7 @@
       window.dispatchEvent(new CustomEvent('tct:' + eventName, { detail: detail }));
     } catch (e) {}
 
-    // Beacon to ntfy for daily summary (fire-and-forget)
-    beacon(eventName, detail);
-  }
-
-  function beacon(eventName, detail) {
-    var body = '[VB] ' + eventName + ' | ' + PAGE + ' | ' + (detail.label || '') + ' | ' + dayKey;
-    try {
-      if (navigator.sendBeacon) {
-        var blob = new Blob([body], { type: 'text/plain' });
-        navigator.sendBeacon(NTFY_ACTIVITY + '?title=' + encodeURIComponent(eventName) + '&tags=chart_with_upwards_trend&priority=low', blob);
-      } else {
-        fetch(NTFY_ACTIVITY, {
-          method: 'POST',
-          headers: { 'Title': eventName, 'Tags': 'chart_with_upwards_trend', 'Priority': 'low' },
-          body: body,
-          keepalive: true
-        }).catch(function () {});
-      }
-    } catch (e) {}
+    // Daily activity noise was removed from phone alerts. Keep analytics only.
   }
 
   // ── CTA click tracking ──

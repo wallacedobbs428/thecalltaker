@@ -764,27 +764,6 @@ async function submitApplication() {
       console.error('GHL error:', errText);
     }
 
-    // War room alert
-    const alertBody = [
-      'Agency: ' + companyName,
-      'Contact: ' + firstName + ' ' + lastName,
-      'Email: ' + email,
-      'Phone: ' + phone,
-      website ? 'Website: ' + website : '',
-      numClients ? 'Planned Clients: ' + numClients : '',
-      industries.length ? 'Industries: ' + industries.join(', ') : ''
-    ].filter(Boolean).join('\n');
-
-    fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-      method: 'POST',
-      headers: {
-        'Title': 'NEW AGENCY APPLICATION',
-        'Priority': '5',
-        'Tags': 'briefcase,fire'
-      },
-      body: alertBody
-    }).catch(e => console.error('ntfy error:', e));
-
     // Google Ads conversion
     if (typeof gtag === 'function') {
       gtag('event', 'conversion', {

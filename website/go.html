@@ -355,36 +355,38 @@ function submitLead(e) {
     fbq('track', 'Lead', { content_name: 'go-page-callback', value: 97, currency: 'USD' });
   }
 
-  // Send ntfy alert to Wallace immediately
-  fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
+  // Save callback request into the live operator queue
+  fetch('https://thecalltaker.vercel.app/api/public/lead', {
     method: 'POST',
     headers: {
-      'Title': '[CRITICAL] FB LEAD: ' + name + ' wants a callback NOW',
-      'Priority': '5',
-      'Tags': 'phone,dollar',
-      'Actions': 'view, Call ' + name + ', tel:' + phone.replace(/[^\d+]/g, '')
+      'Content-Type': 'application/json'
     },
-    body: name + ' at ' + (company || 'unknown business') + '\nPhone: ' + phone + '\nSource: Facebook ad (go.html)\nLanded: ' + (window._tctData ? window._tctData.landed : 'unknown') + '\n\nCALL THEM NOW. They are waiting.'
+    body: JSON.stringify({
+      firstName: name.split(' ')[0] || name,
+      lastName: name.split(' ').slice(1).join(' ') || '',
+      phone: phone,
+      company: company,
+      source: 'go-page-callback',
+      page: window.location.pathname,
+      tags: ['callback-request', 'facebook-ad', 'go-page'],
+      notes: 'Immediate callback request from go.html' + (window._tctData && window._tctData.landed ? '\nLanded: ' + window._tctData.landed : '')
+    })
   })
-  .then(function() {
+  .then(function(res) {
+    if (!res.ok) throw new Error('Lead intake failed: ' + res.status);
     // Show success
     document.getElementById('lead-form').innerHTML =
       '<div style="text-align:center;padding:20px 0;">' +
       '<div style="font-size:40px;margin-bottom:10px;">&#9989;</div>' +
       '<div style="font-size:20px;font-weight:700;margin-bottom:8px;">Got it. Wallace is calling you now.</div>' +
       '<div style="color:#666;font-size:14px;">While you wait, hear the AI receptionist live:</div>' +
-      '<div style="margin-top:12px;"><a href="tel:+16157845747" style="color:#4ade80;font-size:24px;font-weight:700;text-decoration:none;">(615) 784-5747</a></div>' +
+      '<div style="margin-top:12px;"><a href="tel:+16292699697" style="color:#4ade80;font-size:24px;font-weight:700;text-decoration:none;">(629) 269-9697</a></div>' +
       '</div>';
   })
   .catch(function() {
-    // ntfy failed but still show success (Wallace has other monitors)
-    document.getElementById('lead-form').innerHTML =
-      '<div style="text-align:center;padding:20px 0;">' +
-      '<div style="font-size:40px;margin-bottom:10px;">&#9989;</div>' +
-      '<div style="font-size:20px;font-weight:700;margin-bottom:8px;">Got it. Wallace is calling you now.</div>' +
-      '<div style="color:#666;font-size:14px;">While you wait, hear the AI receptionist live:</div>' +
-      '<div style="margin-top:12px;"><a href="tel:+16157845747" style="color:#4ade80;font-size:24px;font-weight:700;text-decoration:none;">(615) 784-5747</a></div>' +
-      '</div>';
+    btn.textContent = 'Get Callback Now';
+    btn.disabled = false;
+    alert('We could not save your callback request right now. Please call (629) 269-9697.');
   });
 
   return false;

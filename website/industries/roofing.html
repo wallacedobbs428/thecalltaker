@@ -594,17 +594,7 @@ function submitFallbackForm(e) {
       page: window.location.pathname,
       notes: notes + "\nIndustry: " + industry
     })
-  }).then(function(r) { return r.json(); }).then(function() {
-    fetch("https://ntfy.sh/tct-urgent-Hk9UOEZR", {
-      method: "POST",
-      headers: {
-        "Title": "INDUSTRY PAGE LEAD: " + (company || name),
-        "Priority": "high",
-        "Tags": "rotating_light,phone"
-      },
-      body: "Name: " + name + "\nCompany: " + company + "\nPhone: " + phone + "\nEmail: " + email + "\nIndustry: " + industry + "\nPlan: " + (plan || "N/A") + "\nTime: " + (time || "N/A")
-    }).catch(function(){});
-    form.innerHTML = "<div style="text-align:center;padding:2rem"><h3 style="color:var(--green);margin-bottom:.5rem">Request Received!</h3><p style="color:var(--text-2)">We'll reach out within the hour to schedule your demo.</p><p style="margin-top:1rem"><a href="tel:+16157845747" style="color:var(--green);font-weight:700">Or call now: (615) 784-5747</a></p></div>";
+  }).then(function(r) { return r.json(); }).then(function() {    form.innerHTML = "<div style="text-align:center;padding:2rem"><h3 style="color:var(--green);margin-bottom:.5rem">Request Received!</h3><p style="color:var(--text-2)">We'll reach out within the hour to schedule your demo.</p><p style="margin-top:1rem"><a href="tel:+16157845747" style="color:var(--green);font-weight:700">Or call now: (615) 784-5747</a></p></div>";
   }).catch(function() {
     btn.textContent = origText;
     btn.disabled = false;
