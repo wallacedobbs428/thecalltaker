@@ -1864,17 +1864,6 @@ html.light .theme-toggle .icon-moon { display: none; }
         return res.json();
       })
       .then(function() {
-        // Send ntfy alert to Wallace
-        fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-          method: 'POST',
-          headers: {
-            'Title': 'NEW PILOT SIGNUP: ' + bizName,
-            'Priority': 'urgent',
-            'Tags': 'money_with_wings'
-          },
-          body: yourName + ' at ' + bizName + ' (' + industry + ') just signed up for ' + plan + ' plan via thecalltaker.com/start. Phone: ' + phone + '. CALL THEM NOW.'
-        }).catch(function() {});
-
         // Success
         showSuccess(bizName, plan);
 
@@ -1890,21 +1879,8 @@ html.light .theme-toggle .icon-moon { display: none; }
       })
       .catch(function(err) {
         console.error('Lead intake error:', err);
-        // Still show success + ntfy alert
-        showSuccess(bizName, plan);
-
-        fetch('https://ntfy.sh/tct-urgent-Hk9UOEZR', {
-          method: 'POST',
-          headers: { 'Title': 'PILOT SIGNUP (API error): ' + bizName, 'Priority': 'high' },
-          body: yourName + ' at ' + bizName + ' signed up but GHL API failed. Create contact manually. Phone: ' + phone + ' Email: ' + email
-        }).catch(function() {});
-
-        if (typeof fbq === 'function') {
-          fbq('track', 'StartTrial', {
-            content_name: plan,
-            content_category: industry
-          });
-        }
+        submitBtn.classList.remove('loading');
+        alert('We could not save your signup right now. Please try again in a minute or call (629) 269-9697.');
       });
     });
   }

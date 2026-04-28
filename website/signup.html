@@ -428,7 +428,7 @@
     };
 
     try {
-      await fetch('https://thecalltaker.vercel.app/api/public/lead', {
+      var response = await fetch('https://thecalltaker.vercel.app/api/public/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -443,16 +443,13 @@
           notes: 'City: ' + (data.city || 'N/A') + ' | State: ' + (data.state || 'N/A') + ' | Calls/day: ' + (data.calls || 'N/A')
         })
       });
-    } catch(e) {}
-
-    try {
-      var p = plans[data.plan];
-      await fetch('https://ntfy.sh/tct-warroom-Kx7mN9pQ', {
-        method: 'POST',
-        headers: { 'Title': 'NEW SIGNUP INTENT: ' + data.company, 'Priority': 'urgent', 'Tags': 'rotating_light,money_with_wings,fire' },
-        body: 'Company: ' + data.company + '\nName: ' + data.firstName + ' ' + data.lastName + '\nEmail: ' + data.email + '\nPhone: ' + data.phone + '\nPlan: ' + p.name + ' ($' + p.monthly + '/mo)' + '\nCity: ' + data.city + ', ' + data.state + '\nCalls/day: ' + data.calls + '\n\nACTION: Call them NOW to close!'
-      });
-    } catch(e) {}
+      if (!response.ok) throw new Error('Lead intake failed: ' + response.status);
+    } catch(e) {
+      btn.textContent = 'Complete Signup';
+      btn.disabled = false;
+      alert('We could not save your signup right now. Please try again in a minute or call (629) 269-9697.');
+      return;
+    }
 
     document.getElementById('s-company-name').textContent = data.company;
     document.querySelectorAll('.signup-step').forEach(function(s) { s.classList.remove('active'); });
