@@ -53,6 +53,8 @@ LEGACY_SERVICES = {
 }
 OUTREACH_AUDIT_SCRIPT = OPS_REPO / "ops" / "outreach-engine-audit.py"
 OUTREACH_AUDIT_REPORT = OPS_REPO / "ops" / "outreach-engine-report.json"
+LEGACY_AUDIT_SCRIPT = ROOT / "ops" / "legacy-engine-audit.py"
+LEGACY_AUDIT_REPORT = OPS_REPO / "ops" / "legacy-engine-report.json"
 
 
 def _print_header() -> None:
@@ -167,17 +169,34 @@ def check_booking_payment(results: list[dict]) -> bool:
     return ok
 
 
-def check_legacy_drift(results: list[dict]) -> tuple[int, int]:
-    present = 0
-    total = len(LEGACY_SERVICES)
-    for label, script_name in LEGACY_SERVICES.items():
-        script_path = OPS_DIR / script_name
-        if script_path.exists():
-            present += 1
-    ok = present == total
-    detail = f"{present}/{total} legacy scripts still present"
-    results.append(_check("Legacy engine inventory", ok, detail, tone="legacy"))
-    return present, total
+def check_legacy_drift(results: list[dict]) -> dict:
+    if not LEGACY_AUDIT_SCRIPT.is_file():
+        results.append(_check("Legacy engine audit", False, "audit script missing", tone="legacy"))
+        return {"engines_total": 0, "blocked_legacy_crm": 0, "blocked_stale_path": 0, "loaded_labels_total": 0, "orphan_plists_total": 0}
+
+    _run(["python3", str(LEGACY_AUDIT_SCRIPT)], timeout=30.0)
+    if not LEGACY_AUDIT_REPORT.is_file():
+        results.append(_check("Legacy engine audit", False, "report missing", tone="legacy"))
+        return {"engines_total": 0, "blocked_legacy_crm": 0, "blocked_stale_path": 0, "loaded_labels_total": 0, "orphan_plists_total": 0}
+
+    try:
+        data = json.loads(LEGACY_AUDIT_REPORT.read_text(encoding="utf-8"))
+    except Exception:
+        results.append(_check("Legacy engine audit", False, "report unreadable", tone="legacy"))
+        return {"engines_total": 0, "blocked_legacy_crm": 0, "blocked_stale_path": 0, "loaded_labels_total": 0, "orphan_plists_total": 0}
+
+    total = int(data.get("engines_total", 0))
+    blocked_legacy = int(data.get("blocked_legacy_crm", 0))
+    blocked_path = int(data.get("blocked_stale_path", 0))
+    loaded = int(data.get("loaded_labels_total", 0))
+    orphan_plists = int(data.get("orphan_plists_total", 0))
+    ok = loaded == 0
+    detail = (
+        f"{total} audited, {blocked_legacy} blocked by legacy CRM, "
+        f"{blocked_path} stale path, {loaded} loaded zombies, {orphan_plists} orphan plists"
+    )
+    results.append(_check("Legacy engine audit", ok, detail, tone="legacy"))
+    return data
 
 
 def check_outreach_engines(results: list[dict]) -> tuple[int, int, int]:
@@ -226,7 +245,7 @@ def main() -> int:
     critical_agents_passed, critical_agents_total = check_critical_agents(results)
     booking_ok = check_booking_payment(results)
     outreach_fresh, outreach_stale, outreach_missing = check_outreach_engines(results)
-    legacy_present, legacy_total = check_legacy_drift(results)
+    legacy_report = check_legacy_drift(results)
 
     core_checks = [
         production_ok,
@@ -243,7 +262,13 @@ def main() -> int:
     print("\n" + "=" * 60)
     print(f"  CORE STACK: {core_healthy}/{core_total} healthy")
     print(f"  CRITICAL AGENTS: {critical_agents_passed}/{critical_agents_total} loaded")
-    print(f"  LEGACY INVENTORY: {legacy_present}/{legacy_total} scripts present")
+    print(
+        "  LEGACY AUDIT: "
+        f"{legacy_report.get('engines_total', 0)} tracked, "
+        f"{legacy_report.get('blocked_legacy_crm', 0)} legacy-CRM blocked, "
+        f"{legacy_report.get('blocked_stale_path', 0)} stale-path, "
+        f"{legacy_report.get('loaded_labels_total', 0)} loaded zombies"
+    )
     print("=" * 60)
 
     if core_healthy == core_total:
@@ -260,8 +285,11 @@ def main() -> int:
         "outreach_fresh": outreach_fresh,
         "outreach_stale": outreach_stale,
         "outreach_missing": outreach_missing,
-        "legacy_scripts_present": legacy_present,
-        "legacy_scripts_total": legacy_total,
+        "legacy_engines_total": legacy_report.get("engines_total", 0),
+        "legacy_blocked_legacy_crm": legacy_report.get("blocked_legacy_crm", 0),
+        "legacy_blocked_stale_path": legacy_report.get("blocked_stale_path", 0),
+        "legacy_loaded_labels_total": legacy_report.get("loaded_labels_total", 0),
+        "legacy_orphan_plists_total": legacy_report.get("orphan_plists_total", 0),
         "checks": results,
     }
     write_report(report)
