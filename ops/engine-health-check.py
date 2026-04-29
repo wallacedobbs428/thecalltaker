@@ -57,6 +57,8 @@ LEGACY_AUDIT_SCRIPT = ROOT / "ops" / "legacy-engine-audit.py"
 LEGACY_AUDIT_REPORT = OPS_REPO / "ops" / "legacy-engine-report.json"
 NTFY_TRUST_AUDIT_SCRIPT = ROOT / "ops" / "ntfy-trust-audit.py"
 NTFY_TRUST_AUDIT_REPORT = OPS_REPO / "ops" / "ntfy-trust-report.json"
+NTFY_NOISE_AUDIT_SCRIPT = ROOT / "ops" / "ntfy-noise-recovery-audit.py"
+NTFY_NOISE_AUDIT_REPORT = OPS_REPO / "ops" / "ntfy-noise-recovery-report.json"
 PRODUCTION_WORKFORCE = {
     "workflow_events_ok": None,
     "workflow_events_24h": None,
@@ -202,6 +204,29 @@ def check_ntfy_trust(results: list[dict]) -> bool:
     return ok
 
 
+def check_ntfy_noise_recovery(results: list[dict]) -> bool:
+    if not NTFY_NOISE_AUDIT_SCRIPT.is_file():
+        results.append(_check("NTFY stale-alert recovery audit", False, "audit script missing"))
+        return False
+
+    proc = _run(["python3", str(NTFY_NOISE_AUDIT_SCRIPT)], timeout=30.0)
+    ok = proc.returncode == 0
+    detail = "report missing"
+    if NTFY_NOISE_AUDIT_REPORT.is_file():
+        try:
+            data = json.loads(NTFY_NOISE_AUDIT_REPORT.read_text(encoding="utf-8"))
+            detail = (
+                f"{data.get('loaded_stale_alert_jobs', '?')} loaded stale-alert jobs, "
+                f"{data.get('active_script_risks', '?')} active risky scripts, "
+                f"{data.get('installed_stale_alert_plists', '?')} installed retired plists"
+            )
+        except Exception:
+            detail = "report unreadable"
+            ok = False
+    results.append(_check("NTFY stale-alert recovery audit", ok, detail))
+    return ok
+
+
 def check_legacy_drift(results: list[dict]) -> dict:
     if not LEGACY_AUDIT_SCRIPT.is_file():
         results.append(_check("Legacy engine audit", False, "audit script missing", tone="legacy"))
@@ -278,6 +303,7 @@ def main() -> int:
     critical_agents_passed, critical_agents_total = check_critical_agents(results)
     booking_ok = check_booking_payment(results)
     ntfy_trust_ok = check_ntfy_trust(results)
+    ntfy_noise_ok = check_ntfy_noise_recovery(results)
     outreach_fresh, outreach_stale, outreach_missing = check_outreach_engines(results)
     legacy_report = check_legacy_drift(results)
 
@@ -289,6 +315,7 @@ def main() -> int:
         critical_agents_passed == critical_agents_total,
         booking_ok,
         ntfy_trust_ok,
+        ntfy_noise_ok,
         outreach_stale == 0 and outreach_missing == 0 and outreach_fresh > 0,
     ]
     core_healthy = sum(1 for item in core_checks if item)
