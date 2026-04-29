@@ -87,6 +87,8 @@ def is_skipped(path: Path) -> bool:
         return True
     if any(skip in path.as_posix() for skip in ("/shared/chroma_db/", "/node_modules/", "/.next/")):
         return True
+    if path.name.endswith("-log.txt") or path.name.endswith(".log.txt"):
+        return True
     if path.suffix.lower() in SKIP_SUFFIXES:
         return True
     if path.suffix.lower() and path.suffix.lower() not in SCAN_SUFFIXES:
