@@ -19,6 +19,9 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
+sys.path.insert(0, os.path.expanduser("~/thecalltaker-ops/ops"))
+from trusted_ntfy import post_trusted_ntfy
+
 # ── Paths ────────────────────────────────────────────────────────────────────
 WEBSITE_ROOT = Path(__file__).resolve().parent.parent  # website/
 TOOLS_DIR = WEBSITE_ROOT / "tools"
@@ -27,7 +30,6 @@ DEMO_CONSOLE_JS = WEBSITE_ROOT / "shared" / "demo-console.js"
 DEMO_SHOWCASE = WEBSITE_ROOT / "demo-showcase.html"
 
 NTFY_TOPIC = "tct-system-vRsfXQRQ"
-NTFY_URL = f"https://ntfy.sh/{NTFY_TOPIC}"
 
 # ── Terminal colors ──────────────────────────────────────────────────────────
 USE_COLOR = sys.stdout.isatty()
@@ -407,12 +409,15 @@ def send_ntfy_alert(failure_list):
     title = "[SITE-MONITOR] Issues Found"
 
     try:
-        data = body.encode("utf-8")
-        req = urllib.request.Request(NTFY_URL, data=data, method="POST")
-        req.add_header("Title", title)
-        req.add_header("Priority", "default")
-        req.add_header("Tags", "warning")
-        urllib.request.urlopen(req, timeout=10)
+        post_trusted_ntfy(
+            NTFY_TOPIC,
+            title,
+            body,
+            priority="default",
+            tags="warning",
+            workflow_key="ntfy:site-monitor",
+            evidence={"source": "website/tools/site-monitor.py", "trusted_alert_rule": "ctos_ledger_before_phone_push"},
+        )
         print(f"\n  {green('ntfy alert sent')} to {NTFY_TOPIC}")
     except Exception as e:
         print(f"\n  {yellow('ntfy alert failed')}: {e}")
