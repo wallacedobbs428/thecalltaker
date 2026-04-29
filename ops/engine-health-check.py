@@ -97,7 +97,7 @@ def _http_json(url: str, timeout: float = 5.0) -> tuple[bool, str, dict | None]:
     try:
         req = urllib.request.Request(url, method="GET")
         with urllib.request.urlopen(req, timeout=timeout) as resp:
-            body = resp.read(4000).decode("utf-8", errors="replace")
+            body = resp.read(200000).decode("utf-8", errors="replace")
             parsed = json.loads(body) if body else None
             return resp.status == 200, f"HTTP {resp.status}", parsed
     except urllib.error.HTTPError as e:
