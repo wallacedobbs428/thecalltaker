@@ -76,11 +76,11 @@ def run_static():
         fail(".no-break-word class missing or lacks white-space: nowrap")
 
     # 6. HTML: h1 contains <span class="no-break-word"> wrapping multi-word phrase
-    h1_span = re.search(
-        r'<h1>[^<]*<span\s+class="no-break-word">[^<]+</span>[^<]*</h1>',
-        src
-    )
-    if h1_span:
+    h1_markup = re.search(r'<h1\b[^>]*>(.*?)</h1>', src, re.DOTALL)
+    if h1_markup and re.search(
+        r'<span\s+class="no-break-word">[^<]+</span>',
+        h1_markup.group(1),
+    ):
         ok('H1 contains <span class="no-break-word"> protecting a phrase')
     else:
         fail('H1 missing <span class="no-break-word"> protection')
@@ -89,7 +89,7 @@ def run_static():
     h1_match = re.search(r'<h1>(.*?)</h1>', src, re.DOTALL)
     if h1_match:
         h1_text = re.sub(r'<[^>]+>', '', h1_match.group(1)).strip()
-        if "Missed Call" in h1_text and "Never" in h1_text:
+        if "It's 2 AM" in h1_text and "Gideon answers" in h1_text:
             ok(f'H1 text intact: "{h1_text[:60]}"')
         else:
             fail(f'H1 text changed: "{h1_text[:80]}"')

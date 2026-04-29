@@ -420,14 +420,25 @@ html.light .theme-toggle .icon-moon { display: none; }
 @keyframes enter { to{opacity:1;transform:translateY(0)} }
 
 .hero-copy h1 {
+  display: block;
   font-family: var(--serif); font-weight: 400;
   font-size: clamp(2.4rem, 5.5vw, 4.2rem);
   line-height: 1.12; letter-spacing: -0.03em;
   color: var(--t100); margin-bottom: 24px;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
   opacity: 0; transform: translateY(16px);
   animation: enter 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
   text-shadow: 0 0 40px rgba(42,157,122,0.08);
 }
+.hero h1 {
+  display: block;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+.no-break-word { white-space: nowrap; }
 .hero-copy h1 strong { color: var(--accent); font-weight: 400; text-shadow: 0 0 30px rgba(42,157,122,0.3); }
 
 .hero-sub {
@@ -1666,7 +1677,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
 <section class="hero hero-secondary" id="hero">
   <div class="hero-copy">
     <div class="eyebrow"><span class="blink"></span>SYSTEM ACTIVE</div>
-    <h1>It's 2 AM.<br>Your phone rings.<br><strong>Gideon answers.</strong><span class="cycle-badge"><span class="cycle-badge-dot"></span><span class="cycle-text" id="cycleText">HVAC</span></span></h1>
+    <h1>It's 2 AM.<br>Your phone rings.<br><strong><span class="no-break-word">Gideon answers.</span></strong><span class="cycle-badge"><span class="cycle-badge-dot"></span><span class="cycle-text" id="cycleText">HVAC</span></span></h1>
     <p class="hero-sub">Watch a real call happen. From the <strong>first ring</strong> to a <strong>booked appointment</strong>, while the owner sleeps.</p>
     <div class="industry-selector" id="indSelector">
       <span class="ind-pill active" data-ind="all">All Industries</span>
