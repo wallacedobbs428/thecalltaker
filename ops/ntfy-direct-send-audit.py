@@ -104,6 +104,8 @@ def read_text(path: Path) -> str:
 def find_direct_lines(text: str) -> list[int]:
     lines: list[int] = []
     for idx, line in enumerate(text.splitlines(), start=1):
+        if "ntfy.sh/health" in line or "/json?poll=" in line:
+            continue
         if any(pattern.search(line) for pattern in DIRECT_PATTERNS):
             lines.append(idx)
     return lines
