@@ -59,6 +59,8 @@ NTFY_TRUST_AUDIT_SCRIPT = ROOT / "ops" / "ntfy-trust-audit.py"
 NTFY_TRUST_AUDIT_REPORT = OPS_REPO / "ops" / "ntfy-trust-report.json"
 NTFY_NOISE_AUDIT_SCRIPT = ROOT / "ops" / "ntfy-noise-recovery-audit.py"
 NTFY_NOISE_AUDIT_REPORT = OPS_REPO / "ops" / "ntfy-noise-recovery-report.json"
+NTFY_DIRECT_AUDIT_SCRIPT = ROOT / "ops" / "ntfy-direct-send-audit.py"
+NTFY_DIRECT_AUDIT_REPORT = OPS_REPO / "ops" / "ntfy-direct-send-report.json"
 PRODUCTION_WORKFORCE = {
     "workflow_events_ok": None,
     "workflow_events_24h": None,
@@ -91,6 +93,17 @@ def _launchd_loaded(label: str) -> bool:
     try:
         out = subprocess.check_output(["launchctl", "list"], text=True, stderr=subprocess.DEVNULL)
     except (subprocess.CalledProcessError, FileNotFoundError):
+        out = ""
+    if label in out:
+        return True
+    try:
+        out = subprocess.check_output(
+            ["launchctl", "print", f"gui/{ROOT.stat().st_uid}"],
+            text=True,
+            stderr=subprocess.DEVNULL,
+            timeout=12,
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
         return False
     return label in out
 
@@ -227,6 +240,29 @@ def check_ntfy_noise_recovery(results: list[dict]) -> bool:
     return ok
 
 
+def check_ntfy_direct_senders(results: list[dict]) -> bool:
+    if not NTFY_DIRECT_AUDIT_SCRIPT.is_file():
+        results.append(_check("NTFY direct-send audit", False, "audit script missing"))
+        return False
+
+    proc = _run(["python3", str(NTFY_DIRECT_AUDIT_SCRIPT)], timeout=45.0)
+    ok = proc.returncode == 0
+    detail = "report missing"
+    if NTFY_DIRECT_AUDIT_REPORT.is_file():
+        try:
+            data = json.loads(NTFY_DIRECT_AUDIT_REPORT.read_text(encoding="utf-8"))
+            detail = (
+                f"{data.get('active_blocking_total', '?')} loaded direct senders, "
+                f"{data.get('launch_agent_findings_total', '?')} launchd findings, "
+                f"{data.get('source_untrusted_direct_files_total', '?')} untrusted source files"
+            )
+        except Exception:
+            detail = "report unreadable"
+            ok = False
+    results.append(_check("NTFY direct-send audit", ok, detail))
+    return ok
+
+
 def check_legacy_drift(results: list[dict]) -> dict:
     if not LEGACY_AUDIT_SCRIPT.is_file():
         results.append(_check("Legacy engine audit", False, "audit script missing", tone="legacy"))
@@ -304,6 +340,7 @@ def main() -> int:
     booking_ok = check_booking_payment(results)
     ntfy_trust_ok = check_ntfy_trust(results)
     ntfy_noise_ok = check_ntfy_noise_recovery(results)
+    ntfy_direct_ok = check_ntfy_direct_senders(results)
     outreach_fresh, outreach_stale, outreach_missing = check_outreach_engines(results)
     legacy_report = check_legacy_drift(results)
 
@@ -316,6 +353,7 @@ def main() -> int:
         booking_ok,
         ntfy_trust_ok,
         ntfy_noise_ok,
+        ntfy_direct_ok,
         outreach_stale == 0 and outreach_missing == 0 and outreach_fresh > 0,
     ]
     core_healthy = sum(1 for item in core_checks if item)
