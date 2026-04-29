@@ -10,6 +10,7 @@ without going through CTOS/trusted alert evidence first.
 from __future__ import annotations
 
 import json
+import os
 import plistlib
 import re
 import subprocess
@@ -28,6 +29,7 @@ ROOTS = [
 LAUNCH_AGENTS = HOME / "Library" / "LaunchAgents"
 OPS_REPO = HOME / "thecalltaker-ops"
 REPORT_PATH = OPS_REPO / "ops" / "ntfy-direct-send-report.json"
+MAX_SCAN_BYTES = 2_000_000
 
 SKIP_PARTS = {
     ".git",
@@ -38,6 +40,20 @@ SKIP_PARTS = {
     "logs",
     "shared/chroma_db",
 }
+PRUNE_DIR_NAMES = {
+    ".git",
+    ".next",
+    "node_modules",
+    "dist",
+    "build",
+    "logs",
+    "__pycache__",
+    ".pytest_cache",
+    ".turbo",
+}
+PRUNE_DIR_PATH_FRAGMENTS = (
+    "/shared/chroma_db",
+)
 SKIP_SUFFIXES = {
     ".json",
     ".jsonl",
@@ -91,7 +107,12 @@ def is_skipped(path: Path) -> bool:
         return True
     if path.suffix.lower() in SKIP_SUFFIXES:
         return True
-    if path.suffix.lower() and path.suffix.lower() not in SCAN_SUFFIXES:
+    if path.suffix.lower() not in SCAN_SUFFIXES:
+        return True
+    try:
+        if path.stat().st_size > MAX_SCAN_BYTES:
+            return True
+    except OSError:
         return True
     return False
 
@@ -177,22 +198,34 @@ def scan_sources() -> dict[str, dict[str, Any]]:
     for root in ROOTS:
         if not root.exists():
             continue
-        for path in root.rglob("*"):
-            if not path.is_file() or is_skipped(path):
-                continue
-            text = read_text(path)
-            if not text:
-                continue
-            lines = find_direct_lines(text)
-            if not lines:
-                continue
-            findings[str(path)] = {
-                "path": str(path),
-                "relative_path": path.relative_to(HOME).as_posix() if path.is_relative_to(HOME) else str(path),
-                "direct_lines": lines[:50],
-                "direct_line_count": len(lines),
-                "trusted_path": trusted_source(path, text),
-            }
+        for dirpath, dirnames, filenames in os.walk(root):
+            current = Path(dirpath)
+            current_posix = current.as_posix()
+            dirnames[:] = [
+                dirname
+                for dirname in dirnames
+                if dirname not in PRUNE_DIR_NAMES
+                and not any(f"{current_posix}/{dirname}".endswith(fragment) for fragment in PRUNE_DIR_PATH_FRAGMENTS)
+            ]
+            for filename in filenames:
+                path = current / filename
+                if is_skipped(path):
+                    continue
+                if not path.is_file():
+                    continue
+                text = read_text(path)
+                if not text:
+                    continue
+                lines = find_direct_lines(text)
+                if not lines:
+                    continue
+                findings[str(path)] = {
+                    "path": str(path),
+                    "relative_path": path.relative_to(HOME).as_posix() if path.is_relative_to(HOME) else str(path),
+                    "direct_lines": lines[:50],
+                    "direct_line_count": len(lines),
+                    "trusted_path": trusted_source(path, text),
+                }
     return findings
 
 
