@@ -245,7 +245,11 @@ def check_ntfy_direct_senders(results: list[dict]) -> bool:
         results.append(_check("NTFY direct-send audit", False, "audit script missing"))
         return False
 
-    proc = _run(["python3", str(NTFY_DIRECT_AUDIT_SCRIPT)], timeout=45.0)
+    try:
+        proc = _run(["python3", str(NTFY_DIRECT_AUDIT_SCRIPT)], timeout=120.0)
+    except subprocess.TimeoutExpired:
+        results.append(_check("NTFY direct-send audit", False, "audit timed out"))
+        return False
     ok = proc.returncode == 0
     detail = "report missing"
     if NTFY_DIRECT_AUDIT_REPORT.is_file():

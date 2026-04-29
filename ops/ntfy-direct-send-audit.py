@@ -271,7 +271,21 @@ def main() -> int:
     }
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps(report, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "timestamp": report["timestamp"],
+                "ok": report["ok"],
+                "active_blocking_total": report["active_blocking_total"],
+                "launch_agent_findings_total": report["launch_agent_findings_total"],
+                "source_untrusted_direct_files_total": report["source_untrusted_direct_files_total"],
+                "source_trusted_direct_files_total": report["source_trusted_direct_files_total"],
+                "report_path": str(REPORT_PATH),
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
     return 0 if report["ok"] else 1
 
 
