@@ -39,6 +39,8 @@ CRITICAL_AGENTS = [
     ("Demo webhook listener", "com.thecalltaker.demo-webhook"),
     ("Demo booking run", "com.thecalltaker.demo-booking-run"),
     ("Demo booking reminder", "com.thecalltaker.demo-booking-remind"),
+    ("CTOS cold-call planner", "com.thecalltaker.ctos.cold-call-planner"),
+    ("CTOS hot-lead converter", "com.thecalltaker.ctos.hot-lead-converter"),
 ]
 
 LEGACY_SERVICES = {
