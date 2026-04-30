@@ -61,6 +61,8 @@ NTFY_NOISE_AUDIT_SCRIPT = ROOT / "ops" / "ntfy-noise-recovery-audit.py"
 NTFY_NOISE_AUDIT_REPORT = OPS_REPO / "ops" / "ntfy-noise-recovery-report.json"
 NTFY_DIRECT_AUDIT_SCRIPT = ROOT / "ops" / "ntfy-direct-send-audit.py"
 NTFY_DIRECT_AUDIT_REPORT = OPS_REPO / "ops" / "ntfy-direct-send-report.json"
+TELEGRAM_POLLER_AUDIT_SCRIPT = OPS_REPO / "ops" / "telegram-poller-audit.py"
+TELEGRAM_POLLER_AUDIT_REPORT = OPS_REPO / "ops" / "telegram-poller-audit-report.json"
 PRODUCTION_WORKFORCE = {
     "workflow_events_ok": None,
     "workflow_events_24h": None,
@@ -267,6 +269,30 @@ def check_ntfy_direct_senders(results: list[dict]) -> bool:
     return ok
 
 
+def check_telegram_poller(results: list[dict]) -> bool:
+    if not TELEGRAM_POLLER_AUDIT_SCRIPT.is_file():
+        results.append(_check("Telegram poller audit", False, "audit script missing"))
+        return False
+
+    proc = _run(["python3", str(TELEGRAM_POLLER_AUDIT_SCRIPT)], timeout=30.0)
+    ok = proc.returncode == 0
+    detail = "report missing"
+    if TELEGRAM_POLLER_AUDIT_REPORT.is_file():
+        try:
+            data = json.loads(TELEGRAM_POLLER_AUDIT_REPORT.read_text(encoding="utf-8"))
+            detail = (
+                f"{data.get('loaded_poller_count', '?')}/"
+                f"{data.get('expected_loaded_poller_count', '?')} loaded, "
+                f"{data.get('fresh_conflict_count', '?')} fresh conflicts, "
+                f"{data.get('secret_plist_count', '?')} secret plists"
+            )
+        except Exception:
+            detail = "report unreadable"
+            ok = False
+    results.append(_check("Telegram poller audit", ok, detail))
+    return ok
+
+
 def check_legacy_drift(results: list[dict]) -> dict:
     if not LEGACY_AUDIT_SCRIPT.is_file():
         results.append(_check("Legacy engine audit", False, "audit script missing", tone="legacy"))
@@ -345,6 +371,7 @@ def main() -> int:
     ntfy_trust_ok = check_ntfy_trust(results)
     ntfy_noise_ok = check_ntfy_noise_recovery(results)
     ntfy_direct_ok = check_ntfy_direct_senders(results)
+    telegram_poller_ok = check_telegram_poller(results)
     outreach_fresh, outreach_stale, outreach_missing = check_outreach_engines(results)
     legacy_report = check_legacy_drift(results)
 
@@ -358,6 +385,7 @@ def main() -> int:
         ntfy_trust_ok,
         ntfy_noise_ok,
         ntfy_direct_ok,
+        telegram_poller_ok,
         outreach_stale == 0 and outreach_missing == 0 and outreach_fresh > 0,
     ]
     core_healthy = sum(1 for item in core_checks if item)
