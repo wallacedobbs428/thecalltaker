@@ -1,0 +1,154 @@
+{
+  "version": "2026-05-03",
+  "budget_window": {
+    "start": "2026-05-03",
+    "end": "2026-06-18",
+    "total_budget_usd": 2000,
+    "days": 46,
+    "average_daily_budget_usd": 43.48,
+    "rule": "Spend deliberately. Do not raise budget until demo-line calls, checkout intent, and payment flow remain clean."
+  },
+  "canonical_demo_number": {
+    "e164": "+16292699697",
+    "display": "(629) 269-9697"
+  },
+  "recommended_structure": {
+    "platform": "Meta first",
+    "reason": "Existing winner data favors call_now/live proof, price anchor, missed-call pain, and 15-34s video formats. Meta is the fastest place to test many short creatives on a $2k budget.",
+    "campaigns": [
+      {
+        "name": "TCT | Demo Line Proof | May-Jun 2026",
+        "objective": "Leads",
+        "primary_kpi": "qualified demo calls and landing-page checkout intent",
+        "cta_family": "CALL_NOW",
+        "starting_daily_budget_usd": 22
+      },
+      {
+        "name": "TCT | $97 Pilot | May-Jun 2026",
+        "objective": "Leads",
+        "primary_kpi": "pilot starts, checkout intent, and won payment rows",
+        "cta_family": "START_FREE_PILOT",
+        "starting_daily_budget_usd": 18
+      },
+      {
+        "name": "TCT | Retarget Warm Proof | May-Jun 2026",
+        "objective": "Leads",
+        "primary_kpi": "returning visitor checkout intent and demo calls",
+        "cta_family": "RETARGET",
+        "starting_daily_budget_usd": 3
+      }
+    ]
+  },
+  "phase_plan": [
+    {
+      "phase": "phase_1_find_signal",
+      "dates": "2026-05-03 to 2026-05-10",
+      "budget_usd": 300,
+      "daily_budget_usd": 37.5,
+      "live_ads": [
+        "m1-call-founder-01",
+        "m1-call-ui-01",
+        "m1-price-97-01",
+        "m1-missed-roofing-01"
+      ],
+      "landing_policy": "Use homepage or direct call for proof ads; use /pay or the production Square pilot checkout path for pilot-close traffic."
+    },
+    {
+      "phase": "phase_2_shift_to_winners",
+      "dates": "2026-05-11 to 2026-05-24",
+      "budget_usd": 560,
+      "daily_budget_usd": 40,
+      "live_ads_rule": "Keep the best call-now ad and best price/pilot ad. Replace weak ads with owner-night and emergency/missed-call variants.",
+      "rotation_rule": "Change one variable at a time: hook, first visual, or CTA. Do not change all three at once."
+    },
+    {
+      "phase": "phase_3_scale_or_conserve",
+      "dates": "2026-05-25 to 2026-06-18",
+      "budget_usd": 1140,
+      "daily_budget_usd": 45.6,
+      "budget_split_if_winning": {
+        "best_demo_call_ad": "40%",
+        "best_pilot_checkout_ad": "35%",
+        "retargeting": "15%",
+        "fresh_challenger": "10%"
+      },
+      "budget_split_if_no_winner": {
+        "manual_outreach_support": "50%",
+        "best_proof_ad_only": "30%",
+        "retargeting": "10%",
+        "fresh_challenger": "10%"
+      }
+    }
+  ],
+  "first_ads_to_launch": [
+    {
+      "id": "m1-call-founder-01",
+      "role": "primary proof control",
+      "source_script": "ads/scripts/script-04-try-it-now.md",
+      "cta": "CALL_NOW",
+      "destination": "tel:+16292699697 or https://thecalltaker.com/?utm_source=meta&utm_medium=paid_social&utm_campaign=tct_2k_june18&utm_content=m1-call-founder-01",
+      "why": "Winner data says live proof and call_now are strongest. Wallace founder proof is a sharp pattern interrupt."
+    },
+    {
+      "id": "m1-call-ui-01",
+      "role": "proof challenger",
+      "source_script": "ads/scripts/script-04-try-it-now.md",
+      "cta": "CALL_NOW",
+      "destination": "tel:+16292699697 or https://thecalltaker.com/?utm_source=meta&utm_medium=paid_social&utm_campaign=tct_2k_june18&utm_content=m1-call-ui-01",
+      "why": "Same proof hook, different first visual. Useful clean challenger."
+    },
+    {
+      "id": "m1-price-97-01",
+      "role": "conversion control",
+      "source_script": "ads/scripts/script-05-what-97-buys.md",
+      "cta": "SIGN_UP",
+      "destination": "https://2050-revenue-machine.vercel.app/pay?utm_source=meta&utm_medium=paid_social&utm_campaign=tct_2k_june18&utm_content=m1-price-97-01",
+      "why": "Square close path and checkout intent are now live. The $97 price-anchor creative matches the offer."
+    },
+    {
+      "id": "m1-missed-roofing-01",
+      "role": "pain challenger",
+      "source_script": "ads/scripts/script-01-missed-call.md",
+      "cta": "LEARN_MORE",
+      "destination": "https://thecalltaker.com/never-miss-a-call.html?utm_source=meta&utm_medium=paid_social&utm_campaign=tct_2k_june18&utm_content=m1-missed-roofing-01",
+      "why": "Missed-call pain and loss aversion are proven angles, and the page uses the current demo number."
+    }
+  ],
+  "do_not_use_for_paid_traffic_yet": [
+    "Generated city/industry SEO pages still containing (615) 784-5747.",
+    "Any old campaign or creative with +16157845747 as the demo CTA.",
+    "Any claim placeholders like [BLAND_ANSWER_RATE], [BLAND_BOOKING_RATE], or [BLAND_SAVINGS].",
+    "Broad national $60/day ad sets until the first $300 proves signal."
+  ],
+  "kill_rules": {
+    "minimum_review_threshold": {
+      "spend_usd": 40,
+      "impressions": 1500,
+      "runtime_hours": 48
+    },
+    "green": {
+      "link_ctr_min_percent": 1.5,
+      "qualified_call_or_checkout_intent_per_100_clicks_min": 5,
+      "cost_per_checkout_intent_max_usd": 35
+    },
+    "yellow": {
+      "link_ctr_min_percent": 1.0,
+      "qualified_call_or_checkout_intent_per_100_clicks_min": 2,
+      "cost_per_checkout_intent_max_usd": 55
+    },
+    "red": {
+      "link_ctr_below_percent": 1.0,
+      "qualified_call_or_checkout_intent_per_100_clicks_below": 2,
+      "action": "pause and replace creative before adding budget"
+    }
+  },
+  "measurement": {
+    "primary_events": [
+      "Demo calls to (629) 269-9697",
+      "Payment checkout intent rows",
+      "Square webhook marked-paid rows",
+      "Pilot signup thank-you events"
+    ],
+    "manual_review_cadence": "Review spend, calls, checkout intent, and payment proof every morning before raising budget."
+  }
+}
