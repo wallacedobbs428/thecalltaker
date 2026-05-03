@@ -68,15 +68,7 @@ function collectLead(payload) {
 
 async function postNtfy(topic, title, body, priority, tags) {
   if (!topic) return;
-  await fetch(`https://ntfy.sh/${topic}`, {
-    method: "POST",
-    headers: {
-      Title: title,
-      Priority: priority,
-      Tags: tags,
-    },
-    body,
-  });
+  console.warn("Direct ntfy suppressed in legacy Netlify intake", { title, priority, tags, bodyBytes: body.length });
 }
 
 async function forwardToCtos(lead, payload, origin) {
