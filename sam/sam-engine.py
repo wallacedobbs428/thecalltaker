@@ -32,16 +32,16 @@ from urllib.error import HTTPError, URLError
 # CONFIG
 # ===================================================
 
-GHL_API_KEY = "pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35"
-GHL_LOCATION_ID = "tQb9YmrGDrdVUJYPKrsY"
-GHL_BASE = "https://services.leadconnectorhq.com"
+PROVIDER_SYNC_DISABLED = "REMOVED_SECRET"
+PROVIDER_SYNC_LOCATION_DISABLED = "tQb9YmrGDrdVUJYPKrsY"
+LEGACY_CRM_BASE = "https://crm-disabled.invalid"
 
 NTFY_OPS_TOPIC = "tct-sales-63uYsIT9"
 NTFY_WAR_TOPIC = "tct-urgent-Hk9UOEZR"
 
 FROM_EMAIL = "thecalltakerai@gmail.com"
 FROM_NAME = "Wallace Dobbs"
-DEMO_LINE = "(615) 784-5747"
+DEMO_LINE = "(629) 269-9697"
 
 SAM_DIR = os.path.dirname(os.path.abspath(__file__))
 STATE_FILE = os.path.join(SAM_DIR, "sam-state.json")
@@ -148,7 +148,7 @@ KNOWLEDGE_BASE = {
         "subject": "We Got Your Message",
         "body": """<p>Hey {{firstName}},</p>
 <p>Got your message — thanks for reaching out. I'm looking into this personally and will get back to you shortly.</p>
-<p>If it's urgent, you can always call us directly at <strong>(615) 784-5747</strong>.</p>
+<p>If it's urgent, you can always call us directly at <strong>(629) 269-9697</strong>.</p>
 <p>— Wallace Dobbs<br>The Call Taker</p>""",
     },
 }
@@ -222,7 +222,7 @@ REFERRAL_EMAILS = {
 <p>You've been with The Call Taker for a month now and I hope it's been solid for your business.</p>
 <p><strong>Quick favor:</strong> Do you know 2-3 other HVAC owners who are still sending callers to voicemail?</p>
 <p>For every owner you refer who signs up, you get a <strong>free month</strong> of service. No limit.</p>
-<p>Just reply with their name and number (or have them call our demo line: (615) 784-5747) and we'll take it from there.</p>
+<p>Just reply with their name and number (or have them call our demo line: (629) 269-9697) and we'll take it from there.</p>
 <p>Appreciate you, {{firstName}}.</p>
 <p>— Wallace<br>The Call Taker</p>""",
     },
@@ -231,7 +231,7 @@ REFERRAL_EMAILS = {
         "body": """<p>Hey {{firstName}},</p>
 <p>Glad we got that sorted out quickly. That's what we're here for.</p>
 <p>While I have you — do you know any other HVAC owners who'd benefit from never missing a call? We'll give you a <strong>free month</strong> for each one that signs up.</p>
-<p>Just reply with their info or have them call <strong>(615) 784-5747</strong>.</p>
+<p>Just reply with their info or have them call <strong>(629) 269-9697</strong>.</p>
 <p>Thanks for being a great customer.</p>
 <p>— Wallace<br>The Call Taker</p>""",
     },
@@ -263,9 +263,9 @@ def log(msg):
 
 
 def ghl_request(method, path, body=None, version="2021-07-28"):
-    url = f"{GHL_BASE}{path}"
+    url = f"{LEGACY_CRM_BASE}{path}"
     headers = {
-        "Authorization": f"Bearer {GHL_API_KEY}",
+        "Authorization": f"Bearer {PROVIDER_SYNC_DISABLED}",
         "Version": version,
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -278,27 +278,24 @@ def ghl_request(method, path, body=None, version="2021-07-28"):
             return json.loads(resp.read().decode())
     except HTTPError as e:
         error_body = e.read().decode() if e.fp else ""
-        log(f"GHL API Error {e.code}: {method} {path} — {error_body[:200]}")
+        log(f"legacy CRM API Error {e.code}: {method} {path} — {error_body[:200]}")
         return None
     except URLError as e:
-        log(f"GHL Network Error: {method} {path} — {e.reason}")
+        log(f"legacy CRM Network Error: {method} {path} — {e.reason}")
         return None
     except Exception as e:
-        log(f"GHL Error: {method} {path} — {e}")
+        log(f"legacy CRM Error: {method} {path} — {e}")
         return None
 
 
 def ntfy(topic, title, msg, priority="default", tags=""):
     try:
-        url = f"https://ntfy.sh/{topic}"
-        headers = {"Title": title, "Priority": priority, "Content-Type": "text/plain"}
-        if tags:
-            headers["Tags"] = tags
-        req = Request(url, data=msg.encode(), headers=headers, method="POST")
-        urlopen(req, timeout=10)
-        log(f"ntfy sent: {title}")
+        sys.path.insert(0, os.path.expanduser("~/thecalltaker-ops/ops"))
+        from trusted_ntfy import post_trusted_ntfy
+        post_trusted_ntfy(topic, title, msg, priority=priority, tags=tags, workflow_key="legacy-singleton:sam-engine")
+        log(f"trusted ntfy queued: {title}")
     except Exception as e:
-        log(f"ntfy error: {e}")
+        log(f"trusted ntfy suppressed: {e}")
 
 
 def load_state():
@@ -338,7 +335,7 @@ def get_all_contacts():
     contacts = []
     page = 1
     while True:
-        resp = ghl_request("GET", f"/contacts/?locationId={GHL_LOCATION_ID}&limit=100&page={page}")
+        resp = ghl_request("GET", f"/contacts/?locationId={PROVIDER_SYNC_LOCATION_DISABLED}&limit=100&page={page}")
         if not resp or "contacts" not in resp:
             break
         batch = resp["contacts"]
@@ -363,7 +360,7 @@ def get_customers(contacts):
 
 def get_conversations(contact_id):
     resp = ghl_request("GET",
-        f"/conversations/search?locationId={GHL_LOCATION_ID}&contactId={contact_id}",
+        f"/conversations/search?locationId={PROVIDER_SYNC_LOCATION_DISABLED}&contactId={contact_id}",
         version="2021-04-15")
     if resp and "conversations" in resp:
         return resp["conversations"]

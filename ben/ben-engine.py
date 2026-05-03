@@ -30,14 +30,14 @@ from urllib.error import HTTPError, URLError
 # CONFIG
 # ===================================================
 
-GHL_API_KEY = "pit-771d5b3f-847e-4cbe-8707-77ddc0f24b35"
-GHL_LOCATION_ID = "tQb9YmrGDrdVUJYPKrsY"
-GHL_BASE = "https://services.leadconnectorhq.com"
+PROVIDER_SYNC_DISABLED = "REMOVED_SECRET"
+PROVIDER_SYNC_LOCATION_DISABLED = "tQb9YmrGDrdVUJYPKrsY"
+LEGACY_CRM_BASE = "https://crm-disabled.invalid"
 
 NTFY_OPS_TOPIC = "tct-sales-63uYsIT9"
 NTFY_WAR_TOPIC = "tct-urgent-Hk9UOEZR"
 
-DEMO_LINE = "(615) 784-5747"
+DEMO_LINE = "(629) 269-9697"
 FROM_EMAIL = "thecalltakerai@gmail.com"
 SMS_PHONE = "+16156539004"
 
@@ -117,7 +117,7 @@ REENGAGE_EMAILS = {
 <p>We connected a little while back about The Call Taker for {{companyName}}. Just wanted to circle back with something timely.</p>
 <p>It's peak heating season. When a furnace dies at midnight, your customer calls once. If voicemail answers, they call whoever picks up first.</p>
 <p>The Call Taker answers in under 2 seconds. 24/7. Even Christmas morning. $497/mo, no contracts.</p>
-<p>Still worth a listen: <strong>(615) 784-5747</strong></p>
+<p>Still worth a listen: <strong>(629) 269-9697</strong></p>
 <p>— Wallace</p>
 <p style="font-size:11px;color:#999;">Reply STOP to opt out</p>""",
     },
@@ -127,7 +127,7 @@ REENGAGE_EMAILS = {
 <p>We talked a while back about The Call Taker. Spring is here and AC season is coming fast.</p>
 <p>When every homeowner calls about their AC at the same time, your team will be on jobs and the phone will go to voicemail. That's $350+ per missed call walking out the door.</p>
 <p>The Call Taker handles the overflow — answers every call, books the job, texts you. $497/mo.</p>
-<p>Hear it: <strong>(615) 784-5747</strong></p>
+<p>Hear it: <strong>(629) 269-9697</strong></p>
 <p>— Wallace</p>
 <p style="font-size:11px;color:#999;">Reply STOP to opt out</p>""",
     },
@@ -137,7 +137,7 @@ REENGAGE_EMAILS = {
 <p>It's peak AC season and I know {{companyName}}'s phone is busy. Quick question — how many calls are going to voicemail this week?</p>
 <p>The Call Taker catches every overflow call, gets the customer's info, and books the job. No voicemail. No lost revenue.</p>
 <p>$497/mo. Set up in 48 hours. Cancel anytime.</p>
-<p>Call the demo: <strong>(615) 784-5747</strong></p>
+<p>Call the demo: <strong>(629) 269-9697</strong></p>
 <p>— Wallace</p>
 <p style="font-size:11px;color:#999;">Reply STOP to opt out</p>""",
     },
@@ -147,16 +147,16 @@ REENGAGE_EMAILS = {
 <p>We connected earlier this year about The Call Taker for {{companyName}}. Wanted to circle back before heating season hits.</p>
 <p>When furnaces start failing and customers call at 10pm, voicemail won't cut it. The company that answers first gets the job.</p>
 <p>The Call Taker makes sure that's always {{companyName}}. $497/mo, no contracts, 48-hour setup.</p>
-<p>Hear it live: <strong>(615) 784-5747</strong></p>
+<p>Hear it live: <strong>(629) 269-9697</strong></p>
 <p>— Wallace</p>
 <p style="font-size:11px;color:#999;">Reply STOP to opt out</p>""",
     },
 }
 
 SMS_TEMPLATES = [
-    "Hey {{firstName}}, quick Q — when customers call {{companyName}} after hours, what happens? The Call Taker answers 24/7 so you never miss a job. Hear it: (615) 784-5747. Reply STOP to opt out",
-    "{{firstName}} — 62% of HVAC calls that hit voicemail never call back. The Call Taker fixes that for {{companyName}}. Hear it live: (615) 784-5747. Reply STOP to opt out",
-    "{{firstName}}, what if {{companyName}} never sent a caller to voicemail again? The Call Taker handles it 24/7. Quick listen: (615) 784-5747. Reply STOP to opt out",
+    "Hey {{firstName}}, quick Q — when customers call {{companyName}} after hours, what happens? The Call Taker answers 24/7 so you never miss a job. Hear it: (629) 269-9697. Reply STOP to opt out",
+    "{{firstName}} — 62% of HVAC calls that hit voicemail never call back. The Call Taker fixes that for {{companyName}}. Hear it live: (629) 269-9697. Reply STOP to opt out",
+    "{{firstName}}, what if {{companyName}} never sent a caller to voicemail again? The Call Taker handles it 24/7. Quick listen: (629) 269-9697. Reply STOP to opt out",
 ]
 
 
@@ -176,9 +176,9 @@ def log(msg):
 
 
 def ghl_request(method, path, body=None, version="2021-07-28"):
-    url = f"{GHL_BASE}{path}"
+    url = f"{LEGACY_CRM_BASE}{path}"
     headers = {
-        "Authorization": f"Bearer {GHL_API_KEY}",
+        "Authorization": f"Bearer {PROVIDER_SYNC_DISABLED}",
         "Version": version,
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -191,27 +191,24 @@ def ghl_request(method, path, body=None, version="2021-07-28"):
             return json.loads(resp.read().decode())
     except HTTPError as e:
         error_body = e.read().decode() if e.fp else ""
-        log(f"GHL API Error {e.code}: {method} {path} — {error_body[:200]}")
+        log(f"legacy CRM API Error {e.code}: {method} {path} — {error_body[:200]}")
         return None
     except URLError as e:
-        log(f"GHL Network Error: {method} {path} — {e.reason}")
+        log(f"legacy CRM Network Error: {method} {path} — {e.reason}")
         return None
     except Exception as e:
-        log(f"GHL Error: {method} {path} — {e}")
+        log(f"legacy CRM Error: {method} {path} — {e}")
         return None
 
 
 def ntfy(topic, title, msg, priority="default", tags=""):
     try:
-        url = f"https://ntfy.sh/{topic}"
-        headers = {"Title": title, "Priority": priority, "Content-Type": "text/plain"}
-        if tags:
-            headers["Tags"] = tags
-        req = Request(url, data=msg.encode(), headers=headers, method="POST")
-        urlopen(req, timeout=10)
-        log(f"ntfy sent: {title}")
+        sys.path.insert(0, os.path.expanduser("~/thecalltaker-ops/ops"))
+        from trusted_ntfy import post_trusted_ntfy
+        post_trusted_ntfy(topic, title, msg, priority=priority, tags=tags, workflow_key="legacy-singleton:ben-engine")
+        log(f"trusted ntfy queued: {title}")
     except Exception as e:
-        log(f"ntfy error: {e}")
+        log(f"trusted ntfy suppressed: {e}")
 
 
 def load_state():
@@ -247,7 +244,7 @@ def get_all_contacts():
     contacts = []
     page = 1
     while True:
-        resp = ghl_request("GET", f"/contacts/?locationId={GHL_LOCATION_ID}&limit=100&page={page}")
+        resp = ghl_request("GET", f"/contacts/?locationId={PROVIDER_SYNC_LOCATION_DISABLED}&limit=100&page={page}")
         if not resp or "contacts" not in resp:
             break
         batch = resp["contacts"]
@@ -271,7 +268,7 @@ def get_non_customer_contacts(contacts):
 
 def get_conversations(contact_id):
     resp = ghl_request("GET",
-        f"/conversations/search?locationId={GHL_LOCATION_ID}&contactId={contact_id}",
+        f"/conversations/search?locationId={PROVIDER_SYNC_LOCATION_DISABLED}&contactId={contact_id}",
         version="2021-04-15")
     if resp and "conversations" in resp:
         return resp["conversations"]
@@ -459,7 +456,7 @@ TODAY'S GAME PLAN:
 
 YOUR MOVES TODAY:
   1. Check ntfy for any reply alerts — respond within 1 hour
-  2. Secret shop 3-5 HVAC companies after 6pm (call, confirm voicemail, tag "voicemail-confirmed" in GHL)
+  2. Secret shop 3-5 HVAC companies after 6pm (call, confirm voicemail, tag "voicemail-confirmed" in legacy CRM)
   3. Check Instantly dashboard — make sure emails are actually sending
   4. Ben will score all leads at 3pm — check war room for hottest ones
 

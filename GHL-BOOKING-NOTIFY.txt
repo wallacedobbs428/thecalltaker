@@ -5,11 +5,11 @@ Last updated: 2026-04-12
 Your book page: https://thecalltaker.com/book.html
 Calendar widget ID: h4IlzccZ1m3JprEQqpMJ (LeadConnector)
 
-A) GHL — ALLOW YOUR SITE (if iframe is blank)
+A) legacy CRM — ALLOW YOUR SITE (if iframe is blank)
    Calendars → [your demo calendar] → Settings / Widget
    → Allowed domains: thecalltaker.com, www.thecalltaker.com
 
-B) GHL — WORKFLOW: NEW APPOINTMENT → NTFY (phone buzz)
+B) legacy CRM — WORKFLOW: NEW APPOINTMENT → NTFY (phone buzz)
    1. Automation → Create workflow
    2. Trigger: "Appointment Booked" or "Customer Booked Appointment"
       (pick the calendar tied to widget h4IlzccZ1m3JprEQqpMJ)
@@ -17,27 +17,27 @@ B) GHL — WORKFLOW: NEW APPOINTMENT → NTFY (phone buzz)
       a) Add tag on contact: appointment-booked
          (optional — helps demo-booking-engine.py on your Mac)
       b) Custom Webhook — if your plan includes it:
-         URL:  https://ntfy.sh/tct-urgent-Hk9UOEZR
+         URL:  use the CTOS public lead / booking-intake endpoint, not a raw ntfy topic.
          Method: POST
          Headers:
            Title:    DEMO BOOKED: {{contact.name}}
            Priority: high
            Tags:     calendar,moneybag
-         Body (plain text, use GHL merge fields for your account):
+         Body (plain text, use legacy CRM merge fields for your account):
            {{contact.name}} booked a demo
            Phone: {{contact.phone}}
            Email: {{contact.email}}
-           Time: (paste your appointment start merge field from GHL)
+           Time: (paste your appointment start merge field from legacy CRM)
 
       If Custom Webhook is not available, use "Send Email" to yourself
-      and/or "Internal notification" in the GHL mobile app (still turn
-      on push notifications for GHL on your phone).
+      and/or "Internal notification" in the legacy CRM mobile app (still turn
+      on push notifications for legacy CRM on your phone).
 
 C) MAC — DEMO BOOKING ENGINE (reminders / no-show — not instant ping)
    ~/thecalltaker-ops/ops/demo-booking-engine.py  (booking URL in engine: /book.html)
-   Needs TCT_GHL_API_KEY and a launchd job if you want automated
+   Needs TCT_PROVIDER_SYNC_DISABLED and a launchd job if you want automated
    reminders. Instant ping = section B above.
 
 D) SMOKE TEST
-   Book a test slot from /book.html → confirm in GHL calendar +
+   Book a test slot from /book.html → confirm in legacy CRM calendar +
    you receive ntfy (or email fallback).

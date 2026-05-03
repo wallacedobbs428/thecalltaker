@@ -29,7 +29,6 @@ REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ntfy config (matches tct_common.py topics)
 NTFY_SALES = "tct-sales-63uYsIT9"
-NTFY_URL = "https://ntfy.sh"
 
 
 def load_state():
@@ -251,24 +250,20 @@ def format_report_ntfy(report):
 
 
 def send_ntfy(message, title="Video Ad Report"):
-    """Send to ntfy SALES topic."""
+    """Send to trusted ntfy SALES topic."""
     try:
-        import urllib.request
-
-        data = message.encode("utf-8")
-        req = urllib.request.Request(
-            f"{NTFY_URL}/{NTFY_SALES}",
-            data=data,
-            headers={
-                "Title": title,
-                "Priority": "default",
-                "Tags": "bar_chart,video_camera",
-            },
+        sys.path.insert(0, os.path.expanduser("~/thecalltaker-ops/ops"))
+        from trusted_ntfy import post_trusted_ntfy
+        post_trusted_ntfy(
+            NTFY_SALES,
+            title,
+            message,
+            tags="bar_chart,video_camera",
+            workflow_key="legacy-singleton:video-ad-reporter",
         )
-        urllib.request.urlopen(req, timeout=10)
-        print(f"  → Sent to ntfy/{NTFY_SALES}")
+        print(f"  → Queued trusted ntfy/{NTFY_SALES}")
     except Exception as e:
-        print(f"  → ntfy failed: {e}")
+        print(f"  → trusted ntfy suppressed: {e}")
 
 
 def cmd_report():
