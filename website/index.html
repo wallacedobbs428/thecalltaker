@@ -53,7 +53,7 @@
     }
   })();
 </script>
-<meta name="description" content="AI revenue recovery for service businesses. Capture calls, recover missed leads, route hot opportunities, and start with a no-card controlled pilot.">
+<meta name="description" content="AI revenue recovery for service businesses. Capture calls, recover missed leads, route hot opportunities, and start your 14-day trial through secure Square checkout.">
 <meta property="og:title" content="AI Revenue Recovery for Service Businesses | The Call Taker">
 <meta property="og:description" content="Capture every call, recover missed leads, and give your team the context to close more jobs.">
 <meta property="og:image" content="https://thecalltaker.com/og-image.png">
@@ -74,7 +74,7 @@
 <noscript><style>.reveal,.reveal-left,.reveal-right,.reveal-scale,.reveal-stagger>*{opacity:1!important;transform:none!important;}</style></noscript>
 <!-- Schema.org -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"The Call Taker","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI revenue recovery system that helps service businesses capture calls, recover missed leads, and route high-intent opportunities.","url":"https://thecalltaker.com","telephone":"+16292699697","offers":{"@type":"AggregateOffer","lowPrice":"97","highPrice":"997","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my customers know it's not a real person?","acceptedAnswer":{"@type":"Answer","text":"Most don't. Call (629) 269-9697 right now and judge for yourself."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"We confirm your business rules, configure the call flow, and get approval before launch."}},{"@type":"Question","name":"Is there really a free 14-day pilot?","acceptedAnswer":{"@type":"Answer","text":"Yes. The controlled pilot request does not require a card. You approve the call flow before launch."}}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"The Call Taker","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI revenue recovery system that helps service businesses capture calls, recover missed leads, and route high-intent opportunities.","url":"https://thecalltaker.com","telephone":"+16292699697","offers":{"@type":"AggregateOffer","lowPrice":"97","highPrice":"997","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my customers know it's not a real person?","acceptedAnswer":{"@type":"Answer","text":"Most don't. Call (629) 269-9697 right now and judge for yourself."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"We confirm your business rules, configure the call flow, and get approval before launch."}},{"@type":"Question","name":"How does the 14-day trial work?","acceptedAnswer":{"@type":"Answer","text":"Start through secure Square checkout. The trial starts at $0 today, then continues at the selected monthly plan unless canceled before the trial ends."}}]}]}
 </script>
 
 <style>
@@ -115,13 +115,14 @@ body {
   font-size: 16px;
   line-height: 1.6;
 }
+a[href^="tel:"] { white-space: nowrap; }
 
 body::after {
   content: '';
   position: fixed; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
   pointer-events: none; z-index: 9999;
-  opacity: 0.25; mix-blend-mode: overlay;
+  opacity: 0.16; mix-blend-mode: soft-light;
 }
 
 /* ═══ SCROLL PROGRESS BAR ═══ */
@@ -139,11 +140,11 @@ body::after {
 .nav {
   position: fixed; top: 0; left: 0; right: 0;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 40px;
+  padding: 16px clamp(24px, 4vw, 56px);
   z-index: 100;
-  background: rgba(8,10,8,0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(3,7,5,0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(42,157,122,0.08);
 }
 .nav-logo {
@@ -152,10 +153,11 @@ body::after {
   text-decoration: none;
 }
 .nav-logo span { color: var(--accent); }
-.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links { display: flex; gap: 22px; align-items: center; margin-left: auto; }
 .nav-links a {
   font-size: 13px; color: var(--t40);
   text-decoration: none; transition: color 0.2s;
+  white-space: nowrap;
 }
 .nav-links a:hover { color: var(--t100); }
 .nav-cta {
@@ -314,6 +316,7 @@ html.light .marquee-track { color: var(--t40); }
 
 /* ═══ THEME TOGGLE ═══ */
 .theme-toggle {
+  display: none;
   position: fixed;
   bottom: 24px; left: 24px;
   width: 48px; height: 48px;
@@ -376,9 +379,9 @@ html.light .theme-toggle .icon-moon { display: none; }
 .ambient { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 .ambient-inner {
   width: 100%; height: 100%;
-  background: radial-gradient(ellipse at 65% 35%, rgba(42,157,122,0.06) 0%, transparent 55%),
-              radial-gradient(ellipse at 25% 75%, rgba(42,157,122,0.025) 0%, transparent 45%),
-              radial-gradient(ellipse at 50% 50%, rgba(42,157,122,0.015) 0%, transparent 70%);
+  background: radial-gradient(ellipse at 65% 35%, rgba(42,157,122,0.035) 0%, transparent 48%),
+              radial-gradient(ellipse at 25% 75%, rgba(42,157,122,0.018) 0%, transparent 42%),
+              radial-gradient(ellipse at 50% 50%, rgba(42,157,122,0.01) 0%, transparent 68%);
   animation: amb 14s ease-in-out infinite;
 }
 @keyframes amb { 0%,100%{opacity:1} 50%{opacity:0.5} }
@@ -1148,8 +1151,9 @@ html.light .feature-icon svg { stroke: var(--accent); }
 .g-vault-bg {
   position: absolute; inset: 0; z-index: 0;
   background:
-    radial-gradient(ellipse 60% 80% at 62% 50%, rgba(42,157,122,0.07) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 60% at 25% 45%, rgba(42,157,122,0.025) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(0,0,0,0.98) 0%, rgba(3,10,8,0.96) 48%, #000 100%),
+    radial-gradient(ellipse 54% 78% at 66% 50%, rgba(42,157,122,0.06) 0%, transparent 52%),
+    radial-gradient(ellipse 34% 52% at 24% 42%, rgba(42,157,122,0.018) 0%, transparent 48%),
     #000;
 }
 
@@ -1209,11 +1213,11 @@ html.light .feature-icon svg { stroke: var(--accent); }
 /* Projection beam — vertical light column under hologram */
 .g-projection-beam {
   position: absolute; bottom: 0; right: 28%; transform: translateX(50%);
-  width: 200px; height: 70%;
+  width: 160px; height: 66%;
   background: linear-gradient(0deg,
-    rgba(42,157,122,0.12) 0%,
-    rgba(42,157,122,0.04) 30%,
-    rgba(42,157,122,0.02) 60%,
+    rgba(42,157,122,0.075) 0%,
+    rgba(42,157,122,0.025) 34%,
+    rgba(42,157,122,0.012) 62%,
     transparent 100%);
   -webkit-mask-image: linear-gradient(90deg, transparent, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.6) 70%, transparent);
   mask-image: linear-gradient(90deg, transparent, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.6) 70%, transparent);
@@ -1222,13 +1226,13 @@ html.light .feature-icon svg { stroke: var(--accent); }
 
 /* Hologram glow */
 .g-bg-glow {
-  position: absolute; top: 8%; right: 12%;
-  width: 550px; height: 700px;
-  background: radial-gradient(ellipse at center, rgba(42,157,122,0.12) 0%, rgba(26,122,92,0.05) 35%, transparent 60%);
-  filter: blur(70px); opacity: 0;
+  position: absolute; top: 10%; right: 13%;
+  width: 480px; height: 640px;
+  background: radial-gradient(ellipse at center, rgba(42,157,122,0.085) 0%, rgba(26,122,92,0.035) 34%, transparent 62%);
+  filter: blur(52px); opacity: 0;
   animation: gBgBreathe 5s ease-in-out infinite;
 }
-@keyframes gBgBreathe { 0%,100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
+@keyframes gBgBreathe { 0%,100% { opacity: 0.42; transform: scale(1); } 50% { opacity: 0.68; transform: scale(1.05); } }
 
 /* ── SPLIT LAYOUT — 42/58 to give hologram more room ── */
 .g-vault-inner {
@@ -1349,7 +1353,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
   display: block; mix-blend-mode: screen; opacity: 0.94;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 3%, black 8%, black 80%, rgba(0,0,0,0.25) 93%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 3%, black 8%, black 80%, rgba(0,0,0,0.25) 93%, transparent 100%);
-  filter: hue-rotate(25deg) drop-shadow(0 0 50px rgba(42,157,122,0.7)) drop-shadow(0 0 100px rgba(42,157,122,0.35));
+  filter: hue-rotate(25deg) brightness(0.92) contrast(1.08) drop-shadow(0 0 38px rgba(42,157,122,0.58)) drop-shadow(0 0 85px rgba(42,157,122,0.24));
   will-change: filter, opacity;
 }
 
@@ -1364,13 +1368,13 @@ html.light .feature-icon svg { stroke: var(--accent); }
 
 /* Hologram bloom animation */
 @keyframes gBloom {
-  0%,100% { filter: hue-rotate(25deg) drop-shadow(0 0 50px rgba(42,157,122,0.7)) drop-shadow(0 0 100px rgba(42,157,122,0.35)); }
-  50% { filter: hue-rotate(25deg) drop-shadow(0 0 70px rgba(42,157,122,0.9)) drop-shadow(0 0 160px rgba(42,157,122,0.5)); }
+  0%,100% { filter: hue-rotate(25deg) brightness(0.92) contrast(1.08) drop-shadow(0 0 38px rgba(42,157,122,0.58)) drop-shadow(0 0 85px rgba(42,157,122,0.24)); }
+  50% { filter: hue-rotate(25deg) brightness(0.98) contrast(1.08) drop-shadow(0 0 52px rgba(42,157,122,0.72)) drop-shadow(0 0 120px rgba(42,157,122,0.32)); }
 }
 
 /* ── SPEAKING STATE — hologram intensifies when GIDEON talks ── */
 .g-figure.speaking .g-img {
-  filter: hue-rotate(25deg) drop-shadow(0 0 80px rgba(42,157,122,1)) drop-shadow(0 0 180px rgba(42,157,122,0.7)) brightness(1.15) !important;
+  filter: hue-rotate(25deg) brightness(1.02) contrast(1.1) drop-shadow(0 0 62px rgba(42,157,122,0.82)) drop-shadow(0 0 140px rgba(42,157,122,0.42)) !important;
   transition: filter 0.15s ease;
 }
 .g-figure.speaking::after {
@@ -1470,7 +1474,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
 .g-tap-gate {
   position: absolute; inset: 0; z-index: 1000;
   background: #000;
-  display: flex; align-items: center; justify-content: center;
+  display: none; align-items: center; justify-content: center;
   cursor: pointer; transition: opacity 0.8s ease;
 }
 .g-tap-gate.dismissed { opacity: 0; pointer-events: none; }
@@ -1564,8 +1568,8 @@ html.light .feature-icon svg { stroke: var(--accent); }
     <a href="#features">Features</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
-    <a href="tel:+16292699697">Demo: (629) 269-9697</a>
-    <a href="/pilot/" class="nav-cta">Start Free Pilot</a>
+    <a href="tel:+16292699697">Call Gideon Live</a>
+    <a href="https://square.link/u/POTLUBKa" class="nav-cta">Start Free Trial</a>
   </div>
 </nav>
 
@@ -1635,8 +1639,8 @@ html.light .feature-icon svg { stroke: var(--accent); }
       </div>
 
       <div class="gideon-cta" id="gideonCTA">
-        <a href="/pilot/" class="btn-gideon">Start Free Pilot →</a>
-        <a href="tel:+16292699697" class="btn-gideon-ghost">Call Me Right Now</a>
+        <a href="https://square.link/u/POTLUBKa" class="btn-gideon">Start Free Trial →</a>
+        <a href="tel:+16292699697" class="btn-gideon-ghost">Call Gideon Live</a>
       </div>
     </div>
 
@@ -1689,7 +1693,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
       <span class="ind-pill" data-ind="legal">Legal</span>
     </div>
     <div class="hero-ctas">
-      <a href="tel:+16292699697" class="btn btn-primary"><span>Call the demo line</span></a>
+      <a href="tel:+16292699697" class="btn btn-primary"><span>Call Gideon Live</span></a>
       <a href="#pricing" class="hero-ghost">See pricing</a>
     </div>
     <div class="step-display">
@@ -1920,15 +1924,15 @@ html.light .feature-icon svg { stroke: var(--accent); }
     <!-- Left: CTA -->
     <div style="text-align:left;">
       <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--accent);margin-bottom:16px;">HEAR IT YOURSELF</div>
-      <a href="tel:+16292699697" class="demo-phone" style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);color:var(--accent);text-decoration:none;display:block;letter-spacing:-0.03em;line-height:1.1;margin-bottom:24px;">(629) 269&#8209;9697</a>
+        <a href="tel:+16292699697" class="demo-phone" style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);color:var(--accent);text-decoration:none;display:inline-block;letter-spacing:-0.03em;line-height:1.1;margin-bottom:24px;white-space:nowrap;">(629) 269&#8209;9697</a>
       <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px;">
         <div style="display:flex;align-items:center;gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:14px;color:var(--t70);">Picks up in under 2 seconds</span></div>
         <div style="display:flex;align-items:center;gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:14px;color:var(--t70);">Sounds like a real receptionist</span></div>
         <div style="display:flex;align-items:center;gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:14px;color:var(--t70);">Tell Gideon your industry and it adapts instantly</span></div>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="tel:+16292699697" class="btn btn-primary"><span>Call Now</span></a>
-        <a href="/book.html" class="btn btn-outline">Book a Demo Instead</a>
+        <a href="tel:+16292699697" class="btn btn-primary"><span>Call Gideon Live</span></a>
+        <a href="https://square.link/u/POTLUBKa" class="btn btn-outline">Start Free Trial</a>
       </div>
     </div>
     <!-- Right: Live transcript preview -->
@@ -1992,7 +1996,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
     </div>
     <div>
       <div style="color:var(--amber);font-size:13px;letter-spacing:3px;margin-bottom:12px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"Signed up Monday, caught 4 missed calls by Friday. Two turned into jobs. Paid for itself before the trial was over."</p>
+      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"I put the pilot on after-hours only at first. By the end of the week, I had four callers I normally would have missed and two were real jobs."</p>
       <div style="display:flex;align-items:center;gap:16px;">
         <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">MR</div>
         <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Mike R.</div><div style="font-size:12px;color:var(--t40);">Locksmith &bull; Nashville, TN</div></div>
@@ -2005,11 +2009,11 @@ html.light .feature-icon svg { stroke: var(--accent); }
   <div class="reveal-right test-item-wrap" style="display:grid;grid-template-columns:1fr 120px;gap:40px;align-items:start;margin-bottom:64px;padding:32px;padding-bottom:64px;border-bottom:1px solid var(--t06);border-radius:12px;">
     <div>
       <div style="color:var(--amber);font-size:13px;letter-spacing:3px;margin-bottom:12px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"I was losing 2 to 3 calls a night. Now every one gets answered. $800 emergency job at 11 PM I would've missed."</p>
+      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"The biggest thing was speed. Calls that used to sit until morning were getting answered and texted to me right away, with enough detail to call back fast."</p>
       <div style="display:flex;align-items:center;gap:16px;">
         <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">JK</div>
         <div><div style="font-size:14px;font-weight:600;color:var(--t100);">James K.</div><div style="font-size:12px;color:var(--t40);">Plumber &bull; Memphis, TN</div></div>
-        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--amber);background:rgba(194,124,58,0.1);padding:6px 12px;border-radius:4px;">+$3,200/mo revenue</div>
+        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--amber);background:rgba(194,124,58,0.1);padding:6px 12px;border-radius:4px;">Faster after-hours follow-up</div>
       </div>
     </div>
     <div style="text-align:right;">
@@ -2024,11 +2028,11 @@ html.light .feature-icon svg { stroke: var(--accent); }
     </div>
     <div>
       <div style="color:var(--amber);font-size:13px;letter-spacing:3px;margin-bottom:12px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"Solo operator. Can't answer the phone on a roof. Last month The Call Taker captured 11 jobs I would've missed. Do the math."</p>
+      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"I'm usually on a roof or driving between estimates, so calls slip. The summaries made it easy to see who needed a callback and which ones were actually urgent."</p>
       <div style="display:flex;align-items:center;gap:16px;">
         <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">DM</div>
         <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Derek M.</div><div style="font-size:12px;color:var(--t40);">Roofing &bull; Charlotte, NC</div></div>
-        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:4px;">11 jobs in one month</div>
+        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:4px;">Cleaner lead handoff</div>
       </div>
     </div>
   </div>
@@ -2081,7 +2085,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
     <div style="width:1px;height:36px;background:var(--t10);"></div>
     <div style="text-align:center;">
       <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--accent);margin-bottom:4px;">14-DAY</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">FREE PILOT</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">TRIAL</div>
     </div>
     <div style="width:1px;height:36px;background:var(--t10);"></div>
     <div style="text-align:center;">
@@ -2100,9 +2104,9 @@ html.light .feature-icon svg { stroke: var(--accent); }
 <section id="pricing" style="padding:120px 40px;max-width:1100px;margin:0 auto;border-top:1px solid var(--t06);">
   <div class="sec-label reveal" style="text-align:center;">06 / PRICING</div>
   <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 12px;">Less than one missed job.</h2>
-  <p class="reveal" style="text-align:center;color:var(--t40);font-size:15px;margin-bottom:16px;">14-day controlled pilot. No card required. You approve the call flow before launch.</p>
+  <p class="reveal" style="text-align:center;color:var(--t40);font-size:15px;margin-bottom:16px;">14-day trial through secure Square checkout. Wallace reviews setup before Gideon goes live.</p>
   <div class="reveal" style="text-align:center;margin-bottom:64px;">
-    <div class="urgency-badge"><span class="urgency-dot"></span>Only 3 pilot spots left this month</div>
+    <div class="urgency-badge"><span class="urgency-dot"></span>Only 3 trial setup spots left this month</div>
   </div>
 
   <div class="pricing-grid reveal-stagger">
@@ -2118,7 +2122,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
         <li>Flags emergency or high-intent calls</li>
         <li>Simple appointment request capture</li>
       </ul>
-      <a href="/pilot/" class="btn btn-outline price-cta">Start After-Hours Capture</a>
+      <a href="https://square.link/u/POTLUBKa" class="btn btn-outline price-cta">Start Free Trial</a>
     </div>
     <div class="price-card featured">
       <div class="price-badge">MOST POPULAR</div>
@@ -2133,7 +2137,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
         <li>Hot-lead team notifications</li>
         <li>Monthly Revenue Recovery Report</li>
       </ul>
-      <a href="/pilot/" class="btn btn-primary price-cta"><span>Start Revenue Recovery</span></a>
+      <a href="https://square.link/u/POTLUBKa" class="btn btn-primary price-cta"><span>Start Free Trial</span></a>
     </div>
     <div class="price-card">
       <div class="price-badge amber">WHITE GLOVE</div>
@@ -2148,10 +2152,10 @@ html.light .feature-icon svg { stroke: var(--accent); }
         <li>Operational notification map</li>
         <li>Quarterly optimization review</li>
       </ul>
-      <a href="/book.html" class="btn btn-outline price-cta">Book Revenue Ops Call</a>
+      <a href="https://square.link/u/POTLUBKa" class="btn btn-outline price-cta">Start Free Trial</a>
     </div>
   </div>
-  <p style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--t20);margin-top:32px;letter-spacing:0.05em;">CONTROLLED PILOT &middot; NO CARD REQUIRED &middot; APPROVED CALL FLOW</p>
+  <p style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--t20);margin-top:32px;letter-spacing:0.05em;">SECURE SQUARE CHECKOUT &middot; 14-DAY TRIAL &middot; SETUP REVIEWED</p>
 
   <!-- Cost Comparison -->
   <div class="reveal" style="margin-top:80px;background:var(--bg);border:1px solid var(--t10);border-radius:16px;padding:40px;max-width:700px;margin-left:auto;margin-right:auto;">
@@ -2237,20 +2241,20 @@ html.light .feature-icon svg { stroke: var(--accent); }
       <div style="text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:var(--t100);">14</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">DAY PILOT</div></div>
       <div style="text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:var(--t100);">$0</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">COST TO YOU</div></div>
     </div>
-    <a href="/pilot/" class="btn btn-primary" style="font-size:15px;padding:16px 36px;"><span>Start Free Pilot</span></a>
+    <a href="https://square.link/u/POTLUBKa" class="btn btn-primary" style="font-size:15px;padding:16px 36px;"><span>Start Free Trial</span></a>
   </div>
 </section>
 
 <!-- ═══ SECTION 9: FINAL CTA — full-bleed dark with giant serif ═══ -->
 <section class="reveal-scale" style="text-align:center;padding:140px 40px;background:var(--surface);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
   <h2 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;color:var(--t100);letter-spacing:-0.02em;max-width:700px;margin:0 auto 32px;line-height:1.15;">Your competitors are <span class="highlight-on-scroll">answering their phones</span> right now.</h2>
-  <p style="color:var(--t40);font-size:16px;max-width:460px;margin:0 auto 40px;line-height:1.7;">Start a controlled 14-day pilot. No card required. You approve Gideon's call flow before launch.</p>
+    <p style="color:var(--t40);font-size:16px;max-width:560px;margin:0 auto 40px;line-height:1.7;">Start your 14-day trial through Square. Wallace Dobbs personally reviews each setup before Gideon goes live.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-    <a href="/pilot/" class="btn btn-primary" style="font-size:16px;padding:18px 40px;"><span>Start Your Free Pilot</span></a>
-    <a href="tel:+16292699697" class="btn btn-outline" style="font-size:16px;padding:18px 40px;">Call (629) 269-9697</a>
+    <a href="https://square.link/u/POTLUBKa" class="btn btn-primary" style="font-size:16px;padding:18px 40px;"><span>Start Free Trial</span></a>
+    <a href="tel:+16292699697" class="btn btn-outline" style="font-size:16px;padding:18px 40px;">Call Gideon Live</a>
   </div>
   <div style="display:flex;justify-content:center;gap:28px;margin-top:36px;flex-wrap:wrap;">
-    <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">NO CARD REQUIRED</span>
+    <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">SECURE SQUARE CHECKOUT</span>
     <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">CANCEL ANYTIME</span>
     <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">5 MIN SETUP</span>
   </div>
@@ -2274,12 +2278,12 @@ html.light .feature-icon svg { stroke: var(--accent); }
       <a href="#pricing">Pricing</a>
       <a href="#how">How It Works</a>
       <a href="/industries.html">Industries</a>
-      <a href="/pilot/">Free Pilot</a>
+      <a href="https://square.link/u/POTLUBKa">Start Free Trial</a>
     </div>
     <div class="footer-col">
       <h4>RESOURCES</h4>
       <a href="/case-studies/">Case Studies</a>
-      <a href="/book.html">Book a Demo</a>
+      <a href="tel:+16292699697">Call Gideon Live</a>
       <a href="/blog.html">Blog</a>
       <a href="/agency.html">Agencies</a>
     </div>
@@ -2314,8 +2318,8 @@ html.light .feature-icon svg { stroke: var(--accent); }
 <!-- STICKY CTA BAR — shows after scrolling past hero -->
 <div class="sticky-cta" id="stickyCta">
   <span class="sticky-cta-text"><strong>3 pilot spots left</strong> this month</span>
-  <a href="/pilot/" class="btn btn-primary" style="padding:10px 24px;font-size:13px;"><span>Start Free Pilot</span></a>
-  <a href="tel:+16292699697" class="btn btn-outline" style="padding:10px 20px;font-size:13px;">Call Demo</a>
+  <a href="https://square.link/u/POTLUBKa" class="btn btn-primary" style="padding:10px 24px;font-size:13px;"><span>Start Free Trial</span></a>
+  <a href="tel:+16292699697" class="btn btn-outline" style="padding:10px 20px;font-size:13px;">Call Gideon Live</a>
 </div>
 
 <!-- THEME TOGGLE -->
@@ -2331,7 +2335,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
     <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:12px;">BEFORE YOU GO</div>
     <h3 style="font-family:var(--serif);font-size:24px;color:var(--t100);margin-bottom:12px;line-height:1.3;">Hear your receptionist answer a call right now</h3>
     <p style="color:var(--t40);font-size:14px;margin-bottom:24px;line-height:1.6;">Call the demo line. Pretend you need a plumber at 2 AM. Takes 30 seconds.</p>
-    <a href="tel:+16292699697" style="display:block;background:var(--accent);color:#fff;padding:16px;border-radius:10px;font-size:16px;font-weight:600;text-decoration:none;margin-bottom:12px;">Call (629) 269-9697</a>
+    <a href="tel:+16292699697" style="display:block;background:var(--accent);color:#fff;padding:16px;border-radius:10px;font-size:16px;font-weight:600;text-decoration:none;margin-bottom:12px;">Call Gideon Live</a>
     <p style="font-family:var(--mono);font-size:10px;color:var(--t20);letter-spacing:0.1em;">FREE DEMO. NO SIGNUP NEEDED.</p>
   </div>
 </div>
@@ -2356,7 +2360,7 @@ setTimeout(function() {
 
 <!-- MOBILE CALL BAR -->
 <div class="mobile-bar">
-  <a href="tel:+16292699697">Call Gideon Now: (629) 269-9697</a>
+  <a href="tel:+16292699697">Call Gideon Live: (629) 269-9697</a>
 </div>
 
 <!-- GSAP -->
@@ -2637,16 +2641,15 @@ document.querySelectorAll('.faq-q').forEach(q => {
   highlights.forEach(function(el) { hlObs.observe(el); });
 })();
 
-// Theme toggle — remembers preference
+// Theme toggle disabled: the public brand experience is intentionally dark.
 (function() {
   const toggle = document.getElementById('themeToggle');
-  const saved = localStorage.getItem('tct-theme');
-  if (saved === 'light') document.documentElement.classList.add('light');
+  document.documentElement.classList.remove('light');
+  localStorage.setItem('tct-theme', 'dark');
 
   toggle.addEventListener('click', () => {
-    document.documentElement.classList.toggle('light');
-    const isLight = document.documentElement.classList.contains('light');
-    localStorage.setItem('tct-theme', isLight ? 'light' : 'dark');
+    document.documentElement.classList.remove('light');
+    localStorage.setItem('tct-theme', 'dark');
   });
 })();
 </script>
@@ -2665,13 +2668,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
   var CHAR_SPEED = 22, LINE_PAUSE = 350, BLOCK_PAUSE = 1800, CTA_DELAY = 600, LOOP_DELAY = 7000;
 
   var speeches = [
-    { lines: ["Hey. I'm GIDEON."], pause: 1200 },
-    { lines: ["I'm your 24/7 receptionist."], pause: 1400 },
-    { lines: ["While you're on a job, asleep, or just busy,", "I answer every call your business gets."], pause: BLOCK_PAUSE },
-    { lines: ["I capture the appointment request.", "Get their name, number, and what they need.", "Then text you everything instantly."], pause: BLOCK_PAUSE },
-    { lines: ["Your customers think they're talking", "to your front desk."], pause: 1400 },
-    { lines: ["I'm ready to make your phone", "your biggest money maker."], pause: BLOCK_PAUSE },
-    { lines: ["Call the demo line right now", "and hear me for yourself."], pause: CTA_DELAY, showCTA: true }
+    { lines: ["I answer calls, capture the details, and route the revenue your business used to miss."], pause: BLOCK_PAUSE, showCTA: true }
   ];
 
   var el = document.getElementById('gideonSpeaks');
@@ -2691,9 +2688,12 @@ document.querySelectorAll('.faq-q').forEach(q => {
 
   function wait(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
 
-  /* ── AUDIO ── */
-  var gideonAudio = new Audio(isMob ? 'gideon-intro-short.mp3' : 'gideon-intro.mp3');
-  gideonAudio.preload = 'auto';
+  /* ── AUDIO ──
+     Audio is intentionally disabled until a synced, user-controlled demo is ready.
+     Previous behavior loaded gideon-intro.mp3 / gideon-intro-short.mp3 and auto-started after 1.3s. */
+  var AUDIO_ENABLED = false;
+  var gideonAudio = AUDIO_ENABLED ? new Audio(isMob ? 'gideon-intro-short.mp3' : 'gideon-intro.mp3') : null;
+  if (gideonAudio) gideonAudio.preload = 'auto';
   var audioUnlocked = false;
 
   /* ── AUDIO ANALYZER — reactive hologram ── */
@@ -2866,6 +2866,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
 
   var audioPlaying = false;
   function tryPlayAudio() {
+    if (!AUDIO_ENABLED) return;
     if (audioPlaying) return;
     setupAudioAnalyzer();
     if (audioCtx) audioCtx.resume().catch(function(){});
@@ -2890,6 +2891,13 @@ document.querySelectorAll('.faq-q').forEach(q => {
     });
   }
   function unlockAndPlay() {
+    if (!AUDIO_ENABLED) {
+      if (tapGate) {
+        tapGate.classList.add('dismissed');
+        tapGate.style.display = 'none';
+      }
+      return;
+    }
     if (audioUnlocked) return;
     audioUnlocked = true;
     tapGate.classList.add('dismissed');
@@ -2903,12 +2911,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
     tapGate.addEventListener('click', unlockAndPlay);
     tapGate.addEventListener('touchend', function(e) { e.preventDefault(); unlockAndPlay(); }, { passive: false });
   }
-  /* Hologram itself is also clickable for audio (after gate auto-dismisses) */
-  if (heroEl) {
-    heroEl.addEventListener('click', function() { if (!audioUnlocked) unlockAndPlay(); });
-  }
-  /* Auto-dismiss tap gate after 1.3s — don't block cold traffic */
-  setTimeout(function() { if (!audioUnlocked) unlockAndPlay(); }, 1300);
+  /* Audio autoplay/click-to-play is disabled until the demo copy and audio are synced. */
 
   /* ── TYPEWRITER ── */
   async function typeText(text) {
@@ -2935,6 +2938,15 @@ document.querySelectorAll('.faq-q').forEach(q => {
       } else { await wait(b.pause); await fadeOutText(); await wait(250); }
     }
     runSpeeches();
+  }
+
+  function showStaticHeroMessage() {
+    stopSpeakingMotion();
+    el.textContent = "I answer calls, capture the details, and route the revenue your business used to miss.";
+    if (ctaEl) {
+      ctaEl.style.display = 'flex';
+      ctaEl.classList.add('visible');
+    }
   }
 
   /* ── DEPTH PARTICLES ── */
@@ -3169,8 +3181,8 @@ document.querySelectorAll('.faq-q').forEach(q => {
 
     await wait(500);
 
-    /* ═══ PHASE 6: Gideon speaks ═══ */
-    runSpeeches();
+    /* ═══ PHASE 6: Static message until synced audio demo is ready ═══ */
+    showStaticHeroMessage();
   }
 
   /* ── GSAP MOVEMENT — Flash Gideon style: alive, breathing, reactive ── */
