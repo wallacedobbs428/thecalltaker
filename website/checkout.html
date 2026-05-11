@@ -332,7 +332,7 @@
         <li>After-hours coverage</li>
         <li>Weekends &amp; holidays</li>
         <li>Custom to your biz</li>
-        <li>Appointment booking</li>
+        <li>Appointment request capture</li>
         <li>Unlimited calls</li>
         <li>Cancel anytime</li>
       </ul>
@@ -352,7 +352,7 @@
         <li>Business hours overflow</li>
         <li>FAQ handling</li>
         <li>Dispatch support</li>
-        <li>Appointment booking</li>
+        <li>Appointment request capture</li>
         <li>Cancel anytime</li>
       </ul>
     </div>
@@ -361,15 +361,15 @@
       <div class="plan-top" style="margin-bottom: 4px;">
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="radio-dot"></div>
-          <div class="plan-name">Pro</div>
+          <div class="plan-name">Operational Infrastructure</div>
         </div>
         <div class="plan-price">$997<span>/mo</span></div>
       </div>
-      <div class="plan-desc">White-glove — custom voice, CRM integration, dedicated manager</div>
+      <div class="plan-desc">Scoped automation, reminders, and operational visibility</div>
       <ul class="plan-features">
         <li>Everything in 24/7</li>
         <li>Custom voice &amp; scripts</li>
-        <li>CRM integration</li>
+        <li>Scoped CRM/calendar connection where feasible</li>
         <li>Dedicated manager</li>
         <li>Priority support</li>
         <li>Cancel anytime</li>
@@ -385,7 +385,7 @@
 
   <!-- FREE PILOT CTA -->
   <div class="cta-area">
-    <a class="cta-btn" href="https://thecalltaker.com/signup.html" id="checkout-btn" onclick="trackCheckout(event)">
+    <a class="cta-btn" href="https://thecalltaker.com/pilot/" id="checkout-btn" onclick="trackCheckout(event)">
       Start Free 14-Day Pilot
     </a>
     <div class="cta-sub">No credit card &bull; No contracts &bull; Cancel anytime</div>
@@ -397,11 +397,11 @@
     <a class="pay-btn paypal-btn" id="paypal-btn" href="#" onclick="payWithPayPal(event)">
       Pay with PayPal — <span id="paypal-price">$97/mo</span>
     </a>
-    <a class="pay-btn venmo-btn" href="https://venmo.com/u/Wallace-Dobbs" target="_blank">
-      Pay with Venmo — @Wallace-Dobbs
+    <a class="pay-btn venmo-btn" href="https://venmo.com/u/wallace-dobbs-2" target="_blank">
+      Pay with Venmo — @wallace-dobbs-2
     </a>
     <div style="text-align:center;font-size:12px;color:#8b949e;margin-top:8px;">
-      Or text "READY" to <a href="sms:+16157845747" style="color:#58a6ff;">(615) 784-5747</a> and we'll send you an invoice
+      Manual payment backup only after plan confirmation. Do not send payment before pilot setup is approved.
     </div>
   </div>
 
@@ -420,8 +420,8 @@
     <div class="feature-item">
       <div class="feature-icon">&#128197;</div>
       <div>
-        <div class="feature-name">Appointment Booking</div>
-        <div class="feature-desc">Books appointments on the spot. No more "leave a message."</div>
+        <div class="feature-name">Appointment Request Capture</div>
+        <div class="feature-desc">Captures appointment requests and routes the details to your team. Direct booking depends on approved scope.</div>
       </div>
     </div>
 
@@ -437,7 +437,7 @@
       <div class="feature-icon">&#128736;</div>
       <div>
         <div class="feature-name">Custom to Your Business</div>
-        <div class="feature-desc">Trained on your services, pricing, and booking process.</div>
+        <div class="feature-desc">Trained on your services, pricing, and approved intake process.</div>
       </div>
     </div>
 
@@ -471,10 +471,10 @@
 
   <!-- SECOND CTA -->
   <div class="cta-area" style="padding: 20px 0;">
-    <a class="cta-btn" href="https://thecalltaker.com/signup.html" onclick="trackCheckout(event)">
-      Start Free Pilot — <span id="cta-price-2">$97/mo</span> after trial
+    <a class="cta-btn" href="https://thecalltaker.com/pilot/" onclick="trackCheckout(event)">
+      Start Free Pilot
     </a>
-    <div class="cta-sub">14 days free &bull; No credit card required</div>
+    <div class="cta-sub">Controlled pilot &bull; No card required &bull; Call flow approved before launch</div>
   </div>
 
 </div>
@@ -490,9 +490,9 @@
   // ── PLAN CONFIG ──
   var selectedPlan = 'afterhours';
   var PLANS = {
-    afterhours: { name: 'After-Hours', price: 97, roi: '$97 < 1 missed call', paypal: 'https://paypal.me/wallacedobbs/97' },
-    full247:    { name: 'Full 24/7',    price: 497, roi: '$497 < 1 service call', paypal: 'https://paypal.me/wallacedobbs/497' },
-    premium:    { name: 'Pro',      price: 997, roi: '$497 < 2 service calls', paypal: 'https://paypal.me/wallacedobbs/997' }
+    afterhours: { name: 'After-Hours Capture', price: 97, roi: '$97 < 1 missed call', paypal: 'https://paypal.me/wallacedobbs/97' },
+    full247:    { name: 'Revenue Recovery System',    price: 497, roi: '$497 < 1 service call', paypal: 'https://paypal.me/wallacedobbs/497' },
+    premium:    { name: 'Operational Infrastructure',      price: 997, roi: '$997 < 2 service calls', paypal: 'https://paypal.me/wallacedobbs/997' }
   };
 
   // Stripe payment links — REPLACE THESE when Stripe is connected
@@ -539,7 +539,7 @@
           <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
           The Call <span>Taker</span>
         </a>
-        <p>AI receptionist for service businesses.</p>
+        <p>AI revenue recovery for service businesses.</p>
       </div>
       <div class="footer-links">
         <a href="index.html">Home</a>
