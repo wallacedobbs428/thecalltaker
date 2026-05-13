@@ -2882,19 +2882,18 @@ document.querySelectorAll('.faq-q').forEach(q => {
 // Theme defaults to light, with dark available for visitors who prefer higher contrast.
 (function() {
   const toggle = document.getElementById('themeToggle');
-  const savedTheme = localStorage.getItem('tct-theme') || 'light';
 
   function applyTheme(theme) {
     const isLight = theme !== 'dark';
     document.documentElement.classList.toggle('light', isLight);
-    localStorage.setItem('tct-theme', isLight ? 'light' : 'dark');
     if (toggle) {
       toggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
       toggle.setAttribute('aria-pressed', isLight ? 'false' : 'true');
     }
   }
 
-  applyTheme(savedTheme);
+  localStorage.removeItem('tct-theme');
+  applyTheme('light');
 
   if (toggle) {
     toggle.addEventListener('click', () => {
