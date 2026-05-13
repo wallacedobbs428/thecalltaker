@@ -74,7 +74,7 @@
 <noscript><style>.reveal,.reveal-left,.reveal-right,.reveal-scale,.reveal-stagger>*{opacity:1!important;transform:none!important;}</style></noscript>
 <!-- Schema.org -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"The Call Taker","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI revenue recovery system that helps service businesses capture calls, recover missed leads, and route high-intent opportunities.","url":"https://thecalltaker.com","telephone":"+16292699697","offers":{"@type":"AggregateOffer","lowPrice":"97","highPrice":"997","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my customers know it's not a real person?","acceptedAnswer":{"@type":"Answer","text":"Most don't. Call (629) 269-9697 right now and judge for yourself."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"We confirm your business rules, configure the call flow, and get approval before launch."}},{"@type":"Question","name":"How does the 14-day trial work?","acceptedAnswer":{"@type":"Answer","text":"Start through secure Square checkout. The trial starts at $0 today, then continues at the selected monthly plan unless canceled before the trial ends."}}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"The Call Taker","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI revenue recovery system that helps service businesses capture calls, recover missed leads, and route high-intent opportunities.","url":"https://thecalltaker.com","telephone":"+16292699697","offers":{"@type":"AggregateOffer","lowPrice":"97","highPrice":"997","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my customers know it's not a real person?","acceptedAnswer":{"@type":"Answer","text":"Call (629) 269-9697 and judge it yourself. Gideon is designed to sound natural while following your approved call flow."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"We confirm your business rules, configure the call flow, and get approval before launch."}},{"@type":"Question","name":"How does the 14-day trial work?","acceptedAnswer":{"@type":"Answer","text":"Start through secure Square checkout. The trial starts at $0 today, then continues at the selected monthly plan unless canceled before the trial ends."}}]}]}
 </script>
 
 <style>
@@ -427,7 +427,8 @@ html.light .theme-toggle .icon-moon { display: none; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
 @keyframes enter { to{opacity:1;transform:translateY(0)} }
 
-.hero-copy h1 {
+.hero-copy h1,
+.hero-copy h2 {
   display: block;
   font-family: var(--serif); font-weight: 400;
   font-size: clamp(2.4rem, 5.5vw, 4.2rem);
@@ -440,14 +441,16 @@ html.light .theme-toggle .icon-moon { display: none; }
   animation: enter 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
   text-shadow: 0 0 40px rgba(42,157,122,0.08);
 }
-.hero h1 {
+.hero h1,
+.hero h2 {
   display: block;
   word-break: normal;
   overflow-wrap: normal;
   hyphens: none;
 }
 .no-break-word { white-space: nowrap; }
-.hero-copy h1 strong { color: var(--accent); font-weight: 400; text-shadow: 0 0 30px rgba(42,157,122,0.3); }
+.hero-copy h1 strong,
+.hero-copy h2 strong { color: var(--accent); font-weight: 400; text-shadow: 0 0 30px rgba(42,157,122,0.3); }
 
 .hero-sub {
   font-size: clamp(0.95rem, 1.8vw, 1.06rem);
@@ -1562,6 +1565,189 @@ html.light .feature-icon svg { stroke: var(--accent); }
 }
 .hero-secondary .hero-phone { min-height: 480px; }
 
+/* ── BRANDED SERVICE-SELLING HERO OVERRIDE ── */
+.gideon-hero.service-selling {
+  min-height: 940px;
+  align-items: stretch;
+  background: #020504;
+  opacity: 1;
+}
+.gideon-hero.service-selling .g-service-picture,
+.gideon-hero.service-selling .g-service-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+.gideon-hero.service-selling .g-service-picture {
+  display: block;
+}
+.gideon-hero.service-selling .g-service-bg {
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0.96;
+  filter: saturate(1.08) contrast(1.04) brightness(0.96);
+}
+.gideon-hero.service-selling::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.05) 42%, rgba(0,0,0,0.2) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.34) 0%, transparent 26%, rgba(0,0,0,0.54) 100%);
+}
+.gideon-hero.service-selling::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 28% 72%, rgba(42,157,122,0.16), transparent 34%);
+}
+.gideon-hero.service-selling .g-vault-bg,
+.gideon-hero.service-selling .g-vault-walls,
+.gideon-hero.service-selling .g-environment,
+.gideon-hero.service-selling .g-scanline,
+.gideon-hero.service-selling .g-scanline-2,
+.gideon-hero.service-selling .g-hud-frame,
+.gideon-hero.service-selling .g-right,
+.gideon-hero.service-selling .g-tap-gate {
+  display: none !important;
+}
+.gideon-hero.service-selling .g-vault-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1380px;
+  grid-template-columns: 1fr;
+  align-items: end;
+  justify-items: start;
+  min-height: 940px;
+  padding: 132px 56px 92px;
+}
+.gideon-hero.service-selling .g-left {
+  width: min(640px, calc(100vw - 72px));
+  padding: 24px 26px 22px;
+  border: 1px solid rgba(42,157,122,0.2);
+  border-radius: 14px;
+  background: rgba(2,8,6,0.66);
+  box-shadow: 0 24px 90px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.gideon-hero.service-selling .g-proof-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(150,255,216,0.68);
+}
+.gideon-hero.service-selling .g-proof-kicker::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 14px rgba(42,157,122,0.8);
+}
+.gideon-hero.service-selling .gideon-name {
+  font-family: Inter, sans-serif;
+  font-size: clamp(2.1rem, 4vw, 4.35rem);
+  letter-spacing: -0.04em;
+  text-transform: none;
+  color: #fff;
+  text-shadow: 0 0 28px rgba(42,157,122,0.35);
+  opacity: 1;
+  line-height: 0.98;
+  max-width: 620px;
+}
+.gideon-hero.service-selling .gideon-subtitle {
+  max-width: 560px;
+  font-family: Inter, sans-serif;
+  font-size: clamp(1rem, 1.2vw, 1.14rem);
+  line-height: 1.55;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(255,255,255,0.74);
+  opacity: 1;
+  margin: 16px 0 18px;
+}
+.gideon-hero.service-selling .g-divider,
+.gideon-hero.service-selling .g-status-bar {
+  opacity: 1;
+}
+.gideon-hero.service-selling .g-status-bar {
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+}
+.gideon-hero.service-selling .speech-bubble {
+  max-width: 520px;
+  min-height: auto;
+  font-size: clamp(0.88rem, 1vw, 0.98rem);
+  line-height: 1.55;
+  color: rgba(255,255,255,0.86);
+}
+.gideon-hero.service-selling .g-cursor {
+  display: none;
+}
+.gideon-hero.service-selling .gideon-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  opacity: 1;
+  transform: none;
+  margin-top: 18px;
+}
+.gideon-hero.service-selling .btn-gideon,
+.gideon-hero.service-selling .btn-gideon-ghost {
+  padding: 12px 15px;
+  font-size: 0.82rem;
+}
+@media (max-width: 900px) {
+  .gideon-hero.service-selling {
+    min-height: 780px;
+  }
+  .gideon-hero.service-selling .g-service-bg {
+    object-position: center center;
+    opacity: 0.72;
+  }
+  .gideon-hero.service-selling .g-vault-inner {
+    min-height: 780px;
+    padding: 96px 20px 34px;
+    align-items: end;
+  }
+  .gideon-hero.service-selling .g-left {
+    width: 100%;
+    max-width: 360px;
+    padding: 22px 20px;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .gideon-hero.service-selling .gideon-name {
+    font-size: clamp(1.8rem, 10vw, 2.55rem);
+  }
+  .gideon-hero.service-selling .gideon-subtitle {
+    font-size: 0.96rem;
+  }
+  .gideon-hero.service-selling .gideon-cta {
+    width: 100%;
+  }
+  .gideon-hero.service-selling .btn-gideon,
+  .gideon-hero.service-selling .btn-gideon-ghost {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 </style>
 <!-- styles.css removed — was overriding inline light mode with hardcoded #000 backgrounds.
      All styles are now handled by inline <style> blocks with CSS variable theming. -->
@@ -1586,7 +1772,11 @@ html.light .feature-icon svg { stroke: var(--accent); }
 </nav>
 
 <!-- ==================== GIDEON HERO — TIME VAULT (The Flash) ==================== -->
-<section class="gideon-hero">
+<section class="gideon-hero service-selling">
+  <picture class="g-service-picture">
+    <source media="(max-width: 700px)" srcset="assets/images/gideon-service-mobile-hero.png">
+    <img class="g-service-bg" src="assets/images/gideon-service-homepage-hero.png" alt="The Call Taker Revenue Recovery System showing Gideon answering calls, capturing leads, and notifying the team.">
+  </picture>
 
   <!-- TAP GATE -->
   <div class="g-tap-gate" id="gTapGate">
@@ -1633,21 +1823,22 @@ html.light .feature-icon svg { stroke: var(--accent); }
 
     <!-- LEFT — Name + Speech -->
     <div class="g-left" id="gLeft">
-      <div class="gideon-name" id="gideonName">GIDEON</div>
-      <div class="gideon-subtitle" id="gideonSubtitle">YOUR RECEPTIONIST · THE CALL TAKER</div>
+      <div class="g-proof-kicker">Revenue Recovery System</div>
+      <h1 class="gideon-name" id="gideonName">Recover missed-call revenue before the job goes cold.</h1>
+      <div class="gideon-subtitle" id="gideonSubtitle">Gideon answers, captures the lead, and alerts your team so paid-for opportunities do not disappear after the phone rings.</div>
       <div class="g-divider" id="gDivider"></div>
 
       <div class="g-status-bar" id="gStatusBar">
         <span class="g-status-dot"></span>
-        <span>ONLINE</span>
+        <span>CALLS ANSWERED</span>
         <span class="g-status-sep">|</span>
-        <span>24/7/365</span>
+        <span>LEADS CAPTURED</span>
         <span class="g-status-sep">|</span>
-        <span>AWAITING COMMAND</span>
+        <span>TEAM ALERT SENT</span>
       </div>
 
       <div class="speech-bubble">
-        <span id="gideonSpeaks"></span><span class="g-cursor">|</span>
+        <span id="gideonSpeaks">Built for service businesses that need calls captured, filtered, and routed without spamming the team.</span><span class="g-cursor">|</span>
       </div>
 
       <div class="gideon-cta" id="gideonCTA">
@@ -1662,7 +1853,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
         <div class="g-figure" id="gFigure">
           <canvas class="g-voice-ring" id="gVoiceRing" width="320" height="320"></canvas>
           <div class="g-speech-pulse" id="gSpeechPulse"></div>
-          <img src="gideon-hologram.png" alt="Gideon, AI Receptionist"
+          <img src="gideon-hologram.png" alt="Gideon, revenue recovery call agent"
                class="g-img" id="gideonImg"/>
         </div>
         <canvas class="g-particles-canvas" id="gParticles"></canvas>
@@ -1693,7 +1884,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
 <section class="hero hero-secondary" id="hero">
   <div class="hero-copy">
     <div class="eyebrow"><span class="blink"></span>SYSTEM ACTIVE</div>
-    <h1>It's 2 AM.<br>Your phone rings.<br><strong><span class="no-break-word">Gideon answers.</span></strong><span class="cycle-badge"><span class="cycle-badge-dot"></span><span class="cycle-text" id="cycleText">HVAC</span></span></h1>
+    <h2>It's 2 AM.<br>Your phone rings.<br><strong><span class="no-break-word">Gideon answers.</span></strong><span class="cycle-badge"><span class="cycle-badge-dot"></span><span class="cycle-text" id="cycleText">HVAC</span></span></h2>
     <p class="hero-sub">Watch a real call happen. From the <strong>first ring</strong> to a <strong>captured revenue opportunity</strong>, while the owner sleeps.</p>
     <div class="industry-selector" id="indSelector">
       <span class="ind-pill active" data-ind="all">All Industries</span>
@@ -1728,7 +1919,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
         <div class="screen-state" id="s2"><div class="conn-tag">CONNECTED</div><div class="conn-name">Gideon</div><div class="conn-timer" id="timer">00:00</div><div class="waveform" id="wf"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="conn-transcript" id="transcript">"Hi Sarah, thanks for calling. I can get a locksmith to you right away."</div></div>
         <div class="screen-state" id="s3" style="padding:48px 18px 20px;align-items:stretch;"><div class="cap-title">DETAILS CAPTURED</div><div class="cap-field" id="f1"><div class="cap-label">NAME</div><div class="cap-val"><span id="t1"></span><span class="cap-cursor"></span></div></div><div class="cap-field" id="f2"><div class="cap-label">ISSUE</div><div class="cap-val"><span id="t2"></span><span class="cap-cursor"></span></div></div><div class="cap-field" id="f3"><div class="cap-label">ADDRESS</div><div class="cap-val"><span id="t3"></span><span class="cap-cursor"></span></div></div><div class="cap-field" id="f4"><div class="cap-label">URGENCY</div><div class="cap-val"><span id="t4"></span><span class="cap-cursor"></span></div></div></div>
         <div class="screen-state" id="s4"><div class="book-tag">APPOINTMENT REQUEST</div><div class="book-cal" id="cal"></div><div class="book-detail" id="bd"><div class="book-detail-time">8:00 AM</div><div class="book-detail-day">SUN MAR 19</div></div><div class="book-ok" id="bk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>CONFIRMED</div></div>
-        <div class="screen-state" id="s5" style="align-items:stretch;"><div class="text-tag">OWNER NOTIFIED</div><div class="msg-bubble" id="b1"><div class="msg-from">GIDEON</div><div class="msg-body">New lead captured:<br>Sarah Martinez<br>Lockout, 412 Oak St<br>8:00 AM Sunday</div><div class="msg-ts">2:18 AM</div></div><div class="msg-bubble reply" id="b2"><div class="msg-body">Got it. Sending my guy.</div><div class="msg-ts">2:19 AM</div></div><div class="result" id="res"><div class="result-num">$350 saved</div><div class="result-label">WHILE YOU SLEPT</div></div></div>
+        <div class="screen-state" id="s5" style="align-items:stretch;"><div class="text-tag">TEAM ALERT SENT</div><div class="msg-bubble" id="b1"><div class="msg-from">GIDEON</div><div class="msg-body">New lead captured:<br>Sarah Martinez<br>Lockout, 412 Oak St<br>8:00 AM Sunday</div><div class="msg-ts">2:18 AM</div></div><div class="msg-bubble reply" id="b2"><div class="msg-body">Got it. Sending my guy.</div><div class="msg-ts">2:19 AM</div></div><div class="result" id="res"><div class="result-num">$350 saved</div><div class="result-label">WHILE YOU SLEPT</div></div></div>
       </div>
       <div class="frame-line top" id="flt"></div>
       <div class="frame-line btm" id="flb"></div>
@@ -1792,16 +1983,16 @@ html.light .feature-icon svg { stroke: var(--accent); }
     <div style="font-family:var(--mono);font-size:12px;color:var(--t40);letter-spacing:0.1em;">OF CALLERS WON'T LEAVE A VOICEMAIL</div>
   </div>
   <div class="reveal-right" style="display:flex;flex-direction:column;justify-content:center;padding:80px 64px;">
-    <h2 class="sec-title" style="margin-bottom:24px;">Every missed call <span class="highlight-on-scroll">costs you $300 to $500.</span></h2>
+    <h2 class="sec-title" style="margin-bottom:24px;">Every missed call <span class="highlight-on-scroll">can cost you a real job.</span></h2>
     <p style="color:var(--t70);font-size:16px;line-height:1.8;margin-bottom:40px;">When someone's locked out at midnight or has a burst pipe at 2 AM, they're not leaving a voicemail. They're calling the next company on Google.</p>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;">
       <div><div class="stat-num">62%</div><div class="stat-label">AFTER HOURS</div></div>
-      <div><div class="stat-num">$1,200</div><div class="stat-label">AVG JOB VALUE</div></div>
+      <div><div class="stat-num">High</div><div class="stat-label">INTENT CALLS</div></div>
       <div><div class="stat-num">$0</div><div class="stat-label">FROM MISSED CALL</div></div>
     </div>
     <div class="roi-teaser">
       <div class="roi-teaser-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
-      <div class="roi-teaser-text">The average service business loses <strong>$2,400/month</strong> in missed calls. Gideon pays for itself in the first week.</div>
+      <div class="roi-teaser-text">Even one recovered call can matter. Gideon turns missed-call risk into a captured lead and a faster next step.</div>
     </div>
   </div>
 </section>
@@ -1829,11 +2020,11 @@ html.light .feature-icon svg { stroke: var(--accent); }
       <div style="padding:48px 40px;background:var(--accent-soft);">
         <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:28px;">WITH THE CALL TAKER</div>
         <div style="display:flex;flex-direction:column;gap:20px;">
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Every call answered in under 2 seconds</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Fast answer when calls route to Gideon</span></div>
           <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">GIDEON captures the job request and texts you details</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Callers think it's your front desk</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Starting at $97/mo. Less than one job</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Zero missed calls. Zero missed revenue.</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Designed to sound natural and follow your rules</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Starting at $97/mo for after-hours capture</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Fewer missed calls. Faster follow-up.</span></div>
         </div>
       </div>
     </div>
@@ -1845,13 +2036,13 @@ html.light .feature-icon svg { stroke: var(--accent); }
 <section id="features" style="padding:120px 40px;max-width:1100px;margin:0 auto;border-bottom:1px solid var(--t06);border-top:1px solid var(--t06);">
   <div class="sec-label reveal" style="text-align:center;">03 / CAPABILITIES</div>
   <h2 class="sec-title reveal" style="text-align:center;max-width:650px;margin:0 auto 16px;">Everything a receptionist does.<br>At a fraction of the cost.</h2>
-  <p class="sec-sub reveal" style="text-align:center;margin:0 auto 64px;">Gideon isn't a voicemail tree. A fully trained receptionist that knows your business, captures job requests, and never takes a day off.</p>
+  <p class="sec-sub reveal" style="text-align:center;margin:0 auto 64px;">Gideon isn't a voicemail tree. It is configured around your approved rules, captures job requests, and sends your team the details needed to follow up.</p>
 
   <div class="features-grid reveal-stagger">
     <div class="feature-card">
       <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></div>
-      <h3>Answers Every Call</h3>
-      <p>First ring. Every time. 2 AM on a holiday, middle of a Saturday rush. Gideon picks up. Your customers never hear voicemail again.</p>
+      <h3>Answers Routed Calls</h3>
+      <p>When calls route to Gideon after hours or during overflow, it answers fast and captures the details your team needs.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
@@ -1871,7 +2062,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
     <div class="feature-card">
       <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
       <h3>Trained On Your Business</h3>
-      <p>Your services, hours, service area, and pricing. Callers think they're talking to your front desk. Because GIDEON sounds like it.</p>
+      <p>Your services, hours, service area, and approved intake rules. Gideon is designed to sound natural while staying inside the call flow you approve.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
@@ -1938,7 +2129,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
       <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--accent);margin-bottom:16px;">HEAR IT YOURSELF</div>
         <a href="tel:+16292699697" class="demo-phone" style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);color:var(--accent);text-decoration:none;display:inline-block;letter-spacing:-0.03em;line-height:1.1;margin-bottom:24px;white-space:nowrap;">(629) 269&#8209;9697</a>
       <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px;">
-        <div style="display:flex;align-items:center;gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:14px;color:var(--t70);">Picks up in under 2 seconds</span></div>
+        <div style="display:flex;align-items:center;gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:14px;color:var(--t70);">Answers quickly when calls route to Gideon</span></div>
         <div style="display:flex;align-items:center;gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:14px;color:var(--t70);">Sounds like a real receptionist</span></div>
         <div style="display:flex;align-items:center;gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:14px;color:var(--t70);">Tell Gideon your industry and it adapts instantly</span></div>
       </div>
@@ -1990,7 +2181,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
     <div class="live-counter-item">
       <div>
         <div class="live-counter-num" style="color:var(--green);">0</div>
-        <div class="live-counter-label">Missed calls</div>
+        <div class="live-counter-label">Lead capture</div>
       </div>
     </div>
   </div>
@@ -1998,8 +2189,8 @@ html.light .feature-icon svg { stroke: var(--accent); }
 
 <!-- ═══ SECTION 6: TESTIMONIALS — offset quote layout, not cards ═══ -->
 <section id="testimonials" style="padding:120px 40px;max-width:1100px;margin:0 auto;">
-  <div class="sec-label reveal" style="text-align:center;">05 / REAL RESULTS</div>
-  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 72px;">Don't take our word for it.</h2>
+  <div class="sec-label reveal" style="text-align:center;">05 / FIELD EXAMPLES</div>
+  <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 72px;">What recovery can look like.</h2>
 
   <!-- Testimonial 1: big quote -->
   <div class="reveal-left test-item-wrap" style="display:grid;grid-template-columns:120px 1fr;gap:40px;align-items:start;margin-bottom:64px;padding:32px;padding-bottom:64px;border-bottom:1px solid var(--t06);border-radius:12px;">
@@ -2007,12 +2198,12 @@ html.light .feature-icon svg { stroke: var(--accent); }
       <div style="font-family:var(--serif);font-size:96px;color:var(--accent);line-height:0.8;opacity:0.4;">&ldquo;</div>
     </div>
     <div>
-      <div style="color:var(--amber);font-size:13px;letter-spacing:3px;margin-bottom:12px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"I put the pilot on after-hours only at first. By the end of the week, I had four callers I normally would have missed and two were real jobs."</p>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:0.14em;margin-bottom:12px;">EXAMPLE SCENARIO</div>
+      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"After-hours coverage can surface callers who normally wait until morning, including urgent requests that need a faster callback."</p>
       <div style="display:flex;align-items:center;gap:16px;">
-        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">MR</div>
-        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Mike R.</div><div style="font-size:12px;color:var(--t40);">Locksmith &bull; Nashville, TN</div></div>
-        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:4px;">4 calls caught in first week</div>
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">AH</div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">After-hours capture</div><div style="font-size:12px;color:var(--t40);">Local service business</div></div>
+        <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:4px;">Urgent calls surfaced</div>
       </div>
     </div>
   </div>
@@ -2020,11 +2211,11 @@ html.light .feature-icon svg { stroke: var(--accent); }
   <!-- Testimonial 2 -->
   <div class="reveal-right test-item-wrap" style="display:grid;grid-template-columns:1fr 120px;gap:40px;align-items:start;margin-bottom:64px;padding:32px;padding-bottom:64px;border-bottom:1px solid var(--t06);border-radius:12px;">
     <div>
-      <div style="color:var(--amber);font-size:13px;letter-spacing:3px;margin-bottom:12px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"The biggest thing was speed. Calls that used to sit until morning were getting answered and texted to me right away, with enough detail to call back fast."</p>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:0.14em;margin-bottom:12px;">EXAMPLE SCENARIO</div>
+      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"A clean call summary gives the owner the name, number, problem, urgency, and suggested next step instead of a vague voicemail."</p>
       <div style="display:flex;align-items:center;gap:16px;">
-        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">JK</div>
-        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">James K.</div><div style="font-size:12px;color:var(--t40);">Plumber &bull; Memphis, TN</div></div>
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">HF</div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Handoff flow</div><div style="font-size:12px;color:var(--t40);">Plumbing / HVAC / trades</div></div>
         <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--amber);background:rgba(194,124,58,0.1);padding:6px 12px;border-radius:4px;">Faster after-hours follow-up</div>
       </div>
     </div>
@@ -2039,11 +2230,11 @@ html.light .feature-icon svg { stroke: var(--accent); }
       <div style="font-family:var(--serif);font-size:96px;color:var(--accent);line-height:0.8;opacity:0.4;">&ldquo;</div>
     </div>
     <div>
-      <div style="color:var(--amber);font-size:13px;letter-spacing:3px;margin-bottom:12px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"I'm usually on a roof or driving between estimates, so calls slip. The summaries made it easy to see who needed a callback and which ones were actually urgent."</p>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:0.14em;margin-bottom:12px;">EXAMPLE SCENARIO</div>
+      <p style="font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--t100);line-height:1.7;font-style:italic;margin-bottom:24px;">"For owners in the field, summaries make it easier to see who needs a callback and which requests are actually urgent."</p>
       <div style="display:flex;align-items:center;gap:16px;">
-        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">DM</div>
-        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Derek M.</div><div style="font-size:12px;color:var(--t40);">Roofing &bull; Charlotte, NC</div></div>
+        <div style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--bg);">OF</div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--t100);">Owner in the field</div><div style="font-size:12px;color:var(--t40);">Roofing / home services</div></div>
         <div style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:4px;">Cleaner lead handoff</div>
       </div>
     </div>
@@ -2087,38 +2278,63 @@ html.light .feature-icon svg { stroke: var(--accent); }
   </div>
 </section>
 
-<!-- ═══ TRUST STRIP — aggregate proof before pricing ═══ -->
+<!-- ═══ TRUST STRIP — verified proof before pricing ═══ -->
 <div class="reveal" style="padding:56px 40px;border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
   <div style="display:flex;justify-content:center;gap:48px;flex-wrap:wrap;align-items:center;max-width:800px;margin:0 auto;">
     <div style="text-align:center;">
-      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--accent);margin-bottom:4px;">4.9</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">AVG RATING</div>
+      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--accent);margin-bottom:4px;">14</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">CALLS EVALUATED</div>
     </div>
     <div style="width:1px;height:36px;background:var(--t10);"></div>
     <div style="text-align:center;">
-      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--accent);margin-bottom:4px;">14-DAY</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">TRIAL</div>
+      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--accent);margin-bottom:4px;">4</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">TEAM-WORTHY</div>
     </div>
     <div style="width:1px;height:36px;background:var(--t10);"></div>
     <div style="text-align:center;">
-      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--green);margin-bottom:4px;">0</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">MISSED CALLS</div>
+      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--green);margin-bottom:4px;">10</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">LOW-VALUE SUPPRESSED</div>
     </div>
     <div style="width:1px;height:36px;background:var(--t10);"></div>
     <div style="text-align:center;">
-      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--accent);margin-bottom:4px;">$32K</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">SAVED VS HUMAN HIRE</div>
+      <div class="stat-num" style="font-family:var(--serif);font-size:32px;color:var(--accent);margin-bottom:4px;">SENT</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">TEAM HANDOFF</div>
     </div>
   </div>
 </div>
 
+<!-- ═══ VERIFIED CLIENT PROOF ═══ -->
+<section class="reveal" style="padding:90px 40px;max-width:960px;margin:0 auto;border-bottom:1px solid var(--t06);">
+  <div class="client-proof-grid" style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:48px;align-items:center;">
+    <div>
+      <div class="sec-label">06 / VERIFIED PROOF</div>
+      <h2 class="sec-title" style="margin-bottom:18px;">A real medical supply client got the handoff.</h2>
+      <p style="color:var(--t70);font-size:16px;line-height:1.8;">Gideon evaluated real calls, separated action-worthy requests from noise, and delivered a clean CTOS-native handoff to the team inbox.</p>
+    </div>
+    <div style="border:1px solid var(--t10);border-radius:16px;padding:28px;background:var(--surface);">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.14em;margin-bottom:18px;">REDACTED CLIENT PROOF</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px;">
+        <div><div style="font-family:var(--serif);font-size:34px;color:var(--t100);">14</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">CALLS REVIEWED</div></div>
+        <div><div style="font-family:var(--serif);font-size:34px;color:var(--accent);">4</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">QUALIFIED</div></div>
+        <div><div style="font-family:var(--serif);font-size:34px;color:var(--green);">10</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">SUPPRESSED</div></div>
+      </div>
+      <p style="color:var(--t70);font-size:14px;line-height:1.7;margin-bottom:18px;">The delivered handoff included summaries, audit IDs, qualification reasons, unresolved items, and recommended next moves. Private caller details stay private.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <span style="font-family:var(--mono);font-size:10px;color:var(--accent);background:var(--accent-soft);padding:7px 10px;border-radius:4px;">QUOTE REQUESTS</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--accent);background:var(--accent-soft);padding:7px 10px;border-radius:4px;">ORDER INTENT</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--accent);background:var(--accent-soft);padding:7px 10px;border-radius:4px;">NOISE FILTERING</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ SECTION 7: PRICING — center featured card, flanked ═══ -->
 <section id="pricing" style="padding:120px 40px;max-width:1100px;margin:0 auto;border-top:1px solid var(--t06);">
-  <div class="sec-label reveal" style="text-align:center;">06 / PRICING</div>
+  <div class="sec-label reveal" style="text-align:center;">07 / PRICING</div>
   <h2 class="sec-title reveal" style="text-align:center;max-width:500px;margin:0 auto 12px;">Less than one missed job.</h2>
   <p class="reveal" style="text-align:center;color:var(--t40);font-size:15px;margin-bottom:16px;">14-day trial through secure Square checkout. Wallace reviews setup before Gideon goes live.</p>
   <div class="reveal" style="text-align:center;margin-bottom:64px;">
-    <div class="urgency-badge"><span class="urgency-dot"></span>Only 3 trial setup spots left this month</div>
+    <div class="urgency-badge"><span class="urgency-dot"></span>Setup reviewed before Gideon goes live</div>
   </div>
 
   <div class="pricing-grid reveal-stagger">
@@ -2180,7 +2396,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
   <div class="reveal" style="margin-top:80px;background:var(--bg);border:1px solid var(--t10);border-radius:16px;padding:40px;max-width:700px;margin-left:auto;margin-right:auto;">
     <div style="text-align:center;margin-bottom:32px;">
       <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;color:var(--accent);margin-bottom:8px;">THE MATH</div>
-      <h3 style="font-family:var(--serif);font-size:24px;color:var(--t100);font-weight:400;">What you're really paying for a missed call</h3>
+      <h3 style="font-family:var(--serif);font-size:24px;color:var(--t100);font-weight:400;">Why recovery beats more payroll</h3>
     </div>
     <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;">
       <!-- Human -->
@@ -2203,16 +2419,16 @@ html.light .feature-icon svg { stroke: var(--accent); }
         <div style="font-family:var(--serif);font-size:36px;color:var(--accent);">$97</div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--t20);">/month</div>
         <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;text-align:left;">
-          <span style="font-size:12px;color:var(--accent);">Never calls in sick</span>
-          <span style="font-size:12px;color:var(--accent);">Zero training needed</span>
-          <span style="font-size:12px;color:var(--accent);">No overhead costs</span>
-          <span style="font-size:12px;color:var(--accent);">Works 24/7/365</span>
+          <span style="font-size:12px;color:var(--accent);">Configured around your rules</span>
+          <span style="font-size:12px;color:var(--accent);">Reviewed before launch</span>
+          <span style="font-size:12px;color:var(--accent);">No payroll overhead</span>
+          <span style="font-size:12px;color:var(--accent);">After-hours and overflow support</span>
         </div>
       </div>
     </div>
     <div style="text-align:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--t06);">
-      <div style="font-family:var(--serif);font-size:28px;color:var(--accent);">Save $32,400/year</div>
-      <div style="font-family:var(--mono);font-size:10px;color:var(--t20);margin-top:4px;">THAT'S 96% LESS THAN A HUMAN HIRE</div>
+      <div style="font-family:var(--serif);font-size:28px;color:var(--accent);">Start with call recovery first</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--t20);margin-top:4px;">CAPTURE, QUALIFY, HAND OFF, AND REVIEW</div>
     </div>
   </div>
 </section>
@@ -2228,10 +2444,10 @@ html.light .feature-icon svg { stroke: var(--accent); }
     <div class="faq-item"><div class="faq-q">How does call forwarding work?</div><div class="faq-a"><p>You set your phone to forward to us, same way you'd forward to an employee. Takes 2 minutes and your customers still call your regular number.</p></div></div>
     <div class="faq-item"><div class="faq-q">What does GIDEON actually sound like?</div><div class="faq-a"><p>It sounds like a real person, not a robot. Call (629) 269-9697 right now and hear for yourself.</p></div></div>
     <div class="faq-item"><div class="faq-q">Can it handle appointment requests?</div><div class="faq-a"><p>It captures their name, number, what they need, and the requested timing. Direct calendar booking is available only when it is included in the approved workflow scope.</p></div></div>
-    <div class="faq-item"><div class="faq-q">What if the caller needs a real person?</div><div class="faq-a"><p>It handles almost every call on its own. If someone really needs you, it transfers the call or texts you their info immediately.</p></div></div>
-    <div class="faq-item"><div class="faq-q">How fast can I get set up?</div><div class="faq-a"><p>About 5 minutes. We set up GIDEON with your business info, give you a number to forward to, and you're live.</p></div></div>
-    <div class="faq-item"><div class="faq-q">What happens after the 14-day pilot?</div><div class="faq-a"><p>You pick a plan. If you don't like it, we turn it off. No contracts, no fees. Most people see it pay for itself in the first week.</p></div></div>
-    <div class="faq-item"><div class="faq-q">How is this different from a regular answering service?</div><div class="faq-a"><p>Traditional answering services cost $800 to $1,200/mo and put callers on hold. Gideon answers instantly, is configured around your approved business rules, services, hours, and call flow, captures appointment requests and can support direct booking when scoped, and costs a fraction of the price. No hold times, no scripts that sound robotic.</p></div></div>
+    <div class="faq-item"><div class="faq-q">What if the caller needs a real person?</div><div class="faq-a"><p>Gideon follows your approved escalation rules. If someone needs your team, it captures the context and routes the next step according to the workflow you approved.</p></div></div>
+    <div class="faq-item"><div class="faq-q">How fast can I get set up?</div><div class="faq-a"><p>Setup depends on your call flow. Wallace reviews your services, hours, service area, escalation rules, and handoff path before Gideon goes live.</p></div></div>
+    <div class="faq-item"><div class="faq-q">How does the 14-day trial work?</div><div class="faq-a"><p>You start through Square, Wallace reviews your setup before Gideon goes live, and you can cancel before renewal if it is not the right fit. No long-term contract.</p></div></div>
+    <div class="faq-item"><div class="faq-q">How is this different from a regular answering service?</div><div class="faq-a"><p>Traditional answering services often stop at taking a message. Gideon is configured around your approved business rules, captures the request, filters lower-value calls, and routes a useful handoff so your team knows what to do next.</p></div></div>
     <div class="faq-item"><div class="faq-q">Does it integrate with my existing tools?</div><div class="faq-a"><p>Scoped integrations are available in Operational Infrastructure or custom plans. We review your calendar, CRM, and scheduling tools before promising any direct connection.</p></div></div>
     <div class="faq-item"><div class="faq-q">What about data privacy and security?</div><div class="faq-a"><p>All calls are encrypted in transit. We never share your customer data with third parties. You own your data. We can provide a BAA for HIPAA-regulated businesses like dental and medical offices.</p></div></div>
     <div class="faq-item"><div class="faq-q">Can I use this for multiple locations?</div><div class="faq-a"><p>Absolutely. Each location gets its own trained GIDEON with unique hours, services, and service area. Volume discounts available on the Pro plan for 3+ locations.</p></div></div>
@@ -2240,25 +2456,27 @@ html.light .feature-icon svg { stroke: var(--accent); }
 <style>
 @media(max-width:768px){
   #faq{grid-template-columns:1fr !important;gap:40px !important;}
+  .client-proof-grid{grid-template-columns:1fr !important;gap:28px !important;}
+  .client-proof-grid [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr !important;}
   [style*="grid-template-columns:1fr auto 1fr"]{grid-template-columns:1fr !important;gap:32px !important;}
   [style*="grid-template-columns:1fr auto 1fr"] [style*="font-family:var(--mono);font-size:14px"]{text-align:center;font-size:12px !important;}
 }
 </style>
 
-<!-- ═══ BETA TESTERS WANTED ═══ -->
+<!-- ═══ REVIEWED SETUP CTA ═══ -->
 <section class="reveal" style="padding:80px 40px;max-width:800px;margin:0 auto;">
   <div style="background:linear-gradient(135deg, rgba(42,157,122,0.08) 0%, rgba(42,157,122,0.02) 100%);border:1px solid rgba(42,157,122,0.15);border-radius:20px;padding:48px 40px;text-align:center;position:relative;overflow:hidden;">
     <div style="position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);"></div>
     <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(42,157,122,0.12);border:1px solid rgba(42,157,122,0.2);border-radius:20px;padding:6px 16px;margin-bottom:20px;">
       <span style="width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;"></span>
-      <span style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.12em;color:var(--accent);">BETA TESTERS WANTED</span>
+      <span style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.12em;color:var(--accent);">SETUP REVIEWED BEFORE LAUNCH</span>
     </div>
-    <h2 style="font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.2rem);color:var(--t100);font-weight:400;margin-bottom:16px;">Be one of our first 10 businesses.</h2>
-    <p style="color:var(--t70);font-size:15px;line-height:1.7;max-width:500px;margin:0 auto 28px;">We're hand-picking businesses across every industry to test Gideon for 14 days. You get a controlled revenue recovery pilot for your business. We confirm the call flow with you before anything goes live.</p>
+    <h2 style="font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.2rem);color:var(--t100);font-weight:400;margin-bottom:16px;">Start with a controlled recovery setup.</h2>
+    <p style="color:var(--t70);font-size:15px;line-height:1.7;max-width:500px;margin:0 auto 28px;">Start with a 14-day Square trial. You get a reviewed revenue recovery setup for your business, and we confirm the call flow with you before anything goes live.</p>
     <div style="display:flex;gap:32px;justify-content:center;margin-bottom:28px;flex-wrap:wrap;">
-      <div style="text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:var(--accent);">3</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">SPOTS LEFT</div></div>
-      <div style="text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:var(--t100);">14</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">DAY PILOT</div></div>
-      <div style="text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:var(--t100);">$0</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">COST TO YOU</div></div>
+      <div style="text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:var(--accent);">14</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">DAY TRIAL</div></div>
+      <div style="text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:var(--t100);">1</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">REVIEWED SETUP</div></div>
+      <div style="text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:var(--t100);">0</div><div style="font-family:var(--mono);font-size:9px;color:var(--t40);letter-spacing:0.1em;">LIVE BEFORE APPROVAL</div></div>
     </div>
     <a href="https://square.link/u/POTLUBKa" class="btn btn-primary" style="font-size:15px;padding:16px 36px;"><span>Start Free Trial</span></a>
   </div>
@@ -2336,7 +2554,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
 
 <!-- STICKY CTA BAR — shows after scrolling past hero -->
 <div class="sticky-cta" id="stickyCta">
-  <span class="sticky-cta-text"><strong>3 pilot spots left</strong> this month</span>
+  <span class="sticky-cta-text"><strong>14-day trial</strong> through Square</span>
   <a href="https://square.link/u/POTLUBKa" class="btn btn-primary" style="padding:10px 24px;font-size:13px;"><span>Start Free Trial</span></a>
   <a href="tel:+16292699697" class="btn btn-outline" style="padding:10px 20px;font-size:13px;">Call Gideon Live</a>
 </div>
@@ -2687,7 +2905,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
   var CHAR_SPEED = 22, LINE_PAUSE = 350, BLOCK_PAUSE = 1800, CTA_DELAY = 600, LOOP_DELAY = 7000;
 
   var speeches = [
-    { lines: ["I answer calls, capture the details, and route the revenue your business used to miss."], pause: BLOCK_PAUSE, showCTA: true }
+    { lines: ["Built for service businesses that need calls captured, filtered, and routed without spamming the team."], pause: BLOCK_PAUSE, showCTA: true }
   ];
 
   var el = document.getElementById('gideonSpeaks');
@@ -2961,7 +3179,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
 
   function showStaticHeroMessage() {
     stopSpeakingMotion();
-    el.textContent = "I answer calls, capture the details, and route the revenue your business used to miss.";
+    el.textContent = "Built for service businesses that need calls captured, filtered, and routed without spamming the team.";
     if (ctaEl) {
       ctaEl.style.display = 'flex';
       ctaEl.classList.add('visible');
@@ -3372,7 +3590,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
   // Track Book a Demo clicks
   document.querySelectorAll('a[href*="book.html"]').forEach(function(a){
     a.addEventListener('click', function(){
-      if(typeof fbq==='function') fbq('track','Schedule',{content_name:'Book Demo Click'});
+      if(typeof fbq==='function') fbq('track','Schedule',{content_name:'Start Free Trial Click'});
     });
   });
 
