@@ -1586,8 +1586,8 @@ html.light .feature-icon svg { stroke: var(--accent); }
 .gideon-hero.service-selling .g-service-bg {
   object-fit: cover;
   object-position: center center;
-  opacity: 0.96;
-  filter: saturate(1.08) contrast(1.04) brightness(0.96);
+  opacity: 1;
+  filter: saturate(1.14) contrast(1.08) brightness(1.12);
 }
 .gideon-hero.service-selling::before {
   content: '';
@@ -1596,8 +1596,8 @@ html.light .feature-icon svg { stroke: var(--accent); }
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.05) 42%, rgba(0,0,0,0.2) 100%),
-    linear-gradient(180deg, rgba(0,0,0,0.34) 0%, transparent 26%, rgba(0,0,0,0.54) 100%);
+    linear-gradient(90deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0) 46%, rgba(0,0,0,0.12) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.2) 0%, transparent 30%, rgba(0,0,0,0.34) 100%);
 }
 .gideon-hero.service-selling::after {
   content: '';
@@ -1625,17 +1625,17 @@ html.light .feature-icon svg { stroke: var(--accent); }
   align-items: end;
   justify-items: start;
   min-height: 940px;
-  padding: 132px 56px 92px;
+  padding: 132px 56px 104px;
 }
 .gideon-hero.service-selling .g-left {
-  width: min(640px, calc(100vw - 72px));
-  padding: 24px 26px 22px;
+  width: min(600px, calc(100vw - 72px));
+  padding: 22px 24px 21px;
   border: 1px solid rgba(42,157,122,0.2);
   border-radius: 14px;
-  background: rgba(2,8,6,0.66);
+  background: rgba(2,8,6,0.58);
   box-shadow: 0 24px 90px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.04);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 .gideon-hero.service-selling .g-proof-kicker {
   display: inline-flex;
@@ -1658,14 +1658,14 @@ html.light .feature-icon svg { stroke: var(--accent); }
 }
 .gideon-hero.service-selling .gideon-name {
   font-family: Inter, sans-serif;
-  font-size: clamp(2.1rem, 4vw, 4.35rem);
+  font-size: clamp(2rem, 3.55vw, 3.95rem);
   letter-spacing: -0.04em;
   text-transform: none;
-  color: #fff;
+  color: rgba(255,255,255,0.98);
   text-shadow: 0 0 28px rgba(42,157,122,0.35);
   opacity: 1;
   line-height: 0.98;
-  max-width: 620px;
+  max-width: 560px;
 }
 .gideon-hero.service-selling .gideon-subtitle {
   max-width: 560px;
@@ -1674,7 +1674,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
   line-height: 1.55;
   letter-spacing: 0;
   text-transform: none;
-  color: rgba(255,255,255,0.74);
+  color: rgba(255,255,255,0.8);
   opacity: 1;
   margin: 16px 0 18px;
 }
@@ -1718,7 +1718,8 @@ html.light .feature-icon svg { stroke: var(--accent); }
   }
   .gideon-hero.service-selling .g-service-bg {
     object-position: center center;
-    opacity: 0.72;
+    opacity: 0.88;
+    filter: saturate(1.1) contrast(1.06) brightness(1.02);
   }
   .gideon-hero.service-selling .g-vault-inner {
     min-height: 780px;
@@ -2912,6 +2913,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
   var ctaEl = document.getElementById('gideonCTA');
   var nameEl = document.getElementById('gideonName');
   var heroEl = document.querySelector('.gideon-hero');
+  var isServiceHero = heroEl && heroEl.classList.contains('service-selling');
   var figureEl = document.getElementById('gFigure');
   var subtitleEl = document.getElementById('gideonSubtitle');
   var statusBar = document.getElementById('gStatusBar');
@@ -3296,6 +3298,15 @@ document.querySelectorAll('.faq-q').forEach(q => {
 
   /* ── TIME VAULT ENTRANCE — The Flash sequence ── */
   async function entrance() {
+    if (isServiceHero) {
+      heroEl.style.opacity = '1';
+      [nameEl, subtitleEl, statusBar, gDivider].forEach(function(node) {
+        if (node) node.style.opacity = '1';
+      });
+      showStaticHeroMessage();
+      return;
+    }
+
     if (isMob) {
       heroEl.style.opacity = '1';
       [nameEl, subtitleEl, statusBar, gDivider].forEach(function(node) {
