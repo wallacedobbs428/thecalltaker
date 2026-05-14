@@ -14,11 +14,13 @@ Usage:
   node tools/outreach/import_prospects.mjs --input tools/outreach/example_import.csv --dry-run
   node tools/outreach/import_prospects.mjs --input tools/outreach/example_import.json --dry-run
   node tools/outreach/import_prospects.mjs --single '{"business_name":"Example HVAC","industry":"hvac",...}' --dry-run
+  node tools/outreach/import_prospects.mjs --input tools/outreach/private/prospects.csv --private-local --dry-run
 
 Options:
   --input <path>      Manual CSV or JSON import file.
   --single <json>     One prospect JSON object.
   --dry-run           Required. Writes a local preview only; never sends.
+  --private-local     Allows real researched domains in a local ignored file. Never commit that file.
   --output <path>     Preview markdown path. Defaults to tools/outreach/output/import-preview.sample.md.
   --help              Show this help text.
 `;
@@ -33,6 +35,7 @@ function parseArgs(argv) {
     else if (arg === "--input") args.input = argv[++index];
     else if (arg === "--single") args.single = argv[++index];
     else if (arg === "--output") args.output = argv[++index];
+    else if (arg === "--private-local") args.privateLocal = true;
     else throw new Error(`Unknown option: ${arg}`);
   }
   return args;
@@ -89,6 +92,19 @@ function loadInput(filePath) {
 function defaultOutputPath() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   return path.join(__dirname, "output", "import-preview.sample.md");
+}
+
+function privateOutputPath() {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  return path.join(__dirname, "output", "private", "import-preview.local.md");
+}
+
+function assertPrivateLocalPath(filePath) {
+  if (!filePath) return;
+  const normalized = filePath.split(path.sep).join("/");
+  if (!normalized.includes("tools/outreach/private/") && !path.resolve(filePath).includes(`${path.sep}private${path.sep}`)) {
+    throw new Error("--private-local inputs must live in tools/outreach/private/ or another private local path.");
+  }
 }
 
 function summarize(results) {
@@ -174,9 +190,10 @@ function runCli() {
 
   const sourceLabel = args.input || "single-json";
   const records = args.single ? [JSON.parse(args.single)] : loadInput(args.input);
-  const results = importProspects(records, { dataSource: sourceLabel, sampleMode: true });
+  if (args.privateLocal) assertPrivateLocalPath(args.input);
+  const results = importProspects(records, { dataSource: sourceLabel, sampleMode: !args.privateLocal });
   const summary = summarize(results);
-  const outputPath = args.output || defaultOutputPath();
+  const outputPath = args.output || (args.privateLocal ? privateOutputPath() : defaultOutputPath());
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, renderPreview({ sourceLabel, ...summary }));
   console.log(

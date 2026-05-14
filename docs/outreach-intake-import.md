@@ -69,6 +69,14 @@ node tools/outreach/import_prospects.mjs --single '{"business_name":"Example HVA
 
 The output is local Markdown at `tools/outreach/output/import-preview.sample.md` unless `--output` is provided.
 
+Private local researched prospects can be previewed without committing them:
+
+```bash
+node tools/outreach/import_prospects.mjs --input tools/outreach/private/prospects.csv --private-local --dry-run
+```
+
+Private mode accepts real researched domains locally, but it still does not send anything. `tools/outreach/private/` and `tools/outreach/output/private/` are ignored by git.
+
 ## Safety Boundary
 
 - No email sending.
