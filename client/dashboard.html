@@ -30,6 +30,9 @@
     .gideon-live { display: inline-flex; align-items: center; gap: 10px; background: rgba(0,220,130,0.12); border: 1px solid rgba(0,220,130,0.25); border-radius: 10px; padding: 14px 24px; margin-bottom: 32px; }
     .gideon-live .dot { width: 12px; height: 12px; background: #00dc82; border-radius: 50%; animation: pulse-dot 2s infinite; box-shadow: 0 0 12px rgba(0,220,130,0.5); }
     .gideon-live span { font-size: 0.9rem; font-weight: 700; color: #00dc82; letter-spacing: 0.05em; }
+    .gideon-live.pending { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.30); }
+    .gideon-live.pending .dot { background: #f59e0b; box-shadow: 0 0 12px rgba(245,158,11,0.35); }
+    .gideon-live.pending span { color: #f59e0b; }
     @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
     .section-label { color: #00dc82; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 40px; }
@@ -48,6 +51,16 @@
     .greeting-box { background: rgba(0,220,130,0.06); border: 1px solid rgba(0,220,130,0.15); border-radius: 10px; padding: 20px; margin-bottom: 40px; }
     .greeting-box h3 { font-size: 0.85rem; color: #00dc82; margin: 0 0 8px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
     .greeting-box p { font-size: 0.9rem; color: #a1a1aa; margin: 0; line-height: 1.6; font-style: italic; }
+    .setup-warning { display: none; background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.25); border-radius: 10px; color: #fed7aa; font-size: 0.9rem; line-height: 1.5; padding: 16px 18px; margin-bottom: 28px; }
+    .setup-warning.show { display: block; }
+    .setup-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: -12px 0 32px; }
+    .btn-secondary { border: 1px solid rgba(255,255,255,0.12); color: #fff; background: rgba(255,255,255,0.04); border-radius: 6px; padding: 10px 14px; cursor: pointer; font-size: 0.85rem; font-family: inherit; text-decoration: none; }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+    .btn-secondary.danger { color: #fecaca; border-color: rgba(239,68,68,0.28); }
+    .missing-list { display: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 18px 20px; margin-bottom: 40px; }
+    .missing-list.show { display: block; }
+    .missing-list h3 { font-size: 0.9rem; margin: 0 0 12px; color: #fff; }
+    .missing-list ul { margin: 0; padding-left: 18px; color: #d4d4d8; font-size: 0.85rem; line-height: 1.7; }
     .logout-link { display: inline-block; margin-top: 20px; color: #71717a; font-size: 0.85rem; text-decoration: none; }
     .logout-link:hover { color: #ef4444; }
     @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
@@ -83,41 +96,50 @@
 <div class="dash-wrap">
   <div class="dash-header">
     <h1>Welcome back, <span id="client-name">Client</span></h1>
-    <p>Here's how GIDEON is performing for your business.</p>
+    <p>Review the local call setup before any provider or phone routing work begins.</p>
   </div>
 
-  <div class="gideon-live">
+  <div class="gideon-live" id="gideon-status">
     <div class="dot"></div>
-    <span>GIDEON IS LIVE</span>
+    <span id="gideon-status-label">SETUP NEEDS ATTENTION</span>
+  </div>
+  <div class="setup-warning" id="setup-warning"></div>
+  <div class="setup-actions">
+    <a href="onboarding.html" class="btn-secondary">Edit setup</a>
+    <button type="button" class="btn-secondary danger" id="reset-setup">Reset setup</button>
+  </div>
+  <div class="missing-list" id="missing-list">
+    <h3>Setup Items Needing Attention</h3>
+    <ul id="missing-items"></ul>
   </div>
 
-  <div class="section-label">This Month</div>
+  <div class="section-label">Setup Status</div>
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="num">127</div>
-      <div class="label">Calls Answered</div>
+      <div class="num" id="setup-complete-card">No</div>
+      <div class="label">Local Setup Complete</div>
     </div>
     <div class="stat-card">
-      <div class="num">34</div>
-      <div class="label">Appointments Booked</div>
+      <div class="num">Local</div>
+      <div class="label">Storage Boundary</div>
     </div>
     <div class="stat-card">
-      <div class="num">97%</div>
-      <div class="label">Answer Rate</div>
+      <div class="num" id="provider-status-card">Off</div>
+      <div class="label">Provider Routing</div>
     </div>
     <div class="stat-card">
-      <div class="num">1.8s</div>
-      <div class="label">Avg Answer Time</div>
+      <div class="num">No</div>
+      <div class="label">Backend Sync</div>
     </div>
     <div class="stat-card">
-      <div class="num">$0</div>
-      <div class="label">Missed Calls</div>
+      <div class="num">No</div>
+      <div class="label">Live Activation</div>
     </div>
   </div>
 
   <div class="greeting-box">
     <h3>Your AI Greeting</h3>
-    <p>"Thank you for calling! How can we help you today? I can schedule an appointment, answer questions about our services, or connect you with a team member."</p>
+    <p id="dashboard-greeting">"Thank you for calling! How can we help you today? I can schedule an appointment, answer questions about our services, or connect you with a team member."</p>
   </div>
 
   <div class="section-label">Account Details</div>
@@ -145,19 +167,19 @@
       <h3>Business Hours</h3>
       <div class="info-row">
         <span class="lbl">Monday - Friday</span>
-        <span class="val">8:00 AM - 6:00 PM</span>
+        <span class="val" id="hours-weekday">8:00 AM - 6:00 PM</span>
       </div>
       <div class="info-row">
         <span class="lbl">Saturday</span>
-        <span class="val">9:00 AM - 1:00 PM</span>
+        <span class="val" id="hours-saturday">9:00 AM - 1:00 PM</span>
       </div>
       <div class="info-row">
         <span class="lbl">Sunday</span>
-        <span class="val">Closed (AI answers)</span>
+        <span class="val" id="hours-sunday">Closed (AI answers)</span>
       </div>
       <div class="info-row">
-        <span class="lbl">After Hours</span>
-        <span class="val green">GIDEON Active</span>
+        <span class="lbl">Urgent Calls</span>
+        <span class="val" id="hours-after">Not configured</span>
       </div>
     </div>
   </div>
@@ -238,12 +260,42 @@
 </div>
 
 <script src="../script.js"></script>
+<script src="call-flow.js"></script>
 <script>
 (function() {
-  var name = sessionStorage.getItem('tct_client_name');
-  if (name) {
-    document.getElementById('client-name').textContent = name;
+  var setupStore = TCTCallFlow.createLocalSetupStore(localStorage);
+  var setup = setupStore.load();
+  var state = TCTCallFlow.dashboardState(setup);
+  var sessionName = sessionStorage.getItem('tct_client_name');
+  document.getElementById('client-name').textContent = state.complete ? state.businessName : (sessionName || 'Client');
+  document.getElementById('gideon-status-label').textContent = state.statusLabel;
+  document.getElementById('dashboard-greeting').textContent = '"' + state.greeting + '"';
+  document.getElementById('hours-weekday').textContent = state.weekdayHours;
+  document.getElementById('hours-saturday').textContent = state.saturdayHours;
+  document.getElementById('hours-sunday').textContent = state.sundayHours;
+  document.getElementById('hours-after').textContent = state.afterHours;
+  document.getElementById('setup-complete-card').textContent = state.complete ? 'Yes' : 'No';
+  document.getElementById('provider-status-card').textContent = state.providerStatus === 'not-configured' ? 'Off' : state.providerStatus;
+
+  if (!state.complete) {
+    document.getElementById('gideon-status').classList.add('pending');
+    document.getElementById('hours-after').classList.remove('green');
+    document.getElementById('setup-warning').textContent = 'Call setup is incomplete. Finish onboarding before treating this account as ready.';
+    document.getElementById('setup-warning').classList.add('show');
+    var list = document.getElementById('missing-items');
+    state.missingItems.forEach(function(item) {
+      var li = document.createElement('li');
+      li.textContent = item.label + ': ' + item.message;
+      list.appendChild(li);
+    });
+    document.getElementById('missing-list').classList.add('show');
   }
+
+  document.getElementById('reset-setup').addEventListener('click', function() {
+    if (!confirm('Reset the local call setup on this browser?')) return;
+    setupStore.reset();
+    window.location.reload();
+  });
 })();
 </script>
 </body>

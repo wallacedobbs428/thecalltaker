@@ -44,6 +44,11 @@
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #00dc82; box-shadow: 0 0 0 3px rgba(0,220,130,0.12); }
     .form-group textarea { min-height: 100px; resize: vertical; }
     .form-group input::placeholder, .form-group textarea::placeholder { color: #71717a; }
+    .form-group.invalid input, .form-group.invalid select, .form-group.invalid textarea { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.12); }
+    .field-error { display: none; color: #ef4444; font-size: 0.75rem; margin-top: 6px; }
+    .form-group.invalid .field-error { display: block; }
+    .setup-alert { display: none; background: rgba(239,68,68,0.10); border: 1px solid rgba(239,68,68,0.28); border-radius: 8px; color: #fecaca; font-size: 0.85rem; line-height: 1.5; padding: 12px 14px; margin-bottom: 20px; }
+    .setup-alert.show { display: block; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .btn-row { display: flex; gap: 12px; margin-top: 32px; }
     .btn-next { background: #00dc82; color: #000; font-weight: 600; border-radius: 6px; padding: 12px 24px; border: none; cursor: pointer; font-size: 0.95rem; font-family: inherit; }
@@ -110,6 +115,7 @@
     <span>Greeting</span>
     <span>Done</span>
   </div>
+  <div class="setup-alert" id="setup-alert" role="alert"></div>
 
   <!-- Step 1: Business -->
   <div class="wizard-step active" id="step-1">
@@ -118,6 +124,7 @@
     <div class="form-group">
       <label>Business Name</label>
       <input type="text" id="co-name" placeholder="e.g. Thompson Plumbing">
+      <div class="field-error" id="err-businessName"></div>
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -138,14 +145,16 @@
           <option>Garage Door</option>
           <option>Restoration</option>
         </select>
+        <div class="field-error" id="err-industry"></div>
       </div>
       <div class="form-group">
         <label>Location</label>
         <input type="text" id="co-location" placeholder="City, State">
+        <div class="field-error" id="err-location"></div>
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn-next" onclick="goStep(2)">Continue</button>
+      <button class="btn-next" onclick="handleContinue(2)">Continue</button>
     </div>
   </div>
 
@@ -156,18 +165,21 @@
     <div class="form-group">
       <label>Weekday Hours</label>
       <input type="text" id="co-weekday" placeholder="e.g. 8:00 AM - 6:00 PM">
+      <div class="field-error" id="err-weekdayHours"></div>
     </div>
     <div class="form-group">
       <label>Saturday Hours</label>
       <input type="text" id="co-saturday" placeholder="e.g. 9:00 AM - 1:00 PM or Closed">
+      <div class="field-error" id="err-saturdayHours"></div>
     </div>
     <div class="form-group">
       <label>Sunday Hours</label>
       <input type="text" id="co-sunday" placeholder="e.g. Closed">
+      <div class="field-error" id="err-sundayHours"></div>
     </div>
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(1)">Back</button>
-      <button class="btn-next" onclick="goStep(3)">Continue</button>
+      <button class="btn-next" onclick="handleContinue(3)">Continue</button>
     </div>
   </div>
 
@@ -178,14 +190,16 @@
     <div class="form-group">
       <label>Services (comma separated)</label>
       <textarea id="co-services" placeholder="e.g. AC Repair, Furnace Installation, Duct Cleaning, Emergency Service"></textarea>
+      <div class="field-error" id="err-services"></div>
     </div>
     <div class="form-group">
       <label>Service Area</label>
       <input type="text" id="co-area" placeholder="e.g. Nashville metro, within 30 miles">
+      <div class="field-error" id="err-serviceArea"></div>
     </div>
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(2)">Back</button>
-      <button class="btn-next" onclick="goStep(4)">Continue</button>
+      <button class="btn-next" onclick="handleContinue(4)">Continue</button>
     </div>
   </div>
 
@@ -196,14 +210,16 @@
     <div class="form-group">
       <label>Phone Greeting</label>
       <textarea id="co-greeting" placeholder="e.g. Thank you for calling Thompson Plumbing! I can help you schedule a service, get a quote, or answer any questions about our work."></textarea>
+      <div class="field-error" id="err-greeting"></div>
     </div>
     <div class="form-group">
       <label>Emergency Forward Number (optional)</label>
       <input type="tel" id="co-forward" placeholder="Number for urgent after-hours calls">
+      <div class="field-error" id="err-forwardNumber"></div>
     </div>
     <div class="btn-row">
       <button class="btn-back" onclick="goStep(3)">Back</button>
-      <button class="btn-next" onclick="goStep(5)">Finish Setup</button>
+      <button class="btn-next" onclick="handleFinish()">Finish Setup</button>
     </div>
   </div>
 
@@ -215,12 +231,12 @@
           <path d="M5 13l4 4L19 7"/>
         </svg>
       </div>
-      <h2>You're All Set</h2>
-      <p>GIDEON is now configured for your business.</p>
-      <p>Your AI receptionist is live and answering calls 24/7.</p>
+      <h2>Setup Saved</h2>
+      <p>Your call setup details are ready for Gideon.</p>
+      <p>Use the dashboard to review the greeting, hours, services, and urgent call handling.</p>
       <div class="tip-box">
         <h4>What Happens Next</h4>
-        <p>Forward your business line to your new GIDEON number. We'll send setup instructions to your email within the hour.</p>
+        <p>Backend/provider connection is not automatic from this local setup screen. A team member still needs to connect the live phone system.</p>
       </div>
       <div class="btn-row" style="justify-content:center;margin-top:24px;">
         <a href="dashboard.html" class="btn-next" style="text-decoration:none;">Go to Dashboard</a>
@@ -302,9 +318,70 @@
 </div>
 
 <script src="../script.js"></script>
+<script src="call-flow.js"></script>
 <script>
 var currentStep = 1;
+var fields = {
+  businessName: 'co-name',
+  industry: 'co-industry',
+  location: 'co-location',
+  weekdayHours: 'co-weekday',
+  saturdayHours: 'co-saturday',
+  sundayHours: 'co-sunday',
+  services: 'co-services',
+  serviceArea: 'co-area',
+  greeting: 'co-greeting',
+  forwardNumber: 'co-forward'
+};
+var setupStore = TCTCallFlow.createLocalSetupStore(localStorage);
+
+function getSetup() {
+  var setup = {};
+  Object.keys(fields).forEach(function(key) {
+    setup[key] = document.getElementById(fields[key]).value;
+  });
+  return setup;
+}
+
+function setSetupFields(setup) {
+  var form = TCTCallFlow.formSetupFromContract(setup);
+  Object.keys(fields).forEach(function(key) {
+    var input = document.getElementById(fields[key]);
+    if (input) input.value = form[key] || '';
+  });
+}
+
+function clearErrors() {
+  document.getElementById('setup-alert').classList.remove('show');
+  Object.keys(fields).forEach(function(key) {
+    var input = document.getElementById(fields[key]);
+    var group = input.closest('.form-group');
+    var error = document.getElementById('err-' + key);
+    if (group) group.classList.remove('invalid');
+    if (error) error.textContent = '';
+  });
+}
+
+function showErrors(errors) {
+  clearErrors();
+  var keys = Object.keys(errors || {});
+  if (!keys.length) return;
+  document.getElementById('setup-alert').textContent = 'Fix the highlighted fields before Gideon can use this call setup.';
+  document.getElementById('setup-alert').classList.add('show');
+  keys.forEach(function(key) {
+    var input = document.getElementById(fields[key]);
+    var error = document.getElementById('err-' + key);
+    if (!input) return;
+    var group = input.closest('.form-group');
+    if (group) group.classList.add('invalid');
+    if (error) error.textContent = errors[key];
+  });
+  var first = document.getElementById(fields[keys[0]]);
+  if (first) first.focus();
+}
+
 function goStep(n) {
+  clearErrors();
   document.getElementById('step-' + currentStep).classList.remove('active');
   currentStep = n;
   document.getElementById('step-' + n).classList.add('active');
@@ -313,6 +390,30 @@ function goStep(n) {
   bars.forEach(function(b, i) { b.classList.toggle('active', i < n); });
   labels.forEach(function(l, i) { l.classList.toggle('active', i < n); });
 }
+
+function handleContinue(nextStep) {
+  var errors = TCTCallFlow.validateStep(currentStep, getSetup());
+  if (Object.keys(errors).length) {
+    showErrors(errors);
+    return;
+  }
+  goStep(nextStep);
+}
+
+function handleFinish() {
+  var result = setupStore.save(getSetup());
+  if (!result.ok) {
+    showErrors(result.errors);
+    return;
+  }
+  sessionStorage.setItem('tct_client_name', result.setup.business.name);
+  goStep(5);
+}
+
+(function hydrateExistingSetup() {
+  var setup = setupStore.load();
+  if (setup) setSetupFields(setup);
+})();
 </script>
 </body>
 </html>
