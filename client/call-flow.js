@@ -9,6 +9,7 @@
   var SCHEMA_VERSION = 2;
   var COMPLETION_COMPLETE = "complete";
   var COMPLETION_INCOMPLETE = "incomplete";
+  var PROVIDER_STATUS_NOT_CONFIGURED = "not-configured";
   var FIELD_LABELS = {
     businessName: "Business name",
     industry: "Industry",
@@ -123,7 +124,7 @@
       .filter(Boolean);
   }
 
-  function buildSetup(input, existing, options) {
+  function serializeSetup(input, existing, options) {
     var now = new Date().toISOString();
     var opts = options || {};
     var form = formSetupFromContract(input);
@@ -152,6 +153,10 @@
         greeting: form.greeting,
         emergencyForwardNumber: form.forwardNumber,
       },
+      activation: {
+        liveProviderConfigured: false,
+        providerStatus: PROVIDER_STATUS_NOT_CONFIGURED,
+      },
       meta: {
         savedAt: meta.savedAt || prior.savedAt || now,
         updatedAt: opts.preserveMeta ? (meta.updatedAt || prior.updatedAt || now) : now,
@@ -160,13 +165,17 @@
     };
   }
 
+  function buildSetup(input, existing, options) {
+    return serializeSetup(input, existing, options);
+  }
+
   function validateSetup(setup) {
     return validateFormSetup(formSetupFromContract(setup));
   }
 
   function saveSetup(storage, setup) {
     var existing = loadSetup(storage);
-    var normalized = buildSetup(setup, existing);
+    var normalized = serializeSetup(setup, existing);
     var errors = validateSetup(normalized);
     if (hasErrors(errors)) {
       return { ok: false, errors: errors, setup: normalized };
@@ -180,7 +189,7 @@
       var raw = storage.getItem(STORAGE_KEY);
       if (!raw) return null;
       var parsed = JSON.parse(raw);
-      return buildSetup(parsed, parsed, { preserveMeta: true });
+      return serializeSetup(parsed, parsed, { preserveMeta: true });
     } catch (error) {
       return null;
     }
@@ -192,16 +201,61 @@
     }
   }
 
+  function createLocalSetupStore(storage) {
+    return {
+      load: function() {
+        return loadSetup(storage);
+      },
+      save: function(setup) {
+        return saveSetup(storage, setup);
+      },
+      reset: function() {
+        resetSetup(storage);
+      },
+    };
+  }
+
+  /*
+   * Future backend persistence boundary.
+   *
+   * This adapter intentionally does not call CTOS, Supabase, GHL, Voice AI,
+   * SMS, email, webhooks, phone routing, or any provider. A real implementation
+   * must live behind an authenticated server endpoint and must decide how to:
+   * - persist the serialized schema v2 setup contract
+   * - associate it with a verified client/account identity
+   * - validate the contract again server-side
+   * - queue or perform provider-specific setup with explicit operator approval
+   * - return provider status without implying live phone activation before it exists
+   */
+  function createBackendPersistenceAdapter() {
+    return {
+      providerStatus: PROVIDER_STATUS_NOT_CONFIGURED,
+      persist: function(setup) {
+        return {
+          ok: false,
+          skipped: true,
+          providerStatus: PROVIDER_STATUS_NOT_CONFIGURED,
+          liveProviderConfigured: false,
+          reason: "No backend persistence adapter is configured. Setup remains local-only.",
+          setup: serializeSetup(setup, setup, { preserveMeta: true }),
+        };
+      },
+    };
+  }
+
   function dashboardState(setup) {
-    var errors = setup ? validateSetup(setup) : { setup: "No call setup has been saved." };
-    var complete = !hasErrors(errors);
-    var form = formSetupFromContract(setup);
+    var serialized = setup ? serializeSetup(setup, setup, { preserveMeta: true }) : null;
+    var errors = serialized ? validateSetup(serialized) : { setup: "No call setup has been saved." };
     var items = missingItems(errors);
+    var complete = Boolean(serialized) && serialized.setupCompletion === COMPLETION_COMPLETE && items.length === 0;
+    var form = formSetupFromContract(setup);
     return {
       complete: complete,
       statusLabel: complete ? "GIDEON IS READY" : "SETUP NEEDS ATTENTION",
       statusTone: complete ? "live" : "pending",
       setupCompletion: complete ? COMPLETION_COMPLETE : COMPLETION_INCOMPLETE,
+      providerStatus: serialized ? serialized.activation.providerStatus : PROVIDER_STATUS_NOT_CONFIGURED,
+      liveProviderConfigured: false,
       businessName: complete ? form.businessName : "Client",
       greeting: complete ? form.greeting : "Complete onboarding before Gideon starts answering with a custom greeting.",
       weekdayHours: complete ? form.weekdayHours : "Not configured",
@@ -212,7 +266,7 @@
         : "Blocked until setup is complete",
       errors: errors,
       missingItems: items,
-      setup: setup ? buildSetup(setup, setup, { preserveMeta: true }) : null,
+      setup: serialized,
     };
   }
 
@@ -222,12 +276,15 @@
     clean: clean,
     normalizePhone: normalizePhone,
     formSetupFromContract: formSetupFromContract,
+    serializeSetup: serializeSetup,
     buildSetup: buildSetup,
     validateStep: validateStep,
     validateSetup: validateSetup,
     saveSetup: saveSetup,
     loadSetup: loadSetup,
     resetSetup: resetSetup,
+    createLocalSetupStore: createLocalSetupStore,
+    createBackendPersistenceAdapter: createBackendPersistenceAdapter,
     dashboardState: dashboardState,
   };
 });

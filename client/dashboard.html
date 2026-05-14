@@ -263,7 +263,8 @@
 <script src="call-flow.js"></script>
 <script>
 (function() {
-  var setup = TCTCallFlow.loadSetup(localStorage);
+  var setupStore = TCTCallFlow.createLocalSetupStore(localStorage);
+  var setup = setupStore.load();
   var state = TCTCallFlow.dashboardState(setup);
   var sessionName = sessionStorage.getItem('tct_client_name');
   document.getElementById('client-name').textContent = state.complete ? state.businessName : (sessionName || 'Client');
@@ -290,7 +291,7 @@
 
   document.getElementById('reset-setup').addEventListener('click', function() {
     if (!confirm('Reset the local call setup on this browser?')) return;
-    TCTCallFlow.resetSetup(localStorage);
+    setupStore.reset();
     window.location.reload();
   });
 })();

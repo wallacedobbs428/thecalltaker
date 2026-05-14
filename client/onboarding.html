@@ -333,6 +333,7 @@ var fields = {
   greeting: 'co-greeting',
   forwardNumber: 'co-forward'
 };
+var setupStore = TCTCallFlow.createLocalSetupStore(localStorage);
 
 function getSetup() {
   var setup = {};
@@ -400,7 +401,7 @@ function handleContinue(nextStep) {
 }
 
 function handleFinish() {
-  var result = TCTCallFlow.saveSetup(localStorage, getSetup());
+  var result = setupStore.save(getSetup());
   if (!result.ok) {
     showErrors(result.errors);
     return;
@@ -410,7 +411,7 @@ function handleFinish() {
 }
 
 (function hydrateExistingSetup() {
-  var setup = TCTCallFlow.loadSetup(localStorage);
+  var setup = setupStore.load();
   if (setup) setSetupFields(setup);
 })();
 </script>
