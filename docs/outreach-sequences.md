@@ -197,6 +197,8 @@ Voicemail:
 
 Use only where compliant, consented, relationship-based, or explicitly approved. Do not cold-text without compliance review.
 
+SMS style rule: keep texts human and lightly imperfect. Do not write cold SMS like polished email copy. Use short fragments, lowercase where natural, and simple punctuation. Keep it readable, but avoid corporate-perfect grammar.
+
 ### SMS/DM 1: Permission-Based
 
 Hi [First Name], Wallace with The Call Taker. Quick question: is missed after-hours call capture something [Company] is trying to improve, or should I leave it alone?
