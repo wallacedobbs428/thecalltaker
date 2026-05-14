@@ -96,12 +96,12 @@
 <div class="dash-wrap">
   <div class="dash-header">
     <h1>Welcome back, <span id="client-name">Client</span></h1>
-    <p>Here's how GIDEON is performing for your business.</p>
+    <p>Review the local call setup before any provider or phone routing work begins.</p>
   </div>
 
   <div class="gideon-live" id="gideon-status">
     <div class="dot"></div>
-    <span id="gideon-status-label">GIDEON IS LIVE</span>
+    <span id="gideon-status-label">SETUP NEEDS ATTENTION</span>
   </div>
   <div class="setup-warning" id="setup-warning"></div>
   <div class="setup-actions">
@@ -113,27 +113,27 @@
     <ul id="missing-items"></ul>
   </div>
 
-  <div class="section-label">This Month</div>
+  <div class="section-label">Setup Status</div>
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="num">127</div>
-      <div class="label">Calls Answered</div>
+      <div class="num" id="setup-complete-card">No</div>
+      <div class="label">Local Setup Complete</div>
     </div>
     <div class="stat-card">
-      <div class="num">34</div>
-      <div class="label">Appointments Booked</div>
+      <div class="num">Local</div>
+      <div class="label">Storage Boundary</div>
     </div>
     <div class="stat-card">
-      <div class="num">97%</div>
-      <div class="label">Answer Rate</div>
+      <div class="num" id="provider-status-card">Off</div>
+      <div class="label">Provider Routing</div>
     </div>
     <div class="stat-card">
-      <div class="num">1.8s</div>
-      <div class="label">Avg Answer Time</div>
+      <div class="num">No</div>
+      <div class="label">Backend Sync</div>
     </div>
     <div class="stat-card">
-      <div class="num">$0</div>
-      <div class="label">Missed Calls</div>
+      <div class="num">No</div>
+      <div class="label">Live Activation</div>
     </div>
   </div>
 
@@ -178,8 +178,8 @@
         <span class="val" id="hours-sunday">Closed (AI answers)</span>
       </div>
       <div class="info-row">
-        <span class="lbl">After Hours</span>
-        <span class="val green" id="hours-after">GIDEON Active</span>
+        <span class="lbl">Urgent Calls</span>
+        <span class="val" id="hours-after">Not configured</span>
       </div>
     </div>
   </div>
@@ -274,6 +274,8 @@
   document.getElementById('hours-saturday').textContent = state.saturdayHours;
   document.getElementById('hours-sunday').textContent = state.sundayHours;
   document.getElementById('hours-after').textContent = state.afterHours;
+  document.getElementById('setup-complete-card').textContent = state.complete ? 'Yes' : 'No';
+  document.getElementById('provider-status-card').textContent = state.providerStatus === 'not-configured' ? 'Off' : state.providerStatus;
 
   if (!state.complete) {
     document.getElementById('gideon-status').classList.add('pending');

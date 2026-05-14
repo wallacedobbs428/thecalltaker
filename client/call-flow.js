@@ -251,8 +251,8 @@
     var form = formSetupFromContract(setup);
     return {
       complete: complete,
-      statusLabel: complete ? "GIDEON IS READY" : "SETUP NEEDS ATTENTION",
-      statusTone: complete ? "live" : "pending",
+      statusLabel: complete ? "SETUP COMPLETE" : "SETUP NEEDS ATTENTION",
+      statusTone: complete ? "complete" : "pending",
       setupCompletion: complete ? COMPLETION_COMPLETE : COMPLETION_INCOMPLETE,
       providerStatus: serialized ? serialized.activation.providerStatus : PROVIDER_STATUS_NOT_CONFIGURED,
       liveProviderConfigured: false,
@@ -262,8 +262,8 @@
       saturdayHours: complete ? form.saturdayHours : "Not configured",
       sundayHours: complete ? form.sundayHours : "Not configured",
       afterHours: complete
-        ? (form.forwardNumber ? "Forward urgent calls to " + form.forwardNumber : "Take message and send summary")
-        : "Blocked until setup is complete",
+        ? (form.forwardNumber ? "Preference: forward urgent calls to " + form.forwardNumber : "Preference: take message and send summary")
+        : "Not configured until setup is complete",
       errors: errors,
       missingItems: items,
       setup: serialized,

@@ -58,4 +58,4 @@ A future real persistence implementation must:
 - update `activation.providerStatus` only after real provider work is complete
 - require explicit operator approval before CTOS, Supabase, GHL, Voice AI, SMS, email, webhooks, or phone routing changes
 
-Local setup completion means the client has supplied required configuration fields. It does not mean the business line is live or providers are configured.
+Local setup completion means the client has supplied required configuration fields. It does not mean the business line is live, provider routing is configured, backend sync exists, or any SMS/email/call/webhook automation is active.
