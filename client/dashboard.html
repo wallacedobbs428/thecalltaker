@@ -53,6 +53,14 @@
     .greeting-box p { font-size: 0.9rem; color: #a1a1aa; margin: 0; line-height: 1.6; font-style: italic; }
     .setup-warning { display: none; background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.25); border-radius: 10px; color: #fed7aa; font-size: 0.9rem; line-height: 1.5; padding: 16px 18px; margin-bottom: 28px; }
     .setup-warning.show { display: block; }
+    .setup-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: -12px 0 32px; }
+    .btn-secondary { border: 1px solid rgba(255,255,255,0.12); color: #fff; background: rgba(255,255,255,0.04); border-radius: 6px; padding: 10px 14px; cursor: pointer; font-size: 0.85rem; font-family: inherit; text-decoration: none; }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+    .btn-secondary.danger { color: #fecaca; border-color: rgba(239,68,68,0.28); }
+    .missing-list { display: none; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 18px 20px; margin-bottom: 40px; }
+    .missing-list.show { display: block; }
+    .missing-list h3 { font-size: 0.9rem; margin: 0 0 12px; color: #fff; }
+    .missing-list ul { margin: 0; padding-left: 18px; color: #d4d4d8; font-size: 0.85rem; line-height: 1.7; }
     .logout-link { display: inline-block; margin-top: 20px; color: #71717a; font-size: 0.85rem; text-decoration: none; }
     .logout-link:hover { color: #ef4444; }
     @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
@@ -96,6 +104,14 @@
     <span id="gideon-status-label">GIDEON IS LIVE</span>
   </div>
   <div class="setup-warning" id="setup-warning"></div>
+  <div class="setup-actions">
+    <a href="onboarding.html" class="btn-secondary">Edit setup</a>
+    <button type="button" class="btn-secondary danger" id="reset-setup">Reset setup</button>
+  </div>
+  <div class="missing-list" id="missing-list">
+    <h3>Setup Items Needing Attention</h3>
+    <ul id="missing-items"></ul>
+  </div>
 
   <div class="section-label">This Month</div>
   <div class="stats-grid">
@@ -261,9 +277,22 @@
   if (!state.complete) {
     document.getElementById('gideon-status').classList.add('pending');
     document.getElementById('hours-after').classList.remove('green');
-    document.getElementById('setup-warning').textContent = 'Call setup is incomplete. Finish onboarding before treating this account as live.';
+    document.getElementById('setup-warning').textContent = 'Call setup is incomplete. Finish onboarding before treating this account as ready.';
     document.getElementById('setup-warning').classList.add('show');
+    var list = document.getElementById('missing-items');
+    state.missingItems.forEach(function(item) {
+      var li = document.createElement('li');
+      li.textContent = item.label + ': ' + item.message;
+      list.appendChild(li);
+    });
+    document.getElementById('missing-list').classList.add('show');
   }
+
+  document.getElementById('reset-setup').addEventListener('click', function() {
+    if (!confirm('Reset the local call setup on this browser?')) return;
+    TCTCallFlow.resetSetup(localStorage);
+    window.location.reload();
+  });
 })();
 </script>
 </body>

@@ -231,12 +231,12 @@
           <path d="M5 13l4 4L19 7"/>
         </svg>
       </div>
-      <h2>You're All Set</h2>
-      <p>GIDEON is now configured for your business.</p>
-      <p>Your AI receptionist is live and answering calls 24/7.</p>
+      <h2>Setup Saved</h2>
+      <p>Your call setup details are ready for Gideon.</p>
+      <p>Use the dashboard to review the greeting, hours, services, and urgent call handling.</p>
       <div class="tip-box">
         <h4>What Happens Next</h4>
-        <p>Forward your business line to your new GIDEON number. We'll send setup instructions to your email within the hour.</p>
+        <p>Backend/provider connection is not automatic from this local setup screen. A team member still needs to connect the live phone system.</p>
       </div>
       <div class="btn-row" style="justify-content:center;margin-top:24px;">
         <a href="dashboard.html" class="btn-next" style="text-decoration:none;">Go to Dashboard</a>
@@ -342,6 +342,14 @@ function getSetup() {
   return setup;
 }
 
+function setSetupFields(setup) {
+  var form = TCTCallFlow.formSetupFromContract(setup);
+  Object.keys(fields).forEach(function(key) {
+    var input = document.getElementById(fields[key]);
+    if (input) input.value = form[key] || '';
+  });
+}
+
 function clearErrors() {
   document.getElementById('setup-alert').classList.remove('show');
   Object.keys(fields).forEach(function(key) {
@@ -397,9 +405,14 @@ function handleFinish() {
     showErrors(result.errors);
     return;
   }
-  sessionStorage.setItem('tct_client_name', result.setup.businessName);
+  sessionStorage.setItem('tct_client_name', result.setup.business.name);
   goStep(5);
 }
+
+(function hydrateExistingSetup() {
+  var setup = TCTCallFlow.loadSetup(localStorage);
+  if (setup) setSetupFields(setup);
+})();
 </script>
 </body>
 </html>

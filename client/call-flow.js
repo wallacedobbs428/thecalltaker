@@ -6,6 +6,21 @@
   }
 })(typeof window !== "undefined" ? window : globalThis, function() {
   var STORAGE_KEY = "tct_call_setup_v1";
+  var SCHEMA_VERSION = 2;
+  var COMPLETION_COMPLETE = "complete";
+  var COMPLETION_INCOMPLETE = "incomplete";
+  var FIELD_LABELS = {
+    businessName: "Business name",
+    industry: "Industry",
+    location: "Location",
+    weekdayHours: "Weekday hours",
+    saturdayHours: "Saturday hours",
+    sundayHours: "Sunday hours",
+    services: "Services",
+    serviceArea: "Service area",
+    greeting: "Phone greeting",
+    forwardNumber: "Emergency forward number",
+  };
 
   function clean(value) {
     return String(value || "").trim().replace(/\s+/g, " ");
@@ -59,24 +74,28 @@
     return Object.keys(errors || {}).length > 0;
   }
 
-  function normalizeSetup(setup) {
+  function formSetupFromContract(setup) {
     var data = setup || {};
+    var business = data.business || {};
+    var hours = data.hours || {};
+    var services = data.services || {};
+    var callHandling = data.callHandling || {};
+
     return {
-      businessName: clean(data.businessName),
-      industry: clean(data.industry),
-      location: clean(data.location),
-      weekdayHours: clean(data.weekdayHours),
-      saturdayHours: clean(data.saturdayHours),
-      sundayHours: clean(data.sundayHours),
-      services: clean(data.services),
-      serviceArea: clean(data.serviceArea),
-      greeting: clean(data.greeting),
-      forwardNumber: normalizePhone(data.forwardNumber),
-      savedAt: data.savedAt || new Date().toISOString(),
+      businessName: clean(business.name || data.businessName),
+      industry: clean(business.industry || data.industry),
+      location: clean(business.location || data.location),
+      weekdayHours: clean(hours.weekday || data.weekdayHours),
+      saturdayHours: clean(hours.saturday || data.saturdayHours),
+      sundayHours: clean(hours.sunday || data.sundayHours),
+      services: clean(Array.isArray(services.offered) ? services.offered.join(", ") : data.services),
+      serviceArea: clean(services.serviceArea || data.serviceArea),
+      greeting: clean(callHandling.greeting || data.greeting),
+      forwardNumber: normalizePhone(callHandling.emergencyForwardNumber || data.forwardNumber),
     };
   }
 
-  function validateSetup(setup) {
+  function validateFormSetup(setup) {
     var errors = {};
     [1, 2, 3, 4].forEach(function(step) {
       var stepErrors = validateStep(step, setup);
@@ -87,8 +106,67 @@
     return errors;
   }
 
+  function missingItems(errors) {
+    return Object.keys(errors || {}).map(function(key) {
+      return {
+        key: key,
+        label: FIELD_LABELS[key] || key,
+        message: errors[key],
+      };
+    });
+  }
+
+  function splitServices(value) {
+    return clean(value)
+      .split(",")
+      .map(clean)
+      .filter(Boolean);
+  }
+
+  function buildSetup(input, existing, options) {
+    var now = new Date().toISOString();
+    var opts = options || {};
+    var form = formSetupFromContract(input);
+    var errors = validateFormSetup(form);
+    var prior = existing || {};
+    var meta = prior.meta || {};
+
+    return {
+      schemaVersion: SCHEMA_VERSION,
+      setupCompletion: hasErrors(errors) ? COMPLETION_INCOMPLETE : COMPLETION_COMPLETE,
+      business: {
+        name: form.businessName,
+        industry: form.industry,
+        location: form.location,
+      },
+      hours: {
+        weekday: form.weekdayHours,
+        saturday: form.saturdayHours,
+        sunday: form.sundayHours,
+      },
+      services: {
+        offered: splitServices(form.services),
+        serviceArea: form.serviceArea,
+      },
+      callHandling: {
+        greeting: form.greeting,
+        emergencyForwardNumber: form.forwardNumber,
+      },
+      meta: {
+        savedAt: meta.savedAt || prior.savedAt || now,
+        updatedAt: opts.preserveMeta ? (meta.updatedAt || prior.updatedAt || now) : now,
+        storage: "local-only",
+      },
+    };
+  }
+
+  function validateSetup(setup) {
+    return validateFormSetup(formSetupFromContract(setup));
+  }
+
   function saveSetup(storage, setup) {
-    var normalized = normalizeSetup(setup);
+    var existing = loadSetup(storage);
+    var normalized = buildSetup(setup, existing);
     var errors = validateSetup(normalized);
     if (hasErrors(errors)) {
       return { ok: false, errors: errors, setup: normalized };
@@ -100,39 +178,56 @@
   function loadSetup(storage) {
     try {
       var raw = storage.getItem(STORAGE_KEY);
-      return raw ? normalizeSetup(JSON.parse(raw)) : null;
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      return buildSetup(parsed, parsed, { preserveMeta: true });
     } catch (error) {
       return null;
+    }
+  }
+
+  function resetSetup(storage) {
+    if (storage && typeof storage.removeItem === "function") {
+      storage.removeItem(STORAGE_KEY);
     }
   }
 
   function dashboardState(setup) {
     var errors = setup ? validateSetup(setup) : { setup: "No call setup has been saved." };
     var complete = !hasErrors(errors);
+    var form = formSetupFromContract(setup);
+    var items = missingItems(errors);
     return {
       complete: complete,
       statusLabel: complete ? "GIDEON IS READY" : "SETUP NEEDS ATTENTION",
       statusTone: complete ? "live" : "pending",
-      businessName: complete ? setup.businessName : "Client",
-      greeting: complete ? setup.greeting : "Complete onboarding before Gideon starts answering with a custom greeting.",
-      weekdayHours: complete ? setup.weekdayHours : "Not configured",
-      saturdayHours: complete ? setup.saturdayHours : "Not configured",
-      sundayHours: complete ? setup.sundayHours : "Not configured",
+      setupCompletion: complete ? COMPLETION_COMPLETE : COMPLETION_INCOMPLETE,
+      businessName: complete ? form.businessName : "Client",
+      greeting: complete ? form.greeting : "Complete onboarding before Gideon starts answering with a custom greeting.",
+      weekdayHours: complete ? form.weekdayHours : "Not configured",
+      saturdayHours: complete ? form.saturdayHours : "Not configured",
+      sundayHours: complete ? form.sundayHours : "Not configured",
       afterHours: complete
-        ? (setup.forwardNumber ? "Forward urgent calls to " + setup.forwardNumber : "Take message and send summary")
+        ? (form.forwardNumber ? "Forward urgent calls to " + form.forwardNumber : "Take message and send summary")
         : "Blocked until setup is complete",
       errors: errors,
+      missingItems: items,
+      setup: setup ? buildSetup(setup, setup, { preserveMeta: true }) : null,
     };
   }
 
   return {
     STORAGE_KEY: STORAGE_KEY,
+    SCHEMA_VERSION: SCHEMA_VERSION,
     clean: clean,
     normalizePhone: normalizePhone,
+    formSetupFromContract: formSetupFromContract,
+    buildSetup: buildSetup,
     validateStep: validateStep,
     validateSetup: validateSetup,
     saveSetup: saveSetup,
     loadSetup: loadSetup,
+    resetSetup: resetSetup,
     dashboardState: dashboardState,
   };
 });
