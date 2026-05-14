@@ -1,8 +1,8 @@
 # CTOS Outreach Command Center
 
-Phase 1 local command center for The Call Taker outreach.
+Phase 1/2 local command center for The Call Taker outreach.
 
-This tool is intentionally no-send. It reads local JSON, validates fake/sample prospects, scores them, and writes a local Wallace daily queue report.
+This tool is intentionally no-send. It reads local JSON/CSV, validates fake/sample prospects, scores them, and writes local preview reports.
 
 ## Safety Locks
 
@@ -23,15 +23,24 @@ This tool is intentionally no-send. It reads local JSON, validates fake/sample p
 - `sample_prospects.json`: fake sample data using `example.invalid`.
 - `score_prospects.mjs`: validates and scores prospects.
 - `generate_daily_queue.mjs`: writes `output/daily-queue.sample.md`.
+- `normalize_prospect.mjs`: normalizes manual intake fields into the scored prospect contract.
+- `import_prospects.mjs`: dry-run CSV/JSON/single-record intake preview. It never contacts anyone.
+- `example_import.csv`: fake manual import sample.
+- `example_import.json`: fake manual import sample.
 - `output/daily-queue.sample.md`: generated fake Wallace queue.
+- `output/import-preview.sample.md`: generated fake import preview.
 
 ## Commands
 
 ```bash
 node --check tools/outreach/score_prospects.mjs
 node --check tools/outreach/generate_daily_queue.mjs
+node --check tools/outreach/normalize_prospect.mjs
+node --check tools/outreach/import_prospects.mjs
 node tools/outreach/score_prospects.mjs
 node tools/outreach/generate_daily_queue.mjs
+node tools/outreach/import_prospects.mjs --input tools/outreach/example_import.csv --dry-run
+node tools/outreach/import_prospects.mjs --input tools/outreach/example_import.json --dry-run
 ```
 
 ## Score Categories
@@ -41,6 +50,12 @@ node tools/outreach/generate_daily_queue.mjs
 - `C`: nurture or re-research.
 - `D`: bad fit or suppress.
 
+## Intake Priority
+
+Every business with a phone line can be evaluated, but not every business deserves outreach.
+
+The importer supports `business_with_phone_line` as a generic classification, then uses A/B/C/D scoring to prioritize businesses with emergency demand, appointment value, high-ticket jobs, recurring call volume, after-hours need, weak answering paths, and owner/operator reachability.
+
 ## Next Build Lane
 
-Build a private/local prospect storage location outside committed sample data, add import validation, and keep all provider adapters absent or dry-run only until Wallace explicitly approves live sending.
+Build a private/local prospect storage location outside committed sample data and keep all provider adapters absent or dry-run only until Wallace explicitly approves live sending.
