@@ -12,7 +12,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="yD21d967IvWfANFmEZBw55ZZUWCa11fI92Mr-3wXk3s" />
-  <meta name="description" content="Complete your onboarding with The Call Taker — set up GIDEON for your business.">
+  <meta name="description" content="Complete your local call setup details for The Call Taker.">
   <meta name="robots" content="noindex, nofollow">
   <title>The Call Taker — AI Receptionist for Service Businesses</title>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -97,8 +97,8 @@
 
 <div class="ob-wrap">
   <div class="ob-header">
-    <h1>Set Up <span>GIDEON</span></h1>
-    <p>Let's get your AI receptionist ready in under 5 minutes.</p>
+    <h1>Prepare <span>Call Setup</span></h1>
+    <p>Save the local setup details your team can review before provider work begins.</p>
   </div>
 
   <div class="progress-bar" id="progress-bar">
@@ -120,7 +120,7 @@
   <!-- Step 1: Business -->
   <div class="wizard-step active" id="step-1">
     <h2>Tell us about your business</h2>
-    <p class="desc">This helps GIDEON answer calls the way your customers expect.</p>
+    <p class="desc">This helps define the saved call-handling plan for your business.</p>
     <div class="form-group">
       <label>Business Name</label>
       <input type="text" id="co-name" placeholder="e.g. Thompson Plumbing">
@@ -161,7 +161,7 @@
   <!-- Step 2: Hours -->
   <div class="wizard-step" id="step-2">
     <h2>When are you open?</h2>
-    <p class="desc">GIDEON takes calls 24/7 — but it helps to know when your team is available.</p>
+    <p class="desc">These hours help define the future call-handling plan.</p>
     <div class="form-group">
       <label>Weekday Hours</label>
       <input type="text" id="co-weekday" placeholder="e.g. 8:00 AM - 6:00 PM">
@@ -186,7 +186,7 @@
   <!-- Step 3: Services -->
   <div class="wizard-step" id="step-3">
     <h2>What services do you offer?</h2>
-    <p class="desc">GIDEON will mention these when booking appointments and answering questions.</p>
+    <p class="desc">These services shape the saved call-handling plan.</p>
     <div class="form-group">
       <label>Services (comma separated)</label>
       <textarea id="co-services" placeholder="e.g. AC Repair, Furnace Installation, Duct Cleaning, Emergency Service"></textarea>
@@ -206,7 +206,7 @@
   <!-- Step 4: Greeting -->
   <div class="wizard-step" id="step-4">
     <h2>Customize your greeting</h2>
-    <p class="desc">This is the first thing callers will hear. Make it yours.</p>
+    <p class="desc">This is the greeting you want callers to hear after provider setup is completed.</p>
     <div class="form-group">
       <label>Phone Greeting</label>
       <textarea id="co-greeting" placeholder="e.g. Thank you for calling Thompson Plumbing! I can help you schedule a service, get a quote, or answer any questions about our work."></textarea>
@@ -232,11 +232,11 @@
         </svg>
       </div>
       <h2>Setup Saved</h2>
-      <p>Your call setup details are ready for Gideon.</p>
+      <p>Your local call setup details are saved for review.</p>
       <p>Use the dashboard to review the greeting, hours, services, and urgent call handling.</p>
       <div class="tip-box">
         <h4>What Happens Next</h4>
-        <p>Backend/provider connection is not automatic from this local setup screen. A team member still needs to connect the live phone system.</p>
+        <p>Backend/provider connection is not automatic from this local setup screen. A team member still needs to configure any provider or phone routing separately.</p>
       </div>
       <div class="btn-row" style="justify-content:center;margin-top:24px;">
         <a href="dashboard.html" class="btn-next" style="text-decoration:none;">Go to Dashboard</a>
@@ -272,50 +272,6 @@
     </div>
   </div>
 </footer>
-
-<!-- FLOATING CALLBACK WIDGET -->
-<div class="float-cb" id="float-widget">
-  <div class="float-cb-panel" id="float-panel">
-    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
-    <p style="font-size: 12px; color: var(--text-3); margin-bottom: 14px;">Our AI will call you in under 30 seconds.</p>
-    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
-    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 10px;">
-    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Me Now</button>
-    <div id="float-success" style="display: none; text-align: center; padding: 16px 0;">
-      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
-      <p style="font-size: 12px; color: var(--text-2);">Pick up your phone.</p>
-    </div>
-  </div>
-  <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-  </button>
-</div>
-
-<!-- EXIT INTENT POPUP -->
-<div class="exit-overlay" id="exit-popup">
-  <div class="exit-modal">
-    <button class="exit-close" onclick="closeExitPopup()">&times;</button>
-    <div style="text-align: center;">
-      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;">Before you go</div>
-      <h3 style="font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px;">Get a free missed call audit</h3>
-      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">We'll call your business after hours and tell you exactly what your customers are hearing. Free. No strings.</p>
-      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
-      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px;">
-      <button class="callback-btn" onclick="requestExitCallback()">Get My Free Audit</button>
-      <div id="exit-success" style="display: none; padding: 20px 0;">
-        <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
-        <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
-      </div>
-      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16157845747" style="color: var(--green); font-weight: 600;">(615) 784-5747</a></p>
-    </div>
-  </div>
-</div>
-
-<!-- MOBILE BAR -->
-<div class="sticky-mobile-bar">
-  <a href="tel:+16157845747"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
-  <a href="../demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
-</div>
 
 <script src="../script.js"></script>
 <script src="call-flow.js"></script>
@@ -366,7 +322,7 @@ function showErrors(errors) {
   clearErrors();
   var keys = Object.keys(errors || {});
   if (!keys.length) return;
-  document.getElementById('setup-alert').textContent = 'Fix the highlighted fields before Gideon can use this call setup.';
+  document.getElementById('setup-alert').textContent = 'Fix the highlighted fields before this local call setup can be saved.';
   document.getElementById('setup-alert').classList.add('show');
   keys.forEach(function(key) {
     var input = document.getElementById(fields[key]);

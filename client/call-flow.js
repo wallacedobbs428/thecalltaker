@@ -257,7 +257,7 @@
       providerStatus: serialized ? serialized.activation.providerStatus : PROVIDER_STATUS_NOT_CONFIGURED,
       liveProviderConfigured: false,
       businessName: complete ? form.businessName : "Client",
-      greeting: complete ? form.greeting : "Complete onboarding before Gideon starts answering with a custom greeting.",
+      greeting: complete ? form.greeting : "Complete onboarding before this account has a custom greeting ready for provider setup.",
       weekdayHours: complete ? form.weekdayHours : "Not configured",
       saturdayHours: complete ? form.saturdayHours : "Not configured",
       sundayHours: complete ? form.sundayHours : "Not configured",

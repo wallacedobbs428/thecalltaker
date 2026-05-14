@@ -1,4 +1,6 @@
 const assert = require("assert");
+const fs = require("fs");
+const path = require("path");
 const CallFlow = require("../client/call-flow.js");
 
 function memoryStorage() {
@@ -112,6 +114,10 @@ assert.strictEqual(missingSetupState.complete, false);
 assert.strictEqual(missingSetupState.statusLabel, "SETUP NEEDS ATTENTION");
 assert.strictEqual(missingSetupState.afterHours, "Not configured until setup is complete");
 assert.strictEqual(missingSetupState.providerStatus, "not-configured");
+assert.strictEqual(
+  missingSetupState.greeting,
+  "Complete onboarding before this account has a custom greeting ready for provider setup."
+);
 
 const backendAdapter = CallFlow.createBackendPersistenceAdapter();
 const backendResult = backendAdapter.persist(loaded);
@@ -123,5 +129,24 @@ assert.strictEqual(backendResult.liveProviderConfigured, false);
 store.reset();
 assert.strictEqual(store.load(), null);
 assert.strictEqual(storage.getItem("unrelated_key"), "keep-me");
+
+const clientPages = [
+  fs.readFileSync(path.join(__dirname, "../client/onboarding.html"), "utf8"),
+  fs.readFileSync(path.join(__dirname, "../client/dashboard.html"), "utf8"),
+].join("\n");
+[
+  "Hear AI Live",
+  "Call Me Now",
+  "Calling you now",
+  "missed call audit",
+  "view call stats",
+  "GIDEON IS LIVE",
+  "This Month",
+  "Answer Rate",
+  "Calls Answered",
+  "Booked",
+].forEach((phrase) => {
+  assert.strictEqual(clientPages.includes(phrase), false, `${phrase} should not appear on setup pages`);
+});
 
 console.log("call-flow regression tests passed");
