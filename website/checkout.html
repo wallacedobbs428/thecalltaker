@@ -508,21 +508,27 @@
       name: 'After-Hours Capture',
       price: 97,
       roi: '$97 < 1 missed call',
-      trialLink: 'https://buy.stripe.com/4gM00j7HG816fbO6Y3b3q03',
+      trialLink: 'https://square.link/u/POTLUBKa',
+      checkoutLabel: 'Start After-Hours Capture Trial',
+      configured: true,
       paypal: 'https://paypal.me/wallacedobbs/97'
     },
     full247: {
       name: 'Revenue Recovery System',
       price: 497,
       roi: '$497 < 1 service call',
-      trialLink: 'https://buy.stripe.com/6oU8wP4vu3KQfbObejb3q04',
+      trialLink: 'tel:+16292699697',
+      checkoutLabel: 'Request $497 Square Trial Setup',
+      configured: false,
       paypal: 'https://paypal.me/wallacedobbs/497'
     },
     premium: {
       name: 'Operational Infrastructure',
       price: 997,
       roi: '$997 < 2 service calls',
-      trialLink: 'https://buy.stripe.com/4gM8wPbXWgxCaVy3LRb3q05',
+      trialLink: 'tel:+16292699697',
+      checkoutLabel: 'Request $997+ Square Trial Setup',
+      configured: false,
       paypal: 'https://paypal.me/wallacedobbs/997'
     }
   };
@@ -544,11 +550,15 @@
     var btn = document.getElementById('checkout-btn');
     var sub = document.getElementById('checkout-sub');
     var status = document.getElementById('checkout-status');
-    btn.textContent = p.trialLink ? 'Start ' + p.name + ' Trial' : 'Talk Through ' + p.name + ' Trial';
-    btn.href = p.trialLink || 'tel:+16292699697';
+    btn.textContent = p.checkoutLabel;
+    btn.href = p.trialLink;
     sub.textContent = 'Selected plan: ' + p.name + ' - 14 days free, then $' + p.price + '/mo unless canceled before renewal';
     status.className = 'checkout-status';
-    status.innerHTML = '<strong>' + p.name + ' selected.</strong> This checkout is the configured 14-day trial path for $' + p.price + '/mo after the trial. Wallace reviews setup before Gideon goes live.';
+    if (p.configured) {
+      status.innerHTML = '<strong>' + p.name + ' selected.</strong> This is the configured Square trial path for $' + p.price + '/mo after the trial. Wallace reviews setup before Gideon goes live.';
+    } else {
+      status.innerHTML = '<strong>' + p.name + ' selected.</strong> This tier needs the correct Square recurring invoice before checkout. Call Wallace so the $' + p.price + '/mo trial is set up without sending you to the wrong payment link.';
+    }
   }
 
   function trackCheckout(e) {

@@ -15,20 +15,22 @@ const publicTrialPages = [
   "website/pay.html",
   "website/demo.html",
   "website/pilot/index.html",
+  "website/go.html",
+  "website/try-funnel/checkout.html",
 ];
 
 const publicTrialHtml = publicTrialPages.map(read).join("\n");
 
 assert.strictEqual(
-  publicTrialHtml.includes("square.link"),
+  publicTrialHtml.includes("buy.stripe.com"),
   false,
-  "public trial funnel should not send buyers to the old generic Square link"
+  "public trial funnel should not send buyers to Stripe checkout links"
 );
 
 assert.strictEqual(
-  publicTrialHtml.includes("Secure Square"),
+  publicTrialHtml.includes("Stripe"),
   false,
-  "public trial funnel copy should not imply the old Square-only checkout path"
+  "public trial funnel copy should not imply Stripe checkout"
 );
 
 [
@@ -49,14 +51,24 @@ const checkoutHtml = read("website/checkout.html");
 const intakeHtml = read("website/onboarding/intake.html");
 
 [
-  ["After-Hours Capture", 97, "https://buy.stripe.com/4gM00j7HG816fbO6Y3b3q03"],
-  ["Revenue Recovery System", 497, "https://buy.stripe.com/6oU8wP4vu3KQfbObejb3q04"],
-  ["Operational Infrastructure", 997, "https://buy.stripe.com/4gM8wPbXWgxCaVy3LRb3q05"],
-].forEach(([planName, price, trialLink]) => {
+  ["After-Hours Capture", 97],
+  ["Revenue Recovery System", 497],
+  ["Operational Infrastructure", 997],
+].forEach(([planName, price]) => {
   assert.ok(checkoutHtml.includes(planName), `checkout should display ${planName}`);
   assert.ok(checkoutHtml.includes(`price: ${price}`), `checkout should configure ${planName} at $${price}/mo`);
-  assert.ok(checkoutHtml.includes(trialLink), `checkout should configure a distinct trial link for ${planName}`);
 });
+
+assert.ok(
+  checkoutHtml.includes("https://square.link/u/POTLUBKa"),
+  "checkout should use the configured Square link for the public $97 trial path"
+);
+
+assert.ok(
+  checkoutHtml.includes("Request $497 Square Trial Setup") &&
+    checkoutHtml.includes("Request $997+ Square Trial Setup"),
+  "checkout should not send higher tiers to a generic or wrong payment link"
+);
 
 assert.ok(
   checkoutHtml.includes('href="#plans" class="header-cta"'),

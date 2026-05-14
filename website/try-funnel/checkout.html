@@ -37,12 +37,12 @@
     .guarantee-row svg { flex-shrink: 0; color: var(--green); }
     .guarantee-row p { font-size: 13px; color: var(--text-2); line-height: 1.5; }
 
-    .stripe-placeholder {
+    .checkout-placeholder {
       padding: 40px 24px; text-align: center; background: rgba(255,255,255,0.02);
       border: 2px dashed rgba(255,255,255,0.08); border-radius: 12px; margin-top: 24px;
     }
-    .stripe-placeholder p { font-size: 14px; color: var(--text-3); margin-bottom: 12px; }
-    .stripe-placeholder .note { font-size: 12px; color: var(--text-3); margin-top: 8px; }
+    .checkout-placeholder p { font-size: 14px; color: var(--text-3); margin-bottom: 12px; }
+    .checkout-placeholder .note { font-size: 12px; color: var(--text-3); margin-top: 8px; }
 
     .secure-badges { display: flex; justify-content: center; gap: 20px; padding: 20px 0; }
     .secure-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-3); }
@@ -166,25 +166,24 @@
       </div>
     </div>
 
-    <!-- Stripe Checkout -->
+    <!-- Square Checkout -->
     <div class="checkout-card">
       <h2>Payment</h2>
 
-      <!-- STRIPE CHECKOUT LINK — Replace href when Stripe is connected -->
-      <div id="stripe-btn-container">
-        <a href="#" id="stripe-checkout-btn" class="btn btn-green btn-lg" style="width: 100%; justify-content: center;" onclick="handleCheckout(event)">
-          Pay $97/mo — Start Now
+      <div id="checkout-btn-container">
+        <a href="#" id="square-checkout-btn" class="btn btn-green btn-lg" style="width: 100%; justify-content: center;" onclick="handleCheckout(event)">
+          Start $97/mo Trial
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
       </div>
 
-      <div class="stripe-placeholder" id="stripe-pending" style="display: none;">
-        <p>Stripe checkout will be connected here.</p>
-        <div class="note">Stripe integration pending — signups are being collected via the form on the Try page and processed manually.</div>
+      <div class="checkout-placeholder" id="checkout-pending" style="display: none;">
+        <p>Square checkout is used for trial setup.</p>
+        <div class="note">Wallace reviews setup before Gideon goes live.</div>
       </div>
 
       <p style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 12px;">
-        You'll be charged $97 today. Cancel anytime from your dashboard.
+        Start through Square. Cancel before renewal if you do not want the monthly plan.
       </p>
     </div>
 
@@ -263,7 +262,7 @@
 
     function handleCheckout(e) {
       e.preventDefault();
-      window.location.href = 'https://buy.stripe.com/6oU8wP4vu3KQfbObejb3q04';
+      window.location.href = '/checkout.html?plan=afterhours';
     }
   </script>
 <script src="/shared/ui-dark.js" defer></script>
