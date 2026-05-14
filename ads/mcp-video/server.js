@@ -15,7 +15,8 @@
  *   TCT_KLING_API_KEY     — Kling AI API key
  *   TCT_HEYGEN_API_KEY    — HeyGen API key (for spokesperson videos)
  *   TCT_ELEVENLABS_KEY    — ElevenLabs API key (for voiceover + captions)
- *   TCT_VIDEO_OUTPUT_DIR  — Output directory (default: ~/thecalltaker/ads/videos)
+ *   TCT_VIDEO_OUTPUT_DIR  — Output directory (default: ../videos from this package)
+ *   TCT_VIDEO_SCRIPTS_DIR — Script directory (default: ../scripts from this package)
  */
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";

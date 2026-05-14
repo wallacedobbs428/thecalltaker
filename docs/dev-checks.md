@@ -3,8 +3,9 @@
 This repo is mostly a static website with a small Node MCP server in
 `ads/mcp-video` and Python utility scripts. There is no website build step.
 
-Use these checks before committing code changes. They are local-only and do
-not deploy, send messages, call providers, or require secrets.
+Use these checks before committing code changes. The default commands below
+are local-only and require no `.env` files, provider credentials, deployment
+access, live services, browser automation, or network access.
 
 ## Safe Daily Verification
 
@@ -15,12 +16,16 @@ cd ads/mcp-video
 npm run verify
 ```
 
-`npm run verify` runs:
+`npm run verify` is the strongest safe default. It runs:
 
 - MCP server JavaScript syntax check
-- MCP stdio `tools/list` smoke check
+- MCP stdio `tools/list` smoke check, with output redirected to `/private/tmp/thecalltaker-mcp-video-smoke`
 - static homepage hero regression test
 - Python syntax compilation with pycache redirected to `/private/tmp`
+
+It must stay safe for future Codex lanes: no provider calls, no deployments,
+no email/SMS/call/webhook sends, no CRM or provider state mutation, no secret
+requirements, and no browser automation that can hang.
 
 ## Individual Commands
 
@@ -52,8 +57,12 @@ PYTHONPYCACHEPREFIX=/private/tmp/thecalltaker-pycache python3 -m compileall -q o
 Run the MCP stdio smoke check from `ads/mcp-video`:
 
 ```bash
-printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' | TCT_VIDEO_OUTPUT_DIR=/private/tmp/thecalltaker-mcp-video-smoke node server.js
+npm run mcp:smoke
 ```
+
+The smoke check only asks the MCP server for `tools/list`. It should not call
+provider-backed tools such as video generation, status polling against live
+providers, email/SMS/call workflows, webhooks, deploys, or state-mutating ops.
 
 ## Optional Checks
 
@@ -76,6 +85,9 @@ npm audit --audit-level=moderate
 
 ## Safety Rules
 
+- Keep `npm run verify` deterministic and local. Do not add checks that depend
+  on dirty local files, provider secrets, live services, deployment state, or
+  Chrome automation.
 - Do not run provider-backed MCP tools during routine verification.
 - Do not run deploy workflows from local verification.
 - Do not run ops scripts that send email, SMS, calls, ntfy alerts, or mutate CRM/provider state.
