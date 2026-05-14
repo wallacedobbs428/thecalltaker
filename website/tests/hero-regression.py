@@ -178,14 +178,17 @@ def run_live(url, screenshot_dir=None):
       if (!h1) return 'NO_H1';
       var text = h1.innerText || h1.textContent;
       var style = window.getComputedStyle(h1);
-      var nbw = h1.querySelector('.no-break-word');
-      var nbwWS = nbw ? window.getComputedStyle(nbw).whiteSpace : 'N/A';
+      var secondaryNoBreak = document.querySelector('.hero-secondary .no-break-word');
+      var secondaryNoBreakWS = secondaryNoBreak ? window.getComputedStyle(secondaryNoBreak).whiteSpace : 'N/A';
+      var widthDelta = Math.ceil(h1.scrollWidth - h1.clientWidth);
       return [
         'TEXT=' + text.replace(/\n/g, ' '),
         'DISPLAY=' + style.display,
         'WORD_BREAK=' + style.wordBreak,
+        'OVERFLOW_WRAP=' + style.overflowWrap,
         'HYPHENS=' + (style.hyphens || style.webkitHyphens || 'N/A'),
-        'NBW_WS=' + nbwWS
+        'SECONDARY_NBW_WS=' + secondaryNoBreakWS,
+        'WIDTH_DELTA=' + widthDelta
       ].join('|');
     })();
     """.strip()
@@ -225,23 +228,41 @@ fetch('{url}/index.html').then(function(r){{return r.text()}}).then(function(htm
         fields = dict(kv.split("=", 1) for kv in data.split("|") if "=" in kv)
 
         display = fields.get("DISPLAY", "?")
+        word_break = fields.get("WORD_BREAK", "?")
+        overflow_wrap = fields.get("OVERFLOW_WRAP", "?")
         hyphens = fields.get("HYPHENS", "?")
-        nbw_ws = fields.get("NBW_WS", "?")
+        secondary_nbw_ws = fields.get("SECONDARY_NBW_WS", "?")
+        width_delta = int(fields.get("WIDTH_DELTA", "9999"))
 
         if display == "block":
             ok(f"[{w}px] h1 display: block")
         else:
             fail(f"[{w}px] h1 display: {display} (expected block)")
 
-        if nbw_ws == "nowrap":
-            ok(f"[{w}px] .no-break-word white-space: nowrap")
+        if word_break == "normal":
+            ok(f"[{w}px] h1 word-break: normal")
         else:
-            fail(f"[{w}px] No nowrap protection (nbw={nbw_ws})")
+            fail(f"[{w}px] h1 word-break: {word_break} (expected normal)")
+
+        if overflow_wrap == "normal":
+            ok(f"[{w}px] h1 overflow-wrap: normal")
+        else:
+            fail(f"[{w}px] h1 overflow-wrap: {overflow_wrap} (expected normal)")
 
         if hyphens in ("none", "manual"):
             ok(f"[{w}px] h1 hyphens: {hyphens}")
         else:
             fail(f"[{w}px] h1 hyphens: {hyphens} (expected none)")
+
+        if secondary_nbw_ws == "nowrap":
+            ok(f"[{w}px] secondary .no-break-word white-space: nowrap")
+        else:
+            fail(f"[{w}px] Secondary nowrap protection missing (nbw={secondary_nbw_ws})")
+
+        if width_delta <= 1:
+            ok(f"[{w}px] h1 has no horizontal text overflow")
+        else:
+            fail(f"[{w}px] h1 horizontal overflow: {width_delta}px")
 
     if server_proc:
         server_proc.terminate()
