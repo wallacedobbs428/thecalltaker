@@ -6,7 +6,8 @@ This ledger is the source of truth for what is live, what is only local or branc
 
 ## Current Live Release State
 
-- Current `origin/main`: `6c8c670`
+- Last reconciled against `origin/main`: `825699d`
+- Note: docs-only ledger pushes may advance `origin/main` after this line is written. Verify the current hash with `git rev-parse --short origin/main`.
 - GitHub Pages deploy artifact: `website/`
 - Live website: `https://thecalltaker.com/`
 - Latest completed live releases:
@@ -26,6 +27,7 @@ This ledger is the source of truth for what is live, what is only local or branc
 - Latest workflow status:
   - `adcde6b` claim-safety polish: Deploy to GitHub Pages, Hero Headline Regression, and Notify on push passed.
   - `6c8c670` release ledger docs: Notify on push passed. No website deploy was required.
+  - `825699d` release ledger reconciliation docs: Notify on push passed. No website deploy was required.
 
 ## Completed Tracks
 
@@ -40,6 +42,7 @@ This ledger is the source of truth for what is live, what is only local or branc
 | American Surgical proof engine docs | `5d58a2c` | yes | not applicable | not applicable | Docs-only proof strategy record. Catch-up email, website proof, and outreach proof are still not complete. |
 | Outreach Revenue Machine architecture | `5f6d506` | yes | not applicable | not applicable | Docs-only architecture record. No sending enabled by this commit. |
 | No-send outreach command center | `a9ca327` | yes | not applicable | not applicable | Local tooling/docs for no-send outreach queue work. No provider sending is enabled. |
+| Release ledger reconciliation | `825699d` | yes | not applicable | not applicable | Docs-only update after parallel lane progress. Notify on push passed. |
 
 ## Open Tracks
 
