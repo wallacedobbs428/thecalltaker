@@ -1045,8 +1045,28 @@
     .sticky-mobile-bar a svg { width: 16px; height: 16px; }
 
     @media (max-width: 768px) {
-      .sticky-mobile-bar { display: flex; }
+      .sticky-mobile-bar {
+        display: flex;
+        width: 100vw;
+        max-width: 100vw;
+      }
       body { padding-bottom: 60px; }
+      .wrap {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+        overflow-x: hidden;
+      }
+      .hero-section {
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      .hero-section > .wrap {
+        width: 100vw;
+        max-width: 100vw;
+      }
       .hero-title {
         max-width: 300px;
         margin-left: auto;
@@ -1072,9 +1092,17 @@
         font-size: 26px;
       }
       .demo-form-card {
-        width: 100%;
-        max-width: 330px;
+        width: min(320px, calc(100vw - 48px));
+        max-width: calc(100vw - 48px);
         padding: 24px 20px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .form-input,
+      .form-select,
+      .btn-demo {
+        max-width: 100%;
+        min-width: 0;
       }
       .form-card-head { text-align: center; }
       .btn-demo {
@@ -1094,6 +1122,16 @@
       .phone-mockup { width: 260px; }
       .text-me-form { flex-direction: column; }
       .text-me-form button { width: 100%; padding: 14px; }
+      .sticky-mobile-bar a {
+        flex: 0 0 50%;
+        max-width: 50%;
+        min-width: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
 
     /* ===== UTILITIES ===== */
@@ -1341,7 +1379,7 @@
 
     <!-- Call CTA -->
     <div class="call-cta">
-      <p>Call our demo line now to hear Gideon live:</p>
+      <p>Call our demo line now to preview Gideon:</p>
       <a href="tel:+16292699697" class="call-cta-number">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         (629) 269-9697
@@ -1474,10 +1512,6 @@
   <a href="tel:+16292699697">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     Call Demo
-  </a>
-  <a href="pay.html" style="border-left:1px solid var(--border);">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    Free Trial
   </a>
 </div>
 
@@ -1684,14 +1718,10 @@
         <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
         <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
       </div>
-      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16292699697" style="color: var(--green); font-weight: 600;">(629) 269-9697</a></p>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or preview the demo line: <a href="tel:+16292699697" style="color: var(--green); font-weight: 600;">(629) 269-9697</a></p>
     </div>
   </div>
 </div>
 
-<!-- MOBILE BAR -->
-<div class="sticky-mobile-bar">
-  <a href="tel:+16292699697"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
-  <a href="demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
 </body>
 </html>
