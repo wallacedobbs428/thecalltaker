@@ -126,6 +126,18 @@
     text-align: center; font-size: 12px; color: #8b949e;
     margin-top: 8px;
   }
+  .checkout-status {
+    margin-top: 10px;
+    border: 1px solid rgba(42,157,122,0.26);
+    border-radius: 12px;
+    background: rgba(42,157,122,0.1);
+    color: #c9d1d9;
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: left;
+  }
+  .checkout-status strong { color: #fff; }
 
   /* ROI callout */
   .roi-callout {
@@ -277,7 +289,7 @@
       <a href="#pricing">Pricing</a>
       <a href="demo.html">Demo</a>
     </nav>
-    <a href="https://square.link/u/POTLUBKa" class="header-cta">Start Free Trial</a>
+    <a href="#plans" class="header-cta">Start Free Trial</a>
     <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -287,7 +299,7 @@
   <a href="services.html">Services</a>
   <a href="#pricing">Pricing</a>
   <a href="demo.html">Demo</a>
-  <a href="https://square.link/u/POTLUBKa" class="btn btn-primary btn-lg">Start Free Trial</a>
+  <a href="#plans" class="btn btn-primary btn-lg">Start Free Trial</a>
 </nav>
 
 
@@ -316,7 +328,7 @@
 <div class="container">
 
   <!-- PLAN SELECTOR -->
-  <div class="plans">
+  <div class="plans" id="plans">
     <div class="plan-label">Choose Your Plan</div>
 
     <div class="plan-card selected" id="plan-afterhours" onclick="selectPlan('afterhours')">
@@ -386,10 +398,11 @@
 
   <!-- TRIAL CTA -->
   <div class="cta-area">
-    <a class="cta-btn" href="https://square.link/u/POTLUBKa" id="checkout-btn" onclick="trackCheckout(event)">
-      Start Free Trial
+    <a class="cta-btn" href="#" id="checkout-btn" onclick="trackCheckout(event)">
+      Start After-Hours Trial
     </a>
-    <div class="cta-sub">Secure Square checkout &bull; 14-day trial &bull; Cancel before renewal</div>
+    <div class="cta-sub" id="checkout-sub">Secure checkout &bull; 14-day trial &bull; Cancel before renewal</div>
+    <div class="checkout-status" id="checkout-status"></div>
   </div>
 
   <!-- PAYMENT OPTIONS -->
@@ -454,15 +467,15 @@
   <!-- GUARANTEE -->
   <div class="guarantee">
     <div class="icon">&#128170;</div>
-    <div class="title">14-Day Trial Through Square</div>
-    <div class="desc">Start with a 14-day trial through Square. Cancel before the trial ends if you do not want the monthly plan.</div>
+    <div class="title">14-Day Trial Through Secure Checkout</div>
+    <div class="desc">Start with a 14-day trial through secure checkout. Cancel before the trial ends if you do not want the monthly plan.</div>
   </div>
 
   <!-- DEMO LINE -->
   <div class="demo-strip">
     <div class="lbl">Call Gideon Live</div>
     <a href="tel:+16292699697">(629) 269-9697</a>
-    <div class="sub">Hear the live demo before you start the Square trial</div>
+    <div class="sub">Hear the live demo before you start the checkout</div>
   </div>
 
   <!-- URGENCY -->
@@ -472,10 +485,10 @@
 
   <!-- SECOND CTA -->
   <div class="cta-area" style="padding: 20px 0;">
-    <a class="cta-btn" href="https://square.link/u/POTLUBKa" onclick="trackCheckout(event)">
-      Start Free Trial
+    <a class="cta-btn" href="#plans">
+      Choose Plan for Free Trial
     </a>
-    <div class="cta-sub">Secure Square checkout &bull; Setup reviewed before launch</div>
+    <div class="cta-sub">Secure checkout &bull; Setup reviewed before launch</div>
   </div>
 
 </div>
@@ -484,20 +497,35 @@
 <div class="footer">
   The Call Taker &bull; Virtual Receptionist for Service Businesses<br>
   <a href="https://thecalltaker.com">thecalltaker.com</a> &bull; <a href="tel:+16292699697">(629) 269-9697</a><br><br>
-  Questions? Start the Square trial or call Gideon live.
+  Questions? Choose a trial plan or call Gideon live.
 </div>
 
 <script>
   // ── PLAN CONFIG ──
   var selectedPlan = 'afterhours';
   var PLANS = {
-    afterhours: { name: 'After-Hours Capture', price: 97, roi: '$97 < 1 missed call', paypal: 'https://paypal.me/wallacedobbs/97' },
-    full247:    { name: 'Revenue Recovery System',    price: 497, roi: '$497 < 1 service call', paypal: 'https://paypal.me/wallacedobbs/497' },
-    premium:    { name: 'Operational Infrastructure',      price: 997, roi: '$997 < 2 service calls', paypal: 'https://paypal.me/wallacedobbs/997' }
+    afterhours: {
+      name: 'After-Hours Capture',
+      price: 97,
+      roi: '$97 < 1 missed call',
+      trialLink: 'https://buy.stripe.com/4gM00j7HG816fbO6Y3b3q03',
+      paypal: 'https://paypal.me/wallacedobbs/97'
+    },
+    full247: {
+      name: 'Revenue Recovery System',
+      price: 497,
+      roi: '$497 < 1 service call',
+      trialLink: 'https://buy.stripe.com/6oU8wP4vu3KQfbObejb3q04',
+      paypal: 'https://paypal.me/wallacedobbs/497'
+    },
+    premium: {
+      name: 'Operational Infrastructure',
+      price: 997,
+      roi: '$997 < 2 service calls',
+      trialLink: 'https://buy.stripe.com/4gM8wPbXWgxCaVy3LRb3q05',
+      paypal: 'https://paypal.me/wallacedobbs/997'
+    }
   };
-
-  // Stripe payment links — REPLACE THESE when Stripe is connected
-  var STRIPE_LINKS = { afterhours: 'https://buy.stripe.com/4gM00j7HG816fbO6Y3b3q03', full247: 'https://buy.stripe.com/6oU8wP4vu3KQfbObejb3q04', premium: 'https://buy.stripe.com/4gM8wPbXWgxCaVy3LRb3q05' };
 
   function selectPlan(plan) {
     selectedPlan = plan;
@@ -506,14 +534,31 @@
     document.getElementById('plan-full247').classList.toggle('selected', plan === 'full247');
     document.getElementById('plan-premium').classList.toggle('selected', plan === 'premium');
     document.getElementById('roi-text').textContent = p.roi;
-    document.getElementById('cta-price-2').textContent = '$' + p.price + '/mo';
     document.getElementById('paypal-price').textContent = '$' + p.price + '/mo';
     document.getElementById('paypal-btn').href = p.paypal;
+    updateCheckoutForPlan();
+  }
+
+  function updateCheckoutForPlan() {
+    var p = PLANS[selectedPlan];
+    var btn = document.getElementById('checkout-btn');
+    var sub = document.getElementById('checkout-sub');
+    var status = document.getElementById('checkout-status');
+    btn.textContent = p.trialLink ? 'Start ' + p.name + ' Trial' : 'Talk Through ' + p.name + ' Trial';
+    btn.href = p.trialLink || 'tel:+16292699697';
+    sub.textContent = 'Selected plan: ' + p.name + ' - 14 days free, then $' + p.price + '/mo unless canceled before renewal';
+    status.className = 'checkout-status';
+    status.innerHTML = '<strong>' + p.name + ' selected.</strong> This checkout is the configured 14-day trial path for $' + p.price + '/mo after the trial. Wallace reviews setup before Gideon goes live.';
   }
 
   function trackCheckout(e) {
-    // Show payment options for returning visitors
-    document.getElementById('payment-options').style.display = 'block';
+    var p = PLANS[selectedPlan];
+    if (typeof gtag === 'function') {
+      gtag('event', 'conversion', { send_to: 'AW-17970510102/checkout_click', value: p.price, currency: 'USD' });
+    }
+    if (typeof fbq === 'function') {
+      fbq('track', 'InitiateCheckout', { value: p.price, currency: 'USD', content_name: selectedPlan + '-trial' });
+    }
   }
 
   function payWithPayPal(e) {
@@ -526,6 +571,7 @@
   var params = new URLSearchParams(window.location.search);
   var urlPlan = params.get('plan');
   if (urlPlan && PLANS[urlPlan]) selectPlan(urlPlan);
+  else updateCheckoutForPlan();
   // Show payment options if returning from signup
   if (params.get('pay') === '1') document.getElementById('payment-options').style.display = 'block';
 </script>
@@ -603,6 +649,6 @@
 <!-- MOBILE BAR -->
 <div class="sticky-mobile-bar">
   <a href="tel:+16292699697"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call Gideon Live</a>
-  <a href="https://square.link/u/POTLUBKa" style="border-left:1px solid var(--border);">Start Free Trial</a>
+  <a href="#plans" style="border-left:1px solid var(--border);">Start Free Trial</a>
 </body>
 </html>
