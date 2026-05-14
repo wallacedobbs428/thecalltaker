@@ -6,7 +6,7 @@ This ledger is the source of truth for what is live, what is only local or branc
 
 ## Current Live Release State
 
-- Current `origin/main`: `a9ca327`
+- Current `origin/main`: `6c8c670`
 - GitHub Pages deploy artifact: `website/`
 - Live website: `https://thecalltaker.com/`
 - Latest completed live releases:
@@ -23,10 +23,9 @@ This ledger is the source of truth for what is live, what is only local or branc
   - `https://thecalltaker.com/demo.html`
   - `https://thecalltaker.com/pay.html`
   - `https://thecalltaker.com/pilot/`
-- Workflows passed on latest claim-safety push:
-  - Deploy to GitHub Pages
-  - Hero Headline Regression
-  - Notify on push
+- Latest workflow status:
+  - `adcde6b` claim-safety polish: Deploy to GitHub Pages, Hero Headline Regression, and Notify on push passed.
+  - `6c8c670` release ledger docs: Notify on push passed. No website deploy was required.
 
 ## Completed Tracks
 
@@ -49,6 +48,7 @@ This ledger is the source of truth for what is live, what is only local or branc
 - Architecture committed: `05d49ce`; superseded/live docs committed in `5f6d506`.
 - Current status: architecture docs and no-send command center are on current `origin/main`.
 - Command center build: `a9ca327`.
+- Phase 2 intake/import: open unless a future `origin/main` commit confirms it.
 - Sending: not enabled.
 - Provider calls/webhooks/email/SMS: not approved from this lane.
 - Integration status: docs/tooling are pushed, but outreach sending remains disabled unless Wallace explicitly approves it.
@@ -56,7 +56,8 @@ This ledger is the source of truth for what is live, what is only local or branc
 ### American Surgical Proof Engine
 
 - Strategy docs: pushed in `5d58a2c`; Wallace acceptance and implementation remain pending.
-- Catch-up email: not sent.
+- Catch-up email drafts: branch commit `2855a99` exists, but it is not included in current `origin/main`.
+- Catch-up email send/Gmail draft: not sent and not created from this lane.
 - Website proof: not added.
 - Outreach proof: not integrated.
 - Current status: docs exist on `origin/main`, but this is not a sent email, live website proof, or integrated outreach proof.
@@ -95,6 +96,6 @@ Local work, branch-only work, screenshots, reports, and unpushed commits are not
 
 ## Next Best Moves
 
-- RIGHT: finish the no-send CTOS outreach command center.
-- MIDDLE: finish the American Surgical proof engine strategy.
+- RIGHT: finish outreach Phase 2 intake/import without enabling sending.
+- MIDDLE: reconcile American Surgical catch-up email drafts, website proof, and outreach proof integration.
 - LEFT: maintain this release ledger and verify every new push that affects the live site.
