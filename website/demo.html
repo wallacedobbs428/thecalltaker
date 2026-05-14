@@ -181,8 +181,29 @@
       font-size: clamp(15px, 2.5vw, 18px);
       color: var(--text-2);
       max-width: 500px;
-      margin: 0 auto 40px;
+      margin: 0 auto 18px;
       line-height: 1.5;
+    }
+
+    .hero-trust {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 auto 32px;
+    }
+
+    .hero-trust span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 600;
     }
 
     /* ===== FORM ===== */
@@ -193,6 +214,26 @@
       padding: 32px 28px;
       max-width: 520px;
       margin: 0 auto;
+    }
+
+    .form-card-head {
+      margin-bottom: 22px;
+      text-align: left;
+    }
+
+    .form-card-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .form-card-sub {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.55;
+      overflow-wrap: anywhere;
     }
 
     .form-group {
@@ -298,6 +339,39 @@
     }
 
     .btn-demo svg { width: 20px; height: 20px; }
+
+    .form-expectations {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .expectation-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .expectation-item span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .expectation-item svg {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+      margin-top: 2px;
+      stroke: var(--green);
+      fill: none;
+      stroke-width: 2.5;
+    }
 
     /* ===== PRE-SUBMIT INFO ===== */
     .pre-submit {
@@ -431,6 +505,15 @@
       font-size: 12px;
       color: var(--text-3);
       margin-top: 2px;
+    }
+
+    .proof-note {
+      max-width: 520px;
+      margin: 14px auto 0;
+      text-align: center;
+      color: var(--text-3);
+      font-size: 12px;
+      line-height: 1.55;
     }
 
     /* ===== DEMO EXPERIENCE (post-submit) ===== */
@@ -574,6 +657,32 @@
       font-size: 15px;
       color: var(--text-2);
       margin-bottom: 12px;
+    }
+
+    .next-step-card {
+      max-width: 520px;
+      margin: 0 auto 28px;
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: left;
+    }
+
+    .next-step-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .next-step-card p {
+      margin: 0;
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
     }
 
     .call-cta-number {
@@ -944,13 +1053,30 @@
         margin-right: auto;
         font-size: 29px;
       }
+      .hero-sub {
+        max-width: 300px;
+        font-size: 14px;
+      }
+      .hero-trust {
+        max-width: 300px;
+      }
+      .hero-trust span {
+        max-width: 100%;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
       .section-title {
         max-width: 320px;
         margin-left: auto;
         margin-right: auto;
         font-size: 26px;
       }
-      .demo-form-card { padding: 24px 20px; }
+      .demo-form-card {
+        width: 100%;
+        max-width: 330px;
+        padding: 24px 20px;
+      }
+      .form-card-head { text-align: center; }
       .btn-demo {
         font-size: 15px;
         padding: 15px 18px;
@@ -1055,9 +1181,18 @@
       Live AI Demo
     </div>
     <h1 class="hero-title">Hear Gideon<br>answer for YOUR business</h1>
-    <p class="hero-sub">Type your business name below. We'll show you exactly what your customers will hear when Gideon picks up.</p>
+    <p class="hero-sub">Type your business name and industry to generate a custom call preview. Then call the live demo line when you want to hear Gideon out loud.</p>
+    <div class="hero-trust" aria-label="Demo expectations">
+      <span>No signup</span>
+      <span>No card</span>
+      <span>Live demo line</span>
+    </div>
 
     <div class="demo-form-card" id="demo-form">
+      <div class="form-card-head">
+        <div class="form-card-title">Build your preview</div>
+        <p class="form-card-sub">This only personalizes the sample below. It does not start a call or submit your phone number.</p>
+      </div>
       <div class="form-group">
         <label class="form-label" for="biz-name">Your Business Name</label>
         <input class="form-input large" type="text" id="biz-name" placeholder="e.g., Johnson's Plumbing" maxlength="80" autocomplete="organization" required aria-describedby="biz-name-error">
@@ -1083,8 +1218,18 @@
       </div>
       <button class="btn-demo" id="btn-submit" type="button">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        <span>Preview Gideon Answering</span>
+        <span>Show My Demo Preview</span>
       </button>
+      <div class="form-expectations" aria-label="What happens after preview">
+        <div class="expectation-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Step 1: See how Gideon would greet callers for your business.</span>
+        </div>
+        <div class="expectation-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Step 2: Call the demo line if you want to hear the real voice experience.</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1096,29 +1241,29 @@
     <!-- What is The Call Taker -->
     <div class="section-label">What is The Call Taker?</div>
     <h2 class="section-title">An AI receptionist for missed calls</h2>
-    <p class="section-desc">Gideon answers your phone 24/7, books jobs, and sounds so real your customers won't know the difference.</p>
+    <p class="section-desc">Gideon answers routed calls, captures the caller details, and gives your team a clean next step instead of another voicemail.</p>
 
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </div>
-        <h3>Answers Every Call</h3>
-        <p>24/7, 365 days a year. No voicemail, no missed revenue. Gideon picks up in under 2 seconds.</p>
+        <h3>Answers Routed Calls</h3>
+        <p>Use Gideon after hours, for overflow, or as a front line call capture layer when your team is busy.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
-        <h3>Books Appointments</h3>
-        <p>Captures caller info, schedules jobs, and sends you a text with every detail. No more phone tag.</p>
+        <h3>Captures the Details</h3>
+        <p>Name, phone number, service need, urgency, and the best next step are captured for follow up.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
         </div>
-        <h3>Live in 24 Hours</h3>
-        <p>No hardware, no training, no hassle. Forward your calls and Gideon is answering for you by tomorrow.</p>
+        <h3>Reviewed Before Launch</h3>
+        <p>Your services, hours, service area, and handoff rules are confirmed before calls go live.</p>
       </div>
     </div>
 
@@ -1148,22 +1293,23 @@
     <!-- Social proof -->
     <div class="proof-bar">
       <div class="proof-item">
-        <div class="proof-val">100%</div>
-        <div class="proof-label">Calls Answered</div>
+        <div class="proof-val">No card</div>
+        <div class="proof-label">For this preview</div>
       </div>
       <div class="proof-item">
-        <div class="proof-val">&lt; 2s</div>
-        <div class="proof-label">Pickup Time</div>
+        <div class="proof-val">Live line</div>
+        <div class="proof-label">Call to judge it</div>
       </div>
       <div class="proof-item">
-        <div class="proof-val">24/7</div>
-        <div class="proof-label">Always On</div>
+        <div class="proof-val">Approved</div>
+        <div class="proof-label">Call flow first</div>
       </div>
       <div class="proof-item">
-        <div class="proof-val">Human</div>
-        <div class="proof-label">Sounds Real</div>
+        <div class="proof-val">Founder</div>
+        <div class="proof-label">Setup review</div>
       </div>
     </div>
+    <p class="proof-note">The preview is a fast way to understand the call flow. Real setup is reviewed before launch so Gideon follows your actual business rules.</p>
 
   </div>
 </section>
@@ -1200,6 +1346,10 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         (629) 269-9697
       </a>
+    </div>
+    <div class="next-step-card">
+      <div class="next-step-title">What happens next</div>
+      <p>If the preview feels right, call the demo line to hear the voice. If you start the trial, Wallace reviews your call flow before launch so Gideon knows what to capture and when to hand off.</p>
     </div>
 
     <!-- Transcript Preview -->
@@ -1248,7 +1398,7 @@
   <div class="wrap">
     <div class="cta-box">
       <h2 class="cta-title">Ready to put Gideon to work for <span class="biz-name" id="cta-biz-name">Your Business</span>?</h2>
-      <p class="cta-sub">Gideon can be answering your calls by tomorrow.</p>
+      <p class="cta-sub">Start the trial, then your call flow is reviewed before Gideon goes live.</p>
 
       <a href="pay.html" class="btn-trial">
         Start Free 14-Day Trial
@@ -1270,13 +1420,13 @@
         </div>
         <div class="trust-item">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Live in 24 hours
+          Setup reviewed
         </div>
       </div>
 
       <!-- Text me the details -->
       <div class="text-me">
-        <p>Want us to text you the details?</p>
+        <p>Want the trial details by text?</p>
         <form class="text-me-form" id="text-me-form" onsubmit="return false;">
           <input type="tel" placeholder="(555) 123-4567" id="text-me-phone" maxlength="20" autocomplete="tel" inputmode="tel" aria-describedby="text-me-status">
           <button type="button" id="text-me-btn">Text Me</button>
@@ -1331,7 +1481,7 @@
   </a>
 </div>
 
-<script defer src="website/tct-tracking.js"></script>
+<script defer src="tct-tracking.js"></script>
 
 <script>
 (function() {
