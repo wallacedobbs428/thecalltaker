@@ -45,29 +45,29 @@ def run_static():
     with open(INDEX, "r") as f:
         src = f.read()
 
-    # 1. CSS: .hero h1 has display: block
-    if re.search(r'\.hero\s+h1\s*\{[^}]*display:\s*block', src):
-        ok(".hero h1 CSS has display: block")
+    # 1. CSS: current primary hero h1 has display: block
+    if re.search(r'\.gideon-hero\.service-selling\s+\.gideon-name\s*\{[^}]*display:\s*block', src):
+        ok(".gideon-name CSS has display: block")
     else:
-        fail(".hero h1 CSS missing display: block")
+        fail(".gideon-name CSS missing display: block")
 
-    # 2. CSS: .hero h1 has word-break: normal
-    if re.search(r'\.hero\s+h1\s*\{[^}]*word-break:\s*normal', src):
-        ok(".hero h1 CSS has word-break: normal")
+    # 2. CSS: current primary hero h1 has word-break: normal
+    if re.search(r'\.gideon-hero\.service-selling\s+\.gideon-name\s*\{[^}]*word-break:\s*normal', src):
+        ok(".gideon-name CSS has word-break: normal")
     else:
-        fail(".hero h1 CSS missing word-break: normal")
+        fail(".gideon-name CSS missing word-break: normal")
 
-    # 3. CSS: .hero h1 has overflow-wrap: normal
-    if re.search(r'\.hero\s+h1\s*\{[^}]*overflow-wrap:\s*normal', src):
-        ok(".hero h1 CSS has overflow-wrap: normal")
+    # 3. CSS: current primary hero h1 has overflow-wrap: normal
+    if re.search(r'\.gideon-hero\.service-selling\s+\.gideon-name\s*\{[^}]*overflow-wrap:\s*normal', src):
+        ok(".gideon-name CSS has overflow-wrap: normal")
     else:
-        fail(".hero h1 CSS missing overflow-wrap: normal")
+        fail(".gideon-name CSS missing overflow-wrap: normal")
 
-    # 4. CSS: .hero h1 has hyphens: none
-    if re.search(r'\.hero\s+h1\s*\{[^}]*hyphens:\s*none', src):
-        ok(".hero h1 CSS has hyphens: none")
+    # 4. CSS: current primary hero h1 has hyphens: none
+    if re.search(r'\.gideon-hero\.service-selling\s+\.gideon-name\s*\{[^}]*hyphens:\s*none', src):
+        ok(".gideon-name CSS has hyphens: none")
     else:
-        fail(".hero h1 CSS missing hyphens: none")
+        fail(".gideon-name CSS missing hyphens: none")
 
     # 5. CSS: .no-break-word class exists with white-space: nowrap
     if re.search(r'\.no-break-word\s*\{[^}]*white-space:\s*nowrap', src):
@@ -75,32 +75,32 @@ def run_static():
     else:
         fail(".no-break-word class missing or lacks white-space: nowrap")
 
-    # 6. HTML: h1 contains <span class="no-break-word"> wrapping multi-word phrase
-    h1_markup = re.search(r'<h1\b[^>]*>(.*?)</h1>', src, re.DOTALL)
-    if h1_markup and re.search(
+    # 6. HTML: secondary hero heading keeps its protected multi-word phrase
+    secondary_heading = re.search(r'<h2\b[^>]*>(.*?)</h2>', src, re.DOTALL)
+    if secondary_heading and re.search(
         r'<span\s+class="no-break-word">[^<]+</span>',
-        h1_markup.group(1),
+        secondary_heading.group(1),
     ):
-        ok('H1 contains <span class="no-break-word"> protecting a phrase')
+        ok('Secondary hero contains <span class="no-break-word"> protection')
     else:
-        fail('H1 missing <span class="no-break-word"> protection')
+        fail('Secondary hero missing <span class="no-break-word"> protection')
 
-    # 7. HTML: h1 text is current copy
-    h1_match = re.search(r'<h1>(.*?)</h1>', src, re.DOTALL)
+    # 7. HTML: primary h1 text is current copy
+    h1_match = re.search(r'<h1\b[^>]*>(.*?)</h1>', src, re.DOTALL)
     if h1_match:
         h1_text = re.sub(r'<[^>]+>', '', h1_match.group(1)).strip()
-        if "It's 2 AM" in h1_text and "Gideon answers" in h1_text:
+        if "Recover missed-call revenue" in h1_text and "job goes cold" in h1_text:
             ok(f'H1 text intact: "{h1_text[:60]}"')
         else:
             fail(f'H1 text changed: "{h1_text[:80]}"')
     else:
-        fail("No <h1> found in hero section")
+        fail("No primary <h1> found")
 
-    # 8. CSS: .hero h1 does NOT have display: inline
-    if not re.search(r'\.hero\s+h1\s*\{[^}]*display:\s*inline[^-]', src):
-        ok(".hero h1 does NOT set display: inline")
+    # 8. CSS: primary hero h1 does NOT have display: inline
+    if not re.search(r'\.gideon-hero\.service-selling\s+\.gideon-name\s*\{[^}]*display:\s*inline[^-]', src):
+        ok(".gideon-name does NOT set display: inline")
     else:
-        fail(".hero h1 has display: inline — THIS WILL BREAK THE HEADLINE")
+        fail(".gideon-name has display: inline — THIS WILL BREAK THE HEADLINE")
 
 
 # --- LAYER 2: LIVE HEADLESS CHROME ---
@@ -174,7 +174,7 @@ def run_live(url, screenshot_dir=None):
 
     js_payload = r"""
     (function() {
-      var h1 = document.querySelector('.hero h1');
+      var h1 = document.querySelector('.gideon-hero .gideon-name');
       if (!h1) return 'NO_H1';
       var text = h1.innerText || h1.textContent;
       var style = window.getComputedStyle(h1);

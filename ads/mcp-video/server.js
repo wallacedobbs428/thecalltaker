@@ -15,7 +15,8 @@
  *   TCT_KLING_API_KEY     — Kling AI API key
  *   TCT_HEYGEN_API_KEY    — HeyGen API key (for spokesperson videos)
  *   TCT_ELEVENLABS_KEY    — ElevenLabs API key (for voiceover + captions)
- *   TCT_VIDEO_OUTPUT_DIR  — Output directory (default: ~/thecalltaker/ads/videos)
+ *   TCT_VIDEO_OUTPUT_DIR  — Output directory (default: ../videos from this package)
+ *   TCT_VIDEO_SCRIPTS_DIR — Script directory (default: ../scripts from this package)
  */
 
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
@@ -25,12 +26,15 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from "fs";
-import { join, resolve } from "path";
-import { homedir } from "os";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ADS_DIR = dirname(__dirname);
 
 const OUTPUT_DIR =
   process.env.TCT_VIDEO_OUTPUT_DIR ||
-  join(homedir(), "thecalltaker", "ads", "videos");
+  join(ADS_DIR, "videos");
 
 // Ensure output dir exists
 if (!existsSync(OUTPUT_DIR)) {
@@ -237,7 +241,8 @@ const providers = {
 
 // ---------- Script Loader ----------
 
-const SCRIPTS_DIR = join(homedir(), "thecalltaker", "ads", "scripts");
+const SCRIPTS_DIR =
+  process.env.TCT_VIDEO_SCRIPTS_DIR || join(ADS_DIR, "scripts");
 
 function loadScript(scriptNum) {
   const files = readdirSync(SCRIPTS_DIR).filter((f) =>

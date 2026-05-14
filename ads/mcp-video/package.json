@@ -6,10 +6,16 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "check": "node --check server.js",
+    "test": "npm run check",
+    "mcp:smoke": "printf '%s\\n' '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\",\"params\":{}}' | TCT_VIDEO_OUTPUT_DIR=/private/tmp/thecalltaker-mcp-video-smoke node server.js",
+    "verify": "npm run check && npm run mcp:smoke && cd ../.. && python3 website/tests/hero-regression.py && PYTHONPYCACHEPREFIX=/private/tmp/thecalltaker-pycache python3 -m compileall -q ops max ben sam water-damage netlify tools website/scripts *.py"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.0",
-    "node-fetch": "^3.3.0"
+    "@modelcontextprotocol/sdk": "^1.0.0"
   }
 }
