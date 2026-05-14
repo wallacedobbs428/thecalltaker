@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>The Call Taker — AI Receptionist for Service Businesses</title>
+  <title>The Call Taker - Local Call Setup</title>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,54 +12,43 @@
   <link rel="stylesheet" href="../styles.css">
   <style>
     .onboard-page { padding: 100px 0 60px; }
-
-    /* Progress Bar */
+    .ob-header { text-align: center; max-width: 680px; margin: 0 auto 36px; }
+    .ob-header h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; color: #fff; letter-spacing: -0.02em; margin-bottom: 10px; }
+    .ob-header p { color: var(--text-2); font-size: 16px; line-height: 1.6; }
+    .ob-note { margin: 18px auto 0; max-width: 620px; border: 1px solid rgba(0,220,130,0.16); background: rgba(0,220,130,0.04); color: var(--text-2); border-radius: 10px; padding: 14px 16px; font-size: 14px; line-height: 1.55; }
     .ob-progress { display: flex; align-items: center; gap: 0; max-width: 560px; margin: 0 auto 40px; }
-    .ob-dot { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--text-3); flex-shrink: 0; transition: 0.3s; }
+    .ob-dot { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--text-3); flex-shrink: 0; transition: 0.2s; }
     .ob-dot.active { border-color: var(--green); color: var(--green); background: var(--green-dim); }
     .ob-dot.done { border-color: var(--green); background: var(--green); color: #000; }
-    .ob-line { flex: 1; height: 2px; background: var(--border); transition: background 0.3s; }
+    .ob-line { flex: 1; height: 2px; background: var(--border); transition: background 0.2s; }
     .ob-line.done { background: var(--green); }
-
-    /* Wizard Card */
-    .ob-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 40px 32px; max-width: 600px; margin: 0 auto 40px; }
-    @media (max-width: 640px) { .ob-card { padding: 28px 20px; } }
+    .ob-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 36px 30px; max-width: 640px; margin: 0 auto 40px; }
     .ob-card h2 { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.02em; }
-    .ob-card .step-desc { font-size: 14px; color: var(--text-2); margin-bottom: 28px; line-height: 1.6; }
+    .step-desc { font-size: 14px; color: var(--text-2); margin-bottom: 26px; line-height: 1.6; }
     .ob-step { display: none; }
     .ob-step.active { display: block; }
-
-    /* Greeting Preview */
-    .greeting-live-preview { background: rgba(0,220,130,0.03); border: 1px solid rgba(0,220,130,0.12); border-radius: 12px; padding: 20px; margin-top: 16px; }
-    .greeting-live-label { font-size: 11px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-    .greeting-live-text { font-size: 14px; color: var(--text-2); line-height: 1.6; font-style: italic; min-height: 40px; }
-
-    /* Hours Grid */
-    .hours-set { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    .hours-row { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 8px; align-items: center; }
-    .hours-row label { font-size: 13px; font-weight: 600; color: var(--text-2); }
-
-    /* Test Call Box */
-    .test-call-box { text-align: center; padding: 32px 0; }
-    .test-call-number { font-size: 28px; font-weight: 800; color: var(--green); letter-spacing: -0.02em; margin-bottom: 8px; }
-    .test-call-number a { color: var(--green); }
-    .test-call-sub { font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6; }
-    .test-call-steps { text-align: left; max-width: 400px; margin: 0 auto; }
-    .test-call-steps li { font-size: 14px; color: var(--text-2); padding: 8px 0; border-bottom: 1px solid var(--border); list-style: none; display: flex; align-items: center; gap: 10px; }
-    .test-call-steps li:last-child { border-bottom: none; }
-    .step-num-badge { width: 24px; height: 24px; border-radius: 50%; background: var(--green-dim); color: var(--green); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-
-    /* You're Live */
-    .live-celebration { text-align: center; padding: 20px 0; }
-    .live-icon { width: 80px; height: 80px; border-radius: 50%; background: var(--green-dim); border: 2px solid rgba(0,220,130,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; animation: celebPulse 2s ease-in-out infinite; }
-    @keyframes celebPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(0,220,130,0.2); } 50% { box-shadow: 0 0 0 20px rgba(0,220,130,0); } }
-    .live-icon svg { width: 36px; height: 36px; color: var(--green); }
-    .live-celebration h2 { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 8px; }
-    .live-celebration p { font-size: 15px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6; max-width: 400px; margin-left: auto; margin-right: auto; }
-
-    /* Buttons */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group.invalid .form-input,
+    .form-group.invalid .form-select,
+    .form-group.invalid .form-textarea { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.12); }
+    .field-error { display: none; color: #fca5a5; font-size: 12px; line-height: 1.45; margin-top: 6px; }
+    .form-group.invalid .field-error { display: block; }
+    .setup-alert { display: none; background: rgba(239,68,68,0.10); border: 1px solid rgba(239,68,68,0.28); border-radius: 10px; color: #fecaca; font-size: 14px; line-height: 1.5; padding: 12px 14px; margin-bottom: 20px; }
+    .setup-alert.show { display: block; }
+    .success-box { text-align: center; padding: 18px 0; }
+    .success-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--green-dim); border: 2px solid rgba(0,220,130,0.28); color: var(--green); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    .success-icon svg { width: 32px; height: 32px; }
+    .success-box h2 { color: #fff; margin-bottom: 8px; }
+    .success-box p { color: var(--text-2); font-size: 15px; line-height: 1.65; max-width: 460px; margin: 0 auto 10px; }
+    .boundary-list { text-align: left; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin: 22px auto; max-width: 460px; }
+    .boundary-list li { color: var(--text-2); font-size: 14px; line-height: 1.6; margin-left: 18px; }
     .ob-buttons { display: flex; gap: 12px; margin-top: 28px; }
     .ob-buttons .btn { flex: 1; justify-content: center; }
+    @media (max-width: 640px) {
+      .ob-card { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .ob-buttons { flex-direction: column; }
+    }
   </style>
 </head>
 <body style="overflow-x:hidden">
@@ -70,9 +59,9 @@
       The Call <span>Taker</span>
     </a>
     <nav class="nav">
-      <a href="/" class="active">Home</a>
+      <a href="/">Home</a>
       <a href="/services.html">Services</a>
-      <a href="#pricing">Pricing</a>
+      <a href="/pricing.html">Pricing</a>
       <a href="/demo.html">Demo</a>
     </nav>
     <a href="/demo.html" class="header-cta">Book a Demo</a>
@@ -83,27 +72,20 @@
 <nav class="mobile-nav">
   <a href="/">Home</a>
   <a href="/services.html">Services</a>
-  <a href="#pricing">Pricing</a>
+  <a href="/pricing.html">Pricing</a>
   <a href="/demo.html">Demo</a>
   <a href="/demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
 </nav>
 
-
-
-
-
-
-
-
 <main class="onboard-page">
   <div class="wrap">
-    <div style="text-align:center; margin-bottom:32px;">
-      <h1 style="font-size:clamp(28px,4vw,40px); font-weight:700; color:#fff; letter-spacing:-0.03em; margin-bottom:8px;">Let's Get You Set Up</h1>
-      <p style="font-size:16px; color:var(--text-2);">5 quick steps and your AI receptionist goes live.</p>
+    <div class="ob-header">
+      <h1>Prepare Local Call Setup</h1>
+      <p>Save the business details your team can review before any backend, provider, phone routing, SMS, email, or webhook work begins.</p>
+      <div class="ob-note">This page stores setup details in this browser only. It does not activate phone service or configure providers.</div>
     </div>
 
-    <!-- Progress -->
-    <div class="ob-progress" id="ob-progress">
+    <div class="ob-progress" id="ob-progress" aria-label="Setup progress">
       <div class="ob-dot active" data-step="1">1</div>
       <div class="ob-line"></div>
       <div class="ob-dot" data-step="2">2</div>
@@ -116,130 +98,134 @@
     </div>
 
     <div class="ob-card">
+      <div class="setup-alert" id="setup-alert" role="alert"></div>
 
-      <!-- Step 1: Welcome -->
       <div class="ob-step active" data-step="1">
-        <h2>Welcome!</h2>
-        <p class="step-desc">Let's confirm your information so we can set up GIDEON for your business.</p>
-        <div class="form-group">
-          <label class="form-label">Business Name</label>
-          <input type="text" class="form-input" id="co-business" placeholder="Your business name">
+        <h2>Business basics</h2>
+        <p class="step-desc">These details identify the setup record saved in local browser storage.</p>
+        <div class="form-group" data-field="businessName">
+          <label class="form-label" for="co-business">Business Name</label>
+          <input type="text" class="form-input" id="co-business" autocomplete="organization" placeholder="Your business name">
+          <div class="field-error" id="err-businessName"></div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Your Name</label>
-          <input type="text" class="form-input" id="co-name" placeholder="Full name">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Phone Number</label>
-          <input type="tel" class="form-input" id="co-phone" placeholder="(615) 555-1234">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Industry</label>
-          <select class="form-select" id="co-industry">
-            <option value="">Select your industry</option>
-            <option value="hvac">HVAC</option>
-            <option value="plumbing">Plumbing</option>
-            <option value="electrical">Electrical</option>
-            <option value="roofing">Roofing</option>
-            <option value="dental">Dental</option>
-            <option value="medspa">Med Spa</option>
-            <option value="legal">Legal</option>
-            <option value="locksmith">Locksmith</option>
-            <option value="towing">Towing</option>
-            <option value="veterinary">Veterinary</option>
-            <option value="property-management">Property Management</option>
-          </select>
+        <div class="form-row">
+          <div class="form-group" data-field="industry">
+            <label class="form-label" for="co-industry">Industry</label>
+            <select class="form-select" id="co-industry">
+              <option value="">Select your industry</option>
+              <option>HVAC</option>
+              <option>Plumbing</option>
+              <option>Electrical</option>
+              <option>Roofing</option>
+              <option>Dental</option>
+              <option>Med Spa</option>
+              <option>Legal</option>
+              <option>Locksmith</option>
+              <option>Towing</option>
+              <option>Veterinary</option>
+              <option>Property Management</option>
+              <option>Garage Door</option>
+              <option>Restoration</option>
+            </select>
+            <div class="field-error" id="err-industry"></div>
+          </div>
+          <div class="form-group" data-field="location">
+            <label class="form-label" for="co-location">Location</label>
+            <input type="text" class="form-input" id="co-location" placeholder="City, State">
+            <div class="field-error" id="err-location"></div>
+          </div>
         </div>
         <div class="ob-buttons">
-          <button class="btn btn-green btn-lg" onclick="obNext()">Continue</button>
+          <button class="btn btn-green btn-lg" type="button" onclick="handleContinue(2)">Continue</button>
         </div>
       </div>
 
-      <!-- Step 2: Business Hours -->
       <div class="ob-step" data-step="2">
-        <h2>Set Your Business Hours</h2>
-        <p class="step-desc">GIDEON uses these to handle calls differently during and after business hours.</p>
-        <div class="hours-set">
-          <div class="hours-row">
-            <label>Mon - Fri</label>
-            <input type="time" class="form-input" value="08:00">
-            <input type="time" class="form-input" value="17:00">
+        <h2>Business hours</h2>
+        <p class="step-desc">These hours become part of the saved call-handling plan for later review.</p>
+        <div class="form-group" data-field="weekdayHours">
+          <label class="form-label" for="co-weekday">Weekday Hours</label>
+          <input type="text" class="form-input" id="co-weekday" placeholder="e.g. 8:00 AM - 6:00 PM">
+          <div class="field-error" id="err-weekdayHours"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group" data-field="saturdayHours">
+            <label class="form-label" for="co-saturday">Saturday Hours</label>
+            <input type="text" class="form-input" id="co-saturday" placeholder="e.g. 9:00 AM - 1:00 PM or Closed">
+            <div class="field-error" id="err-saturdayHours"></div>
           </div>
-          <div class="hours-row">
-            <label>Saturday</label>
-            <input type="time" class="form-input" value="09:00">
-            <input type="time" class="form-input" value="13:00">
-          </div>
-          <div class="hours-row">
-            <label>Sunday</label>
-            <input type="text" class="form-input" value="Closed" disabled style="opacity:0.5;">
-            <input type="text" class="form-input" value="AI Active" disabled style="opacity:0.5;">
+          <div class="form-group" data-field="sundayHours">
+            <label class="form-label" for="co-sunday">Sunday Hours</label>
+            <input type="text" class="form-input" id="co-sunday" placeholder="e.g. Closed">
+            <div class="field-error" id="err-sundayHours"></div>
           </div>
         </div>
         <div class="ob-buttons">
-          <button class="btn btn-secondary btn-lg" onclick="obPrev()">Back</button>
-          <button class="btn btn-green btn-lg" onclick="obNext()">Continue</button>
+          <button class="btn btn-secondary btn-lg" type="button" onclick="goStep(1)">Back</button>
+          <button class="btn btn-green btn-lg" type="button" onclick="handleContinue(3)">Continue</button>
         </div>
       </div>
 
-      <!-- Step 3: Customize Greeting -->
       <div class="ob-step" data-step="3">
-        <h2>Customize Your Greeting</h2>
-        <p class="step-desc">This is what callers hear when GIDEON picks up. Edit it to match your brand.</p>
-        <div class="form-group">
-          <label class="form-label">Greeting Script</label>
-          <textarea class="form-textarea" id="co-greeting" rows="4" oninput="updateGreetingPreview()">Thank you for calling! This is our AI assistant. I can help you schedule an appointment, answer questions, or connect you with our team. How can I help you today?</textarea>
+        <h2>Services and area</h2>
+        <p class="step-desc">List the services callers can ask about and the service area your team covers.</p>
+        <div class="form-group" data-field="services">
+          <label class="form-label" for="co-services">Services</label>
+          <textarea class="form-textarea" id="co-services" rows="4" placeholder="AC repair, drain cleaning, emergency service"></textarea>
+          <div class="field-error" id="err-services"></div>
         </div>
-        <div class="greeting-live-preview">
-          <div class="greeting-live-label">Live Preview</div>
-          <div class="greeting-live-text" id="greeting-preview">Thank you for calling! This is our AI assistant. I can help you schedule an appointment, answer questions, or connect you with our team. How can I help you today?</div>
+        <div class="form-group" data-field="serviceArea">
+          <label class="form-label" for="co-area">Service Area</label>
+          <input type="text" class="form-input" id="co-area" placeholder="e.g. Nashville metro, within 30 miles">
+          <div class="field-error" id="err-serviceArea"></div>
         </div>
         <div class="ob-buttons">
-          <button class="btn btn-secondary btn-lg" onclick="obPrev()">Back</button>
-          <button class="btn btn-green btn-lg" onclick="obNext()">Continue</button>
+          <button class="btn btn-secondary btn-lg" type="button" onclick="goStep(2)">Back</button>
+          <button class="btn btn-green btn-lg" type="button" onclick="handleContinue(4)">Continue</button>
         </div>
       </div>
 
-      <!-- Step 4: Test Call -->
       <div class="ob-step" data-step="4">
-        <h2>Test Your AI Receptionist</h2>
-        <p class="step-desc">Call the number below to hear GIDEON in action. Try it before going live.</p>
-        <div class="test-call-box">
-          <div class="test-call-number"><a href="tel:+16157845747">(615) 784-5747</a></div>
-          <p class="test-call-sub">This is a live demo line. Call now and talk to GIDEON.</p>
-          <ul class="test-call-steps">
-            <li><span class="step-num-badge">1</span>Call the number above from your phone</li>
-            <li><span class="step-num-badge">2</span>Tell GIDEON what kind of business you are</li>
-            <li><span class="step-num-badge">3</span>Test common questions your customers ask</li>
-            <li><span class="step-num-badge">4</span>Try scheduling a fake appointment</li>
-          </ul>
+        <h2>Greeting and urgent preference</h2>
+        <p class="step-desc">Save the greeting and urgent-call preference for later configuration work.</p>
+        <div class="form-group" data-field="greeting">
+          <label class="form-label" for="co-greeting">Phone Greeting</label>
+          <textarea class="form-textarea" id="co-greeting" rows="4" placeholder="Thank you for calling. How can we help?"></textarea>
+          <div class="field-error" id="err-greeting"></div>
+        </div>
+        <div class="form-group" data-field="forwardNumber">
+          <label class="form-label" for="co-forward">Emergency Forward Number (optional)</label>
+          <input type="tel" class="form-input" id="co-forward" placeholder="10 digit US number, or leave blank">
+          <div class="field-error" id="err-forwardNumber"></div>
         </div>
         <div class="ob-buttons">
-          <button class="btn btn-secondary btn-lg" onclick="obPrev()">Back</button>
-          <button class="btn btn-green btn-lg" onclick="obNext()">I've Tested It</button>
+          <button class="btn btn-secondary btn-lg" type="button" onclick="goStep(3)">Back</button>
+          <button class="btn btn-green btn-lg" type="button" onclick="handleFinish()">Save Local Setup</button>
         </div>
       </div>
 
-      <!-- Step 5: You're Live -->
       <div class="ob-step" data-step="5">
-        <div class="live-celebration">
-          <div class="live-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="success-box">
+          <div class="success-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <h2>You're Live!</h2>
-          <p>GIDEON is now answering calls for your business 24/7. You'll never miss another customer again.</p>
-          <div style="display:flex; flex-direction:column; gap:12px; max-width:320px; margin:0 auto;">
-            <a href="dashboard.html" class="btn btn-green btn-lg" style="justify-content:center;">Go to Dashboard</a>
-            <a href="mailto:thecalltakerai@gmail.com" class="btn btn-secondary btn-lg" style="justify-content:center;">Contact Support</a>
+          <h2>Setup Saved</h2>
+          <p>Your local call setup details are saved in this browser for review.</p>
+          <ul class="boundary-list">
+            <li>Backend sync is not configured.</li>
+            <li>Provider routing is not configured.</li>
+            <li>Live activation is not enabled by this page.</li>
+          </ul>
+          <div class="ob-buttons">
+            <a href="dashboard.html" class="btn btn-green btn-lg">Review Dashboard</a>
+            <button class="btn btn-secondary btn-lg" type="button" onclick="goStep(1)">Edit Setup</button>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </main>
 
-<!-- === FOOTER === -->
 <footer class="footer">
   <div class="wrap">
     <div class="footer-inner">
@@ -258,106 +244,131 @@
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/terms.html">Terms of Service</a>
         <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
-        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
       </div>
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
+      <span>The Call Taker &middot; Brentwood, TN</span>
     </div>
   </div>
 </footer>
 
-
 <script src="../script.js"></script>
+<script src="call-flow.js"></script>
 <script>
 (function() {
   'use strict';
   var currentStep = 1;
-  var totalSteps = 5;
+  var fields = {
+    businessName: 'co-business',
+    industry: 'co-industry',
+    location: 'co-location',
+    weekdayHours: 'co-weekday',
+    saturdayHours: 'co-saturday',
+    sundayHours: 'co-sunday',
+    services: 'co-services',
+    serviceArea: 'co-area',
+    greeting: 'co-greeting',
+    forwardNumber: 'co-forward'
+  };
+  var setupStore = TCTCallFlow.createLocalSetupStore(localStorage);
 
-  function updateProgress() {
-    var dots = document.querySelectorAll('.ob-dot');
-    var lines = document.querySelectorAll('.ob-line');
-    dots.forEach(function(dot, i) {
-      var step = i + 1;
-      dot.classList.remove('active', 'done');
-      if (step < currentStep) dot.classList.add('done');
-      else if (step === currentStep) dot.classList.add('active');
+  function getSetup() {
+    var setup = {};
+    Object.keys(fields).forEach(function(key) {
+      setup[key] = document.getElementById(fields[key]).value;
     });
-    lines.forEach(function(line, i) {
-      line.classList.toggle('done', i + 1 < currentStep);
-    });
-    document.querySelectorAll('.ob-step').forEach(function(s) {
-      s.classList.toggle('active', parseInt(s.getAttribute('data-step')) === currentStep);
+    return setup;
+  }
+
+  function setSetupFields(setup) {
+    var form = TCTCallFlow.formSetupFromContract(setup);
+    Object.keys(fields).forEach(function(key) {
+      var input = document.getElementById(fields[key]);
+      if (input) input.value = form[key] || '';
     });
   }
 
-  window.obNext = function() {
-    if (currentStep < totalSteps) {
-      currentStep++;
-      updateProgress();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  function clearErrors() {
+    document.getElementById('setup-alert').classList.remove('show');
+    Object.keys(fields).forEach(function(key) {
+      var input = document.getElementById(fields[key]);
+      var group = input.closest('.form-group');
+      var error = document.getElementById('err-' + key);
+      if (group) group.classList.remove('invalid');
+      if (input) {
+        input.removeAttribute('aria-invalid');
+        input.removeAttribute('aria-describedby');
+      }
+      if (error) error.textContent = '';
+    });
+  }
+
+  function showErrors(errors) {
+    clearErrors();
+    var keys = Object.keys(errors || {});
+    if (!keys.length) return;
+    document.getElementById('setup-alert').textContent = 'Fix the highlighted fields before this local setup can be saved.';
+    document.getElementById('setup-alert').classList.add('show');
+    keys.forEach(function(key) {
+      var input = document.getElementById(fields[key]);
+      var error = document.getElementById('err-' + key);
+      if (!input) return;
+      var group = input.closest('.form-group');
+      if (group) group.classList.add('invalid');
+      if (error) {
+        error.textContent = errors[key];
+        input.setAttribute('aria-describedby', error.id);
+      }
+      input.setAttribute('aria-invalid', 'true');
+    });
+    var first = document.getElementById(fields[keys[0]]);
+    if (first) first.focus();
+  }
+
+  function updateProgress() {
+    document.querySelectorAll('.ob-dot').forEach(function(dot, i) {
+      var step = i + 1;
+      dot.classList.toggle('done', step < currentStep);
+      dot.classList.toggle('active', step === currentStep);
+    });
+    document.querySelectorAll('.ob-line').forEach(function(line, i) {
+      line.classList.toggle('done', i + 1 < currentStep);
+    });
+    document.querySelectorAll('.ob-step').forEach(function(step) {
+      step.classList.toggle('active', parseInt(step.getAttribute('data-step'), 10) === currentStep);
+    });
+  }
+
+  window.goStep = function(nextStep) {
+    clearErrors();
+    currentStep = nextStep;
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  window.obPrev = function() {
-    if (currentStep > 1) {
-      currentStep--;
-      updateProgress();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.handleContinue = function(nextStep) {
+    var errors = TCTCallFlow.validateStep(currentStep, getSetup());
+    if (Object.keys(errors).length) {
+      showErrors(errors);
+      return;
     }
+    window.goStep(nextStep);
   };
 
-  window.updateGreetingPreview = function() {
-    var text = document.getElementById('co-greeting').value;
-    document.getElementById('greeting-preview').textContent = text || 'Type your greeting above to see a preview...';
+  window.handleFinish = function() {
+    var result = setupStore.save(getSetup());
+    if (!result.ok) {
+      showErrors(result.errors);
+      return;
+    }
+    sessionStorage.setItem('tct_client_name', result.setup.business.name);
+    window.goStep(5);
   };
+
+  var existingSetup = setupStore.load();
+  if (existingSetup) setSetupFields(existingSetup);
 })();
 </script>
-
-<!-- === FLOATING WIDGET === -->
-<!-- FLOATING CALLBACK WIDGET -->
-<div class="float-cb" id="float-widget">
-  <div class="float-cb-panel" id="float-panel">
-    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
-    <p style="font-size: 12px; color: var(--text-3); margin-bottom: 14px;">Our AI will call you in under 30 seconds.</p>
-    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
-    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 10px;">
-    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Me Now</button>
-    <div id="float-success" style="display: none; text-align: center; padding: 16px 0;">
-      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
-      <p style="font-size: 12px; color: var(--text-2);">Pick up your phone.</p>
-    </div>
-  </div>
-  <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-  </button>
-</div>
-
-<!-- EXIT INTENT POPUP -->
-<div class="exit-overlay" id="exit-popup">
-  <div class="exit-modal">
-    <button class="exit-close" onclick="closeExitPopup()">&times;</button>
-    <div style="text-align: center;">
-      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;">Before you go</div>
-      <h3 style="font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px;">Get a free missed call audit</h3>
-      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">We'll call your business after hours and tell you exactly what your customers are hearing. Free. No strings.</p>
-      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
-      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px;">
-      <button class="callback-btn" onclick="requestExitCallback()">Get My Free Audit</button>
-      <div id="exit-success" style="display: none; padding: 20px 0;">
-        <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
-        <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
-      </div>
-      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16157845747" style="color: var(--green); font-weight: 600;">(615) 784-5747</a></p>
-    </div>
-  </div>
-</div>
-
-<!-- MOBILE BAR -->
-<div class="sticky-mobile-bar">
-  <a href="tel:+16157845747"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
-  <a href="../demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
 </body>
 </html>
