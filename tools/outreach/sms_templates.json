@@ -1,0 +1,47 @@
+{
+  "permission_preview": {
+    "approval_required": false,
+    "source_required": "inbound_demo_request",
+    "messages": [
+      "hey {first_name}, Wallace with The Call Taker. saw your demo request - want me to send the preview for {company}?",
+      "yep i can send it. just to be clear, its a preview - not live call routing yet",
+      "want the short version or should i call and walk you through it?"
+    ]
+  },
+  "after_demo": {
+    "approval_required": false,
+    "source_required": "inbound_demo_request",
+    "messages": [
+      "hey {first_name}, Wallace here. looks like you checked out The Call Taker demo. want me to show what Gideon would say for {company}?",
+      "quick note - nothing goes live from the demo. its just the caller experience preview",
+      "if missed calls arent an issue, all good. if they are, i can send the preview"
+    ]
+  },
+  "after_call": {
+    "approval_required": false,
+    "source_required": "manual_wallace_review",
+    "messages": [
+      "good talking earlier. i wrote down the main issue as: {call_path_note}. that right?",
+      "next step would be a reviewed setup preview. no routing gets turned on from this",
+      "i can send the preview here if thats easiest"
+    ]
+  },
+  "cold_candidate": {
+    "approval_required": true,
+    "source_required": "cold_sms_provider_approval",
+    "messages": [
+      "hey {first_name}, Wallace with The Call Taker. quick question - what happens when calls hit after hours at {company}? reply stop and i wont text again",
+      "not trying to spam you. i help businesses catch missed calls and prep cleaner handoffs. worth sending the preview?",
+      "last text from me - if missed calls arent a problem, no worries. if they are, i can show the preview"
+    ]
+  },
+  "hvac_variant": {
+    "approval_required": true,
+    "source_required": "cold_sms_provider_approval",
+    "messages": [
+      "hey {first_name}, quick question - when someone calls about AC after hours, does it hit a person or voicemail?",
+      "Wallace with The Call Taker btw. i help HVAC shops catch missed calls and prep cleaner handoffs. want the preview?",
+      "last one from me. if after-hours calls are handled, all good. if not, i can show what the preview sounds like"
+    ]
+  }
+}

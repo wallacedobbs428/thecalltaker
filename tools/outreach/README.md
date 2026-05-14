@@ -27,6 +27,11 @@ This tool is intentionally no-send. It reads local JSON/CSV, validates fake/samp
 - `import_prospects.mjs`: dry-run CSV/JSON/single-record intake preview. It never contacts anyone.
 - `example_import.csv`: fake manual import sample.
 - `example_import.json`: fake manual import sample.
+- `sms_approval_status.json`: current SMS approval gate. Defaults to blocked/no-send.
+- `sms_templates.json`: human-style SMS drafts for review only.
+- `generate_sms_approval_packet.mjs`: renders provider-review packet from local status/templates.
+- `generate_sms_preview.mjs`: renders SMS drafts for Wallace review. It never sends.
+- `sms_preview_sample.json`: fake sample merge data.
 - `output/daily-queue.sample.md`: generated fake Wallace queue.
 - `output/import-preview.sample.md`: generated fake import preview.
 
@@ -41,6 +46,9 @@ node tools/outreach/score_prospects.mjs
 node tools/outreach/generate_daily_queue.mjs
 node tools/outreach/import_prospects.mjs --input tools/outreach/example_import.csv --dry-run
 node tools/outreach/import_prospects.mjs --input tools/outreach/example_import.json --dry-run
+node tools/outreach/generate_sms_approval_packet.mjs
+node tools/outreach/generate_sms_preview.mjs --scenario after_demo --prospect tools/outreach/sms_preview_sample.json
+node tools/outreach/generate_sms_preview.mjs --scenario cold_candidate --prospect tools/outreach/sms_preview_sample.json
 ```
 
 ## Score Categories

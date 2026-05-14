@@ -1,0 +1,36 @@
+{
+  "status": "blocked",
+  "status_label": "Not approved for live SMS",
+  "last_reviewed": "2026-05-14",
+  "owner": "Wallace",
+  "no_send_mode": true,
+  "provider_submission": {
+    "a2p_10dlc_status": "not_submitted",
+    "provider_approval_verified": false,
+    "campaign_use_case_ready": true,
+    "sample_messages_ready": true,
+    "opt_out_language_ready": true,
+    "help_language_ready": true
+  },
+  "allowed_sources_after_approval": [
+    "inbound_demo_request",
+    "inbound_call_or_text",
+    "explicit_written_permission",
+    "existing_customer_relationship",
+    "manual_wallace_review"
+  ],
+  "blocked_until_approved": [
+    "cold_sms",
+    "bulk_sms",
+    "automated_sms_sequences",
+    "crm_provider_writes",
+    "uploaded_scraped_phone_lists"
+  ],
+  "required_boundaries": [
+    "Identify Wallace or The Call Taker in the first message.",
+    "Honor STOP, unsubscribe, remove me, and equivalent opt-outs immediately.",
+    "Pause on any human reply until Wallace reviews it.",
+    "Do not claim live routing, call forwarding, backend sync, or guaranteed jobs.",
+    "Use human text style, not polished email grammar."
+  ]
+}
