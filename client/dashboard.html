@@ -30,6 +30,9 @@
     .gideon-live { display: inline-flex; align-items: center; gap: 10px; background: rgba(0,220,130,0.12); border: 1px solid rgba(0,220,130,0.25); border-radius: 10px; padding: 14px 24px; margin-bottom: 32px; }
     .gideon-live .dot { width: 12px; height: 12px; background: #00dc82; border-radius: 50%; animation: pulse-dot 2s infinite; box-shadow: 0 0 12px rgba(0,220,130,0.5); }
     .gideon-live span { font-size: 0.9rem; font-weight: 700; color: #00dc82; letter-spacing: 0.05em; }
+    .gideon-live.pending { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.30); }
+    .gideon-live.pending .dot { background: #f59e0b; box-shadow: 0 0 12px rgba(245,158,11,0.35); }
+    .gideon-live.pending span { color: #f59e0b; }
     @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
     .section-label { color: #00dc82; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 40px; }
@@ -48,6 +51,8 @@
     .greeting-box { background: rgba(0,220,130,0.06); border: 1px solid rgba(0,220,130,0.15); border-radius: 10px; padding: 20px; margin-bottom: 40px; }
     .greeting-box h3 { font-size: 0.85rem; color: #00dc82; margin: 0 0 8px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
     .greeting-box p { font-size: 0.9rem; color: #a1a1aa; margin: 0; line-height: 1.6; font-style: italic; }
+    .setup-warning { display: none; background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.25); border-radius: 10px; color: #fed7aa; font-size: 0.9rem; line-height: 1.5; padding: 16px 18px; margin-bottom: 28px; }
+    .setup-warning.show { display: block; }
     .logout-link { display: inline-block; margin-top: 20px; color: #71717a; font-size: 0.85rem; text-decoration: none; }
     .logout-link:hover { color: #ef4444; }
     @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
@@ -86,10 +91,11 @@
     <p>Here's how GIDEON is performing for your business.</p>
   </div>
 
-  <div class="gideon-live">
+  <div class="gideon-live" id="gideon-status">
     <div class="dot"></div>
-    <span>GIDEON IS LIVE</span>
+    <span id="gideon-status-label">GIDEON IS LIVE</span>
   </div>
+  <div class="setup-warning" id="setup-warning"></div>
 
   <div class="section-label">This Month</div>
   <div class="stats-grid">
@@ -117,7 +123,7 @@
 
   <div class="greeting-box">
     <h3>Your AI Greeting</h3>
-    <p>"Thank you for calling! How can we help you today? I can schedule an appointment, answer questions about our services, or connect you with a team member."</p>
+    <p id="dashboard-greeting">"Thank you for calling! How can we help you today? I can schedule an appointment, answer questions about our services, or connect you with a team member."</p>
   </div>
 
   <div class="section-label">Account Details</div>
@@ -145,19 +151,19 @@
       <h3>Business Hours</h3>
       <div class="info-row">
         <span class="lbl">Monday - Friday</span>
-        <span class="val">8:00 AM - 6:00 PM</span>
+        <span class="val" id="hours-weekday">8:00 AM - 6:00 PM</span>
       </div>
       <div class="info-row">
         <span class="lbl">Saturday</span>
-        <span class="val">9:00 AM - 1:00 PM</span>
+        <span class="val" id="hours-saturday">9:00 AM - 1:00 PM</span>
       </div>
       <div class="info-row">
         <span class="lbl">Sunday</span>
-        <span class="val">Closed (AI answers)</span>
+        <span class="val" id="hours-sunday">Closed (AI answers)</span>
       </div>
       <div class="info-row">
         <span class="lbl">After Hours</span>
-        <span class="val green">GIDEON Active</span>
+        <span class="val green" id="hours-after">GIDEON Active</span>
       </div>
     </div>
   </div>
@@ -238,11 +244,25 @@
 </div>
 
 <script src="../script.js"></script>
+<script src="call-flow.js"></script>
 <script>
 (function() {
-  var name = sessionStorage.getItem('tct_client_name');
-  if (name) {
-    document.getElementById('client-name').textContent = name;
+  var setup = TCTCallFlow.loadSetup(localStorage);
+  var state = TCTCallFlow.dashboardState(setup);
+  var sessionName = sessionStorage.getItem('tct_client_name');
+  document.getElementById('client-name').textContent = state.complete ? state.businessName : (sessionName || 'Client');
+  document.getElementById('gideon-status-label').textContent = state.statusLabel;
+  document.getElementById('dashboard-greeting').textContent = '"' + state.greeting + '"';
+  document.getElementById('hours-weekday').textContent = state.weekdayHours;
+  document.getElementById('hours-saturday').textContent = state.saturdayHours;
+  document.getElementById('hours-sunday').textContent = state.sundayHours;
+  document.getElementById('hours-after').textContent = state.afterHours;
+
+  if (!state.complete) {
+    document.getElementById('gideon-status').classList.add('pending');
+    document.getElementById('hours-after').classList.remove('green');
+    document.getElementById('setup-warning').textContent = 'Call setup is incomplete. Finish onboarding before treating this account as live.';
+    document.getElementById('setup-warning').classList.add('show');
   }
 })();
 </script>
