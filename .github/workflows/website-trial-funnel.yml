@@ -1,0 +1,36 @@
+name: Website Trial Funnel Regression
+
+on:
+  pull_request:
+    paths:
+      - 'website/index.html'
+      - 'website/pricing.html'
+      - 'website/checkout.html'
+      - 'website/pay.html'
+      - 'website/demo.html'
+      - 'website/pilot/**'
+      - 'website/onboarding/**'
+      - 'tests/website-trial-funnel.test.js'
+      - '.github/workflows/website-trial-funnel.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'website/index.html'
+      - 'website/pricing.html'
+      - 'website/checkout.html'
+      - 'website/pay.html'
+      - 'website/demo.html'
+      - 'website/pilot/**'
+      - 'website/onboarding/**'
+      - 'tests/website-trial-funnel.test.js'
+      - '.github/workflows/website-trial-funnel.yml'
+
+jobs:
+  trial-funnel-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run trial funnel regression
+        run: node tests/website-trial-funnel.test.js

@@ -1018,21 +1018,21 @@ textarea.error {
         <div class="form-group-stack">
           <label>Select Your Plan <span class="required">*</span></label>
           <div class="plan-cards" id="planCards">
-            <label class="plan-card" data-plan="after-hours">
-              <input type="radio" name="plan" value="After-Hours ($97/mo)">
-              <div class="plan-name">After-Hours</div>
+            <label class="plan-card" data-plan="afterhours">
+              <input type="radio" name="plan" value="After-Hours Capture ($97/mo)">
+              <div class="plan-name">After-Hours Capture</div>
               <div class="plan-price">$97<span>/mo</span></div>
             </label>
-            <label class="plan-card selected" data-plan="starter">
+            <label class="plan-card selected" data-plan="full247">
               <div class="plan-badge">Most Popular</div>
-              <input type="radio" name="plan" value="Starter ($497/mo)" checked>
-              <div class="plan-name">Starter</div>
+              <input type="radio" name="plan" value="Revenue Recovery System ($497/mo)" checked>
+              <div class="plan-name">Revenue Recovery System</div>
               <div class="plan-price">$497<span>/mo</span></div>
             </label>
-            <label class="plan-card" data-plan="pro">
-              <input type="radio" name="plan" value="Pro ($997/mo)">
-              <div class="plan-name">Pro</div>
-              <div class="plan-price">$997<span>/mo</span></div>
+            <label class="plan-card" data-plan="premium">
+              <input type="radio" name="plan" value="Operational Infrastructure ($997+/mo)">
+              <div class="plan-name">Operational Infrastructure</div>
+              <div class="plan-price">$997+<span>/mo</span></div>
             </label>
           </div>
           <div class="field-error" id="err-plan">Please select a plan.</div>
@@ -1205,13 +1205,35 @@ textarea.error {
   // Plan Selector
   // =========================================================================
   var planCards = document.querySelectorAll('.plan-card');
+  var PLAN_ALIASES = {
+    afterhours: 'afterhours',
+    'after-hours': 'afterhours',
+    full247: 'full247',
+    revenue: 'full247',
+    starter: 'full247',
+    premium: 'premium',
+    operational: 'premium',
+    pro: 'premium'
+  };
+
+  function selectPlanCard(planKey) {
+    planCards.forEach(function(c) {
+      var selected = c.getAttribute('data-plan') === planKey;
+      c.classList.toggle('selected', selected);
+      c.querySelector('input[type="radio"]').checked = selected;
+    });
+  }
+
   planCards.forEach(function(card) {
     card.addEventListener('click', function() {
-      planCards.forEach(function(c) { c.classList.remove('selected'); });
-      this.classList.add('selected');
-      this.querySelector('input[type="radio"]').checked = true;
+      selectPlanCard(this.getAttribute('data-plan'));
     });
   });
+
+  var requestedPlan = new URLSearchParams(window.location.search).get('plan');
+  if (requestedPlan && PLAN_ALIASES[requestedPlan]) {
+    selectPlanCard(PLAN_ALIASES[requestedPlan]);
+  }
 
   // =========================================================================
   // Form Validation & Submission

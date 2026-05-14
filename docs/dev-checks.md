@@ -48,6 +48,12 @@ Run the static hero regression from the repo root:
 python3 website/tests/hero-regression.py
 ```
 
+Run the trial funnel regression from the repo root:
+
+```bash
+node tests/website-trial-funnel.test.js
+```
+
 Run Python syntax compilation from the repo root:
 
 ```bash

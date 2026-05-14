@@ -46,6 +46,7 @@ assert.strictEqual(
 });
 
 const checkoutHtml = read("website/checkout.html");
+const intakeHtml = read("website/onboarding/intake.html");
 
 [
   ["After-Hours Capture", 97, "https://buy.stripe.com/4gM00j7HG816fbO6Y3b3q03"],
@@ -65,6 +66,24 @@ assert.ok(
 assert.ok(
   checkoutHtml.includes("Selected plan: ") && checkoutHtml.includes("14 days free, then $"),
   "checkout should show selected plan and post-trial monthly billing copy"
+);
+
+[
+  ["afterhours", "After-Hours Capture ($97/mo)"],
+  ["full247", "Revenue Recovery System ($497/mo)"],
+  ["premium", "Operational Infrastructure ($997+/mo)"],
+].forEach(([planKey, label]) => {
+  assert.ok(intakeHtml.includes(`data-plan="${planKey}"`), `intake should use current plan key ${planKey}`);
+  assert.ok(intakeHtml.includes(label), `intake should use current plan label ${label}`);
+});
+
+["starter: 'full247'", "pro: 'premium'", "'after-hours': 'afterhours'"].forEach((alias) => {
+  assert.ok(intakeHtml.includes(alias), `intake should preserve legacy plan alias ${alias}`);
+});
+
+assert.ok(
+  intakeHtml.includes("new URLSearchParams(window.location.search).get('plan')"),
+  "intake should be able to preselect a plan from the checkout success URL"
 );
 
 console.log("website trial funnel regression tests passed");
