@@ -2,28 +2,68 @@
    Shared premium operational layer for the public buying path. */
 
 :root {
-  --tct-ink: #f7f7f2;
-  --tct-muted: rgba(247, 247, 242, 0.66);
-  --tct-faint: rgba(247, 247, 242, 0.38);
-  --tct-line: rgba(247, 247, 242, 0.10);
-  --tct-panel: rgba(247, 247, 242, 0.045);
-  --tct-panel-strong: rgba(247, 247, 242, 0.075);
-  --tct-green: #13d18e;
-  --tct-amber: #c98f55;
-  --tct-shadow: 0 28px 90px rgba(0, 0, 0, 0.35);
+  --tct-ink: #111210;
+  --tct-muted: rgba(17, 18, 16, 0.68);
+  --tct-faint: rgba(17, 18, 16, 0.42);
+  --tct-line: rgba(17, 18, 16, 0.10);
+  --tct-panel: rgba(255, 255, 255, 0.68);
+  --tct-panel-strong: rgba(255, 255, 255, 0.88);
+  --tct-green: #2d7352;
+  --tct-green-soft: #e7f0ea;
+  --tct-amber: #a97848;
+  --tct-cream: #f6f4ef;
+  --tct-warm: #ebe7df;
+  --tct-shadow: 0 28px 90px rgba(44, 54, 46, 0.12);
 }
 
 body.funnel-page {
+  --bg: #f7f5ef;
+  --bg-card: rgba(255, 255, 255, 0.82);
+  --bg-card-hover: #fff;
+  --green: var(--tct-green);
+  --green-dim: rgba(45, 115, 82, 0.10);
+  --green-glow: rgba(45, 115, 82, 0.10);
+  --text-1: #111210;
+  --text-2: rgba(17, 18, 16, 0.66);
+  --text-3: rgba(17, 18, 16, 0.42);
+  --border: rgba(17, 18, 16, 0.10);
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-hover: #fff;
   background:
-    radial-gradient(circle at 72% 8%, rgba(19, 209, 142, 0.13), transparent 34rem),
-    radial-gradient(circle at 8% 34%, rgba(201, 143, 85, 0.08), transparent 28rem),
-    #050606;
+    radial-gradient(circle at 72% 4%, rgba(45, 115, 82, 0.13), transparent 34rem),
+    radial-gradient(circle at 8% 30%, rgba(169, 120, 72, 0.10), transparent 28rem),
+    linear-gradient(180deg, #fbfaf7 0%, #f4f1ea 46%, #fbfaf7 100%);
+  color: var(--tct-ink);
 }
 
 .funnel-page .header {
-  background: rgba(5, 6, 6, 0.74);
-  border-bottom-color: rgba(247, 247, 242, 0.08);
+  background: rgba(250, 249, 245, 0.84);
+  border-bottom-color: rgba(17, 18, 16, 0.08);
   backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.funnel-page .header-inner {
+  height: 70px;
+}
+
+.funnel-page .logo {
+  color: var(--tct-ink);
+  font-size: 15px;
+}
+
+.funnel-page .logo-icon {
+  background: var(--tct-green);
+}
+
+.funnel-page .logo span,
+.funnel-page .nav a:hover,
+.funnel-page .nav a.active {
+  color: var(--tct-green);
+}
+
+.funnel-page .nav a {
+  color: rgba(17, 18, 16, 0.58);
 }
 
 .funnel-page .btn,
@@ -36,12 +76,25 @@ body.funnel-page {
 .funnel-page .btn-primary,
 .funnel-page .header-cta {
   background: var(--tct-green);
-  color: #04110d;
+  color: #fff;
 }
 
 .funnel-page .btn-secondary {
-  background: rgba(247, 247, 242, 0.055);
-  border-color: rgba(247, 247, 242, 0.13);
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(17, 18, 16, 0.12);
+  color: var(--tct-ink);
+}
+
+.funnel-page .hero,
+.funnel-page .hero-section {
+  padding-top: 150px;
+  background:
+    linear-gradient(180deg, rgba(45, 115, 82, 0.06), transparent 54%),
+    transparent;
+}
+
+.funnel-page .hero::before {
+  opacity: 0.22;
 }
 
 .funnel-page .hero,
@@ -54,14 +107,38 @@ body.funnel-page {
 .funnel-page .hero-label,
 .funnel-page .hero-badge,
 .funnel-page .feature-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
   color: var(--tct-green);
   letter-spacing: 0.12em;
+  background: rgba(45, 115, 82, 0.09);
+  border-color: rgba(45, 115, 82, 0.16);
+  border: 1px solid rgba(45, 115, 82, 0.16);
+  border-radius: 999px;
+  padding: 6px 14px;
 }
 
 .funnel-page .section-title,
 .funnel-page .hero-title,
 .funnel-page h1 {
   letter-spacing: -0.055em;
+  color: var(--tct-ink) !important;
+}
+
+.funnel-page p,
+.funnel-page .hero-sub,
+.funnel-page .section-desc,
+.funnel-page .feature-desc,
+.funnel-page .pricing-desc,
+.funnel-page .pricing-feature,
+.funnel-page .risk-desc,
+.funnel-page .proof-note,
+.funnel-page .form-card-sub,
+.funnel-page .transcript-note,
+.funnel-page .cta-sub {
+  color: var(--tct-muted);
 }
 
 .funnel-page .pricing-grid,
@@ -101,8 +178,8 @@ body.funnel-page {
 
 .funnel-page .pricing-card.featured {
   background:
-    linear-gradient(180deg, rgba(19, 209, 142, 0.12), rgba(247, 247, 242, 0.045));
-  border-color: rgba(19, 209, 142, 0.30);
+    linear-gradient(180deg, rgba(45, 115, 82, 0.11), rgba(255, 255, 255, 0.78));
+  border-color: rgba(45, 115, 82, 0.24);
 }
 
 .funnel-page .feature-row {
@@ -110,7 +187,112 @@ body.funnel-page {
 }
 
 .funnel-page .footer {
-  background: #050606;
+  background: #f7f5ef;
+  border-top-color: var(--tct-line);
+}
+
+.funnel-page .footer,
+.funnel-page .footer a,
+.funnel-page .footer-bottom {
+  color: var(--tct-muted);
+}
+
+.funnel-page .footer .logo {
+  color: var(--tct-ink);
+}
+
+.funnel-page .form-label,
+.funnel-page .form-card-title,
+.funnel-page .pricing-name,
+.funnel-page .pricing-price,
+.funnel-page .risk-title,
+.funnel-page .feature-heading,
+.funnel-page .feature-card h3,
+.funnel-page .cta-title,
+.funnel-page .transcript-title,
+.funnel-page .next-step-title {
+  color: var(--tct-ink);
+}
+
+.funnel-page .form-input,
+.funnel-page .form-select,
+.funnel-page .form-textarea {
+  background-color: rgba(255, 255, 255, 0.86);
+  border-color: rgba(17, 18, 16, 0.14);
+  color: var(--tct-ink);
+}
+
+.funnel-page .form-input::placeholder,
+.funnel-page .form-textarea::placeholder {
+  color: rgba(17, 18, 16, 0.40);
+}
+
+.funnel-page .form-select option {
+  background: #fff;
+  color: var(--tct-ink);
+}
+
+.funnel-page .hero-trust span,
+.funnel-page .industry-pill,
+.funnel-page .trust-item,
+.funnel-page .post-demo-plan,
+.funnel-page .next-step-card,
+.funnel-page .proof-bar {
+  background: rgba(255, 255, 255, 0.68);
+  border-color: var(--tct-line);
+  color: var(--tct-muted);
+}
+
+.funnel-page .btn-demo,
+.funnel-page .post-demo-plan.featured,
+.funnel-page .post-demo-plan:hover {
+  background: var(--tct-green);
+  color: #fff;
+  border-color: var(--tct-green);
+}
+
+.funnel-page .btn-demo svg,
+.funnel-page .post-demo-plan.featured .post-demo-plan-action,
+.funnel-page .post-demo-plan:hover .post-demo-plan-action {
+  color: #fff;
+}
+
+.funnel-page .post-demo-plan.featured *,
+.funnel-page .post-demo-plan:hover * {
+  color: #fff !important;
+}
+
+.funnel-page .post-demo-plan-action,
+.funnel-page .post-demo-plan-kicker,
+.funnel-page .matrix-check,
+.funnel-page .pricing-badge,
+.funnel-page .proof-val,
+.funnel-page .call-cta-number {
+  color: var(--tct-green);
+}
+
+.funnel-page .phone-screen,
+.funnel-page .transcript-bubble {
+  background: #fff;
+  color: var(--tct-ink);
+}
+
+.funnel-page .call-status,
+.funnel-page .transcript-name.gideon {
+  color: var(--tct-green);
+}
+
+.funnel-page .mobile-nav {
+  background: rgba(250, 249, 245, 0.98);
+}
+
+.funnel-page .mobile-nav a,
+.funnel-page .menu-toggle span {
+  color: var(--tct-ink);
+}
+
+.funnel-page .menu-toggle span {
+  background: var(--tct-ink);
 }
 
 .funnel-transition {
@@ -127,8 +309,8 @@ body.funnel-page {
   border: 1px solid var(--tct-line);
   border-radius: 28px;
   background:
-    linear-gradient(135deg, rgba(247, 247, 242, 0.08), rgba(247, 247, 242, 0.03)),
-    #080909;
+    linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.54)),
+    #f8f6f0;
   overflow: hidden;
   box-shadow: var(--tct-shadow);
 }
@@ -164,7 +346,7 @@ body.funnel-page {
 .funnel-frame {
   min-height: 280px;
   position: relative;
-  background: #0a0d0c;
+  background: #e8e4dc;
   overflow: hidden;
 }
 
@@ -180,7 +362,7 @@ body.funnel-page {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 10%, rgba(0, 0, 0, 0.64));
+  background: linear-gradient(180deg, transparent 34%, rgba(17, 18, 16, 0.36));
 }
 
 .plan-visual-grid {
@@ -196,7 +378,7 @@ body.funnel-page {
   border: 1px solid var(--tct-line);
   border-radius: 24px;
   overflow: hidden;
-  background: #080909;
+  background: #ebe7df;
   position: relative;
   box-shadow: var(--tct-shadow);
 }
@@ -229,23 +411,23 @@ body.funnel-page {
 
 .plan-visual-content h3 {
   margin: 0 0 8px;
-  color: var(--tct-ink);
+  color: #fff;
   font-size: 20px;
   letter-spacing: -0.035em;
 }
 
 .plan-visual-content p {
   margin: 0 0 14px;
-  color: var(--tct-muted);
+  color: rgba(255, 255, 255, 0.76);
   font-size: 13px;
   line-height: 1.55;
 }
 
 .plan-visual-tag {
   display: inline-flex;
-  color: var(--tct-green);
-  border: 1px solid rgba(19, 209, 142, 0.24);
-  background: rgba(19, 209, 142, 0.10);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(17, 18, 16, 0.38);
   border-radius: 999px;
   padding: 6px 10px;
   font-size: 11px;
