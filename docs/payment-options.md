@@ -119,11 +119,12 @@ Now you type 9 characters and the full link is ready to text.
 
 ## Recommended Setup Order
 
-1. **Start with PayPal** — easiest trial setup, Wallace already has an account
-2. **Add Square** — for customers who don't want PayPal
-3. **Add GoCardless later** — when volume justifies the lower fees (10+ customers)
+1. **Square first** — this is the approved public checkout provider for the website trial funnel
+2. **Manual Square recurring invoice for higher tiers** — use this until the `$497` and `$997+` Square trial links are created and verified
+3. **GoCardless later** — when volume justifies the lower fees (10+ customers)
 
 ## Notes
-- Stripe requires 18+ or parent/guardian — not available yet
+- See `docs/square-trial-links.md` for the current public website link state.
+- Do not add Stripe links to the public trial funnel.
 - Venmo is fine for one-offs but doesn't do recurring subscriptions
 - Always capture payment method DURING the close call — conversion drops 80% if you "send it later"

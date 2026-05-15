@@ -501,34 +501,38 @@
 </div>
 
 <script>
-  // ── PLAN CONFIG ──
+  // Square is the approved public checkout provider. Leave a plan link blank
+  // until the matching Square recurring trial invoice exists and has been verified.
   var selectedPlan = 'afterhours';
+  var SQUARE_TRIAL_LINKS = {
+    afterhours: 'https://square.link/u/POTLUBKa',
+    full247: '',
+    premium: ''
+  };
+
   var PLANS = {
     afterhours: {
       name: 'After-Hours Capture',
       price: 97,
       roi: '$97 < 1 missed call',
-      trialLink: 'https://square.link/u/POTLUBKa',
+      trialLink: SQUARE_TRIAL_LINKS.afterhours,
       checkoutLabel: 'Start After-Hours Capture Trial',
-      configured: true,
       paypal: 'https://paypal.me/wallacedobbs/97'
     },
     full247: {
       name: 'Revenue Recovery System',
       price: 497,
       roi: '$497 < 1 service call',
-      trialLink: 'tel:+16292699697',
+      trialLink: SQUARE_TRIAL_LINKS.full247,
       checkoutLabel: 'Request $497 Square Trial Setup',
-      configured: false,
       paypal: 'https://paypal.me/wallacedobbs/497'
     },
     premium: {
       name: 'Operational Infrastructure',
       price: 997,
       roi: '$997 < 2 service calls',
-      trialLink: 'tel:+16292699697',
+      trialLink: SQUARE_TRIAL_LINKS.premium,
       checkoutLabel: 'Request $997+ Square Trial Setup',
-      configured: false,
       paypal: 'https://paypal.me/wallacedobbs/997'
     }
   };
@@ -550,11 +554,12 @@
     var btn = document.getElementById('checkout-btn');
     var sub = document.getElementById('checkout-sub');
     var status = document.getElementById('checkout-status');
+    var hasSquareLink = Boolean(p.trialLink);
     btn.textContent = p.checkoutLabel;
-    btn.href = p.trialLink;
+    btn.href = hasSquareLink ? p.trialLink : 'tel:+16292699697';
     sub.textContent = 'Selected plan: ' + p.name + ' - 14 days free, then $' + p.price + '/mo unless canceled before renewal';
     status.className = 'checkout-status';
-    if (p.configured) {
+    if (hasSquareLink) {
       status.innerHTML = '<strong>' + p.name + ' selected.</strong> This is the configured Square trial path for $' + p.price + '/mo after the trial. Wallace reviews setup before Gideon goes live.';
     } else {
       status.innerHTML = '<strong>' + p.name + ' selected.</strong> This tier needs the correct Square recurring invoice before checkout. Call Wallace so the $' + p.price + '/mo trial is set up without sending you to the wrong payment link.';

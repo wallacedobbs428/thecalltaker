@@ -65,9 +65,21 @@ assert.ok(
 );
 
 assert.ok(
+  checkoutHtml.includes("var SQUARE_TRIAL_LINKS") &&
+    checkoutHtml.includes("full247: '',") &&
+    checkoutHtml.includes("premium: ''"),
+  "checkout should keep missing Square links explicit until the real $497/$997 links exist"
+);
+
+assert.ok(
   checkoutHtml.includes("Request $497 Square Trial Setup") &&
     checkoutHtml.includes("Request $997+ Square Trial Setup"),
   "checkout should not send higher tiers to a generic or wrong payment link"
+);
+
+assert.ok(
+  checkoutHtml.includes("hasSquareLink ? p.trialLink : 'tel:+16292699697'"),
+  "checkout should fall back to a call instead of a wrong payment link when a Square link is missing"
 );
 
 assert.ok(
