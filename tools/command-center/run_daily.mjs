@@ -6,6 +6,7 @@ import { writeSmsPreview } from "../outreach/generate_sms_preview.mjs";
 import { writeLaunchGate } from "../creative/launch_gate.mjs";
 import { writeOrganicQueue } from "../creative/generate_organic_queue.mjs";
 import { writeSocialHandoff } from "../creative/generate_social_handoff.mjs";
+import { writeApprovedSocialHandoff } from "../creative/apply_social_approval.mjs";
 import { writeActionBoard } from "./wallace_action_board.mjs";
 
 export const DAILY_RUNNER_NO_SEND_MODE = true;
@@ -24,6 +25,8 @@ const paths = {
   launchGate: path.join(repoRoot, "tools/creative/output/launch-gate.sample.md"),
   organicQueue: path.join(repoRoot, "tools/creative/output/organic-content-queue.sample.md"),
   socialHandoff: path.join(repoRoot, "tools/creative/output/social-agent-handoff.sample.json"),
+  socialApproval: path.join(repoRoot, "tools/creative/social_approval.sample.json"),
+  socialApproved: path.join(repoRoot, "tools/creative/output/social-agent-approved.sample.json"),
   actionBoard: path.join(repoRoot, "tools/command-center/output/wallace-action-board.sample.md"),
 };
 
@@ -67,6 +70,11 @@ export function runDailyCommandCenter() {
   const launchGate = writeLaunchGate(paths.creativeAssets, paths.launchGate);
   const organicQueue = writeOrganicQueue(paths.creativeAssets, paths.organicQueue);
   const socialHandoff = writeSocialHandoff(paths.creativeAssets, paths.socialHandoff);
+  const socialApproved = writeApprovedSocialHandoff({
+    handoffPath: paths.socialHandoff,
+    approvalPath: paths.socialApproval,
+    outputPath: paths.socialApproved,
+  });
   const actionBoard = writeActionBoard({ output: paths.actionBoard });
 
   return {
@@ -79,6 +87,7 @@ export function runDailyCommandCenter() {
       launch_gate: launchGate.output,
       organic_queue: organicQueue.output,
       social_handoff: socialHandoff.output,
+      social_approved_handoff: socialApproved.output,
       action_board: actionBoard.output,
     },
     summary: {
@@ -89,6 +98,7 @@ export function runDailyCommandCenter() {
       paid_ready: launchGate.paid_ready,
       posts_ready_for_manual_review: organicQueue.posts_ready_for_manual_review,
       social_agent_candidates: socialHandoff.candidates,
+      social_approved_candidates: socialApproved.approved_candidates,
       a_prospects: actionBoard.a_prospects,
     },
   };
