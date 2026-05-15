@@ -66,34 +66,35 @@ assert.strictEqual(
 });
 
 assert.ok(
-  checkoutHtml.includes("https://square.link/u/POTLUBKa"),
+  checkoutHtml.includes("https://square.link/u/2hfmRPY7"),
   "checkout should use the configured Square link for the public $97 trial path"
 );
 
 assert.ok(
-  checkoutHtml.includes("full247: 'https://square.link/u/q6veA8JM'") &&
-    checkoutHtml.includes("premium: 'https://square.link/u/NsAkfZWW'"),
+  checkoutHtml.includes("full247: 'https://square.link/u/S305ewBr'") &&
+    checkoutHtml.includes("premium: 'https://square.link/u/OpwWF9Sa'"),
   "checkout should use the configured Square links for the public $497 and $997 trial paths"
 );
 
 assert.ok(
-  checkoutHtml.includes("Start Revenue Recovery System Trial") &&
-    checkoutHtml.includes("Start Operational Infrastructure Trial"),
-  "checkout should label higher-tier checkout actions as plan-specific trial starts"
+  checkoutHtml.includes("Revenue Recovery System: 14 days free, then $497/mo") &&
+    checkoutHtml.includes("Operational Infrastructure: 14 days free, then $997/mo"),
+  "checkout should state post-trial monthly billing terms before Square opens"
 );
 
 assert.ok(
-  checkoutHtml.includes("hasSquareLink ? p.trialLink : 'tel:+16292699697'"),
-  "checkout should fall back to a call instead of a wrong payment link when a Square link is missing"
+  checkoutHtml.includes("Choose the plan before the trial starts.") &&
+    checkoutHtml.includes("Payment details are entered on Square-hosted checkout."),
+  "checkout should present a focused premium plan-selection experience"
 );
 
 assert.ok(
-  checkoutHtml.includes('href="#plans" class="header-cta"'),
-  "checkout header trial CTA should scroll to plan selection before provider checkout"
+  checkoutHtml.includes('id="plans"'),
+  "checkout should keep a plan-selection anchor before provider checkout"
 );
 
 assert.ok(
-  checkoutHtml.includes("Selected plan: ") && checkoutHtml.includes("14 days free, then $"),
+  checkoutHtml.includes("Trial summary") && checkoutHtml.includes("unless canceled before renewal"),
   "checkout should show selected plan and post-trial monthly billing copy"
 );
 

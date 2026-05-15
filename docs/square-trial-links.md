@@ -9,9 +9,15 @@ Square link for higher tiers.
 
 | Plan | Monthly Price After Trial | Square Link State |
 | --- | ---: | --- |
-| After-Hours Capture | `$97/mo` | Configured: `https://square.link/u/POTLUBKa` |
-| Revenue Recovery System | `$497/mo` | Configured: `https://square.link/u/q6veA8JM` |
-| Operational Infrastructure | `$997+/mo` | Configured: `https://square.link/u/NsAkfZWW` |
+| After-Hours Capture | `$97/mo` | Configured: `https://square.link/u/2hfmRPY7` |
+| Revenue Recovery System | `$497/mo` | Configured: `https://square.link/u/S305ewBr` |
+| Operational Infrastructure | `$997+/mo` | Configured: `https://square.link/u/OpwWF9Sa` |
+
+Each Square-hosted checkout title must state the renewal terms visibly:
+
+- `After-Hours Capture: 14 days free, then $97/mo`
+- `Revenue Recovery System: 14 days free, then $497/mo`
+- `Operational Infrastructure: 14 days free, then $997/mo`
 
 ## Website Behavior
 
