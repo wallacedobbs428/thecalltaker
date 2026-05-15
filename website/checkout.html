@@ -462,25 +462,76 @@
   }
 
   @media (max-width: 640px) {
+    html {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    *,
+    *::before,
+    *::after {
+      min-width: 0;
+    }
     .topbar-inner,
     .shell {
-      max-width: 430px;
-      margin-left: 0;
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
       margin-right: auto;
+    }
+    .topbar-inner {
+      padding: 14px;
+      gap: 10px;
+    }
+    .brand {
+      min-width: 0;
+    }
+    .brand span:last-child {
+      white-space: nowrap;
     }
     .top-actions .hide-sm {
       display: none;
+    }
+    .top-pill {
+      padding: 8px 11px;
+      white-space: nowrap;
     }
     .shell {
       padding: 30px 14px 110px;
     }
     h1 {
-      font-size: 40px;
-      line-height: 1;
-      letter-spacing: -0.045em;
+      max-width: 340px;
+      font-size: 34px;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
     }
     .lead {
+      max-width: 340px;
       font-size: 17px;
+    }
+    .hero-copy,
+    .hero-points,
+    .point,
+    .point span:last-child,
+    .visual-card,
+    .plan-card,
+    .plan-name-row,
+    .plan-name-row span:last-child,
+    .selected-line,
+    .money-row {
+      max-width: 100%;
+    }
+    .hero,
+    .checkout-grid,
+    .panel,
+    .summary,
+    .visual {
+      max-width: 100%;
     }
     .features {
       grid-template-columns: 1fr;
@@ -488,6 +539,12 @@
     .plan-top {
       flex-direction: column;
       gap: 12px;
+    }
+    .plan-name {
+      display: block;
+    }
+    .plan-desc {
+      display: block;
     }
     .price {
       padding-left: 34px;

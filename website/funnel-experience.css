@@ -275,15 +275,115 @@ body.funnel-page {
 }
 
 @media (max-width: 640px) {
+  html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body.funnel-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .funnel-page *,
+  .funnel-page *::before,
+  .funnel-page *::after {
+    min-width: 0;
+  }
+
+  .pricing-page .header,
+  .pricing-page .header-inner,
+  .pricing-page .hero,
+  .pricing-page .section,
+  .pricing-page .wrap,
+  .pricing-page .pricing-grid,
+  .pricing-page .pricing-card,
+  .pricing-page .funnel-transition,
+  .pricing-page .plan-visual-grid,
+  .pricing-page .plan-visual,
+  .pricing-page .footer {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .pricing-page .header-inner {
+    grid-template-columns: auto auto !important;
+    justify-content: space-between;
+    column-gap: 12px !important;
+    padding-left: 22px !important;
+    padding-right: 22px !important;
+  }
+
+  .pricing-page .logo {
+    white-space: nowrap;
+  }
+
+  .pricing-page .wrap {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
   .funnel-transition {
     padding: 0 14px 50px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .funnel-transition-copy {
     padding: 24px;
   }
 
+  .pricing-page .hero {
+    padding-top: 118px;
+  }
+
+  .pricing-page .hero h1 {
+    max-width: 330px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 32px !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.035em !important;
+    overflow-wrap: normal;
+  }
+
+  .pricing-page .hero p {
+    max-width: 330px !important;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .plan-visual-grid {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .plan-visual {
     min-height: 270px;
+    width: 100%;
+  }
+
+  .plan-visual-content {
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+  }
+
+  .plan-visual-content h3 {
+    font-size: 17px;
+    line-height: 1.22;
+    overflow-wrap: normal;
+  }
+
+  .plan-visual-content p {
+    font-size: 13px;
+  }
+
+  .plan-visual-tag {
+    max-width: 100%;
+    white-space: normal;
   }
 }
