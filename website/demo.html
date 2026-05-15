@@ -839,29 +839,78 @@
       margin-bottom: 28px;
     }
 
-    .btn-trial {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 16px 36px;
-      background: var(--green);
-      color: #000;
-      font-size: 17px;
-      font-weight: 700;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    .post-demo-plans {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 28px;
+      text-align: left;
     }
 
-    .btn-trial:hover {
-      background: #00b86e;
-      box-shadow: 0 0 30px var(--green-glow);
+    .post-demo-plan {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 100%;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.035);
+      color: var(--text-1);
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+
+    .post-demo-plan:hover {
+      border-color: rgba(34,197,94,0.35);
+      background: rgba(34,197,94,0.07);
       transform: translateY(-1px);
     }
 
-    .btn-trial svg { width: 18px; height: 18px; }
+    .post-demo-plan.featured {
+      border-color: rgba(34,197,94,0.38);
+      background: rgba(34,197,94,0.08);
+    }
+
+    .post-demo-plan-kicker {
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-demo-plan-name {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .post-demo-plan-price {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .post-demo-plan-price span {
+      color: var(--text-3);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+
+    .post-demo-plan-copy {
+      color: var(--text-2);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .post-demo-plan-action {
+      margin-top: auto;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+    }
 
     .trust-signals {
       display: flex;
@@ -881,84 +930,18 @@
 
     .trust-item svg { width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2.5; }
 
-    /* Text me section */
-    .text-me {
+    .post-demo-note {
       margin-top: 40px;
       padding-top: 32px;
       border-top: 1px solid var(--border);
     }
 
-    .text-me p {
+    .post-demo-note p {
+      max-width: 680px;
+      margin: 0 auto;
       font-size: 15px;
       color: var(--text-2);
-      margin-bottom: 12px;
-    }
-
-    .text-me-form {
-      display: flex;
-      gap: 10px;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    .text-me-form input {
-      flex: 1;
-      padding: 12px 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text-1);
-      font-size: 15px;
-      font-family: inherit;
-    }
-
-    .text-me-form input:focus {
-      outline: none;
-      border-color: var(--green);
-    }
-
-    .text-me-form input::placeholder { color: var(--text-3); }
-
-    .text-me-form input[aria-invalid="true"] {
-      border-color: #ef4444;
-      box-shadow: 0 0 0 3px rgba(239,68,68,0.14);
-    }
-
-    .text-me-form button {
-      padding: 12px 20px;
-      background: var(--green);
-      color: #000;
-      font-weight: 700;
-      font-size: 14px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: inherit;
-      white-space: nowrap;
-      transition: background 0.2s;
-    }
-
-    .text-me-form button:hover { background: #00b86e; }
-
-    .text-me-form button:disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-
-    .text-me-success {
-      display: none;
-      color: var(--green);
-      font-size: 14px;
-      font-weight: 600;
-      margin-top: 10px;
-    }
-
-    .text-me-status {
-      min-height: 18px;
-      margin-top: 8px;
-      color: #f87171;
-      font-size: 12px;
-      line-height: 1.35;
+      line-height: 1.65;
     }
 
     /* ===== FOOTER ===== */
@@ -1120,8 +1103,7 @@
         overflow-wrap: anywhere;
       }
       .phone-mockup { width: 260px; }
-      .text-me-form { flex-direction: column; }
-      .text-me-form button { width: 100%; padding: 14px; }
+      .post-demo-plans { grid-template-columns: 1fr; }
       .sticky-mobile-bar a {
         flex: 0 0 50%;
         max-width: 50%;
@@ -1370,7 +1352,7 @@
 <section class="demo-experience" id="demo-experience" aria-live="polite">
   <div class="wrap">
 
-    <div class="ready-label">Gideon is ready to answer for <span class="biz-name" id="demo-biz-name">Your Business</span></div>
+    <div class="ready-label">Preview built for <span class="biz-name" id="demo-biz-name">Your Business</span></div>
 
     <!-- Phone Mockup -->
     <div class="phone-mockup">
@@ -1449,13 +1431,32 @@
 <section class="bottom-cta" id="bottom-cta">
   <div class="wrap">
     <div class="cta-box">
-      <h2 class="cta-title">Ready to put Gideon to work for <span class="biz-name" id="cta-biz-name">Your Business</span>?</h2>
-      <p class="cta-sub">Start the trial, then your call flow is reviewed before Gideon goes live.</p>
+      <h2 class="cta-title">Choose the setup path for <span class="biz-name" id="cta-biz-name">Your Business</span>.</h2>
+      <p class="cta-sub">Pick the operating layer you want to trial. Square shows the post-trial price before payment details, then Wallace reviews setup before Gideon is treated as live.</p>
 
-      <a href="/checkout.html" class="btn-trial">
-        Start Free 14-Day Trial
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
+      <div class="post-demo-plans" aria-label="Choose a trial plan after preview">
+        <a class="post-demo-plan" href="/checkout.html?plan=afterhours">
+          <span class="post-demo-plan-kicker">Entry coverage</span>
+          <span class="post-demo-plan-name">After-Hours Capture</span>
+          <span class="post-demo-plan-price">$97<span>/mo after trial</span></span>
+          <span class="post-demo-plan-copy">For nights, weekends, holidays, and urgent calls when the team is offline.</span>
+          <span class="post-demo-plan-action">Start this trial</span>
+        </a>
+        <a class="post-demo-plan featured" href="/checkout.html?plan=full247">
+          <span class="post-demo-plan-kicker">Main system</span>
+          <span class="post-demo-plan-name">Revenue Recovery System</span>
+          <span class="post-demo-plan-price">$497<span>/mo after trial</span></span>
+          <span class="post-demo-plan-copy">For 24/7 and overflow capture, missed-call recovery, and cleaner lead handoff.</span>
+          <span class="post-demo-plan-action">Start this trial</span>
+        </a>
+        <a class="post-demo-plan" href="/checkout.html?plan=premium">
+          <span class="post-demo-plan-kicker">Custom operations</span>
+          <span class="post-demo-plan-name">Operational Infrastructure</span>
+          <span class="post-demo-plan-price">$997+<span>/mo after trial</span></span>
+          <span class="post-demo-plan-copy">For call-flow design, handoff planning, and operational rules around real workflows.</span>
+          <span class="post-demo-plan-action">Start this trial</span>
+        </a>
+      </div>
 
       <div class="trust-signals">
         <div class="trust-item">
@@ -1476,15 +1477,8 @@
         </div>
       </div>
 
-      <!-- Text me the details -->
-      <div class="text-me">
-        <p>Want the trial details by text?</p>
-        <form class="text-me-form" id="text-me-form" onsubmit="return false;">
-          <input type="tel" placeholder="(555) 123-4567" id="text-me-phone" maxlength="20" autocomplete="tel" inputmode="tel" aria-describedby="text-me-status">
-          <button type="button" id="text-me-btn">Text Me</button>
-        </form>
-        <div class="text-me-status" id="text-me-status" role="status" aria-live="polite"></div>
-        <div class="text-me-success" id="text-me-success" role="status" aria-live="polite">We'll text you shortly.</div>
+      <div class="post-demo-note">
+        <p>The useful work is not just a voice answering. It is filtering noise, capturing the details your team needs, and handing off the calls that are actually worth attention. No SMS, provider routing, booking, or backend sync is implied from this preview alone.</p>
       </div>
     </div>
   </div>
@@ -1637,55 +1631,6 @@
   });
   bizInput.addEventListener('input', function() {
     if (bizInput.value.trim()) setBizError('');
-  });
-
-  // ===== Text me handler (visual only) =====
-  var textMeBtn = document.getElementById('text-me-btn');
-  var textMePhone = document.getElementById('text-me-phone');
-  var textMeSuccess = document.getElementById('text-me-success');
-  var textMeStatus = document.getElementById('text-me-status');
-
-  function setTextMeStatus(message, isError) {
-    if (textMeStatus) {
-      textMeStatus.textContent = message || '';
-      textMeStatus.style.color = isError ? '#f87171' : 'var(--green)';
-    }
-    textMePhone.setAttribute('aria-invalid', isError ? 'true' : 'false');
-  }
-
-  textMeBtn.addEventListener('click', function() {
-    var phone = textMePhone.value.trim();
-    var digits = phone.replace(/\D/g, '');
-    if (digits.length < 10) {
-      setTextMeStatus('Enter a 10 digit phone number so we can text the details.', true);
-      textMePhone.focus();
-      return;
-    }
-
-    textMeBtn.textContent = 'Sent!';
-    textMeBtn.disabled = true;
-    textMeBtn.setAttribute('aria-busy', 'true');
-    setTextMeStatus('', false);
-    textMeSuccess.style.display = 'block';
-
-    if (typeof gtag === 'function') {
-      gtag('event', 'text_me_details', {
-        event_category: 'lead_capture',
-        event_label: 'demo_page'
-      });
-    }
-  });
-
-  textMePhone.addEventListener('input', function(e) {
-    var digits = e.target.value.replace(/\D/g, '').slice(0, 10);
-    var formatted = digits;
-    if (digits.length > 3 && digits.length <= 6) {
-      formatted = '(' + digits.slice(0, 3) + ') ' + digits.slice(3);
-    } else if (digits.length > 6) {
-      formatted = '(' + digits.slice(0, 3) + ') ' + digits.slice(3, 6) + '-' + digits.slice(6);
-    }
-    e.target.value = formatted;
-    if (digits.length === 10) setTextMeStatus('', false);
   });
 
   // ===== Auto-focus business name on load =====

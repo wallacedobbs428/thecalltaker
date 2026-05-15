@@ -40,6 +40,9 @@ assert.strictEqual(
   ["website/pricing.html", "/checkout.html?plan=afterhours"],
   ["website/pricing.html", "/checkout.html?plan=full247"],
   ["website/pricing.html", "/checkout.html?plan=premium"],
+  ["website/demo.html", "/checkout.html?plan=afterhours"],
+  ["website/demo.html", "/checkout.html?plan=full247"],
+  ["website/demo.html", "/checkout.html?plan=premium"],
 ].forEach(([page, expectedHref]) => {
   assert.ok(
     read(page).includes(expectedHref),
@@ -96,6 +99,23 @@ assert.ok(
 assert.ok(
   checkoutHtml.includes("Trial summary") && checkoutHtml.includes("unless canceled before renewal"),
   "checkout should show selected plan and post-trial monthly billing copy"
+);
+
+const demoHtml = read("website/demo.html");
+
+assert.strictEqual(
+  demoHtml.includes("We'll text you shortly") ||
+    demoHtml.includes("Text Me") ||
+    demoHtml.includes("text-me"),
+  false,
+  "demo page should not imply SMS follow-up exists without a live provider path"
+);
+
+assert.ok(
+  demoHtml.includes("Choose the setup path") &&
+    demoHtml.includes("Square shows the post-trial price") &&
+    demoHtml.includes("No SMS, provider routing, booking, or backend sync is implied"),
+  "demo page should move preview users into a clear, provider-safe plan-selection follow-up"
 );
 
 [
