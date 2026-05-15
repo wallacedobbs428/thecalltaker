@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { writeDailyQueue } from "../outreach/generate_daily_queue.mjs";
 import { writeApprovalPacket } from "../outreach/generate_sms_approval_packet.mjs";
 import { writeSmsPreview } from "../outreach/generate_sms_preview.mjs";
+import { writeSmsStyleReport } from "../outreach/validate_sms_copy_style.mjs";
 import { writeLaunchGate } from "../creative/launch_gate.mjs";
 import { writeOrganicQueue } from "../creative/generate_organic_queue.mjs";
 import { writeSocialHandoff } from "../creative/generate_social_handoff.mjs";
@@ -23,6 +24,7 @@ const paths = {
   smsSampleProspect: path.join(repoRoot, "tools/outreach/sms_preview_sample.json"),
   smsWarmPreview: path.join(repoRoot, "tools/outreach/output/sms-preview.sample.md"),
   smsColdPreview: path.join(repoRoot, "tools/outreach/output/sms-preview-cold-blocked.sample.md"),
+  smsStyleReport: path.join(repoRoot, "tools/outreach/output/sms-style-report.sample.md"),
   creativeAssets: path.join(repoRoot, "tools/creative/creative_assets.sample.json"),
   launchGate: path.join(repoRoot, "tools/creative/output/launch-gate.sample.md"),
   organicQueue: path.join(repoRoot, "tools/creative/output/organic-content-queue.sample.md"),
@@ -73,6 +75,7 @@ export function runDailyCommandCenter() {
     },
     destination: paths.smsColdPreview,
   });
+  const smsStyle = writeSmsStyleReport({ outputPath: paths.smsStyleReport });
   const launchGate = writeLaunchGate(paths.creativeAssets, paths.launchGate);
   const organicQueue = writeOrganicQueue(paths.creativeAssets, paths.organicQueue);
   const socialHandoff = writeSocialHandoff(paths.creativeAssets, paths.socialHandoff);
@@ -102,6 +105,7 @@ export function runDailyCommandCenter() {
       sms_approval_packet: smsApproval.output,
       sms_warm_preview: smsWarm.output,
       sms_cold_preview: smsCold.output,
+      sms_style_report: smsStyle.output,
       launch_gate: launchGate.output,
       organic_queue: organicQueue.output,
       social_handoff: socialHandoff.output,
@@ -116,6 +120,7 @@ export function runDailyCommandCenter() {
       prospects_scored: dailyQueue.scored.length,
       sms_status: smsApproval.status,
       sms_cold_gate: smsCold.gate,
+      sms_style_pass: smsStyle.pass,
       organic_ready: launchGate.organic_ready,
       paid_ready: launchGate.paid_ready,
       posts_ready_for_manual_review: organicQueue.posts_ready_for_manual_review,

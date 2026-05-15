@@ -14,6 +14,7 @@ test("daily runner regenerates all operating outputs", () => {
   assert.ok(result.summary.prospects_scored > 0);
   assert.equal(result.summary.sms_status, "blocked");
   assert.equal(result.summary.sms_cold_gate, "blocked_provider_approval_required");
+  assert.equal(result.summary.sms_style_pass, true);
   assert.ok(result.summary.organic_ready > 0);
   assert.ok(result.summary.posts_ready_for_manual_review > 0);
   assert.ok(result.summary.social_agent_candidates > 0);
@@ -32,6 +33,7 @@ test("generated outputs preserve operating boundaries", () => {
 
   assert.match(combined, /No-send mode: on|no-send review only|local no-post queue|local no-send\/no-post/);
   assert.match(combined, /Cold SMS|blocked_provider_approval_required|SMS remains draft-only/);
+  assert.match(combined, /SMS Copy Style Report|Cold SMS remains blocked/);
   assert.doesNotMatch(combined, /Send allowed: yes/);
   assert.doesNotMatch(combined, /Post allowed by tool: yes/);
   assert.match(combined, /post_allowed_default|post_allowed/);
