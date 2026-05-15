@@ -205,20 +205,6 @@
   }
   .footer a { color: #58a6ff; text-decoration: none; }
 
-  /* Payment option buttons */
-  .payment-options { margin: 20px 0; }
-  .pay-btn {
-    display: block; width: 100%;
-    border: none; border-radius: 14px;
-    padding: 16px; font-size: 16px; font-weight: 700;
-    text-align: center; cursor: pointer;
-    text-decoration: none; margin: 8px 0;
-    transition: all 0.15s;
-  }
-  .pay-btn:active { transform: scale(0.98); opacity: 0.9; }
-  .paypal-btn { background: #0070ba; color: #fff; }
-  .venmo-btn { background: #3d95ce; color: #fff; }
-
   /* Urgency bar */
   .urgency-bar {
     background: rgba(248,81,73,0.12);
@@ -405,20 +391,6 @@
     <div class="checkout-status" id="checkout-status"></div>
   </div>
 
-  <!-- PAYMENT OPTIONS -->
-  <div class="payment-options" id="payment-options" style="display:none;">
-    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:14px;text-align:center;">Ready to Pay? Choose How</div>
-    <a class="pay-btn paypal-btn" id="paypal-btn" href="#" onclick="payWithPayPal(event)">
-      Pay with PayPal — <span id="paypal-price">$97/mo</span>
-    </a>
-    <a class="pay-btn venmo-btn" href="https://venmo.com/u/wallace-dobbs-2" target="_blank">
-      Pay with Venmo — @wallace-dobbs-2
-    </a>
-    <div style="text-align:center;font-size:12px;color:#8b949e;margin-top:8px;">
-      Manual payment backup only after plan confirmation. Do not send manual payment before your plan setup is confirmed.
-    </div>
-  </div>
-
   <!-- WHAT YOU GET -->
   <div class="features-section">
     <div class="features-title">What You Get</div>
@@ -501,13 +473,13 @@
 </div>
 
 <script>
-  // Square is the approved public checkout provider. Leave a plan link blank
-  // until the matching Square recurring trial invoice exists and has been verified.
+  // Square is the approved public checkout provider. Each link must point to
+  // the matching recurring trial checkout for that exact monthly plan.
   var selectedPlan = 'afterhours';
   var SQUARE_TRIAL_LINKS = {
     afterhours: 'https://square.link/u/POTLUBKa',
-    full247: '',
-    premium: ''
+    full247: 'https://square.link/u/q6veA8JM',
+    premium: 'https://square.link/u/NsAkfZWW'
   };
 
   var PLANS = {
@@ -516,24 +488,21 @@
       price: 97,
       roi: '$97 < 1 missed call',
       trialLink: SQUARE_TRIAL_LINKS.afterhours,
-      checkoutLabel: 'Start After-Hours Capture Trial',
-      paypal: 'https://paypal.me/wallacedobbs/97'
+      checkoutLabel: 'Start After-Hours Capture Trial'
     },
     full247: {
       name: 'Revenue Recovery System',
       price: 497,
       roi: '$497 < 1 service call',
       trialLink: SQUARE_TRIAL_LINKS.full247,
-      checkoutLabel: 'Request $497 Square Trial Setup',
-      paypal: 'https://paypal.me/wallacedobbs/497'
+      checkoutLabel: 'Start Revenue Recovery System Trial'
     },
     premium: {
       name: 'Operational Infrastructure',
       price: 997,
       roi: '$997 < 2 service calls',
       trialLink: SQUARE_TRIAL_LINKS.premium,
-      checkoutLabel: 'Request $997+ Square Trial Setup',
-      paypal: 'https://paypal.me/wallacedobbs/997'
+      checkoutLabel: 'Start Operational Infrastructure Trial'
     }
   };
 
@@ -544,8 +513,6 @@
     document.getElementById('plan-full247').classList.toggle('selected', plan === 'full247');
     document.getElementById('plan-premium').classList.toggle('selected', plan === 'premium');
     document.getElementById('roi-text').textContent = p.roi;
-    document.getElementById('paypal-price').textContent = '$' + p.price + '/mo';
-    document.getElementById('paypal-btn').href = p.paypal;
     updateCheckoutForPlan();
   }
 
@@ -576,19 +543,11 @@
     }
   }
 
-  function payWithPayPal(e) {
-    e.preventDefault();
-    var p = PLANS[selectedPlan];
-    window.open(p.paypal, '_blank');
-  }
-
   // Auto-select plan from URL param
   var params = new URLSearchParams(window.location.search);
   var urlPlan = params.get('plan');
   if (urlPlan && PLANS[urlPlan]) selectPlan(urlPlan);
   else updateCheckoutForPlan();
-  // Show payment options if returning from signup
-  if (params.get('pay') === '1') document.getElementById('payment-options').style.display = 'block';
 </script>
 
   <script src="script.js" defer></script>

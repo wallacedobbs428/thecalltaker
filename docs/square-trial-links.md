@@ -10,8 +10,8 @@ Square link for higher tiers.
 | Plan | Monthly Price After Trial | Square Link State |
 | --- | ---: | --- |
 | After-Hours Capture | `$97/mo` | Configured: `https://square.link/u/POTLUBKa` |
-| Revenue Recovery System | `$497/mo` | Missing: create/verify the matching Square recurring trial invoice before adding a link |
-| Operational Infrastructure | `$997+/mo` | Missing: create/verify the matching Square recurring trial invoice before adding a link |
+| Revenue Recovery System | `$497/mo` | Configured: `https://square.link/u/q6veA8JM` |
+| Operational Infrastructure | `$997+/mo` | Configured: `https://square.link/u/NsAkfZWW` |
 
 ## Website Behavior
 
@@ -20,9 +20,10 @@ Square link for higher tiers.
   - `/checkout.html?plan=afterhours`
   - `/checkout.html?plan=full247`
   - `/checkout.html?plan=premium`
-- `$97` can continue to the configured Square link.
-- `$497` and `$997+` must ask the buyer to call Wallace until the correct
-  Square recurring trial links exist.
+- Each plan continues to its matching Square recurring trial checkout.
+- If a future plan lacks a verified Square trial link, leave its
+  `SQUARE_TRIAL_LINKS` value blank so checkout falls back to calling Wallace
+  instead of sending buyers to the wrong payment link.
 
 ## Adding Missing Square Links Later
 
@@ -49,5 +50,5 @@ git diff --check
 - Do not create public checkout links for the `$2,500` implementation setup.
 - Do not imply provider routing, SMS/email notifications, backend sync, CTOS,
   CRM, or booking automation is active from checkout alone.
-- Do not send buyers from `$497` or `$997+` to the `$97` Square link.
+- Do not send buyers to a Square link for the wrong monthly tier.
 - Do not add Stripe links to public trial pages.

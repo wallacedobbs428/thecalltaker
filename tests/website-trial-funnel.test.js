@@ -50,6 +50,12 @@ assert.strictEqual(
 const checkoutHtml = read("website/checkout.html");
 const intakeHtml = read("website/onboarding/intake.html");
 
+assert.strictEqual(
+  checkoutHtml.includes("paypal.me") || checkoutHtml.includes("venmo.com"),
+  false,
+  "public checkout should use Square links instead of manual PayPal or Venmo payment links"
+);
+
 [
   ["After-Hours Capture", 97],
   ["Revenue Recovery System", 497],
@@ -65,16 +71,15 @@ assert.ok(
 );
 
 assert.ok(
-  checkoutHtml.includes("var SQUARE_TRIAL_LINKS") &&
-    checkoutHtml.includes("full247: '',") &&
-    checkoutHtml.includes("premium: ''"),
-  "checkout should keep missing Square links explicit until the real $497/$997 links exist"
+  checkoutHtml.includes("full247: 'https://square.link/u/q6veA8JM'") &&
+    checkoutHtml.includes("premium: 'https://square.link/u/NsAkfZWW'"),
+  "checkout should use the configured Square links for the public $497 and $997 trial paths"
 );
 
 assert.ok(
-  checkoutHtml.includes("Request $497 Square Trial Setup") &&
-    checkoutHtml.includes("Request $997+ Square Trial Setup"),
-  "checkout should not send higher tiers to a generic or wrong payment link"
+  checkoutHtml.includes("Start Revenue Recovery System Trial") &&
+    checkoutHtml.includes("Start Operational Infrastructure Trial"),
+  "checkout should label higher-tier checkout actions as plan-specific trial starts"
 );
 
 assert.ok(
