@@ -6,7 +6,7 @@ This ledger is the source of truth for what is live, what is only local or branc
 
 ## Current Live Release State
 
-- Last reconciled against `origin/main`: `825699d`
+- Last reconciled against `origin/main`: `7c47fa2`
 - Note: docs-only ledger pushes may advance `origin/main` after this line is written. Verify the current hash with `git rev-parse --short origin/main`.
 - GitHub Pages deploy artifact: `website/`
 - Live website: `https://thecalltaker.com/`
@@ -19,6 +19,7 @@ This ledger is the source of truth for what is live, what is only local or branc
   - claim-safety polish release
   - American Surgical proof engine docs
   - no-send outreach command center
+  - public-safe proof funnel block
 - Pages verified live:
   - `https://thecalltaker.com/`
   - `https://thecalltaker.com/demo.html`
@@ -28,6 +29,7 @@ This ledger is the source of truth for what is live, what is only local or branc
   - `adcde6b` claim-safety polish: Deploy to GitHub Pages, Hero Headline Regression, and Notify on push passed.
   - `6c8c670` release ledger docs: Notify on push passed. No website deploy was required.
   - `825699d` release ledger reconciliation docs: Notify on push passed. No website deploy was required.
+  - `7c47fa2` public-safe proof funnel block: Deploy to GitHub Pages, Hero Headline Regression, Website Trial Funnel Regression, and Notify on push passed.
 
 ## Completed Tracks
 
@@ -43,6 +45,7 @@ This ledger is the source of truth for what is live, what is only local or branc
 | Outreach Revenue Machine architecture | `5f6d506` | yes | not applicable | not applicable | Docs-only architecture record. No sending enabled by this commit. |
 | No-send outreach command center | `a9ca327` | yes | not applicable | not applicable | Local tooling/docs for no-send outreach queue work. No provider sending is enabled. |
 | Release ledger reconciliation | `825699d` | yes | not applicable | not applicable | Docs-only update after parallel lane progress. Notify on push passed. |
+| Public-safe proof funnel block | `7c47fa2` | yes | yes | yes | Added public-safe proof framing to homepage and pilot page without naming private client details; fixed pilot mobile copy/CTA pressure. |
 
 ## Open Tracks
 
