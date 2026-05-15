@@ -5,6 +5,7 @@ import { writeApprovalPacket } from "../outreach/generate_sms_approval_packet.mj
 import { writeSmsPreview } from "../outreach/generate_sms_preview.mjs";
 import { writeLaunchGate } from "../creative/launch_gate.mjs";
 import { writeOrganicQueue } from "../creative/generate_organic_queue.mjs";
+import { writeSocialHandoff } from "../creative/generate_social_handoff.mjs";
 import { writeActionBoard } from "./wallace_action_board.mjs";
 
 export const DAILY_RUNNER_NO_SEND_MODE = true;
@@ -22,6 +23,7 @@ const paths = {
   creativeAssets: path.join(repoRoot, "tools/creative/creative_assets.sample.json"),
   launchGate: path.join(repoRoot, "tools/creative/output/launch-gate.sample.md"),
   organicQueue: path.join(repoRoot, "tools/creative/output/organic-content-queue.sample.md"),
+  socialHandoff: path.join(repoRoot, "tools/creative/output/social-agent-handoff.sample.json"),
   actionBoard: path.join(repoRoot, "tools/command-center/output/wallace-action-board.sample.md"),
 };
 
@@ -64,6 +66,7 @@ export function runDailyCommandCenter() {
   });
   const launchGate = writeLaunchGate(paths.creativeAssets, paths.launchGate);
   const organicQueue = writeOrganicQueue(paths.creativeAssets, paths.organicQueue);
+  const socialHandoff = writeSocialHandoff(paths.creativeAssets, paths.socialHandoff);
   const actionBoard = writeActionBoard({ output: paths.actionBoard });
 
   return {
@@ -75,6 +78,7 @@ export function runDailyCommandCenter() {
       sms_cold_preview: smsCold.output,
       launch_gate: launchGate.output,
       organic_queue: organicQueue.output,
+      social_handoff: socialHandoff.output,
       action_board: actionBoard.output,
     },
     summary: {
@@ -84,6 +88,7 @@ export function runDailyCommandCenter() {
       organic_ready: launchGate.organic_ready,
       paid_ready: launchGate.paid_ready,
       posts_ready_for_manual_review: organicQueue.posts_ready_for_manual_review,
+      social_agent_candidates: socialHandoff.candidates,
       a_prospects: actionBoard.a_prospects,
     },
   };

@@ -16,6 +16,7 @@ test("daily runner regenerates all operating outputs", () => {
   assert.equal(result.summary.sms_cold_gate, "blocked_provider_approval_required");
   assert.ok(result.summary.organic_ready > 0);
   assert.ok(result.summary.posts_ready_for_manual_review > 0);
+  assert.ok(result.summary.social_agent_candidates > 0);
   Object.values(result.outputs).forEach((filePath) => {
     assert.ok(fs.existsSync(filePath), `${filePath} should exist`);
   });
@@ -29,4 +30,5 @@ test("generated outputs preserve operating boundaries", () => {
   assert.match(combined, /Cold SMS|blocked_provider_approval_required|SMS remains draft-only/);
   assert.doesNotMatch(combined, /Send allowed: yes/);
   assert.doesNotMatch(combined, /Post allowed by tool: yes/);
+  assert.match(combined, /post_allowed_default|post_allowed/);
 });
