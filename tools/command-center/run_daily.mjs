@@ -7,6 +7,7 @@ import { writeLaunchGate } from "../creative/launch_gate.mjs";
 import { writeOrganicQueue } from "../creative/generate_organic_queue.mjs";
 import { writeSocialHandoff } from "../creative/generate_social_handoff.mjs";
 import { writeApprovedSocialHandoff } from "../creative/apply_social_approval.mjs";
+import { writeSocialCalendar } from "../social/generate_calendar.mjs";
 import { writeActionBoard } from "./wallace_action_board.mjs";
 
 export const DAILY_RUNNER_NO_SEND_MODE = true;
@@ -27,6 +28,8 @@ const paths = {
   socialHandoff: path.join(repoRoot, "tools/creative/output/social-agent-handoff.sample.json"),
   socialApproval: path.join(repoRoot, "tools/creative/social_approval.sample.json"),
   socialApproved: path.join(repoRoot, "tools/creative/output/social-agent-approved.sample.json"),
+  socialCalendar: path.join(repoRoot, "tools/social/output/social-calendar.sample.json"),
+  socialCalendarMarkdown: path.join(repoRoot, "tools/social/output/social-calendar.sample.md"),
   actionBoard: path.join(repoRoot, "tools/command-center/output/wallace-action-board.sample.md"),
 };
 
@@ -75,6 +78,12 @@ export function runDailyCommandCenter() {
     approvalPath: paths.socialApproval,
     outputPath: paths.socialApproved,
   });
+  const socialCalendar = writeSocialCalendar({
+    inputPath: paths.socialApproved,
+    outputPath: paths.socialCalendar,
+    markdownPath: paths.socialCalendarMarkdown,
+    days: 7,
+  });
   const actionBoard = writeActionBoard({ output: paths.actionBoard });
 
   return {
@@ -88,6 +97,8 @@ export function runDailyCommandCenter() {
       organic_queue: organicQueue.output,
       social_handoff: socialHandoff.output,
       social_approved_handoff: socialApproved.output,
+      social_calendar: socialCalendar.output,
+      social_calendar_markdown: socialCalendar.markdown,
       action_board: actionBoard.output,
     },
     summary: {
@@ -99,6 +110,7 @@ export function runDailyCommandCenter() {
       posts_ready_for_manual_review: organicQueue.posts_ready_for_manual_review,
       social_agent_candidates: socialHandoff.candidates,
       social_approved_candidates: socialApproved.approved_candidates,
+      social_calendar_posts: socialCalendar.scheduled_posts,
       a_prospects: actionBoard.a_prospects,
     },
   };

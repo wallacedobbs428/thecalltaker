@@ -18,6 +18,7 @@ test("daily runner regenerates all operating outputs", () => {
   assert.ok(result.summary.posts_ready_for_manual_review > 0);
   assert.ok(result.summary.social_agent_candidates > 0);
   assert.ok(result.summary.social_approved_candidates > 0);
+  assert.equal(result.summary.social_calendar_posts, 7);
   Object.values(result.outputs).forEach((filePath) => {
     assert.ok(fs.existsSync(filePath), `${filePath} should exist`);
   });
