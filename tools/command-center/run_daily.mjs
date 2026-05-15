@@ -5,6 +5,7 @@ import { writeApprovalPacket } from "../outreach/generate_sms_approval_packet.mj
 import { writeSmsPreview } from "../outreach/generate_sms_preview.mjs";
 import { writeSmsStyleReport } from "../outreach/validate_sms_copy_style.mjs";
 import { writeLaunchGate } from "../creative/launch_gate.mjs";
+import { writeMetaLaunchPacket } from "../creative/generate_meta_launch_packet.mjs";
 import { writeOrganicQueue } from "../creative/generate_organic_queue.mjs";
 import { writeSocialHandoff } from "../creative/generate_social_handoff.mjs";
 import { writeApprovedSocialHandoff } from "../creative/apply_social_approval.mjs";
@@ -27,6 +28,8 @@ const paths = {
   smsStyleReport: path.join(repoRoot, "tools/outreach/output/sms-style-report.sample.md"),
   creativeAssets: path.join(repoRoot, "tools/creative/creative_assets.sample.json"),
   launchGate: path.join(repoRoot, "tools/creative/output/launch-gate.sample.md"),
+  metaLaunchPacket: path.join(repoRoot, "tools/creative/output/meta-launch-packet.sample.json"),
+  metaLaunchPacketMarkdown: path.join(repoRoot, "tools/creative/output/meta-launch-packet.sample.md"),
   organicQueue: path.join(repoRoot, "tools/creative/output/organic-content-queue.sample.md"),
   socialHandoff: path.join(repoRoot, "tools/creative/output/social-agent-handoff.sample.json"),
   socialApproval: path.join(repoRoot, "tools/creative/social_approval.sample.json"),
@@ -77,6 +80,11 @@ export function runDailyCommandCenter() {
   });
   const smsStyle = writeSmsStyleReport({ outputPath: paths.smsStyleReport });
   const launchGate = writeLaunchGate(paths.creativeAssets, paths.launchGate);
+  const metaLaunchPacket = writeMetaLaunchPacket({
+    inputPath: paths.creativeAssets,
+    outputPath: paths.metaLaunchPacket,
+    markdownPath: paths.metaLaunchPacketMarkdown,
+  });
   const organicQueue = writeOrganicQueue(paths.creativeAssets, paths.organicQueue);
   const socialHandoff = writeSocialHandoff(paths.creativeAssets, paths.socialHandoff);
   const socialApproved = writeApprovedSocialHandoff({
@@ -107,6 +115,8 @@ export function runDailyCommandCenter() {
       sms_cold_preview: smsCold.output,
       sms_style_report: smsStyle.output,
       launch_gate: launchGate.output,
+      meta_launch_packet: metaLaunchPacket.output,
+      meta_launch_packet_markdown: metaLaunchPacket.markdown,
       organic_queue: organicQueue.output,
       social_handoff: socialHandoff.output,
       social_approved_handoff: socialApproved.output,
@@ -123,6 +133,8 @@ export function runDailyCommandCenter() {
       sms_style_pass: smsStyle.pass,
       organic_ready: launchGate.organic_ready,
       paid_ready: launchGate.paid_ready,
+      meta_launch_drafts: metaLaunchPacket.drafts,
+      meta_launch_allowed: metaLaunchPacket.launch_allowed,
       posts_ready_for_manual_review: organicQueue.posts_ready_for_manual_review,
       social_agent_candidates: socialHandoff.candidates,
       social_approved_candidates: socialApproved.approved_candidates,
