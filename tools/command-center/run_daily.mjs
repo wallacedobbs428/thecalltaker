@@ -8,6 +8,7 @@ import { writeOrganicQueue } from "../creative/generate_organic_queue.mjs";
 import { writeSocialHandoff } from "../creative/generate_social_handoff.mjs";
 import { writeApprovedSocialHandoff } from "../creative/apply_social_approval.mjs";
 import { writeSocialCalendar } from "../social/generate_calendar.mjs";
+import { writePostReadiness } from "../social/validate_post_readiness.mjs";
 import { writeActionBoard } from "./wallace_action_board.mjs";
 
 export const DAILY_RUNNER_NO_SEND_MODE = true;
@@ -30,6 +31,8 @@ const paths = {
   socialApproved: path.join(repoRoot, "tools/creative/output/social-agent-approved.sample.json"),
   socialCalendar: path.join(repoRoot, "tools/social/output/social-calendar.sample.json"),
   socialCalendarMarkdown: path.join(repoRoot, "tools/social/output/social-calendar.sample.md"),
+  postReadiness: path.join(repoRoot, "tools/social/output/post-readiness.sample.json"),
+  postReadinessMarkdown: path.join(repoRoot, "tools/social/output/post-readiness.sample.md"),
   actionBoard: path.join(repoRoot, "tools/command-center/output/wallace-action-board.sample.md"),
 };
 
@@ -84,6 +87,12 @@ export function runDailyCommandCenter() {
     markdownPath: paths.socialCalendarMarkdown,
     days: 7,
   });
+  const postReadiness = writePostReadiness({
+    calendarPath: paths.socialCalendar,
+    registryPath: paths.creativeAssets,
+    outputPath: paths.postReadiness,
+    markdownPath: paths.postReadinessMarkdown,
+  });
   const actionBoard = writeActionBoard({ output: paths.actionBoard });
 
   return {
@@ -99,6 +108,8 @@ export function runDailyCommandCenter() {
       social_approved_handoff: socialApproved.output,
       social_calendar: socialCalendar.output,
       social_calendar_markdown: socialCalendar.markdown,
+      post_readiness: postReadiness.output,
+      post_readiness_markdown: postReadiness.markdown,
       action_board: actionBoard.output,
     },
     summary: {
@@ -111,6 +122,8 @@ export function runDailyCommandCenter() {
       social_agent_candidates: socialHandoff.candidates,
       social_approved_candidates: socialApproved.approved_candidates,
       social_calendar_posts: socialCalendar.scheduled_posts,
+      social_post_ready: postReadiness.ready_count,
+      social_post_blocked: postReadiness.blocked_count,
       a_prospects: actionBoard.a_prospects,
     },
   };

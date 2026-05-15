@@ -19,6 +19,8 @@ test("daily runner regenerates all operating outputs", () => {
   assert.ok(result.summary.social_agent_candidates > 0);
   assert.ok(result.summary.social_approved_candidates > 0);
   assert.equal(result.summary.social_calendar_posts, 7);
+  assert.equal(result.summary.social_post_ready, 0);
+  assert.ok(result.summary.social_post_blocked > 0);
   Object.values(result.outputs).forEach((filePath) => {
     assert.ok(fs.existsSync(filePath), `${filePath} should exist`);
   });
@@ -34,4 +36,5 @@ test("generated outputs preserve operating boundaries", () => {
   assert.doesNotMatch(combined, /Post allowed by tool: yes/);
   assert.match(combined, /post_allowed_default|post_allowed/);
   assert.match(combined, /approved_for_manual_post/);
+  assert.match(combined, /Social Post Readiness|missing local asset_path/);
 });
