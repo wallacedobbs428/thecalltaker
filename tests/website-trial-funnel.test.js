@@ -131,6 +131,26 @@ assert.ok(
 );
 
 [
+  "Calling you now",
+  "Pick up your phone",
+  "SMS, email, or scoped CRM routing",
+  "You get every lead",
+  "Takes 2 minutes",
+].forEach((unsafeCopy) => {
+  assert.strictEqual(
+    read("website/index.html").includes(unsafeCopy),
+    false,
+    `homepage should avoid instant activation or live-provider copy: ${unsafeCopy}`
+  );
+});
+
+assert.strictEqual(
+  read("website/index.html").includes("fetch(") || read("website/index.html").includes("atob("),
+  false,
+  "homepage floating demo widget should not send webhook notifications from the public page"
+);
+
+[
   "after-hours-capture-v2.jpg",
   "revenue-recovery-system-v2.jpg",
   "operational-infrastructure-v2.jpg",
@@ -154,6 +174,20 @@ assert.ok(
     demoHtml.includes("No SMS, provider routing, booking, or backend sync is implied"),
   "demo page should move preview users into a clear, provider-safe plan-selection follow-up"
 );
+
+[
+  "48h",
+  "<2s",
+  "No delay",
+  "notified immediately",
+  "provider routing is reviewed",
+].forEach((unsafeCopy) => {
+  assert.strictEqual(
+    read("website/services.html").includes(unsafeCopy) || read("website/checkout.html").includes(unsafeCopy),
+    false,
+    `services and checkout should avoid exact-speed or provider-activation promises: ${unsafeCopy}`
+  );
+});
 
 [
   ["afterhours", "After-Hours Capture ($97/mo)"],

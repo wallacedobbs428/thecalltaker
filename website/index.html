@@ -169,7 +169,7 @@ body::after {
 }
 .nav-cta:hover { background: var(--accent-hover) !important; }
 @media(max-width:768px) {
-  .nav { padding: 14px 20px; }
+  .nav { left:0;right:0;width:100%;max-width:100vw;padding: 14px 20px; }
   .nav-links a:not(.nav-cta) { display: none; }
 }
 @media(max-width:500px) {
@@ -346,6 +346,38 @@ html.light .theme-toggle .icon-moon { display: block; }
 
 @media(max-width:768px) {
   .theme-toggle { bottom: 72px; left: 16px; }
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .ambient,
+  .ambient-inner,
+  .ambient-particles {
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+  }
+  .phone-glow {
+    width: min(360px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+  }
+  .particle {
+    display: none;
+  }
+  .reveal-left,
+  .reveal-right {
+    transform: none !important;
+  }
+  .marquee {
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+  }
+  .marquee-track {
+    max-width: 100vw;
+  }
 }
 
 /* ═══ BUTTONS ═══ */
@@ -2090,8 +2122,8 @@ html.light .feature-icon svg { stroke: var(--accent); }
       <div class="step-circle" style="position:relative;width:72px;height:72px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;transition:box-shadow 0.3s,background 0.3s;">
         <span style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent);letter-spacing:-0.02em;">01</span>
       </div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Forward your calls</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Same way you'd forward to an employee. Takes 2 minutes.</p>
+      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Confirm your call path</h3>
+      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">We review the forwarding path and approved rules before Gideon is treated as live.</p>
       <div style="margin-top:16px;background:var(--surface);border:1px solid var(--t06);border-radius:8px;padding:12px 16px;max-width:240px;margin-left:auto;margin-right:auto;">
         <div style="font-family:var(--mono);font-size:9px;color:var(--t20);letter-spacing:0.1em;margin-bottom:6px;">WORKS WITH</div>
         <div style="font-size:12px;color:var(--t40);line-height:1.5;">iPhone, Android, Landline, VoIP. Any phone system</div>
@@ -2114,11 +2146,11 @@ html.light .feature-icon svg { stroke: var(--accent); }
       <div class="step-circle" style="position:relative;width:72px;height:72px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;transition:box-shadow 0.3s,background 0.3s;">
         <span style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent);letter-spacing:-0.02em;">03</span>
       </div>
-      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">You get every lead</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Text with name, number, what they need. Appointment requests captured.</p>
+      <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">You get usable call details</h3>
+      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Caller details, request, urgency, and the next step your team needs.</p>
       <div style="margin-top:16px;background:var(--surface);border:1px solid var(--t06);border-radius:8px;padding:12px 16px;max-width:240px;margin-left:auto;margin-right:auto;">
-        <div style="font-family:var(--mono);font-size:9px;color:var(--t20);letter-spacing:0.1em;margin-bottom:6px;">DELIVERED VIA</div>
-        <div style="font-size:12px;color:var(--t40);line-height:1.5;">SMS, email, or scoped CRM routing when approved</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--t20);letter-spacing:0.1em;margin-bottom:6px;">HANDOFF METHOD</div>
+        <div style="font-size:12px;color:var(--t40);line-height:1.5;">Approved during setup before launch</div>
       </div>
     </div>
   </div>
@@ -2446,7 +2478,7 @@ html.light .feature-icon svg { stroke: var(--accent); }
     <p style="color:var(--t40);font-size:15px;line-height:1.7;margin-top:16px;">Can't find your answer? Call us at <a href="tel:+16292699697" style="color:var(--accent);text-decoration:none;">(629) 269-9697</a> and ask Gideon yourself.</p>
   </div>
   <div class="faq-list reveal-right">
-    <div class="faq-item"><div class="faq-q">How does call forwarding work?</div><div class="faq-a"><p>You set your phone to forward to us, same way you'd forward to an employee. Takes 2 minutes and your customers still call your regular number.</p></div></div>
+    <div class="faq-item"><div class="faq-q">How does call forwarding work?</div><div class="faq-a"><p>Your customers still call your regular number. We confirm the forwarding path, approved call rules, and handoff method during setup before Gideon is treated as live.</p></div></div>
     <div class="faq-item"><div class="faq-q">What does GIDEON actually sound like?</div><div class="faq-a"><p>It sounds like a real person, not a robot. Call (629) 269-9697 right now and hear for yourself.</p></div></div>
     <div class="faq-item"><div class="faq-q">Can it handle appointment requests?</div><div class="faq-a"><p>It captures their name, number, what they need, and the requested timing. Direct calendar booking is available only when it is included in the approved workflow scope.</p></div></div>
     <div class="faq-item"><div class="faq-q">What if the caller needs a real person?</div><div class="faq-a"><p>Gideon follows your approved escalation rules. If someone needs your team, it captures the context and routes the next step according to the workflow you approved.</p></div></div>
@@ -3584,14 +3616,14 @@ document.querySelectorAll('.faq-q').forEach(q => {
 <!-- FLOATING CALLBACK WIDGET -->
 <div class="float-cb" id="float-widget">
   <div class="float-cb-panel" id="float-panel">
-    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
-    <p style="font-size: 12px; color: var(--t40); margin-bottom: 14px;">Wallace Dobbs will personally review your request and get back with you.</p>
+    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want to hear Gideon?</h4>
+    <p style="font-size: 12px; color: var(--t40); margin-bottom: 14px;">Use the demo line to hear Gideon before setup starts.</p>
     <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
     <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 10px;">
-    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Me Now</button>
+    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Demo Line</button>
     <div id="float-success" style="display: none; text-align: center; padding: 16px 0;">
-      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
-      <p style="font-size: 12px; color: var(--t70);">Pick up your phone.</p>
+      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Demo line is ready.</p>
+      <p style="font-size: 12px; color: var(--t70);">Call when you are ready.</p>
     </div>
   </div>
   <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
@@ -3605,7 +3637,6 @@ document.querySelectorAll('.faq-q').forEach(q => {
 <script>
 /* === CALLBACK + CONVERSION TRACKING === */
 (function(){
-  var _n = atob('aHR0cHM6Ly9udGZ5LnNoL3RjdC11cmdlbnQtSGs5VU9FWlI=');
   // Track demo line clicks
   document.querySelectorAll('a[href^="tel:"]').forEach(function(a){
     a.addEventListener('click', function(){
@@ -3628,29 +3659,16 @@ document.querySelectorAll('.faq-q').forEach(q => {
 
   // Float callback
   window.requestFloatCallback = function(){
-    var phone = document.getElementById('float-phone');
-    var company = document.getElementById('float-company');
-    if(!phone || !phone.value.trim() || phone.value.trim().length < 7) return;
-    var p = phone.value.trim(), c = company ? company.value.trim() : '';
-    if(typeof fbq==='function') fbq('track','Lead',{content_name:'Float Callback',content_category:'Callback Request',value:p});
-    if(typeof gtag==='function') gtag('event','conversion',{send_to:'AW-17970510102/callback'});
-    fetch(_n,{method:'POST',headers:{'Title':'WEBSITE CALLBACK: '+(c||p),'Priority':'urgent','Tags':'rotating_light,phone'},body:'Phone: '+p+'\nCompany: '+c+'\nSource: Floating widget'});
-    var btn = phone.parentElement.querySelector('.callback-btn');
-    if(btn){btn.textContent='Calling you now!';btn.disabled=true;}
+    if(typeof fbq==='function') fbq('track','Lead',{content_name:'Float Demo Line',content_category:'Demo Call'});
+    if(typeof gtag==='function') gtag('event','conversion',{send_to:'AW-17970510102/phone_click'});
+    window.location.href = 'tel:+16292699697';
   };
 
   // Exit intent callback
   window.requestExitCallback = function(){
-    var phone = document.getElementById('exit-phone');
-    var company = document.getElementById('exit-company');
-    if(!phone || !phone.value.trim() || phone.value.trim().length < 7) return;
-    var p = phone.value.trim(), c = company ? company.value.trim() : '';
-    if(typeof fbq==='function') fbq('track','Lead',{content_name:'Exit Intent',content_category:'Callback Request',value:p});
+    if(typeof fbq==='function') fbq('track','Lead',{content_name:'Exit Demo Line',content_category:'Demo Call'});
     if(typeof gtag==='function') gtag('event','conversion',{send_to:'AW-17970510102/exit_intent'});
-    fetch(_n,{method:'POST',headers:{'Title':'EXIT INTENT: '+(c||p),'Priority':'urgent','Tags':'rotating_light,phone'},body:'Phone: '+p+'\nCompany: '+c+'\nSource: Exit intent popup\nThey were LEAVING and still gave their number!'});
-    var popup = document.getElementById('exit-popup');
-    if(popup) popup.innerHTML='<div style="text-align:center;padding:40px;color:#fff;"><h3>We\'ll call you right back!</h3></div>';
-    setTimeout(function(){if(popup)popup.classList.remove('show');},3000);
+    window.location.href = 'tel:+16292699697';
   };
 
   // Close exit popup

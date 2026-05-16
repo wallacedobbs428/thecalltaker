@@ -529,16 +529,23 @@
     }
     .hero,
     .checkout-grid,
+    .trust-strip,
+    .topbar,
+    .topbar-inner,
+    .shell,
     .panel,
     .summary,
     .visual {
+      width: 100%;
       max-width: 100%;
+      min-width: 0;
     }
     .features {
       grid-template-columns: 1fr;
     }
     .plan-top {
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 12px;
     }
     .plan-name {
@@ -549,6 +556,7 @@
     }
     .price {
       padding-left: 34px;
+      white-space: normal;
     }
     .trust-strip {
       grid-template-columns: 1fr;
@@ -576,6 +584,22 @@
     .mobile-bar .primary {
       margin: 0;
       padding: 14px 16px;
+    }
+    .visual {
+      min-height: 300px;
+    }
+    .visual-card {
+      max-width: calc(100% - 32px);
+    }
+    .visual-card strong,
+    .visual-card span,
+    .plan-name,
+    .plan-desc,
+    .features li,
+    .selected-line strong,
+    .selected-line span,
+    .trust-item span {
+      overflow-wrap: anywhere;
     }
   }
 </style>
@@ -674,8 +698,10 @@
           </span>
           <ul class="features">
             <li>Everything in Revenue Recovery</li>
-            <li>Custom call-flow design</li>
-            <li>Operational handoff planning</li>
+            <li>Different call paths for different jobs</li>
+            <li>Right summary to the right person</li>
+            <li>Owner view of captured calls as available</li>
+            <li>Approved follow-up steps</li>
             <li>Founder/operator review</li>
           </ul>
         </button>
@@ -700,7 +726,7 @@
   <section class="trust-strip" aria-label="Checkout safeguards">
     <div class="trust-item"><strong>Secure checkout</strong><span>Payment details are entered on Square-hosted checkout.</span></div>
     <div class="trust-item"><strong>Terms up front</strong><span>The selected post-trial monthly price is shown before Square opens.</span></div>
-    <div class="trust-item"><strong>Reviewed setup</strong><span>Checkout starts the setup process; provider routing is reviewed before launch.</span></div>
+    <div class="trust-item"><strong>Reviewed setup</strong><span>Checkout starts the setup process; call path and handoff rules are reviewed before launch.</span></div>
     <div class="trust-item"><strong>Cancel before renewal</strong><span>You can cancel during the 14-day trial if it is not the right fit.</span></div>
   </section>
 </main>
