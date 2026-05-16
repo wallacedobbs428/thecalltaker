@@ -116,13 +116,19 @@ const pricingHtml = read("website/pricing.html");
 
 [
   "Each column adds a larger operating layer",
-  "Custom call-flow design",
-  "Scoped workflow automation",
-  "Operational notification map",
-  "Call Taker Operating System visibility as available",
+  "Builds different call paths for different jobs",
+  "Sets up approved follow-up steps",
+  "Sends the right summary to the right person",
+  "Owner view of captured calls and follow-up notes as available",
 ].forEach((expected) => {
   assert.ok(pricingHtml.includes(expected), `pricing should explain tier differences beyond checkmarks: ${expected}`);
 });
+
+assert.ok(
+  read("website/index.html").includes('href="/pricing.html">Pricing') &&
+    read("website/index.html").includes('href="#pricing" class="hero-ghost"'),
+  "homepage nav should open the full pricing page while the hero keeps a quick scroll pricing CTA"
+);
 
 [
   "after-hours-capture-v2.jpg",
