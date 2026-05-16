@@ -115,11 +115,11 @@ assert.ok(
 const pricingHtml = read("website/pricing.html");
 
 [
-  "The upgrade is not more checkmarks.",
-  "Custom coverage logic",
-  "Workflow-specific intake",
-  "Notification map",
-  "Operations-heavy business",
+  "Each column adds a larger operating layer",
+  "Custom call-flow design",
+  "Scoped workflow automation",
+  "Operational notification map",
+  "Call Taker Operating System visibility as available",
 ].forEach((expected) => {
   assert.ok(pricingHtml.includes(expected), `pricing should explain tier differences beyond checkmarks: ${expected}`);
 });
