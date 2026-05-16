@@ -14,6 +14,7 @@ const publicTrialPages = [
   "website/checkout.html",
   "website/pay.html",
   "website/demo.html",
+  "website/faq.html",
   "website/pilot/index.html",
   "website/go.html",
   "website/try-funnel/checkout.html",
@@ -89,6 +90,12 @@ assert.ok(
   checkoutHtml.includes("Choose the plan before the trial starts.") &&
     checkoutHtml.includes("Payment details are entered on Square-hosted checkout."),
   "checkout should present a focused premium plan-selection experience"
+);
+
+assert.strictEqual(
+  publicTrialHtml.includes("https://square.link/u/POTLUBKa"),
+  false,
+  "public funnel pages should not use the deprecated single-plan Square trial link"
 );
 
 assert.ok(
@@ -181,11 +188,14 @@ assert.ok(
   "No delay",
   "notified immediately",
   "provider routing is reviewed",
+  "CTOS-backed",
 ].forEach((unsafeCopy) => {
   assert.strictEqual(
-    read("website/services.html").includes(unsafeCopy) || read("website/checkout.html").includes(unsafeCopy),
+    read("website/services.html").includes(unsafeCopy) ||
+      read("website/checkout.html").includes(unsafeCopy) ||
+      read("website/faq.html").includes(unsafeCopy),
     false,
-    `services and checkout should avoid exact-speed or provider-activation promises: ${unsafeCopy}`
+    `services, checkout, and FAQ should avoid exact-speed, jargon, or provider-activation promises: ${unsafeCopy}`
   );
 });
 
