@@ -178,6 +178,7 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: opacity 0.18s ease;
   }
   .visual::after {
     content: "";
@@ -607,10 +608,10 @@
       </div>
     </div>
     <div class="visual" aria-label="The Call Taker phone visual">
-      <img src="/assets/images/hero-phone.jpeg" alt="">
+      <img src="/assets/images/plan-visuals/after-hours-capture-v2.jpg" alt="After-hours service desk prepared for missed-call capture" id="plan-visual-img">
       <div class="visual-card">
-        <strong>Revenue recovery starts at checkout.</strong>
-        <span>Pick the operating layer you want, confirm the trial terms in Square, then complete setup before launch.</span>
+        <strong id="plan-visual-title">Closed-hours calls stop dying in voicemail.</strong>
+        <span id="plan-visual-copy">Start with the coverage gap most owners feel first: nights, weekends, holidays, and urgent calls when the team is offline.</span>
       </div>
     </div>
   </section>
@@ -722,21 +723,33 @@
       price: 97,
       priceLabel: '$97/mo',
       squareTitle: 'After-Hours Capture: 14 days free, then $97/mo',
-      trialLink: SQUARE_TRIAL_LINKS.afterhours
+      trialLink: SQUARE_TRIAL_LINKS.afterhours,
+      visual: '/assets/images/plan-visuals/after-hours-capture-v2.jpg',
+      visualAlt: 'After-hours service desk prepared for missed-call capture',
+      visualTitle: 'Closed-hours calls stop dying in voicemail.',
+      visualCopy: 'Start with the coverage gap most owners feel first: nights, weekends, holidays, and urgent calls when the team is offline.'
     },
     full247: {
       name: 'Revenue Recovery System',
       price: 497,
       priceLabel: '$497/mo',
       squareTitle: 'Revenue Recovery System: 14 days free, then $497/mo',
-      trialLink: SQUARE_TRIAL_LINKS.full247
+      trialLink: SQUARE_TRIAL_LINKS.full247,
+      visual: '/assets/images/plan-visuals/revenue-recovery-system-v2.jpg',
+      visualAlt: 'Organized revenue recovery desk for captured service leads',
+      visualTitle: 'Recovered leads get organized before they go cold.',
+      visualCopy: 'This is the main system: 24/7 and overflow capture, missed-call recovery, and cleaner handoff for the people who close work.'
     },
     premium: {
       name: 'Operational Infrastructure',
       price: 997,
       priceLabel: '$997/mo',
       squareTitle: 'Operational Infrastructure: 14 days free, then $997/mo',
-      trialLink: SQUARE_TRIAL_LINKS.premium
+      trialLink: SQUARE_TRIAL_LINKS.premium,
+      visual: '/assets/images/plan-visuals/operational-infrastructure-v2.jpg',
+      visualAlt: 'Operations manager reviewing call-flow and handoff rules',
+      visualTitle: 'The phone becomes an operating layer.',
+      visualCopy: 'For teams that need call-flow design, handoff planning, escalation rules, and founder/operator review around real workflows.'
     }
   };
 
@@ -752,6 +765,15 @@
     document.getElementById('checkout-btn').href = p.trialLink;
     document.getElementById('mobile-checkout-btn').href = p.trialLink;
     document.getElementById('checkout-sub').textContent = 'Square will show: ' + p.squareTitle + '.';
+    var visual = document.getElementById('plan-visual-img');
+    visual.style.opacity = '0.45';
+    window.setTimeout(function() {
+      visual.src = p.visual;
+      visual.alt = p.visualAlt;
+      document.getElementById('plan-visual-title').textContent = p.visualTitle;
+      document.getElementById('plan-visual-copy').textContent = p.visualCopy;
+      visual.style.opacity = '1';
+    }, 120);
   }
 
   function trackCheckout() {

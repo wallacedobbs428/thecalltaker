@@ -40,14 +40,26 @@
   </script>
   <style>
     /* Feature Matrix */
-    .matrix-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    .matrix-table th, .matrix-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); }
-    .matrix-table th { font-weight: 700; color: #fff; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; background: rgba(255,255,255,0.02); }
+    .matrix-wrap { max-width: 1040px; margin: 0 auto; overflow-x: auto; }
+    .matrix-table { width: 100%; min-width: 840px; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+    .matrix-table th, .matrix-table td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .matrix-table th { font-weight: 800; color: var(--text-1); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; background: rgba(45,115,82,0.06); }
+    .matrix-table th:first-child { border-top-left-radius: 16px; }
+    .matrix-table th:last-child { border-top-right-radius: 16px; }
     .matrix-table td { color: var(--text-2); }
-    .matrix-table td:not(:first-child) { text-align: center; font-weight: 600; }
-    .matrix-check { color: var(--green); }
-    .matrix-dash { color: var(--text-3); }
-    @media (max-width: 640px) { .matrix-table { font-size: 12px; } .matrix-table th, .matrix-table td { padding: 10px 8px; } }
+    .matrix-table td:not(:first-child) { width: 24%; }
+    .matrix-feature { color: var(--text-1); font-weight: 800; }
+    .matrix-cell { display: grid; gap: 4px; min-width: 150px; }
+    .matrix-value { color: var(--text-1); font-weight: 800; line-height: 1.25; }
+    .matrix-note { color: var(--text-3); font-size: 12px; line-height: 1.4; }
+    .matrix-check .matrix-value { color: var(--green); }
+    .matrix-premium { background: rgba(45,115,82,0.055); }
+    .matrix-dash { color: var(--text-3); font-weight: 800; }
+    @media (max-width: 640px) {
+      .matrix-wrap { margin-left: -14px; margin-right: -14px; padding: 0 14px; }
+      .matrix-table { font-size: 12px; min-width: 780px; }
+      .matrix-table th, .matrix-table td { padding: 12px 10px; }
+    }
 
     /* Risk Items */
     .risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: 800px; margin: 0 auto; }
@@ -110,7 +122,7 @@
 <section class="funnel-transition" aria-label="Plan visualizations">
   <div class="plan-visual-grid reveal">
     <div class="plan-visual">
-      <div class="plan-visual-media" style="background-image:url('/assets/images/plan-visuals/after-hours-capture.jpg');"></div>
+      <div class="plan-visual-media" style="background-image:url('/assets/images/plan-visuals/after-hours-capture-v2.jpg');"></div>
       <div class="plan-visual-content">
         <div class="plan-visual-tag">$97 / after hours</div>
         <h3>Closed-hours calls stop dying in voicemail.</h3>
@@ -118,7 +130,7 @@
       </div>
     </div>
     <div class="plan-visual">
-      <div class="plan-visual-media" style="background-image:url('/assets/images/plan-visuals/revenue-recovery-system.jpg');"></div>
+      <div class="plan-visual-media" style="background-image:url('/assets/images/plan-visuals/revenue-recovery-system-v2.jpg');"></div>
       <div class="plan-visual-content">
         <div class="plan-visual-tag">$497 / recovery</div>
         <h3>Leads get organized before they go cold.</h3>
@@ -126,7 +138,7 @@
       </div>
     </div>
     <div class="plan-visual">
-      <div class="plan-visual-media" style="background-image:url('/assets/images/plan-visuals/operational-infrastructure.jpg');"></div>
+      <div class="plan-visual-media" style="background-image:url('/assets/images/plan-visuals/operational-infrastructure-v2.jpg');"></div>
       <div class="plan-visual-content">
         <div class="plan-visual-tag">$997+ / infrastructure</div>
         <h3>The phone becomes an operating system.</h3>
@@ -213,7 +225,8 @@
 <section class="section" style="padding-top: 0;">
   <div class="wrap">
     <h2 class="section-title reveal" style="text-align: center; margin-bottom: 32px;">Compare Plans</h2>
-    <div class="reveal" style="max-width: 800px; margin: 0 auto; overflow-x: auto;">
+    <p class="reveal" style="text-align:center;color:var(--text-2);max-width:640px;margin:0 auto 28px;line-height:1.6;">The upgrade is not more checkmarks. It is how much operational weight Gideon carries before your team has to touch the lead.</p>
+    <div class="matrix-wrap reveal">
       <table class="matrix-table">
         <thead>
           <tr>
@@ -224,16 +237,54 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>24/7 call answering</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>After-hours coverage</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Appointment request capture</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Lead notifications</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Emergency detection</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Missed-call recovery</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Speed-to-lead support</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Scoped workflow automation</td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Revenue reporting</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>14-day trial</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr>
+            <td class="matrix-feature">Coverage window</td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">Closed hours</span><span class="matrix-note">Nights, weekends, holidays</span></span></td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">24/7 + overflow</span><span class="matrix-note">Calls are captured even when the team is busy</span></span></td>
+            <td class="matrix-premium"><span class="matrix-cell matrix-check"><span class="matrix-value">Custom coverage logic</span><span class="matrix-note">Rules by hours, urgency, role, and handoff path</span></span></td>
+          </tr>
+          <tr>
+            <td class="matrix-feature">Lead capture</td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">Basic intake</span><span class="matrix-note">Name, need, urgency, callback</span></span></td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">Qualified handoff</span><span class="matrix-note">Separates real opportunities from noise</span></span></td>
+            <td class="matrix-premium"><span class="matrix-cell matrix-check"><span class="matrix-value">Workflow-specific intake</span><span class="matrix-note">Different paths for quotes, orders, emergencies, and support</span></span></td>
+          </tr>
+          <tr>
+            <td class="matrix-feature">Missed-call recovery</td>
+            <td class="matrix-dash">&mdash;</td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">Included</span><span class="matrix-note">Built around speed-to-lead and cleaner follow-up</span></span></td>
+            <td class="matrix-premium"><span class="matrix-cell matrix-check"><span class="matrix-value">Recovery system design</span><span class="matrix-note">Rules for what gets escalated, suppressed, or reviewed</span></span></td>
+          </tr>
+          <tr>
+            <td class="matrix-feature">Team notifications</td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">Simple summaries</span><span class="matrix-note">Basic call detail handoff</span></span></td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">Hot-lead alerts</span><span class="matrix-note">Urgent and revenue-worthy calls stand out</span></span></td>
+            <td class="matrix-premium"><span class="matrix-cell matrix-check"><span class="matrix-value">Notification map</span><span class="matrix-note">Who gets what, when, and why</span></span></td>
+          </tr>
+          <tr>
+            <td class="matrix-feature">Call-flow design</td>
+            <td><span class="matrix-cell"><span class="matrix-value">Approved greeting</span><span class="matrix-note">Simple approved intake path</span></span></td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">Revenue recovery flow</span><span class="matrix-note">Optimized around missed and overflow calls</span></span></td>
+            <td class="matrix-premium"><span class="matrix-cell matrix-check"><span class="matrix-value">Custom operating rules</span><span class="matrix-note">Built around real services, roles, edge cases, and escalation</span></span></td>
+          </tr>
+          <tr>
+            <td class="matrix-feature">Operational visibility</td>
+            <td class="matrix-dash">&mdash;</td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">Monthly recovery review</span><span class="matrix-note">See what was captured and where leads came from</span></span></td>
+            <td class="matrix-premium"><span class="matrix-cell matrix-check"><span class="matrix-value">CTOS visibility as available</span><span class="matrix-note">Founder/operator review and deeper workflow visibility</span></span></td>
+          </tr>
+          <tr>
+            <td class="matrix-feature">Best fit</td>
+            <td><span class="matrix-cell"><span class="matrix-value">Small coverage gap</span><span class="matrix-note">You mainly miss closed-hour calls</span></span></td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">Growth-minded team</span><span class="matrix-note">You need missed calls recovered and organized</span></span></td>
+            <td class="matrix-premium"><span class="matrix-cell matrix-check"><span class="matrix-value">Operations-heavy business</span><span class="matrix-note">You need the phone system shaped around how work actually moves</span></span></td>
+          </tr>
+          <tr>
+            <td class="matrix-feature">Trial path</td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">14 days</span><span class="matrix-note">$97/mo after trial</span></span></td>
+            <td><span class="matrix-cell matrix-check"><span class="matrix-value">14 days</span><span class="matrix-note">$497/mo after trial</span></span></td>
+            <td class="matrix-premium"><span class="matrix-cell matrix-check"><span class="matrix-value">14 days</span><span class="matrix-note">$997+/mo after trial, setup reviewed</span></span></td>
+          </tr>
         </tbody>
       </table>
     </div>

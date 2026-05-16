@@ -101,6 +101,37 @@ assert.ok(
   "checkout should show selected plan and post-trial monthly billing copy"
 );
 
+[
+  "after-hours-capture-v2.jpg",
+  "revenue-recovery-system-v2.jpg",
+  "operational-infrastructure-v2.jpg",
+  'id="plan-visual-img"',
+  'id="plan-visual-title"',
+  'id="plan-visual-copy"',
+].forEach((expected) => {
+  assert.ok(checkoutHtml.includes(expected), `checkout should support plan-specific visual context: ${expected}`);
+});
+
+const pricingHtml = read("website/pricing.html");
+
+[
+  "The upgrade is not more checkmarks.",
+  "Custom coverage logic",
+  "Workflow-specific intake",
+  "Notification map",
+  "Operations-heavy business",
+].forEach((expected) => {
+  assert.ok(pricingHtml.includes(expected), `pricing should explain tier differences beyond checkmarks: ${expected}`);
+});
+
+[
+  "after-hours-capture-v2.jpg",
+  "revenue-recovery-system-v2.jpg",
+  "operational-infrastructure-v2.jpg",
+].forEach((expected) => {
+  assert.ok(pricingHtml.includes(expected), `pricing should use the upgraded plan visual: ${expected}`);
+});
+
 const demoHtml = read("website/demo.html");
 
 assert.strictEqual(
