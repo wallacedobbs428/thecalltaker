@@ -28,37 +28,49 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="funnel-experience.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-    {"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"Setup depends on the call flow. We confirm your hours, services, urgency rules, and handoff path before Gideon is treated as live for your business."}},
+    {"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"We confirm your business rules, configure the call flow, and get approval before launch."}},
     {"@type":"Question","name":"Is there a contract?","acceptedAnswer":{"@type":"Answer","text":"No contracts, ever. Month-to-month. Cancel anytime."}},
     {"@type":"Question","name":"What industries do you work with?","acceptedAnswer":{"@type":"Answer","text":"Any business that answers phones. HVAC, plumbing, electrical, roofing, locksmith, dental, legal, med spa, veterinary, towing, property management, and more."}},
-    {"@type":"Question","name":"Does it only work after hours?","acceptedAnswer":{"@type":"Answer","text":"The $97/mo After-Hours Capture plan covers evenings, weekends, and holidays. The $497/mo Revenue Recovery System adds 24/7 and overflow call capture, missed-call recovery, speed-to-lead support, hot-lead notifications, and monthly revenue recovery reporting. The $997+/mo Operational Infrastructure plan adds different call paths for different jobs, approved follow-up steps, reminder and follow-up logic, an owner view of captured calls and follow-up notes as available, and Wallace workflow review."}},
-    {"@type":"Question","name":"Does the AI sound human?","acceptedAnswer":{"@type":"Answer","text":"Call (629) 269-9697 right now and judge the voice experience yourself. Gideon is configured around your approved call flow before launch."}}
+    {"@type":"Question","name":"Does it only work after hours?","acceptedAnswer":{"@type":"Answer","text":"The $97/mo After-Hours Capture plan covers evenings, weekends, and holidays. The $497/mo Revenue Recovery System adds 24/7 and overflow call capture, missed-call recovery, speed-to-lead support, hot-lead notifications, and monthly revenue recovery reporting. The $997+/mo Operational Infrastructure plan adds custom call-flow design, scoped workflow automation, reminder and follow-up logic, CTOS-backed visibility as available, and founder/operator review."}},
+    {"@type":"Question","name":"Does the AI sound human?","acceptedAnswer":{"@type":"Answer","text":"Call (629) 269-9697 and judge it yourself. Gideon is designed to sound natural while following your approved call flow."}}
   ]}
   </script>
   <style>
     /* Feature Matrix */
-    .matrix-wrap { max-width: 1040px; margin: 0 auto; overflow-x: auto; }
-    .matrix-table { width: 100%; min-width: 840px; border-collapse: separate; border-spacing: 0; font-size: 14px; background: rgba(255,255,255,0.62); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
-    .matrix-table th, .matrix-table td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
-    .matrix-table tr:last-child td { border-bottom: 0; }
-    .matrix-table th { font-weight: 800; color: var(--text-1); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; background: rgba(45,115,82,0.06); }
-    .matrix-table th:first-child { border-top-left-radius: 16px; }
-    .matrix-table th:last-child { border-top-right-radius: 16px; }
+    .matrix-wrap { max-width: 800px; margin: 0 auto; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .matrix-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+    .matrix-table th, .matrix-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+    .matrix-table th { position: sticky; top: 56px; z-index: 4; font-weight: 700; color: #fff; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; background: #050505; box-shadow: 0 1px 0 var(--border); }
     .matrix-table td { color: var(--text-2); }
-    .matrix-table td:not(:first-child), .matrix-table th:not(:first-child) { text-align: center; width: 22%; }
-    .matrix-feature { color: var(--text-1); font-weight: 800; }
-    .matrix-feature-title { display: block; color: var(--text-1); font-weight: 800; line-height: 1.25; }
-    .matrix-feature-help { display: block; color: var(--text-2); font-size: 12px; font-weight: 500; line-height: 1.45; margin-top: 4px; max-width: 360px; }
-    .matrix-check { color: var(--green); font-size: 20px; font-weight: 900; line-height: 1; }
-    .matrix-dash { color: var(--text-3); font-size: 18px; font-weight: 800; }
-    .matrix-premium { background: rgba(45,115,82,0.055); }
+    .matrix-table td:not(:first-child) { text-align: center; font-weight: 600; }
+    .matrix-table th:first-child, .matrix-table td:first-child { position: sticky; left: 0; z-index: 3; background: #050505; box-shadow: 1px 0 0 var(--border); }
+    .matrix-table th:first-child { z-index: 5; }
+    .matrix-check { color: var(--green); }
+    .matrix-dash { color: var(--text-3); }
+    .matrix-plan-label { display: block; white-space: nowrap; }
+    .matrix-plan-price { display: block; margin-top: 2px; color: var(--text-3); font-size: 10px; letter-spacing: 0.04em; }
+    .matrix-scroll-note { display: none; margin: -18px auto 14px; max-width: 800px; color: var(--text-3); font-size: 12px; text-align: center; }
+    .matrix-mobile-cards { display: none; }
     @media (max-width: 640px) {
-      .matrix-wrap { margin-left: -14px; margin-right: -14px; padding: 0 14px; }
-      .matrix-table { font-size: 12px; min-width: 780px; }
-      .matrix-table th, .matrix-table td { padding: 12px 10px; }
+      .matrix-scroll-note { display: none; }
+      .matrix-wrap { display: none; }
+      .matrix-table { min-width: 720px; font-size: 12px; }
+      .matrix-table th, .matrix-table td { padding: 11px 10px; }
+      .matrix-table th { top: 56px; vertical-align: bottom; }
+      .matrix-table th:first-child, .matrix-table td:first-child { min-width: 190px; max-width: 190px; white-space: normal; }
+      .matrix-table td:first-child { font-size: 12px; line-height: 1.35; }
+      .matrix-plan-label { white-space: normal; line-height: 1.15; }
+      .matrix-mobile-cards { display: grid; gap: 12px; }
+      .matrix-mobile-row { border: 1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,0.025); padding: 14px; }
+      .matrix-mobile-feature { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+      .matrix-mobile-plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+      .matrix-mobile-plan { min-height: 58px; border: 1px solid var(--border); border-radius: 10px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-align: center; }
+      .matrix-mobile-plan strong { display: block; color: var(--text-2); font-size: 10px; line-height: 1.15; }
+      .matrix-mobile-plan span { display: block; font-size: 15px; font-weight: 800; line-height: 1; }
+      .matrix-mobile-plan .yes { color: var(--green); }
+      .matrix-mobile-plan .no { color: var(--text-3); }
     }
 
     /* Risk Items */
@@ -68,22 +80,22 @@
     .risk-item:hover { background: rgba(255,255,255,0.02); }
     .risk-icon { width: 48px; height: 48px; background: var(--green-dim); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
     .risk-icon svg { width: 22px; height: 22px; color: var(--green); }
-    .risk-title { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 4px; }
+    .risk-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
     .risk-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
   </style>
 </head>
-<body class="funnel-page pricing-page" style="overflow-x:hidden">
+<body style="overflow-x:hidden">
 <header class="header">
   <div class="header-inner">
     <a href="index.html" class="logo">
       <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-      The Call <span>Taker</span>
+      <span class="logo-text">The Call<span>Taker</span></span>
     </a>
     <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
-      <a href="pricing.html" class="active">Pricing</a>
-      <a href="tel:+16292699697">Call Demo Line</a>
+      <a href="/#features">Features</a>
+      <a href="/#pricing" class="active">Pricing</a>
+      <a href="/#faq">FAQ</a>
+      <a href="tel:+16292699697">Call Gideon Live</a>
     </nav>
     <a href="/checkout.html" class="header-cta">Start Free Trial</a>
     <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -91,10 +103,10 @@
 </header>
 
 <nav class="mobile-nav">
-  <a href="index.html">Home</a>
-  <a href="services.html">Services</a>
-  <a href="pricing.html">Pricing</a>
-  <a href="tel:+16292699697">Call Demo Line</a>
+  <a href="/#features">Features</a>
+  <a href="/#pricing">Pricing</a>
+  <a href="/#faq">FAQ</a>
+  <a href="tel:+16292699697">Call Gideon Live</a>
   <a href="/checkout.html" class="btn btn-primary btn-lg">Start Free Trial</a>
 </nav>
 
@@ -111,42 +123,11 @@
   <div class="wrap" style="text-align: center;">
     <div class="reveal">
       <div class="section-label" style="justify-content: center;">Pricing</div>
-      <h1 style="font-size: clamp(36px, 6vw, 56px); font-weight: 800; color: var(--text-1); letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 16px;">Choose the operating layer your phones need.</h1>
+      <h1 style="font-size: clamp(36px, 6vw, 56px); font-weight: 800; color: #fff; letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 16px;">Simple Pricing.<br>Clear <span style="background: linear-gradient(135deg, var(--green) 0%, #00a8ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Recovery.</span></h1>
       <p style="font-size: 18px; color: var(--text-2); max-width: 640px; margin: 0 auto 16px; line-height: 1.6;">Choose the revenue recovery layer your business needs now. The $97 plan covers entry after-hours capture, the $497 plan is the main Revenue Recovery System, and $997+ is for businesses that want operational infrastructure built around their workflow.</p>
-      <p style="font-size: 13px; color: var(--text-3);">14-day trial through secure checkout &middot; Setup reviewed before launch</p>
+      <p style="font-size: 13px; color: var(--text-3);">14-day trial through secure Square checkout &middot; Setup reviewed before launch</p>
     </div>
   </div>
-</section>
-
-<!-- PLAN VISUALIZATION -->
-<section class="funnel-transition" aria-label="Plan visualizations">
-  <div class="plan-visual-grid reveal">
-    <div class="plan-visual">
-      <div class="plan-visual-media" style="background-image:url('/assets/images/plan-visuals/after-hours-capture-v2.jpg');"></div>
-      <div class="plan-visual-content">
-        <div class="plan-visual-tag">$97 / after hours</div>
-        <h3>Closed-hours calls stop dying in voicemail.</h3>
-        <p>Built for the owner who needs nights, weekends, and urgent calls captured while the team is offline.</p>
-      </div>
-    </div>
-    <div class="plan-visual">
-      <div class="plan-visual-media" style="background-image:url('/assets/images/plan-visuals/revenue-recovery-system-v2.jpg');"></div>
-      <div class="plan-visual-content">
-        <div class="plan-visual-tag">$497 / recovery</div>
-        <h3>Leads get organized before they go cold.</h3>
-        <p>For 24/7 and overflow capture, missed-call recovery, and cleaner handoff to the people who close work.</p>
-      </div>
-    </div>
-    <div class="plan-visual">
-      <div class="plan-visual-media" style="background-image:url('/assets/images/plan-visuals/operational-infrastructure-v2.jpg');"></div>
-      <div class="plan-visual-content">
-        <div class="plan-visual-tag">$997+ / infrastructure</div>
-        <h3>The phone becomes an operating system.</h3>
-        <p>For businesses that need call-flow design, handoff rules, and operational visibility around real workflows.</p>
-      </div>
-    </div>
-  </div>
-  <p class="higgsfield-note">Illustrative operational visuals, not dashboards or customer proof. Setup is reviewed before Gideon is treated as live for your business.</p>
 </section>
 
 <!-- PRICING CARDS -->
@@ -169,7 +150,7 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Simple appointment request capture</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Best for closed-hours coverage only</div>
         </div>
-        <a href="/checkout.html?plan=afterhours" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
+        <a href="https://square.link/u/2hfmRPY7" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
         <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">Entry option. Most growth-minded teams choose Revenue Recovery.</div>
       </div>
 
@@ -185,12 +166,12 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 24/7 and overflow call capture</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Missed-call recovery</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Speed-to-lead support</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Lead notifications</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Lead text notifications</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Appointment request capture</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Hot-lead team notifications</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Monthly Revenue Recovery Report</div>
         </div>
-        <a href="/checkout.html?plan=full247" class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
+        <a href="https://square.link/u/S305ewBr" class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
         <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">Main conversion tier for serious service businesses.</div>
       </div>
 
@@ -204,16 +185,16 @@
         <div class="pricing-divider"></div>
         <div class="pricing-features">
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Revenue Recovery</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Builds different call paths for different jobs</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Follow-up steps for leads that need fast attention</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Sets up approved follow-up steps</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Custom call-flow design</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Speed-to-lead workflow setup</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Scoped workflow automation</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Reminder and follow-up logic</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Sends the right summary to the right person</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Owner view of captured calls and follow-up notes as available</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Operational notification map</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> CTOS-backed visibility as available</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Quarterly optimization review</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Wallace reviews the workflow with you</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Founder/operator review</div>
         </div>
-        <a href="/checkout.html?plan=premium" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
+        <a href="https://square.link/u/OpwWF9Sa" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
         <a href="tel:+16292699697" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: 10px;">Talk Through Setup</a>
         <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">We scope automation before anything goes live.</div>
       </div>
@@ -222,37 +203,75 @@
 </section>
 
 <!-- FEATURE MATRIX -->
-<section class="section" style="padding-top: 0;">
-  <div class="wrap">
-    <h2 class="section-title reveal" style="text-align: center; margin-bottom: 32px;">Compare Plans</h2>
-    <p class="reveal" style="text-align:center;color:var(--text-2);max-width:640px;margin:0 auto 28px;line-height:1.6;">Each column adds a larger operating layer: more coverage, more recovery, and more workflow control before your team has to touch the lead.</p>
+<section class="section" id="compare-plans" style="padding-top: 0;">
+    <div class="wrap">
+      <h2 class="section-title reveal" style="text-align: center; margin-bottom: 32px;">Compare Plans</h2>
+      <p class="matrix-scroll-note">Scroll sideways to compare. Plan names stay pinned while you review the checkmarks.</p>
     <div class="matrix-wrap reveal">
       <table class="matrix-table">
         <thead>
           <tr>
             <th>Feature</th>
-            <th>After-Hours</th>
-            <th>Recovery</th>
-            <th>Infrastructure</th>
+            <th><span class="matrix-plan-label">After-Hours Capture</span><span class="matrix-plan-price">$97/mo</span></th>
+            <th><span class="matrix-plan-label">Revenue Recovery</span><span class="matrix-plan-price">$497/mo</span></th>
+            <th><span class="matrix-plan-label">Infrastructure</span><span class="matrix-plan-price">$997+/mo</span></th>
           </tr>
         </thead>
         <tbody>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Answers calls after your office closes</span><span class="matrix-feature-help">Nights, weekends, and holidays are covered so callers do not hit dead voicemail.</span></td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Uses your approved greeting and intake questions</span><span class="matrix-feature-help">Gideon asks for the caller's name, job need, urgency, and callback details.</span></td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Flags emergencies so urgent jobs do not wait</span><span class="matrix-feature-help">Emergency and high-urgency calls are marked clearly for faster follow-up.</span></td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Answers when your team is busy during the day</span><span class="matrix-feature-help">Overflow calls are captured when the office, techs, or sales team cannot pick up.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Helps recover missed calls before they call someone else</span><span class="matrix-feature-help">Missed-call workflows are organized around fast follow-up and cleaner handoff.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Shows your team who needs attention first</span><span class="matrix-feature-help">Summaries make it clear who called, what they need, and whether the lead is worth chasing.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Calls out hot leads instead of burying them</span><span class="matrix-feature-help">Your team can see which calls sound urgent, valuable, or ready for follow-up.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Reviews what was captured each month</span><span class="matrix-feature-help">You can see patterns in missed calls, recovered leads, and where the process can improve.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Builds different call paths for different jobs</span><span class="matrix-feature-help">Estimates, repairs, emergencies, existing customers, and support calls can follow different rules.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Sets up approved follow-up steps</span><span class="matrix-feature-help">The workflow can be scoped so fewer good leads sit untouched after the call.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Sends the right summary to the right person</span><span class="matrix-feature-help">Urgent jobs, quote requests, service calls, and owner-level issues can be routed differently.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Gives the owner a clearer view of call activity</span><span class="matrix-feature-help">When available, The Call Taker shows captured calls, follow-up notes, and setup status in one place.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">Wallace reviews the workflow with you</span><span class="matrix-feature-help">The higher-tier setup gets founder/operator review before the system is treated as ready.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">14-day trial</span><span class="matrix-feature-help">Start with $0 due today, then continue on the selected plan unless canceled before renewal.</span></td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td>24/7 call answering</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr><td>After-hours coverage</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr><td>Appointment request capture</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr><td>Lead text notifications</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr><td>Emergency detection</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr><td>Missed-call recovery</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr><td>Speed-to-lead support</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr><td>Scoped workflow automation</td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr><td>Revenue reporting</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr><td>14-day trial</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
         </tbody>
       </table>
+    </div>
+    <div class="matrix-mobile-cards reveal" aria-label="Mobile plan comparison">
+      <div class="matrix-mobile-row">
+        <div class="matrix-mobile-feature">24/7 call answering</div>
+        <div class="matrix-mobile-plans"><div class="matrix-mobile-plan"><strong>After-Hours</strong><span class="no">&mdash;</span></div><div class="matrix-mobile-plan"><strong>Recovery</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Infrastructure</strong><span class="yes">&#10003;</span></div></div>
+      </div>
+      <div class="matrix-mobile-row">
+        <div class="matrix-mobile-feature">After-hours coverage</div>
+        <div class="matrix-mobile-plans"><div class="matrix-mobile-plan"><strong>After-Hours</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Recovery</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Infrastructure</strong><span class="yes">&#10003;</span></div></div>
+      </div>
+      <div class="matrix-mobile-row">
+        <div class="matrix-mobile-feature">Appointment request capture</div>
+        <div class="matrix-mobile-plans"><div class="matrix-mobile-plan"><strong>After-Hours</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Recovery</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Infrastructure</strong><span class="yes">&#10003;</span></div></div>
+      </div>
+      <div class="matrix-mobile-row">
+        <div class="matrix-mobile-feature">Lead text notifications</div>
+        <div class="matrix-mobile-plans"><div class="matrix-mobile-plan"><strong>After-Hours</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Recovery</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Infrastructure</strong><span class="yes">&#10003;</span></div></div>
+      </div>
+      <div class="matrix-mobile-row">
+        <div class="matrix-mobile-feature">Emergency detection</div>
+        <div class="matrix-mobile-plans"><div class="matrix-mobile-plan"><strong>After-Hours</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Recovery</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Infrastructure</strong><span class="yes">&#10003;</span></div></div>
+      </div>
+      <div class="matrix-mobile-row">
+        <div class="matrix-mobile-feature">Missed-call recovery</div>
+        <div class="matrix-mobile-plans"><div class="matrix-mobile-plan"><strong>After-Hours</strong><span class="no">&mdash;</span></div><div class="matrix-mobile-plan"><strong>Recovery</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Infrastructure</strong><span class="yes">&#10003;</span></div></div>
+      </div>
+      <div class="matrix-mobile-row">
+        <div class="matrix-mobile-feature">Speed-to-lead support</div>
+        <div class="matrix-mobile-plans"><div class="matrix-mobile-plan"><strong>After-Hours</strong><span class="no">&mdash;</span></div><div class="matrix-mobile-plan"><strong>Recovery</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Infrastructure</strong><span class="yes">&#10003;</span></div></div>
+      </div>
+      <div class="matrix-mobile-row">
+        <div class="matrix-mobile-feature">Scoped workflow automation</div>
+        <div class="matrix-mobile-plans"><div class="matrix-mobile-plan"><strong>After-Hours</strong><span class="no">&mdash;</span></div><div class="matrix-mobile-plan"><strong>Recovery</strong><span class="no">&mdash;</span></div><div class="matrix-mobile-plan"><strong>Infrastructure</strong><span class="yes">&#10003;</span></div></div>
+      </div>
+      <div class="matrix-mobile-row">
+        <div class="matrix-mobile-feature">Revenue reporting</div>
+        <div class="matrix-mobile-plans"><div class="matrix-mobile-plan"><strong>After-Hours</strong><span class="no">&mdash;</span></div><div class="matrix-mobile-plan"><strong>Recovery</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Infrastructure</strong><span class="yes">&#10003;</span></div></div>
+      </div>
+      <div class="matrix-mobile-row">
+        <div class="matrix-mobile-feature">14-day trial</div>
+        <div class="matrix-mobile-plans"><div class="matrix-mobile-plan"><strong>After-Hours</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Recovery</strong><span class="yes">&#10003;</span></div><div class="matrix-mobile-plan"><strong>Infrastructure</strong><span class="yes">&#10003;</span></div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -260,13 +279,13 @@
 <!-- RISK REVERSAL -->
 <section class="section" style="padding-top: 0;">
   <div class="wrap" style="text-align: center;">
-    <div class="section-label reveal" style="justify-content: center;">Zero Risk</div>
-    <h2 class="section-title reveal" style="text-align: center; margin-bottom: 40px;">Every Reason To Try, No Reason Not To</h2>
+    <div class="section-label reveal" style="justify-content: center;">Low Friction</div>
+    <h2 class="section-title reveal" style="text-align: center; margin-bottom: 40px;">Try the Recovery Layer Before It Renews</h2>
     <div class="risk-grid reveal">
       <div class="risk-item">
         <div class="risk-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <div class="risk-title">14-Day Trial</div>
-        <div class="risk-desc">Start through checkout. Wallace reviews setup before Gideon goes live.</div>
+        <div class="risk-desc">Start through Square checkout. Wallace reviews setup before Gideon goes live.</div>
       </div>
       <div class="risk-item">
         <div class="risk-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
@@ -275,8 +294,8 @@
       </div>
       <div class="risk-item">
         <div class="risk-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <div class="risk-title">Pays For Itself</div>
-        <div class="risk-desc">One real recovered job can cover the month. The exact value depends on your ticket size and call volume.</div>
+        <div class="risk-title">Built Around Recovered Calls</div>
+        <div class="risk-desc">One recovered call can help offset the monthly cost. Results depend on call volume and job value.</div>
       </div>
     </div>
   </div>
@@ -301,7 +320,7 @@
       </div>
       <div class="faq-item reveal">
         <button class="faq-question">Does it only work after hours?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <div class="faq-answer"><div class="faq-answer-inner">The $97/mo After-Hours Capture plan covers evenings, weekends, and holidays. The $497/mo Revenue Recovery System is the main 24/7 recovery layer: overflow capture, missed-call recovery, speed-to-lead support, lead notifications, appointment request capture, hot-lead alerts, and monthly revenue reporting. The $997+/mo Operational Infrastructure plan adds different call paths for different jobs, approved follow-up steps, reminder and follow-up logic, routing the right summary to the right person, an owner view of captured calls and follow-up notes as available, and Wallace workflow review.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">The $97/mo After-Hours Capture plan covers evenings, weekends, and holidays. The $497/mo Revenue Recovery System is the main 24/7 recovery layer: overflow capture, missed-call recovery, speed-to-lead support, lead notifications, appointment request capture, hot-lead alerts, and monthly revenue reporting. The $997+/mo Operational Infrastructure plan adds custom call-flow design, scoped workflow automation, reminder and follow-up logic, operational notification mapping, CTOS-backed visibility as available, and founder/operator review.</div></div>
       </div>
       <div class="faq-item reveal">
         <button class="faq-question">Can I customize GIDEON?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
@@ -309,7 +328,7 @@
       </div>
       <div class="faq-item reveal">
         <button class="faq-question">Does GIDEON sound human?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <div class="faq-answer"><div class="faq-answer-inner">Call (629) 269-9697 right now and judge the voice experience yourself. Gideon is configured around your approved call flow before launch.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Call (629) 269-9697 and judge it yourself. Gideon is designed to sound natural while following your approved call flow.</div></div>
       </div>
     </div>
   </div>
@@ -318,11 +337,11 @@
 <!-- FINAL CTA -->
 <section style="padding: 60px 0 80px; text-align: center; border-top: 1px solid var(--border);">
   <div class="wrap">
-    <h2 class="reveal" style="font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: var(--text-1); letter-spacing: -0.03em; margin-bottom: 12px;">Stop Losing Revenue Between Calls.</h2>
-    <p class="reveal" style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Start your 14-day trial through secure checkout. Wallace reviews setup before Gideon goes live.</p>
+    <h2 class="reveal" style="font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: #fff; letter-spacing: -0.03em; margin-bottom: 12px;">Stop Losing Revenue Between Calls.</h2>
+    <p class="reveal" style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Start your 14-day trial through secure Square checkout. Wallace reviews setup before Gideon goes live.</p>
     <div class="reveal" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
       <a href="/checkout.html" class="btn btn-green btn-lg">Start Free Trial</a>
-      <a href="tel:+16292699697" class="btn btn-secondary btn-lg">Call Demo Line</a>
+      <a href="tel:+16292699697" class="btn btn-secondary btn-lg">Call Gideon Live</a>
     </div>
   </div>
 </section>
@@ -335,7 +354,7 @@
       <div class="footer-brand">
         <a href="index.html" class="logo">
           <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          The Call <span>Taker</span>
+          <span class="logo-text">The Call<span>Taker</span></span>
         </a>
         <p>AI revenue recovery for service businesses.</p>
       </div>
@@ -358,26 +377,20 @@
 </footer>
 
 
-<!-- MOBILE BAR -->
-<div class="sticky-mobile-bar">
-  <a href="tel:+16292699697"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call Demo Line</a>
-  <a href="/checkout.html" style="border-left:1px solid var(--border);">Start Free Trial</a>
-</div>
-
 <script src="script.js"></script>
 
 <!-- === FLOATING WIDGET === -->
 <!-- FLOATING CALLBACK WIDGET -->
 <div class="float-cb" id="float-widget">
   <div class="float-cb-panel" id="float-panel">
-    <h4 style="font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 4px;">Want to hear Gideon?</h4>
+    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
     <p style="font-size: 12px; color: var(--text-3); margin-bottom: 14px;">Wallace Dobbs will personally review your request and get back with you.</p>
-    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 8px; color: var(--text-1); font-size: 14px; font-family: inherit; margin-bottom: 8px;">
-    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 8px; color: var(--text-1); font-size: 14px; font-family: inherit; margin-bottom: 10px;">
-    <button class="callback-btn" onclick="window.location.href='tel:+16292699697'" style="font-size: 14px; padding: 12px;">Call Me Now</button>
+    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 10px;">
+    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Me Now</button>
     <div id="float-success" style="display: none; text-align: center; padding: 16px 0;">
-      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Demo line is ready.</p>
-      <p style="font-size: 12px; color: var(--text-2);">Call the demo line when you are ready.</p>
+      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
+      <p style="font-size: 12px; color: var(--text-2);">Pick up your phone.</p>
     </div>
   </div>
   <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
@@ -391,19 +404,24 @@
     <button class="exit-close" onclick="closeExitPopup()">&times;</button>
     <div style="text-align: center;">
       <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;">Before you go</div>
-      <h3 style="font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 8px;">Talk through missed-call recovery</h3>
-      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">Use the demo line to hear the voice, then choose a plan if the workflow fits.</p>
-      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 8px; color: var(--text-1); font-size: 14px; font-family: inherit; margin-bottom: 8px;">
-      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 8px; color: var(--text-1); font-size: 14px; font-family: inherit; margin-bottom: 12px;">
-      <button class="callback-btn" onclick="window.location.href='tel:+16292699697'">Call Demo Line</button>
+      <h3 style="font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px;">Get a free missed call audit</h3>
+      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">We'll call your business after hours and tell you exactly what your customers are hearing. Free. No strings.</p>
+      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px;">
+      <button class="callback-btn" onclick="requestExitCallback()">Get My Free Audit</button>
       <div id="exit-success" style="display: none; padding: 20px 0;">
         <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
-        <p style="font-size: 13px; color: var(--text-2);">Use the demo line to hear The Call Taker.</p>
+        <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
       </div>
       <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear Gideon live right now: <a href="tel:+16292699697" style="color: var(--green); font-weight: 600; white-space: nowrap;">(629) 269-9697</a></p>
     </div>
   </div>
 </div>
 
+<!-- MOBILE BAR -->
+<div class="sticky-mobile-bar">
+  <a href="tel:+16292699697"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call Gideon Live</a>
+  <a href="/checkout.html" style="border-left:1px solid var(--border);">Start Free Trial</a>
+</div>
 </body>
 </html>

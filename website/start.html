@@ -43,9 +43,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Start Your Free Pilot | The Call Taker</title>
-<meta name="description" content="Start your free 14-day pilot with The Call Taker. No card, no contract. Forward your number and GIDEON starts answering calls in 5 minutes.">
+<meta name="description" content="Start a reviewed pilot with The Call Taker. Choose the plan path, confirm setup, and review how GIDEON can capture missed-call revenue before anything goes live.">
 <meta property="og:title" content="Start Your Free Pilot | The Call Taker">
-<meta property="og:description" content="No card. No contract. Forward your number and GIDEON answers your calls in 5 minutes. 14-day free trial.">
+<meta property="og:description" content="Choose the plan path, confirm setup, and review how GIDEON can capture missed-call revenue before anything goes live.">
 <meta property="og:url" content="https://thecalltaker.com/start.html">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://thecalltaker.com/start.html">
@@ -69,7 +69,7 @@
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "Start Your Free Pilot",
-  "description": "Sign up for a free 14-day pilot of The Call Taker AI receptionist. No credit card required.",
+  "description": "Start a reviewed pilot path for The Call Taker revenue recovery system.",
   "url": "https://thecalltaker.com/start.html",
   "isPartOf": {
     "@type": "WebSite",
@@ -81,7 +81,7 @@
     "name": "The Call Taker",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web",
-    "description": "AI receptionist that answers calls 24/7, books appointments automatically, and never misses a lead.",
+    "description": "Revenue recovery system that helps capture missed-call details and prepare cleaner service-business handoffs.",
     "url": "https://thecalltaker.com",
     "telephone": "+16292699697",
     "offers": [
@@ -107,11 +107,7 @@
         "description": "Full receptionist with CRM, scheduling, and priority support"
       }
     ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "47"
-    }
+    "brand": "The Call Taker"
   },
   "potentialAction": {
     "@type": "RegisterAction",
@@ -1309,13 +1305,13 @@ html.light .theme-toggle .icon-moon { display: none; }
   <div class="hero-start-inner">
     <div class="eyebrow reveal">
       <span class="pulse"></span>
-      SETUP TAKES 5 MINUTES
+      REVIEWED SETUP PATH
     </div>
 
     <h1 class="reveal" style="transition-delay:0.08s">Start Your <span class="accent">Free</span> Pilot</h1>
 
     <p class="hero-subtitle reveal" style="transition-delay:0.16s">
-      No card. No contract. No call with us needed. Just forward your number and GIDEON starts answering.
+      Choose your plan path, confirm the setup details, and review the call flow before GIDEON goes live.
     </p>
 
     <div class="trust-row reveal" style="transition-delay:0.24s">
@@ -1620,7 +1616,7 @@ html.light .theme-toggle .icon-moon { display: none; }
     <div class="footer-col">
       <h4>RESOURCES</h4>
       <a href="/case-studies/">Case Studies</a>
-      <a href="/book.html">Book a Demo</a>
+      <a href="/demo.html">Live Demo</a>
       <a href="/blog.html">Blog</a>
       <a href="/demo/">Try the Demo</a>
     </div>
@@ -1885,21 +1881,21 @@ html.light .theme-toggle .icon-moon { display: none; }
     });
   }
 
-  // Stripe payment links by plan
-  var STRIPE_LINKS = {
-    'after-hours': 'https://buy.stripe.com/4gM00j7HG816fbO6Y3b3q03',
-    'starter': 'https://buy.stripe.com/6oU8wP4vu3KQfbObejb3q04',
-    'pro': 'https://buy.stripe.com/4gM8wPbXWgxCaVy3LRb3q05'
+  // Keep signup success routing on the reviewed checkout path instead of stale direct payment links.
+  var CHECKOUT_LINKS = {
+    'after-hours': '/checkout.html?plan=after-hours',
+    'starter': '/checkout.html?plan=starter',
+    'pro': '/checkout.html?plan=pro'
   };
 
   function showSuccess(bizName, plan) {
     submitBtn.classList.remove('loading');
     // Update business name in success state
     successBiz.textContent = bizName;
-    // Add Stripe payment link
+    // Add reviewed checkout link
     var payLink = document.getElementById('paymentLink');
-    if (payLink && STRIPE_LINKS[plan]) {
-      payLink.href = STRIPE_LINKS[plan];
+    if (payLink && CHECKOUT_LINKS[plan]) {
+      payLink.href = CHECKOUT_LINKS[plan];
       payLink.style.display = 'inline-flex';
     }
     // Hide form, show success
