@@ -333,8 +333,7 @@ body::after {
   .nav-cta { display: none; }
 }
 @media(max-width:768px) {
-  .nav,
-  .mobile-bar {
+  .nav {
     right: auto;
     width: 100vw;
     max-width: 100vw;
@@ -543,7 +542,6 @@ html.light .msg-bubble { background: #fff; border-color: rgba(0,0,0,0.06); }
 html.light .cap-field { background: rgba(0,0,0,0.03); }
 html.light .btn-primary { color: #fff; }
 html.light .nav-cta { color: #fff !important; }
-html.light .mobile-bar a { color: #fff; }
 html.light .book-d.sel { color: #fff; }
 html.light .industry-trust { background: linear-gradient(180deg, var(--bg) 0%, rgba(234,231,226,0.6) 50%, var(--bg) 100%); }
 html.light .trust-badge { color: var(--t70); background: var(--surface); }
@@ -1081,8 +1079,6 @@ html.light .feature-icon svg { stroke: var(--accent); }
   .sticky-cta { padding: 10px 16px; gap: 10px; }
   .sticky-cta-text { font-size: 12px; display: none; }
   .sticky-cta { justify-content: center; }
-  /* Hide when mobile call bar is showing */
-  .mobile-bar ~ .sticky-cta { display: none; }
 }
 /* Hide sticky CTA on mobile where we already have the call bar */
 @media(max-width:768px) { .sticky-cta { display: none; } }
@@ -1355,32 +1351,6 @@ html.light .feature-icon svg { stroke: var(--accent); }
 .footer-col a:hover { color: var(--t100); }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--t06); }
 .footer-bottom p { font-size: 12px; color: var(--t20); }
-
-/* ═══ MOBILE CALL BAR ═══ */
-.mobile-bar {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  background: var(--accent);
-  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-  text-align: center; z-index: 100;
-  display: none;
-}
-.mobile-bar a { color: var(--t100); font-weight: 700; font-size: 14px; text-decoration: none; }
-@media(max-width:768px) {
-  body { padding-bottom: 0; }
-  .mobile-bar {
-    display: block;
-    min-height: 50px;
-    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
-  }
-  .mobile-bar a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 34px;
-    font-size: 13px;
-    line-height: 1.2;
-  }
-}
 
 /* ══════════════════════════════════════════════
    GIDEON HERO — TIME VAULT v2
@@ -2115,9 +2085,6 @@ html.light .feature-icon svg { stroke: var(--accent); }
 
 @media (max-width: 768px) {
   .float-cb {
-    display: none !important;
-  }
-  .mobile-bar {
     display: none !important;
   }
 }
