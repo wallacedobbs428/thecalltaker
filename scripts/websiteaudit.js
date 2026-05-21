@@ -5,6 +5,7 @@ const path = require('path');
 const root = path.resolve(__dirname, '..');
 const websiteDir = path.join(root, 'website');
 const reportPath = path.join(root, 'reports', 'websiteaudit-report.json');
+const websiteOpportunitiesPath = path.join(root, 'reports', 'websiteaudit-opportunities.json');
 
 const publicPages = [
   'index.html',
@@ -15,6 +16,17 @@ const publicPages = [
   'pay.html',
   'start.html',
   'pilot/index.html'
+];
+
+const coreNavPages = ['index.html', 'pricing.html', 'faq.html', 'demo.html', 'pay.html', 'pilot/index.html'];
+
+const outerPagePatterns = [
+  /^ai-receptionist-/,
+  /^ai-answering-service\//,
+  /^vs\//,
+  /^demo\//,
+  /^agency-program\//,
+  /^industries\//
 ];
 
 const riskyTerms = [
@@ -37,6 +49,16 @@ const staleCtaTerms = [
   'Book a Demo'
 ];
 
+const legacyPositioningTerms = [
+  'generic AI receptionist',
+  'fully automated',
+  'never misses a lead',
+  'answers every call, books every job',
+  'most callers can',
+  'Average ROI',
+  '10-30x'
+];
+
 const expectedSquareLinks = {
   after_hours_capture: 'https://square.link/u/2hfmRPY7',
   revenue_recovery_system: 'https://square.link/u/S305ewBr',
@@ -49,6 +71,21 @@ function read(rel) {
 
 function exists(rel) {
   return fs.existsSync(path.join(websiteDir, rel));
+}
+
+function walkHtml(dir, base = '') {
+  const files = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name.startsWith('.')) continue;
+    const abs = path.join(dir, entry.name);
+    const rel = path.join(base, entry.name).replace(/\\/g, '/');
+    if (entry.isDirectory()) {
+      files.push(...walkHtml(abs, rel));
+    } else if (entry.isFile() && entry.name.endsWith('.html')) {
+      files.push(rel);
+    }
+  }
+  return files.sort();
 }
 
 function addIssue(list, severity, category, file, message, evidence) {
@@ -77,10 +114,21 @@ function normalizeLinkTarget(href) {
   return withoutSlash + '.html';
 }
 
+function isOuterGeneratedPage(page) {
+  return outerPagePatterns.some((pattern) => pattern.test(page));
+}
+
+function countMatches(text, term) {
+  const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  return (text.match(re) || []).length;
+}
+
 function audit() {
   const issues = [];
   const checks = [];
   const pageTexts = {};
+  const allHtmlPages = walkHtml(websiteDir);
+  const opportunityIssues = [];
 
   for (const page of publicPages) {
     if (!exists(page)) {
@@ -104,15 +152,25 @@ function audit() {
     }
   }
 
-  const navPages = ['index.html', 'pricing.html', 'faq.html', 'demo.html'];
   const navLabels = ['Features', 'Pricing', 'FAQ', 'Call Gideon'];
-  for (const page of navPages) {
+  for (const page of coreNavPages) {
     const html = pageTexts[page] || '';
     for (const label of navLabels) {
       if (!html.includes(label)) {
-        addIssue(issues, 'warn', 'nav_label', page, `Expected nav label missing: ${label}`);
+        addIssue(issues, page === 'index.html' ? 'fail' : 'warn', 'nav_label', page, `Expected nav label missing: ${label}`);
       }
     }
+  }
+
+  const home = pageTexts['index.html'] || '';
+  if (!home.includes('class="mobile-top-links"') || !home.includes('max-width: 430px')) {
+    addIssue(issues, 'fail', 'mobile_home_nav', 'index.html', 'Homepage mobile quick nav is not visibly capped for phone widths.');
+  }
+  if (!home.includes('grid-template-columns: repeat(2, minmax(0, 1fr))')) {
+    addIssue(issues, 'fail', 'mobile_home_nav', 'index.html', 'Homepage mobile quick nav does not use the two-row phone-safe layout.');
+  }
+  if (home.includes('sticky-mobile-bar') || home.includes('Call Gideon Live: (629)')) {
+    addIssue(issues, 'fail', 'mobile_home_cta', 'index.html', 'Homepage still appears to include the old sticky mobile call bar.');
   }
 
   const pricing = pageTexts['pricing.html'] || '';
@@ -161,9 +219,31 @@ function audit() {
     }
   }
 
+  for (const page of allHtmlPages) {
+    const html = read(page);
+    if (publicPages.includes(page)) continue;
+    const foundRisk = [];
+    for (const term of riskyTerms.concat(staleCtaTerms, legacyPositioningTerms)) {
+      const hits = countMatches(html, term);
+      if (hits) foundRisk.push({ term, hits });
+    }
+    const generated = isOuterGeneratedPage(page);
+    if (foundRisk.length) {
+      opportunityIssues.push({
+        severity: generated ? 'warn' : 'manual_review',
+        category: generated ? 'generated_outer_page_risk' : 'outer_page_risk',
+        file: page,
+        generated_or_outer_page: generated,
+        findings: foundRisk
+      });
+    }
+  }
+
   const summary = {
     generated_at: new Date().toISOString(),
     pages_checked: publicPages,
+    all_html_pages_count: allHtmlPages.length,
+    core_nav_pages_checked: coreNavPages,
     fail_count: issues.filter(i => i.severity === 'fail').length,
     warn_count: issues.filter(i => i.severity === 'warn').length,
     pass_count: checks.length,
@@ -174,6 +254,14 @@ function audit() {
 
   fs.mkdirSync(path.dirname(reportPath), { recursive: true });
   fs.writeFileSync(reportPath, JSON.stringify(summary, null, 2) + '\n');
+  fs.writeFileSync(websiteOpportunitiesPath, JSON.stringify({
+    generated_at: summary.generated_at,
+    all_html_pages_count: allHtmlPages.length,
+    core_funnel_pages_checked: publicPages,
+    outer_pages_with_risk_count: opportunityIssues.length,
+    note: 'These are wider website cleanup opportunities. Core public funnel failures are reported in websiteaudit-report.json.',
+    issues: opportunityIssues
+  }, null, 2) + '\n');
   return summary;
 }
 
@@ -182,10 +270,12 @@ console.log(`websiteaudit: ${report.current_verdict}`);
 console.log(`pages checked: ${report.pages_checked.length}`);
 console.log(`failures: ${report.fail_count}`);
 console.log(`warnings: ${report.warn_count}`);
+console.log(`all html pages seen: ${report.all_html_pages_count}`);
 if (report.issues.length) {
   for (const issue of report.issues) {
     console.log(`${issue.severity.toUpperCase()} ${issue.file} ${issue.category}: ${issue.message}`);
   }
 }
 console.log(`report: ${path.relative(root, reportPath)}`);
+console.log(`outer-page opportunities: ${path.relative(root, websiteOpportunitiesPath)}`);
 process.exit(report.fail_count ? 1 : 0);
