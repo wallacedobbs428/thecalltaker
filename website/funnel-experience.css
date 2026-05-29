@@ -72,6 +72,96 @@ body.funnel-page {
   box-shadow: none;
 }
 
+.funnel-page .pricing-card .btn,
+.funnel-page .sticky-mobile-bar a,
+.funnel-page .header-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.funnel-page .pricing-card .btn::before,
+.funnel-page .sticky-mobile-bar a::before,
+.funnel-page .header-cta::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255, 213, 79, 0.95), transparent 28%),
+    radial-gradient(circle at 82% 18%, rgba(64, 196, 255, 0.9), transparent 30%),
+    radial-gradient(circle at 50% 110%, rgba(42, 157, 122, 1), transparent 42%),
+    linear-gradient(135deg, #2d734e, #5fd38b 42%, #46a6ff 100%);
+  opacity: 0;
+  transform: scale(0.88);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.funnel-page .pricing-card .btn::after,
+.funnel-page .header-cta::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  z-index: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.14);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.funnel-page .pricing-card .btn > *,
+.funnel-page .header-cta > * {
+  position: relative;
+  z-index: 1;
+}
+
+.funnel-page .pricing-card .btn:hover,
+.funnel-page .pricing-card .btn:focus-visible,
+.funnel-page .pricing-card .btn.cta-hot,
+.funnel-page .sticky-mobile-bar a:hover,
+.funnel-page .sticky-mobile-bar a:focus-visible,
+.funnel-page .sticky-mobile-bar a.cta-hot,
+.funnel-page .header-cta:hover,
+.funnel-page .header-cta:focus-visible,
+.funnel-page .header-cta.cta-hot {
+  transform: translateY(-2px);
+  background:
+    radial-gradient(circle at 22% 20%, rgba(255, 213, 79, 0.95), transparent 28%),
+    radial-gradient(circle at 88% 22%, rgba(64, 196, 255, 0.9), transparent 32%),
+    linear-gradient(135deg, #236744 0%, #38a86f 42%, #37a6ff 100%) !important;
+  background-size: 140% 140% !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: 0 18px 42px rgba(45, 115, 82, 0.24), 0 0 0 4px rgba(42, 157, 122, 0.12);
+}
+
+.funnel-page .pricing-card .btn:hover::before,
+.funnel-page .pricing-card .btn:focus-visible::before,
+.funnel-page .pricing-card .btn.cta-hot::before,
+.funnel-page .sticky-mobile-bar a:hover::before,
+.funnel-page .sticky-mobile-bar a:focus-visible::before,
+.funnel-page .sticky-mobile-bar a.cta-hot::before,
+.funnel-page .header-cta:hover::before,
+.funnel-page .header-cta:focus-visible::before,
+.funnel-page .header-cta.cta-hot::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.funnel-page .pricing-card .btn:hover::after,
+.funnel-page .pricing-card .btn:focus-visible::after,
+.funnel-page .pricing-card .btn.cta-hot::after,
+.funnel-page .header-cta:hover::after,
+.funnel-page .header-cta:focus-visible::after,
+.funnel-page .header-cta.cta-hot::after {
+  opacity: 1;
+}
+
 .funnel-page .btn-green,
 .funnel-page .btn-primary,
 .funnel-page .header-cta {
@@ -322,8 +412,12 @@ body.funnel-page {
   color: var(--tct-ink);
 }
 
-.funnel-page .menu-toggle span {
-  background: var(--tct-ink);
+.funnel-page .menu-toggle .menu-lines {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.funnel-page .menu-toggle .menu-lines > span {
+  background: rgba(255, 255, 255, 0.96);
 }
 
 .funnel-transition {
@@ -404,6 +498,56 @@ body.funnel-page {
   margin: 0 auto;
 }
 
+.plan-switcher {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: min(900px, 100%);
+  margin: 0 auto 16px;
+}
+
+.plan-switch-option {
+  min-height: 58px;
+  border: 1px solid var(--tct-line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--tct-ink);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(17, 18, 16, 0.06);
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.plan-switch-option span {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tct-muted);
+}
+
+.plan-switch-option:hover,
+.plan-switch-option:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(43, 107, 78, 0.35);
+  outline: none;
+}
+
+.plan-switch-option.is-active {
+  background: var(--tct-green);
+  border-color: var(--tct-green);
+  color: #fff;
+}
+
+.plan-switch-option.is-active span {
+  color: rgba(255, 255, 255, 0.82);
+}
+
 .plan-visual {
   min-height: 320px;
   border: 1px solid var(--tct-line);
@@ -412,6 +556,12 @@ body.funnel-page {
   background: #ebe7df;
   position: relative;
   box-shadow: var(--tct-shadow);
+}
+
+.plan-visual-featured {
+  width: min(1100px, 100%);
+  min-height: 430px;
+  margin: 0 auto;
 }
 
 .plan-visual::before {
@@ -430,6 +580,7 @@ body.funnel-page {
   background-size: cover;
   background-position: center;
   opacity: 0.72;
+  transition: background-image 180ms ease, transform 180ms ease;
 }
 
 .plan-visual-content {
@@ -467,11 +618,15 @@ body.funnel-page {
   text-transform: uppercase;
 }
 
-.higgsfield-note {
-  max-width: 920px;
-  margin: 18px auto 0;
-  color: var(--tct-faint);
-  font-size: 12px;
+  .higgsfield-note {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 920px;
+    margin: 18px auto 0;
+    padding-left: 6px;
+    padding-right: 6px;
+    color: var(--tct-faint);
+    font-size: 12px;
   line-height: 1.6;
   text-align: center;
 }
@@ -615,9 +770,11 @@ body.funnel-page {
   }
 
   .funnel-transition {
+    box-sizing: border-box;
     padding: 0 14px 50px;
     width: 100%;
     max-width: 100%;
+    overflow-x: hidden;
   }
 
   .funnel-transition-copy {
@@ -649,9 +806,29 @@ body.funnel-page {
     max-width: 100%;
   }
 
+  .plan-switcher {
+    grid-template-columns: 1fr;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 14px;
+  }
+
+  .plan-switch-option {
+    min-height: 54px;
+    font-size: 15px;
+  }
+
   .plan-visual {
+    box-sizing: border-box;
     min-height: 270px;
     width: 100%;
+  }
+
+  .plan-visual-featured {
+    min-height: 330px;
   }
 
   .plan-visual-content {
