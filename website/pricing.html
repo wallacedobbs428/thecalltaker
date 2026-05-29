@@ -376,9 +376,9 @@
 <!-- PLAN VISUALIZATION -->
 <section class="funnel-transition" aria-label="Plan visualizations">
   <div class="plan-switcher reveal" aria-label="Switch pricing plan visual">
-    <button class="plan-switch-option is-active" type="button" data-plan-visual="afterhours">$97 <span>After-Hours Capture</span></button>
-    <button class="plan-switch-option" type="button" data-plan-visual="full247">$497 <span>24/7 Call Coverage</span></button>
-    <button class="plan-switch-option" type="button" data-plan-visual="custom">$997+ <span>Custom Call Coverage</span></button>
+    <button class="plan-switch-option is-active" type="button" data-plan-visual="afterhours" data-checkout="https://square.link/u/2hfmRPY7">$97 <span>After-Hours Capture</span></button>
+    <button class="plan-switch-option" type="button" data-plan-visual="full247" data-checkout="https://square.link/u/S305ewBr">$497 <span>24/7 Call Coverage</span></button>
+    <button class="plan-switch-option" type="button" data-plan-visual="custom" data-checkout="https://square.link/u/OpwWF9Sa">$997+ <span>Custom Call Coverage</span></button>
   </div>
   <div class="plan-visual plan-visual-featured reveal" id="pricingPlanVisual">
     <div class="plan-visual-media" id="pricingPlanImage" style="background-image:url('/assets/images/plan-visuals/after-hours-capture-v3.png?v=20260528-bedside');"></div>
@@ -607,6 +607,19 @@
 <script src="script.js"></script>
 <script>
 (function () {
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a');
+    if (!link) return;
+
+    var href = link.getAttribute('href') || '';
+    var label = (link.textContent || '').replace(/\s+/g, ' ').trim();
+    if (label === 'Start Free Trial' && href.indexOf('https://square.link/u/') === 0) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.location.assign(href);
+    }
+  }, true);
+
   document.querySelectorAll('.pricing-card .btn, .header-cta, .sticky-mobile-bar a').forEach(function (button) {
     button.addEventListener('pointerenter', function () {
       button.classList.add('cta-hot');
