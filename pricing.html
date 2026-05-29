@@ -11,42 +11,130 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Call Taker — AI Receptionist for Service Businesses</title>
+  <title>Call Coverage Pricing | The Call Taker</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="description" content="The Call Taker AI receptionist pricing. After-Hours $97/mo, Starter $497/mo, Pro $997/mo. 14-day free pilot, $500 setup, cancel anytime.">
+  <meta name="description" content="The Call Taker pricing for call answering coverage. After-Hours Capture is $97/mo, 24/7 Call Coverage is $497/mo, and Custom Call Coverage starts at $997+/mo.">
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Pricing — The Call Taker AI Receptionist">
-  <meta property="og:description" content="AI receptionist starting at $97/mo. Less than the cost of one missed job. Free 14-day pilot, no credit card.">
+  <meta property="og:title" content="Call Coverage Pricing — The Call Taker">
+  <meta property="og:description" content="Choose after-hours capture, 24/7 call coverage, or a custom call coverage setup reviewed before launch.">
+  <meta property="og:image" content="https://thecalltaker.com/og-image.png">
   <meta property="og:url" content="https://thecalltaker.com/pricing">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Pricing — The Call Taker AI Receptionist">
-  <meta name="twitter:description" content="AI receptionist starting at $97/mo. Free 14-day pilot.">
+  <meta name="twitter:title" content="Call Coverage Pricing — The Call Taker">
+  <meta name="twitter:description" content="Start with after-hours call answering, add 24/7 coverage, or build a custom call coverage setup.">
   <link rel="canonical" href="https://thecalltaker.com/pricing">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="funnel-experience.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-    {"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"Under 48 hours. You forward your number to us, tell us your business hours and services, and the AI goes live same day."}},
+    {"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"Setup depends on the call flow. We confirm your hours, services, urgency rules, and handoff path before Gideon is treated as live for your business."}},
     {"@type":"Question","name":"Is there a contract?","acceptedAnswer":{"@type":"Answer","text":"No contracts, ever. Month-to-month. Cancel anytime."}},
     {"@type":"Question","name":"What industries do you work with?","acceptedAnswer":{"@type":"Answer","text":"Any business that answers phones. HVAC, plumbing, electrical, roofing, locksmith, dental, legal, med spa, veterinary, towing, property management, and more."}},
-    {"@type":"Question","name":"Does it only work after hours?","acceptedAnswer":{"@type":"Answer","text":"The $97/mo After-Hours plan covers evenings, weekends, and holidays. The $497/mo Starter plan handles every call 24/7. The $997/mo Pro plan adds smart routing, custom workflows, and priority support."}},
-    {"@type":"Question","name":"Does the AI sound human?","acceptedAnswer":{"@type":"Answer","text":"Yes. Call (629) 269-9697 right now and hear for yourself. Most callers can't tell it's AI."}}
+    {"@type":"Question","name":"Does it only work after hours?","acceptedAnswer":{"@type":"Answer","text":"The $97/mo After-Hours Capture plan covers evenings, weekends, and holidays. The $497/mo 24/7 Call Coverage plan adds day, night, and overflow call answering, fast follow-up support, lead notifications, appointment request capture, hot-lead alerts, and monthly call summary reporting. The $997+/mo Custom Call Coverage plan adds a custom call flow, approved tool connections, reminder and follow-up support, clear owner notifications, and founder review."}},
+    {"@type":"Question","name":"Does the AI sound human?","acceptedAnswer":{"@type":"Answer","text":"Call (629) 269-9697 right now and judge the voice experience yourself. Gideon is configured around your approved call flow before launch."}}
   ]}
   </script>
   <style>
     /* Feature Matrix */
-    .matrix-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    .matrix-table th, .matrix-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); }
-    .matrix-table th { font-weight: 700; color: #fff; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; background: rgba(255,255,255,0.02); }
+    .matrix-wrap { max-width: 1040px; margin: 0 auto; overflow-x: auto; }
+    .matrix-table { width: 100%; min-width: 840px; border-collapse: separate; border-spacing: 0; font-size: 14px; background: rgba(255,255,255,0.62); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
+    .matrix-table th, .matrix-table td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .matrix-table tr:last-child td { border-bottom: 0; }
+    .matrix-table th { font-weight: 800; color: var(--text-1); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; background: rgba(45,115,82,0.06); }
+    .matrix-table th:first-child { border-top-left-radius: 16px; }
+    .matrix-table th:last-child { border-top-right-radius: 16px; }
     .matrix-table td { color: var(--text-2); }
-    .matrix-table td:not(:first-child) { text-align: center; font-weight: 600; }
-    .matrix-check { color: var(--green); }
-    .matrix-dash { color: var(--text-3); }
-    @media (max-width: 640px) { .matrix-table { font-size: 12px; } .matrix-table th, .matrix-table td { padding: 10px 8px; } }
-
+    .matrix-table td:not(:first-child), .matrix-table th:not(:first-child) { text-align: center; width: 22%; }
+    .matrix-feature { color: var(--text-1); font-weight: 800; }
+    .matrix-feature-title { display: block; color: var(--text-1); font-weight: 800; line-height: 1.25; }
+    .matrix-feature-help { display: block; color: var(--text-2); font-size: 12px; font-weight: 500; line-height: 1.45; margin-top: 4px; max-width: 360px; }
+    .matrix-check { color: var(--green); font-size: 20px; font-weight: 900; line-height: 1; }
+    .matrix-dash { color: var(--text-3); font-size: 18px; font-weight: 800; }
+    .matrix-premium { background: rgba(45,115,82,0.055); }
+    @media (max-width: 640px) {
+      .matrix-wrap {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: visible;
+      }
+      .matrix-table {
+        display: block;
+        width: 100% !important;
+        max-width: 100%;
+        min-width: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        overflow: visible;
+      }
+      .matrix-table thead { display: none; }
+      .matrix-table tbody { display: grid; gap: 12px; }
+      .matrix-table tr {
+        display: grid;
+        width: 100%;
+        max-width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: rgba(255,255,255,0.72);
+        overflow: hidden;
+      }
+      .matrix-table th,
+      .matrix-table td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100% !important;
+        max-width: 100%;
+        padding: 11px 14px;
+        border-bottom: 1px solid var(--border);
+        text-align: left !important;
+      }
+      .matrix-table td:not(:first-child) {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+      }
+      .matrix-table td:first-child {
+        display: block;
+        background: rgba(45,115,82,0.06);
+      }
+      .matrix-table td:last-child { border-bottom: 0; }
+      .matrix-table td:not(:first-child)::before {
+        color: var(--text-2);
+        font-size: 11px;
+        font-weight: 800;
+        line-height: 1.2;
+        text-transform: uppercase;
+      }
+      .matrix-table td:nth-child(2)::before { content: "After-Hours Capture"; }
+      .matrix-table td:nth-child(3)::before { content: "24/7 Call Coverage"; }
+      .matrix-table td:nth-child(4)::before { content: "Custom Call Coverage"; }
+      .matrix-table td.matrix-check,
+      .matrix-table td.matrix-dash { font-size: 0; }
+      .matrix-table td.matrix-check::after {
+        content: "\2713";
+        color: var(--green);
+        font-size: 18px;
+        font-weight: 900;
+        line-height: 1;
+      }
+      .matrix-table td.matrix-dash::after {
+        content: "\2014";
+        color: var(--text-3);
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .matrix-feature-title,
+      .matrix-feature-help {
+        max-width: none;
+        overflow-wrap: anywhere;
+      }
+    }
     /* Risk Items */
     .risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: 800px; margin: 0 auto; }
     @media (max-width: 640px) { .risk-grid { grid-template-columns: 1fr; } }
@@ -54,55 +142,253 @@
     .risk-item:hover { background: rgba(255,255,255,0.02); }
     .risk-icon { width: 48px; height: 48px; background: var(--green-dim); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
     .risk-icon svg { width: 22px; height: 22px; color: var(--green); }
-    .risk-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .risk-title { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 4px; }
     .risk-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+    .pricing-mobile-menu-button { display: none !important; }
+    .pricing-page .nav { display: none !important; }
+    .pricing-page .header-inner {
+      display: grid !important;
+      grid-template-columns: 1fr 132px 132px 1fr !important;
+      align-items: center !important;
+      column-gap: 18px !important;
+    }
+    .pricing-page .logo {
+      grid-column: 1 !important;
+      justify-self: start !important;
+      margin-right: 0 !important;
+    }
+    .pricing-page .header-cta {
+      grid-column: 2 !important;
+      justify-self: stretch !important;
+      width: 132px !important;
+      min-width: 132px !important;
+      max-width: 132px !important;
+      justify-content: center !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+      .pricing-page .menu-toggle {
+        grid-column: 3 !important;
+        justify-self: stretch !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 9px !important;
+        width: 132px !important;
+        max-width: 132px !important;
+        min-width: 132px !important;
+        min-height: 40px !important;
+        padding: 0 16px !important;
+      border-radius: 999px !important;
+      background: var(--tct-green) !important;
+      color: #fff !important;
+      box-shadow: 0 12px 28px rgba(45,115,82,0.16) !important;
+    }
+    .pricing-page .menu-toggle .menu-lines {
+      display: inline-flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      gap: 4px !important;
+      width: 18px !important;
+      height: 18px !important;
+      border-radius: 999px !important;
+      background: rgba(255,255,255,0.14) !important;
+    }
+    .pricing-page .menu-toggle .menu-lines > span {
+      width: 10px !important;
+      height: 1.5px !important;
+      margin: 0 auto !important;
+      background: rgba(255,255,255,0.96) !important;
+      border-radius: 99px !important;
+    }
+    .pricing-page .menu-toggle strong {
+      color: #fff !important;
+      font-size: 12px !important;
+      font-weight: 900 !important;
+      line-height: 1 !important;
+    }
+    @media (max-width: 640px) {
+      .pricing-page .hero {
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding: 74px 0 36px !important;
+        overflow-x: hidden !important;
+      }
+      .pricing-page .header-inner {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding-left: 22px !important;
+        padding-right: 22px !important;
+      }
+      .pricing-page .menu-toggle {
+        display: inline-flex !important;
+        width: 104px !important;
+        min-width: 104px !important;
+        max-width: 104px !important;
+      }
+      .pricing-page .mobile-nav {
+        top: 70px !important;
+        left: 18px !important;
+        right: 18px !important;
+        background: rgba(250, 249, 245, 0.98) !important;
+        border: 1px solid rgba(17, 18, 16, 0.10) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 24px 50px rgba(17, 18, 16, 0.12) !important;
+      }
+      .pricing-page .mobile-nav a {
+        color: var(--tct-ink) !important;
+        border-bottom-color: rgba(17, 18, 16, 0.10) !important;
+      }
+      .pricing-page .mobile-nav a:hover,
+      .pricing-page .mobile-nav a.active {
+        color: var(--tct-green) !important;
+      }
+      .pricing-page .mobile-nav .btn {
+        background: var(--tct-green) !important;
+        color: #fff !important;
+        border-radius: 999px !important;
+      }
+      .pricing-page .hero .wrap {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+      }
+      .pricing-page .hero .reveal {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 258px !important;
+        margin: 0 auto !important;
+        overflow: visible !important;
+      }
+      .pricing-page .hero h1 {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        font-size: 24px !important;
+        line-height: 1.12 !important;
+        letter-spacing: -0.02em !important;
+        margin: 0 0 12px !important;
+        text-align: center !important;
+        overflow-wrap: normal;
+      }
+      .pricing-page .hero p {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin: 0 auto 12px !important;
+        font-size: 13px !important;
+        line-height: 1.45 !important;
+        text-align: center !important;
+      }
+      .pricing-page .plan-visual-content {
+        left: 22px !important;
+        right: 34px !important;
+        max-width: 300px !important;
+      }
+      .pricing-page .funnel-transition {
+        box-sizing: border-box !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        overflow-x: hidden !important;
+      }
+      .pricing-page .plan-switcher,
+      .pricing-page .plan-visual,
+      .pricing-page .higgsfield-note {
+        box-sizing: border-box !important;
+        width: calc(100vw - 32px) !important;
+        max-width: calc(100vw - 32px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      .pricing-page .plan-switcher {
+        transform: none !important;
+      }
+      .pricing-page .plan-switch-option {
+        width: 100% !important;
+      }
+      .pricing-page .plan-visual-content h3 {
+        font-size: 16px !important;
+        line-height: 1.2 !important;
+      }
+      .pricing-page .plan-visual-content p {
+        font-size: 12px !important;
+        line-height: 1.45 !important;
+        max-width: 270px !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+      }
+      .pricing-page .sticky-mobile-bar {
+        display: none !important;
+      }
+    }
   </style>
 </head>
-<body style="overflow-x:hidden">
-
-<a href="#pricing-cards" class="skip-link">Skip to pricing</a>
-
-<!-- NAV -->
-<!-- === NAV === -->
-<!-- NAV -->
-<!-- === NAV === -->
+<body class="funnel-page pricing-page" style="overflow-x:hidden">
 <header class="header">
   <div class="header-inner">
     <a href="index.html" class="logo">
       <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-      The Call <span>Taker</span>
+      <span class="logo-text">The Call<span>Taker</span></span>
     </a>
-    <nav class="nav">
-      <a href="index.html" class="active">Home</a>
-      <a href="services.html">Services</a>
-      <a href="#pricing">Pricing</a>
-      <a href="demo.html">Demo</a>
-    </nav>
-    <a href="demo.html" class="header-cta">Book a Demo</a>
-    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <a href="#pricing-cards" class="header-cta">Choose Plan</a>
+    <button class="menu-toggle" aria-label="Menu"><span class="menu-lines"><span></span><span></span><span></span></span><strong>Menu</strong></button>
   </div>
 </header>
 
 <nav class="mobile-nav">
-  <a href="index.html">Home</a>
-  <a href="services.html">Services</a>
-  <a href="#pricing">Pricing</a>
-  <a href="demo.html">Demo</a>
-  <a href="demo.html" class="btn btn-primary btn-lg">Book a Demo</a>
+  <a href="/#features">Features</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="/faq.html">FAQ</a>
+  <a href="tel:+16292699697">Call Gideon Live</a>
+  <a href="#pricing-cards" class="btn btn-primary btn-lg">Choose Plan</a>
 </nav>
 
 
 
-<!-- HERO -->
+
+
+
+
+
+<a href="#pricing-cards" class="skip-link">Skip to pricing</a>
+
 <section class="hero" style="padding-bottom: 60px;">
   <div class="wrap" style="text-align: center;">
     <div class="reveal">
       <div class="section-label" style="justify-content: center;">Pricing</div>
-      <h1 style="font-size: clamp(36px, 6vw, 56px); font-weight: 800; color: #fff; letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 16px;">Simple Pricing.<br>Massive <span style="background: linear-gradient(135deg, var(--green) 0%, #00a8ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">ROI.</span></h1>
-      <p style="font-size: 18px; color: var(--text-2); max-width: 520px; margin: 0 auto 16px; line-height: 1.6;">One missed call costs more than an entire month of service. Every plan includes a 14-day free pilot.</p>
-      <p style="font-size: 13px; color: var(--text-3);">$500 one-time setup &middot; No contracts &middot; Cancel anytime</p>
+      <h1 style="font-size: clamp(36px, 6vw, 56px); font-weight: 800; color: var(--text-1); letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 16px;">Choose your call coverage.</h1>
+      <p style="font-size: 18px; color: var(--text-2); max-width: 640px; margin: 0 auto 16px; line-height: 1.6;">Start with after-hours capture, add 24/7 call coverage, or build a custom setup around how your team handles calls.</p>
+      <p style="font-size: 13px; color: var(--text-3);">14-day Square trial &middot; $0 due today &middot; Selected monthly plan starts after 14 days unless canceled</p>
     </div>
   </div>
+</section>
+
+<!-- PLAN VISUALIZATION -->
+<section class="funnel-transition" aria-label="Plan visualizations">
+  <div class="plan-switcher reveal" aria-label="Switch pricing plan visual">
+    <button class="plan-switch-option is-active" type="button" data-plan-visual="afterhours">$97 <span>After-Hours Capture</span></button>
+    <button class="plan-switch-option" type="button" data-plan-visual="full247">$497 <span>24/7 Call Coverage</span></button>
+    <button class="plan-switch-option" type="button" data-plan-visual="custom">$997+ <span>Custom Call Coverage</span></button>
+  </div>
+  <div class="plan-visual plan-visual-featured reveal" id="pricingPlanVisual">
+    <div class="plan-visual-media" id="pricingPlanImage" style="background-image:url('/assets/images/plan-visuals/after-hours-capture-v3.png?v=20260528-bedside');"></div>
+    <div class="plan-visual-content">
+      <div class="plan-visual-tag" id="pricingPlanTag">$97 / After-Hours Capture</div>
+      <h3 id="pricingPlanHeadline">Closed-hours calls stop dying in voicemail.</h3>
+      <p id="pricingPlanCopy">Built for the owner who needs nights, weekends, and urgent calls captured while the team is offline.</p>
+    </div>
+  </div>
+  <p class="higgsfield-note">Illustrative operational visuals, not dashboards or customer proof. Setup is reviewed before Gideon is treated as live for your business.</p>
 </section>
 
 <!-- PRICING CARDS -->
@@ -112,55 +398,66 @@
       <!-- After-Hours -->
       <div class="pricing-card">
         <div class="pricing-badge">&nbsp;</div>
-        <div class="pricing-name">After-Hours</div>
-        <div class="pricing-desc">Evenings, weekends, holidays</div>
+        <div class="pricing-name">After-Hours Capture</div>
+        <div class="pricing-desc">Entry coverage when your team is closed</div>
         <div class="pricing-price">$97<span>/mo</span></div>
-        <div class="pricing-setup">+ $500 one-time setup</div>
+        <div class="pricing-setup">$0 setup fee</div>
         <div class="pricing-divider"></div>
         <div class="pricing-features">
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> AI answers after-hours calls</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> After-hours AI answering</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Evenings, weekends, holidays</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Texts you new leads</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Emergency detection</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 48-hour setup</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Lead summaries to your team</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Urgency and emergency flagging</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Simple appointment request capture</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Best for closed-hours coverage only</div>
         </div>
-        <a href="pilot/" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Pilot</a>
+        <a href="https://square.link/u/2hfmRPY7" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
+        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $97/mo starts after 14 days unless canceled.</div>
       </div>
 
-      <!-- Starter (Featured) -->
+      <!-- 24/7 Call Coverage (Featured) -->
       <div class="pricing-card featured">
-        <div class="pricing-badge">Most Popular</div>
-        <div class="pricing-name">Starter</div>
-        <div class="pricing-desc">HVAC, Plumbing, Electrical</div>
+        <div class="pricing-badge">Recommended</div>
+        <div class="pricing-name">24/7 Call Coverage</div>
+        <div class="pricing-desc">Day, night, and overflow call answering</div>
         <div class="pricing-price">$497<span>/mo</span></div>
-        <div class="pricing-setup">+ $500 one-time setup</div>
+        <div class="pricing-setup">$0 setup fee</div>
         <div class="pricing-divider"></div>
         <div class="pricing-features">
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> AI answers calls 24/7</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Books appointments</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Texts you new leads</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Emergency detection</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 48-hour setup</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 24/7 and overflow call capture</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Missed-call follow-up support</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Speed-to-lead support</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Lead notifications</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Appointment request capture</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Hot-lead team notifications</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Monthly call summary report</div>
         </div>
-        <a href="pilot/" class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Pilot</a>
+        <a href="https://square.link/u/S305ewBr" class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
+        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $497/mo starts after 14 days unless canceled.</div>
       </div>
 
-      <!-- Pro -->
+      <!-- Custom Call Coverage -->
       <div class="pricing-card">
         <div class="pricing-badge">Best for Premium Industries</div>
-        <div class="pricing-name">Pro</div>
-        <div class="pricing-desc">Dental, Legal, Roofing, MedSpa, Property Mgmt</div>
-        <div class="pricing-price">$997<span>/mo</span></div>
-        <div class="pricing-setup">+ $500 one-time setup</div>
+        <div class="pricing-name">Custom Call Coverage</div>
+        <div class="pricing-desc">We set it up around how your business works</div>
+        <div class="pricing-price">$997+<span>/mo</span></div>
+        <div class="pricing-setup">$0 setup fee</div>
         <div class="pricing-divider"></div>
         <div class="pricing-features">
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Starter</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Smart call routing</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Custom intake workflow</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Priority support</div>
-          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Monthly performance reports</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in 24/7 Call Coverage</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Custom call-flow design</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Fast follow-up setup</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Approved tool connections</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Reminder and follow-up logic</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Clear owner notification plan</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Simple call review notes when available</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Quarterly optimization review</div>
+          <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Founder/operator review</div>
         </div>
-        <a href="pilot/" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Pilot</a>
+        <a href="https://square.link/u/OpwWF9Sa" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
+        <a href="tel:+16292699697" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: 10px;">Talk Through Setup</a>
+        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $997+/mo starts after 14 days unless canceled.</div>
       </div>
     </div>
   </div>
@@ -170,27 +467,32 @@
 <section class="section" style="padding-top: 0;">
   <div class="wrap">
     <h2 class="section-title reveal" style="text-align: center; margin-bottom: 32px;">Compare Plans</h2>
-    <div class="reveal" style="max-width: 800px; margin: 0 auto; overflow-x: auto;">
+    <p class="reveal" style="text-align:center;color:var(--text-2);max-width:640px;margin:0 auto 28px;line-height:1.6;">Compare the coverage level, follow-up support, and setup depth in each plan.</p>
+    <div class="matrix-wrap reveal">
       <table class="matrix-table">
         <thead>
           <tr>
             <th>Feature</th>
-            <th>After-Hours</th>
-            <th>Starter</th>
-            <th>Pro</th>
+            <th>After-Hours Capture</th>
+            <th>24/7 Call Coverage</th>
+            <th>Custom Call Coverage</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>24/7 call answering</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>After-hours coverage</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Appointment booking</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Lead text notifications</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Emergency detection</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Smart call routing</td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Custom intake workflow</td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Priority support</td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>Monthly reports</td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td></tr>
-          <tr><td>14-day free pilot</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Answers calls after your office closes</span><span class="matrix-feature-help">Nights, weekends, and holidays are covered so callers do not hit dead voicemail.</span></td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Uses your approved greeting and intake questions</span><span class="matrix-feature-help">Gideon asks for the caller's name, job need, urgency, and callback details.</span></td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Flags emergencies so urgent jobs do not wait</span><span class="matrix-feature-help">Emergency and high-urgency calls are marked clearly for faster follow-up.</span></td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Answers when your team is busy during the day</span><span class="matrix-feature-help">Overflow calls are captured when the office, techs, or sales team cannot pick up.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Supports faster missed-call follow-up</span><span class="matrix-feature-help">Calls are organized around fast follow-up and cleaner handoff.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Shows your team who needs attention first</span><span class="matrix-feature-help">Summaries make it clear who called, what they need, and whether the lead is worth chasing.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Calls out hot leads instead of burying them</span><span class="matrix-feature-help">Your team can see which calls sound urgent, valuable, or ready for follow-up.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Reviews what was captured each month</span><span class="matrix-feature-help">You can see patterns in missed calls, qualified leads, and where the process can improve.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Custom call paths for different jobs</span><span class="matrix-feature-help">Estimates, repairs, emergencies, existing customers, and support calls can follow different rules.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Approved follow-up setup</span><span class="matrix-feature-help">Follow-up can be scoped so fewer good leads sit untouched after the call.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Clear owner notifications</span><span class="matrix-feature-help">Urgent jobs, quote requests, service calls, and owner-level issues can be routed clearly.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Call review notes when available</span><span class="matrix-feature-help">The custom setup can include captured call notes, follow-up notes, and setup status in one place.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Founder/operator review</span><span class="matrix-feature-help">The higher-tier setup gets founder/operator review before the system is treated as ready.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">14-day trial</span><span class="matrix-feature-help">Start with $0 due today, then continue on the selected plan unless canceled before renewal.</span></td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
         </tbody>
       </table>
     </div>
@@ -205,8 +507,8 @@
     <div class="risk-grid reveal">
       <div class="risk-item">
         <div class="risk-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <div class="risk-title">14-Day Free Pilot</div>
-        <div class="risk-desc">Try it free. No credit card. See the results before you spend a dollar.</div>
+        <div class="risk-title">14-Day Trial</div>
+        <div class="risk-desc">Start through Square. Wallace reviews setup before Gideon goes live.</div>
       </div>
       <div class="risk-item">
         <div class="risk-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
@@ -216,7 +518,7 @@
       <div class="risk-item">
         <div class="risk-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
         <div class="risk-title">Pays For Itself</div>
-        <div class="risk-desc">One caught call covers the entire month. Average ROI: 10-30x.</div>
+        <div class="risk-desc">One real booked job can cover the month. The exact value depends on your ticket size and call volume.</div>
       </div>
     </div>
   </div>
@@ -229,7 +531,7 @@
     <div style="max-width: 600px; margin: 0 auto;">
       <div class="faq-item reveal">
         <button class="faq-question">How long does setup take?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <div class="faq-answer"><div class="faq-answer-inner">Under 48 hours. You forward your number to us, tell us your business hours and services, and the AI goes live. No hardware, no software to install.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">We confirm your business rules, configure the call flow, and get your approval before launch. Higher-tier automation or integrations are scoped before implementation.</div></div>
       </div>
       <div class="faq-item reveal">
         <button class="faq-question">Is there a contract?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
@@ -241,15 +543,15 @@
       </div>
       <div class="faq-item reveal">
         <button class="faq-question">Does it only work after hours?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <div class="faq-answer"><div class="faq-answer-inner">The $97/mo After-Hours plan covers evenings, weekends, and holidays. The $497/mo Starter plan handles every call 24/7. The $997/mo Pro plan adds routing, custom workflows, and priority support.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">The $97/mo After-Hours Capture plan covers evenings, weekends, and holidays. The $497/mo 24/7 Call Coverage plan adds full-time call answering, overflow coverage, speed-to-lead support, lead notifications, appointment request capture, urgent-call alerts, and monthly call summaries. The $997+/mo Custom Call Coverage plan adds custom call paths, approved follow-up steps, reminder logic, routing the right summary to the right person, owner visibility into captured calls as available, and Wallace workflow review.</div></div>
       </div>
       <div class="faq-item reveal">
-        <button class="faq-question">Can I customize GIDEON?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <div class="faq-answer"><div class="faq-answer-inner">Every AI is trained on your business — your services, pricing, hours, and how you want calls handled. Pro plans include full custom voice selection and script writing.</div></div>
+        <button class="faq-question">Can I customize Gideon?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. Gideon is configured around your services, hours, service area, urgency rules, and approved call flow. Direct booking and tool integrations depend on the plan and approved scope.</div></div>
       </div>
       <div class="faq-item reveal">
-        <button class="faq-question">Does GIDEON sound human?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <div class="faq-answer"><div class="faq-answer-inner">Yes. Call (629) 269-9697 right now and hear for yourself. Most callers can't tell it's AI.</div></div>
+        <button class="faq-question">Does Gideon sound human?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Call (629) 269-9697 right now and judge the voice experience yourself. Gideon is configured around your approved call flow before launch.</div></div>
       </div>
     </div>
   </div>
@@ -258,11 +560,11 @@
 <!-- FINAL CTA -->
 <section style="padding: 60px 0 80px; text-align: center; border-top: 1px solid var(--border);">
   <div class="wrap">
-    <h2 class="reveal" style="font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: #fff; letter-spacing: -0.03em; margin-bottom: 12px;">Stop Losing Jobs to Voicemail.</h2>
-    <p class="reveal" style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Start your free 14-day pilot today. See the results, then decide.</p>
+    <h2 class="reveal" style="font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: var(--text-1); letter-spacing: -0.03em; margin-bottom: 12px;">Stop Letting Calls Slip Through.</h2>
+    <p class="reveal" style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Start your 14-day trial through secure Square link. Wallace reviews setup before Gideon goes live.</p>
     <div class="reveal" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-      <a href="pilot/" class="btn btn-green btn-lg">Start Free Pilot</a>
-      <a href="tel:+16292699697" class="btn btn-secondary btn-lg">Call (629) 269-9697</a>
+      <a href="#pricing-cards" class="btn btn-green btn-lg">Choose Plan</a>
+      <a href="tel:+16292699697" class="btn btn-secondary btn-lg">Call Gideon Live</a>
     </div>
   </div>
 </section>
@@ -275,19 +577,17 @@
       <div class="footer-brand">
         <a href="index.html" class="logo">
           <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          The Call <span>Taker</span>
+          <span class="logo-text">The Call<span>Taker</span></span>
         </a>
-        <p>AI receptionist for service businesses.</p>
+        <p>AI call answering for local service businesses.</p>
       </div>
       <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="demo.html">Demo</a>
-        <a href="calculator.html">Calculator</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
+        <a href="/#features">Features</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/#how">How It Works</a>
+        <a href="tel:+16292699697">Call Gideon Live</a>
         <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
-        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -300,22 +600,101 @@
 
 <!-- MOBILE BAR -->
 <div class="sticky-mobile-bar">
-  <a href="tel:+16292699697"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
-  <a href="demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
-</div><script src="script.js"></script>
+  <a href="tel:+16292699697"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call Gideon Live</a>
+  <a href="#pricing-cards" style="border-left:1px solid var(--border);">Choose Plan</a>
+</div>
+
+<script src="script.js"></script>
+<script>
+(function () {
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a');
+    if (!link) return;
+
+    var href = link.getAttribute('href') || '';
+    var label = (link.textContent || '').replace(/\s+/g, ' ').trim();
+    if (label === 'Start Free Trial' && href.indexOf('https://square.link/u/') === 0) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.location.assign(href);
+    }
+  }, true);
+
+  document.querySelectorAll('.pricing-card .btn, .header-cta, .sticky-mobile-bar a').forEach(function (button) {
+    button.addEventListener('pointerenter', function () {
+      button.classList.add('cta-hot');
+    });
+    button.addEventListener('pointerleave', function () {
+      button.classList.remove('cta-hot');
+    });
+    button.addEventListener('focus', function () {
+      button.classList.add('cta-hot');
+    });
+    button.addEventListener('blur', function () {
+      button.classList.remove('cta-hot');
+    });
+  });
+
+  var plans = {
+    afterhours: {
+      image: '/assets/images/plan-visuals/after-hours-capture-v3.png?v=20260528-bedside',
+      tag: '$97 / After-Hours Capture',
+      headline: 'Closed-hours calls stop dying in voicemail.',
+      copy: 'Built for the owner who needs nights, weekends, and urgent calls captured while the team is offline.'
+    },
+    full247: {
+      image: '/assets/images/plan-visuals/247-call-coverage-v3.png',
+      tag: '$497 / 24/7 Call Coverage',
+      headline: 'Leads get organized before they go cold.',
+      copy: 'For 24/7 and overflow call answering, fast follow-up support, and cleaner handoff to the people who close work.'
+    },
+    custom: {
+      image: '/assets/images/plan-visuals/custom-call-coverage-v3.png',
+      tag: '$997+ / Custom Call Coverage',
+      headline: 'Your call flow matches how your business works.',
+      copy: 'For businesses that need custom call questions, approved handoffs, owner notifications, and reviewed setup before launch.'
+    }
+  };
+
+  var image = document.getElementById('pricingPlanImage');
+  var tag = document.getElementById('pricingPlanTag');
+  var headline = document.getElementById('pricingPlanHeadline');
+  var copy = document.getElementById('pricingPlanCopy');
+  var buttons = document.querySelectorAll('.plan-switch-option');
+
+  if (!image || !tag || !headline || !copy || !buttons.length) return;
+
+  buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      var plan = plans[button.getAttribute('data-plan-visual')];
+      if (!plan) return;
+
+      buttons.forEach(function (other) {
+        other.classList.remove('is-active');
+      });
+
+      button.classList.add('is-active');
+      image.style.backgroundImage = "url('" + plan.image + "')";
+      tag.textContent = plan.tag;
+      headline.textContent = plan.headline;
+      copy.textContent = plan.copy;
+    });
+  });
+})();
+</script>
 
 <!-- === FLOATING WIDGET === -->
 <!-- FLOATING CALLBACK WIDGET -->
 <div class="float-cb" id="float-widget">
   <div class="float-cb-panel" id="float-panel">
-    <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Want us to call you?</h4>
-    <p style="font-size: 12px; color: var(--text-3); margin-bottom: 14px;">Our AI will call you in under 30 seconds.</p>
-    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
-    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 10px;">
-    <button class="callback-btn" onclick="requestFloatCallback()" style="font-size: 14px; padding: 12px;">Call Me Now</button>
+    <h4 style="font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 4px;">Want to hear Gideon?</h4>
+    <p style="font-size: 12px; color: var(--text-3); margin-bottom: 14px;">Wallace Dobbs will personally review your request and get back with you.</p>
+    <input type="tel" id="float-phone" placeholder="Your phone number" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 8px; color: var(--text-1); font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+    <input type="text" id="float-company" placeholder="Company name" style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 8px; color: var(--text-1); font-size: 14px; font-family: inherit; margin-bottom: 10px;">
+    <button class="callback-btn" onclick="window.location.href='tel:+16292699697'" style="font-size: 14px; padding: 12px;">Call Me Now</button>
     <div id="float-success" style="display: none; text-align: center; padding: 16px 0;">
-      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Calling you now!</p>
-      <p style="font-size: 12px; color: var(--text-2);">Pick up your phone.</p>
+      <p style="font-size: 14px; font-weight: 700; color: var(--green);">Demo line is ready.</p>
+      <p style="font-size: 12px; color: var(--text-2);">Call the demo line when you are ready.</p>
     </div>
   </div>
   <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
@@ -329,23 +708,19 @@
     <button class="exit-close" onclick="closeExitPopup()">&times;</button>
     <div style="text-align: center;">
       <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px;">Before you go</div>
-      <h3 style="font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 8px;">Get a free missed call audit</h3>
-      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">We'll call your business after hours and tell you exactly what your customers are hearing. Free. No strings.</p>
-      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 8px;">
-      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit; margin-bottom: 12px;">
-      <button class="callback-btn" onclick="requestExitCallback()">Get My Free Audit</button>
+      <h3 style="font-size: 22px; font-weight: 700; color: var(--text-1); margin-bottom: 8px;">Talk through missed-call coverage</h3>
+      <p style="font-size: 14px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6;">Use the demo line to hear the voice, then choose a plan if the workflow fits.</p>
+      <input type="tel" id="exit-phone" placeholder="Your phone number" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 8px; color: var(--text-1); font-size: 14px; font-family: inherit; margin-bottom: 8px;">
+      <input type="text" id="exit-company" placeholder="Company name" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.88); border: 1px solid var(--border); border-radius: 8px; color: var(--text-1); font-size: 14px; font-family: inherit; margin-bottom: 12px;">
+      <button class="callback-btn" onclick="window.location.href='tel:+16292699697'">Call Gideon Live</button>
       <div id="exit-success" style="display: none; padding: 20px 0;">
         <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">We'll be in touch!</p>
-        <p style="font-size: 13px; color: var(--text-2);">Check your phone for a call from The Call Taker.</p>
+        <p style="font-size: 13px; color: var(--text-2);">Use the demo line to hear The Call Taker.</p>
       </div>
-      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear the AI right now: <a href="tel:+16292699697" style="color: var(--green); font-weight: 600;">(629) 269-9697</a></p>
+      <p style="font-size: 12px; color: var(--text-3); margin-top: 12px;">Or hear Gideon live right now: <a href="tel:+16292699697" style="color: var(--green); font-weight: 600; white-space: nowrap;">(629) 269-9697</a></p>
     </div>
   </div>
 </div>
 
-<!-- MOBILE BAR -->
-<div class="sticky-mobile-bar">
-  <a href="tel:+16292699697"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Hear AI Live</a>
-  <a href="demo.html" style="border-left:1px solid var(--border);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Book Demo</a>
 </body>
 </html>
