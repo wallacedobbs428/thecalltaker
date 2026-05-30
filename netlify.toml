@@ -1,6 +1,12 @@
 [build]
   publish = "website/"
 
+# API routes backed by Netlify Functions
+[[redirects]]
+  from = "/api/webhooks/instagram"
+  to = "/.netlify/functions/instagram-webhook"
+  status = 200
+
 # Redirects for clean URLs (no .html extension needed)
 [[redirects]]
   from = "/industries/:slug"
