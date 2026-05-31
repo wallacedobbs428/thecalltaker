@@ -39,6 +39,7 @@ const money = readJson("revenue/money-scoreboard.json");
 const nextActions = asArray(readJson("ai-execution/ai-next-actions.json").next_actions);
 const campaigns = asArray(readJson("campaigns/autonomous-campaigns.json").campaigns);
 const campaignBoard = asArray(readJson("boards/master-campaign-board.json").campaigns);
+const researchQueue = readJson("outbound/instagram-lead-research-queue.json", { tasks: [] });
 const sendQueue = asArray(readJson("outbound/autonomous-send-queue.json").items);
 const dmBatches = asArray(readJson("outbound/dm-draft-queue.json").draft_batches);
 const emailQueue = asArray(readJson("outbound/email-send-queue.json").items);
@@ -48,16 +49,17 @@ const escalations = asArray(readJson("communications/wallace-approval-queue.json
 const webhook = readJson("product/webhook-status.json", { tracked_webhooks: [] });
 const checkout = readJson("product/checkout-status.json", { known_blockers: [] });
 const revenueOpps = asArray(readJson("revenue/revenue-opportunities.json").opportunities);
+const laneOwnership = money.lane_ownership || {};
 
-const autonomousReady = nextActions.filter((item) => item.action_mode === "autonomous_now");
+const autonomousReady = nextActions.filter((item) => String(item.action_mode || "").includes("autonomous_now"));
 const integrationBlocked = [
-  ...campaignBoard.filter((item) => String(item.autonomy_status || item.status).includes("blocked")),
+  ...campaignBoard.filter((item) => String(item.autonomy_status || item.status).includes("blocked") || String(item.autonomy_status || "").includes("provider_gated")),
   ...sendQueue.filter((item) => item.status === "failed_provider_block"),
   ...emailQueue.filter((item) => item.status === "failed_provider_block")
 ];
 const allowedCampaigns = campaignBoard.filter((item) =>
   ["active", "generation_allowed"].includes(item.status) ||
-  ["allowed_after_real_lead_and_provider_check", "partially_autonomous", "autonomous_for_non_sensitive_followups", "generation_allowed"].includes(item.autonomy_status)
+  ["allowed_after_real_lead_and_provider_check", "partially_autonomous", "autonomous_for_non_sensitive_followups", "generation_allowed", "research_autonomous_send_provider_gated", "classification_ready_reply_provider_gated", "right_lane_owned_middle_capture_ready"].includes(item.autonomy_status)
 );
 const pausedCampaigns = campaignBoard.filter((item) => ["blocked", "critical"].includes(item.status) || String(item.autonomy_status || "").includes("blocked"));
 const leadsMoveable = sendQueue.filter((item) => item.status === "ready_for_agent_research" || item.status === "ready_to_generate");
@@ -72,6 +74,15 @@ console.log(`Target MRR: $${money.target_mrr ?? 10000}`);
 console.log(`Confirmed MRR: $${money.current_confirmed_mrr ?? 0}`);
 console.log(`Expected pipeline MRR: $${money.expected_pipeline_mrr ?? 0}`);
 console.log(`Top AI money action: ${money.top_ai_action_likely_to_create_money_next || "None recorded."}`);
+
+printSection(
+  "Lane ownership today",
+  [
+    laneOwnership.left && `${laneOwnership.left.lane}: ${laneOwnership.left.owns}`,
+    laneOwnership.middle && `${laneOwnership.middle.lane}: ${laneOwnership.middle.owns}`,
+    laneOwnership.right && `${laneOwnership.right.lane}: ${laneOwnership.right.owns}`
+  ]
+);
 
 printSection(
   "1. Autonomous actions agents can execute now",
@@ -104,22 +115,32 @@ printSection(
 );
 
 printSection(
-  "7. Inbound replies agents can answer automatically",
+  "7. Instagram lead research tasks ready",
+  asArray(researchQueue.tasks).map((item) => `${item.task_id}: ${item.target_segment} in ${item.target_market} [${item.status}] - ${item.autonomous_next_action}`)
+);
+
+printSection(
+  "8. Inbound replies agents can answer automatically",
   inboundAuto.map((item) => `${item.queue_id}: ${item.business_name} / ${item.intent} - ${item.next_best_ai_action}`)
 );
 
 printSection(
-  "8. Follow-ups agents can send automatically",
+  "9. Follow-ups agents can send automatically",
   followupsAuto.map(queueLine)
 );
 
 printSection(
-  "9. Revenue opportunities closest to money",
+  "10. Revenue opportunities closest to money",
   revenueOpps.map((item) => `${item.owner_agent}: ${item.title} [${item.action_mode}] - ${item.next_ai_action}`)
 );
 
 printSection(
-  "10. System proof: what AI handled without Wallace",
+  "11. Provider/runtime blocks",
+  asArray(money.provider_blocks)
+);
+
+printSection(
+  "12. System proof: what AI handled without Wallace",
   [
     ...systemProof,
     `${sendQueue.length} outbound queue items policy-modeled without sends.`,

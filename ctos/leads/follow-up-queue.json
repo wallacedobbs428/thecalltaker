@@ -1,18 +1,40 @@
 {
-  "queue_policy": "AI finds overdue follow-ups, drafts next touch, classifies urgency, and queues approval before sending.",
+  "queue_policy": "Follow-Up Agent finds due follow-ups, drafts next touch, classifies urgency, and sends only when policy, source context, spacing, and provider status allow. It does not queue every message for Wallace by default.",
+  "generated_at": "2026-05-31",
   "source_references": [
     "/Users/wallacedobbs/Developer/business-brain/operator-manual/NEXT-MONEY-ACTION-BOARD.md",
     "/Users/wallacedobbs/Developer/business-brain/agents/sales-agent/warm-leads/warm-lead-follow-up-drafts.json",
     "/Users/wallacedobbs/Developer/business-brain/agents/revenue-notifications/daily-notification-digest.json"
   ],
   "summary": {
-    "total_due_or_needing_review": 6,
-    "drafts_ready": 3,
-    "escalated": 4,
-    "overdue_high_value": 0,
-    "needs_date_review": 3
+    "total_due_or_needing_review": 7,
+    "autonomous_follow_up_allowed": 0,
+    "escalated": 7,
+    "waiting_on_data": 1,
+    "protected_context_only": 1,
+    "needs_date_review": 1
   },
   "items": [
+    {
+      "follow_up_id": "followup-warm-franklin-medical-meeting",
+      "lead_id": "warm-franklin-medical-meeting",
+      "business_name": "Franklin medical meeting",
+      "status": "escalated",
+      "urgency": "high",
+      "source": "/Users/wallacedobbs/Developer/business-brain/agents/sales-agent/warm-leads/warm-lead-follow-up-drafts.json",
+      "evidence": "Warm-lead follow-up draft exists and is marked NEEDS_WALLACE_REVIEW.",
+      "next_touch_date": "needs_review",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "exact meeting/contact details",
+        "healthcare-adjacent sensitivity"
+      ],
+      "ai_next_action": "AI can prepare meeting context and safe questions; do not send autonomously.",
+      "approval_required": true,
+      "draft_next_touch": "I want to use the meeting to map where calls come in, what happens after hours, what staff misses, and whether a small pilot would catch revenue without disrupting the office.",
+      "stage_if_policy_or_escalation_clears": "meeting_suggested"
+    },
     {
       "follow_up_id": "followup-jay-grosman-reminder-date-needed",
       "lead_id": "lead-jay-grosman",
@@ -22,6 +44,11 @@
       "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/NEXT-MONEY-ACTION-BOARD.md",
       "evidence": "Strategic networking lead; Jay is showing Bree the site/demo and requested a reminder after around seven days.",
       "next_touch_date": "needs_wallace_review",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "exact last-touch date"
+      ],
       "ai_next_action": "AI can create reminder packet once exact last-touch date is provided or found in an approved source.",
       "approval_required": true,
       "draft_next_touch": "Quick reminder like you asked. Did Bree get a chance to look at the site/demo, or should I check back later?",
@@ -34,40 +61,18 @@
       "status": "needs_review",
       "urgency": "high",
       "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/NEXT-MONEY-ACTION-BOARD.md",
-      "evidence": "Warm lead / scheduling pending; Chuck replied love it, let's talk.",
+      "evidence": "Warm lead / scheduling pending; Chuck replied love it, let us talk.",
       "next_touch_date": "needs_wallace_review",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "preferred scheduling channel",
+        "relationship timing"
+      ],
       "ai_next_action": "AI can prepare a scheduling nudge and call questions; Wallace handles high-trust call.",
       "approval_required": true,
       "draft_next_touch": "No rush on this - just keeping it on my radar. What day works best for a quick call?",
       "stage_if_approved": "meeting_suggested"
-    },
-    {
-      "follow_up_id": "followup-freedom-diagnostics-answers",
-      "lead_id": "lead-freedom-diagnostics",
-      "business_name": "Freedom Diagnostics",
-      "status": "waiting_on_data",
-      "urgency": "medium",
-      "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/NEXT-MONEY-ACTION-BOARD.md",
-      "evidence": "Build prep waiting on Sydney/Kris answers; AI can process answers after receipt.",
-      "next_touch_date": "waiting_on_sydney_kris_answers",
-      "ai_next_action": "AI can keep implementation packet and onboarding checklist ready, but must not configure live systems.",
-      "approval_required": true,
-      "draft_next_touch": "No outbound draft queued until Sydney/Kris answers or Wallace instruction exists.",
-      "stage_if_approved": "waiting_on_data"
-    },
-    {
-      "follow_up_id": "followup-warm-franklin-medical-meeting",
-      "lead_id": "warm-franklin-medical-meeting",
-      "business_name": "Franklin medical meeting",
-      "status": "escalated",
-      "urgency": "high",
-      "source": "/Users/wallacedobbs/Developer/business-brain/agents/sales-agent/warm-leads/warm-lead-follow-up-drafts.json",
-      "evidence": "Warm-lead follow-up draft exists and is marked NEEDS_WALLACE_REVIEW.",
-      "next_touch_date": "needs_wallace_review",
-      "ai_next_action": "AI has drafted the follow-up but escalates because healthcare-adjacent meeting context is sensitive.",
-      "approval_required": true,
-      "draft_next_touch": "I want to use the meeting to map where calls come in, what happens after hours, what staff misses, and whether a small pilot would catch revenue without disrupting the office.",
-      "stage_if_policy_or_escalation_clears": "meeting_suggested"
     },
     {
       "follow_up_id": "followup-warm-orthodontist-dm",
@@ -78,9 +83,16 @@
       "source": "/Users/wallacedobbs/Developer/business-brain/agents/sales-agent/warm-leads/warm-lead-follow-up-drafts.json",
       "evidence": "Warm-lead follow-up draft exists and is marked NEEDS_WALLACE_REVIEW.",
       "next_touch_date": "needs_wallace_review",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "exact Instagram thread",
+        "provider/channel runtime status",
+        "relationship sensitivity"
+      ],
       "ai_next_action": "AI has drafted the follow-up but escalates until channel/provider and relationship context are clear.",
       "approval_required": true,
-      "draft_next_touch": "Quick thought - if calls or appointment requests are slipping when the front desk is busy, I built The Call Taker to capture the caller's need and next step instead of letting it disappear into voicemail.",
+      "draft_next_touch": "Quick thought - if calls or appointment requests are slipping when the front desk is busy, I built The Call Taker to capture the caller need and next step instead of letting it disappear into voicemail.",
       "stage_if_policy_or_escalation_clears": "AI_reply_drafted"
     },
     {
@@ -92,10 +104,57 @@
       "source": "/Users/wallacedobbs/Developer/business-brain/agents/sales-agent/warm-leads/warm-lead-follow-up-drafts.json",
       "evidence": "Warm-lead follow-up draft exists and is marked NEEDS_WALLACE_REVIEW.",
       "next_touch_date": "needs_wallace_review",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "identity/context",
+        "whether this is partner/referral path"
+      ],
       "ai_next_action": "AI has drafted the follow-up but escalates because it may be a strategic referral/partner path.",
       "approval_required": true,
       "draft_next_touch": "If paid traffic is creating calls that are not answered fast enough, the ad problem may actually be a phone/recovery problem. The Call Taker can be positioned as the capture layer after the click.",
       "stage_if_policy_or_escalation_clears": "AI_reply_drafted"
+    },
+    {
+      "follow_up_id": "followup-freedom-diagnostics-answers",
+      "lead_id": "lead-freedom-diagnostics",
+      "business_name": "Freedom Diagnostics",
+      "status": "waiting_on_data",
+      "urgency": "medium",
+      "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/NEXT-MONEY-ACTION-BOARD.md",
+      "evidence": "Build prep waiting on Sydney/Kris answers; AI can process answers after receipt.",
+      "next_touch_date": "waiting_on_sydney_kris_answers",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "Sydney/Kris answers",
+        "client approval authority",
+        "implementation scope"
+      ],
+      "ai_next_action": "AI can keep implementation packet and onboarding checklist ready, but must not configure live systems or send outbound.",
+      "approval_required": true,
+      "draft_next_touch": "No outbound draft queued until Sydney/Kris answers or Wallace instruction exists.",
+      "stage_if_approved": "waiting_on_data"
+    },
+    {
+      "follow_up_id": "followup-american-surgical-context-protected",
+      "lead_id": "lead-american-surgical",
+      "business_name": "American Surgical",
+      "status": "protected_context_only",
+      "urgency": "low",
+      "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/NEXT-MONEY-ACTION-BOARD.md",
+      "evidence": "Existing customer/proof-monitoring context, not a sales follow-up target for Middle.",
+      "next_touch_date": "not_applicable_for_middle_revenue",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "client-ops authorization for any client action",
+        "verified proof boundaries"
+      ],
+      "ai_next_action": "Do not send sales follow-up. Use only as protected proof/client-ops context if separately authorized.",
+      "approval_required": true,
+      "draft_next_touch": "No Middle Revenue outbound draft. Client/customer action belongs to client-ops approval only.",
+      "stage_if_approved": "paid_customer"
     }
   ]
 }

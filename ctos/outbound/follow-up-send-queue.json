@@ -1,91 +1,167 @@
 {
-  "queue_policy": "Follow-Up Agent sends only non-sensitive follow-ups inside approved policy. Known warm relationships, custom terms, and meeting-with-Wallace requests escalate.",
+  "queue_policy": "Follow-Up Agent sends only non-sensitive follow-ups inside approved policy. Known warm relationships, custom terms, missing context, current customers, and provider gaps block autonomous send.",
+  "generated_at": "2026-05-31",
   "summary": {
-    "items_total": 4,
+    "items_total": 7,
     "ready_to_send": 0,
-    "escalated": 4,
+    "escalated": 7,
+    "waiting_on_data": 1,
     "sent": 0
   },
   "items": [
     {
-      "queue_id": "followup-send-chuck-001",
-      "lead_id": "lead-chuck-mcdowell",
-      "campaign_id": "auto-warm-follow-up-v1",
-      "channel": "follow_up",
-      "target": {
-        "business_name": "Chuck McDowell",
-        "relationship_type": "known warm relationship"
-      },
-      "status": "escalated",
-      "generated_message": "No rush on this - just keeping it on my radar. What day works best for a quick call?",
-      "personalization_fields_used": ["known_reply_context"],
-      "policy_check_result": "escalate",
-      "send_allowed": false,
-      "send_reason": "Known high-value warm relationship and scheduling context.",
-      "escalation_required": true,
-      "provider_status": "manual_channel_or_unknown",
-      "next_action": "Escalate relationship-sensitive follow-up.",
-      "next_follow_up_at": "needs_review"
-    },
-    {
-      "queue_id": "followup-send-jay-001",
-      "lead_id": "lead-jay-grosman",
-      "campaign_id": "auto-warm-follow-up-v1",
-      "channel": "follow_up",
-      "target": {
-        "business_name": "Jay Grosman / Bree site-demo thread",
-        "relationship_type": "strategic networking"
-      },
-      "status": "escalated",
-      "generated_message": "Quick reminder like you asked. Did Bree get a chance to look at the site/demo, or should I check back later?",
-      "personalization_fields_used": ["known_reminder_context"],
-      "policy_check_result": "escalate",
-      "send_allowed": false,
-      "send_reason": "Strategic relationship and exact last-touch date missing.",
-      "escalation_required": true,
-      "provider_status": "manual_channel_or_unknown",
-      "next_action": "Confirm last-touch date before any follow-up.",
-      "next_follow_up_at": "needs_review"
-    },
-    {
-      "queue_id": "followup-send-franklin-medical-001",
+      "queue_id": "followup-send-warm-franklin-medical-meeting",
       "lead_id": "warm-franklin-medical-meeting",
       "campaign_id": "auto-warm-follow-up-v1",
       "channel": "manual_email_or_message",
       "target": {
         "business_name": "Franklin medical meeting",
-        "relationship_type": "warm healthcare-adjacent"
+        "relationship_type": "warm_or_needs_review"
       },
       "status": "escalated",
       "generated_message": "I want to use the meeting to map where calls come in, what happens after hours, what staff misses, and whether a small pilot would catch revenue without disrupting the office.",
-      "personalization_fields_used": ["meeting_context"],
+      "personalization_fields_used": [
+        "existing_context_only"
+      ],
       "policy_check_result": "escalate",
       "send_allowed": false,
-      "send_reason": "Healthcare-adjacent meeting context is sensitive.",
+      "send_reason": "Escalation or missing context: exact meeting/contact details; healthcare-adjacent sensitivity",
       "escalation_required": true,
       "provider_status": "manual_channel_or_unknown",
-      "next_action": "Escalate before send.",
+      "next_action": "AI can prepare meeting context and safe questions; do not send autonomously.",
       "next_follow_up_at": "needs_review"
     },
     {
-      "queue_id": "followup-send-orthodontist-001",
+      "queue_id": "followup-send-jay-grosman-reminder-date-needed",
+      "lead_id": "lead-jay-grosman",
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "manual_email_or_message",
+      "target": {
+        "business_name": "Jay Grosman / Bree site-demo thread",
+        "relationship_type": "warm_or_needs_review"
+      },
+      "status": "escalated",
+      "generated_message": "Quick reminder like you asked. Did Bree get a chance to look at the site/demo, or should I check back later?",
+      "personalization_fields_used": [
+        "existing_context_only"
+      ],
+      "policy_check_result": "escalate",
+      "send_allowed": false,
+      "send_reason": "Escalation or missing context: exact last-touch date",
+      "escalation_required": true,
+      "provider_status": "manual_channel_or_unknown",
+      "next_action": "AI can create reminder packet once exact last-touch date is provided or found in an approved source.",
+      "next_follow_up_at": "needs_wallace_review"
+    },
+    {
+      "queue_id": "followup-send-chuck-mcdowell-scheduling",
+      "lead_id": "lead-chuck-mcdowell",
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "manual_email_or_message",
+      "target": {
+        "business_name": "Chuck McDowell",
+        "relationship_type": "warm_or_needs_review"
+      },
+      "status": "escalated",
+      "generated_message": "No rush on this - just keeping it on my radar. What day works best for a quick call?",
+      "personalization_fields_used": [
+        "existing_context_only"
+      ],
+      "policy_check_result": "escalate",
+      "send_allowed": false,
+      "send_reason": "Escalation or missing context: preferred scheduling channel; relationship timing",
+      "escalation_required": true,
+      "provider_status": "manual_channel_or_unknown",
+      "next_action": "AI can prepare a scheduling nudge and call questions; Wallace handles high-trust call.",
+      "next_follow_up_at": "needs_wallace_review"
+    },
+    {
+      "queue_id": "followup-send-warm-orthodontist-dm",
       "lead_id": "warm-orthodontist-dm",
       "campaign_id": "auto-warm-follow-up-v1",
       "channel": "manual_dm",
       "target": {
         "business_name": "Orthodontist DM lead",
-        "relationship_type": "warm dental lead"
+        "relationship_type": "warm_or_needs_review"
       },
       "status": "escalated",
-      "generated_message": "Quick thought - if calls or appointment requests are slipping when the front desk is busy, I built The Call Taker to capture the caller's need and next step instead of letting it disappear into voicemail.",
-      "personalization_fields_used": ["front_desk_context"],
+      "generated_message": "Quick thought - if calls or appointment requests are slipping when the front desk is busy, I built The Call Taker to capture the caller need and next step instead of letting it disappear into voicemail.",
+      "personalization_fields_used": [
+        "existing_context_only"
+      ],
       "policy_check_result": "escalate",
       "send_allowed": false,
-      "send_reason": "Known warm lead imported from manual draft source, channel/provider status unknown.",
+      "send_reason": "Escalation or missing context: exact Instagram thread; provider/channel runtime status; relationship sensitivity",
       "escalation_required": true,
       "provider_status": "manual_channel_or_unknown",
-      "next_action": "Escalate before send or wait for provider/channel confirmation.",
-      "next_follow_up_at": "needs_review"
+      "next_action": "AI has drafted the follow-up but escalates until channel/provider and relationship context are clear.",
+      "next_follow_up_at": "needs_wallace_review"
+    },
+    {
+      "queue_id": "followup-send-warm-ad-growth-lead",
+      "lead_id": "warm-ad-growth-lead",
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "manual_email_or_message",
+      "target": {
+        "business_name": "Ad-growth lead follow-up",
+        "relationship_type": "warm_or_needs_review"
+      },
+      "status": "escalated",
+      "generated_message": "If paid traffic is creating calls that are not answered fast enough, the ad problem may actually be a phone/recovery problem. The Call Taker can be positioned as the capture layer after the click.",
+      "personalization_fields_used": [
+        "existing_context_only"
+      ],
+      "policy_check_result": "escalate",
+      "send_allowed": false,
+      "send_reason": "Escalation or missing context: identity/context; whether this is partner/referral path",
+      "escalation_required": true,
+      "provider_status": "manual_channel_or_unknown",
+      "next_action": "AI has drafted the follow-up but escalates because it may be a strategic referral/partner path.",
+      "next_follow_up_at": "needs_wallace_review"
+    },
+    {
+      "queue_id": "followup-send-freedom-diagnostics-answers",
+      "lead_id": "lead-freedom-diagnostics",
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "manual_email_or_message",
+      "target": {
+        "business_name": "Freedom Diagnostics",
+        "relationship_type": "warm_or_needs_review"
+      },
+      "status": "waiting_on_data",
+      "generated_message": "No outbound draft queued until Sydney/Kris answers or Wallace instruction exists.",
+      "personalization_fields_used": [
+        "existing_context_only"
+      ],
+      "policy_check_result": "escalate",
+      "send_allowed": false,
+      "send_reason": "Escalation or missing context: Sydney/Kris answers; client approval authority; implementation scope",
+      "escalation_required": true,
+      "provider_status": "manual_channel_or_unknown",
+      "next_action": "AI can keep implementation packet and onboarding checklist ready, but must not configure live systems or send outbound.",
+      "next_follow_up_at": "waiting_on_sydney_kris_answers"
+    },
+    {
+      "queue_id": "followup-send-american-surgical-context-protected",
+      "lead_id": "lead-american-surgical",
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "client_ops_protected_context",
+      "target": {
+        "business_name": "American Surgical",
+        "relationship_type": "existing_customer_context"
+      },
+      "status": "stopped",
+      "generated_message": "No Middle Revenue outbound draft. Client/customer action belongs to client-ops approval only.",
+      "personalization_fields_used": [
+        "existing_context_only"
+      ],
+      "policy_check_result": "escalate",
+      "send_allowed": false,
+      "send_reason": "Escalation or missing context: client-ops authorization for any client action; verified proof boundaries",
+      "escalation_required": true,
+      "provider_status": "manual_channel_or_unknown",
+      "next_action": "Do not send sales follow-up. Use only as protected proof/client-ops context if separately authorized.",
+      "next_follow_up_at": "not_applicable_for_middle_revenue"
     }
   ]
 }

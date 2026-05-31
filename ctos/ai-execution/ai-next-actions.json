@@ -1,53 +1,82 @@
 {
-  "generated_at": "2026-05-30",
+  "generated_at": "2026-05-31",
   "principle": "Show what AI agents can execute next to create revenue, with Wallace escalation only for exceptions.",
+  "lane_ownership": {
+    "generated_at": "2026-05-31",
+    "left": {
+      "lane": "Left Builder Agent",
+      "owns": "Square/payment/checkout provider repair",
+      "current_focus": "Repair the Square provider/payment blocker and checkout confirmation path without Middle changing checkout/pricing files."
+    },
+    "middle": {
+      "lane": "Middle Revenue Execution Agent",
+      "owns": "Revenue execution, CTOS operations, outbound, inbound, follow-ups, lead movement, revenue scoreboard, and ad-response capture",
+      "current_focus": "Run policy-based revenue workflows and move leads inside approved rules."
+    },
+    "right": {
+      "lane": "Right Video/Content Agent",
+      "owns": "Video production, Instagram content, Higgsfield generation, and first ad launch",
+      "current_focus": "Create first ad/post assets while Middle builds the capture and revenue loop behind them."
+    }
+  },
   "next_actions": [
     {
       "id": "ai-next-001",
-      "title": "Research real Instagram leads for local founder campaign",
+      "title": "Run Sunday Instagram lead research queue",
       "owner_agent": "middle-revenue-agent",
       "business_area": "outbound",
       "action_mode": "autonomous_now",
-      "next_ai_action": "Research source-backed local roofing, HVAC, plumbing, dental, and local-owner accounts, create lead records, and generate policy-checked DMs.",
+      "next_ai_action": "Research source-backed local accounts across 11 approved segments, create real lead records, and generate policy-checked founder/advice DMs.",
       "wallace_approval_needed": false,
       "escalation_only_if": "known personal relationship, custom claims, provider block, or trust-risk appears",
       "revenue_connection": "Creates warm conversations from real local owners."
     },
     {
       "id": "ai-next-002",
-      "title": "Run Instagram DM sends when provider runtime passes",
+      "title": "Run Instagram DM sends only after provider runtime proves connected",
       "owner_agent": "middle-revenue-agent",
       "business_area": "outbound",
-      "action_mode": "autonomous_now",
-      "next_ai_action": "Send policy-passing Instagram DMs if adapter confirms provider connection, daily limits pass, and no escalation trigger exists.",
+      "action_mode": "provider_runtime_gated",
+      "next_ai_action": "Send policy-passing Instagram DMs only when a real source-backed lead exists, Instagram runtime confirms send access, daily limits pass, and no escalation trigger exists.",
       "wallace_approval_needed": false,
       "escalation_only_if": "provider permission/rate-limit error or outside-policy reply",
-      "revenue_connection": "Turns lead research into actual conversations."
+      "revenue_connection": "Turns lead research into actual conversations without per-message approval."
     },
     {
       "id": "ai-next-003",
-      "title": "Classify inbound replies and auto-reply to low-risk categories",
+      "title": "Prove Instagram inbound POST/reply loop",
       "owner_agent": "middle-revenue-agent",
       "business_area": "inbound",
-      "action_mode": "autonomous_now",
-      "next_ai_action": "Reply autonomously to asks-what-it-does, website requests, advice, sounds-interested, basic pricing, and polite close-outs when provider is connected.",
+      "action_mode": "needs_integration_runtime_proof",
+      "next_ai_action": "Use the Netlify webhook GET proof as readiness signal, but treat Instagram inbound POST and reply sends as unconfirmed until runtime evidence exists.",
       "wallace_approval_needed": false,
-      "escalation_only_if": "custom pricing, proof, investor interest, legal/contract, angry/sensitive, meeting with Wallace, or known personal relationship",
-      "revenue_connection": "Improves speed-to-lead."
+      "escalation_only_if": "provider setup or credentials are missing, or provider mutation is required",
+      "revenue_connection": "Enables ad comments/DMs to become lead records and replies."
     },
     {
       "id": "ai-next-004",
-      "title": "Execute non-sensitive follow-ups inside policy",
-      "owner_agent": "follow-up-agent",
-      "business_area": "follow_up",
-      "action_mode": "autonomous_now",
-      "next_ai_action": "Find due non-sensitive follow-ups, policy-check them, send through connected provider, log outcome, and schedule next touch.",
+      "title": "Capture Right lane first-ad replies into CTOS",
+      "owner_agent": "middle-revenue-agent",
+      "business_area": "first_ad_revenue_capture",
+      "action_mode": "autonomous_now_for_local_classification_provider_gated_for_replies",
+      "next_ai_action": "Classify comments/DMs from Right lane first ad, create source-backed lead records, draft or send low-risk replies when provider is connected, and queue follow-ups.",
       "wallace_approval_needed": false,
-      "escalation_only_if": "known warm relationship, meeting request, custom scope/pricing, or provider missing",
-      "revenue_connection": "Stops warm leads from cooling."
+      "escalation_only_if": "known relationship, asks for Wallace, custom pricing, proof claim, angry/sensitive reply, or provider block",
+      "revenue_connection": "Turns content attention into tracked revenue opportunities."
     },
     {
       "id": "ai-next-005",
+      "title": "Execute non-sensitive follow-ups inside policy",
+      "owner_agent": "follow-up-agent",
+      "business_area": "follow_up",
+      "action_mode": "autonomous_now_when_context_and_provider_pass",
+      "next_ai_action": "Find due non-sensitive follow-ups, policy-check them, send through connected provider, log outcome, and schedule next touch.",
+      "wallace_approval_needed": false,
+      "escalation_only_if": "known warm relationship, meeting request, custom scope/pricing, current customer, missing context, or provider missing",
+      "revenue_connection": "Stops warm leads from cooling."
+    },
+    {
+      "id": "ai-next-006",
       "title": "Prepare Instantly campaign locally",
       "owner_agent": "middle-revenue-agent",
       "business_area": "email_outbound",
@@ -58,37 +87,26 @@
       "revenue_connection": "Creates scalable outbound once adapter is connected."
     },
     {
-      "id": "ai-next-006",
-      "title": "Prepare Facebook advice posts and classify replies",
-      "owner_agent": "middle-revenue-agent",
-      "business_area": "social_outbound",
-      "action_mode": "needs_integration",
-      "next_ai_action": "Generate policy-passing advice posts and run comment classification; posting waits on adapter/platform confirmation.",
-      "wallace_approval_needed": false,
-      "escalation_only_if": "platform confirmation required, group rules unclear, or public trust-risk appears",
-      "revenue_connection": "Creates inbound advice and referral signals."
-    },
-    {
       "id": "ai-next-007",
-      "title": "Keep $97 Square blocker visible",
-      "owner_agent": "right-qa-agent",
-      "business_area": "checkout_qa",
-      "action_mode": "autonomous_tracking_only",
-      "next_ai_action": "Track the $97 provider-link blocker; do not change checkout/pricing from Middle Revenue/Ops.",
+      "title": "Left owns Square/payment/checkout provider repair",
+      "owner_agent": "left-builder-agent",
+      "business_area": "checkout_provider_repair",
+      "action_mode": "left_lane_owned",
+      "next_ai_action": "Repair Square/payment/checkout provider issue. Middle only tracks revenue impact and does not edit pricing, checkout, or provider settings.",
       "wallace_approval_needed": true,
-      "escalation_only_if": "Square link replacement/provider change/deploy",
-      "revenue_connection": "Protects entry-plan checkout conversion."
+      "escalation_only_if": "provider access, Square link replacement, payment setting change, or deploy",
+      "revenue_connection": "Protects checkout conversion while keeping lane ownership clean."
     },
     {
       "id": "ai-next-008",
-      "title": "Use live Netlify webhook endpoint for adapter verification",
-      "owner_agent": "left-builder-agent",
-      "business_area": "integrations",
+      "title": "Support Right lane first ad launch with capture system",
+      "owner_agent": "middle-revenue-agent",
+      "business_area": "ad_revenue_ops",
       "action_mode": "autonomous_now",
-      "next_ai_action": "Let adapters use the Netlify endpoint that returns test123 for webhook verification; do not deploy or mutate providers from CTOS.",
+      "next_ai_action": "Provide comment/DM classification, lead creation rules, reply rules, and follow-up movement behind Right lane video and Instagram post.",
       "wallace_approval_needed": false,
-      "escalation_only_if": "provider setup requires credentials or permission changes",
-      "revenue_connection": "Enables inbound/reply/payment visibility."
+      "escalation_only_if": "public trust risk, unsupported proof, custom offer, or provider block",
+      "revenue_connection": "Prevents first ad engagement from leaking."
     },
     {
       "id": "ai-next-009",
@@ -96,21 +114,21 @@
       "owner_agent": "middle-revenue-agent",
       "business_area": "revenue_ops",
       "action_mode": "autonomous_now",
-      "next_ai_action": "Log what AI researched, generated, sent, replied to, and moved without Wallace intervention.",
+      "next_ai_action": "Log what AI researched, generated, sent, replied to, moved, and escalated without Wallace acting as operator.",
       "wallace_approval_needed": false,
       "escalation_only_if": "revenue claim lacks provider proof",
       "revenue_connection": "Creates proof that AI can operate business workflows."
     },
     {
       "id": "ai-next-010",
-      "title": "Generate missed-call content campaign assets",
-      "owner_agent": "middle-revenue-agent",
-      "business_area": "content",
-      "action_mode": "autonomous_now",
-      "next_ai_action": "Generate content hooks and captions inside brand policy; only public posting waits on platform adapter confirmation.",
+      "title": "Right creates video/content; Middle captures revenue response",
+      "owner_agent": "right-video-content-agent",
+      "business_area": "content_ad_launch",
+      "action_mode": "right_lane_owned_middle_capture_ready",
+      "next_ai_action": "Right lane produces Higgsfield/video/Instagram creative. Middle receives comments, DMs, and lead signals into CTOS workflows.",
       "wallace_approval_needed": false,
-      "escalation_only_if": "personal story detail, unsupported proof, or public trust-risk appears",
-      "revenue_connection": "Creates organic inbound paths."
+      "escalation_only_if": "ad launch needs strategy/taste decision or unsupported claims appear",
+      "revenue_connection": "Connects creative distribution to lead capture."
     }
   ]
 }

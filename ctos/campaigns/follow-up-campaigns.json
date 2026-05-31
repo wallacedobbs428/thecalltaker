@@ -1,4 +1,6 @@
 {
+  "generated_at": "2026-05-31",
+  "execution_model": "policy_based_autonomy_not_per_message_approval",
   "campaigns": [
     {
       "campaign_id": "auto-warm-follow-up-v1",
@@ -39,7 +41,12 @@
         "unclear source context",
         "provider channel missing"
       ],
-      "stop_conditions": ["not interested", "no response after final follow-up", "suppressed", "provider failure"],
+      "stop_conditions": [
+        "not interested",
+        "no response after final follow-up",
+        "suppressed",
+        "provider failure"
+      ],
       "follow_up_sequence": [
         {
           "step": "soft_nudge",
@@ -57,23 +64,103 @@
           "autonomous_allowed": true
         }
       ],
-      "success_metrics": ["followups_sent", "replies", "meetings_suggested", "meetings_booked", "lost_suppressed"],
-      "current_status": "partially_ready_escalations_exist",
-      "next_agent_action": "Follow-Up Agent can send non-sensitive policy-passing follow-ups; known warm relationships escalate."
+      "success_metrics": [
+        "followups_sent",
+        "replies",
+        "meetings_suggested",
+        "meetings_booked",
+        "lost_suppressed"
+      ],
+      "current_status": "ready_for_non_sensitive_followups_provider_runtime_gated",
+      "next_agent_action": "Follow-Up Agent can send non-sensitive policy-passing follow-ups if provider/channel is connected; known warm relationships and sensitive contexts escalate."
     }
   ],
-  "known_escalated_warm_relationships": [
+  "known_warm_lead_classifications": [
     {
-      "lead_id": "lead-chuck-mcdowell",
-      "reason": "warm scheduling lead and relationship-sensitive"
+      "lead_id": "warm-franklin-medical-meeting",
+      "business_name": "Franklin medical meeting",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "exact meeting/contact details",
+        "healthcare-adjacent sensitivity"
+      ],
+      "next_agent_action": "Prepare meeting context and safe questions; do not send autonomously.",
+      "source_status": "existing_context_only"
     },
     {
       "lead_id": "lead-jay-grosman",
-      "reason": "strategic networking relationship"
+      "business_name": "Jay Grosman / Bree site-demo thread",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "exact last-touch date",
+        "relationship timing"
+      ],
+      "next_agent_action": "Prepare reminder packet after exact date is sourced or provided.",
+      "source_status": "existing_context_only"
     },
     {
-      "lead_id": "warm-franklin-medical-meeting",
-      "reason": "meeting context and healthcare-adjacent sensitivity"
+      "lead_id": "lead-chuck-mcdowell",
+      "business_name": "Chuck McDowell",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "preferred scheduling channel",
+        "relationship timing"
+      ],
+      "next_agent_action": "Prepare scheduling nudge and call prep; high-trust moment stays escalated.",
+      "source_status": "existing_context_only"
+    },
+    {
+      "lead_id": "warm-orthodontist-dm",
+      "business_name": "Orthodontist DM lead",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "exact Instagram thread",
+        "provider/channel runtime status",
+        "relationship sensitivity"
+      ],
+      "next_agent_action": "Hold draft until channel context is confirmed; then classify again.",
+      "source_status": "existing_context_only"
+    },
+    {
+      "lead_id": "warm-ad-growth-lead",
+      "business_name": "Ad-growth lead follow-up",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "identity/context",
+        "whether this is partner/referral path"
+      ],
+      "next_agent_action": "Prepare partner/referral framing; do not auto-send until source context is clearer.",
+      "source_status": "existing_context_only"
+    },
+    {
+      "lead_id": "lead-freedom-diagnostics",
+      "business_name": "Freedom Diagnostics",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "Sydney/Kris answers",
+        "client approval authority",
+        "implementation scope"
+      ],
+      "next_agent_action": "Keep implementation packet ready; no live setup or outbound until answers/authority exist.",
+      "source_status": "existing_context_only"
+    },
+    {
+      "lead_id": "lead-american-surgical",
+      "business_name": "American Surgical",
+      "autonomous_follow_up_allowed": false,
+      "escalation_required": true,
+      "missing_context": [
+        "client-ops authorization for any client action",
+        "verified proof boundaries"
+      ],
+      "next_agent_action": "Use only as protected proof/client-ops context; no sales outreach or provider action from Middle.",
+      "source_status": "existing_context_only"
     }
   ]
 }

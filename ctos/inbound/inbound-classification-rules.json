@@ -1,18 +1,31 @@
 {
   "classification_policy": "AI classifies inbound, sends low-risk policy-approved replies when provider is connected, updates lead state, and escalates exceptions.",
+  "generated_at": "2026-05-31",
   "default_action_mode": "autonomous_if_policy_passes",
+  "instagram_post_proof_status": "not_confirmed",
+  "first_ad_capture_ready": true,
   "intent_classes": [
     {
       "intent": "asks_what_it_does",
+      "aliases": [
+        "what does it do",
+        "how does it work",
+        "what is The Call Taker"
+      ],
       "autonomous_reply_allowed": true,
       "reply_style": "short product explanation, no overclaiming",
-      "pipeline_stage_update": "AI_reply_drafted",
+      "pipeline_stage_update": "AI_reply_sent_if_provider_connected_else_AI_reply_drafted",
       "follow_up_action": "Offer demo line if they engage.",
       "escalation_trigger": "asks for custom implementation or sensitive workflow",
       "next_best_ai_action": "Reply with approved what-it-does explanation and log."
     },
     {
-      "intent": "asks_for_website",
+      "intent": "asks_website",
+      "aliases": [
+        "asks_for_website",
+        "site link",
+        "send website"
+      ],
       "autonomous_reply_allowed": true,
       "reply_style": "send site link plus honest early-stage context",
       "pipeline_stage_update": "demo_sent",
@@ -22,15 +35,25 @@
     },
     {
       "intent": "asks_pricing",
+      "aliases": [
+        "price",
+        "how much",
+        "cost"
+      ],
       "autonomous_reply_allowed": true,
       "reply_style": "standard pricing facts only: $97, $497, $997+; no custom discounts",
-      "pipeline_stage_update": "AI_reply_drafted",
+      "pipeline_stage_update": "AI_reply_sent_if_provider_connected_else_AI_reply_drafted",
       "follow_up_action": "Ask whether they need simple after-hours capture, revenue recovery, or operational infrastructure.",
       "escalation_trigger": "discount, custom price, contract, payment term, or scope exception",
       "next_best_ai_action": "Answer basic pricing from sourced CTOS facts if no exception."
     },
     {
-      "intent": "sounds_interested",
+      "intent": "sounds_interesting",
+      "aliases": [
+        "interesting",
+        "tell me more",
+        "that sounds useful"
+      ],
       "autonomous_reply_allowed": true,
       "reply_style": "appreciative, low-pressure, offer demo line or short explanation",
       "pipeline_stage_update": "interested",
@@ -40,15 +63,25 @@
     },
     {
       "intent": "gives_advice",
+      "aliases": [
+        "advice",
+        "you should",
+        "try this"
+      ],
       "autonomous_reply_allowed": true,
       "reply_style": "thank-you, summarize advice, ask one useful follow-up",
       "pipeline_stage_update": "replied",
       "follow_up_action": "If fit signal appears, mark warm and schedule a follow-up.",
-      "escalation_trigger": "advice includes sensitive legal/medical/financial concern",
+      "escalation_trigger": "advice includes sensitive legal, medical, financial, or trust-risk concern",
       "next_best_ai_action": "Thank them and ask one positioning follow-up."
     },
     {
       "intent": "referral_opportunity",
+      "aliases": [
+        "you should talk to",
+        "I know someone",
+        "referral"
+      ],
       "autonomous_reply_allowed": true,
       "reply_style": "grateful and specific; ask for intro path",
       "pipeline_stage_update": "replied",
@@ -58,6 +91,11 @@
     },
     {
       "intent": "wants_demo",
+      "aliases": [
+        "demo",
+        "can I try it",
+        "show me"
+      ],
       "autonomous_reply_allowed": true,
       "reply_style": "send demo line/context and ask which scenario to test",
       "pipeline_stage_update": "demo_sent",
@@ -67,15 +105,26 @@
     },
     {
       "intent": "wants_call",
+      "aliases": [
+        "call me",
+        "let us talk",
+        "schedule"
+      ],
       "autonomous_reply_allowed": false,
       "reply_style": "summarize and propose scheduling packet",
       "pipeline_stage_update": "meeting_suggested",
-      "follow_up_action": "Escalate for relationship/sales call decision.",
+      "follow_up_action": "Escalate for high-trust sales call decision.",
       "escalation_trigger": "always for call with Wallace",
       "next_best_ai_action": "Prepare call summary and questions for Wallace escalation."
     },
     {
       "intent": "asks_for_proof",
+      "aliases": [
+        "case study",
+        "proof",
+        "results",
+        "ROI"
+      ],
       "autonomous_reply_allowed": false,
       "reply_style": "proof-safe only, no invented metrics",
       "pipeline_stage_update": "AI_reply_drafted",
@@ -84,7 +133,26 @@
       "next_best_ai_action": "Escalate unless verified proof source is attached."
     },
     {
+      "intent": "vertical_fit_question",
+      "aliases": [
+        "does this work for roofers",
+        "does this work for plumbers",
+        "would this work for my business"
+      ],
+      "autonomous_reply_allowed": true,
+      "reply_style": "connect the product to the business category without making guarantees",
+      "pipeline_stage_update": "interested",
+      "follow_up_action": "Ask what call type they miss most and offer demo scenario.",
+      "escalation_trigger": "asks for guarantee, regulated workflow, emergency dispatch promise, or custom implementation",
+      "next_best_ai_action": "Answer with category-specific use case and one question."
+    },
+    {
       "intent": "investor_interest",
+      "aliases": [
+        "invest",
+        "investment",
+        "equity"
+      ],
       "autonomous_reply_allowed": false,
       "reply_style": "professional acknowledgment only after escalation",
       "pipeline_stage_update": "AI_reply_drafted",
@@ -94,6 +162,10 @@
     },
     {
       "intent": "not_interested",
+      "aliases": [
+        "not interested",
+        "no thanks"
+      ],
       "autonomous_reply_allowed": true,
       "reply_style": "polite close-out, no debate",
       "pipeline_stage_update": "lost",
@@ -103,6 +175,11 @@
     },
     {
       "intent": "angry_sensitive",
+      "aliases": [
+        "angry",
+        "sensitive",
+        "complaint"
+      ],
       "autonomous_reply_allowed": false,
       "reply_style": "do not auto-reply",
       "pipeline_stage_update": "escalated",
@@ -112,6 +189,11 @@
     },
     {
       "intent": "spam_irrelevant",
+      "aliases": [
+        "spam",
+        "irrelevant",
+        "bot"
+      ],
       "autonomous_reply_allowed": true,
       "reply_style": "no reply unless needed",
       "pipeline_stage_update": "lost",

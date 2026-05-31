@@ -1,43 +1,56 @@
 {
+  "generated_at": "2026-05-31",
   "opportunities": [
     {
       "opportunity_id": "rev-opp-001",
-      "title": "Instagram local founder advice campaign",
+      "title": "Sunday Instagram local founder research and DM campaign",
       "owner_agent": "middle-revenue-agent",
-      "expected_mrr_range": [97, 997],
+      "expected_mrr_range": [
+        97,
+        997
+      ],
       "probability": 0.22,
-      "next_ai_action": "Research real local accounts, create lead records, generate policy-checked DMs, and send if Instagram runtime confirms provider connection.",
+      "next_ai_action": "Research real local accounts across 11 approved segments, create lead records, generate policy-checked DMs, and send only when Instagram runtime proves connected.",
       "wallace_needed_for": "Escalations only: known relationship, custom pricing, unverified proof, provider/rate-limit block, or trust risk.",
-      "action_mode": "autonomous_now",
-      "source": "ctos/campaigns/instagram-dm-campaigns.json"
+      "action_mode": "autonomous_research_provider_gated_send",
+      "source": "ctos/campaigns/instagram-local-founder-campaign.json"
     },
     {
       "opportunity_id": "rev-opp-002",
-      "title": "Policy-based inbound speed-to-lead",
+      "title": "First ad inbound capture loop",
       "owner_agent": "middle-revenue-agent",
-      "expected_mrr_range": [97, 997],
+      "expected_mrr_range": [
+        97,
+        997
+      ],
       "probability": 0.3,
-      "next_ai_action": "Reply automatically to low-risk inbound categories when provider is connected and policy passes.",
-      "wallace_needed_for": "Investor interest, custom pricing, meeting with Wallace, angry/sensitive replies, or known personal relationships.",
-      "action_mode": "autonomous_now",
-      "source": "ctos/inbound/autonomous-reply-policy.json"
+      "next_ai_action": "Classify Right lane ad comments/DMs, create source-backed lead records, answer low-risk questions when provider is connected, and queue follow-ups.",
+      "wallace_needed_for": "High-trust relationship, custom pricing, proof request, meeting request, angry/sensitive reply, or provider block.",
+      "action_mode": "autonomous_classification_provider_gated_reply",
+      "source": "ctos/workflows/first-ad-inbound-capture-loop.md"
     },
     {
       "opportunity_id": "rev-opp-003",
       "title": "Non-sensitive follow-up execution",
       "owner_agent": "follow-up-agent",
-      "expected_mrr_range": [97, 997],
+      "expected_mrr_range": [
+        97,
+        997
+      ],
       "probability": 0.25,
-      "next_ai_action": "Find due non-sensitive follow-ups, send through connected provider, log outcome, and schedule next touch.",
-      "wallace_needed_for": "Known high-value relationships, meetings, custom scope/pricing, or unclear source context.",
-      "action_mode": "autonomous_now",
-      "source": "ctos/campaigns/follow-up-campaigns.json"
+      "next_ai_action": "Send non-sensitive follow-ups only when context and provider status pass. Current known warm lead set is escalated or waiting on data.",
+      "wallace_needed_for": "Known high-value relationships, meetings, current customer context, custom scope/pricing, or unclear source context.",
+      "action_mode": "autonomous_for_future_non_sensitive_followups_current_items_escalated",
+      "source": "ctos/leads/follow-up-queue.json"
     },
     {
       "opportunity_id": "rev-opp-004",
       "title": "Instantly local service email engine",
       "owner_agent": "middle-revenue-agent",
-      "expected_mrr_range": [97, 997],
+      "expected_mrr_range": [
+        97,
+        997
+      ],
       "probability": 0.18,
       "next_ai_action": "Prepare source-reviewed list, suppression checklist, and campaign draft locally.",
       "wallace_needed_for": "Provider setup and any campaign start outside approved policy.",
@@ -46,14 +59,31 @@
     },
     {
       "opportunity_id": "rev-opp-005",
-      "title": "$97 Square provider-link recovery",
-      "owner_agent": "right-qa-agent",
-      "expected_mrr_range": [97, 97],
+      "title": "Square/payment/checkout provider repair",
+      "owner_agent": "left-builder-agent",
+      "expected_mrr_range": [
+        97,
+        997
+      ],
       "probability": 0.35,
-      "next_ai_action": "Keep the $97 blocker visible and verify after provider-side repair.",
-      "wallace_needed_for": "Square link repair/replacement or provider settings.",
-      "action_mode": "escalation_only",
+      "next_ai_action": "Left lane repairs checkout/payment provider issue; Middle tracks revenue impact only.",
+      "wallace_needed_for": "Provider access, payment setting change, checkout link replacement, or deploy.",
+      "action_mode": "left_lane_owned",
       "source": "ctos/product/checkout-status.json"
+    },
+    {
+      "opportunity_id": "rev-opp-006",
+      "title": "Protected proof/client context from American Surgical",
+      "owner_agent": "middle-revenue-agent",
+      "expected_mrr_range": [
+        0,
+        0
+      ],
+      "probability": 0,
+      "next_ai_action": "Do not use as sales proof unless verified and approved through client-ops. Track as protected context only.",
+      "wallace_needed_for": "Any client/customer communication, proof claim, or provider action.",
+      "action_mode": "protected_context_only",
+      "source": "ctos/leads/unified-lead-pipeline.json"
     }
   ]
 }

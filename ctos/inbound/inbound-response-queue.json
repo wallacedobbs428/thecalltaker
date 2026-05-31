@@ -1,60 +1,64 @@
 {
-  "queue_policy": "Inbound Agent replies autonomously only for low-risk policy-passing categories with a connected provider. Known warm relationships and sensitive contexts escalate.",
+  "queue_policy": "Inbound Agent replies autonomously only for low-risk policy-passing categories with a connected provider. Known warm relationships, sensitive contexts, and unproven Instagram POST/runtime paths escalate or wait.",
+  "generated_at": "2026-05-31",
   "summary": {
-    "inbound_total": 3,
+    "inbound_total": 0,
     "autonomous_reply_ready": 0,
     "blocked_by_provider": 0,
-    "escalated": 3,
-    "sent": 0
+    "escalated": 0,
+    "sent": 0,
+    "first_ad_capture_templates_ready": 6
   },
-  "items": [
+  "current_provider_truth": {
+    "netlify_instagram_webhook_get_returns_test123": true,
+    "instagram_inbound_post_proof_confirmed": false,
+    "autonomous_reply_send_connected": false
+  },
+  "capture_readiness": {
+    "first_ad_comments": "ready_to_classify_when_comments_exist",
+    "first_ad_dms": "ready_to_classify_when_dms_exist",
+    "lead_creation": "ready_after_real_comment_or_dm_source_exists",
+    "no_fake_inbound_policy": "Do not create lead records from imagined comments or DMs."
+  },
+  "response_templates": [
     {
-      "queue_id": "inbound-warm-franklin-medical-meeting-001",
-      "lead_id": "warm-franklin-medical-meeting",
-      "business_name": "Franklin medical meeting",
-      "intent": "wants_call",
-      "autonomous_reply_allowed": false,
-      "reply_style": "meeting/setup review context; relationship-sensitive",
-      "pipeline_stage_update": "meeting_suggested",
-      "follow_up_action": "Escalate before send.",
-      "escalation_trigger": "healthcare-adjacent meeting context and likely human sales moment",
-      "next_best_ai_action": "Prepare concise meeting context and questions for escalation.",
-      "generated_reply": "I want to use the meeting to map where calls come in, what happens after hours, what staff misses, and whether a small pilot would catch revenue without disrupting the office.",
-      "policy_check_result": "escalate",
-      "provider_status": "manual_channel_or_unknown",
-      "status": "escalated"
+      "intent": "asks_what_it_does",
+      "autonomous_reply_allowed_when_provider_connected": true,
+      "draft": "It is an AI receptionist for local businesses. It can answer calls, collect the caller name, number, what they need, and pass the details back so the owner does not lose the lead when they are busy or closed.",
+      "next_stage": "AI_reply_sent_if_provider_connected_else_AI_reply_drafted"
     },
     {
-      "queue_id": "inbound-warm-orthodontist-dm-001",
-      "lead_id": "warm-orthodontist-dm",
-      "business_name": "Orthodontist DM lead",
-      "intent": "sounds_interested",
-      "autonomous_reply_allowed": false,
-      "reply_style": "front-desk missed-call follow-up",
-      "pipeline_stage_update": "interested",
-      "follow_up_action": "Escalate unless channel/provider and relationship sensitivity are cleared.",
-      "escalation_trigger": "warm imported manual DM lead with provider/channel status unknown",
-      "next_best_ai_action": "Wait for channel confirmation or escalate.",
-      "generated_reply": "Quick thought - if calls or appointment requests are slipping when the front desk is busy, I built The Call Taker to capture the caller's need and next step instead of letting it disappear into voicemail.",
-      "policy_check_result": "escalate",
-      "provider_status": "manual_channel_or_unknown",
-      "status": "escalated"
+      "intent": "asks_website",
+      "autonomous_reply_allowed_when_provider_connected": true,
+      "draft": "Here is the site: https://thecalltaker.com. It is still early, but the goal is simple: help local businesses stop losing calls when nobody can pick up.",
+      "next_stage": "demo_sent"
     },
     {
-      "queue_id": "inbound-warm-ad-growth-lead-001",
-      "lead_id": "warm-ad-growth-lead",
-      "business_name": "Ad-growth lead follow-up",
-      "intent": "referral_opportunity",
-      "autonomous_reply_allowed": false,
-      "reply_style": "possible partner/referral angle",
-      "pipeline_stage_update": "AI_reply_drafted",
-      "follow_up_action": "Escalate before relationship/channel reply.",
-      "escalation_trigger": "possible strategic/referral relationship and source context needs review",
-      "next_best_ai_action": "Summarize opportunity and wait for escalation decision.",
-      "generated_reply": "If paid traffic is creating calls that are not answered fast enough, the ad problem may actually be a phone/recovery problem. The Call Taker can be positioned as the capture layer after the click.",
-      "policy_check_result": "escalate",
-      "provider_status": "manual_channel_or_unknown",
-      "status": "escalated"
+      "intent": "asks_pricing",
+      "autonomous_reply_allowed_when_provider_connected": true,
+      "draft": "Current public pricing is $97, $497, and $997+ depending on what the business needs. I would not want to guess the right fit from one message, but the simple version is for missed-call and after-hours capture.",
+      "next_stage": "AI_reply_sent_if_provider_connected_else_AI_reply_drafted",
+      "escalation_trigger": "discount, custom quote, contract, payment term, or special promise"
+    },
+    {
+      "intent": "vertical_fit_question",
+      "autonomous_reply_allowed_when_provider_connected": true,
+      "draft": "Yes, the basic fit is strongest where calls turn into jobs or appointments. For {segment}, the useful scenario is usually capturing who called, what they need, and how urgent it is when nobody can pick up. What type of call do you miss most often?",
+      "next_stage": "interested"
+    },
+    {
+      "intent": "gives_advice",
+      "autonomous_reply_allowed_when_provider_connected": true,
+      "draft": "That is genuinely helpful. I am trying to make this feel local and useful instead of like generic AI spam. If you were explaining it in one sentence to a business owner, what would you say?",
+      "next_stage": "replied"
+    },
+    {
+      "intent": "wants_demo",
+      "autonomous_reply_allowed_when_provider_connected": true,
+      "draft": "I can send you a simple demo path. What would be the most realistic call to test: missed estimate, after-hours call, new appointment, or urgent service request?",
+      "next_stage": "demo_sent",
+      "escalation_trigger": "asks for a meeting with Wallace or live custom setup"
     }
-  ]
+  ],
+  "items": []
 }

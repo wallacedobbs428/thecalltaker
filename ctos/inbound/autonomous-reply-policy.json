@@ -1,13 +1,20 @@
 {
   "policy_id": "autonomous-reply-policy-v1",
-  "status": "active",
+  "status": "active_provider_runtime_gated",
+  "generated_at": "2026-05-31",
   "principle": "Inbound Agent can answer low-risk replies inside approved policy. Escalate trust-risk, custom promises, known relationships, and provider/platform blocks.",
+  "current_truth": {
+    "netlify_instagram_webhook_get_returns_test123": true,
+    "instagram_inbound_post_proof_confirmed": false,
+    "provider_write_or_reply_actions_sent_today": false
+  },
   "autonomous_allowed_categories": [
     "asks_what_it_does",
-    "asks_for_website",
+    "asks_website",
     "gives_advice",
     "sounds_interested",
-    "asks_basic_pricing",
+    "asks_pricing_standard_only",
+    "vertical_fit_question",
     "not_interested_polite_close",
     "spam_irrelevant_archive"
   ],
@@ -20,23 +27,25 @@
     "asks_for_meeting_with_wallace",
     "known_personal_relationship",
     "current_customer",
-    "provider_block"
+    "provider_block",
+    "regulated_or_emergency_claim"
   ],
   "send_gate": {
     "autonomous_reply_allowed_if": [
       "category autonomous_allowed is true",
       "reply uses approved facts",
       "no custom promise",
-      "provider_status is connected",
+      "Instagram inbound POST and reply runtime are confirmed, or another provider status is connected",
       "channel limits and quiet hours pass",
       "lead is not marked personal_or_sensitive",
       "escalation_required is false"
     ],
-    "otherwise": "draft_reply_and_escalate_or_wait_for_provider"
+    "otherwise": "classify_and_draft_locally_then_wait_for_provider_or_escalate"
   },
   "logging_required": [
     "ctos/inbound/inbound-message-history.jsonl",
     "ctos/inbound/inbound-response-queue.json",
-    "ctos/leads/unified-lead-pipeline.json"
+    "ctos/leads/unified-lead-pipeline.json",
+    "ctos/revenue/money-scoreboard.json"
   ]
 }

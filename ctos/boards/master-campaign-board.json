@@ -1,19 +1,61 @@
 {
   "board_name": "CTOS Master Campaign Board",
   "purpose": "Show campaigns agents can run under policy and which ones are blocked by provider, platform, data, or escalation rules.",
-  "generated_at": "2026-05-30",
+  "generated_at": "2026-05-31",
   "execution_model": "policy_based_autonomy",
+  "lane_ownership": {
+    "generated_at": "2026-05-31",
+    "left": {
+      "lane": "Left Builder Agent",
+      "owns": "Square/payment/checkout provider repair",
+      "current_focus": "Repair the Square provider/payment blocker and checkout confirmation path without Middle changing checkout/pricing files."
+    },
+    "middle": {
+      "lane": "Middle Revenue Execution Agent",
+      "owns": "Revenue execution, CTOS operations, outbound, inbound, follow-ups, lead movement, revenue scoreboard, and ad-response capture",
+      "current_focus": "Run policy-based revenue workflows and move leads inside approved rules."
+    },
+    "right": {
+      "lane": "Right Video/Content Agent",
+      "owns": "Video production, Instagram content, Higgsfield generation, and first ad launch",
+      "current_focus": "Create first ad/post assets while Middle builds the capture and revenue loop behind them."
+    }
+  },
   "campaigns": [
     {
-      "campaign_id": "auto-ig-local-founder-advice-v1",
-      "name": "Instagram Local Founder Advice",
+      "campaign_id": "ig-local-founder-sunday-2026-05-31",
+      "name": "Sunday Instagram Local Founder Revenue Sprint",
       "owner_agent": "middle-revenue-agent",
       "current_stage": "ready_for_agent_research",
-      "ai_next_action": "Research real local accounts, generate policy-checked DMs, and send if Instagram runtime confirms provider connection.",
-      "autonomy_status": "allowed_after_real_lead_and_provider_check",
+      "ai_next_action": "Research 11 source-backed segment queues, create real lead records, generate policy-checked DMs, and send only after Instagram runtime confirms provider access.",
+      "autonomy_status": "research_autonomous_send_provider_gated",
       "escalation_only_if": "provider block, rate limit, known relationship, custom promise, or trust-risk",
-      "blocker": "No real source-backed leads in queue yet.",
+      "blocker": "No real source-backed leads researched in this run; Instagram outbound runtime not proven here.",
       "revenue_connection": "Warm conversations with local service owners.",
+      "status": "active"
+    },
+    {
+      "campaign_id": "first-ad-inbound-capture-v1",
+      "name": "First Ad Inbound Capture Loop",
+      "owner_agent": "middle-revenue-agent",
+      "current_stage": "ready_for_right_lane_ad_engagement",
+      "ai_next_action": "Classify ad comments/DMs, create lead records, draft or send low-risk replies when provider is connected, and schedule follow-ups.",
+      "autonomy_status": "classification_ready_reply_provider_gated",
+      "escalation_only_if": "known relationship, meeting with Wallace, custom pricing, proof request, angry/sensitive reply, or provider block",
+      "blocker": "Waiting on Right lane first ad/post and Instagram inbound POST proof.",
+      "revenue_connection": "Captures revenue from ad attention.",
+      "status": "active"
+    },
+    {
+      "campaign_id": "right-first-ad-launch-v1",
+      "name": "Right Lane First Video/Instagram Ad Launch",
+      "owner_agent": "right-video-content-agent",
+      "current_stage": "right_lane_video_production",
+      "ai_next_action": "Produce Higgsfield/video/Instagram creative; hand comments, DMs, and launch metadata into Middle capture workflow.",
+      "autonomy_status": "right_lane_owned_middle_capture_ready",
+      "escalation_only_if": "unsupported claim, trust-risk, or strategic ad decision",
+      "blocker": "Creative/ad asset production is outside Middle lane.",
+      "revenue_connection": "Creates attention that CTOS can convert into tracked leads.",
       "status": "active"
     },
     {
@@ -21,10 +63,10 @@
       "name": "Policy-Based Warm Follow-Up",
       "owner_agent": "follow-up-agent",
       "current_stage": "partially_ready_escalations_exist",
-      "ai_next_action": "Send non-sensitive due follow-ups inside policy; escalate known warm relationships.",
+      "ai_next_action": "Send non-sensitive due follow-ups inside policy; current known warm leads remain escalated or waiting on context.",
       "autonomy_status": "partially_autonomous",
       "escalation_only_if": "known relationship, meeting with Wallace, custom terms, sensitive context, provider missing",
-      "blocker": "Current known warm items are relationship/sensitivity escalations.",
+      "blocker": "Known warm items are relationship, sensitive, current customer, or missing-context cases.",
       "revenue_connection": "Prevents warm lead drift.",
       "status": "active"
     },
@@ -65,15 +107,15 @@
       "status": "active"
     },
     {
-      "campaign_id": "square-97-checkout-blocker",
-      "name": "$97 Square Provider Link",
-      "owner_agent": "right-qa-agent",
-      "current_stage": "provider_block",
-      "ai_next_action": "Track blocker and verify after provider-side repair.",
-      "autonomy_status": "tracking_only",
-      "escalation_only_if": "Square link replacement, payment setting, deploy",
-      "blocker": "$97 Square provider link.",
-      "revenue_connection": "Entry-plan checkout path.",
+      "campaign_id": "square-payment-checkout-provider-repair",
+      "name": "Square Payment/Checkout Provider Repair",
+      "owner_agent": "left-builder-agent",
+      "current_stage": "left_lane_owned",
+      "ai_next_action": "Left repairs Square/payment/checkout provider issue. Middle does not edit checkout/pricing.",
+      "autonomy_status": "left_lane_owned",
+      "escalation_only_if": "provider access, payment setting change, checkout link replacement, or deploy",
+      "blocker": "Provider/payment work is owned by Left.",
+      "revenue_connection": "Protects checkout conversion.",
       "status": "critical"
     }
   ]
