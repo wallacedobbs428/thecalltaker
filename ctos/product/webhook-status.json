@@ -1,0 +1,42 @@
+{
+  "status": "netlify_endpoint_live_test123",
+  "owner_agent": "left-builder-agent",
+  "current_truth": {
+    "netlify_webhook_function_code_exists": true,
+    "netlify_webhook_endpoint_returns_test123": true,
+    "instagram_meta_connection_assumption": "usable_unless_runtime_proves_blocked",
+    "primary_site_hosting": "thecalltaker.com is still GitHub Pages for now",
+    "temporary_url_strategy": "Use the live Netlify webhook endpoint for provider/webhook testing before production hostname assumptions."
+  },
+  "tracked_webhooks": [
+    {
+      "provider": "Instagram/Meta",
+      "purpose": "Inbound replies and DM workflow tracking",
+      "status": "assumed_usable_until_runtime_proves_blocked",
+      "autonomous_allowed": true,
+      "safe_next_action": "Runtime adapter should confirm permissions before first send; failed runtime proof marks provider blocked."
+    },
+    {
+      "provider": "Square",
+      "purpose": "Payment confirmation and checkout status",
+      "status": "blocked_by_97_square_provider_link",
+      "autonomous_allowed": false,
+      "safe_next_action": "Process verified provider events only; do not mutate Square links/settings."
+    },
+    {
+      "provider": "Instantly",
+      "purpose": "Campaign reply tracking and email sends",
+      "status": "blocked_until_provider_setup_verified",
+      "autonomous_allowed": false,
+      "safe_next_action": "Prepare drafts, source review, and suppression checks locally."
+    },
+    {
+      "provider": "Netlify temporary webhook",
+      "purpose": "Webhook verification",
+      "status": "live_returns_test123",
+      "autonomous_allowed": true,
+      "safe_next_action": "Use for read/receive webhook verification; no deploy from CTOS."
+    }
+  ],
+  "action_mode": "autonomous_where_adapter_connected"
+}

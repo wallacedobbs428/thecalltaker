@@ -1,0 +1,79 @@
+{
+  "campaigns": [
+    {
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "follow_up",
+      "target_segment": "non-sensitive warm leads and replies inside approved policy",
+      "goal": "Move warm leads to demo, meeting, checkout, or clear close-out without manual follow-up drift.",
+      "approved_policy_id": "autonomous-outbound-policy-v1",
+      "message_angle": "Continue the existing thread with one clear next step.",
+      "brand_voice": "brand-voice-policy-v1",
+      "daily_send_limit": 20,
+      "qualification_rules": [
+        "lead is source-backed",
+        "last touch date known",
+        "follow-up spacing passes",
+        "lead is not personal/sensitive",
+        "reply fits approved policy"
+      ],
+      "personalization_rules": [
+        "reference recorded context only",
+        "ask one next-step question",
+        "do not invent urgency",
+        "stop on no/stop/remove"
+      ],
+      "autonomous_actions_allowed": [
+        "find due follow-ups",
+        "generate follow-up",
+        "policy check",
+        "send through connected provider if no escalation",
+        "log",
+        "move lead stage",
+        "schedule next touch"
+      ],
+      "escalation_triggers": [
+        "known high-value warm relationship",
+        "meeting with Wallace requested",
+        "custom scope/pricing",
+        "current customer",
+        "unclear source context",
+        "provider channel missing"
+      ],
+      "stop_conditions": ["not interested", "no response after final follow-up", "suppressed", "provider failure"],
+      "follow_up_sequence": [
+        {
+          "step": "soft_nudge",
+          "spacing": "48 to 72 hours",
+          "autonomous_allowed": true
+        },
+        {
+          "step": "value_based_nudge",
+          "spacing": "3 to 5 business days",
+          "autonomous_allowed": true
+        },
+        {
+          "step": "park_or_close",
+          "spacing": "7 days after value nudge",
+          "autonomous_allowed": true
+        }
+      ],
+      "success_metrics": ["followups_sent", "replies", "meetings_suggested", "meetings_booked", "lost_suppressed"],
+      "current_status": "partially_ready_escalations_exist",
+      "next_agent_action": "Follow-Up Agent can send non-sensitive policy-passing follow-ups; known warm relationships escalate."
+    }
+  ],
+  "known_escalated_warm_relationships": [
+    {
+      "lead_id": "lead-chuck-mcdowell",
+      "reason": "warm scheduling lead and relationship-sensitive"
+    },
+    {
+      "lead_id": "lead-jay-grosman",
+      "reason": "strategic networking relationship"
+    },
+    {
+      "lead_id": "warm-franklin-medical-meeting",
+      "reason": "meeting context and healthcare-adjacent sensitivity"
+    }
+  ]
+}

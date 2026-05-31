@@ -1,0 +1,62 @@
+{
+  "campaigns": [
+    {
+      "campaign_id": "auto-facebook-advice-post-v1",
+      "channel": "Facebook group post",
+      "target_segment": "approved local business and community groups",
+      "goal": "Generate advice, comments, referrals, and market language without hard selling.",
+      "approved_policy_id": "autonomous-outbound-policy-v1",
+      "message_angle": "Local high school founder asks owners if missed-call and after-hours capture is a real problem.",
+      "brand_voice": "brand-voice-policy-v1",
+      "daily_send_limit": 2,
+      "qualification_rules": [
+        "group rules allow advice asks",
+        "group is relevant to local business/community",
+        "post is not a sales pitch",
+        "platform adapter permits posting or flags human confirmation"
+      ],
+      "personalization_rules": [
+        "include local context if true",
+        "do not mention pricing in post",
+        "ask one question",
+        "do not bump post unless allowed"
+      ],
+      "autonomous_actions_allowed": [
+        "generate post",
+        "policy check",
+        "publish if adapter and group policy allow",
+        "classify comments",
+        "send low-risk replies if allowed",
+        "create lead records from interested comments"
+      ],
+      "escalation_triggers": [
+        "group rules unclear",
+        "platform requires human confirmation",
+        "moderator warning",
+        "angry/sensitive comment",
+        "custom claim or pricing request"
+      ],
+      "stop_conditions": ["post removed", "moderator warning", "negative thread", "rate-limit warning"],
+      "follow_up_sequence": ["reply_to_advice", "invite demo only if they ask", "create lead on interest/referral"],
+      "success_metrics": ["posts_published", "comments", "advice_items", "leads_created", "referrals"],
+      "current_status": "blocked_by_platform_confirmation",
+      "next_agent_action": "Middle Revenue Agent can prepare and policy-check posts; publishing waits on adapter confirmation."
+    }
+  ],
+  "draft_posts": [
+    {
+      "draft_id": "fb-advice-founder-missed-call-001",
+      "policy_check_result": "pass",
+      "send_allowed": false,
+      "send_reason": "Facebook group adapter/platform confirmation is required before autonomous posting.",
+      "post_text": "Quick local founder question. I'm Wallace, a high schooler in Brentwood building The Call Taker, an AI receptionist for local businesses.\n\nThe idea is to answer calls, capture customer info, and help owners avoid losing jobs when they cannot pick up, especially after hours.\n\nFor owners here: is missed-call or after-hours follow-up a real problem, or am I solving the wrong thing? I am looking for honest advice more than customers right now."
+    },
+    {
+      "draft_id": "fb-advice-phone-heavy-owner-002",
+      "policy_check_result": "pass",
+      "send_allowed": false,
+      "send_reason": "Facebook group adapter/platform confirmation is required before autonomous posting.",
+      "post_text": "For local service-business owners: when you are on a job, with a customer, or closed for the day, what usually happens to calls that come in?\n\nI'm building The Call Taker in Brentwood to answer, collect the caller's info, and send the owner a clean summary. I am trying to figure out whether this solves a real pain or just sounds useful in theory."
+    }
+  ]
+}

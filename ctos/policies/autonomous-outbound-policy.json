@@ -1,0 +1,65 @@
+{
+  "policy_id": "autonomous-outbound-policy-v1",
+  "status": "active",
+  "principle": "AI agents execute inside approved campaign policies. Wallace reviews escalations and performance, not every low-risk message.",
+  "autonomous_actions_allowed": [
+    "research local businesses from approved public/source inputs",
+    "enrich lead records from public business info",
+    "create lead records with source paths and confidence labels",
+    "classify business type and likely phone pain",
+    "choose approved message angle by segment",
+    "draft outbound messages from approved templates",
+    "policy-check generated messages",
+    "send messages through approved integrations when campaign policy allows it",
+    "log sent messages and provider result",
+    "classify replies",
+    "draft and send low-risk replies inside approved policy",
+    "schedule follow-ups within spacing limits",
+    "move leads through pipeline stages",
+    "summarize lead status",
+    "generate call lists from approved source notes",
+    "generate email campaigns from approved segments",
+    "update CTOS revenue scoreboard"
+  ],
+  "send_gate": {
+    "default": "send_autonomously_if_all_conditions_pass",
+    "conditions": [
+      "campaign status allows autonomous execution",
+      "target lead is real and source-backed",
+      "message passes brand voice and truth policy",
+      "channel limit has remaining capacity",
+      "duplicate prevention passes",
+      "quiet hours are not active",
+      "provider_status is connected",
+      "platform does not require human confirmation",
+      "escalation_required is false"
+    ],
+    "if_any_condition_fails": "do_not_send_and_set_next_action"
+  },
+  "not_allowed": [
+    "fake proof",
+    "fake case studies",
+    "custom pricing promises",
+    "discounts",
+    "contract or payment term changes",
+    "legal or financial claims",
+    "regulated advice",
+    "sending after stop/not interested",
+    "platform spam behavior",
+    "provider mutation outside adapter spec"
+  ],
+  "lead_quality_requirements": [
+    "business_name is present",
+    "source is recorded",
+    "channel target is present",
+    "category is classified",
+    "duplicate check has passed",
+    "business appears relevant to missed-call, after-hours, front-desk, booking, urgent, or callback pain"
+  ],
+  "logging_required": [
+    "ctos/outbound/message-history.jsonl",
+    "ctos/outbound/autonomous-send-queue.json",
+    "ctos/leads/unified-lead-pipeline.json",
+    "ctos/revenue/money-scoreboard.json"
+  ]
+}

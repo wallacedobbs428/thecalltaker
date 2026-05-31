@@ -1,0 +1,95 @@
+{
+  "source_policy": "Templates are draft-only and must be personalized, approved, and logged before any send. No channel integration is authorized by this file.",
+  "primary_sources": [
+    "/Users/wallacedobbs/Developer/business-brain/outreach-system/instagram-dm-outreach/INSTAGRAM-DM-OUTREACH-MACHINE-2026-05-30.md",
+    "/Users/wallacedobbs/Developer/business-brain/operator-manual/middle-lane-2026-05-28/10-REVENUE-SCRIPTS-AND-MESSAGE-BANK.md",
+    "/Users/wallacedobbs/Developer/business-brain/outreach-system/MICRO-SEGMENT-OUTREACH-COPY-BANK.md",
+    "/Users/wallacedobbs/Developer/business-brain/outreach-system/FIRST-5-REPLY-FOLLOW-UP-PACK-2026-05-14.md"
+  ],
+  "templates": [
+    {
+      "template_id": "ig-local-founder-advice-ask-v1",
+      "channel": "Instagram DM",
+      "target_business_type": "local service business owner",
+      "tone": "honest, local, curious, non-corporate",
+      "founder_angle": "Wallace is a local Brentwood high schooler building The Call Taker and asking owners for advice, not pitching a contract in the first message.",
+      "message_text": "{personalized_first_line}\n\nHey {first_name}, I'm Wallace - local in Brentwood and a high schooler building The Call Taker, an AI receptionist for local businesses.\n\nIt answers calls, captures customer info, and helps owners avoid losing jobs when they can't pick up.\n\nI have my first customer now, but I'm trying to learn how to get from one customer to more. If you were in my shoes, what would you do? Any advice would help a lot.",
+      "personalization_fields": ["business_name", "first_name", "instagram_handle", "category", "personalized_first_line"],
+      "approval_required": true,
+      "ideal_use_case": "First-touch Instagram DM to a local owner-led business where the account appears active and phone-driven.",
+      "next_follow_up_logic": "If no reply after 2 days, draft one soft advice follow-up. If advice is given, draft a thank-you plus one follow-up question. Stop on not interested.",
+      "action_mode": "draft_for_approval",
+      "source": "/Users/wallacedobbs/Developer/business-brain/outreach-system/instagram-dm-outreach/INSTAGRAM-DM-OUTREACH-MACHINE-2026-05-30.md"
+    },
+    {
+      "template_id": "ig-service-owner-missed-call-question-v1",
+      "channel": "Instagram DM",
+      "target_business_type": "service business with missed-call or after-hours pain",
+      "tone": "short, practical, owner-to-owner",
+      "founder_angle": "Local high school founder validating the real pain before selling.",
+      "message_text": "{personalized_first_line}\n\nHey {first_name}, quick question from a local founder. I'm a high schooler in Brentwood building The Call Taker - an AI receptionist for service businesses.\n\nIt answers the phone, gets the customer's info, and passes the details to the owner.\n\nFor a business like yours, is missed-call or after-hours follow-up actually a problem, or am I looking at the wrong pain point?",
+      "personalization_fields": ["business_name", "first_name", "category", "observed_signal", "personalized_first_line"],
+      "approval_required": true,
+      "ideal_use_case": "Roofing, plumbing, HVAC, locksmith, towing, electrical, landscaping, med spa, dentist, veterinary, restoration.",
+      "next_follow_up_logic": "If they say the pain is real, draft a demo-line offer. If they say it is not a problem, draft a thank-you and optional referral ask.",
+      "action_mode": "draft_for_approval",
+      "source": "/Users/wallacedobbs/Developer/business-brain/outreach-system/instagram-dm-outreach/INSTAGRAM-DM-OUTREACH-MACHINE-2026-05-30.md"
+    },
+    {
+      "template_id": "facebook-group-advice-ask-v1",
+      "channel": "Facebook group post",
+      "target_business_type": "local business owners and community groups",
+      "tone": "transparent, advice-seeking, group-safe",
+      "founder_angle": "Local Brentwood high schooler asking for real business-owner feedback before scaling.",
+      "message_text": "Quick local founder question. I'm Wallace, a high schooler in Brentwood building The Call Taker, an AI receptionist for local businesses.\n\nThe idea is to answer calls, capture customer info, and help owners avoid losing jobs when they cannot pick up, especially after hours.\n\nFor owners here: is missed-call or after-hours follow-up a real problem, or am I solving the wrong thing? I am looking for honest advice more than customers right now.",
+      "personalization_fields": ["group_name", "group_rules", "local_context"],
+      "approval_required": true,
+      "ideal_use_case": "Facebook groups where advice asks are allowed and no hard selling is permitted.",
+      "next_follow_up_logic": "AI classifies comments into advice, interest, referral, pricing, not interested, or spam; draft replies only after approval.",
+      "action_mode": "draft_for_approval",
+      "source": "/Users/wallacedobbs/Developer/business-brain/agents/sales-agent/daily-acquisition/daily-acquisition-attack-board.json"
+    },
+    {
+      "template_id": "email-founder-missed-call-v1",
+      "channel": "email",
+      "target_business_type": "qualified local service business with public email and phone-heavy workflow",
+      "tone": "plain, low-pressure, specific",
+      "founder_angle": "Early local founder asking whether the phone bottleneck is real.",
+      "message_text": "Subject: quick question about missed calls\n\nHi {first_name_or_team},\n\nI'm Wallace, a Brentwood high schooler building The Call Taker, an AI receptionist for local businesses.\n\nFor {business_name}, I was curious: when calls come in after hours or while the team is busy, do they usually get answered, forwarded, or go to voicemail?\n\nThe product answers calls, captures the customer's name, phone, and what they need, then gives the owner a clean handoff. I am trying to learn whether that is actually useful for businesses like yours.\n\nWould one quick example call be helpful, or is missed-call capture not a real issue for you?",
+      "personalization_fields": ["business_name", "first_name_or_team", "vertical", "city", "observed_signal"],
+      "approval_required": true,
+      "ideal_use_case": "Instantly/manual email draft after lead source, suppression, and compliance review.",
+      "next_follow_up_logic": "If no reply after 3 to 5 business days, draft a single no-pressure follow-up. If pricing is asked, use pricing reply rules.",
+      "action_mode": "draft_for_approval",
+      "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/middle-lane-2026-05-28/10-REVENUE-SCRIPTS-AND-MESSAGE-BANK.md"
+    },
+    {
+      "template_id": "call-opener-local-service-v1",
+      "channel": "phone",
+      "target_business_type": "approved local service business call list",
+      "tone": "quick, respectful, owner-friendly",
+      "founder_angle": "Wallace introduces himself and asks one phone-bottleneck question.",
+      "message_text": "Hi, this is Wallace with The Call Taker. Quick question: when your team misses a call during a job or after hours, do you have a system that captures the details and gets it back to you fast?",
+      "personalization_fields": ["business_name", "vertical", "city", "call_reason"],
+      "approval_required": true,
+      "ideal_use_case": "Only after a real lead is approved as call-ready and suppression/source notes are complete.",
+      "next_follow_up_logic": "If interested, offer a one-call preview. If already covered by receptionist, position as overflow/after-hours only. If not interested, suppress.",
+      "action_mode": "draft_for_approval",
+      "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/middle-lane-2026-05-28/10-REVENUE-SCRIPTS-AND-MESSAGE-BANK.md"
+    },
+    {
+      "template_id": "referral-ask-phone-heavy-owner-v1",
+      "channel": "manual message",
+      "target_business_type": "trusted contact or local network",
+      "tone": "specific, respectful, not blast-y",
+      "founder_angle": "Founder asks for one useful intro instead of mass prospecting.",
+      "message_text": "If you know a business owner who misses calls or has front-desk overload, send them my way. I can show them the demo before they change anything. I am looking for the right fits, not blasting everybody.",
+      "personalization_fields": ["contact_name", "relationship_context", "preferred_vertical"],
+      "approval_required": true,
+      "ideal_use_case": "Referral network asks after Wallace approves the exact recipient and relationship context.",
+      "next_follow_up_logic": "If a referral is offered, create unified lead record, draft thank-you, and queue one intro-handling reply.",
+      "action_mode": "draft_for_approval",
+      "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/middle-lane-2026-05-28/10-REVENUE-SCRIPTS-AND-MESSAGE-BANK.md"
+    }
+  ]
+}

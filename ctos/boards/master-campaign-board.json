@@ -1,0 +1,80 @@
+{
+  "board_name": "CTOS Master Campaign Board",
+  "purpose": "Show campaigns agents can run under policy and which ones are blocked by provider, platform, data, or escalation rules.",
+  "generated_at": "2026-05-30",
+  "execution_model": "policy_based_autonomy",
+  "campaigns": [
+    {
+      "campaign_id": "auto-ig-local-founder-advice-v1",
+      "name": "Instagram Local Founder Advice",
+      "owner_agent": "middle-revenue-agent",
+      "current_stage": "ready_for_agent_research",
+      "ai_next_action": "Research real local accounts, generate policy-checked DMs, and send if Instagram runtime confirms provider connection.",
+      "autonomy_status": "allowed_after_real_lead_and_provider_check",
+      "escalation_only_if": "provider block, rate limit, known relationship, custom promise, or trust-risk",
+      "blocker": "No real source-backed leads in queue yet.",
+      "revenue_connection": "Warm conversations with local service owners.",
+      "status": "active"
+    },
+    {
+      "campaign_id": "auto-warm-follow-up-v1",
+      "name": "Policy-Based Warm Follow-Up",
+      "owner_agent": "follow-up-agent",
+      "current_stage": "partially_ready_escalations_exist",
+      "ai_next_action": "Send non-sensitive due follow-ups inside policy; escalate known warm relationships.",
+      "autonomy_status": "partially_autonomous",
+      "escalation_only_if": "known relationship, meeting with Wallace, custom terms, sensitive context, provider missing",
+      "blocker": "Current known warm items are relationship/sensitivity escalations.",
+      "revenue_connection": "Prevents warm lead drift.",
+      "status": "active"
+    },
+    {
+      "campaign_id": "auto-facebook-advice-post-v1",
+      "name": "Facebook Advice-Post",
+      "owner_agent": "middle-revenue-agent",
+      "current_stage": "blocked_by_platform_confirmation",
+      "ai_next_action": "Generate and policy-check posts; publish only if adapter confirms platform/group rules allow it.",
+      "autonomy_status": "blocked_by_platform",
+      "escalation_only_if": "group rules unclear, public trust risk, platform confirmation required",
+      "blocker": "Facebook adapter/platform confirmation.",
+      "revenue_connection": "Inbound advice, comments, referrals.",
+      "status": "blocked"
+    },
+    {
+      "campaign_id": "auto-instantly-local-service-v1",
+      "name": "Instantly Local Service Email",
+      "owner_agent": "middle-revenue-agent",
+      "current_stage": "blocked_by_provider_setup",
+      "ai_next_action": "Prepare source-review, suppression, and campaign draft locally.",
+      "autonomy_status": "blocked_by_provider",
+      "escalation_only_if": "provider setup, source uncertainty, spam-risk, campaign start",
+      "blocker": "Instantly adapter setup not verified.",
+      "revenue_connection": "Scalable outbound after provider setup.",
+      "status": "blocked"
+    },
+    {
+      "campaign_id": "auto-missed-call-content-v1",
+      "name": "Missed-Call Content",
+      "owner_agent": "middle-revenue-agent",
+      "current_stage": "ready_to_generate",
+      "ai_next_action": "Generate hooks/captions from approved brand voice and missed-call pain.",
+      "autonomy_status": "generation_allowed",
+      "escalation_only_if": "public posting adapter required, personal story detail, unsupported proof",
+      "blocker": "Publishing depends on platform adapter.",
+      "revenue_connection": "Organic inbound and trust.",
+      "status": "active"
+    },
+    {
+      "campaign_id": "square-97-checkout-blocker",
+      "name": "$97 Square Provider Link",
+      "owner_agent": "right-qa-agent",
+      "current_stage": "provider_block",
+      "ai_next_action": "Track blocker and verify after provider-side repair.",
+      "autonomy_status": "tracking_only",
+      "escalation_only_if": "Square link replacement, payment setting, deploy",
+      "blocker": "$97 Square provider link.",
+      "revenue_connection": "Entry-plan checkout path.",
+      "status": "critical"
+    }
+  ]
+}

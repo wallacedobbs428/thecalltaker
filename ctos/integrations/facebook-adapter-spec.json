@@ -1,0 +1,65 @@
+{
+  "adapter_id": "facebook-adapter-v1",
+  "provider": "Facebook",
+  "connection_status": "blocked_by_platform_confirmation_until_runtime_proves_allowed",
+  "required_env_vars": [
+    "META_APP_ID",
+    "META_APP_SECRET",
+    "META_PAGE_ACCESS_TOKEN",
+    "FACEBOOK_PAGE_ID",
+    "CTOS_WEBHOOK_BASE_URL"
+  ],
+  "actions_supported": [
+    "create_group_post_draft",
+    "publish_group_post_if_platform_policy_allows",
+    "read_comments",
+    "classify_comments",
+    "reply_to_low_risk_comments_if_allowed",
+    "create_lead_from_comment"
+  ],
+  "read_operations": [
+    "read post status",
+    "read comments",
+    "read messages if permissions exist"
+  ],
+  "write_operations": [
+    "publish post if allowed",
+    "reply to comment if allowed",
+    "write_ctos_history",
+    "update_lead_stage"
+  ],
+  "autonomous_allowed_actions": [
+    "draft and policy-check posts",
+    "publish only when adapter confirms group/page action is allowed",
+    "classify comments",
+    "reply to low-risk advice comments if allowed"
+  ],
+  "escalation_required_actions": [
+    "group rules unclear",
+    "platform requires human confirmation",
+    "moderator warning",
+    "negative or sensitive comments",
+    "custom pricing or claims"
+  ],
+  "rate_limits": {
+    "group_posts_per_campaign_per_day": 2,
+    "minimum_hours_between_posts": 24
+  },
+  "logging_requirements": [
+    "ctos/outbound/message-history.jsonl",
+    "ctos/inbound/inbound-message-history.jsonl",
+    "ctos/campaigns/facebook-group-campaigns.json"
+  ],
+  "failure_handling": [
+    "stop posting on moderator warning",
+    "mark failed_provider_block",
+    "escalate public trust-risk",
+    "log platform error class only"
+  ],
+  "ctos_files_updated_after_action": [
+    "ctos/campaigns/facebook-group-campaigns.json",
+    "ctos/outbound/message-history.jsonl",
+    "ctos/inbound/inbound-message-history.jsonl",
+    "ctos/leads/unified-lead-pipeline.json"
+  ]
+}

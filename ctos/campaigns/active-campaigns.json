@@ -1,0 +1,69 @@
+{
+  "execution_model": "policy_based_autonomy",
+  "campaigns": [
+    {
+      "campaign_id": "auto-ig-local-founder-advice-v1",
+      "name": "Instagram Local Founder Advice",
+      "goal": "Create advice-first conversations with local service businesses.",
+      "target_audience": "Phone-heavy local service businesses.",
+      "owner_agent": "middle-revenue-agent",
+      "lead_source": "AI-researched source-backed Instagram/local records.",
+      "message_angle": "Local Brentwood high schooler asking honest advice about missed-call pain.",
+      "current_stage": "ready_for_agent_research",
+      "autonomy_status": "allowed_after_real_lead_and_provider_check",
+      "ai_next_action": "Research real leads, generate policy-checked DMs, and send if provider runtime passes.",
+      "wallace_role": "Escalations only.",
+      "result_metrics": ["real_leads_created", "messages_sent", "replies", "demo_requests", "meetings_suggested"],
+      "revenue_created": 0,
+      "action_mode": "autonomous_now"
+    },
+    {
+      "campaign_id": "auto-warm-follow-up-v1",
+      "name": "Policy-Based Warm Follow-Up",
+      "goal": "Move non-sensitive warm leads forward without follow-up drift.",
+      "target_audience": "Warm leads with source-backed context and no escalation trigger.",
+      "owner_agent": "follow-up-agent",
+      "lead_source": "CTOS lead/follow-up queues.",
+      "message_angle": "One recorded-context next step.",
+      "current_stage": "partially_ready_escalations_exist",
+      "autonomy_status": "autonomous_for_non_sensitive_followups",
+      "ai_next_action": "Send non-sensitive follow-ups if provider connected; escalate known relationships.",
+      "wallace_role": "Escalations only.",
+      "result_metrics": ["followups_sent", "replies", "meetings_suggested", "meetings_booked"],
+      "revenue_created": 0,
+      "action_mode": "autonomous_now"
+    },
+    {
+      "campaign_id": "auto-facebook-advice-post-v1",
+      "name": "Facebook Advice-Post",
+      "goal": "Generate advice and inbound signals from group-safe posts.",
+      "target_audience": "Approved local business/community groups.",
+      "owner_agent": "middle-revenue-agent",
+      "lead_source": "Facebook groups.",
+      "message_angle": "Advice ask, not sales pitch.",
+      "current_stage": "blocked_by_platform_confirmation",
+      "autonomy_status": "blocked_by_platform",
+      "ai_next_action": "Prepare posts and classify replies; publish only if adapter confirms allowed.",
+      "wallace_role": "Escalation if platform requires human confirmation.",
+      "result_metrics": ["posts_published", "comments", "leads_created", "referrals"],
+      "revenue_created": 0,
+      "action_mode": "needs_integration"
+    },
+    {
+      "campaign_id": "auto-instantly-local-service-v1",
+      "name": "Instantly Local Service Email",
+      "goal": "Create scalable email outbound after provider and list gates pass.",
+      "target_audience": "Approved source-backed local service businesses.",
+      "owner_agent": "middle-revenue-agent",
+      "lead_source": "Source-reviewed lists only.",
+      "message_angle": "Missed calls and after-hours leads leak revenue.",
+      "current_stage": "blocked_by_provider_setup",
+      "autonomy_status": "blocked_by_provider",
+      "ai_next_action": "Prepare campaign/list/suppression locally.",
+      "wallace_role": "Escalation for provider setup or campaign start outside policy.",
+      "result_metrics": ["approved_recipients", "emails_sent", "positive_replies", "meetings_booked"],
+      "revenue_created": 0,
+      "action_mode": "needs_integration"
+    }
+  ]
+}

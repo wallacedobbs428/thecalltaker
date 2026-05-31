@@ -1,0 +1,72 @@
+{
+  "adapter_id": "instagram-adapter-v1",
+  "provider": "Instagram/Meta",
+  "connection_status": "assumed_usable_until_runtime_proves_blocked",
+  "required_env_vars": [
+    "META_APP_ID",
+    "META_APP_SECRET",
+    "META_VERIFY_TOKEN",
+    "META_PAGE_ACCESS_TOKEN",
+    "INSTAGRAM_BUSINESS_ACCOUNT_ID",
+    "CTOS_WEBHOOK_BASE_URL"
+  ],
+  "actions_supported": [
+    "receive_inbound_dm_via_webhook",
+    "classify_inbound",
+    "send_autonomous_low_risk_reply",
+    "send_outbound_dm_if_campaign_policy_allows",
+    "log_message_to_ctos",
+    "schedule_follow_up"
+  ],
+  "read_operations": [
+    "read_inbound_dm_event",
+    "read_profile_public_context_if_available",
+    "read_delivery_status",
+    "read_reply_thread_context"
+  ],
+  "write_operations": [
+    "send_dm",
+    "send_reply",
+    "write_ctos_message_history",
+    "update_lead_stage",
+    "update_follow_up_queue"
+  ],
+  "autonomous_allowed_actions": [
+    "send low-risk reply inside autonomous-reply-policy-v1",
+    "send outbound DM inside auto-ig-local-founder-advice-v1 when lead is real and limits pass",
+    "schedule follow-up within channel-safety-limits-v1"
+  ],
+  "escalation_required_actions": [
+    "reply to angry/sensitive messages",
+    "custom pricing or contract discussion",
+    "known personal relationship",
+    "provider permission error",
+    "rate-limit warning",
+    "unverified proof claim"
+  ],
+  "rate_limits": {
+    "campaign_daily_dm_limit": 15,
+    "minimum_hours_between_followups": 48,
+    "max_followups_per_lead": 2
+  },
+  "logging_requirements": [
+    "ctos/outbound/message-history.jsonl",
+    "ctos/inbound/inbound-message-history.jsonl",
+    "ctos/outbound/autonomous-send-queue.json",
+    "ctos/inbound/inbound-response-queue.json",
+    "ctos/leads/unified-lead-pipeline.json"
+  ],
+  "failure_handling": [
+    "mark failed_provider_block",
+    "stop retries on rate-limit/trust-risk",
+    "log error class without token values",
+    "escalate revenue-critical blocks"
+  ],
+  "ctos_files_updated_after_action": [
+    "ctos/outbound/message-history.jsonl",
+    "ctos/inbound/inbound-message-history.jsonl",
+    "ctos/leads/unified-lead-pipeline.json",
+    "ctos/leads/follow-up-queue.json",
+    "ctos/revenue/money-scoreboard.json"
+  ]
+}

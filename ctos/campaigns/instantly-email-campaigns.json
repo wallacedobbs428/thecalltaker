@@ -1,0 +1,82 @@
+{
+  "campaigns": [
+    {
+      "campaign_id": "auto-instantly-local-service-v1",
+      "channel": "Instantly email",
+      "target_segment": "approved source-backed local service leads with public email",
+      "goal": "Build scalable email outreach without spam or unapproved imports.",
+      "approved_policy_id": "autonomous-outbound-policy-v1",
+      "message_angle": "Missed calls and after-hours calls leak jobs; The Call Taker captures the caller and next step.",
+      "brand_voice": "brand-voice-policy-v1",
+      "daily_send_limit": 25,
+      "qualification_rules": [
+        "email is public/source-backed",
+        "suppression check passes",
+        "category is approved",
+        "campaign limit available",
+        "Instantly adapter connected"
+      ],
+      "personalization_rules": [
+        "mention category pain only",
+        "do not invent observed details",
+        "ask one fit question",
+        "use provider unsubscribe/suppression controls"
+      ],
+      "autonomous_actions_allowed": [
+        "create campaign draft",
+        "prepare source-backed recipient list",
+        "import list if policy allows",
+        "start campaign if adapter confirms policy",
+        "track replies and bounces",
+        "classify replies",
+        "schedule follow-ups"
+      ],
+      "escalation_triggers": [
+        "provider access missing",
+        "suppression uncertainty",
+        "list source unclear",
+        "bounce/spam warning",
+        "custom pricing",
+        "contract/payment question"
+      ],
+      "stop_conditions": ["unsubscribe", "bounce", "spam complaint", "not interested", "rate-limit warning"],
+      "follow_up_sequence": [
+        {
+          "step": "follow_up_1",
+          "spacing": "3 to 5 business days",
+          "goal": "ask if missed-call capture is relevant"
+        },
+        {
+          "step": "follow_up_2",
+          "spacing": "7 days after follow_up_1",
+          "goal": "polite close or park"
+        }
+      ],
+      "success_metrics": ["approved_recipients", "emails_sent", "positive_replies", "meetings_booked", "bounces", "complaints"],
+      "current_status": "blocked_by_provider_setup",
+      "next_agent_action": "Middle Revenue Agent can prepare campaign and source-reviewed list locally; Instantly send/start waits on adapter."
+    }
+  ],
+  "segments_from_source": [
+    {
+      "segment": "Dental Scheduling Calls",
+      "loaded_prospects_reported": 103,
+      "status": "needs_review_before_import"
+    },
+    {
+      "segment": "Clinic Patient Intake Calls",
+      "loaded_prospects_reported": 33,
+      "status": "needs_review_before_import"
+    },
+    {
+      "segment": "Electrical Repair Calls",
+      "loaded_prospects_reported": 23,
+      "status": "needs_review_before_import"
+    },
+    {
+      "segment": "Barber And Salon Booking Calls",
+      "loaded_prospects_reported": 16,
+      "status": "needs_review_before_import"
+    }
+  ]
+}

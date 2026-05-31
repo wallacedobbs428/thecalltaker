@@ -1,0 +1,123 @@
+{
+  "classification_policy": "AI classifies inbound, sends low-risk policy-approved replies when provider is connected, updates lead state, and escalates exceptions.",
+  "default_action_mode": "autonomous_if_policy_passes",
+  "intent_classes": [
+    {
+      "intent": "asks_what_it_does",
+      "autonomous_reply_allowed": true,
+      "reply_style": "short product explanation, no overclaiming",
+      "pipeline_stage_update": "AI_reply_drafted",
+      "follow_up_action": "Offer demo line if they engage.",
+      "escalation_trigger": "asks for custom implementation or sensitive workflow",
+      "next_best_ai_action": "Reply with approved what-it-does explanation and log."
+    },
+    {
+      "intent": "asks_for_website",
+      "autonomous_reply_allowed": true,
+      "reply_style": "send site link plus honest early-stage context",
+      "pipeline_stage_update": "demo_sent",
+      "follow_up_action": "Schedule light check-in if they engage.",
+      "escalation_trigger": "known personal relationship or sensitive context",
+      "next_best_ai_action": "Send website reply if provider connected."
+    },
+    {
+      "intent": "asks_pricing",
+      "autonomous_reply_allowed": true,
+      "reply_style": "standard pricing facts only: $97, $497, $997+; no custom discounts",
+      "pipeline_stage_update": "AI_reply_drafted",
+      "follow_up_action": "Ask whether they need simple after-hours capture, revenue recovery, or operational infrastructure.",
+      "escalation_trigger": "discount, custom price, contract, payment term, or scope exception",
+      "next_best_ai_action": "Answer basic pricing from sourced CTOS facts if no exception."
+    },
+    {
+      "intent": "sounds_interested",
+      "autonomous_reply_allowed": true,
+      "reply_style": "appreciative, low-pressure, offer demo line or short explanation",
+      "pipeline_stage_update": "interested",
+      "follow_up_action": "If they accept demo, send demo context and schedule follow-up.",
+      "escalation_trigger": "asks to meet Wallace or discuss custom setup",
+      "next_best_ai_action": "Offer demo line and ask what call type matters."
+    },
+    {
+      "intent": "gives_advice",
+      "autonomous_reply_allowed": true,
+      "reply_style": "thank-you, summarize advice, ask one useful follow-up",
+      "pipeline_stage_update": "replied",
+      "follow_up_action": "If fit signal appears, mark warm and schedule a follow-up.",
+      "escalation_trigger": "advice includes sensitive legal/medical/financial concern",
+      "next_best_ai_action": "Thank them and ask one positioning follow-up."
+    },
+    {
+      "intent": "referral_opportunity",
+      "autonomous_reply_allowed": true,
+      "reply_style": "grateful and specific; ask for intro path",
+      "pipeline_stage_update": "replied",
+      "follow_up_action": "Create referred lead only after name/source exists.",
+      "escalation_trigger": "high-value personal intro or strategic relationship",
+      "next_best_ai_action": "Draft referral intake reply; escalate if relationship-sensitive."
+    },
+    {
+      "intent": "wants_demo",
+      "autonomous_reply_allowed": true,
+      "reply_style": "send demo line/context and ask which scenario to test",
+      "pipeline_stage_update": "demo_sent",
+      "follow_up_action": "Schedule post-demo check-in.",
+      "escalation_trigger": "asks for custom live setup or meeting with Wallace",
+      "next_best_ai_action": "Send demo line if provider connected and context is low risk."
+    },
+    {
+      "intent": "wants_call",
+      "autonomous_reply_allowed": false,
+      "reply_style": "summarize and propose scheduling packet",
+      "pipeline_stage_update": "meeting_suggested",
+      "follow_up_action": "Escalate for relationship/sales call decision.",
+      "escalation_trigger": "always for call with Wallace",
+      "next_best_ai_action": "Prepare call summary and questions for Wallace escalation."
+    },
+    {
+      "intent": "asks_for_proof",
+      "autonomous_reply_allowed": false,
+      "reply_style": "proof-safe only, no invented metrics",
+      "pipeline_stage_update": "AI_reply_drafted",
+      "follow_up_action": "Offer one-call preview if proof source is limited.",
+      "escalation_trigger": "asks for case study, customer claim, ROI, or unverified proof",
+      "next_best_ai_action": "Escalate unless verified proof source is attached."
+    },
+    {
+      "intent": "investor_interest",
+      "autonomous_reply_allowed": false,
+      "reply_style": "professional acknowledgment only after escalation",
+      "pipeline_stage_update": "AI_reply_drafted",
+      "follow_up_action": "Create Wallace decision packet.",
+      "escalation_trigger": "always",
+      "next_best_ai_action": "Escalate to Wallace."
+    },
+    {
+      "intent": "not_interested",
+      "autonomous_reply_allowed": true,
+      "reply_style": "polite close-out, no debate",
+      "pipeline_stage_update": "lost",
+      "follow_up_action": "Suppress unless referral offered.",
+      "escalation_trigger": "angry/sensitive language",
+      "next_best_ai_action": "Send polite close-out or archive."
+    },
+    {
+      "intent": "angry_sensitive",
+      "autonomous_reply_allowed": false,
+      "reply_style": "do not auto-reply",
+      "pipeline_stage_update": "escalated",
+      "follow_up_action": "Escalate with summary and risk.",
+      "escalation_trigger": "always",
+      "next_best_ai_action": "Stop automation and escalate."
+    },
+    {
+      "intent": "spam_irrelevant",
+      "autonomous_reply_allowed": true,
+      "reply_style": "no reply unless needed",
+      "pipeline_stage_update": "lost",
+      "follow_up_action": "Archive.",
+      "escalation_trigger": "threat or abuse",
+      "next_best_ai_action": "Archive or suppress."
+    }
+  ]
+}

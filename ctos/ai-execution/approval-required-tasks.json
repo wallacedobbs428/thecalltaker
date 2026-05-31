@@ -1,0 +1,45 @@
+{
+  "queue_policy": "This file now tracks escalation-required tasks only. Routine low-risk messages and follow-ups execute under campaign policy when providers are connected.",
+  "escalation_required_tasks": [
+    {
+      "task_id": "escalation-task-square-97-link",
+      "escalation_type": "provider_payment_link",
+      "exact_issue": "$97 Square provider link blocks checkout.",
+      "agent_requesting": "right-qa-agent",
+      "risk_level": "high",
+      "business_upside": "Restores entry-plan checkout conversion.",
+      "why_ai_cannot_execute": "Square link replacement/payment settings are provider-sensitive.",
+      "linked_file": "ctos/product/checkout-status.json"
+    },
+    {
+      "task_id": "escalation-task-instantly-provider",
+      "escalation_type": "provider_setup",
+      "exact_issue": "Instantly adapter is not verified for autonomous sends.",
+      "agent_requesting": "middle-revenue-agent",
+      "risk_level": "high",
+      "business_upside": "Unlocks controlled email campaign execution.",
+      "why_ai_cannot_execute": "Provider access and suppression setup are missing or unverified.",
+      "linked_file": "ctos/integrations/instantly-adapter-spec.json"
+    },
+    {
+      "task_id": "escalation-task-facebook-platform",
+      "escalation_type": "platform_confirmation",
+      "exact_issue": "Facebook group posting may require human/platform confirmation.",
+      "agent_requesting": "middle-revenue-agent",
+      "risk_level": "medium",
+      "business_upside": "Unlocks advice-post campaign.",
+      "why_ai_cannot_execute": "Group/platform rules vary and adapter must confirm allowed actions.",
+      "linked_file": "ctos/integrations/facebook-adapter-spec.json"
+    },
+    {
+      "task_id": "escalation-task-known-warm-relationships",
+      "escalation_type": "relationship_sensitive",
+      "exact_issue": "Current warm follow-ups include known or sensitive relationships.",
+      "agent_requesting": "follow-up-agent",
+      "risk_level": "medium",
+      "business_upside": "Protects trust while keeping warm leads visible.",
+      "why_ai_cannot_execute": "Known relationship and meeting context are escalation triggers.",
+      "linked_file": "ctos/outbound/follow-up-send-queue.json"
+    }
+  ]
+}

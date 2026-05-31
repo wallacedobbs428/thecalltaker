@@ -1,0 +1,52 @@
+{
+  "reply_policy": "Inbound Agent can send low-risk replies when autonomous-reply-policy-v1 passes. Otherwise it drafts and escalates.",
+  "default_action_mode": "autonomous_if_policy_passes",
+  "global_rules": [
+    "Use approved offer truth only.",
+    "Do not claim integrations, proof, customer counts, or guarantees that are not verified.",
+    "Ask one useful next question.",
+    "Do not pressure the lead.",
+    "Do not send custom pricing, contract, payment, legal, or financial replies.",
+    "Stop on not interested, stop, remove, wrong person, or angry reply.",
+    "Log every autonomous reply."
+  ],
+  "draft_rules_by_intent": [
+    {
+      "intent": "asks_what_it_does",
+      "autonomous_reply_allowed": true,
+      "reply_text": "Short version: The Call Taker answers business calls when the owner or front desk can't, gets the caller's name, number, and what they need, and sends the owner the details. It is meant for missed calls and after-hours leads, not to replace the owner.",
+      "pipeline_stage_update": "AI_reply_drafted"
+    },
+    {
+      "intent": "asks_for_website",
+      "autonomous_reply_allowed": true,
+      "reply_text": "Yeah - it is https://thecalltaker.com. Honest version: I am still early, and I am using feedback from local owners to make the pitch and product better.",
+      "pipeline_stage_update": "demo_sent"
+    },
+    {
+      "intent": "asks_pricing",
+      "autonomous_reply_allowed": true,
+      "reply_text": "Basic version: $97/month is for simple after-hours capture, $497/month is the main revenue recovery setup, and $997+/month is for more complex operational infrastructure. The best fit depends on the call problem.",
+      "pipeline_stage_update": "AI_reply_drafted",
+      "escalate_if": "asks for discount, custom terms, contract, payment changes, or guaranteed result"
+    },
+    {
+      "intent": "sounds_interested",
+      "autonomous_reply_allowed": true,
+      "reply_text": "Appreciate it. Would it be useful if I sent the demo line so you can hear what it sounds like for 30 seconds? No pressure - feedback is helpful even if it is not a fit.",
+      "pipeline_stage_update": "interested"
+    },
+    {
+      "intent": "gives_advice",
+      "autonomous_reply_allowed": true,
+      "reply_text": "Thank you, that is genuinely helpful. I am going to use that. If you are open to it, could I ask one follow-up: when a business misses a call, what is the best way to explain the value without sounding salesy?",
+      "pipeline_stage_update": "replied"
+    },
+    {
+      "intent": "not_interested",
+      "autonomous_reply_allowed": true,
+      "reply_text": "Totally understand. Thanks for replying. I will leave it there.",
+      "pipeline_stage_update": "lost"
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "execution_model": "policy_based_autonomy",
+  "principle": "AI executes inside approved campaign policy. Wallace reviews escalations and performance.",
+  "campaigns": [
+    {
+      "campaign_id": "auto-ig-local-founder-advice-v1",
+      "channel": "Instagram DM",
+      "target_segment": "local phone-heavy service businesses in Brentwood, Franklin, Cool Springs, and Nashville",
+      "goal": "Create advice-first conversations that can become demos, referrals, or meetings.",
+      "approved_policy_id": "autonomous-outbound-policy-v1",
+      "message_angle": "Local Brentwood high schooler building The Call Taker asks whether missed-call and after-hours capture is a real pain.",
+      "brand_voice": "brand-voice-policy-v1",
+      "daily_send_limit": 15,
+      "qualification_rules": [
+        "business is real and source-backed",
+        "business appears phone-heavy",
+        "category matches an approved segment",
+        "no recent contact or stop condition exists",
+        "message can be personalized from public/source info"
+      ],
+      "personalization_rules": [
+        "use business category first line",
+        "use first name only if known from source",
+        "never claim Wallace saw a missed call unless recorded",
+        "do not include checkout link in first touch"
+      ],
+      "autonomous_actions_allowed": [
+        "research",
+        "enrich",
+        "create lead",
+        "generate message",
+        "policy check",
+        "send if Instagram adapter is connected and campaign limits pass",
+        "log sent message",
+        "classify replies",
+        "send low-risk replies",
+        "schedule follow-up"
+      ],
+      "escalation_triggers": [
+        "asks for Wallace specifically",
+        "asks custom pricing or contract terms",
+        "asks for unverified proof",
+        "known personal relationship",
+        "angry/sensitive reply",
+        "provider block",
+        "rate-limit warning"
+      ],
+      "stop_conditions": ["not interested", "wrong person", "stop", "remove me", "no response after two follow-ups"],
+      "follow_up_sequence": ["follow_up_1_after_48_hours", "follow_up_2_after_5_days_if_context_warrants"],
+      "success_metrics": ["real_leads_created", "messages_sent", "reply_rate", "advice_received", "demo_requests", "meetings_suggested"],
+      "current_status": "ready_for_agent_research",
+      "next_agent_action": "Middle Revenue Agent can research real local accounts and queue policy-checked sends."
+    },
+    {
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "follow_up",
+      "target_segment": "non-sensitive warm leads and replies inside approved policy",
+      "goal": "Move warm leads to demo, meeting, checkout, or clear close-out without manual follow-up drift.",
+      "approved_policy_id": "autonomous-outbound-policy-v1",
+      "message_angle": "Continue the existing thread with one clear next step.",
+      "brand_voice": "brand-voice-policy-v1",
+      "daily_send_limit": 20,
+      "qualification_rules": [
+        "lead is source-backed",
+        "last touch date is known",
+        "follow-up spacing passes",
+        "lead is not marked personal_relationship or sensitive",
+        "reply can be handled from approved policy"
+      ],
+      "personalization_rules": [
+        "reference prior context only if recorded",
+        "ask one next-step question",
+        "do not invent interest level",
+        "stop on no/stop/remove"
+      ],
+      "autonomous_actions_allowed": [
+        "find due follow-ups",
+        "generate follow-up",
+        "policy check",
+        "send through connected channel if no escalation",
+        "log result",
+        "move lead stage",
+        "schedule next touch"
+      ],
+      "escalation_triggers": [
+        "high-value warm relationship",
+        "meeting with Wallace requested",
+        "custom scope/pricing",
+        "current customer",
+        "unclear source context"
+      ],
+      "stop_conditions": ["not interested", "no response after final follow-up", "suppressed", "provider failure"],
+      "follow_up_sequence": ["soft_nudge", "value_based_nudge", "polite_close_or_park"],
+      "success_metrics": ["followups_sent", "replies", "meetings_suggested", "meetings_booked", "lost_suppressed"],
+      "current_status": "partially_ready_escalations_exist",
+      "next_agent_action": "Follow-Up Agent can send non-sensitive policy-passing follow-ups; known warm relationships escalate."
+    },
+    {
+      "campaign_id": "auto-facebook-advice-post-v1",
+      "channel": "Facebook group post",
+      "target_segment": "approved local business and community groups",
+      "goal": "Generate advice, comments, referrals, and market language.",
+      "approved_policy_id": "autonomous-outbound-policy-v1",
+      "message_angle": "Advice ask from a local founder, not a sales post.",
+      "brand_voice": "brand-voice-policy-v1",
+      "daily_send_limit": 2,
+      "qualification_rules": [
+        "group rules allow advice asks",
+        "post does not pitch checkout or pricing",
+        "post includes no unsupported proof",
+        "platform adapter confirms posting is allowed or returns human-confirmation-required"
+      ],
+      "personalization_rules": [
+        "adapt to group local context",
+        "avoid repetitive posting",
+        "use question format",
+        "log group and post URL/result"
+      ],
+      "autonomous_actions_allowed": [
+        "draft post",
+        "policy check",
+        "post only if adapter and group policy allow autonomous posting",
+        "classify comments",
+        "draft low-risk replies",
+        "create lead records from interested replies"
+      ],
+      "escalation_triggers": [
+        "group rules unclear",
+        "platform requires human confirmation",
+        "public controversy",
+        "sensitive reply",
+        "asks custom claim/pricing"
+      ],
+      "stop_conditions": ["moderator warning", "negative sentiment spike", "post removed", "rate-limit warning"],
+      "follow_up_sequence": ["reply_to_advice", "create_lead_on_interest", "no bumping unless policy allows"],
+      "success_metrics": ["posts_published", "comments", "advice_items", "leads_created", "referrals"],
+      "current_status": "blocked_by_platform_confirmation",
+      "next_agent_action": "Middle Revenue Agent can prepare posts and classify replies; publishing waits for adapter/platform allowance."
+    },
+    {
+      "campaign_id": "auto-instantly-local-service-v1",
+      "channel": "Instantly email",
+      "target_segment": "approved source-backed local service leads with public email",
+      "goal": "Build scalable email outreach without spam or unapproved imports.",
+      "approved_policy_id": "autonomous-outbound-policy-v1",
+      "message_angle": "Missed calls and after-hours calls leak jobs; The Call Taker captures the caller and next step.",
+      "brand_voice": "brand-voice-policy-v1",
+      "daily_send_limit": 25,
+      "qualification_rules": [
+        "email is public/source-backed",
+        "suppression check passes",
+        "business category is approved",
+        "Instantly adapter is connected",
+        "campaign policy explicitly allows start"
+      ],
+      "personalization_rules": [
+        "mention business category, not fake observation",
+        "one pain hypothesis",
+        "one low-pressure question",
+        "unsubscribe/suppression compliance handled by provider policy"
+      ],
+      "autonomous_actions_allowed": [
+        "create campaign draft",
+        "prepare approved list",
+        "import approved list if policy allows",
+        "start campaign if policy and adapter allow",
+        "track replies and bounces",
+        "classify replies",
+        "schedule follow-ups"
+      ],
+      "escalation_triggers": [
+        "provider access missing",
+        "suppression uncertainty",
+        "list source unclear",
+        "bounce/spam warning",
+        "custom pricing or contract reply"
+      ],
+      "stop_conditions": ["unsubscribe", "bounce", "spam complaint", "not interested", "rate-limit warning"],
+      "follow_up_sequence": ["follow_up_after_3_to_5_business_days", "final_breakup_after_7_days"],
+      "success_metrics": ["approved_recipients", "emails_sent", "positive_replies", "meetings_booked", "bounces", "complaints"],
+      "current_status": "blocked_by_provider_setup",
+      "next_agent_action": "Middle Revenue Agent can prepare campaign/list locally; send/start waits on Instantly adapter."
+    }
+  ]
+}

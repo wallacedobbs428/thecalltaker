@@ -1,0 +1,91 @@
+{
+  "queue_policy": "Follow-Up Agent sends only non-sensitive follow-ups inside approved policy. Known warm relationships, custom terms, and meeting-with-Wallace requests escalate.",
+  "summary": {
+    "items_total": 4,
+    "ready_to_send": 0,
+    "escalated": 4,
+    "sent": 0
+  },
+  "items": [
+    {
+      "queue_id": "followup-send-chuck-001",
+      "lead_id": "lead-chuck-mcdowell",
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "follow_up",
+      "target": {
+        "business_name": "Chuck McDowell",
+        "relationship_type": "known warm relationship"
+      },
+      "status": "escalated",
+      "generated_message": "No rush on this - just keeping it on my radar. What day works best for a quick call?",
+      "personalization_fields_used": ["known_reply_context"],
+      "policy_check_result": "escalate",
+      "send_allowed": false,
+      "send_reason": "Known high-value warm relationship and scheduling context.",
+      "escalation_required": true,
+      "provider_status": "manual_channel_or_unknown",
+      "next_action": "Escalate relationship-sensitive follow-up.",
+      "next_follow_up_at": "needs_review"
+    },
+    {
+      "queue_id": "followup-send-jay-001",
+      "lead_id": "lead-jay-grosman",
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "follow_up",
+      "target": {
+        "business_name": "Jay Grosman / Bree site-demo thread",
+        "relationship_type": "strategic networking"
+      },
+      "status": "escalated",
+      "generated_message": "Quick reminder like you asked. Did Bree get a chance to look at the site/demo, or should I check back later?",
+      "personalization_fields_used": ["known_reminder_context"],
+      "policy_check_result": "escalate",
+      "send_allowed": false,
+      "send_reason": "Strategic relationship and exact last-touch date missing.",
+      "escalation_required": true,
+      "provider_status": "manual_channel_or_unknown",
+      "next_action": "Confirm last-touch date before any follow-up.",
+      "next_follow_up_at": "needs_review"
+    },
+    {
+      "queue_id": "followup-send-franklin-medical-001",
+      "lead_id": "warm-franklin-medical-meeting",
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "manual_email_or_message",
+      "target": {
+        "business_name": "Franklin medical meeting",
+        "relationship_type": "warm healthcare-adjacent"
+      },
+      "status": "escalated",
+      "generated_message": "I want to use the meeting to map where calls come in, what happens after hours, what staff misses, and whether a small pilot would catch revenue without disrupting the office.",
+      "personalization_fields_used": ["meeting_context"],
+      "policy_check_result": "escalate",
+      "send_allowed": false,
+      "send_reason": "Healthcare-adjacent meeting context is sensitive.",
+      "escalation_required": true,
+      "provider_status": "manual_channel_or_unknown",
+      "next_action": "Escalate before send.",
+      "next_follow_up_at": "needs_review"
+    },
+    {
+      "queue_id": "followup-send-orthodontist-001",
+      "lead_id": "warm-orthodontist-dm",
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "manual_dm",
+      "target": {
+        "business_name": "Orthodontist DM lead",
+        "relationship_type": "warm dental lead"
+      },
+      "status": "escalated",
+      "generated_message": "Quick thought - if calls or appointment requests are slipping when the front desk is busy, I built The Call Taker to capture the caller's need and next step instead of letting it disappear into voicemail.",
+      "personalization_fields_used": ["front_desk_context"],
+      "policy_check_result": "escalate",
+      "send_allowed": false,
+      "send_reason": "Known warm lead imported from manual draft source, channel/provider status unknown.",
+      "escalation_required": true,
+      "provider_status": "manual_channel_or_unknown",
+      "next_action": "Escalate before send or wait for provider/channel confirmation.",
+      "next_follow_up_at": "needs_review"
+    }
+  ]
+}

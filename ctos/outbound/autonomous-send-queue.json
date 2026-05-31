@@ -1,0 +1,133 @@
+{
+  "queue_policy": "AI sends only when policy_check_result is pass, send_allowed is true, provider_status is connected, escalation_required is false, and the target is a real source-backed lead.",
+  "statuses_supported": [
+    "ready_for_agent_research",
+    "ready_to_generate",
+    "generated",
+    "policy_checked",
+    "ready_to_send",
+    "sent",
+    "replied",
+    "follow_up_scheduled",
+    "escalated",
+    "stopped",
+    "failed_provider_block"
+  ],
+  "summary": {
+    "items_total": 5,
+    "ready_to_send": 0,
+    "ready_for_agent_research": 2,
+    "failed_provider_block": 2,
+    "escalated": 1,
+    "sent": 0
+  },
+  "items": [
+    {
+      "queue_id": "auto-ig-roofing-research-001",
+      "lead_id": "pending-real-lead-roofing-001",
+      "campaign_id": "auto-ig-local-founder-advice-v1",
+      "channel": "Instagram DM",
+      "target": {
+        "business_name": "pending real roofing business",
+        "segment": "roofing",
+        "market": "Nashville TN",
+        "is_placeholder": true
+      },
+      "status": "ready_for_agent_research",
+      "generated_message": "",
+      "personalization_fields_used": [],
+      "policy_check_result": "not_run",
+      "send_allowed": false,
+      "send_reason": "No real source-backed lead yet.",
+      "escalation_required": false,
+      "provider_status": "instagram_assumed_usable_until_runtime_proves_blocked",
+      "next_action": "Research and create real lead record, then generate segment-specific message.",
+      "next_follow_up_at": null
+    },
+    {
+      "queue_id": "auto-ig-hvac-research-001",
+      "lead_id": "pending-real-lead-hvac-001",
+      "campaign_id": "auto-ig-local-founder-advice-v1",
+      "channel": "Instagram DM",
+      "target": {
+        "business_name": "pending real HVAC business",
+        "segment": "HVAC",
+        "market": "Brentwood TN",
+        "is_placeholder": true
+      },
+      "status": "ready_for_agent_research",
+      "generated_message": "",
+      "personalization_fields_used": [],
+      "policy_check_result": "not_run",
+      "send_allowed": false,
+      "send_reason": "No real source-backed lead yet.",
+      "escalation_required": false,
+      "provider_status": "instagram_assumed_usable_until_runtime_proves_blocked",
+      "next_action": "Research and create real lead record, then generate segment-specific message.",
+      "next_follow_up_at": null
+    },
+    {
+      "queue_id": "auto-fb-advice-post-001",
+      "lead_id": "not_lead_public_post",
+      "campaign_id": "auto-facebook-advice-post-v1",
+      "channel": "Facebook group post",
+      "target": {
+        "group_name": "pending approved local group",
+        "segment": "local business owners generally",
+        "is_placeholder": true
+      },
+      "status": "failed_provider_block",
+      "generated_message": "Quick local founder question. I'm Wallace, a high schooler in Brentwood building The Call Taker, an AI receptionist for local businesses. The idea is to answer calls, capture customer info, and help owners avoid losing jobs when they cannot pick up, especially after hours. For owners here: is missed-call or after-hours follow-up a real problem, or am I solving the wrong thing?",
+      "personalization_fields_used": ["local_context"],
+      "policy_check_result": "pass",
+      "send_allowed": false,
+      "send_reason": "Facebook adapter/platform confirmation is required before posting.",
+      "escalation_required": true,
+      "provider_status": "platform_requires_human_confirmation_or_adapter",
+      "next_action": "Wait for Facebook adapter to confirm autonomous posting is permitted for the group.",
+      "next_follow_up_at": null
+    },
+    {
+      "queue_id": "auto-instantly-dental-segment-001",
+      "lead_id": "pending-approved-email-list-dental-001",
+      "campaign_id": "auto-instantly-local-service-v1",
+      "channel": "Instantly email",
+      "target": {
+        "segment": "Dental Scheduling Calls",
+        "list_status": "needs_review_before_import",
+        "is_placeholder": true
+      },
+      "status": "failed_provider_block",
+      "generated_message": "Subject: quick question about missed calls\n\nHi {first_name_or_team}, I'm Wallace, a Brentwood high schooler building The Call Taker, an AI receptionist for local businesses. For {business_name}, I was curious: when calls come in after hours or while the team is busy, do they usually get answered, forwarded, or go to voicemail?",
+      "personalization_fields_used": ["business_name", "first_name_or_team", "category"],
+      "policy_check_result": "pass_template_only",
+      "send_allowed": false,
+      "send_reason": "Instantly provider/list import is not connected or source-approved.",
+      "escalation_required": true,
+      "provider_status": "blocked_by_provider_setup",
+      "next_action": "Prepare source-review and suppression checklist.",
+      "next_follow_up_at": null
+    },
+    {
+      "queue_id": "auto-followup-chuck-001",
+      "lead_id": "lead-chuck-mcdowell",
+      "campaign_id": "auto-warm-follow-up-v1",
+      "channel": "follow_up",
+      "target": {
+        "business_name": "Chuck McDowell",
+        "relationship_type": "known warm relationship",
+        "is_placeholder": false
+      },
+      "status": "escalated",
+      "generated_message": "No rush on this - just keeping it on my radar. What day works best for a quick call?",
+      "personalization_fields_used": ["known_reply_context"],
+      "policy_check_result": "escalate",
+      "send_allowed": false,
+      "send_reason": "Known high-value warm relationship and meeting context requires escalation.",
+      "escalation_required": true,
+      "provider_status": "manual_channel_or_unknown",
+      "next_action": "Escalate relationship-sensitive follow-up; do not auto-send.",
+      "next_follow_up_at": "needs_review"
+    }
+  ]
+}

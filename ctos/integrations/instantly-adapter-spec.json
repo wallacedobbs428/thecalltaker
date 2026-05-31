@@ -1,0 +1,68 @@
+{
+  "adapter_id": "instantly-adapter-v1",
+  "provider": "Instantly",
+  "connection_status": "blocked_until_provider_setup_verified",
+  "required_env_vars": [
+    "INSTANTLY_API_KEY",
+    "INSTANTLY_WORKSPACE_ID",
+    "CTOS_ALLOWED_SENDER_ID"
+  ],
+  "actions_supported": [
+    "create_campaign_draft",
+    "import_approved_list_if_policy_allows",
+    "start_campaign_if_policy_allows",
+    "track_replies",
+    "track_bounces",
+    "sync_unsubscribes"
+  ],
+  "read_operations": [
+    "read_campaign_status",
+    "read_replies",
+    "read_bounces",
+    "read_unsubscribes"
+  ],
+  "write_operations": [
+    "create_campaign",
+    "import_recipients",
+    "start_campaign",
+    "pause_campaign",
+    "write_ctos_message_history"
+  ],
+  "autonomous_allowed_actions": [
+    "create campaign draft",
+    "import source-backed approved list if policy allows",
+    "start campaign only when campaign status is allowed_to_run and suppression passes",
+    "classify replies and schedule follow-ups"
+  ],
+  "escalation_required_actions": [
+    "provider setup missing",
+    "list source uncertainty",
+    "suppression uncertainty",
+    "spam complaint",
+    "custom pricing/contract reply",
+    "manual sender identity issue"
+  ],
+  "rate_limits": {
+    "campaign_daily_email_limit": 25,
+    "minimum_hours_between_followups": 72,
+    "max_followups_per_lead": 2
+  },
+  "logging_requirements": [
+    "ctos/outbound/message-history.jsonl",
+    "ctos/outbound/email-send-queue.json",
+    "ctos/inbound/inbound-response-queue.json",
+    "ctos/leads/unified-lead-pipeline.json"
+  ],
+  "failure_handling": [
+    "pause queue on bounce/spam warning",
+    "mark failed_provider_block",
+    "log error class without secret values",
+    "escalate if campaign is revenue-critical"
+  ],
+  "ctos_files_updated_after_action": [
+    "ctos/outbound/email-send-queue.json",
+    "ctos/outbound/message-history.jsonl",
+    "ctos/inbound/inbound-response-queue.json",
+    "ctos/revenue/money-scoreboard.json"
+  ]
+}

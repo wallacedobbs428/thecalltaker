@@ -1,0 +1,84 @@
+{
+  "policy_id": "channel-safety-limits-v1",
+  "status": "active",
+  "timezone": "America/Chicago",
+  "quiet_hours": {
+    "start": "20:00",
+    "end": "08:00",
+    "applies_to": ["Instagram DM", "Facebook DM", "email", "follow_up", "phone"]
+  },
+  "daily_limits": [
+    {
+      "channel": "Instagram DM",
+      "max_per_campaign_per_day": 15,
+      "max_followups_per_lead": 2,
+      "minimum_hours_between_touches": 48,
+      "provider_required": true
+    },
+    {
+      "channel": "Facebook DM",
+      "max_per_campaign_per_day": 10,
+      "max_followups_per_lead": 1,
+      "minimum_hours_between_touches": 72,
+      "provider_required": true
+    },
+    {
+      "channel": "Facebook group post",
+      "max_per_campaign_per_day": 2,
+      "max_followups_per_lead": 0,
+      "minimum_hours_between_posts": 24,
+      "provider_required": true,
+      "human_confirmation_required_if_platform_requires_it": true
+    },
+    {
+      "channel": "Instantly email",
+      "max_per_campaign_per_day": 25,
+      "max_followups_per_lead": 2,
+      "minimum_hours_between_touches": 72,
+      "provider_required": true
+    },
+    {
+      "channel": "follow_up",
+      "max_per_campaign_per_day": 20,
+      "max_followups_per_lead": 2,
+      "minimum_hours_between_touches": 48,
+      "provider_required": true
+    },
+    {
+      "channel": "phone",
+      "max_per_campaign_per_day": 0,
+      "max_followups_per_lead": 0,
+      "provider_required": true,
+      "autonomous_calling_allowed": false
+    }
+  ],
+  "duplicate_prevention": {
+    "do_not_send_if_same_lead_contacted_within_days": 7,
+    "do_not_send_if_same_message_hash_seen_for_lead": true,
+    "do_not_send_if_business_name_and_channel_match_existing_open_thread": true,
+    "dedupe_files": [
+      "ctos/outbound/message-history.jsonl",
+      "ctos/inbound/inbound-message-history.jsonl",
+      "ctos/leads/unified-lead-pipeline.json"
+    ]
+  },
+  "stop_conditions": [
+    "not interested",
+    "stop",
+    "remove me",
+    "wrong person",
+    "do not contact",
+    "unsubscribe",
+    "angry reply",
+    "platform warning or rate-limit",
+    "provider failure that indicates trust risk"
+  ],
+  "spam_prevention": [
+    "no scraped bulk blasts without source review",
+    "no repeating same template more than twice in a row",
+    "no first-touch checkout links",
+    "no hard sales pitch in advice-ask campaigns",
+    "no sending to placeholders",
+    "no sending without source-backed lead"
+  ]
+}

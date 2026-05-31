@@ -1,0 +1,88 @@
+{
+  "source_policy": "Follow-up templates are draft-only. CTOS may draft and queue them, but no send is authorized without approval and channel safety checks.",
+  "primary_sources": [
+    "/Users/wallacedobbs/Developer/business-brain/outreach-system/instagram-dm-outreach/INSTAGRAM-DM-OUTREACH-MACHINE-2026-05-30.md",
+    "/Users/wallacedobbs/Developer/business-brain/outreach-system/FOLLOW-UP-SEQUENCES.md",
+    "/Users/wallacedobbs/Developer/business-brain/outreach-system/FIRST-5-REPLY-FOLLOW-UP-PACK-2026-05-14.md",
+    "/Users/wallacedobbs/Developer/business-brain/operator-manual/middle-lane-2026-05-28/10-REVENUE-SCRIPTS-AND-MESSAGE-BANK.md"
+  ],
+  "templates": [
+    {
+      "template_id": "reply-advice-received-thank-you-v1",
+      "channel": "Instagram DM or Facebook reply",
+      "trigger": "lead gives advice",
+      "stage_to_move_to": "replied",
+      "message_text": "Thank you, that is genuinely helpful. I'm going to use that.\n\nIf you are open to it, could I ask one follow-up: when a business misses a call, what is the best way to explain the value without sounding salesy?",
+      "approval_required": true,
+      "urgency": "medium",
+      "next_follow_up_logic": "If they keep engaging, mark warm and draft demo/context reply. If no response, no more than one additional follow-up.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/outreach-system/instagram-dm-outreach/INSTAGRAM-DM-OUTREACH-MACHINE-2026-05-30.md"
+    },
+    {
+      "template_id": "reply-asked-what-it-does-v1",
+      "channel": "DM, email, comment, or form reply",
+      "trigger": "lead asks what The Call Taker does",
+      "stage_to_move_to": "AI_reply_drafted",
+      "message_text": "Short version: The Call Taker answers business calls when the owner or front desk can't, gets the caller's name, number, and what they need, and sends the owner the details.\n\nIt is meant for missed calls and after-hours leads, not to replace the owner. The demo line is (615) 784-5747 if you want to hear it.",
+      "approval_required": true,
+      "urgency": "high",
+      "next_follow_up_logic": "If they request demo or pricing, mark hot lead and queue plan-fit or demo follow-up.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/outreach-system/instagram-dm-outreach/INSTAGRAM-DM-OUTREACH-MACHINE-2026-05-30.md"
+    },
+    {
+      "template_id": "reply-asked-for-site-v1",
+      "channel": "DM, email, comment, or form reply",
+      "trigger": "lead asks for website",
+      "stage_to_move_to": "demo_sent",
+      "message_text": "Yeah - it is https://thecalltaker.com\n\nThe honest version is that I'm still early. I have my first customer now, and I'm using feedback from local owners to make the pitch and product better.",
+      "approval_required": true,
+      "urgency": "high",
+      "next_follow_up_logic": "Check back the next business day if they viewed/replied. Do not pressure.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/outreach-system/instagram-dm-outreach/INSTAGRAM-DM-OUTREACH-MACHINE-2026-05-30.md"
+    },
+    {
+      "template_id": "reply-sounds-interesting-demo-offer-v1",
+      "channel": "DM, email, comment, or form reply",
+      "trigger": "lead says sounds interesting",
+      "stage_to_move_to": "interested",
+      "message_text": "Appreciate it. Would it be useful if I sent the demo line so you can hear what it sounds like for 30 seconds?\n\nNo pressure - feedback is helpful even if it is not a fit.",
+      "approval_required": true,
+      "urgency": "high",
+      "next_follow_up_logic": "If they say yes, send demo line and ask what call type to simulate. If they go quiet, one soft follow-up after 2 days.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/outreach-system/instagram-dm-outreach/INSTAGRAM-DM-OUTREACH-MACHINE-2026-05-30.md"
+    },
+    {
+      "template_id": "pricing-question-plan-fit-v1",
+      "channel": "DM, email, or meeting follow-up",
+      "trigger": "lead asks pricing",
+      "stage_to_move_to": "AI_reply_drafted",
+      "message_text": "It depends on the phone problem. If it is simple after-hours capture, $97 can fit. If missed calls are real revenue, $497 is usually the better starting point. If it needs multiple call paths, approved wording, handoffs, testing, and rollback, that is the $997+ infrastructure lane.\n\nThe best next step is to hear or map the call flow first so I do not suggest the wrong setup.",
+      "approval_required": true,
+      "urgency": "high",
+      "next_follow_up_logic": "Ask one qualifying question: simple after-hours capture, revenue recovery, or complex ops build?",
+      "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/middle-lane-2026-05-28/10-REVENUE-SCRIPTS-AND-MESSAGE-BANK.md"
+    },
+    {
+      "template_id": "no-reply-after-advice-ask-v1",
+      "channel": "Instagram DM",
+      "trigger": "no reply 2 days after first advice ask",
+      "stage_to_move_to": "follow_up_later",
+      "message_text": "Hey {first_name}, quick follow-up. No pressure at all - I know DMs are easy to miss.\n\nI was mainly asking for advice from local business owners on how to get The Call Taker from one customer to more. Even one quick thought would help.",
+      "approval_required": true,
+      "urgency": "medium",
+      "next_follow_up_logic": "Only one follow-up unless the lead replies. Stop on no response after final touch.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/outreach-system/instagram-dm-outreach/INSTAGRAM-DM-OUTREACH-MACHINE-2026-05-30.md"
+    },
+    {
+      "template_id": "demo-positive-next-step-v1",
+      "channel": "DM, email, or call follow-up",
+      "trigger": "lead heard demo or wants one-call preview",
+      "stage_to_move_to": "meeting_suggested",
+      "message_text": "That is the core system: answer fast, capture the job, route the handoff, and give your team the next move. Want me to set up the first call flow for your business?",
+      "approval_required": true,
+      "urgency": "high",
+      "next_follow_up_logic": "If yes, prepare setup intake questions and plan-fit recommendation. If unsure, offer one sample call scenario.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/outreach-system/FOLLOW-UP-SEQUENCES.md"
+    }
+  ]
+}

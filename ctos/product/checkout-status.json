@@ -1,0 +1,35 @@
+{
+  "status": "blocked_only_by_97_square_provider_link",
+  "owner_agent": "right-qa-agent",
+  "current_truth": "Per current CTOS context, pricing checkout is blocked only by the $97 Square provider link. CTOS must not edit checkout links, pricing files, or Square settings.",
+  "known_required_flow": {
+    "homepage_start_free_trial": "/pricing or /pricing.html",
+    "pricing_97_start_free_trial": "Square checkout for $97 plan",
+    "pricing_497_start_free_trial": "Square checkout for $497 plan",
+    "pricing_997_start_free_trial": "Square checkout for $997 plan",
+    "must_not_land_on": [
+      "/client/onboarding.html",
+      "transactionId",
+      "orderId",
+      "internal onboarding success page",
+      "old success/return URL"
+    ]
+  },
+  "known_blockers": [
+    {
+      "blocker_id": "square-97-provider-link",
+      "description": "$97 Square provider link remains the checkout blocker.",
+      "status": "active_provider_block",
+      "agent_next_action": "Right QA Agent can verify $497 and $997 flows remain usable and keep $97 marked blocked until Square provider link is repaired.",
+      "escalation_required": true
+    }
+  ],
+  "not_current_blockers_per_current_context": [
+    "generic pricing redirect bug",
+    "homepage routing",
+    "pricing page copy"
+  ],
+  "ai_next_action": "Track Square $97 provider-link repair need and do not change checkout/pricing files from Middle Revenue/Ops.",
+  "approval_needed": "Escalate only for Square link replacement, provider setting change, or deploy.",
+  "action_mode": "autonomous_tracking_only"
+}

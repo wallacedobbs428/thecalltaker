@@ -1,0 +1,92 @@
+{
+  "queue_name": "Wallace Escalation Queue",
+  "purpose": "Escalate exceptions only. Routine low-risk outbound, inbound, and follow-up actions run under approved policy when providers are connected.",
+  "policy": "Wallace does not approve every DM/email/follow-up. Wallace reviews actions outside policy, high-trust relationships, sensitive claims, provider blocks, or strategic decisions.",
+  "summary": {
+    "escalations_open": 6,
+    "routine_per_message_approvals": 0,
+    "provider_blocks": 2,
+    "relationship_sensitive": 3,
+    "custom_or_sensitive_terms": 0
+  },
+  "approval_items": [
+    {
+      "approval_id": "escalation-square-97-provider-link",
+      "status": "open",
+      "campaign": "Checkout/payment observability",
+      "channel": "Square",
+      "target_lead_or_business": "$97 Square checkout link",
+      "exact_action_proposed": "Repair or replace the $97 Square provider link outside CTOS, then let Right QA verify.",
+      "why_policy_cannot_handle_it": "Provider/payment link changes are outside autonomous revenue policy.",
+      "agent_requesting": "right-qa-agent",
+      "risk_level": "high",
+      "expected_upside": "Restores entry-plan checkout path.",
+      "next_safe_action": "Do not mutate Square from CTOS; keep blocker visible."
+    },
+    {
+      "approval_id": "escalation-instantly-provider-setup",
+      "status": "open",
+      "campaign": "Instantly local service campaign",
+      "channel": "Instantly email",
+      "target_lead_or_business": "Instantly adapter",
+      "exact_action_proposed": "Connect/verify Instantly adapter before autonomous email sends.",
+      "why_policy_cannot_handle_it": "Provider access is missing or unverified.",
+      "agent_requesting": "middle-revenue-agent",
+      "risk_level": "high",
+      "expected_upside": "Unlocks controlled email campaign execution.",
+      "next_safe_action": "Prepare provider setup checklist only."
+    },
+    {
+      "approval_id": "escalation-chuck-mcdowell-scheduling",
+      "status": "open",
+      "campaign": "Warm follow-up campaign",
+      "channel": "follow_up",
+      "target_lead_or_business": "Chuck McDowell",
+      "exact_action_proposed": "Review relationship-sensitive scheduling follow-up or handle directly.",
+      "why_policy_cannot_handle_it": "Known warm relationship and meeting context.",
+      "agent_requesting": "follow-up-agent",
+      "risk_level": "medium",
+      "expected_upside": "Could move a warm lead toward a meeting.",
+      "next_safe_action": "AI keeps call questions ready."
+    },
+    {
+      "approval_id": "escalation-jay-grosman-reminder-date",
+      "status": "open",
+      "campaign": "Warm follow-up campaign",
+      "channel": "follow_up",
+      "target_lead_or_business": "Jay Grosman / Bree site-demo thread",
+      "exact_action_proposed": "Confirm exact reminder timing before any follow-up.",
+      "why_policy_cannot_handle_it": "Strategic relationship and exact date uncertainty.",
+      "agent_requesting": "follow-up-agent",
+      "risk_level": "medium",
+      "expected_upside": "Keeps a strategic referral path warm.",
+      "next_safe_action": "AI waits for date/source confirmation."
+    },
+    {
+      "approval_id": "escalation-franklin-medical-meeting",
+      "status": "open",
+      "campaign": "Warm follow-up campaign",
+      "channel": "manual_email_or_message",
+      "target_lead_or_business": "Franklin medical meeting",
+      "exact_action_proposed": "Review healthcare-adjacent meeting follow-up before send.",
+      "why_policy_cannot_handle_it": "Healthcare-adjacent meeting context is sensitive.",
+      "agent_requesting": "follow-up-agent",
+      "risk_level": "medium",
+      "expected_upside": "Could move a warm medical opportunity toward setup review.",
+      "next_safe_action": "AI holds draft and context."
+    },
+    {
+      "approval_id": "escalation-facebook-platform-confirmation",
+      "status": "open",
+      "campaign": "Facebook advice-post campaign",
+      "channel": "Facebook group post",
+      "target_lead_or_business": "Facebook adapter/group posting policy",
+      "exact_action_proposed": "Confirm whether adapter/platform permits autonomous posting for selected groups.",
+      "why_policy_cannot_handle_it": "Platform may require human confirmation and group rules vary.",
+      "agent_requesting": "middle-revenue-agent",
+      "risk_level": "medium",
+      "expected_upside": "Unlocks advice-post campaign without per-post approval.",
+      "next_safe_action": "AI prepares posts and waits for adapter/platform proof."
+    }
+  ]
+}

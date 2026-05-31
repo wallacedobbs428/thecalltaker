@@ -1,0 +1,62 @@
+{
+  "adapter_id": "square-adapter-v1",
+  "provider": "Square",
+  "connection_status": "payment_observability_blocked_by_97_square_link_until_repaired",
+  "required_env_vars": [
+    "SQUARE_ACCESS_TOKEN",
+    "SQUARE_WEBHOOK_SIGNATURE_KEY",
+    "SQUARE_ENVIRONMENT",
+    "CTOS_WEBHOOK_BASE_URL"
+  ],
+  "actions_supported": [
+    "receive_payment_webhook",
+    "verify_webhook_signature",
+    "read_payment_status_if_authorized",
+    "update_payment_status",
+    "update_revenue_scoreboard"
+  ],
+  "read_operations": [
+    "read webhook event",
+    "read payment/order status if authorized",
+    "read checkout link health if available"
+  ],
+  "write_operations": [
+    "write_ctos_payment_status",
+    "write_ctos_revenue_scoreboard",
+    "write_customer_status_on_confirmed_payment"
+  ],
+  "autonomous_allowed_actions": [
+    "process verified payment webhook",
+    "mark payment status from verified provider event",
+    "update revenue scoreboard after confirmed payment"
+  ],
+  "escalation_required_actions": [
+    "Square link replacement",
+    "product/price changes",
+    "refunds",
+    "billing disputes",
+    "unverified success URL",
+    "$97 checkout link blocked or closed"
+  ],
+  "rate_limits": {
+    "webhook_processing": "idempotent_by_event_id",
+    "manual_provider_changes": 0
+  },
+  "logging_requirements": [
+    "ctos/revenue/payment-status.json",
+    "ctos/revenue/money-scoreboard.json",
+    "ctos/product/checkout-status.json"
+  ],
+  "failure_handling": [
+    "ignore unverified success URLs",
+    "mark payment status unknown if provider proof missing",
+    "escalate $97 provider link blocker",
+    "do not mutate Square settings"
+  ],
+  "ctos_files_updated_after_action": [
+    "ctos/revenue/payment-status.json",
+    "ctos/revenue/money-scoreboard.json",
+    "ctos/revenue/customer-list.json",
+    "ctos/product/checkout-status.json"
+  ]
+}

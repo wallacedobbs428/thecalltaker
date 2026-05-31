@@ -1,0 +1,208 @@
+{
+  "campaigns": [
+    {
+      "campaign_id": "auto-ig-local-founder-advice-v1",
+      "channel": "Instagram DM",
+      "target_segment": "local phone-heavy service businesses",
+      "goal": "Create advice-first conversations that can become demos, referrals, or meetings.",
+      "approved_policy_id": "autonomous-outbound-policy-v1",
+      "message_angle": "Local Brentwood high schooler building The Call Taker asks whether missed-call and after-hours capture is a real pain.",
+      "brand_voice": "brand-voice-policy-v1",
+      "daily_send_limit": 15,
+      "qualification_rules": [
+        "real business account",
+        "source recorded",
+        "category matches approved segment",
+        "no duplicate open thread",
+        "no stop condition"
+      ],
+      "personalization_rules": [
+        "use category first line",
+        "use first name only if source-backed",
+        "no fake familiarity",
+        "no first-touch pricing or checkout link"
+      ],
+      "autonomous_actions_allowed": [
+        "research",
+        "enrich",
+        "create lead",
+        "generate DM",
+        "policy check",
+        "send if Instagram adapter connected and limits pass",
+        "log",
+        "classify reply",
+        "schedule follow-up"
+      ],
+      "escalation_triggers": [
+        "custom pricing",
+        "asks for Wallace",
+        "known personal relationship",
+        "angry/sensitive",
+        "unverified proof request",
+        "provider block",
+        "rate-limit warning"
+      ],
+      "stop_conditions": ["not interested", "wrong person", "stop", "remove me", "no response after two follow-ups"],
+      "follow_up_sequence": [
+        {
+          "step": "follow_up_1",
+          "spacing": "48 hours after first touch",
+          "rule": "soft advice nudge only"
+        },
+        {
+          "step": "follow_up_2",
+          "spacing": "5 days after follow_up_1",
+          "rule": "final polite close or park; no pressure"
+        }
+      ],
+      "success_metrics": ["messages_sent", "reply_rate", "advice_received", "site_requests", "demo_requests", "meetings_suggested"],
+      "current_status": "ready_for_agent_research",
+      "next_agent_action": "Middle Revenue Agent can research real local accounts, generate policy-checked DMs, and send if Instagram adapter is connected."
+    }
+  ],
+  "segment_playbooks": [
+    {
+      "segment": "roofing",
+      "first_message": "Saw your roofing work around the area - roofers seem like one of those businesses where missed calls can turn into missed jobs fast.\n\nHey {first_name}, I'm Wallace, local in Brentwood and a high schooler building The Call Taker, an AI receptionist for local businesses.\n\nIt answers calls, captures customer info, and helps owners avoid losing jobs when they can't pick up.\n\nI have my first customer now, but I'm trying to learn how to get from one customer to more. If you were in my shoes, what would you do? Any advice would help a lot.",
+      "follow_up_1": "Quick follow-up, no pressure. For roofing, do missed calls ever turn into lost jobs, or is that not the problem I should focus on?",
+      "follow_up_2": "I'll leave this alone after this. If you ever have one quick thought on how to explain missed-call capture without sounding salesy, it would help.",
+      "if_gives_advice": "Reply with a specific thank-you, summarize the advice, ask one follow-up about explaining missed-call value.",
+      "if_asks_what_it_does": "Autonomous reply allowed: explain call answering, info capture, and owner handoff.",
+      "if_asks_website": "Autonomous reply allowed: send https://thecalltaker.com with honest early-stage context.",
+      "if_asks_pricing": "Autonomous reply allowed only for standard $97/$497/$997+ facts; custom terms escalate.",
+      "if_sounds_interesting": "Autonomous reply allowed: offer demo line or 30-second explanation.",
+      "if_not_interested": "Autonomous polite close-out and suppress lead.",
+      "escalate_when": ["asks for custom storm/restoration claims", "asks for Wallace", "asks for contract/payment terms"]
+    },
+    {
+      "segment": "plumbing",
+      "first_message": "Saw you handle plumbing calls locally - I know those calls can be urgent and hard to answer when you are already on a job.\n\nHey {first_name}, quick question from a local founder. I'm a high schooler in Brentwood building The Call Taker, an AI receptionist for service businesses.\n\nIt answers the phone, gets the customer's info, and passes the details to the owner.\n\nFor a business like yours, is missed-call or after-hours follow-up actually a problem, or am I looking at the wrong pain point?",
+      "follow_up_1": "Quick follow-up. With plumbing calls, do people usually wait for a callback, or do they move on if nobody answers?",
+      "follow_up_2": "Last note from me. I am trying to learn if urgent-service owners care more about answer speed, caller details, or clean handoff.",
+      "if_gives_advice": "Thank them and ask what wording would make a missed-call tool feel useful instead of salesy.",
+      "if_asks_what_it_does": "Autonomous reply allowed with approved short product explanation.",
+      "if_asks_website": "Autonomous site reply allowed.",
+      "if_asks_pricing": "Autonomous standard pricing reply allowed; custom pricing escalates.",
+      "if_sounds_interesting": "Offer demo line and ask what plumbing call scenario to imagine.",
+      "if_not_interested": "Close politely and stop.",
+      "escalate_when": ["emergency dispatch promises requested", "custom terms", "angry reply"]
+    },
+    {
+      "segment": "HVAC",
+      "first_message": "Saw you work in HVAC - it seems like calls come in right when owners or techs are already busy.\n\nHey {first_name}, quick question from a local founder. I'm a high schooler in Brentwood building The Call Taker, an AI receptionist for service businesses.\n\nIt answers the phone, gets the customer's info, and passes the details to the owner.\n\nFor a business like yours, is missed-call or after-hours follow-up actually a problem, or am I looking at the wrong pain point?",
+      "follow_up_1": "Quick follow-up. For HVAC, is after-hours call capture useful, or do most people just wait until the next day?",
+      "follow_up_2": "I'll park this after this. If one recovered HVAC call matters, I am trying to learn the least salesy way to explain that.",
+      "if_gives_advice": "Thank them and ask what would make an AI receptionist feel trustworthy.",
+      "if_asks_what_it_does": "Autonomous explanation allowed.",
+      "if_asks_website": "Autonomous site reply allowed.",
+      "if_asks_pricing": "Autonomous standard pricing reply allowed; custom seasonal plan escalates.",
+      "if_sounds_interesting": "Offer demo line and ask whether emergency, maintenance, or quote calls are most relevant.",
+      "if_not_interested": "Close politely and stop.",
+      "escalate_when": ["custom seasonal offer", "guaranteed revenue request", "known relationship"]
+    },
+    {
+      "segment": "electrical",
+      "first_message": "Saw your electrical work - it seems like calls can come in while you are already on a job or driving.\n\nHey {first_name}, I'm Wallace, a Brentwood high schooler building The Call Taker, an AI receptionist for local businesses.\n\nIt answers calls, captures customer info, and helps owners avoid losing jobs when they can't pick up.\n\nDo missed calls ever turn into lost jobs for electricians, or is that not really the pain?",
+      "follow_up_1": "Quick follow-up. For electrical calls, would capturing the caller details and urgency be useful, or is voicemail enough?",
+      "follow_up_2": "Last note from me. I am mostly looking for advice on whether this is a real owner problem.",
+      "if_gives_advice": "Thank and ask one trust/wording follow-up.",
+      "if_asks_what_it_does": "Autonomous explanation allowed.",
+      "if_asks_website": "Autonomous site reply allowed.",
+      "if_asks_pricing": "Autonomous standard pricing reply allowed.",
+      "if_sounds_interesting": "Offer demo line and electrical repair scenario.",
+      "if_not_interested": "Close politely and suppress.",
+      "escalate_when": ["safety/liability claims", "emergency dispatch promise", "custom terms"]
+    },
+    {
+      "segment": "landscaping",
+      "first_message": "Saw your landscaping work - quote requests and job questions probably come in while crews are out working.\n\nHey {first_name}, I'm Wallace, local in Brentwood and building The Call Taker while I'm still in high school.\n\nIt answers calls, captures customer info, and helps owners avoid losing jobs when they can't pick up.\n\nIs missed-call capture useful for a landscaping business, or am I looking at the wrong kind of business?",
+      "follow_up_1": "Quick follow-up. Do quote calls usually need a fast response, or can they wait without losing the job?",
+      "follow_up_2": "I'll leave this alone after this. Any quick advice on who this would help most would be useful.",
+      "if_gives_advice": "Thank them and ask one follow-up about best-fit local vertical.",
+      "if_asks_what_it_does": "Autonomous explanation allowed.",
+      "if_asks_website": "Autonomous site reply allowed.",
+      "if_asks_pricing": "Autonomous standard pricing reply allowed.",
+      "if_sounds_interesting": "Offer demo line using quote request scenario.",
+      "if_not_interested": "Close politely and stop.",
+      "escalate_when": ["large commercial contract discussion", "custom seasonal pricing", "known relationship"]
+    },
+    {
+      "segment": "towing",
+      "first_message": "Saw your towing page - that seems like a business where fast answers matter a lot.\n\nHey {first_name}, I'm Wallace, a Brentwood high schooler building The Call Taker, an AI receptionist for local businesses.\n\nIt answers calls, captures customer info, and helps owners avoid losing jobs when they can't pick up.\n\nFor towing, does a missed call basically mean the customer calls someone else, or is that too simple?",
+      "follow_up_1": "Quick follow-up. For towing calls, would a clean callback summary help, or does the answer have to be immediate to matter?",
+      "follow_up_2": "Last note from me. I am trying to learn whether urgent-call businesses are the right fit.",
+      "if_gives_advice": "Thank them and ask what the minimum useful handoff would include.",
+      "if_asks_what_it_does": "Autonomous explanation allowed, no dispatch promises.",
+      "if_asks_website": "Autonomous site reply allowed.",
+      "if_asks_pricing": "Autonomous standard pricing reply allowed.",
+      "if_sounds_interesting": "Offer demo line with urgent callback scenario.",
+      "if_not_interested": "Close politely and suppress.",
+      "escalate_when": ["dispatch guarantee requested", "legal/liability concern", "angry reply"]
+    },
+    {
+      "segment": "locksmith",
+      "first_message": "Saw your locksmith page - emergency calls probably do not wait around if nobody answers.\n\nHey {first_name}, I'm Wallace, a local Brentwood high schooler building The Call Taker.\n\nIt answers calls, captures customer info, and helps owners avoid losing jobs when they can't pick up.\n\nIs missed-call capture actually useful in locksmith work, or does it only matter if someone answers live immediately?",
+      "follow_up_1": "Quick follow-up. Would it help to at least capture name, callback, location, and what happened, or is that not enough for locksmith calls?",
+      "follow_up_2": "I'll stop after this. Even one thought on urgent-call businesses would help me a lot.",
+      "if_gives_advice": "Thank and ask one handoff-quality follow-up.",
+      "if_asks_what_it_does": "Autonomous explanation allowed, no emergency guarantee.",
+      "if_asks_website": "Autonomous site reply allowed.",
+      "if_asks_pricing": "Autonomous standard pricing reply allowed.",
+      "if_sounds_interesting": "Offer demo line with lockout callback scenario.",
+      "if_not_interested": "Close politely and stop.",
+      "escalate_when": ["emergency guarantee", "legal/safety", "custom terms"]
+    },
+    {
+      "segment": "med spa",
+      "first_message": "Saw your med spa page - a lot of treatment interest probably starts after someone sees a post and decides to call.\n\nHey {first_name}, I'm Wallace, a Brentwood high schooler building The Call Taker for local businesses.\n\nIt answers calls, captures customer info, and helps owners avoid losing leads when they can't pick up.\n\nDo missed appointment or treatment inquiry calls matter much, or is that not really a med spa problem?",
+      "follow_up_1": "Quick follow-up. For med spa inquiries, is speed-to-response important, or do people usually wait?",
+      "follow_up_2": "Last note from me. I am trying to learn if appointment-based businesses are a better fit than urgent-service businesses.",
+      "if_gives_advice": "Thank and ask one follow-up about booking/conversion pain.",
+      "if_asks_what_it_does": "Autonomous explanation allowed.",
+      "if_asks_website": "Autonomous site reply allowed.",
+      "if_asks_pricing": "Autonomous standard pricing reply allowed.",
+      "if_sounds_interesting": "Offer demo line with appointment inquiry scenario.",
+      "if_not_interested": "Close politely and suppress.",
+      "escalate_when": ["medical claims", "HIPAA/privacy concern", "custom offer"]
+    },
+    {
+      "segment": "dentist",
+      "first_message": "Saw your dental office page - front desk calls, missed appointment questions, and after-hours messages seem like a lot to manage.\n\nHey {first_name}, quick local founder question. I'm a Brentwood high schooler building The Call Taker, an AI receptionist for service businesses.\n\nIt answers the phone, gets the customer's info, and passes the details to the owner.\n\nFor a dental office, is missed-call or after-hours follow-up actually a problem, or am I looking at the wrong pain point?",
+      "follow_up_1": "Quick follow-up. Do missed scheduling or reschedule calls usually get handled later, or do they create real leakage?",
+      "follow_up_2": "I'll leave this alone after this. Any advice from a front-desk perspective would help.",
+      "if_gives_advice": "Thank and ask one follow-up about front-desk overload.",
+      "if_asks_what_it_does": "Autonomous explanation allowed.",
+      "if_asks_website": "Autonomous site reply allowed.",
+      "if_asks_pricing": "Autonomous standard pricing reply allowed.",
+      "if_sounds_interesting": "Offer demo line with new-patient appointment scenario.",
+      "if_not_interested": "Close politely and stop.",
+      "escalate_when": ["HIPAA/privacy concerns", "clinical claims", "known relationship"]
+    },
+    {
+      "segment": "veterinary",
+      "first_message": "Saw your veterinary clinic page - pet owners probably call with questions that feel urgent to them.\n\nHey {first_name}, I'm Wallace, a Brentwood high schooler building The Call Taker, an AI receptionist for local businesses.\n\nIt answers calls, captures customer info, and helps owners avoid losing important messages when they can't pick up.\n\nFor a vet clinic, is after-hours call capture useful, or does that get too sensitive?",
+      "follow_up_1": "Quick follow-up. Would capturing owner name, pet issue, callback, and urgency be useful, or is that not enough for vet calls?",
+      "follow_up_2": "Last note from me. I am trying to learn which businesses this should not handle too.",
+      "if_gives_advice": "Thank and ask one follow-up about safe boundaries.",
+      "if_asks_what_it_does": "Autonomous explanation allowed with safety caveat.",
+      "if_asks_website": "Autonomous site reply allowed.",
+      "if_asks_pricing": "Autonomous standard pricing reply allowed.",
+      "if_sounds_interesting": "Offer demo line with non-emergency callback scenario.",
+      "if_not_interested": "Close politely and suppress.",
+      "escalate_when": ["medical/emergency claims", "regulated advice", "sensitive case"]
+    },
+    {
+      "segment": "local business owners generally",
+      "first_message": "Saw your business page and wanted to ask a quick local founder question.\n\nHey {first_name}, I'm Wallace, local in Brentwood and a high schooler building The Call Taker, an AI receptionist for local businesses.\n\nIt answers calls, captures customer info, and helps owners avoid losing jobs when they can't pick up.\n\nI have my first customer now, but I'm trying to learn how to get from one customer to more. If you were in my shoes, what would you do? Any advice would help a lot.",
+      "follow_up_1": "Quick follow-up, no pressure. I am mostly trying to learn from local owners what they would do to get from one customer to more.",
+      "follow_up_2": "I'll leave this alone after this. Even one quick thought would help.",
+      "if_gives_advice": "Thank and ask one follow-up about positioning.",
+      "if_asks_what_it_does": "Autonomous explanation allowed.",
+      "if_asks_website": "Autonomous site reply allowed.",
+      "if_asks_pricing": "Autonomous standard pricing reply allowed.",
+      "if_sounds_interesting": "Offer demo line or short example.",
+      "if_not_interested": "Close politely and stop.",
+      "escalate_when": ["investment interest", "known relationship", "custom partnership"]
+    }
+  ]
+}

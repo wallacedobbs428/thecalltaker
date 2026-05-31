@@ -1,0 +1,31 @@
+{
+  "queue_policy": "Email sends run only through approved adapter policy. Drafts can be generated locally; send/start waits for source-backed list, suppression pass, provider connection, and no escalation.",
+  "summary": {
+    "items_total": 1,
+    "ready_to_send": 0,
+    "failed_provider_block": 1
+  },
+  "items": [
+    {
+      "queue_id": "email-auto-dental-segment-001",
+      "lead_id": "pending-approved-email-list-dental-001",
+      "campaign_id": "auto-instantly-local-service-v1",
+      "channel": "Instantly email",
+      "target": {
+        "segment": "Dental Scheduling Calls",
+        "source_status": "needs_review_before_import",
+        "is_placeholder": true
+      },
+      "status": "failed_provider_block",
+      "generated_message": "Subject: quick question about missed calls\n\nHi {first_name_or_team}, I'm Wallace, a Brentwood high schooler building The Call Taker, an AI receptionist for local businesses. For {business_name}, I was curious: when calls come in after hours or while the team is busy, do they usually get answered, forwarded, or go to voicemail?",
+      "personalization_fields_used": ["business_name", "first_name_or_team", "category"],
+      "policy_check_result": "pass_template_only",
+      "send_allowed": false,
+      "send_reason": "Instantly provider/list import is blocked until adapter and source-review are complete.",
+      "escalation_required": true,
+      "provider_status": "blocked_by_provider_setup",
+      "next_action": "Prepare approved-recipient and suppression review packet.",
+      "next_follow_up_at": null
+    }
+  ]
+}

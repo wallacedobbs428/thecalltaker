@@ -1,0 +1,60 @@
+{
+  "queue_policy": "Inbound Agent replies autonomously only for low-risk policy-passing categories with a connected provider. Known warm relationships and sensitive contexts escalate.",
+  "summary": {
+    "inbound_total": 3,
+    "autonomous_reply_ready": 0,
+    "blocked_by_provider": 0,
+    "escalated": 3,
+    "sent": 0
+  },
+  "items": [
+    {
+      "queue_id": "inbound-warm-franklin-medical-meeting-001",
+      "lead_id": "warm-franklin-medical-meeting",
+      "business_name": "Franklin medical meeting",
+      "intent": "wants_call",
+      "autonomous_reply_allowed": false,
+      "reply_style": "meeting/setup review context; relationship-sensitive",
+      "pipeline_stage_update": "meeting_suggested",
+      "follow_up_action": "Escalate before send.",
+      "escalation_trigger": "healthcare-adjacent meeting context and likely human sales moment",
+      "next_best_ai_action": "Prepare concise meeting context and questions for escalation.",
+      "generated_reply": "I want to use the meeting to map where calls come in, what happens after hours, what staff misses, and whether a small pilot would catch revenue without disrupting the office.",
+      "policy_check_result": "escalate",
+      "provider_status": "manual_channel_or_unknown",
+      "status": "escalated"
+    },
+    {
+      "queue_id": "inbound-warm-orthodontist-dm-001",
+      "lead_id": "warm-orthodontist-dm",
+      "business_name": "Orthodontist DM lead",
+      "intent": "sounds_interested",
+      "autonomous_reply_allowed": false,
+      "reply_style": "front-desk missed-call follow-up",
+      "pipeline_stage_update": "interested",
+      "follow_up_action": "Escalate unless channel/provider and relationship sensitivity are cleared.",
+      "escalation_trigger": "warm imported manual DM lead with provider/channel status unknown",
+      "next_best_ai_action": "Wait for channel confirmation or escalate.",
+      "generated_reply": "Quick thought - if calls or appointment requests are slipping when the front desk is busy, I built The Call Taker to capture the caller's need and next step instead of letting it disappear into voicemail.",
+      "policy_check_result": "escalate",
+      "provider_status": "manual_channel_or_unknown",
+      "status": "escalated"
+    },
+    {
+      "queue_id": "inbound-warm-ad-growth-lead-001",
+      "lead_id": "warm-ad-growth-lead",
+      "business_name": "Ad-growth lead follow-up",
+      "intent": "referral_opportunity",
+      "autonomous_reply_allowed": false,
+      "reply_style": "possible partner/referral angle",
+      "pipeline_stage_update": "AI_reply_drafted",
+      "follow_up_action": "Escalate before relationship/channel reply.",
+      "escalation_trigger": "possible strategic/referral relationship and source context needs review",
+      "next_best_ai_action": "Summarize opportunity and wait for escalation decision.",
+      "generated_reply": "If paid traffic is creating calls that are not answered fast enough, the ad problem may actually be a phone/recovery problem. The Call Taker can be positioned as the capture layer after the click.",
+      "policy_check_result": "escalate",
+      "provider_status": "manual_channel_or_unknown",
+      "status": "escalated"
+    }
+  ]
+}
