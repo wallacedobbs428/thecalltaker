@@ -1,0 +1,97 @@
+{
+  "policy": "Square links are provider-sensitive. Use only verified Square provider URLs. Do not treat a checkout click as payment success, and do not complete payments from the repair adapter.",
+  "last_agent_attempt": {
+    "date": "2026-05-31",
+    "agent": "left-builder-agent",
+    "scope": "used Square credentials for read-only inspection, created fresh payment links for all three current pricing tiers, and installed the hrefs in website/pricing.html and pricing.html",
+    "SQUARE_ACCESS_TOKEN": "present",
+    "SQUARE_LOCATION_ID": "present",
+    "SQUARE_ENVIRONMENT": "production",
+    "square_api_called": true,
+    "provider_mutation_performed": true,
+    "payment_or_charge_performed": false,
+    "customer_message_performed": false,
+    "deploy_performed": false,
+    "secret_values_printed": false
+  },
+  "repair_adapter": {
+    "spec": "ctos/integrations/square-provider-repair-spec.json",
+    "credential_connection_steps": "docs/SQUARE-CREDENTIAL-CONNECTION-STEPS.md",
+    "readiness_script": "scripts/square-provider-readiness-check.js",
+    "script": "scripts/square-checkout-diagnose.js",
+    "docs": "docs/SQUARE-AUTONOMOUS-PROVIDER-REPAIR.md",
+    "next_command_after_env_exists": "node scripts/square-provider-readiness-check.js --json --env-file=/Users/wallacedobbs/Developer/thecalltaker-ops/.env && node scripts/square-checkout-diagnose.js --json --env-file=/Users/wallacedobbs/Developer/thecalltaker-ops/.env",
+    "agent_ready_env_checklist": {
+      "SQUARE_ACCESS_TOKEN_present": true,
+      "SQUARE_LOCATION_ID_present": true,
+      "SQUARE_ENVIRONMENT_present": true,
+      "dry_run_diagnostic_passed": true,
+      "create_request_file_exists": true
+    },
+    "create_request_files": [
+      "ctos/integrations/square-97-create-payment-link-request.json",
+      "ctos/integrations/square-497-create-payment-link-request.json",
+      "ctos/integrations/square-997-create-payment-link-request.json"
+    ]
+  },
+  "links": [
+    {
+      "plan": "$97 After-Hours Capture",
+      "url": "https://square.link/u/cSiXiuLx",
+      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/hJjmqQxRSZpjYjmSHgAXinmluuNZY",
+      "status": "created_installed_needs_right_lane_verification",
+      "checkout_redirect_url": null,
+      "old_url_replaced": "https://square.link/u/2hfmRPY7",
+      "replacement_targets": [
+        "website/pricing.html:357",
+        "pricing.html:357"
+      ],
+      "action_mode": "ready_for_right_qa"
+    },
+    {
+      "plan": "$497 24/7 Call Coverage",
+      "url": "https://square.link/u/TQseWnAY",
+      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/1tWHNkKGJtpgOJO1AfVRb2S1N37YY",
+      "status": "created_installed_needs_right_lane_verification",
+      "checkout_redirect_url": null,
+      "old_url_replaced": "https://square.link/u/S305ewBr",
+      "replacement_targets": [
+        "website/pricing.html:378",
+        "pricing.html:378"
+      ],
+      "action_mode": "ready_for_right_qa"
+    },
+    {
+      "plan": "$997 Premium / Concierge / Priority Setup",
+      "url": "https://square.link/u/RSjzTrCn",
+      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/59zmn4oORY93mWoxst60LnrhuEVZY",
+      "status": "created_installed_needs_right_lane_verification",
+      "checkout_redirect_url": null,
+      "old_url_replaced": "https://square.link/u/OpwWF9Sa",
+      "replacement_targets": [
+        "website/pricing.html:401",
+        "pricing.html:401"
+      ],
+      "action_mode": "ready_for_right_qa"
+    }
+  ],
+  "image_attachment_status": {
+    "status": "waived_for_deploy",
+    "reason": "The public Square Checkout API recurring subscription payment-link path does not expose a per-link image field. Wallace waived Square payment-link image parity on 2026-05-31 and approved deployment without checkout images.",
+    "mapped_assets": {
+      "$97 After-Hours Capture": "assets/images/plan-visuals/after-hours-capture-v3.png",
+      "$497 24/7 Call Coverage": "assets/images/plan-visuals/247-call-coverage-v3.png",
+      "$997 Premium / Concierge / Priority Setup": "assets/images/plan-visuals/custom-call-coverage-v3.png"
+    },
+    "waived_by_wallace": true,
+    "website_images_changed": false,
+    "payment_or_charge_performed": false
+  },
+  "forbidden_assumptions": [
+    "Do not treat Square click as payment success.",
+    "Do not treat transactionId/orderId query params as confirmed revenue without provider confirmation.",
+    "Do not add repo-side redirect logic to hide a provider-broken payment link.",
+    "Do not call Square Payments API or charge a card from the repair adapter.",
+    "Do not deploy without Wallace/Right QA approval."
+  ]
+}
