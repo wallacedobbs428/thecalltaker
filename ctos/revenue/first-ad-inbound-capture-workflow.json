@@ -1,0 +1,154 @@
+{
+  "workflow_id": "first-ad-inbound-capture-workflow-2026-06-01",
+  "generated_at": "2026-06-01",
+  "mode": "local_no_send",
+  "no_send_mode": {
+    "status": "active",
+    "allowed": [
+      "draft",
+      "classify",
+      "prioritize",
+      "prepare_approval_packets",
+      "prepare_local_ctos_outputs",
+      "recommend_lead_stage_updates"
+    ],
+    "forbidden": [
+      "send_dm",
+      "send_email",
+      "send_sms",
+      "place_call",
+      "send_webhook",
+      "post_publicly",
+      "mutate_provider",
+      "deploy",
+      "read_env"
+    ],
+    "rule": "CTOS may prepare revenue actions locally, but no external communication or provider mutation is allowed from this engine."
+  },
+  "owner_agent": "Ad Capture Agent",
+  "m50_task_links": [
+    "M50-001",
+    "M50-005",
+    "M50-009",
+    "M50-013",
+    "M50-023",
+    "M50-035"
+  ],
+  "required_right_handoff_fields": [
+    "final_caption",
+    "cta_wording",
+    "post_or_ad_url",
+    "target_segment",
+    "expected_comment_prompts",
+    "launch_status"
+  ],
+  "reply_classification_flow": [
+    {
+      "inbound_signal": "asks_what_it_does",
+      "classification": "education_request",
+      "lane_owner": "Inbound Agent",
+      "ai_next_action": "Draft simple explanation and offer Gideon demo path locally.",
+      "wallace_approval_required": false,
+      "next_pipeline_stage": "AI_reply_drafted"
+    },
+    {
+      "inbound_signal": "asks_for_website_or_demo",
+      "classification": "demo_interest",
+      "lane_owner": "Inbound Agent",
+      "ai_next_action": "Prepare demo link/Call Gideon Live reply draft; do not send.",
+      "wallace_approval_required": false,
+      "next_pipeline_stage": "demo_sent"
+    },
+    {
+      "inbound_signal": "basic_pricing_question",
+      "classification": "pricing_interest",
+      "lane_owner": "Revenue Scoreboard Agent",
+      "ai_next_action": "Prepare sourced $97/$497/$997 pricing explanation draft; escalate custom pricing.",
+      "wallace_approval_required": false,
+      "next_pipeline_stage": "interested"
+    },
+    {
+      "inbound_signal": "booking_or_setup_interest",
+      "classification": "meeting_or_setup_review",
+      "lane_owner": "Follow-Up Agent",
+      "ai_next_action": "Create approval packet with context, recommended setup-review next step, and outcome log slot.",
+      "wallace_approval_required": true,
+      "next_pipeline_stage": "meeting_suggested"
+    },
+    {
+      "inbound_signal": "proof_request",
+      "classification": "proof_needed",
+      "lane_owner": "CTOS Data Agent",
+      "ai_next_action": "Prepare proof-safe response draft using only approved public/source-backed proof.",
+      "wallace_approval_required": true,
+      "next_pipeline_stage": "interested"
+    },
+    {
+      "inbound_signal": "angry_sensitive_legal_contract_payment",
+      "classification": "sensitive_exception",
+      "lane_owner": "LEFT / Wallace escalation",
+      "ai_next_action": "Hold and escalate; no reply draft leaves CTOS.",
+      "wallace_approval_required": true,
+      "next_pipeline_stage": "escalated"
+    },
+    {
+      "inbound_signal": "not_interested",
+      "classification": "polite_closeout",
+      "lane_owner": "Inbound Agent",
+      "ai_next_action": "Draft polite close-out and mark follow_up_later or lost after approval rules pass.",
+      "wallace_approval_required": false,
+      "next_pipeline_stage": "follow_up_later"
+    },
+    {
+      "inbound_signal": "spam_or_irrelevant",
+      "classification": "archive",
+      "lane_owner": "Inbound Agent",
+      "ai_next_action": "Mark spam/irrelevant in local queue.",
+      "wallace_approval_required": false,
+      "next_pipeline_stage": "lost"
+    }
+  ],
+  "after_booking_interest": {
+    "create_approval_packet": true,
+    "required_fields": [
+      "lead_name",
+      "source",
+      "reply_summary",
+      "requested_next_step",
+      "recommended_offer_tier",
+      "risk_flags",
+      "suggested_follow_up_date"
+    ],
+    "next_safe_action": "Wallace reviews setup-review or meeting request before any external send, call, payment link, or provider action."
+  },
+  "board_task_context": [
+    {
+      "task_id": "M50-001",
+      "task_name": "Finalize first-ad inbound capture workflow",
+      "owner_agent": "Ad Capture Agent",
+      "output_files": [
+        "ctos/workflows/first-ad-inbound-capture-loop.md",
+        "ctos/inbound/inbound-response-queue.json"
+      ]
+    },
+    {
+      "task_id": "M50-005",
+      "task_name": "Map inbound classifications to CTOS lead stages",
+      "owner_agent": "Inbound Agent",
+      "output_files": [
+        "ctos/inbound/inbound-classification-rules.json",
+        "ctos/inbound/reply-draft-rules.json",
+        "ctos/leads/unified-lead-pipeline.json"
+      ]
+    },
+    {
+      "task_id": "M50-009",
+      "task_name": "Connect Right video CTA handoff to Middle capture loop",
+      "owner_agent": "Ad Capture Agent",
+      "output_files": [
+        "ctos/workflows/first-ad-inbound-capture-loop.md",
+        "ctos/boards/master-campaign-board.json"
+      ]
+    }
+  ]
+}

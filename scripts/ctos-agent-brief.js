@@ -110,6 +110,23 @@ function providerBoundaryLine(line) {
   return line.endsWith(".") ? line.slice(0, -1) : line;
 }
 
+function engineActionLine(action) {
+  const provider = action.provider_required ? "provider needed" : "local/no provider";
+  return `${action.task_id}: ${action.task_name} (${action.owner_agent}; ${action.status}; ${provider}) - ${action.next_action}`;
+}
+
+function approvalPacketLine(packet) {
+  return `${packet.lead_name} [${packet.status}] - next=${packet.recommended_next_action}; approval=${packet.wallace_approval_needed ? "Wallace" : "AI policy"}`;
+}
+
+function blockedActionLine(action) {
+  return `${action.id}: ${action.name} - ${action.blocker}`;
+}
+
+function wallaceOnlyLine(action) {
+  return `${action.lead_name || action.action_id}: ${action.next_action} [why: ${action.why_wallace}]`;
+}
+
 function buildBrief() {
   const middleBoard = readJson("boards/middle-next-50-task-board.json", {
     execution_order: {},
@@ -135,6 +152,10 @@ function buildBrief() {
   const revenueOpps = asArray(readJson("revenue/revenue-opportunities.json").opportunities);
   const leadPipeline = readJson("leads/unified-lead-pipeline.json", { leads: [] });
   const followUpQueue = readJson("leads/follow-up-queue.json", { items: [] });
+  const dailyOutput = readJson("revenue/daily-revenue-execution-output.json", null);
+  const approvalPacketOutput = readJson("revenue/warm-lead-approval-packets.json", { packets: [] });
+  const leadActionQueueOutput = readJson("revenue/lead-action-queue.json", { items: [], summary: {} });
+  const firstAdWorkflowOutput = readJson("revenue/first-ad-inbound-capture-workflow.json", { reply_classification_flow: [] });
 
   const allMiddleTasks = asArray(middleBoard.tasks);
   const todaysTasks = orderedTasks(middleBoard, "next_10_tasks");
@@ -184,7 +205,11 @@ function buildBrief() {
     webhook,
     checkout,
     allMiddleTasks,
-    systemProof
+    systemProof,
+    dailyOutput,
+    approvalPacketOutput,
+    leadActionQueueOutput,
+    firstAdWorkflowOutput
   };
 }
 
@@ -213,7 +238,11 @@ function printBrief(brief) {
     webhook,
     checkout,
     allMiddleTasks,
-    systemProof
+    systemProof,
+    dailyOutput,
+    approvalPacketOutput,
+    leadActionQueueOutput,
+    firstAdWorkflowOutput
   } = brief;
 
   console.log("CTOS Daily Revenue Execution Brief");
@@ -226,19 +255,69 @@ function printBrief(brief) {
   console.log(`Active pipeline records: ${activePipeline.length}`);
   console.log(`Warm follow-up records: ${warmFollowups.length}`);
   console.log(`Top AI money action: ${money.top_ai_action_likely_to_create_money_next || "None recorded."}`);
+  console.log(`Persistent engine output: ${dailyOutput ? dailyOutput.brief_id : "not generated yet"}`);
+
+  if (dailyOutput) {
+    printSection(
+      "0. Data gaps blocking full action-system mode",
+      dailyOutput.data_gaps_preventing_full_action_system
+    );
+
+    printSection(
+      "1. Top 5 generated revenue actions",
+      asArray(dailyOutput.top_5_revenue_actions).map(engineActionLine)
+    );
+
+    printSection(
+      "2. Approval packets ready",
+      asArray(approvalPacketOutput.packets).map(approvalPacketLine)
+    );
+
+    printSection(
+      "3. Blocked actions",
+      asArray(dailyOutput.blocked_actions).map(blockedActionLine)
+    );
+
+    printSection(
+      "4. Wallace-only or personal actions",
+      asArray(dailyOutput.wallace_only_actions).map(wallaceOnlyLine)
+    );
+
+    printSection(
+      "5. AI-agent-owned actions",
+      asArray(dailyOutput.ai_agent_owned_actions).map((item) => `${item.task_id}: ${item.owner_agent} - ${item.next_action}; output=${item.output}`)
+    );
+
+    printSection(
+      "6. Single next best client-getting action",
+      dailyOutput.next_best_client_getting_action ? [
+        `${dailyOutput.next_best_client_getting_action.lead_name}: ${dailyOutput.next_best_client_getting_action.next_action}`,
+        `Owner: ${dailyOutput.next_best_client_getting_action.owner}`,
+        `AI support: ${asArray(dailyOutput.next_best_client_getting_action.ctOS_local_support).join(", ")}`
+      ] : []
+    );
+
+    printSection(
+      "7. Lead-action queue and first-ad capture status",
+      [
+        `${asArray(leadActionQueueOutput.items).length} local lead actions queued; sends_allowed=${leadActionQueueOutput.summary && leadActionQueueOutput.summary.sends_allowed}`,
+        `${asArray(firstAdWorkflowOutput.reply_classification_flow).length} first-ad reply classifications ready; booking interest creates approval packet=${firstAdWorkflowOutput.after_booking_interest && firstAdWorkflowOutput.after_booking_interest.create_approval_packet}`
+      ]
+    );
+  }
 
   printSection(
-    "1. Highest-priority revenue tasks today",
+    "8. Board-ranked revenue tasks today",
     todaysTasks.slice(0, 10).map(taskLine)
   );
 
   printSection(
-    "2. AI can do this without Wallace manually working",
+    "9. Board tasks AI can do without Wallace manually working",
     readyToday.map((task) => `${lineStatus(task)}. Produce/update: ${asArray(task.output_files).join(", ") || "local CTOS artifact"}`)
   );
 
   printSection(
-    "3. Wallace approval or human judgment needed",
+    "10. Board-defined Wallace approval or human judgment needed",
     [
       ...asArray(middleBoard.tasks_that_truly_require_wallace).map((item) => wallaceApprovalLine(item, allMiddleTasks)),
       ...escalations.map((item) => `${item.approval_id}: ${item.target_lead_or_business} - ${item.why_policy_cannot_handle_it}`)
@@ -246,7 +325,7 @@ function printBrief(brief) {
   );
 
   printSection(
-    "4. Follow-up, outreach, content, and pipeline actions next",
+    "11. Follow-up, outreach, content, and pipeline actions next",
     [
       ...categoryNextTasks(sprintTasks, ["instagram", "dm", "outbound", "lead research", "call-list", "email", "facebook"], 5).map((line) => `Outreach: ${line}`),
       ...categoryNextTasks(sprintTasks, ["follow-up", "warm", "referral", "jay", "chuck"], 4).map((line) => `Follow-up: ${line}`),
@@ -256,7 +335,7 @@ function printBrief(brief) {
   );
 
   printSection(
-    "5. Blocked or waiting",
+    "12. Blocked or waiting",
     [
       ...asArray(middleBoard.tasks_blocked_only_by_provider_access).map((item) => `${item.task_id}: ${item.task_name} - ${item.provider_tool_needed}; ${item.blocker}`),
       ...integrationBlocked.map((item) => item.queue_id ? queueLine(item) : campaignLine(item)),
@@ -265,12 +344,12 @@ function printBrief(brief) {
   );
 
   printSection(
-    "6. Agent-specific first actions",
+    "13. Agent-specific first actions",
     asArray(middleMap.first_actions_for_agents).map((item) => `${item.owner_agent}: ${item.task_id} ${item.task_name} [${item.status}]`)
   );
 
   printSection(
-    "7. Next best action to get a client",
+    "14. Board next best action to get a client",
     nextClientTask ? [
       `${nextClientTask.task_id}: ${nextClientTask.task_name} (${nextClientTask.owner_agent})`,
       `Why it matters: ${shortText(nextClientTask.revenue_connection)}`,
@@ -279,44 +358,46 @@ function printBrief(brief) {
   );
 
   printSection(
-    "8. Existing autonomous actions agents can execute now",
+    "15. Existing autonomous actions agents can execute now",
     autonomousReady.slice(0, 10).map((item) => `${item.owner_agent}: ${item.next_ai_action} [escalation only if: ${item.escalation_only_if || "policy exception"}]`)
   );
 
   printSection(
-    "9. Campaigns currently allowed to run",
+    "16. Campaigns currently allowed to run",
     allowedCampaigns.map(campaignLine)
   );
 
   printSection(
-    "10. Campaigns paused by policy, provider, or rate limit",
+    "17. Campaigns paused by policy, provider, or rate limit",
     pausedCampaigns.map(campaignLine)
   );
 
   printSection(
-    "11. Leads agents can move forward without Wallace",
+    "18. Leads agents can move forward without Wallace",
     leadsMoveable.map(queueLine)
   );
 
   printSection(
-    "12. Inbound replies agents can answer automatically",
+    "19. Inbound replies agents can answer automatically",
     inboundAuto.map((item) => `${item.queue_id}: ${item.business_name} / ${item.intent} - ${item.next_best_ai_action}`)
   );
 
   printSection(
-    "13. Follow-ups agents can send automatically",
+    "20. Follow-ups agents can send automatically",
     followupsAuto.map(queueLine)
   );
 
   printSection(
-    "14. Revenue opportunities closest to money",
+    "21. Revenue opportunities closest to money",
     revenueOpps.map((item) => `${item.owner_agent}: ${item.title} [${item.action_mode}] - ${item.next_ai_action}`)
   );
 
   printSection(
-    "15. System proof: what AI handled without Wallace",
+    "22. System proof: what AI handled without Wallace",
     [
       ...systemProof,
+      dailyOutput ? `${asArray(approvalPacketOutput.packets).length} approval packets are persisted locally in no-send mode.` : null,
+      dailyOutput ? `${asArray(leadActionQueueOutput.items).length} lead actions are persisted locally with zero sends allowed.` : null,
       `${todaysTasks.length} board-ranked daily revenue tasks loaded from the Middle 50 board.`,
       `${readyToday.length} top daily tasks are AI-workable without Wallace or provider mutation.`,
       `${sendQueue.length} outbound queue items policy-modeled without sends.`,

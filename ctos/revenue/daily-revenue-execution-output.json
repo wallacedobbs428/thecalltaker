@@ -1,0 +1,278 @@
+{
+  "brief_id": "ctos-daily-revenue-execution-output-2026-06-01",
+  "generated_at": "2026-06-01",
+  "mode": "local_no_send",
+  "no_send_mode": {
+    "status": "active",
+    "allowed": [
+      "draft",
+      "classify",
+      "prioritize",
+      "prepare_approval_packets",
+      "prepare_local_ctos_outputs",
+      "recommend_lead_stage_updates"
+    ],
+    "forbidden": [
+      "send_dm",
+      "send_email",
+      "send_sms",
+      "place_call",
+      "send_webhook",
+      "post_publicly",
+      "mutate_provider",
+      "deploy",
+      "read_env"
+    ],
+    "rule": "CTOS may prepare revenue actions locally, but no external communication or provider mutation is allowed from this engine."
+  },
+  "operating_question": "What can AI agents do next for Wallace to get clients, revenue, meetings, follow-ups, content, and proof?",
+  "data_gaps_preventing_full_action_system": [
+    "No source-backed Instagram/local leads are confirmed in CTOS for M50-003; current send queues contain placeholders.",
+    "Instagram inbound POST and outbound DM runtime proof are not confirmed.",
+    "RIGHT final first-ad CTA/caption handoff is not yet attached to the Middle capture loop.",
+    "Warm lead exact dates and relationship context remain incomplete for some packets.",
+    "Huntsville Roofing outcome is not logged yet; CTOS cannot move the close path until Wallace records the real result.",
+    "Instantly and Facebook posting remain provider/platform blocked.",
+    "Square/payment changes are tracked only; CTOS does not mutate provider dashboards."
+  ],
+  "persistent_outputs": [
+    "ctos/revenue/daily-revenue-execution-output.json",
+    "ctos/revenue/warm-lead-approval-packets.json",
+    "ctos/revenue/lead-action-queue.json",
+    "ctos/revenue/first-ad-inbound-capture-workflow.json"
+  ],
+  "top_5_revenue_actions": [
+    {
+      "task_id": "M50-001",
+      "task_name": "Finalize first-ad inbound capture workflow",
+      "owner_agent": "Ad Capture Agent",
+      "status": "waiting_on_context",
+      "ai_agent_owned": true,
+      "provider_required": false,
+      "no_send_mode": "active",
+      "engine_output": "ctos/revenue/first-ad-inbound-capture-workflow.json",
+      "next_action": "Confirm comment, DM, pricing, demo, referral, proof, and not-interested paths."
+    },
+    {
+      "task_id": "M50-002",
+      "task_name": "Prepare Instagram local founder campaign research packet",
+      "owner_agent": "Lead Research Agent",
+      "status": "waiting_on_context",
+      "ai_agent_owned": true,
+      "provider_required": false,
+      "no_send_mode": "active",
+      "engine_output": "ctos/revenue/lead-action-queue.json",
+      "next_action": "Create machine-readable research tasks for roofing, plumbing, HVAC, electrical, landscaping, towing, locksmith, med spa, dentist, veterinary, and local business owners."
+    },
+    {
+      "task_id": "M50-003",
+      "task_name": "Source 25 real local Instagram business leads",
+      "owner_agent": "Lead Research Agent",
+      "status": "provider_blocked",
+      "ai_agent_owned": true,
+      "provider_required": true,
+      "no_send_mode": "active",
+      "engine_output": "ctos/revenue/lead-action-queue.json",
+      "next_action": "Use approved research queue to search public Instagram/business profiles."
+    },
+    {
+      "task_id": "M50-004",
+      "task_name": "Generate first 25 policy-checked Instagram DM messages",
+      "owner_agent": "Middle Revenue Agent",
+      "status": "waiting_on_context",
+      "ai_agent_owned": true,
+      "provider_required": false,
+      "no_send_mode": "active",
+      "engine_output": "ctos/revenue/warm-lead-approval-packets.json",
+      "next_action": "Select the 25 sourced leads from M50-003."
+    },
+    {
+      "task_id": "M50-005",
+      "task_name": "Map inbound classifications to CTOS lead stages",
+      "owner_agent": "Inbound Agent",
+      "status": "waiting_on_context",
+      "ai_agent_owned": true,
+      "provider_required": false,
+      "no_send_mode": "active",
+      "engine_output": "ctos/revenue/first-ad-inbound-capture-workflow.json",
+      "next_action": "Review inbound categories used by ad, DM, Facebook, email, and referral workflows."
+    }
+  ],
+  "approval_packets_ready": {
+    "count": 6,
+    "packet_ids": [
+      "approval-lead-jay-grosman",
+      "approval-lead-chuck-mcdowell",
+      "approval-lead-freedom-diagnostics",
+      "approval-warm-franklin-medical-meeting",
+      "approval-warm-orthodontist-dm",
+      "approval-warm-ad-growth-lead"
+    ],
+    "wallace_required_count": 6
+  },
+  "blocked_actions": [
+    {
+      "id": "M50-003",
+      "name": "Source 25 real local Instagram business leads",
+      "blocker": "Blocked until live research/provider/browser access is available to the executing agent.",
+      "provider_tool_needed": "Instagram/public web research access"
+    },
+    {
+      "id": "M50-011",
+      "name": "Create public-profile enrichment rules for local service leads",
+      "blocker": "Provider/runtime access is not confirmed for live execution.",
+      "provider_tool_needed": "Instagram/public web research access"
+    },
+    {
+      "id": "M50-018",
+      "name": "Verify referral campaign provider and safety path",
+      "blocker": "Provider/runtime access is not confirmed for live execution.",
+      "provider_tool_needed": "Instagram/Facebook/email adapter proof or manual provider confirmation"
+    },
+    {
+      "id": "provider-boundary-1",
+      "name": "Provider boundary",
+      "blocker": "Instagram webhook GET works; inbound POST and outbound/reply runtime proof are not confirmed in this task.",
+      "provider_tool_needed": "do_not_mutate_provider"
+    },
+    {
+      "id": "provider-boundary-2",
+      "name": "Provider boundary",
+      "blocker": "Instantly provider setup is not verified; email work remains local prep only.",
+      "provider_tool_needed": "do_not_mutate_provider"
+    },
+    {
+      "id": "provider-boundary-3",
+      "name": "Provider boundary",
+      "blocker": "Facebook posting is blocked until group/platform/adapter permission is confirmed.",
+      "provider_tool_needed": "do_not_mutate_provider"
+    },
+    {
+      "id": "provider-boundary-4",
+      "name": "Provider boundary",
+      "blocker": "Square/payment/checkout provider repair belongs to Left; Middle tracks revenue handoff only.",
+      "provider_tool_needed": "do_not_mutate_provider"
+    },
+    {
+      "id": "provider-boundary-5",
+      "name": "Provider boundary",
+      "blocker": "No DMs, emails, calls, public posts, provider mutations, deploys, or website edits are part of this board.",
+      "provider_tool_needed": "do_not_mutate_provider"
+    }
+  ],
+  "wallace_only_actions": [
+    {
+      "action_id": "wallace-huntsville-roofing-follow-up",
+      "lead_name": "Huntsville Roofing Company",
+      "why_wallace": "Only demo/result prospect marked demo_called; founder trust moment, not an automation send.",
+      "next_action": "Ask what happened when they tried Gideon, what worked/failed, and whether one captured missed roofing job covers month one.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/outreach-system/revenue-command-center/middle-command-refresh/WALLACE-FIRST-PERSONAL-FOLLOW-UP-CARD-2026-06-01.md",
+      "send_allowed_from_ctos": false
+    },
+    {
+      "action_id": "approval-lead-jay-grosman",
+      "lead_name": "Jay Grosman / Bree site-demo thread",
+      "why_wallace": "Confirm exact reminder date and whether the reminder should be sent.",
+      "next_action": "AI can create reminder packet once exact last-touch date is provided or found in an approved source.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/NEXT-MONEY-ACTION-BOARD.md",
+      "send_allowed_from_ctos": false
+    },
+    {
+      "action_id": "approval-lead-chuck-mcdowell",
+      "lead_name": "Chuck McDowell",
+      "why_wallace": "Approve/edit scheduling nudge or handle directly.",
+      "next_action": "AI can prepare a scheduling nudge and call questions; Wallace handles high-trust call.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/NEXT-MONEY-ACTION-BOARD.md",
+      "send_allowed_from_ctos": false
+    },
+    {
+      "action_id": "approval-lead-freedom-diagnostics",
+      "lead_name": "Freedom Diagnostics",
+      "why_wallace": "Confirm approval authority and provide/obtain answers before any live setup.",
+      "next_action": "AI can keep implementation packet and onboarding checklist ready, but must not configure live systems.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/operator-manual/NEXT-MONEY-ACTION-BOARD.md",
+      "send_allowed_from_ctos": false
+    },
+    {
+      "action_id": "approval-warm-franklin-medical-meeting",
+      "lead_name": "Franklin medical meeting",
+      "why_wallace": "Escalation review only; routine policy sends do not require review.",
+      "next_action": "AI has drafted the follow-up but escalates because healthcare-adjacent meeting context is sensitive.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/agents/sales-agent/warm-leads/warm-lead-follow-up-drafts.json",
+      "send_allowed_from_ctos": false
+    },
+    {
+      "action_id": "approval-warm-orthodontist-dm",
+      "lead_name": "Orthodontist DM lead",
+      "why_wallace": "Escalation review only if channel or relationship context remains unclear.",
+      "next_action": "AI has drafted the follow-up but escalates until channel/provider and relationship context are clear.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/agents/sales-agent/warm-leads/warm-lead-follow-up-drafts.json",
+      "send_allowed_from_ctos": false
+    },
+    {
+      "action_id": "approval-warm-ad-growth-lead",
+      "lead_name": "Ad-growth lead follow-up",
+      "why_wallace": "Escalation review only if strategic relationship risk remains.",
+      "next_action": "AI has drafted the follow-up but escalates because it may be a strategic referral/partner path.",
+      "source": "/Users/wallacedobbs/Developer/business-brain/agents/sales-agent/warm-leads/warm-lead-follow-up-drafts.json",
+      "send_allowed_from_ctos": false
+    }
+  ],
+  "ai_agent_owned_actions": [
+    {
+      "task_id": "M50-001",
+      "owner_agent": "Ad Capture Agent",
+      "next_action": "Confirm comment, DM, pricing, demo, referral, proof, and not-interested paths.",
+      "output": "ctos/revenue/first-ad-inbound-capture-workflow.json"
+    },
+    {
+      "task_id": "M50-002",
+      "owner_agent": "Lead Research Agent",
+      "next_action": "Create machine-readable research tasks for roofing, plumbing, HVAC, electrical, landscaping, towing, locksmith, med spa, dentist, veterinary, and local business owners.",
+      "output": "ctos/revenue/lead-action-queue.json"
+    },
+    {
+      "task_id": "M50-003",
+      "owner_agent": "Lead Research Agent",
+      "next_action": "Use approved research queue to search public Instagram/business profiles.",
+      "output": "ctos/revenue/lead-action-queue.json"
+    },
+    {
+      "task_id": "M50-004",
+      "owner_agent": "Middle Revenue Agent",
+      "next_action": "Select the 25 sourced leads from M50-003.",
+      "output": "ctos/revenue/warm-lead-approval-packets.json"
+    },
+    {
+      "task_id": "M50-005",
+      "owner_agent": "Inbound Agent",
+      "next_action": "Review inbound categories used by ad, DM, Facebook, email, and referral workflows.",
+      "output": "ctos/revenue/first-ad-inbound-capture-workflow.json"
+    }
+  ],
+  "next_best_client_getting_action": {
+    "action_id": "wallace-huntsville-roofing-follow-up",
+    "owner": "Wallace with Follow-Up Agent support",
+    "ai_support_owner": "Follow-Up Agent",
+    "lead_name": "Huntsville Roofing Company",
+    "reason": "Strongest near-money record because the MIDDLE command sheet marks it demo_sent with close_step demo_called.",
+    "next_action": "Wallace personally asks what happened when they tried Gideon and logs the outcome before any setup, payment link, or provider action.",
+    "ctOS_local_support": [
+      "approval packet ready",
+      "lead action queue entry ready",
+      "no-send outcome logging next step identified"
+    ],
+    "send_allowed_from_ctos": false
+  },
+  "lead_action_queue_summary": {
+    "demo_result_prospects": 8,
+    "hot_ctos_top_5_overlaps": 5,
+    "warm_approval_packets": 6,
+    "sends_allowed": 0
+  },
+  "first_ad_capture_summary": {
+    "workflow_id": "first-ad-inbound-capture-workflow-2026-06-01",
+    "reply_categories": 8,
+    "booking_interest_creates_approval_packet": true
+  }
+}
