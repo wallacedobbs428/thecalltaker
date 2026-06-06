@@ -57,7 +57,7 @@ var TCTCarousel = (function () {
     } else {
       body = 'PILOT \u2014 Business: ____ Industry: ____ Best callback time: ____';
     }
-    return 'sms:+16157845747?body=' + encodeURIComponent(body);
+    return 'sms:+16292699697?body=' + encodeURIComponent(body);
   }
 
   var PILOT_SMS = buildSMSHref();
@@ -366,7 +366,7 @@ var TCTCarousel = (function () {
     } else if (path.indexOf('blog') !== -1) {
       copy = 'Missing calls while you read? <a href="/book.html">Fix that in 2 minutes.</a>';
     } else if (path.indexOf('pilot') !== -1) {
-      copy = '14 days. Zero missed calls. No credit card.';
+      copy = 'setup review. Zero missed calls. No payment collected before review.';
     }
 
     var div = document.createElement('div');

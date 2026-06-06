@@ -42,7 +42,7 @@
     { id: 'pricing', type: 'nav', label: 'Pricing', desc: 'View plans', icon: 'dollar', href: '/pricing.html' },
     { id: 'demo', type: 'nav', label: 'Demo', desc: 'Hear the AI receptionist', icon: 'play', href: '/demo-showcase.html' },
     { id: 'cases', type: 'nav', label: 'Case Studies', desc: 'Real results from real businesses', icon: 'chart', href: '/case-studies/' },
-    { id: 'pilot', type: 'nav', label: 'Start Free Pilot', desc: '14-day free trial', icon: 'rocket', href: '/pilot/' },
+    { id: 'pilot', type: 'nav', label: 'Request Setup Review', desc: 'setup review before launch', icon: 'rocket', href: '/pilot/' },
     { id: 'book', type: 'nav', label: 'Book a Demo', desc: 'Schedule a 10-min call', icon: 'calendar', href: '/book.html' },
     { id: 'play', type: 'action', label: 'Play 15s Demo', desc: 'Hear the AI handle a call', icon: 'speaker', action: function() {
       var dc = document.querySelector('.dc');
@@ -55,7 +55,7 @@
         window.location.href = '/demo-showcase.html';
       }
     }},
-    { id: 'call', type: 'action', label: 'Call the AI', desc: '(615) 784-5747 — live 24/7', icon: 'phone', action: function() { window.location.href = 'tel:+16157845747'; }}
+    { id: 'call', type: 'action', label: 'Call the AI', desc: '(629) 269-9697 — live 24/7', icon: 'phone', action: function() { window.location.href = 'tel:+16292699697'; }}
   ];
 
   var icons = {

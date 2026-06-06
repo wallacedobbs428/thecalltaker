@@ -33,7 +33,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .logo { display: flex; align-items: center; gap: 8px; margin-right: auto; font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
 .logo-text { color: #fff; }
 .logo-text span { color: var(--green); }
-.logo-icon { width: 24px; height: 24px; background: var(--green); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.logo-icon { display: none; }
 .logo-icon svg { width: 13px; height: 13px; }
 .logo span { color: var(--green); }
 .logo .logo-text { color: #fff; }
@@ -175,6 +175,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .sticky-mobile-bar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: #000; border-top: 1px solid var(--border); }
   .sticky-mobile-bar a { flex: 1 1 0; min-width: 0; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 14px 10px; color: #fff; font-size: 13px; font-weight: 600; text-align: center; white-space: normal; line-height: 1.2; }
   .sticky-mobile-bar a[href^="tel:"] { white-space: normal; }
+  .sticky-mobile-bar a[href^="tel:"] { display: none !important; }
+  .sticky-mobile-bar a:not([href^="tel:"]) { flex: 1 1 100%; border-left: 0 !important; background: var(--green); color: #000; }
+  .sticky-mobile-bar:has(> a[href^="tel:"]:only-child) { display: none !important; }
   .sticky-mobile-bar a:first-child { background: var(--green); color: #000; }
   .float-cb { right: 16px; bottom: 82px; display: block !important; }
   .footer { padding-bottom: 72px; }
@@ -267,18 +270,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transform: translateY(0);
   pointer-events: auto;
 }
-.float-cb-btn {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--green);
-  color: #00140b;
-  box-shadow: 0 14px 40px rgba(0,220,130,0.24);
-}
-.float-cb-btn svg { width: 24px; height: 24px; }
 .callback-btn {
   width: 100%;
   min-height: 44px;

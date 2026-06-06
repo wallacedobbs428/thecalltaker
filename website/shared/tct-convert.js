@@ -21,7 +21,7 @@
       className: 'btn btn-primary'
     },
     high: {
-      text: 'Start Free 14-Day Pilot',
+      text: 'Request Setup Review',
       href: '/pilot/',
       className: 'btn btn-primary btn-glow'
     }
@@ -105,12 +105,12 @@
       '<div class="tpb-inner">' +
         '<div class="tpb-title">Want This Answering Your Calls Tonight?</div>' +
         '<ul class="tpb-bullets">' +
-          '<li>Free 14-day pilot, no credit card</li>' +
+          '<li>Free setup-review pilot, no payment collected before review</li>' +
           '<li>Works with your existing phone number</li>' +
           '<li>Live in under 10 minutes</li>' +
         '</ul>' +
         '<div class="tpb-actions">' +
-          '<a href="/start" class="tpb-btn tpb-btn-primary">Start Free Pilot</a>' +
+          '<a href="/start" class="tpb-btn tpb-btn-primary">Request Setup Review</a>' +
           '<a href="#pricing" class="tpb-btn tpb-btn-secondary">See Plans & Pricing</a>' +
         '</div>' +
       '</div>';

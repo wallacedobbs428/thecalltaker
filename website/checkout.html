@@ -4,20 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>The Call Taker - Secure Checkout</title>
+<title>The Call Taker - Setup Review</title>
 <script>
   (function () {
-    var links = {
-      afterhours: 'https://square.link/u/2hfmRPY7',
-      full247: 'https://square.link/u/S305ewBr',
-      premium: 'https://square.link/u/OpwWF9Sa'
+    var allowed = {
+      afterhours: 'afterhours',
+      full247: 'full247',
+      starter: 'full247',
+      premium: 'premium',
+      pro: 'premium'
     };
     var plan = new URLSearchParams(window.location.search).get('plan');
-    window.location.replace(links[plan] || '/pricing.html');
+    var safePlan = allowed[plan] || 'full247';
+    window.location.replace('/signup.html?plan=' + safePlan + '&source=checkout-hold');
   })();
 </script>
 </head>
 <body>
-<p>Taking you to secure checkout. <a href="/pricing.html">Choose a plan</a>.</p>
+<p>Taking you to setup review. <a href="/pricing.html">Choose a plan</a>.</p>
 </body>
 </html>

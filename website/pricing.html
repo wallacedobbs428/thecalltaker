@@ -40,6 +40,7 @@
   </script>
   <style>
     /* Feature Matrix */
+    #plan-comparison { scroll-margin-top: 92px; }
     .matrix-wrap { max-width: 1040px; margin: 0 auto; overflow-x: auto; }
     .matrix-table { width: 100%; min-width: 840px; border-collapse: separate; border-spacing: 0; font-size: 14px; background: rgba(255,255,255,0.62); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
     .matrix-table th, .matrix-table td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
@@ -49,6 +50,22 @@
     .matrix-table th:last-child { border-top-right-radius: 16px; }
     .matrix-table td { color: var(--text-2); }
     .matrix-table td:not(:first-child), .matrix-table th:not(:first-child) { text-align: center; width: 22%; }
+    .matrix-plan-price,
+    .matrix-plan-name {
+      display: block;
+      line-height: 1.2;
+    }
+    .matrix-plan-price {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+    .matrix-plan-name {
+      margin-top: 2px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
     .matrix-feature { color: var(--text-1); font-weight: 800; }
     .matrix-feature-title { display: block; color: var(--text-1); font-weight: 800; line-height: 1.25; }
     .matrix-feature-help { display: block; color: var(--text-2); font-size: 12px; font-weight: 500; line-height: 1.45; margin-top: 4px; max-width: 360px; }
@@ -59,83 +76,105 @@
       .matrix-wrap {
         width: 100%;
         max-width: 100%;
-        overflow-x: visible;
+        overflow: visible;
+        overflow-y: visible;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: rgba(255,255,255,0.64);
       }
       .matrix-table {
-        display: block;
         width: 100% !important;
-        max-width: 100%;
         min-width: 0;
+        table-layout: fixed;
         border: 0;
         border-radius: 0;
         background: transparent;
-        overflow: visible;
+        font-size: 12px;
       }
-      .matrix-table thead { display: none; }
-      .matrix-table tbody { display: grid; gap: 12px; }
-      .matrix-table tr {
-        display: grid;
-        width: 100%;
-        max-width: 100%;
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        background: rgba(255,255,255,0.72);
-        overflow: hidden;
+      .matrix-table thead {
+        display: table-header-group;
       }
       .matrix-table th,
       .matrix-table td {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100% !important;
-        max-width: 100%;
-        padding: 11px 14px;
+        display: table-cell;
+        padding: 12px 10px;
         border-bottom: 1px solid var(--border);
-        text-align: left !important;
+        vertical-align: middle;
       }
-      .matrix-table td:not(:first-child) {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 12px;
+      .matrix-table th {
+        position: sticky;
+        top: 70px;
+        z-index: 4;
+        background: #eef6f1;
+        font-size: 10px;
+        line-height: 1.25;
+        text-align: center;
+        box-shadow: 0 1px 0 var(--border);
       }
       .matrix-table td:first-child {
-        display: block;
-        background: rgba(45,115,82,0.06);
+        text-align: left !important;
+        background: #fff;
       }
-      .matrix-table td:last-child { border-bottom: 0; }
-      .matrix-table td:not(:first-child)::before {
-        color: var(--text-2);
-        font-size: 11px;
-        font-weight: 800;
-        line-height: 1.2;
-        text-transform: uppercase;
+      .matrix-table th:first-child,
+      .matrix-table td:first-child {
+        width: 49% !important;
       }
-      .matrix-table td:nth-child(2)::before { content: "After-Hours Capture"; }
-      .matrix-table td:nth-child(3)::before { content: "24/7 Call Coverage"; }
-      .matrix-table td:nth-child(4)::before { content: "Custom Call Coverage"; }
-      .matrix-table td.matrix-check,
-      .matrix-table td.matrix-dash { font-size: 0; }
-      .matrix-table td.matrix-check::after {
-        content: "\2713";
-        color: var(--green);
+      .matrix-table td:first-child {
+        text-align: left !important;
+        background: #fff;
+      }
+      .matrix-table th:first-child {
+        z-index: 5;
+        background: #eef6f1;
+        text-align: left;
+      }
+      .matrix-table td:first-child {
+        z-index: 2;
+      }
+      .matrix-table td:not(:first-child),
+      .matrix-table th:not(:first-child) {
+        width: 17% !important;
+        text-align: center;
+      }
+      .matrix-table tr:last-child td { border-bottom: 0; }
+      .matrix-check,
+      .matrix-dash {
         font-size: 18px;
-        font-weight: 900;
-        line-height: 1;
-      }
-      .matrix-table td.matrix-dash::after {
-        content: "\2014";
-        color: var(--text-3);
-        font-size: 18px;
-        font-weight: 800;
-        line-height: 1;
       }
       .matrix-feature-title,
       .matrix-feature-help {
         max-width: none;
-        overflow-wrap: anywhere;
+      }
+      .matrix-feature-title {
+        font-size: 11px;
+      }
+      .matrix-feature-help {
+        font-size: 10px;
+        line-height: 1.35;
+      }
+      .matrix-plan-price {
+        font-size: 11px;
+      }
+      .matrix-plan-name {
+        font-size: 8px;
+        letter-spacing: 0.02em;
+      }
+      html.dark .pricing-page .matrix-wrap {
+        background: rgba(255,255,255,0.035);
+      }
+      html.dark .pricing-page .matrix-table th,
+      html.dark .pricing-page .matrix-table th:first-child {
+        background: #07110c;
+      }
+      html.dark .pricing-page .matrix-table td:first-child {
+        background: #050807;
       }
     }
     /* Risk Items */
+    .pricing-page .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
     .risk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: 800px; margin: 0 auto; }
     @media (max-width: 640px) { .risk-grid { grid-template-columns: 1fr; } }
     .risk-item { background: #000; text-align: center; padding: 32px 24px; }
@@ -223,11 +262,56 @@
         padding-left: 22px !important;
         padding-right: 22px !important;
       }
+      .pricing-page .logo {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        max-width: calc(100% - 58px) !important;
+      }
+      .pricing-page .logo-text {
+        min-width: 0 !important;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+      }
       .pricing-page .menu-toggle {
+        position: fixed !important;
+        top: 13px !important;
+        right: 18px !important;
+        z-index: 140 !important;
         display: inline-flex !important;
-        width: 104px !important;
-        min-width: 104px !important;
-        max-width: 104px !important;
+        flex: 0 0 44px !important;
+        width: 44px !important;
+        min-width: 44px !important;
+        max-width: 44px !important;
+        height: 44px !important;
+        min-height: 44px !important;
+        padding: 0 !important;
+        background: #2d7352 !important;
+        color: #fff !important;
+        border: 1px solid rgba(45,115,82,0.28) !important;
+      }
+      .pricing-page .menu-toggle::before {
+        content: "\2630" !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #fff !important;
+        font-size: 22px !important;
+        line-height: 1 !important;
+      }
+      .pricing-page .menu-toggle strong {
+        display: none !important;
+      }
+      .pricing-page .menu-toggle .menu-lines {
+        display: none !important;
+      }
+      .pricing-page .menu-glyph {
+        display: none !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #fff !important;
+        font-size: 22px !important;
+        line-height: 1 !important;
+        transform: translateY(-1px);
       }
       .pricing-page .mobile-nav {
         top: 70px !important;
@@ -331,6 +415,218 @@
         display: none !important;
       }
     }
+
+    html.light {
+      --green: #14694e;
+      --green-dim: rgba(20,105,78,0.10);
+      --green-glow: rgba(20,105,78,0.08);
+      --border: rgba(18,24,20,0.12);
+      --surface: rgba(255,255,255,0.72);
+      --surface-hover: rgba(20,105,78,0.08);
+      --text-1: #121815;
+      --text-2: rgba(18,24,20,0.72);
+      --text-3: rgba(18,24,20,0.48);
+    }
+    html.light body.pricing-page {
+      background: #f7f5ef;
+      color: var(--text-2);
+    }
+    html.light .pricing-page .header {
+      background: rgba(247,245,239,0.92);
+      border-bottom-color: rgba(18,24,20,0.10);
+    }
+    html.light .pricing-page .header.scrolled {
+      background: rgba(247,245,239,0.96);
+    }
+    html.light .pricing-page .logo,
+    html.light .pricing-page .logo-text,
+    html.light .pricing-page .logo .logo-text {
+      color: var(--text-1);
+    }
+    html.light .pricing-page .btn-secondary {
+      background: rgba(255,255,255,0.74);
+      color: var(--text-1);
+      border-color: var(--border);
+    }
+    html.light .pricing-page .pricing-card,
+    html.light .pricing-page .risk-item,
+    html.light .pricing-page .stat,
+    html.light .pricing-page .bento-item {
+      background: #fff;
+    }
+    html.light .pricing-page .matrix-table,
+    html.light .pricing-page .matrix-table tr {
+      background: rgba(255,255,255,0.80);
+    }
+    html.light .pricing-page .mobile-nav {
+      background: rgba(247,245,239,0.98);
+      border-color: rgba(18,24,20,0.12);
+      box-shadow: 0 26px 70px rgba(18,24,20,0.18);
+    }
+    html.light .pricing-page .mobile-nav a {
+      color: var(--text-1);
+      border-bottom-color: rgba(18,24,20,0.10);
+    }
+    html.light .pricing-page .mobile-nav a:hover,
+    html.light .pricing-page .mobile-nav a.active {
+      color: var(--green);
+    }
+    html.light .pricing-page .sticky-mobile-bar {
+      background: #fff;
+      border-top-color: var(--border);
+    }
+    html.light .pricing-page .sticky-mobile-bar a {
+      color: var(--text-1);
+    }
+    html.light .pricing-page .sticky-mobile-bar a:first-child {
+      color: #fff;
+    }
+    html.dark body.pricing-page {
+      --tct-ink: #f8fafc;
+      --tct-muted: rgba(248,250,252,0.70);
+      --tct-faint: rgba(248,250,252,0.46);
+      --tct-line: rgba(255,255,255,0.10);
+      --tct-panel: rgba(255,255,255,0.04);
+      --tct-panel-strong: rgba(255,255,255,0.07);
+      --tct-green: #00dc82;
+      --tct-shadow: 0 28px 90px rgba(0,0,0,0.35);
+      --bg: #000;
+      --green: #00dc82;
+      --green-dim: rgba(0,220,130,0.12);
+      --green-glow: rgba(0,220,130,0.12);
+      --border: rgba(255,255,255,0.08);
+      --surface: rgba(255,255,255,0.04);
+      --surface-hover: rgba(255,255,255,0.07);
+      --text-1: #fff;
+      --text-2: #a1a1aa;
+      --text-3: #71717a;
+      background: #000;
+      color: var(--text-2);
+    }
+    html.dark .pricing-page .header {
+      background: rgba(0,0,0,0.78);
+      border-bottom-color: var(--border);
+    }
+    html.dark .pricing-page .header.scrolled {
+      background: rgba(0,0,0,0.90);
+    }
+    html.dark .pricing-page .logo,
+    html.dark .pricing-page .logo-text,
+    html.dark .pricing-page .logo .logo-text {
+      color: #fff;
+    }
+    html.dark .pricing-page .hero,
+    html.dark .pricing-page .section,
+    html.dark .pricing-page .funnel-transition {
+      background: transparent;
+    }
+    html.dark .pricing-page .pricing-card,
+    html.dark .pricing-page .risk-item,
+    html.dark .pricing-page .stat,
+    html.dark .pricing-page .bento-item,
+    html.dark .pricing-page .faq-item {
+      background: rgba(255,255,255,0.04);
+      border-color: var(--border);
+    }
+    html.dark .pricing-page .pricing-card.featured {
+      background: rgba(0,220,130,0.04);
+      border-color: rgba(0,220,130,0.20);
+    }
+    html.dark .pricing-page .matrix-table,
+    html.dark .pricing-page .matrix-table tr {
+      background: rgba(255,255,255,0.035);
+    }
+    html.dark .pricing-page .plan-switch-option {
+      background: rgba(255,255,255,0.05);
+      color: var(--text-1);
+      box-shadow: none;
+    }
+    html.dark .pricing-page .plan-switch-option span {
+      color: var(--text-2);
+    }
+    html.dark .pricing-page .plan-switch-option.is-active,
+    html.dark .pricing-page .menu-toggle,
+    html.dark .pricing-page .header-cta {
+      background: var(--green) !important;
+      color: #00140b !important;
+    }
+    html.dark .pricing-page .plan-switch-option.is-active span {
+      color: rgba(0,20,11,0.76);
+    }
+    html.dark .pricing-page .plan-visual {
+      background: #080808;
+      border-color: var(--border);
+    }
+    html.dark .pricing-page .btn-secondary {
+      background: var(--surface);
+      color: #fff;
+      border-color: var(--border);
+    }
+    html.dark .pricing-page .mobile-nav {
+      background: rgba(8,12,10,0.98) !important;
+      border-color: rgba(0,220,130,0.18) !important;
+      box-shadow: 0 26px 70px rgba(0,0,0,0.34) !important;
+    }
+    html.dark .pricing-page .mobile-nav a {
+      color: #fff !important;
+      border-bottom-color: rgba(255,255,255,0.10) !important;
+    }
+    html.dark .pricing-page .mobile-nav a:hover,
+    html.dark .pricing-page .mobile-nav a.active {
+      color: var(--green) !important;
+    }
+    html.dark .pricing-page .sticky-mobile-bar {
+      background: #000;
+      border-top-color: var(--border);
+    }
+    html.dark .pricing-page .sticky-mobile-bar a:first-child {
+      color: #00140b;
+    }
+    html.dark .pricing-page .footer {
+      background: #000;
+      border-top-color: var(--border);
+    }
+    .theme-toggle {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 9999;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+      color: var(--text-2);
+    }
+    .theme-toggle:hover {
+      transform: scale(1.08);
+      border-color: var(--green);
+      color: var(--green);
+    }
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      transition: stroke 0.3s;
+    }
+    .theme-toggle .icon-sun { display: block; }
+    .theme-toggle .icon-moon { display: none; }
+    html.light .theme-toggle .icon-sun { display: none; }
+    html.light .theme-toggle .icon-moon { display: block; }
+    @media (max-width: 768px) {
+      .theme-toggle {
+        bottom: calc(18px + env(safe-area-inset-bottom));
+        left: 16px;
+      }
+    }
   </style>
 </head>
 <body class="funnel-page pricing-page" style="overflow-x:hidden">
@@ -341,7 +637,7 @@
       <span class="logo-text">The Call<span>Taker</span></span>
     </a>
     <a href="#pricing-cards" class="header-cta">Choose Plan</a>
-    <button class="menu-toggle" aria-label="Menu"><span class="menu-lines"><span></span><span></span><span></span></span><strong>Menu</strong></button>
+    <button class="menu-toggle" aria-label="Menu"><span class="menu-glyph" aria-hidden="true">&#9776;</span><span class="menu-lines"><span></span><span></span><span></span></span><strong>Menu</strong></button>
   </div>
 </header>
 
@@ -349,7 +645,6 @@
   <a href="/#features">Features</a>
   <a href="pricing.html">Pricing</a>
   <a href="/faq.html">FAQ</a>
-  <a href="tel:+16292699697">Call Gideon Live</a>
   <a href="#pricing-cards" class="btn btn-primary btn-lg">Choose Plan</a>
 </nav>
 
@@ -368,7 +663,7 @@
       <div class="section-label" style="justify-content: center;">Pricing</div>
       <h1 style="font-size: clamp(36px, 6vw, 56px); font-weight: 800; color: var(--text-1); letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 16px;">Choose your call coverage.</h1>
       <p style="font-size: 18px; color: var(--text-2); max-width: 640px; margin: 0 auto 16px; line-height: 1.6;">Start with after-hours capture, add 24/7 call coverage, or build a custom setup around how your team handles calls.</p>
-      <p style="font-size: 13px; color: var(--text-3);">14-day Square trial &middot; $0 due today &middot; Selected monthly plan starts after 14 days unless canceled</p>
+      <p style="font-size: 13px; color: var(--text-3);">No payment collected on this page &middot; Wallace confirms the plan and payment link before launch</p>
     </div>
   </div>
 </section>
@@ -411,8 +706,8 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Simple appointment request capture</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Best for closed-hours coverage only</div>
         </div>
-        <a href="https://square.link/u/cSiXiuLx" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
-        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $97/mo starts after 14 days unless canceled.</div>
+        <a href="/signup.html?plan=afterhours&source=pricing" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Request Setup Review</a>
+        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">No payment collected here. Wallace confirms fit and sends the correct payment link after review.</div>
       </div>
 
       <!-- 24/7 Call Coverage (Featured) -->
@@ -432,8 +727,8 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Hot-lead team notifications</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Monthly call summary report</div>
         </div>
-        <a href="https://square.link/u/TQseWnAY" class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
-        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $497/mo starts after 14 days unless canceled.</div>
+        <a href="/signup.html?plan=full247&source=pricing" class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Request Setup Review</a>
+        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">No payment collected here. Wallace confirms fit and sends the correct payment link after review.</div>
       </div>
 
       <!-- Custom Call Coverage -->
@@ -455,16 +750,16 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Quarterly optimization review</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Founder/operator review</div>
         </div>
-        <a href="https://square.link/u/RSjzTrCn" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
+        <a href="/signup.html?plan=premium&source=pricing" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Request Setup Review</a>
         <a href="tel:+16292699697" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: 10px;">Talk Through Setup</a>
-        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $997+/mo starts after 14 days unless canceled.</div>
+        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">No payment collected here. Wallace confirms fit and sends the correct payment link after review.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FEATURE MATRIX -->
-<section class="section" style="padding-top: 0;">
+<section class="section" id="plan-comparison" style="padding-top: 0;">
   <div class="wrap">
     <h2 class="section-title reveal" style="text-align: center; margin-bottom: 32px;">Compare Plans</h2>
     <p class="reveal" style="text-align:center;color:var(--text-2);max-width:640px;margin:0 auto 28px;line-height:1.6;">Compare the coverage level, follow-up support, and setup depth in each plan.</p>
@@ -472,10 +767,10 @@
       <table class="matrix-table">
         <thead>
           <tr>
-            <th>Feature</th>
-            <th>After-Hours Capture</th>
-            <th>24/7 Call Coverage</th>
-            <th>Custom Call Coverage</th>
+            <th scope="col">Feature</th>
+            <th scope="col"><span class="matrix-plan-price">$97</span><span class="matrix-plan-name">After-Hours</span></th>
+            <th scope="col"><span class="matrix-plan-price">$497</span><span class="matrix-plan-name">24/7 Calls</span></th>
+            <th scope="col"><span class="matrix-plan-price">$997+</span><span class="matrix-plan-name">Custom</span></th>
           </tr>
         </thead>
         <tbody>
@@ -492,7 +787,7 @@
           <tr><td class="matrix-feature"><span class="matrix-feature-title">Clear owner notifications</span><span class="matrix-feature-help">Urgent jobs, quote requests, service calls, and owner-level issues can be routed clearly.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
           <tr><td class="matrix-feature"><span class="matrix-feature-title">Call review notes when available</span><span class="matrix-feature-help">The custom setup can include captured call notes, follow-up notes, and setup status in one place.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
           <tr><td class="matrix-feature"><span class="matrix-feature-title">Founder/operator review</span><span class="matrix-feature-help">The higher-tier setup gets founder/operator review before the system is treated as ready.</span></td><td class="matrix-dash">&mdash;</td><td class="matrix-dash">&mdash;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
-          <tr><td class="matrix-feature"><span class="matrix-feature-title">14-day trial</span><span class="matrix-feature-help">Start with $0 due today, then continue on the selected plan unless canceled before renewal.</span></td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
+          <tr><td class="matrix-feature"><span class="matrix-feature-title">Setup review</span><span class="matrix-feature-help">Request review first. Payment link and launch timing are confirmed before Gideon goes live.</span></td><td class="matrix-check">&#10003;</td><td class="matrix-check">&#10003;</td><td class="matrix-check matrix-premium">&#10003;</td></tr>
         </tbody>
       </table>
     </div>
@@ -508,7 +803,7 @@
       <div class="risk-item">
         <div class="risk-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <div class="risk-title">14-Day Trial</div>
-        <div class="risk-desc">Start through Square. Wallace reviews setup before Gideon goes live.</div>
+        <div class="risk-desc">Request setup review first. Wallace confirms the right plan and payment link before Gideon goes live.</div>
       </div>
       <div class="risk-item">
         <div class="risk-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
@@ -561,7 +856,7 @@
 <section style="padding: 60px 0 80px; text-align: center; border-top: 1px solid var(--border);">
   <div class="wrap">
     <h2 class="reveal" style="font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: var(--text-1); letter-spacing: -0.03em; margin-bottom: 12px;">Stop Letting Calls Slip Through.</h2>
-    <p class="reveal" style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Start your 14-day trial through secure Square link. Wallace reviews setup before Gideon goes live.</p>
+    <p class="reveal" style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Request setup review. Wallace confirms plan fit, payment link, and call-flow details before Gideon goes live.</p>
     <div class="reveal" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
       <a href="#pricing-cards" class="btn btn-green btn-lg">Choose Plan</a>
       <a href="tel:+16292699697" class="btn btn-secondary btn-lg">Call Gideon Live</a>
@@ -600,11 +895,42 @@
 
 <!-- MOBILE BAR -->
 <div class="sticky-mobile-bar">
-  <a href="tel:+16292699697"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call Gideon Live</a>
-  <a href="#pricing-cards" style="border-left:1px solid var(--border);">Choose Plan</a>
+  <a href="#pricing-cards">Compare Plans</a>
+  <a href="/signup.html?plan=full247&source=pricing-sticky" style="border-left:1px solid var(--border);">Request Review</a>
 </div>
 
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+
 <script src="script.js"></script>
+<script>
+(function () {
+  var menuToggle = document.querySelector('.pricing-page .menu-toggle');
+  var mobileNav = document.querySelector('.pricing-page .mobile-nav');
+  if (!menuToggle || !mobileNav) return;
+
+  function setOpen(open) {
+    menuToggle.classList.toggle('open', open);
+    mobileNav.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.addEventListener('click', function () {
+    setOpen(!mobileNav.classList.contains('open'));
+  });
+
+  mobileNav.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () { setOpen(false); });
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') setOpen(false);
+  });
+})();
+</script>
 <script>
 (function () {
   document.querySelectorAll('.pricing-card .btn, .header-cta, .sticky-mobile-bar a').forEach(function (button) {
@@ -669,6 +995,36 @@
   });
 })();
 </script>
+<script>
+(function () {
+  var toggle = document.getElementById('themeToggle');
+  if (!toggle) return;
+
+  function getSavedTheme() {
+    try { return localStorage.getItem('tct-theme'); } catch (error) { return null; }
+  }
+
+  function saveTheme(theme) {
+    try { localStorage.setItem('tct-theme', theme); } catch (error) {}
+  }
+
+  function applyTheme(theme) {
+    var isLight = theme !== 'dark';
+    document.documentElement.classList.toggle('light', isLight);
+    document.documentElement.classList.toggle('dark', !isLight);
+    toggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    toggle.setAttribute('aria-pressed', isLight ? 'false' : 'true');
+  }
+
+  applyTheme(getSavedTheme() || 'light');
+
+  toggle.addEventListener('click', function () {
+    var nextTheme = document.documentElement.classList.contains('light') ? 'dark' : 'light';
+    applyTheme(nextTheme);
+    saveTheme(nextTheme);
+  });
+})();
+</script>
 
 <!-- === FLOATING WIDGET === -->
 <!-- FLOATING CALLBACK WIDGET -->
@@ -684,9 +1040,6 @@
       <p style="font-size: 12px; color: var(--text-2);">Call the demo line when you are ready.</p>
     </div>
   </div>
-  <button class="float-cb-btn pulse" onclick="toggleFloatPanel()" aria-label="Request callback">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-  </button>
 </div>
 
 <!-- EXIT INTENT POPUP -->

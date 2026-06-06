@@ -16,7 +16,7 @@
   // ── Config ──
   var VARIANT = window.TCT_UI_VARIANT || 'A';
   var CTA_ORIGINAL_TEXT = '';
-  var CTA_ESCALATED_TEXT = 'Start Free Pilot \u2014 3 Spots Left';
+  var CTA_ESCALATED_TEXT = 'Request Setup Review \u2014 3 Spots Left';
   var VARIANT_B_ESCALATED_TEXT = 'Claim Your Spot \u2014 Only 3 Left';
 
   // ── State ──
@@ -80,7 +80,7 @@
     }
 
     var ctaHref = '/pilot/';
-    var ctaText = 'Start Free Pilot \u2192';
+    var ctaText = 'Request Setup Review \u2192';
     if (_headerCta) {
       ctaHref = _headerCta.href || ctaHref;
       ctaText = _headerCta.textContent.trim() || ctaText;
@@ -105,22 +105,8 @@
     header.parentNode.insertBefore(overlay, header.nextSibling);
   }
 
-  // ── 3. Inject mobile call bar if missing ──
-  var callBar = document.querySelector('.mobile-call-bar');
-  if (!callBar) {
-    callBar = document.createElement('a');
-    callBar.className = 'mobile-call-bar';
-    callBar.href = 'tel:+16157845747';
-    callBar.innerHTML =
-      '<div class="call-bar-main">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-          '<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>' +
-        '</svg>' +
-        'Call Our AI Demo' +
-      '</div>' +
-      '<span style="font-size:.75rem;font-weight:500;opacity:.85">(615) 784-5747 \u2014 Hear it live</span>';
-    document.body.appendChild(callBar);
-  }
+  // ── 3. Mobile call bar intentionally disabled ──
+  // The public buyer path now uses explicit setup/demo links instead of injected phone UI.
 
   // ── 4. Inject header CTA if missing ──
   var headerCta = header.querySelector('.header-cta');

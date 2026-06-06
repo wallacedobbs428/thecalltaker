@@ -53,7 +53,6 @@
 <meta name="twitter:title" content="FAQ | The Call Taker">
 <meta name="twitter:description" content="Everything you need to know about Gideon answering calls for your business.">
 <link rel="canonical" href="https://thecalltaker.com/faq.html">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
@@ -67,7 +66,7 @@
 
 <!-- JSON-LD FAQPage Schema -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is The Call Taker?","acceptedAnswer":{"@type":"Answer","text":"The Call Taker is AI call answering for service businesses. Gideon answers missed and after-hours calls, collects caller details, and sends your team a clear summary."}},{"@type":"Question","name":"How does it work?","acceptedAnswer":{"@type":"Answer","text":"You forward your business line to us. When a call comes in, Gideon answers, asks the questions you approve, and sends your team the caller details and next step."}},{"@type":"Question","name":"Who is The Call Taker built for?","acceptedAnswer":{"@type":"Answer","text":"Any service business that loses money when calls are missed. HVAC companies, plumbers, electricians, roofers, dentists, law firms, locksmiths, towing companies, pest control, veterinarians, med spas, property managers, and more."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"Setup depends on the plan. Wallace reviews your services, hours, call questions, and follow-up details before launch."}},{"@type":"Question","name":"What do I need to get started?","acceptedAnswer":{"@type":"Answer","text":"Your business phone number, services, hours, service area, and how you want calls handled. Custom tool connections are reviewed before we promise them."}},{"@type":"Question","name":"How does the 14 day trial work?","acceptedAnswer":{"@type":"Answer","text":"Start through secure Square link. Wallace reviews setup, confirms your business rules, configures the call questions, and gets approval before launch."}},{"@type":"Question","name":"How much does The Call Taker cost?","acceptedAnswer":{"@type":"Answer","text":"After-Hours Capture is $97 per month. 24/7 Call Coverage is $497 per month and adds day, night, and overflow call answering, fast follow-up support, hot-lead notifications, appointment request capture, and monthly reporting. Custom Call Coverage starts at $997+ per month and adds custom call-flow design, approved tool connections, reminder and follow-up support, clear owner notifications, and founder review."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is The Call Taker?","acceptedAnswer":{"@type":"Answer","text":"The Call Taker is AI call answering for service businesses. Gideon answers missed and after-hours calls, collects caller details, and sends your team a clear summary."}},{"@type":"Question","name":"How does it work?","acceptedAnswer":{"@type":"Answer","text":"You forward your business line to us. When a call comes in, Gideon answers, asks the questions you approve, and sends your team the caller details and next step."}},{"@type":"Question","name":"Who is The Call Taker built for?","acceptedAnswer":{"@type":"Answer","text":"Any service business that loses money when calls are missed. HVAC companies, plumbers, electricians, roofers, dentists, law firms, locksmiths, towing companies, pest control, veterinarians, med spas, property managers, and more."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"Setup depends on the plan. Wallace reviews your services, hours, call questions, and follow-up details before launch."}},{"@type":"Question","name":"What do I need to get started?","acceptedAnswer":{"@type":"Answer","text":"Your business phone number, services, hours, service area, and how you want calls handled. Custom tool connections are reviewed before we promise them."}},{"@type":"Question","name":"How does setup review work?","acceptedAnswer":{"@type":"Answer","text":"Choose a plan, request setup review, and Wallace confirms your business rules, call questions, launch timing, and the correct payment link before Gideon goes live."}},{"@type":"Question","name":"How much does The Call Taker cost?","acceptedAnswer":{"@type":"Answer","text":"After-Hours Capture is $97 per month. 24/7 Call Coverage is $497 per month and adds day, night, and overflow call answering, fast follow-up support, hot-lead notifications, appointment request capture, and monthly reporting. Custom Call Coverage starts at $997+ per month and adds custom call-flow design, approved tool connections, reminder and follow-up support, clear owner notifications, and founder review."}}]}
 </script>
 
 <style>
@@ -94,6 +93,20 @@
   --mono: 'Inter', 'SF Mono', monospace;
 }
 
+html.dark {
+  --bg: #080a08;
+  --surface: #101611;
+  --surface-2: #172019;
+  --border: rgba(230,245,235,0.10);
+  --border-bright: rgba(42,157,122,0.24);
+  --t100: #f7fbf8;
+  --t70: rgba(247,251,248,0.76);
+  --t40: rgba(247,251,248,0.54);
+  --t20: rgba(247,251,248,0.30);
+  --t10: rgba(247,251,248,0.16);
+  --t06: rgba(247,251,248,0.08);
+}
+
 html { scrollbar-width: none; scroll-behavior: smooth; }
 html::-webkit-scrollbar { display: none; }
 
@@ -114,6 +127,10 @@ body::after {
   pointer-events: none; z-index: 9999;
   opacity: 0.06; mix-blend-mode: multiply;
 }
+html.dark body::after {
+  opacity: 0.12;
+  mix-blend-mode: screen;
+}
 
 /* NAV */
 .nav {
@@ -125,6 +142,10 @@ body::after {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(18,24,20,0.10);
+}
+html.dark .nav {
+  background: rgba(8,10,8,0.90);
+  border-bottom-color: rgba(230,245,235,0.10);
 }
 .nav-logo {
   font-family: var(--serif);
@@ -198,6 +219,11 @@ body::after {
   pointer-events: none;
   transform: translateY(-12px);
   transition: opacity 0.2s ease, transform 0.2s ease;
+}
+html.dark .mobile-nav {
+  background: rgba(8,12,10,0.98);
+  border-color: rgba(42,157,122,0.22);
+  box-shadow: 0 26px 70px rgba(0,0,0,0.34);
 }
 .mobile-nav.open {
   opacity: 1;
@@ -282,6 +308,9 @@ body::after {
   border-bottom: 1px solid var(--border);
   overflow: hidden;
   background: rgba(255,255,255,0.62);
+}
+html.dark .faq-item {
+  background: rgba(255,255,255,0.035);
 }
 .faq-item:first-of-type {
   border-top: 1px solid var(--border);
@@ -409,12 +438,93 @@ body::after {
 .footer-col a:hover { color: var(--t100); }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--t06); }
 .footer-bottom p { font-size: 12px; color: var(--t20); }
+.theme-toggle {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  transition: background 0.3s, border-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  color: var(--t40);
+}
+.theme-toggle:hover {
+  transform: scale(1.08);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  transition: stroke 0.3s;
+}
+.theme-toggle .icon-sun { display: block; }
+.theme-toggle .icon-moon { display: none; }
+html.light .theme-toggle .icon-sun { display: none; }
+html.light .theme-toggle .icon-moon { display: block; }
 @media(max-width:768px) {
   .page-hero { padding: 120px 20px 60px; }
+  .page-hero,
+  .faq-container,
+  .faq-cta {
+    width: 100%;
+    max-width: 100vw;
+  }
+  .page-hero h1,
+  .page-hero p,
+  .faq-question h3,
+  .faq-answer p,
+  .faq-cta h2,
+  .faq-cta p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+  .page-hero h1 {
+    max-width: 320px;
+    font-size: clamp(1.8rem, 8vw, 2.2rem);
+    line-height: 1.08;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .faq-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .faq-item,
+  .faq-question,
+  .faq-answer,
+  .faq-answer p {
+    width: 100%;
+    min-width: 0;
+  }
+  .faq-question h3 {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .faq-answer p {
+    display: block;
+    white-space: normal;
+  }
   .faq-cta { padding: 48px 20px; }
   .faq-section { margin-bottom: 42px; }
   .faq-question h3 { font-size: 15px; }
   .footer-bottom { flex-direction: column; gap: 8px; }
+  .theme-toggle {
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    left: 16px;
+  }
 }
 </style>
 </head>
@@ -433,7 +543,7 @@ body::after {
   <a href="/pricing.html">Pricing</a>
   <a href="/faq.html">FAQ</a>
   <a href="tel:+16292699697">Call Gideon Live</a>
-  <a href="https://square.link/u/S305ewBr" class="mobile-nav-cta">Start Free Trial</a>
+  <a href="/pricing.html" class="mobile-nav-cta">See Plans</a>
 </nav>
 
 <!-- HERO -->
@@ -518,11 +628,11 @@ body::after {
 
     <div class="faq-item">
       <div class="faq-question" onclick="toggleFaq(this)">
-        <h3>Is there really a free 14 day trial?</h3>
+        <h3>How does setup review work?</h3>
         <span class="faq-toggle">+</span>
       </div>
       <div class="faq-answer">
-        <p>Start through secure Square link. Wallace reviews setup, confirms your business rules, configures the call questions, and gets your approval before launch.</p>
+        <p>Choose a plan, request setup review, and Wallace confirms your business rules, call questions, launch timing, and the correct payment link before Gideon goes live.</p>
       </div>
     </div>
 
@@ -721,13 +831,13 @@ body::after {
 <div class="sec-divider"></div>
 <section class="faq-cta">
   <h2>Still have questions?</h2>
-  <p>Call Gideon live and hear the experience yourself. Or start your 14 day trial through Square and let Wallace review your setup.</p>
+  <p>Call Gideon live and hear the experience yourself. Or choose a plan and request setup review before anything goes live.</p>
   <a href="tel:+16292699697" class="cta-phone">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     (629) 269-9697
   </a>
   <br>
-  <a href="https://square.link/u/S305ewBr" class="cta-pilot">Start your 14 day trial &rarr;</a>
+  <a href="/signup.html?plan=full247&source=faq" class="cta-pilot">Request setup review &rarr;</a>
 </section>
 
 <!-- FOOTER -->
@@ -742,7 +852,7 @@ body::after {
       <a href="/#features">Features</a>
       <a href="/#pricing">Pricing</a>
       <a href="/#how">How It Works</a>
-      <a href="https://square.link/u/S305ewBr">Start Free Trial</a>
+      <a href="/pricing.html">See Plans</a>
       <a href="/faq.html">FAQ</a>
     </div>
     <div class="footer-col">
@@ -764,6 +874,11 @@ body::after {
     <p style="display:flex;align-items:center;gap:6px;"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;"></span>Built in Nashville, TN</p>
   </div>
 </footer>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
 
 <script>
 function toggleFaq(el) {
@@ -804,6 +919,35 @@ document.querySelectorAll('.faq-section').forEach(function(section) {
 
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') setOpen(false);
+  });
+})();
+
+(function () {
+  var toggle = document.getElementById('themeToggle');
+  if (!toggle) return;
+
+  function getSavedTheme() {
+    try { return localStorage.getItem('tct-theme'); } catch (error) { return null; }
+  }
+
+  function saveTheme(theme) {
+    try { localStorage.setItem('tct-theme', theme); } catch (error) {}
+  }
+
+  function applyTheme(theme) {
+    var isLight = theme !== 'dark';
+    document.documentElement.classList.toggle('light', isLight);
+    document.documentElement.classList.toggle('dark', !isLight);
+    toggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    toggle.setAttribute('aria-pressed', isLight ? 'false' : 'true');
+  }
+
+  applyTheme(getSavedTheme() || 'light');
+
+  toggle.addEventListener('click', function () {
+    var nextTheme = document.documentElement.classList.contains('light') ? 'dark' : 'light';
+    applyTheme(nextTheme);
+    saveTheme(nextTheme);
   });
 })();
 </script>
