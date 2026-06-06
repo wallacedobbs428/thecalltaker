@@ -62,27 +62,27 @@ assert.strictEqual(
 
 [
   ["After-Hours Capture", 97],
-  ["Revenue Recovery System", 497],
-  ["Operational Infrastructure", 997],
+  ["24/7 Call Coverage", 497],
+  ["Custom Call Coverage", 997],
 ].forEach(([planName, price]) => {
   assert.ok(checkoutHtml.includes(planName), `checkout should display ${planName}`);
   assert.ok(checkoutHtml.includes(`price: ${price}`), `checkout should configure ${planName} at $${price}/mo`);
 });
 
 assert.ok(
-  checkoutHtml.includes("https://square.link/u/2hfmRPY7"),
+  checkoutHtml.includes("https://square.link/u/cSiXiuLx"),
   "checkout should use the configured Square link for the public $97 trial path"
 );
 
 assert.ok(
-  checkoutHtml.includes("full247: 'https://square.link/u/S305ewBr'") &&
-    checkoutHtml.includes("premium: 'https://square.link/u/OpwWF9Sa'"),
+  checkoutHtml.includes("https://square.link/u/TQseWnAY") &&
+    checkoutHtml.includes("https://square.link/u/RSjzTrCn"),
   "checkout should use the configured Square links for the public $497 and $997 trial paths"
 );
 
 assert.ok(
-  checkoutHtml.includes("Revenue Recovery System: 14 days free, then $497/mo") &&
-    checkoutHtml.includes("Operational Infrastructure: 14 days free, then $997/mo"),
+  checkoutHtml.includes("24/7 Call Coverage: 14 days free, then $497/mo") &&
+    checkoutHtml.includes("Custom Call Coverage: 14 days free, then $997+/mo"),
   "checkout should state post-trial monthly billing terms before Square opens"
 );
 
@@ -122,11 +122,11 @@ assert.ok(
 const pricingHtml = read("website/pricing.html");
 
 [
-  "Each column adds a larger operating layer",
-  "Builds different call paths for different jobs",
-  "Sets up approved follow-up steps",
-  "Sends the right summary to the right person",
-  "Owner view of captured calls and follow-up notes as available",
+  "Compare the coverage level, follow-up support, and setup depth in each plan.",
+  "Custom call paths for different jobs",
+  "Approved follow-up setup",
+  "Clear owner notifications",
+  "Call review notes when available",
 ].forEach((expected) => {
   assert.ok(pricingHtml.includes(expected), `pricing should explain tier differences beyond checkmarks: ${expected}`);
 });
@@ -158,9 +158,9 @@ assert.strictEqual(
 );
 
 [
-  "after-hours-capture-v2.jpg",
-  "revenue-recovery-system-v2.jpg",
-  "operational-infrastructure-v2.jpg",
+  "after-hours-capture-v3.png",
+  "247-call-coverage-v3.png",
+  "custom-call-coverage-v3.png",
 ].forEach((expected) => {
   assert.ok(pricingHtml.includes(expected), `pricing should use the upgraded plan visual: ${expected}`);
 });
