@@ -22,9 +22,9 @@ const publicTrialPages = [
 
 const publicTrialHtml = publicTrialPages.map(read).join("\n");
 const squareCheckout = {
-  afterhours: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/hJjmqQxRSZpjYjmSHgAXinmluuNZY",
-  full247: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/1tWHNkKGJtpgOJO1AfVRb2S1N37YY",
-  premium: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/59zmn4oORY93mWoxst60LnrhuEVZY"
+  afterhours: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY",
+  full247: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
+  premium: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY"
 };
 
 assert.strictEqual(

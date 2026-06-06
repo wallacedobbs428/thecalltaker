@@ -1,29 +1,43 @@
 # Right Lane Square QA Handoff
 
-Date: 2026-05-31
+Date: 2026-06-06
 
 ## Root Cause
 
 The old Square payment links carried a provider-side checkout return URL back to `https://thecalltaker.com/client/onboarding.html`. The repo-side click hijacker was already removed; the remaining failure was Square link configuration.
 
-Left Builder Agent used the connected Square credentials to create fresh Square payment links for all three current pricing tiers. The new links omit any checkout redirect URL and provider read-back shows `checkout_redirect_url: null` for each new link.
+RIGHT used the connected Square credentials to create fresh Square payment links for all three current pricing tiers. The new links omit any checkout redirect URL, provider read-back shows `checkout_redirect_url: null` for each new link, and the Square line-item/description copy includes the 2-minute Gideon AI setup-call reassurance.
 
 ## Provider Action Completed
 
-No payment was made. No card was entered. No customer message, deploy, DNS change, or secret output occurred.
+No payment was made. No card was entered. No customer message, DNS change, or secret output occurred.
 
 Fresh Square links created:
 
 | Plan | New button href | Square final checkout URL observed |
 | --- | --- | --- |
-| $97 After-Hours Capture | `https://square.link/u/cSiXiuLx` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/hJjmqQxRSZpjYjmSHgAXinmluuNZY` |
-| $497 24/7 Call Coverage | `https://square.link/u/TQseWnAY` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/1tWHNkKGJtpgOJO1AfVRb2S1N37YY` |
-| $997 Premium / Concierge / Priority Setup | `https://square.link/u/RSjzTrCn` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/59zmn4oORY93mWoxst60LnrhuEVZY` |
+| $97 After-Hours Capture | `https://square.link/u/oHYfrPux` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY` |
+| $497 24/7 Call Coverage | `https://square.link/u/Z65m9l44` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY` |
+| $997 Premium / Concierge / Priority Setup | `https://square.link/u/Xm0k4F4D` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY` |
 
-Pricing files changed:
+## Setup Call Copy
 
+Provider read-back confirmed each new link has:
+
+- Line-item title ending in `AI setup call within 2 minutes`.
+- Description: `After checkout, Gideon AI calls within 2 minutes to ask the questions needed for same-day setup.`
+- `checkout_redirect_url: null`.
+
+The actual post-payment automation from verified Square payment event to outbound setup call is still unverified. Do not treat checkout copy alone as proof that the 2-minute call automation has fired.
+
+Public buyer-path files changed:
+
+- `website/index.html`
 - `website/pricing.html`
-- `pricing.html`
+- `website/demo.html`
+- `website/faq.html`
+- `website/checkout.html`
+- `website/pay.html`
 
 Local preview:
 
@@ -56,8 +70,8 @@ Square payment-link images are not attached. The public Square Checkout API path
 
 ## Pass Criteria
 
-- All three pricing buttons land on Square checkout and remain there.
-- New Square links show the right plan names, $0 trial today, and monthly renewal terms.
+- All three pricing buttons land on the new Square checkout pages and remain there.
+- New Square links show the right plan names, $0 trial today, monthly renewal terms, and AI setup-call wording.
 - No active pricing href uses the old Square links.
 - No active pricing href or pricing script references `/client/onboarding.html`, `transactionId`, or `orderId`.
 - No checkout completion or payment is attempted during QA.

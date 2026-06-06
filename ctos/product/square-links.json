@@ -1,9 +1,9 @@
 {
   "policy": "Square links are provider-sensitive. Use only verified Square provider URLs. Do not treat a checkout click as payment success, and do not complete payments from the repair adapter.",
   "last_agent_attempt": {
-    "date": "2026-05-31",
-    "agent": "left-builder-agent",
-    "scope": "used Square credentials for read-only inspection, created fresh payment links for all three current pricing tiers, and installed the hrefs in website/pricing.html and pricing.html",
+    "date": "2026-06-06",
+    "agent": "right-lane",
+    "scope": "used Square credentials for read-only inspection, created fresh payment links for all three current pricing tiers with visible 2-minute Gideon AI setup-call wording, and installed final checkout.square.site URLs in public buyer-path files",
     "SQUARE_ACCESS_TOKEN": "present",
     "SQUARE_LOCATION_ID": "present",
     "SQUARE_ENVIRONMENT": "production",
@@ -37,10 +37,11 @@
   "links": [
     {
       "plan": "$97 After-Hours Capture",
-      "url": "https://square.link/u/cSiXiuLx",
-      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/hJjmqQxRSZpjYjmSHgAXinmluuNZY",
+      "url": "https://square.link/u/oHYfrPux",
+      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY",
       "status": "created_installed_needs_right_lane_verification",
       "checkout_redirect_url": null,
+      "setup_call_copy": "After checkout, Gideon AI calls within 2 minutes to ask the questions needed for same-day setup.",
       "old_url_replaced": "https://square.link/u/2hfmRPY7",
       "replacement_targets": [
         "website/pricing.html:357",
@@ -50,10 +51,11 @@
     },
     {
       "plan": "$497 24/7 Call Coverage",
-      "url": "https://square.link/u/TQseWnAY",
-      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/1tWHNkKGJtpgOJO1AfVRb2S1N37YY",
+      "url": "https://square.link/u/Z65m9l44",
+      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
       "status": "created_installed_needs_right_lane_verification",
       "checkout_redirect_url": null,
+      "setup_call_copy": "After checkout, Gideon AI calls within 2 minutes to ask the questions needed for same-day setup.",
       "old_url_replaced": "https://square.link/u/S305ewBr",
       "replacement_targets": [
         "website/pricing.html:378",
@@ -63,10 +65,11 @@
     },
     {
       "plan": "$997 Premium / Concierge / Priority Setup",
-      "url": "https://square.link/u/RSjzTrCn",
-      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/59zmn4oORY93mWoxst60LnrhuEVZY",
+      "url": "https://square.link/u/Xm0k4F4D",
+      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY",
       "status": "created_installed_needs_right_lane_verification",
       "checkout_redirect_url": null,
+      "setup_call_copy": "After checkout, Gideon AI calls within 2 minutes to ask the questions needed for same-day setup.",
       "old_url_replaced": "https://square.link/u/OpwWF9Sa",
       "replacement_targets": [
         "website/pricing.html:401",
@@ -89,6 +92,7 @@
   },
   "forbidden_assumptions": [
     "Do not treat Square click as payment success.",
+    "Do not treat Square checkout copy as proof that the post-payment setup-call automation has fired.",
     "Do not treat transactionId/orderId query params as confirmed revenue without provider confirmation.",
     "Do not add repo-side redirect logic to hide a provider-broken payment link.",
     "Do not call Square Payments API or charge a card from the repair adapter.",

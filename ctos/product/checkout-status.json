@@ -1,8 +1,8 @@
 {
-  "status": "ready_for_deploy_image_parity_waived",
-  "owner_agent": "left-builder-agent",
-  "updated_at": "2026-05-31T11:52:30-05:00",
-  "current_truth": "Website-side pricing checkout is fixed. Square credentials were available through the local ops env file. Left Builder Agent created fresh Square payment links for all three current pricing tiers and installed them in both pricing files. Provider read-back shows the new links have no checkout redirect URL. Wallace explicitly waived Square payment-link image parity on 2026-05-31 and approved deployment without checkout images.",
+  "status": "square_checkout_copy_fixed_setup_call_automation_unverified",
+  "owner_agent": "right-lane",
+  "updated_at": "2026-06-06T13:31:55-05:00",
+  "current_truth": "Website-side pricing checkout is fixed. Square credentials were available through the local ops env file. RIGHT created fresh Square payment links for all three current pricing tiers with visible 'AI setup call within 2 minutes' line-item wording and description text. Provider read-back shows the new links have no checkout redirect URL. Actual post-payment Gideon/Bland setup-call automation is not yet verified from a Square payment event source.",
   "square_provider_repair_adapter": {
     "spec": "ctos/integrations/square-provider-repair-spec.json",
     "credential_connection_steps": "docs/SQUARE-CREDENTIAL-CONNECTION-STEPS.md",
@@ -36,31 +36,34 @@
   "new_square_links": {
     "pricing_97_start_free_trial": {
       "plan": "$97 After-Hours Capture",
-      "href": "https://square.link/u/cSiXiuLx",
-      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/hJjmqQxRSZpjYjmSHgAXinmluuNZY",
+      "href": "https://square.link/u/oHYfrPux",
+      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY",
       "checkout_redirect_url": null,
-      "status": "created_installed_needs_right_qa"
+      "status": "created_installed_needs_right_qa",
+      "setup_call_copy": "After checkout, Gideon AI calls within 2 minutes to ask the questions needed for same-day setup."
     },
     "pricing_497_start_free_trial": {
       "plan": "$497 24/7 Call Coverage",
-      "href": "https://square.link/u/TQseWnAY",
-      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/1tWHNkKGJtpgOJO1AfVRb2S1N37YY",
+      "href": "https://square.link/u/Z65m9l44",
+      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
       "checkout_redirect_url": null,
-      "status": "created_installed_needs_right_qa"
+      "status": "created_installed_needs_right_qa",
+      "setup_call_copy": "After checkout, Gideon AI calls within 2 minutes to ask the questions needed for same-day setup."
     },
     "pricing_997_start_free_trial": {
       "plan": "$997 Premium / Concierge / Priority Setup",
-      "href": "https://square.link/u/RSjzTrCn",
-      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/59zmn4oORY93mWoxst60LnrhuEVZY",
+      "href": "https://square.link/u/Xm0k4F4D",
+      "final_square_checkout_url": "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY",
       "checkout_redirect_url": null,
-      "status": "created_installed_needs_right_qa"
+      "status": "created_installed_needs_right_qa",
+      "setup_call_copy": "After checkout, Gideon AI calls within 2 minutes to ask the questions needed for same-day setup."
     }
   },
   "known_required_flow": {
     "homepage_start_free_trial": "/pricing or /pricing.html",
-    "pricing_97_start_free_trial": "https://square.link/u/cSiXiuLx",
-    "pricing_497_start_free_trial": "https://square.link/u/TQseWnAY",
-    "pricing_997_start_free_trial": "https://square.link/u/RSjzTrCn",
+    "pricing_97_start_free_trial": "https://square.link/u/oHYfrPux",
+    "pricing_497_start_free_trial": "https://square.link/u/Z65m9l44",
+    "pricing_997_start_free_trial": "https://square.link/u/Xm0k4F4D",
     "must_not_land_on": [
       "/client/onboarding.html",
       "transactionId",
@@ -88,6 +91,13 @@
       "status": "needs_right_lane_verification",
       "agent_next_action": "Right QA Agent opens http://127.0.0.1:8775/pricing.html, verifies the preserved pricing page, clicks all three pricing Square buttons, and confirms no route goes to onboarding or transaction/order query pages.",
       "escalation_required": false
+    },
+    {
+      "blocker_id": "square-payment-to-setup-call-automation",
+      "description": "The Square checkout pages now promise a Gideon AI setup call within 2 minutes after checkout, but the live automation from verified Square payment event to outbound setup call is not yet verified.",
+      "status": "must_verify_before_scaled_paid_traffic",
+      "agent_next_action": "Build and dry-run Square payment webhook intake, then connect the approved voice-call provider only after Wallace approves the live-call test.",
+      "escalation_required": true
     }
   ],
   "not_current_blockers_per_current_context": [
@@ -97,7 +107,7 @@
     "pricing page images"
   ],
   "local_preview_url": "http://127.0.0.1:8775/pricing.html",
-  "ai_next_action": "Deploy the approved pricing checkout fix without Square payment-link images, then verify the live pricing page and all three Square links without completing payment.",
-  "approval_needed": "Deploy approved by Wallace on 2026-05-31.",
+  "ai_next_action": "Deploy the Square setup-call checkout link update, then verify live pricing links without completing payment. Next, wire the Square payment event to the 2-minute setup-call automation in dry-run before any live call test.",
+  "approval_needed": "Square payment-link creation/editing approved by Wallace on 2026-06-06. Live post-payment call automation still needs a separate live-call test approval.",
   "action_mode": "deploy_approved"
 }
