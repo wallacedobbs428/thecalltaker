@@ -21,6 +21,11 @@ const publicTrialPages = [
 ];
 
 const publicTrialHtml = publicTrialPages.map(read).join("\n");
+const squareCheckout = {
+  afterhours: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/hJjmqQxRSZpjYjmSHgAXinmluuNZY",
+  full247: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/1tWHNkKGJtpgOJO1AfVRb2S1N37YY",
+  premium: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/59zmn4oORY93mWoxst60LnrhuEVZY"
+};
 
 assert.strictEqual(
   publicTrialHtml.includes("buy.stripe.com"),
@@ -35,19 +40,20 @@ assert.strictEqual(
 );
 
 [
-  ["website/index.html", "/checkout.html?plan=afterhours"],
-  ["website/index.html", "/checkout.html?plan=full247"],
-  ["website/index.html", "/checkout.html?plan=premium"],
-  ["website/pricing.html", "/checkout.html?plan=afterhours"],
-  ["website/pricing.html", "/checkout.html?plan=full247"],
-  ["website/pricing.html", "/checkout.html?plan=premium"],
-  ["website/demo.html", "/checkout.html?plan=afterhours"],
-  ["website/demo.html", "/checkout.html?plan=full247"],
-  ["website/demo.html", "/checkout.html?plan=premium"],
+  ["website/index.html", squareCheckout.afterhours],
+  ["website/index.html", squareCheckout.full247],
+  ["website/index.html", squareCheckout.premium],
+  ["website/pricing.html", squareCheckout.afterhours],
+  ["website/pricing.html", squareCheckout.full247],
+  ["website/pricing.html", squareCheckout.premium],
+  ["website/demo.html", squareCheckout.afterhours],
+  ["website/demo.html", squareCheckout.full247],
+  ["website/demo.html", squareCheckout.premium],
+  ["website/faq.html", squareCheckout.full247],
 ].forEach(([page, expectedHref]) => {
   assert.ok(
     read(page).includes(expectedHref),
-    `${page} should route its pricing card to ${expectedHref}`
+    `${page} should route trial CTA directly to Square checkout: ${expectedHref}`
   );
 });
 
@@ -60,36 +66,15 @@ assert.strictEqual(
   "public checkout should use Square links instead of manual PayPal or Venmo payment links"
 );
 
-[
-  ["After-Hours Capture", 97],
-  ["24/7 Call Coverage", 497],
-  ["Custom Call Coverage", 997],
-].forEach(([planName, price]) => {
-  assert.ok(checkoutHtml.includes(planName), `checkout should display ${planName}`);
-  assert.ok(checkoutHtml.includes(`price: ${price}`), `checkout should configure ${planName} at $${price}/mo`);
-});
-
 assert.ok(
-  checkoutHtml.includes("https://square.link/u/cSiXiuLx"),
-  "checkout should use the configured Square link for the public $97 trial path"
+  checkoutHtml.includes(squareCheckout.afterhours),
+  "legacy checkout redirect should use the configured Square checkout URL for the public $97 trial path"
 );
 
 assert.ok(
-  checkoutHtml.includes("https://square.link/u/TQseWnAY") &&
-    checkoutHtml.includes("https://square.link/u/RSjzTrCn"),
-  "checkout should use the configured Square links for the public $497 and $997 trial paths"
-);
-
-assert.ok(
-  checkoutHtml.includes("24/7 Call Coverage: 14 days free, then $497/mo") &&
-    checkoutHtml.includes("Custom Call Coverage: 14 days free, then $997+/mo"),
-  "checkout should state post-trial monthly billing terms before Square opens"
-);
-
-assert.ok(
-  checkoutHtml.includes("Choose the plan before the trial starts.") &&
-    checkoutHtml.includes("Payment details are entered on Square-hosted checkout."),
-  "checkout should present a focused premium plan-selection experience"
+  checkoutHtml.includes(squareCheckout.full247) &&
+    checkoutHtml.includes(squareCheckout.premium),
+  "legacy checkout redirect should use the configured Square checkout URLs for the public $497 and $997 trial paths"
 );
 
 assert.strictEqual(
@@ -99,24 +84,24 @@ assert.strictEqual(
 );
 
 assert.ok(
-  checkoutHtml.includes('id="plans"'),
-  "checkout should keep a plan-selection anchor before provider checkout"
-);
-
-assert.ok(
-  checkoutHtml.includes("Trial summary") && checkoutHtml.includes("unless canceled before renewal"),
-  "checkout should show selected plan and post-trial monthly billing copy"
+  checkoutHtml.includes("window.location.replace") &&
+    checkoutHtml.includes("Taking you to Square checkout"),
+  "legacy checkout should redirect immediately instead of showing an intermediate checkout page"
 );
 
 [
-  "after-hours-capture-v2.jpg",
-  "revenue-recovery-system-v2.jpg",
-  "operational-infrastructure-v2.jpg",
-  'id="plan-visual-img"',
-  'id="plan-visual-title"',
-  'id="plan-visual-copy"',
-].forEach((expected) => {
-  assert.ok(checkoutHtml.includes(expected), `checkout should support plan-specific visual context: ${expected}`);
+  "/checkout.html?plan=afterhours",
+  "/checkout.html?plan=full247",
+  "/checkout.html?plan=premium",
+].forEach((deprecatedLocalRoute) => {
+  assert.strictEqual(
+    read("website/index.html").includes(deprecatedLocalRoute) ||
+      read("website/pricing.html").includes(deprecatedLocalRoute) ||
+      read("website/demo.html").includes(deprecatedLocalRoute) ||
+      read("website/faq.html").includes(deprecatedLocalRoute),
+    false,
+    `public CTAs should not stop on local checkout route: ${deprecatedLocalRoute}`
+  );
 });
 
 const pricingHtml = read("website/pricing.html");
