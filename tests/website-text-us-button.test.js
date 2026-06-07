@@ -177,7 +177,7 @@ assert.strictEqual(
     "</form>"
   ).includes("text-us-button"),
   false,
-  "setup form itself should keep Submit Setup Form as the only form CTA"
+  "setup form itself should keep Submit setup packet as the only form CTA"
 );
 
 const homepageHeroCta = pages["website/index.html"].slice(
@@ -199,7 +199,7 @@ assert.strictEqual(
 );
 
 assert.ok(
-  pages["website/setup.html"].includes("Submit Setup Form") &&
+  pages["website/setup.html"].includes("Submit setup packet") &&
     pages["website/setup.html"].includes("class=\"setup-submit-row\""),
   "setup form submit CTA should remain primary"
 );

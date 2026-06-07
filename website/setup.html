@@ -44,18 +44,34 @@
     .setup-hero h1 { color: var(--text-1); font-size: clamp(34px, 7vw, 58px); line-height: 1.02; letter-spacing: -0.04em; margin: 0 0 16px; }
     .setup-hero p { color: var(--text-2); font-size: 17px; line-height: 1.6; max-width: 680px; margin: 0 auto; }
     .setup-note { margin: 22px auto 0; max-width: 660px; border: 1px solid rgba(0,220,130,0.22); background: rgba(0,220,130,0.08); color: var(--text-2); border-radius: 8px; padding: 14px 16px; font-size: 14px; line-height: 1.55; }
-    .setup-shell { max-width: 920px; margin: 0 auto 84px; padding: 0 20px; }
-    .setup-form { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 30px; box-shadow: 0 28px 70px rgba(0,0,0,0.18); }
-    html.light .setup-form { background: #fff; box-shadow: 0 24px 60px rgba(5,30,18,0.08); }
-    .setup-section { border: 0; border-top: 1px solid var(--border); padding: 28px 0 0; margin: 28px 0 0; }
-    .setup-section:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
-    .setup-section legend { color: var(--text-1); font-size: 20px; font-weight: 800; letter-spacing: -0.02em; padding: 0; margin-bottom: 6px; }
-    .setup-section > p { color: var(--text-3); font-size: 14px; line-height: 1.55; margin: 0 0 18px; }
-    .setup-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; min-width: 0; }
-    .setup-field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+    .setup-shell { max-width: 1120px; margin: 0 auto 84px; padding: 0 20px; display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .setup-progress-card { position: sticky; top: 88px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); padding: 18px; box-shadow: 0 20px 46px rgba(0,0,0,0.12); }
+    html.light .setup-progress-card { background: #fff; box-shadow: 0 18px 44px rgba(5,30,18,0.07); }
+    .setup-progress-card h2 { color: var(--text-1); font-size: 15px; letter-spacing: -0.01em; margin: 0 0 12px; }
+    .setup-progress-card p { color: var(--text-3); font-size: 12px; line-height: 1.5; margin: 0 0 14px; }
+    .setup-progress-list { display: grid; gap: 8px; list-style: none; margin: 0; padding: 0; }
+    .setup-progress-list li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 9px; align-items: center; color: var(--text-2); font-size: 13px; font-weight: 750; line-height: 1.25; }
+    .setup-progress-list span { width: 24px; height: 24px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(0,220,130,0.22); background: rgba(0,220,130,0.08); color: var(--green); font-size: 11px; font-weight: 900; }
+    .setup-progress-footnote { border-top: 1px solid var(--border); margin-top: 14px; padding-top: 14px; color: var(--text-3); font-size: 12px; line-height: 1.5; }
+    .setup-form { display: grid; gap: 18px; min-width: 0; }
+    .setup-section { border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin: 0; background: var(--surface); box-shadow: 0 20px 54px rgba(0,0,0,0.14); min-width: 0; }
+    html.light .setup-section { background: #fff; box-shadow: 0 18px 44px rgba(5,30,18,0.07); }
+    .setup-section legend { width: 100%; padding: 0; margin: 0 0 10px; }
+    .setup-step-heading { display: flex; align-items: center; gap: 12px; width: 100%; color: var(--text-1); }
+    .setup-step-badge { width: 38px; height: 38px; border-radius: 10px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; background: rgba(0,220,130,0.11); border: 1px solid rgba(0,220,130,0.26); color: var(--green); font-size: 12px; font-weight: 900; letter-spacing: 0.06em; }
+    .setup-step-copy { display: grid; gap: 2px; min-width: 0; }
+    .setup-step-title { color: var(--text-1); font-size: 20px; font-weight: 850; letter-spacing: -0.02em; line-height: 1.15; }
+    .setup-step-subtitle { color: var(--text-3); font-size: 13px; line-height: 1.4; font-weight: 650; }
+    .setup-section > p { color: var(--text-3); font-size: 13px; line-height: 1.55; margin: 0 0 18px; max-width: 680px; }
+    .setup-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; min-width: 0; }
+    .setup-field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
     .setup-field.full { grid-column: 1 / -1; }
     .setup-field label, .setup-checkbox span { color: var(--text-1); font-size: 13px; font-weight: 800; }
+    .setup-field label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .optional-badge { flex: 0 0 auto; border: 1px solid var(--border); border-radius: 999px; padding: 3px 8px; color: var(--text-3); background: rgba(255,255,255,0.04); font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+    html.light .optional-badge { background: #f8faf9; }
     .setup-field small, .setup-checkbox small { color: var(--text-3); font-size: 12px; line-height: 1.45; }
+    .setup-field .helper-positive { color: var(--green); font-weight: 750; }
     .setup-field input, .setup-field select, .setup-field textarea {
       width: 100%;
       max-width: 100%;
@@ -72,17 +88,27 @@
       transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
     }
     html.light .setup-field input, html.light .setup-field select, html.light .setup-field textarea { background: #fff; color: #061610; }
-    .setup-field textarea { min-height: 118px; resize: vertical; }
+    .setup-field textarea { min-height: 92px; resize: vertical; }
+    .setup-field textarea[name="callback_rules"],
+    .setup-field textarea[name="services_offered"],
+    .setup-field textarea[name="business_hours"],
+    .setup-field textarea[name="after_hours_rules"],
+    .setup-field textarea[name="emergency_rules"] { min-height: 104px; }
     .setup-field input:focus, .setup-field select:focus, .setup-field textarea:focus { border-color: var(--green); box-shadow: 0 0 0 4px rgba(0,220,130,0.12); }
     .setup-field .is-invalid, .setup-field input.is-invalid, .setup-field select.is-invalid, .setup-field textarea.is-invalid { border-color: #dc2626; box-shadow: 0 0 0 4px rgba(220,38,38,0.12); }
-    .setup-checkbox { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; border: 1px solid var(--border); border-radius: 8px; padding: 14px; background: rgba(255,255,255,0.03); }
+    .setup-checkbox { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; border: 1px solid rgba(0,220,130,0.22); border-radius: 10px; padding: 14px; background: rgba(0,220,130,0.06); }
     html.light .setup-checkbox { background: #f8faf9; }
     .setup-checkbox input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--green); }
     .setup-form-message { border: 1px solid rgba(0,220,130,0.24); background: rgba(0,220,130,0.08); color: var(--text-2); border-radius: 8px; padding: 13px 15px; font-size: 14px; line-height: 1.5; margin-bottom: 22px; }
     .setup-form-message[data-state="error"] { border-color: rgba(220,38,38,0.28); background: rgba(220,38,38,0.08); color: #fca5a5; }
     html.light .setup-form-message[data-state="error"] { color: #991b1b; }
-    .setup-submit-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-top: 1px solid var(--border); margin-top: 30px; padding-top: 24px; }
-    .setup-submit-row p { color: var(--text-3); font-size: 13px; line-height: 1.5; margin: 0; max-width: 500px; }
+    .setup-checkpoint-card { border: 1px solid rgba(220,38,38,0.22); border-radius: 12px; padding: 18px; background: rgba(220,38,38,0.06); }
+    .setup-checkpoint-card h2 { color: var(--text-1); font-size: 18px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -0.02em; }
+    .setup-checklist { display: grid; gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; }
+    .setup-checklist li { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 9px; color: var(--text-2); font-size: 13px; line-height: 1.45; }
+    .setup-checklist li::before { content: ""; width: 8px; height: 8px; margin-top: 6px; border-radius: 999px; background: var(--green); box-shadow: 0 0 0 4px rgba(0,220,130,0.10); }
+    .setup-submit-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-top: 1px solid var(--border); margin-top: 18px; padding-top: 18px; }
+    .setup-submit-row p { color: var(--text-3); font-size: 13px; line-height: 1.5; margin: 0; max-width: 520px; }
     .setup-submit-row .btn { white-space: nowrap; }
     .theme-toggle {
       position: fixed;
@@ -112,8 +138,16 @@
       .setup-hero h1 { max-width: 286px; margin-left: auto; margin-right: auto; font-size: 31px; line-height: 1.08; }
       .setup-hero p { max-width: 306px; font-size: 15px; }
       .setup-note { max-width: 306px; }
-      .setup-shell { width: calc(100vw - 40px); padding: 0; max-width: calc(100vw - 40px); }
-      .setup-form { width: 100%; padding: 22px; max-width: 100%; overflow: hidden; }
+      .setup-shell { width: calc(100vw - 40px); padding: 0; max-width: calc(100vw - 40px); display: block; }
+      .setup-progress-card { position: static; margin-bottom: 18px; padding: 16px; }
+      .setup-progress-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; }
+      .setup-progress-list li { grid-template-columns: 22px minmax(0, 1fr); font-size: 12px; }
+      .setup-progress-list span { width: 22px; height: 22px; font-size: 10px; }
+      .setup-form { width: 100%; max-width: 100%; overflow: hidden; }
+      .setup-section { padding: 20px; overflow: hidden; }
+      .setup-step-heading { align-items: flex-start; }
+      .setup-step-badge { width: 34px; height: 34px; border-radius: 9px; }
+      .setup-step-title { font-size: 18px; }
       .setup-section, .setup-section > p { width: 100%; min-width: 0; max-width: 100%; overflow-wrap: break-word; }
       .setup-grid { grid-template-columns: 1fr; }
       .setup-submit-row { align-items: stretch; flex-direction: column; }
@@ -170,13 +204,29 @@
   </section>
 
   <section class="setup-shell" aria-label="Setup form">
+    <aside class="setup-progress-card" aria-label="Setup progress">
+      <h2>Setup progress</h2>
+      <p>Work down the cards. Required details keep your setup packet clean; optional details help us tune the flow.</p>
+      <ol class="setup-progress-list">
+        <li><span>01</span>Business basics</li>
+        <li><span>02</span>Summaries</li>
+        <li><span>03</span>Services</li>
+        <li><span>04</span>Hours</li>
+        <li><span>05</span>Urgent rules</li>
+        <li><span>06</span>Greeting</li>
+        <li><span>07</span>Phone setup</li>
+        <li><span>08</span>Go live</li>
+        <li><span>09</span>Confirm</li>
+      </ol>
+      <div class="setup-progress-footnote">Not sure on phone setup? Say so. We review forwarding/testing before anything goes live.</div>
+    </aside>
     <form class="setup-form" id="tct-setup-form" novalidate>
       <div class="setup-form-message" data-setup-form-message hidden></div>
       <input type="hidden" name="payment_verification_status" value="paid_unverified">
 
       <fieldset class="setup-section">
-        <legend>1. Business basics</legend>
-        <p>Use the same business and owner details that should appear in the setup packet.</p>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">01</span><span class="setup-step-copy"><span class="setup-step-title">Business basics</span><span class="setup-step-subtitle">Plan, owner, and contact details.</span></span></span></legend>
+        <p>Use the business and owner details that should appear in the setup packet.</p>
         <div class="setup-grid">
           <div class="setup-field">
             <label for="plan_purchased">Plan purchased</label>
@@ -210,11 +260,11 @@
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend>2. Where summaries go</legend>
-        <p>Choose the people and numbers that should receive call notes after Gideon answers.</p>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">02</span><span class="setup-step-copy"><span class="setup-step-title">Where summaries go</span><span class="setup-step-subtitle">Who gets call notes and urgent handoffs.</span></span></span></legend>
+        <p>Tell us where call summaries and transfer-ready calls should go.</p>
         <div class="setup-grid">
           <div class="setup-field">
-            <label for="summary_sms_number">Summary text number</label>
+            <label for="summary_sms_number"><span>Summary text number</span><span class="optional-badge">Optional</span></label>
             <input id="summary_sms_number" name="summary_sms_number" type="tel" placeholder="Optional">
           </div>
           <div class="setup-field">
@@ -230,8 +280,8 @@
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend>3. What Gideon should answer</legend>
-        <p>List the services and rules callers can ask about.</p>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">03</span><span class="setup-step-copy"><span class="setup-step-title">What Gideon should answer</span><span class="setup-step-subtitle">Services, service area, and booking boundaries.</span></span></span></legend>
+        <p>List the work you want Gideon to understand before calls are configured.</p>
         <div class="setup-grid">
           <div class="setup-field full">
             <label for="services_offered">Services offered</label>
@@ -242,15 +292,15 @@
             <textarea id="service_area" name="service_area" required placeholder="Cities, counties, mileage radius, excluded areas, or service limits."></textarea>
           </div>
           <div class="setup-field full">
-            <label for="appointment_booking_rules">Appointment booking rules</label>
-            <textarea id="appointment_booking_rules" name="appointment_booking_rules" placeholder="Optional: booking windows, dispatch rules, pricing boundaries, or scheduling tools."></textarea>
+            <label for="appointment_booking_rules"><span>Appointment booking rules</span><span class="optional-badge">Optional</span></label>
+            <textarea id="appointment_booking_rules" name="appointment_booking_rules" placeholder="Booking windows, dispatch rules, pricing boundaries, or scheduling tools."></textarea>
           </div>
         </div>
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend>4. When Gideon should answer</legend>
-        <p>Tell us your normal hours and when the AI receptionist should take over.</p>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">04</span><span class="setup-step-copy"><span class="setup-step-title">When Gideon should answer</span><span class="setup-step-subtitle">Normal hours and after-hours coverage rules.</span></span></span></legend>
+        <p>Define your normal schedule and when callers should reach the AI receptionist.</p>
         <div class="setup-grid">
           <div class="setup-field full">
             <label for="business_hours">Business hours</label>
@@ -264,23 +314,23 @@
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend>5. Urgent call rules</legend>
-        <p>Define what should be treated as urgent before configuration starts.</p>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">05</span><span class="setup-step-copy"><span class="setup-step-title">Urgent call rules</span><span class="setup-step-subtitle">What needs faster owner or team attention.</span></span></span></legend>
+        <p>Define what should be marked urgent before configuration starts.</p>
         <div class="setup-grid">
           <div class="setup-field full">
             <label for="emergency_rules">Emergency rules</label>
             <textarea id="emergency_rules" name="emergency_rules" required placeholder="Examples: no heat, no AC for elderly customer, active leak, lockout, legal emergency."></textarea>
           </div>
           <div class="setup-field full">
-            <label for="what_ai_should_never_say">What Gideon should never say</label>
-            <textarea id="what_ai_should_never_say" name="what_ai_should_never_say" placeholder="Optional: claims, prices, guarantees, service promises, or phrases to avoid."></textarea>
+            <label for="what_ai_should_never_say"><span>What Gideon should never say</span><span class="optional-badge">Optional</span></label>
+            <textarea id="what_ai_should_never_say" name="what_ai_should_never_say" placeholder="Claims, prices, guarantees, service promises, or phrases to avoid."></textarea>
           </div>
         </div>
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend>6. Greeting preference</legend>
-        <p>Give Gideon the tone and opening callers should hear.</p>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">06</span><span class="setup-step-copy"><span class="setup-step-title">Greeting preference</span><span class="setup-step-subtitle">The opening tone callers should hear.</span></span></span></legend>
+        <p>Give Gideon the greeting style and opening callers should hear.</p>
         <div class="setup-grid">
           <div class="setup-field full">
             <label for="ai_greeting_preference">AI greeting preference</label>
@@ -290,15 +340,16 @@
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend>7. Phone and forwarding info</legend>
-        <p>You do not need to know every phone-system detail. If you are unsure, say so and we will flag the packet for forwarding instructions.</p>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">07</span><span class="setup-step-copy"><span class="setup-step-title">Phone and forwarding info</span><span class="setup-step-subtitle">What you know about the current phone setup.</span></span></span></legend>
+        <p>You do not need every phone-system detail. If you are unsure, say so and we will flag the packet for forwarding instructions.</p>
         <div class="setup-grid">
           <div class="setup-field">
-            <label for="phone_provider">Phone provider</label>
+            <label for="phone_provider"><span>Phone provider</span><span class="optional-badge">Optional</span></label>
             <input id="phone_provider" name="phone_provider" type="text" placeholder="RingCentral, Google Voice, AT&amp;T, not sure">
+            <small class="helper-positive">Not sure is okay. We will review forwarding/testing before launch.</small>
           </div>
           <div class="setup-field">
-            <label for="current_forwarding_status">Current forwarding status</label>
+            <label for="current_forwarding_status"><span>Current forwarding status</span><span class="optional-badge">Optional</span></label>
             <select id="current_forwarding_status" name="current_forwarding_status">
               <option value="">Select one</option>
               <option>Forwarding is already set up</option>
@@ -310,37 +361,43 @@
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend>8. Go-live preference</legend>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">08</span><span class="setup-step-copy"><span class="setup-step-title">Go-live preference</span><span class="setup-step-subtitle">Timing, checkout reference, and notes.</span></span></span></legend>
         <p>Same-day setup can move faster when the packet is complete and forwarding/testing is confirmed.</p>
         <div class="setup-grid">
           <div class="setup-field">
-            <label for="preferred_go_live_time">Preferred go-live time</label>
+            <label for="preferred_go_live_time"><span>Preferred go-live time</span><span class="optional-badge">Optional</span></label>
             <input id="preferred_go_live_time" name="preferred_go_live_time" type="text" placeholder="Today, tomorrow morning, after 5pm, etc.">
           </div>
           <div class="setup-field">
-            <label for="square_checkout_reference">Checkout reference</label>
+            <label for="square_checkout_reference"><span>Checkout reference</span><span class="optional-badge">Optional</span></label>
             <input id="square_checkout_reference" name="square_checkout_reference" type="text" placeholder="Optional Square order/reference">
           </div>
           <div class="setup-field full">
-            <label for="special_notes">Special notes</label>
+            <label for="special_notes"><span>Special notes</span><span class="optional-badge">Optional</span></label>
             <textarea id="special_notes" name="special_notes" placeholder="Anything else your setup reviewer should know?"></textarea>
           </div>
         </div>
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend>9. Final confirmation</legend>
-        <p>Confirm that the information can be used to prepare your AI receptionist setup packet.</p>
-        <label class="setup-checkbox" for="authorized_to_configure_forwarding">
-          <input id="authorized_to_configure_forwarding" name="authorized_to_configure_forwarding" type="checkbox" required>
-          <span>Yes, The Call Taker can use these details to prepare forwarding and configuration instructions for this business.<br><small>Do not change your phone system yet unless you are instructed to.</small></span>
-        </label>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">09</span><span class="setup-step-copy"><span class="setup-step-title">Final confirmation</span><span class="setup-step-subtitle">Safety checkpoint before review.</span></span></span></legend>
+        <div class="setup-checkpoint-card">
+          <h2>Before we review your setup</h2>
+          <ul class="setup-checklist">
+            <li>We use this to prepare your setup packet.</li>
+            <li>Do not change your phone system yet.</li>
+            <li>Live routing starts only after forwarding/testing is confirmed.</li>
+          </ul>
+          <label class="setup-checkbox" for="authorized_to_configure_forwarding">
+            <input id="authorized_to_configure_forwarding" name="authorized_to_configure_forwarding" type="checkbox" required>
+            <span>Yes, The Call Taker can use these details to prepare forwarding and configuration instructions for this business.<br><small>Do not change your phone system yet unless you are instructed to.</small></span>
+          </label>
+          <div class="setup-submit-row">
+            <p>We'll review your details before configuration. No live phone routing starts from this form alone.</p>
+            <button type="submit" class="btn btn-green btn-lg">Submit setup packet</button>
+          </div>
+        </div>
       </fieldset>
-
-      <div class="setup-submit-row">
-        <p>Submitting this form prepares the setup packet path. It does not fake checkout completion or activate live phone routing.</p>
-        <button type="submit" class="btn btn-green btn-lg">Submit Setup Form</button>
-      </div>
     </form>
   </section>
 </main>

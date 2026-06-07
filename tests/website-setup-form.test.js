@@ -107,6 +107,7 @@ function readJson(fileName) {
 
 const setupHtml = read("website/setup.html");
 const confirmationHtml = read("website/setup-confirmation.html");
+const setupFormJs = read("website/setup-form.js");
 const pricingHtml = read("website/pricing.html");
 const indexHtml = read("website/index.html");
 const faqHtml = read("website/faq.html");
@@ -148,6 +149,47 @@ assert.ok(
   "setup form should give paid buyers a clear post-checkout handoff"
 );
 
+assert.strictEqual(
+  (setupHtml.match(/<fieldset class="setup-section">/g) || []).length,
+  9,
+  "setup form should keep the nine approved setup sections"
+);
+
+[
+  "Setup progress",
+  "Business basics",
+  "Summaries",
+  "Services",
+  "Hours",
+  "Urgent rules",
+  "Phone setup",
+  "Go live",
+  "Confirm",
+  "setup-progress-card",
+  "setup-step-badge",
+  "setup-step-title",
+  "optional-badge",
+  "Not sure is okay. We will review forwarding/testing before launch.",
+  "Before we review your setup",
+  "We use this to prepare your setup packet.",
+  "Do not change your phone system yet.",
+  "Live routing starts only after forwarding/testing is confirmed.",
+  "Submit setup packet",
+  "No live phone routing starts from this form alone.",
+].forEach((marker) => {
+  assert.ok(
+    setupHtml.includes(marker),
+    `setup form should include guided wizard marker: ${marker}`
+  );
+});
+
+assert.ok(
+  setupFormJs.includes('setup-confirmation.html?status=') &&
+    setupFormJs.includes("root.location.assign(next)") &&
+    setupFormJs.includes("deriveSetupResponse(payload)"),
+  "setup form submit should still stage receipt data and route to setup-confirmation"
+);
+
 [
   "Setup form submitted",
   "Your setup packet is now in review",
@@ -163,6 +205,9 @@ assert.ok(
   "forwarding/testing next steps",
   "Your AI receptionist goes live after test confirmation",
   "Do not change your phone system yet unless instructed",
+  "Return Home",
+  "View Pricing",
+  "Review FAQ",
   "What we're preparing",
   "AI greeting and call flow",
   "Urgent-call rules",
@@ -188,6 +233,27 @@ assert.ok(
     `confirmation page should include approved setup review marker: ${marker}`
   );
 });
+
+const confirmationActionsStart = confirmationHtml.indexOf('<div class="receipt-actions"');
+const confirmationActionsEnd = confirmationHtml.indexOf("</div>", confirmationActionsStart);
+assert.ok(
+  confirmationActionsStart >= 0 && confirmationActionsEnd > confirmationActionsStart,
+  "confirmation page should include a CTA row"
+);
+const confirmationActions = confirmationHtml.slice(confirmationActionsStart, confirmationActionsEnd);
+assert.strictEqual(
+  /<a\b[^>]*class="[^"]*\bbtn\b[^"]*"[^>]*>\s*<\/a>/.test(confirmationActions),
+  false,
+  "confirmation page should not include blank CTA buttons"
+);
+assert.ok(
+  confirmationHtml.includes(".setup-confirmation-page .receipt-actions .btn-secondary") &&
+    confirmationHtml.includes("color: #061610") &&
+    confirmationHtml.includes("Return Home") &&
+    confirmationHtml.includes("View Pricing") &&
+    confirmationHtml.includes("Review FAQ"),
+  "confirmation page CTA buttons should be clearly labeled and readable in light mode"
+);
 
 [
   "Setup complete",
