@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>The Call Taker - Setup Form Received</title>
-  <meta name="description" content="The Call Taker setup form confirmation.">
+  <title>The Call Taker - Setup Review</title>
+  <meta name="description" content="The Call Taker setup packet review confirmation.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,23 +33,48 @@
     .setup-confirmation-page .header { background: rgba(0,0,0,0.84); backdrop-filter: blur(18px); }
     html.light .setup-confirmation-page .header { background: rgba(255,255,255,0.86); }
     html.light .setup-confirmation-page .logo, html.light .setup-confirmation-page .logo-text { color: #061610; }
+    .setup-confirmation-page .header-inner { max-width: 1120px; }
     .setup-confirmation-page .header-cta { display: none; background: var(--green); color: #03140c; margin-left: auto; }
-    .receipt-main { min-height: calc(100vh - 150px); padding: 132px 20px 76px; display: flex; align-items: center; }
-    .receipt-card { width: 100%; max-width: 780px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: clamp(28px, 5vw, 48px); box-shadow: 0 30px 70px rgba(0,0,0,0.18); }
-    html.light .receipt-card { background: #fff; box-shadow: 0 24px 60px rgba(5,30,18,0.08); }
-    .receipt-icon { width: 58px; height: 58px; border-radius: 50%; background: rgba(0,220,130,0.12); color: var(--green); border: 1px solid rgba(0,220,130,0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
-    .receipt-icon svg { width: 28px; height: 28px; }
-    .receipt-card h1 { font-size: clamp(34px, 6vw, 56px); line-height: 1.03; letter-spacing: -0.04em; margin: 0 0 14px; color: var(--text-1); }
-    .receipt-card p { color: var(--text-2); font-size: 16px; line-height: 1.65; margin: 0 0 18px; }
-    .receipt-card strong { color: var(--text-1); }
-    .receipt-id { border: 1px solid var(--border); border-radius: 8px; padding: 13px 15px; color: var(--text-2); background: rgba(255,255,255,0.04); font-size: 14px; line-height: 1.5; margin: 20px 0; overflow-wrap: anywhere; }
+    .setup-review-main { min-height: calc(100vh - 150px); }
+    .setup-hero { padding: 126px 20px 36px; text-align: center; }
+    .setup-hero .wrap { max-width: 780px; }
+    .setup-kicker { color: var(--green); font-size: 12px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+    .setup-hero h1 { color: var(--text-1); font-size: clamp(34px, 7vw, 58px); line-height: 1.02; letter-spacing: -0.04em; margin: 0 0 16px; }
+    .setup-hero p { color: var(--text-2); font-size: 17px; line-height: 1.6; max-width: 700px; margin: 0 auto; }
+    .setup-note { margin: 22px auto 0; max-width: 680px; border: 1px solid rgba(0,220,130,0.22); background: rgba(0,220,130,0.08); color: var(--text-2); border-radius: 8px; padding: 14px 16px; font-size: 14px; line-height: 1.55; }
+    .setup-shell { max-width: 980px; margin: 0 auto 84px; padding: 0 20px; }
+    .setup-review-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: clamp(24px, 4vw, 34px); box-shadow: 0 28px 70px rgba(0,0,0,0.18); }
+    html.light .setup-review-card { background: #fff; box-shadow: 0 24px 60px rgba(5,30,18,0.08); }
+    .setup-progress { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-bottom: 28px; }
+    .setup-progress-step { min-width: 0; border: 1px solid var(--border); border-radius: 8px; padding: 10px 8px; color: var(--text-3); background: rgba(255,255,255,0.03); font-size: 12px; font-weight: 800; text-align: center; line-height: 1.25; }
+    html.light .setup-progress-step { background: #f8faf9; }
+    .setup-progress-step.is-current { border-color: rgba(0,220,130,0.46); background: rgba(0,220,130,0.12); color: var(--text-1); }
+    .setup-status-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 30px; }
+    .setup-status-card { border: 1px solid var(--border); border-radius: 8px; padding: 16px; background: rgba(255,255,255,0.03); min-width: 0; }
+    html.light .setup-status-card { background: #f8faf9; }
+    .setup-status-card > span { display: block; color: var(--text-3); font-size: 11px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+    .setup-status-card strong { display: block; color: var(--text-1); font-size: 18px; line-height: 1.2; letter-spacing: -0.02em; }
+    .setup-status-card p { color: var(--text-2); font-size: 13px; line-height: 1.45; margin: 9px 0 0; overflow-wrap: anywhere; }
+    .setup-section { border: 0; border-top: 1px solid var(--border); padding: 28px 0 0; margin: 28px 0 0; }
+    .setup-section h2, .setup-prepare-panel h2 { color: var(--text-1); font-size: 22px; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 14px; }
+    .setup-review-timeline { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+    .setup-review-timeline li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; color: var(--text-2); font-size: 15px; line-height: 1.55; }
+    .setup-review-timeline span { width: 34px; height: 34px; border-radius: 50%; background: rgba(0,220,130,0.12); color: var(--green); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; }
+    .setup-prepare-panel { border: 1px solid rgba(0,220,130,0.22); border-radius: 12px; background: rgba(0,220,130,0.07); padding: 22px; margin-top: 28px; }
+    .setup-prepare-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .setup-prepare-item { border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text-2); font-size: 14px; font-weight: 700; line-height: 1.45; padding: 13px 14px; }
+    html.light .setup-prepare-item { background: rgba(255,255,255,0.66); }
+    .setup-trust-line { color: var(--text-2); font-size: 14px; line-height: 1.55; margin: 16px 0 0; }
+    .receipt-id { border: 1px solid var(--border); border-radius: 8px; padding: 13px 15px; color: var(--text-2); background: rgba(255,255,255,0.04); font-size: 14px; line-height: 1.5; margin-top: 12px; overflow-wrap: anywhere; }
     html.light .receipt-id { background: #f8faf9; }
-    .receipt-steps { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 22px 0; margin: 24px 0; display: grid; gap: 14px; }
-    .receipt-step { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; align-items: start; }
-    .receipt-step span { width: 30px; height: 30px; border-radius: 50%; background: rgba(0,220,130,0.12); color: var(--green); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; }
-    .receipt-step p { margin: 3px 0 0; font-size: 15px; }
-    .receipt-warning { border: 1px solid rgba(220,38,38,0.24); background: rgba(220,38,38,0.07); border-radius: 8px; padding: 14px 16px; color: var(--text-2); font-size: 14px; line-height: 1.55; margin: 20px 0; }
+    .receipt-warning { border: 1px solid rgba(220,38,38,0.24); background: rgba(220,38,38,0.07); border-radius: 8px; padding: 14px 16px; color: var(--text-2); font-size: 14px; line-height: 1.55; margin: 24px 0 0; }
+    .receipt-warning strong { color: var(--text-1); }
     .receipt-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+    .setup-confirmation-page .footer { border-top-color: var(--border); }
+    .setup-confirmation-page .footer .logo { color: var(--text-1); min-width: max-content; }
+    .setup-confirmation-page .footer .logo-text { color: var(--text-1); white-space: nowrap; }
+    .setup-confirmation-page .footer .footer-links { align-items: center; }
+    html.light .setup-confirmation-page .footer-links a:hover { color: #061610; }
     .theme-toggle {
       position: fixed;
       right: 18px;
@@ -73,12 +98,20 @@
     html.light .theme-toggle .icon-moon { display: block; }
     @media (max-width: 640px) {
       .setup-confirmation-page .header-inner { padding: 0 18px; }
-      .receipt-main { padding: 108px 0 64px; align-items: flex-start; width: 100%; }
-      .receipt-card { width: calc(100vw - 40px); max-width: calc(100vw - 40px); padding: 28px; overflow: hidden; }
-      .receipt-card h1 { font-size: 31px; line-height: 1.08; }
-      .receipt-card p, .receipt-id, .receipt-warning { max-width: 100%; overflow-wrap: break-word; }
+      .setup-hero { padding: 104px 18px 34px; }
+      .setup-hero .wrap { padding: 0; max-width: 100%; }
+      .setup-hero h1 { max-width: 330px; margin-left: auto; margin-right: auto; font-size: 31px; line-height: 1.08; }
+      .setup-hero p { max-width: 330px; font-size: 15px; }
+      .setup-note { max-width: 330px; }
+      .setup-shell { width: calc(100vw - 40px); padding: 0; max-width: calc(100vw - 40px); margin-bottom: 64px; }
+      .setup-review-card { width: 100%; padding: 22px; max-width: 100%; overflow: hidden; }
+      .setup-progress { grid-template-columns: 1fr; }
+      .setup-status-grid, .setup-prepare-grid { grid-template-columns: 1fr; }
+      .setup-section, .setup-prepare-panel, .receipt-id, .receipt-warning { width: 100%; min-width: 0; max-width: 100%; overflow-wrap: break-word; }
       .receipt-actions .btn { width: 100%; justify-content: center; }
+      .receipt-actions .text-us-button { max-width: 100%; }
       .theme-toggle { width: 42px; height: 42px; right: 14px; bottom: 14px; }
+      .setup-confirmation-page .footer-links { width: 100%; justify-content: center; }
     }
     @media (min-width: 768px) {
       .setup-confirmation-page .header-cta { display: inline-flex; }
@@ -96,30 +129,111 @@
   </div>
 </header>
 
-<main class="receipt-main">
-  <section class="receipt-card" aria-labelledby="receipt-title">
-    <div class="receipt-icon" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+<main class="setup-review-main">
+  <section class="setup-hero setup-review-hero">
+    <div class="wrap">
+      <div class="setup-kicker">Setup form submitted</div>
+      <h1 id="receipt-title">Your setup packet is now in review</h1>
+      <p>We are reviewing your hours, services, call rules, summary destinations, and forwarding details before configuration begins.</p>
+      <div class="setup-note">Your setup details are reviewed before anything goes live. Checkout references may still need verification before configuration is completed.</div>
     </div>
-    <h1 id="receipt-title">Setup form received</h1>
-    <p>Your setup form has been received. This is the handoff after checkout: we review your details, verify anything missing, and prepare your AI receptionist setup packet before configuration. Same-day setup is available once your packet is complete and forwarding/testing is confirmed.</p>
-    <div class="receipt-id"><strong>Setup packet:</strong> <span data-setup-packet-id>setup packet</span><br><strong>Status:</strong> <span data-setup-status>Your packet has the core setup details.</span></div>
-    <div class="receipt-steps" aria-label="Next steps">
-      <div class="receipt-step"><span>1</span><p>We review your hours, services, service area, urgent-call rules, and summary destinations.</p></div>
-      <div class="receipt-step"><span>2</span><p>If forwarding details are incomplete, we will confirm the provider steps before configuration.</p></div>
-      <div class="receipt-step"><span>3</span><p>Keep this page as proof that the setup form was submitted after checkout; next steps come after the setup details are reviewed.</p></div>
-    </div>
-    <div class="receipt-warning">Do not change your phone system yet unless instructed. Checkout references may still need to be verified before configuration is completed.</div>
-    <div class="receipt-actions">
-      <a href="/pricing.html" class="btn btn-secondary btn-lg">Back to Pricing</a>
-      <a href="/faq.html" class="btn btn-green btn-lg">Read FAQ</a>
-      <a class="text-us-button" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Text Us</span>
-      </a>
+  </section>
+
+  <section class="setup-shell setup-review-shell" aria-labelledby="receipt-title">
+    <div class="setup-review-card">
+      <div class="setup-progress" aria-label="Setup progress">
+        <div class="setup-progress-step">Checkout</div>
+        <div class="setup-progress-step">Setup Form</div>
+        <div class="setup-progress-step is-current">Setup Review</div>
+        <div class="setup-progress-step">Forwarding/Test</div>
+        <div class="setup-progress-step">Live</div>
+      </div>
+
+      <div class="setup-status-grid" aria-label="Setup review status">
+        <div class="setup-status-card">
+          <span>Setup form</span>
+          <strong>Received</strong>
+          <p>Packet ID: <span data-setup-packet-id>setup packet</span></p>
+        </div>
+        <div class="setup-status-card">
+          <span>Checkout reference</span>
+          <strong>May still need verification</strong>
+          <p>We confirm this separately before configuration is completed.</p>
+        </div>
+        <div class="setup-status-card">
+          <span>Forwarding details</span>
+          <strong>Review pending</strong>
+          <p><span data-setup-status>Your packet has the core setup details.</span></p>
+        </div>
+        <div class="setup-status-card">
+          <span>Same-day setup</span>
+          <strong>Available after review + testing</strong>
+          <p>Timing depends on a complete packet and confirmed forwarding steps.</p>
+        </div>
+      </div>
+
+      <section class="setup-section setup-review-section" aria-labelledby="next-steps-title">
+        <h2 id="next-steps-title">What happens next</h2>
+        <ol class="setup-review-timeline">
+          <li><span>1</span><p>We review your setup details.</p></li>
+          <li><span>2</span><p>We flag anything missing.</p></li>
+          <li><span>3</span><p>We prepare your call flow and forwarding/testing next steps.</p></li>
+          <li><span>4</span><p>Your AI receptionist goes live after test confirmation.</p></li>
+        </ol>
+      </section>
+
+      <section class="setup-prepare-panel" aria-labelledby="prepare-title">
+        <h2 id="prepare-title">What we're preparing</h2>
+        <div class="setup-prepare-grid">
+          <div class="setup-prepare-item">AI greeting and call flow</div>
+          <div class="setup-prepare-item">Urgent-call rules</div>
+          <div class="setup-prepare-item">Summary delivery rules</div>
+          <div class="setup-prepare-item">Forwarding/testing next steps</div>
+        </div>
+        <p class="setup-trust-line">Your setup details are reviewed before anything goes live.</p>
+      </section>
+
+      <div class="receipt-warning"><strong>Do not change your phone system yet unless instructed.</strong> We will confirm forwarding/testing next steps after the review.</div>
+
+      <div class="receipt-actions" aria-label="Setup confirmation actions">
+        <a href="/" class="btn btn-secondary btn-lg">Return Home</a>
+        <a href="/pricing.html" class="btn btn-secondary btn-lg">View Pricing</a>
+        <a href="/faq.html" class="btn btn-green btn-lg">Review FAQ</a>
+      </div>
+
+      <div class="text-us-support text-us-support--plain" aria-label="Setup update text support">
+        <p class="text-us-inline-note">Need to update something? Text us.</p>
+        <a class="text-us-button text-us-button--small text-us-button--support" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <span>Text Us</span>
+        </a>
+      </div>
     </div>
   </section>
 </main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <span class="logo-text">The Call<span>Taker</span></span>
+        </a>
+        <p>AI receptionist setup for service businesses.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/faq.html">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+      <span>Setup review</span>
+    </div>
+  </div>
+</footer>
 
 <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
   <svg class="icon-moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>

@@ -148,12 +148,71 @@ assert.ok(
   "setup form should give paid buyers a clear post-checkout handoff"
 );
 
+[
+  "Setup form submitted",
+  "Your setup packet is now in review",
+  "We are reviewing your hours, services, call rules, summary destinations, and forwarding details",
+  "Setup form",
+  "Received",
+  "Checkout reference",
+  "May still need verification",
+  "Forwarding details",
+  "Review pending",
+  "Same-day setup",
+  "Available after review + testing",
+  "forwarding/testing next steps",
+  "Your AI receptionist goes live after test confirmation",
+  "Do not change your phone system yet unless instructed",
+  "What we're preparing",
+  "AI greeting and call flow",
+  "Urgent-call rules",
+  "Summary delivery rules",
+  "Your setup details are reviewed before anything goes live",
+  "Checkout",
+  "Setup Form",
+  "Setup Review",
+  "Forwarding/Test",
+  "Live",
+  "AI receptionist setup for service businesses.",
+  'href="/">Home</a>',
+  'href="/pricing.html">Pricing</a>',
+  'href="/faq.html">FAQ</a>',
+  'class="setup-shell setup-review-shell"',
+  'class="setup-note"',
+  'class="setup-status-grid"',
+  'class="setup-progress"',
+  'class="setup-section setup-review-section"',
+].forEach((marker) => {
+  assert.ok(
+    confirmationHtml.includes(marker),
+    `confirmation page should include approved setup review marker: ${marker}`
+  );
+});
+
+[
+  "Setup complete",
+  "setup is live",
+  "Your AI is live",
+  "Checkout verified",
+  "payment verification complete",
+  "AI setup call",
+  "AI will call",
+  "Our AI will call you",
+  "within 2 minutes",
+].forEach((unsafeMarker) => {
+  assert.strictEqual(
+    confirmationHtml.includes(unsafeMarker),
+    false,
+    `confirmation page should not include unsafe setup claim: ${unsafeMarker}`
+  );
+});
+
 assert.ok(
-  confirmationHtml.includes("Setup form received") &&
-    confirmationHtml.includes("Your setup form has been received") &&
-    confirmationHtml.includes("This is the handoff after checkout") &&
-    confirmationHtml.includes("Do not change your phone system yet unless instructed"),
-  "confirmation page should use the approved setup receipt and phone-system boundary copy"
+  confirmationHtml.includes('<span class="logo-text">The Call<span>Taker</span></span>') &&
+    setupHtml.includes('<span class="logo-text">The Call<span>Taker</span></span>') &&
+    !confirmationHtml.includes("The Call <span>Taker</span>") &&
+    !setupHtml.includes("The Call <span>Taker</span>"),
+  "setup flow footers should use the unbroken brand logo text"
 );
 
 [
