@@ -99,52 +99,19 @@
     }
   });
 
-  // --- Float Widget & Exit Popup ---
-  // These functions are called by onclick handlers in the float widget
-  // and exit popup HTML injected across all pages.
+  // --- Removed floating callback widget handlers ---
+  // Keep safe no-op globals so legacy cached handlers fail without provider sends.
 
   window.toggleFloatPanel = function(){
-    var panel = document.getElementById('float-panel');
-    if (panel) panel.classList.toggle('open');
+    return false;
   };
 
   window.requestFloatCallback = function(){
-    var phone = document.getElementById('float-phone');
-    var company = document.getElementById('float-company');
-    if(!phone || !phone.value.trim() || phone.value.trim().length < 7) return;
-    var p = normalizePhone(phone.value.trim()), c = company ? company.value.trim() : '';
-    if(typeof fbq==='function') fbq('track','Lead',{content_name:'Float Callback',content_category:'Callback Request',value:p});
-    if(typeof gtag==='function') gtag('event','conversion',{send_to:'AW-17970510102/callback'});
-    submitLead({
-      kind: 'callback',
-      source: 'floating-widget',
-      page: window.location.pathname,
-      phone: p,
-      company: c,
-      notes: 'Requested from the floating callback widget.'
-    }).catch(function(){});
-    var btn = phone.parentElement.querySelector('.callback-btn');
-    if(btn){btn.textContent='Calling you now!';btn.disabled=true;}
+    return false;
   };
 
   window.requestExitCallback = function(){
-    var phone = document.getElementById('exit-phone');
-    var company = document.getElementById('exit-company');
-    if(!phone || !phone.value.trim() || phone.value.trim().length < 7) return;
-    var p = normalizePhone(phone.value.trim()), c = company ? company.value.trim() : '';
-    if(typeof fbq==='function') fbq('track','Lead',{content_name:'Exit Intent',content_category:'Callback Request',value:p});
-    if(typeof gtag==='function') gtag('event','conversion',{send_to:'AW-17970510102/exit_intent'});
-    submitLead({
-      kind: 'callback',
-      source: 'exit-intent',
-      page: window.location.pathname,
-      phone: p,
-      company: c,
-      notes: 'Requested from the exit-intent callback prompt.'
-    }).catch(function(){});
-    var popup = document.getElementById('exit-popup');
-    if(popup) popup.innerHTML='<div style="text-align:center;padding:40px;color:#fff;"><h3>We\'ll call you right back!</h3></div>';
-    setTimeout(function(){if(popup)popup.classList.remove('show');},3000);
+    return false;
   };
 
   window.closeExitPopup = function(){
