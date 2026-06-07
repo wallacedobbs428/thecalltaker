@@ -1,0 +1,126 @@
+const assert = require("assert");
+const fs = require("fs");
+const path = require("path");
+
+const root = path.join(__dirname, "..");
+const smsHref = "sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service";
+const demoTel = "tel:+16292699697";
+const squareLinks = [
+  "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY",
+  "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
+  "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY",
+];
+
+function read(relativePath) {
+  return fs.readFileSync(path.join(root, relativePath), "utf8");
+}
+
+function hrefs(html) {
+  return [...html.matchAll(/href="([^"]+)"/g)].map((match) => match[1]);
+}
+
+const pages = {
+  "website/index.html": read("website/index.html"),
+  "website/pricing.html": read("website/pricing.html"),
+  "website/faq.html": read("website/faq.html"),
+  "website/setup.html": read("website/setup.html"),
+  "website/setup-confirmation.html": read("website/setup-confirmation.html"),
+  "website/services.html": read("website/services.html"),
+};
+
+assert.ok(
+  read("website/text-us.css").includes("#0A93F6") &&
+    read("website/text-us.css").includes("#0880D9") &&
+    read("website/text-us.css").includes(".text-us-button"),
+  "Text Us button should use the reusable blue button stylesheet"
+);
+
+[
+  "website/index.html",
+  "website/pricing.html",
+  "website/faq.html",
+  "website/setup.html",
+  "website/setup-confirmation.html",
+  "website/services.html",
+].forEach((page) => {
+  assert.ok(pages[page].includes('href="text-us.css"'), `${page} should load the shared Text Us stylesheet`);
+  assert.ok(pages[page].includes("text-us-button"), `${page} should include a Text Us button`);
+  assert.ok(pages[page].includes('aria-label="Text The Call Taker"'), `${page} should label the SMS CTA accessibly`);
+  assert.ok(hrefs(pages[page]).includes(smsHref), `${page} should use the approved Sendblue SMS destination`);
+});
+
+assert.ok(
+  decodeURIComponent(smsHref).includes("Hi! I would love to learn more about your service"),
+  "SMS body should be URL encoded and decode to the approved prospect message"
+);
+
+[
+  "website/index.html",
+  "website/pricing.html",
+  "website/faq.html",
+  "website/services.html",
+].forEach((page) => {
+  assert.ok(pages[page].includes(demoTel), `${page} should keep the existing Gideon demo phone CTA`);
+});
+
+squareLinks.forEach((squareLink) => {
+  assert.ok(pages["website/index.html"].includes(squareLink), `homepage should keep Square checkout link: ${squareLink}`);
+  assert.ok(pages["website/pricing.html"].includes(squareLink), `pricing should keep Square checkout link: ${squareLink}`);
+});
+
+assert.ok(
+  pages["website/faq.html"].includes(squareLinks[1]),
+  "FAQ should keep the existing recommended Square checkout CTA"
+);
+
+Object.entries(pages).forEach(([page, html]) => {
+  [
+    "https://sendblue",
+    "api.sendblue",
+    "sendblue.com",
+    "fetch(\"sms:",
+    "fetch('sms:",
+    "Text Wallace directly",
+    "iMessage us",
+    "Blue text us",
+    "within 2 minutes",
+    "AI setup call",
+    "AI will call",
+    "Our AI will call you",
+    "automatic post-payment call",
+    "phone-circle",
+    "callback-widget",
+    "floating-phone",
+  ].forEach((blockedMarker) => {
+    assert.strictEqual(
+      html.toLowerCase().includes(blockedMarker.toLowerCase()),
+      false,
+      `${page} should not include unsafe Text Us/provider/floating-phone marker: ${blockedMarker}`
+    );
+  });
+});
+
+assert.ok(
+  pages["website/pricing.html"].indexOf("Questions before checkout?") >
+    pages["website/pricing.html"].indexOf(squareLinks[1]),
+  "pricing Text Us support should appear after the main plan checkout CTAs, not above them"
+);
+
+const homepageHeroCta = pages["website/index.html"].slice(
+  pages["website/index.html"].indexOf('<div class="gideon-cta"'),
+  pages["website/index.html"].indexOf("</div>", pages["website/index.html"].indexOf('<div class="gideon-cta"'))
+);
+assert.ok(
+  homepageHeroCta.indexOf("See Plans &amp; Setup Options") >= 0 &&
+    homepageHeroCta.indexOf("Call Gideon Live") > homepageHeroCta.indexOf("See Plans &amp; Setup Options") &&
+    homepageHeroCta.indexOf("Text Us") > homepageHeroCta.indexOf("Call Gideon Live"),
+  "homepage hero CTA order should remain See Plans, Call Gideon Live, then Text Us"
+);
+
+assert.strictEqual(
+  pages["website/index.html"].includes(".gideon-hero.service-selling .btn-gideon-ghost {\n    display: none;"),
+  false,
+  "mobile homepage hero should not hide Call Gideon Live when Text Us is added"
+);
+
+console.log("website Text Us button tests passed");
