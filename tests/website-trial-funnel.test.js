@@ -140,11 +140,17 @@ const customerBuyerPathPages = [
   ["website/index.html", "After checkout, complete your setup form"],
   ["website/index.html", "Same-day setup is available once your setup form is submitted"],
   ["website/pricing.html", "After checkout, complete your setup form"],
+  ["website/pricing.html", "thecalltaker.com/setup.html"],
+  ["website/pricing.html", "If Square does not automatically send you back"],
   ["website/pricing.html", "setup packet"],
   ["website/faq.html", "After checkout, complete your setup form"],
+  ["website/faq.html", "What happens after I pay?"],
+  ["website/faq.html", "If Square does not automatically send you back"],
   ["website/faq.html", "You do not need to know your phone system perfectly"],
-  ["website/checkout.html", "After checkout, complete your setup form"],
-  ["website/pay.html", "After checkout, complete your setup form"],
+  ["website/checkout.html", "After payment, return to the setup form"],
+  ["website/checkout.html", "I already checked out"],
+  ["website/pay.html", "After payment, return to the setup form"],
+  ["website/pay.html", "I already checked out"],
 ].forEach(([page, expected]) => {
   assert.ok(read(page).includes(expected), `${page} should explain the form-first setup path: ${expected}`);
 });

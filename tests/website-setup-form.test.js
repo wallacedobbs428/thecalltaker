@@ -142,8 +142,16 @@ assert.ok(
 );
 
 assert.ok(
+  setupHtml.includes("Use this form after checkout so we can configure your AI receptionist") &&
+    setupHtml.includes("If Square did not send you back automatically") &&
+    setupHtml.includes("Start setup form"),
+  "setup form should give paid buyers a clear post-checkout handoff"
+);
+
+assert.ok(
   confirmationHtml.includes("Setup form received") &&
     confirmationHtml.includes("Your setup form has been received") &&
+    confirmationHtml.includes("This is the handoff after checkout") &&
     confirmationHtml.includes("Do not change your phone system yet unless instructed"),
   "confirmation page should use the approved setup receipt and phone-system boundary copy"
 );
