@@ -176,6 +176,10 @@ assert.strictEqual(
   "Live routing starts only after forwarding/testing is confirmed.",
   "Submit setup packet",
   "No live phone routing starts from this form alone.",
+  "setup-handoff-card",
+  "Already checked out?",
+  "After checkout, complete your setup form at",
+  "Review, forwarding, and testing happen before launch.",
 ].forEach((marker) => {
   assert.ok(
     setupHtml.includes(marker),
