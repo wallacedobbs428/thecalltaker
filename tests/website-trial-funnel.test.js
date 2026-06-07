@@ -8,6 +8,15 @@ function read(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), "utf8");
 }
 
+function listFiles(relativeDir) {
+  const absoluteDir = path.join(root, relativeDir);
+  return fs.readdirSync(absoluteDir, { withFileTypes: true }).flatMap((entry) => {
+    const relativePath = path.join(relativeDir, entry.name);
+    if (entry.isDirectory()) return listFiles(relativePath);
+    return relativePath;
+  });
+}
+
 const publicTrialPages = [
   "website/index.html",
   "website/pricing.html",
@@ -15,16 +24,18 @@ const publicTrialPages = [
   "website/pay.html",
   "website/demo.html",
   "website/faq.html",
+  "website/signup.html",
   "website/pilot/index.html",
   "website/go.html",
   "website/try-funnel/checkout.html",
 ];
 
 const publicTrialHtml = publicTrialPages.map(read).join("\n");
+const publicWebsiteCodeFiles = listFiles("website").filter((file) => /\.(html|js)$/.test(file));
 const squareCheckout = {
-  afterhours: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY",
-  full247: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
-  premium: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY"
+  afterhours: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/rQ8UtxYeF82XjX6RTnqJI1cBUDIZY",
+  full247: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/Rj2p5FuHxMnVFeVo1d6RYNYH46SZY",
+  premium: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/tLZqiyd4tReFcZItQuu0zniW80TZY"
 };
 
 assert.strictEqual(
@@ -59,6 +70,84 @@ assert.strictEqual(
 
 const checkoutHtml = read("website/checkout.html");
 const intakeHtml = read("website/onboarding/intake.html");
+const customerBuyerPathPages = [
+  "website/index.html",
+  "website/pricing.html",
+  "website/checkout.html",
+  "website/pay.html",
+  "website/demo.html",
+  "website/faq.html",
+  "website/signup.html",
+];
+
+[
+  "within 2 minutes",
+  "AI setup call",
+  "same-day setup questions",
+  "AI will call",
+  "calls you after checkout",
+  "instant call",
+  "2 minute setup",
+  "Takes 2 minutes",
+  "automatic post-payment call",
+].forEach((unsafeSetupPromise) => {
+  customerBuyerPathPages.forEach((page) => {
+    assert.strictEqual(
+      read(page).toLowerCase().includes(unsafeSetupPromise.toLowerCase()),
+      false,
+      `${page} should not imply the old post-payment AI setup-call flow: ${unsafeSetupPromise}`
+    );
+  });
+});
+
+[
+  "within 2 minutes",
+  "AI setup call",
+  "same-day setup questions",
+  "AI will call",
+  "calls you after checkout",
+  "instant call",
+  "2 minute setup",
+  "Takes 2 minutes",
+  "automatic post-payment call",
+  "Our AI will call you",
+].forEach((unsafePublicPhrase) => {
+  publicWebsiteCodeFiles.forEach((page) => {
+    assert.strictEqual(
+      read(page).toLowerCase().includes(unsafePublicPhrase.toLowerCase()),
+      false,
+      `${page} should not contain superseded setup-call or instant-callback language: ${unsafePublicPhrase}`
+    );
+  });
+});
+
+[
+  [/Gideon.{0,80}setup call/i, "Gideon should not be positioned as the post-payment setup caller"],
+  [/Gideon.{0,80}after checkout/i, "Gideon should not be promised immediately after checkout"],
+  [/Gideon.{0,80}payment/i, "Gideon should not be tied to payment completion"],
+  [/setup.{0,80}before Gideon goes live/i, "setup copy should describe setup form, packet, forwarding, and testing instead of a vague Gideon-goes-live review"],
+].forEach(([unsafeRegex, message]) => {
+  customerBuyerPathPages.forEach((page) => {
+    assert.strictEqual(
+      unsafeRegex.test(read(page)),
+      false,
+      `${page} has unsafe setup wording: ${message}`
+    );
+  });
+});
+
+[
+  ["website/index.html", "After checkout, complete your setup form"],
+  ["website/index.html", "Same-day setup is available once your setup form is submitted"],
+  ["website/pricing.html", "After checkout, complete your setup form"],
+  ["website/pricing.html", "setup packet"],
+  ["website/faq.html", "After checkout, complete your setup form"],
+  ["website/faq.html", "You do not need to know your phone system perfectly"],
+  ["website/checkout.html", "After checkout, complete your setup form"],
+  ["website/pay.html", "After checkout, complete your setup form"],
+].forEach(([page, expected]) => {
+  assert.ok(read(page).includes(expected), `${page} should explain the form-first setup path: ${expected}`);
+});
 
 assert.strictEqual(
   checkoutHtml.includes("paypal.me") || checkoutHtml.includes("venmo.com"),

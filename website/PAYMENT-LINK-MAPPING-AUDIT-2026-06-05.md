@@ -1,44 +1,43 @@
-# Payment Link Mapping Audit - 2026-06-05
+# Payment Link Mapping Audit - 2026-06-07
 
-RIGHT lane scope: buyer-path link audit, approved Square payment-link creation, and no-payment checkout verification. No card was entered, no payment was attempted, and no customer message/call was sent.
+RIGHT lane scope: buyer-path link audit, form-first setup correction, and no-payment checkout safety. No card was entered, no payment was attempted, and no customer message/call was sent.
 
 ## Summary
 
-Status: **verified Square checkout links restored on buyer path.**
+Status: **public buyer path points to corrected Square checkout links pending deploy.**
 
-Action taken: Wallace approved Square checkout link repair on 2026-06-06. RIGHT created fresh Square payment links for all three plans, verified provider read-back, and installed final `checkout.square.site` URLs in the public buyer path. Each new Square link includes the setup-call reassurance: `After checkout, Gideon AI calls within 2 minutes to ask the questions needed for same-day setup.`
+Public pages now explain the scalable setup truth:
+
+1. Choose a plan.
+2. Checkout securely.
+3. Complete the setup form.
+4. CTOS builds the setup packet.
+5. Same-day configuration begins from the completed form.
+6. Forwarding/testing steps happen before launch.
 
 ## Link Map
 
-| Source | Previous/current link | Should route to | Status | Must fix | Blocked by Wallace/provider |
+| Source | Current link | Should route to | Status | Must fix | Blocked by Wallace/provider |
 |---|---|---|---:|---:|---:|
-| `pricing.html` After-Hours CTA | old Square checkout | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY` | Fixed to verified Square link | No | No |
-| `pricing.html` 24/7 CTA | old Square checkout | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY` | Fixed to verified Square link | No | No |
-| `pricing.html` Custom CTA | old Square checkout | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY` | Fixed to verified Square link | No | No |
-| `faq.html` trial CTA | old 24/7 Square checkout | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY` | Fixed to verified Square link | No | No |
-| `checkout.html?plan=afterhours` | old fallback | new $97 Square checkout | Fixed to direct Square redirect | No | No |
-| `checkout.html?plan=full247` | old fallback | new $497 Square checkout | Fixed to direct Square redirect | No | No |
-| `checkout.html?plan=premium` | old fallback | new $997 Square checkout | Fixed to direct Square redirect | No | No |
-| `pay.html` | old $97 Square link | new $97 Square checkout | Fixed to direct Square redirect | No | No |
-| `demo.html` post-demo plan cards | old Square checkout | matching new Square checkout | Fixed to verified Square links | No | No |
-| `services.html` setup CTA | non-primary path | `/pricing.html` or setup review path | No change this pass | No | No |
+| `pricing.html` After-Hours CTA | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/rQ8UtxYeF82XjX6RTnqJI1cBUDIZY` | same Square checkout, with form-first copy | Corrected locally and provider verified | No after deploy | No |
+| `pricing.html` 24/7 CTA | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/Rj2p5FuHxMnVFeVo1d6RYNYH46SZY` | same Square checkout, with form-first copy | Corrected locally and provider verified | No after deploy | No |
+| `pricing.html` Custom CTA | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/tLZqiyd4tReFcZItQuu0zniW80TZY` | same Square checkout, with form-first copy | Corrected locally and provider verified | No after deploy | No |
+| `faq.html` trial CTA | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/Rj2p5FuHxMnVFeVo1d6RYNYH46SZY` | $497 Square checkout, with form-first copy | Corrected locally and provider verified | No after deploy | No |
+| `checkout.html?plan=afterhours` | direct redirect | $97 Square checkout | Link OK | No | No |
+| `checkout.html?plan=full247` | direct redirect | $497 Square checkout | Link OK | No | No |
+| `checkout.html?plan=premium` | direct redirect | $997 Square checkout | Link OK | No | No |
+| `pay.html` | direct redirect | $97 Square checkout | Link OK | No | No |
+| `demo.html` post-demo cards | direct Square checkout links | matching Square checkout | Corrected locally and provider verified | No after deploy | No |
 
 ## Current Scan Result
 
-- Public buyer-path pricing links use final `checkout.square.site` URLs.
-- Provider read-back confirmed all three new Square links have `checkout_redirect_url: null`.
-- Provider read-back confirmed all three line-item names include `AI setup call within 2 minutes`.
-
-## Temporary Conversion Path
-
-- Homepage plan CTAs: direct to matching Square checkout.
-- Pricing plan CTAs: direct to matching Square checkout.
-- FAQ trial CTA: direct to $497 Square checkout.
-- Old checkout URLs: redirect to matching Square checkout.
-- Old pay URL: redirects to new $97 Square checkout.
+- Public buyer-path pricing links use corrected final `checkout.square.site` URLs.
+- Public site copy has been corrected locally to say setup form first.
+- Local Square request templates now contain the required form-first Square-facing language.
 
 ## Remaining Payment Blockers
 
-- Actual two-minute post-payment AI setup-call automation still needs verified Square payment event source and live-call test approval.
+- Corrected Square hosted checkout copy has been read-only verified.
+- Deploy and live click verification are required.
 - Do not treat a Square checkout click as confirmed payment.
-- Do not treat checkout copy alone as proof that the setup-call automation fired.
+- Do not complete checkout or test payment without separate approval.

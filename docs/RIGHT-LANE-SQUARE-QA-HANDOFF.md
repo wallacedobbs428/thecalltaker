@@ -1,81 +1,69 @@
 # Right Lane Square QA Handoff
 
-Date: 2026-06-06
+Date: 2026-06-07
 
-## Root Cause
+## Current Buyer-Path Truth
 
-The old Square payment links carried a provider-side checkout return URL back to `https://thecalltaker.com/client/onboarding.html`. The repo-side click hijacker was already removed; the remaining failure was Square link configuration.
+The Call Taker no longer uses a post-payment AI phone-call promise as the setup expectation.
 
-RIGHT used the connected Square credentials to create fresh Square payment links for all three current pricing tiers. The new links omit any checkout redirect URL, provider read-back shows `checkout_redirect_url: null` for each new link, and the Square line-item/description copy includes the 2-minute Gideon AI setup-call reassurance.
+Correct public flow:
 
-## Provider Action Completed
+1. Customer chooses a plan.
+2. Customer checks out securely through Square.
+3. Customer completes the setup form.
+4. CTOS creates the setup packet.
+5. Same-day configuration begins from the completed form.
+6. The customer receives forwarding and test-call next steps.
+7. The AI receptionist goes live after test confirmation.
 
-No payment was made. No card was entered. No customer message, DNS change, or secret output occurred.
+Correct Square-facing language:
 
-Fresh Square links created:
+`After checkout, complete your setup form so we can configure your AI receptionist for same-day setup.`
 
-| Plan | New button href | Square final checkout URL observed |
+## Corrected Square Links
+
+These are the corrected buyer-path checkout URLs:
+
+| Plan | Short Square link | Final checkout URL |
 | --- | --- | --- |
-| $97 After-Hours Capture | `https://square.link/u/oHYfrPux` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY` |
-| $497 24/7 Call Coverage | `https://square.link/u/Z65m9l44` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY` |
-| $997 Premium / Concierge / Priority Setup | `https://square.link/u/Xm0k4F4D` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY` |
+| $97 After-Hours Capture | `https://square.link/u/ONo7eqGt` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/rQ8UtxYeF82XjX6RTnqJI1cBUDIZY` |
+| $497 24/7 Call Coverage | `https://square.link/u/oPAJSalQ` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/Rj2p5FuHxMnVFeVo1d6RYNYH46SZY` |
+| $997 Premium / Concierge / Priority Setup | `https://square.link/u/0L3Z4auQ` | `https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/tLZqiyd4tReFcZItQuu0zniW80TZY` |
 
-## Setup Call Copy
+Provider read-back after the approved correction showed `checkout_redirect_url: null` for the links above.
 
-Provider read-back confirmed each new link has:
+## Superseded Copy Status
 
-- Line-item title ending in `AI setup call within 2 minutes`.
-- Description: `After checkout, Gideon AI calls within 2 minutes to ask the questions needed for same-day setup.`
-- `checkout_redirect_url: null`.
+Read-only Square inspection on 2026-06-07 confirmed the old installed Square links carried superseded setup-call wording from the old strategy. Wallace then approved provider mutation, and RIGHT created corrected Square payment links with form-first setup copy.
 
-The actual post-payment automation from verified Square payment event to outbound setup call is still unverified. Do not treat checkout copy alone as proof that the 2-minute call automation has fired.
+During the approved correction pass, RIGHT created new Square payment links only. No card was entered, no payment was attempted, no customer message was sent, and no outbound call/webhook was triggered.
 
-Public buyer-path files changed:
+## Provider-Side Repair Result
 
-- `website/index.html`
-- `website/pricing.html`
-- `website/demo.html`
-- `website/faq.html`
-- `website/checkout.html`
-- `website/pay.html`
+Provider-side repair is complete for checkout copy. New Square provider read-back confirmed:
 
-Local preview:
+- form-first setup copy is present
+- stale setup-call copy is absent
+- checkout redirect URL is `null`
+- order total is still `$0` for the trial start
 
-- `http://127.0.0.1:8775/pricing.html`
+Local request templates used:
 
-## Image Status
+- `ctos/integrations/square-97-create-payment-link-request.json`
+- `ctos/integrations/square-497-create-payment-link-request.json`
+- `ctos/integrations/square-997-create-payment-link-request.json`
 
-Website pricing visuals were not changed.
+Those templates now use the form-first setup language.
 
-Mapped plan assets for Square image parity:
+## Right QA Steps After Deploy
 
-| Plan | Matching website/pricing asset |
-| --- | --- |
-| $97 After-Hours Capture | `assets/images/plan-visuals/after-hours-capture-v3.png` |
-| $497 24/7 Call Coverage | `assets/images/plan-visuals/247-call-coverage-v3.png` |
-| $997 Premium / Concierge / Priority Setup | `assets/images/plan-visuals/custom-call-coverage-v3.png` |
+1. Verify live pricing buttons route to the corrected Square checkout URLs.
+2. Confirm all three pricing buttons still land on Square.
+3. Do not enter card details.
+4. Do not complete checkout.
+5. Confirm no route lands on an internal onboarding success page.
+6. Confirm public pages still explain checkout, setup form, setup packet, forwarding/testing, and test confirmation.
 
-Square payment-link images are not attached. The public Square Checkout API path used for these recurring subscription payment links does not expose a per-link image field. Wallace waived Square payment-link image parity on 2026-05-31 and approved deployment without checkout images.
+## Verdict
 
-## Right QA Steps
-
-1. Open `http://127.0.0.1:8775/pricing.html`.
-2. Confirm the pricing page design and visuals match the current intended page.
-3. Click the $97 `Start Free Trial` button and confirm it stays on Square checkout.
-4. Click the $497 `Start Free Trial` button and confirm it stays on Square checkout.
-5. Click the $997 `Start Free Trial` button and confirm it stays on Square checkout.
-6. Do not enter card details and do not complete checkout.
-7. Confirm no pricing button routes to `/client/onboarding.html`, `transactionId`, `orderId`, or any internal success/onboarding page.
-8. Confirm homepage `Start Free Trial` buttons still route only to `/pricing.html`.
-
-## Pass Criteria
-
-- All three pricing buttons land on the new Square checkout pages and remain there.
-- New Square links show the right plan names, $0 trial today, monthly renewal terms, and AI setup-call wording.
-- No active pricing href uses the old Square links.
-- No active pricing href or pricing script references `/client/onboarding.html`, `transactionId`, or `orderId`.
-- No checkout completion or payment is attempted during QA.
-
-## Current Verdict
-
-Checkout links are ready for Wallace preview, Right QA, and deploy. Payment-link image parity is waived for this deploy.
+Website-side copy and Square hosted checkout copy are corrected locally/provider-side. Remaining work is deploy and post-deploy live click verification without completing payment.

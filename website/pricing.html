@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="funnel-experience.css">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-    {"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"Setup depends on the call flow. We confirm your hours, services, urgency rules, and handoff path before Gideon is treated as live for your business."}},
+    {"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"After checkout, complete your setup form so we can configure your AI receptionist. Same-day setup is available once your setup form is submitted, with launch after forwarding and test-call confirmation."}},
     {"@type":"Question","name":"Is there a contract?","acceptedAnswer":{"@type":"Answer","text":"No contracts, ever. Month-to-month. Cancel anytime."}},
     {"@type":"Question","name":"What industries do you work with?","acceptedAnswer":{"@type":"Answer","text":"Any business that answers phones. HVAC, plumbing, electrical, roofing, locksmith, dental, legal, med spa, veterinary, towing, property management, and more."}},
     {"@type":"Question","name":"Does it only work after hours?","acceptedAnswer":{"@type":"Answer","text":"The $97/mo After-Hours Capture plan covers evenings, weekends, and holidays. The $497/mo 24/7 Call Coverage plan adds day, night, and overflow call answering, fast follow-up support, lead notifications, appointment request capture, hot-lead alerts, and monthly call summary reporting. The $997+/mo Custom Call Coverage plan adds a custom call flow, approved tool connections, reminder and follow-up support, clear owner notifications, and founder review."}},
@@ -72,7 +72,39 @@
     .matrix-check { color: var(--green); font-size: 20px; font-weight: 900; line-height: 1; }
     .matrix-dash { color: var(--text-3); font-size: 18px; font-weight: 800; }
     .matrix-premium { background: rgba(45,115,82,0.055); }
+    .setup-flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 920px;
+      margin: 46px auto 64px;
+    }
+    .setup-flow-step {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      background: rgba(255,255,255,0.58);
+    }
+    .setup-flow-kicker {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+    }
+    .setup-flow-copy {
+      margin: 0;
+      color: var(--text-2);
+      font-size: 13px;
+      line-height: 1.55;
+    }
     @media (max-width: 640px) {
+      .setup-flow {
+        grid-template-columns: 1fr;
+        margin: 34px auto 48px;
+      }
       .matrix-wrap {
         width: 100%;
         max-width: 100%;
@@ -709,8 +741,8 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Simple appointment request capture</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Best for closed-hours coverage only</div>
         </div>
-        <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
-        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $97/mo starts after 14 days unless canceled. Setup needs your hours, services, call routing, and urgency rules before Gideon goes live.</div>
+        <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/rQ8UtxYeF82XjX6RTnqJI1cBUDIZY" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
+        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $97/mo starts after 14 days unless canceled. After checkout, complete your setup form so we can configure your call flow, summaries, transfer rules, and forwarding/testing steps.</div>
       </div>
 
       <!-- 24/7 Call Coverage (Featured) -->
@@ -730,8 +762,8 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Hot-lead team notifications</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Monthly call summary report</div>
         </div>
-        <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY" class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
-        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $497/mo starts after 14 days unless canceled. Setup needs your hours, services, call routing, and urgency rules before Gideon goes live.</div>
+        <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/Rj2p5FuHxMnVFeVo1d6RYNYH46SZY" class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
+        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $497/mo starts after 14 days unless canceled. After checkout, complete your setup form so we can configure your call flow, summaries, transfer rules, and forwarding/testing steps.</div>
       </div>
 
       <!-- Custom Call Coverage -->
@@ -753,10 +785,15 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Quarterly optimization review</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Founder/operator review</div>
         </div>
-        <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
+        <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/tLZqiyd4tReFcZItQuu0zniW80TZY" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;">Start Free Trial</a>
         <a href="tel:+16292699697" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: 10px;">Talk Through Setup</a>
-        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $997+/mo starts after 14 days unless canceled. Setup needs your hours, services, call routing, and urgency rules before Gideon goes live.</div>
+        <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">$0 due today. Card captured by Square; $997+/mo starts after 14 days unless canceled. After checkout, complete your setup form so we can configure your call flow, summaries, transfer rules, and forwarding/testing steps.</div>
       </div>
+    </div>
+    <div class="setup-flow reveal" aria-label="What happens after payment">
+      <div class="setup-flow-step"><span class="setup-flow-kicker">1 / Checkout</span><p class="setup-flow-copy">Choose the plan and start the 14-day trial through secure Square checkout.</p></div>
+      <div class="setup-flow-step"><span class="setup-flow-kicker">2 / Setup Form</span><p class="setup-flow-copy">Complete the form with hours, services, service area, call rules, and who receives summaries.</p></div>
+      <div class="setup-flow-step"><span class="setup-flow-kicker">3 / Setup Packet</span><p class="setup-flow-copy">We build your setup packet and send forwarding/testing next steps before the receptionist goes live.</p></div>
     </div>
   </div>
 </section>
@@ -806,7 +843,7 @@
       <div class="risk-item">
         <div class="risk-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <div class="risk-title">14-Day Trial</div>
-        <div class="risk-desc">Start through Square. Wallace reviews setup before Gideon goes live.</div>
+        <div class="risk-desc">Start through Square, then complete your setup form. Same-day setup is available once the form is submitted.</div>
       </div>
       <div class="risk-item">
         <div class="risk-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
@@ -829,7 +866,7 @@
     <div style="max-width: 600px; margin: 0 auto;">
       <div class="faq-item reveal">
         <button class="faq-question">How long does setup take?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <div class="faq-answer"><div class="faq-answer-inner">We confirm your business rules, configure the call flow, and get your approval before launch. Higher-tier automation or integrations are scoped before implementation.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">After checkout, complete your setup form so we can configure your AI receptionist. Same-day setup is available once your setup form is submitted, and launch waits for forwarding/testing confirmation.</div></div>
       </div>
       <div class="faq-item reveal">
         <button class="faq-question">Is there a contract?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
@@ -845,11 +882,11 @@
       </div>
       <div class="faq-item reveal">
         <button class="faq-question">Can I customize Gideon?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <div class="faq-answer"><div class="faq-answer-inner">Yes. Gideon is configured around your services, hours, service area, urgency rules, and approved call flow. Direct booking and tool integrations depend on the plan and approved scope.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. Your setup form gives us the services, hours, service area, urgency rules, and approved call flow. Direct booking and tool integrations depend on the plan and approved scope.</div></div>
       </div>
       <div class="faq-item reveal">
         <button class="faq-question">Does Gideon sound human?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <div class="faq-answer"><div class="faq-answer-inner">Call (629) 269-9697 right now and judge the voice experience yourself. Gideon is configured around your approved call flow before launch.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Call (629) 269-9697 right now and judge the voice experience yourself. The live setup is configured around your approved setup form and call flow before launch.</div></div>
       </div>
     </div>
   </div>
@@ -859,7 +896,7 @@
 <section style="padding: 60px 0 80px; text-align: center; border-top: 1px solid var(--border);">
   <div class="wrap">
     <h2 class="reveal" style="font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: var(--text-1); letter-spacing: -0.03em; margin-bottom: 12px;">Stop Letting Calls Slip Through.</h2>
-    <p class="reveal" style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Start your 14-day trial through secure Square checkout. Wallace reviews setup before Gideon goes live.</p>
+    <p class="reveal" style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Start your 14-day trial through secure Square checkout. After checkout, complete your setup form so same-day configuration can begin.</p>
     <div class="reveal" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
       <a href="#pricing-cards" class="btn btn-green btn-lg">Choose Plan</a>
       <a href="tel:+16292699697" class="btn btn-secondary btn-lg">Call Gideon Live</a>
@@ -899,7 +936,7 @@
 <!-- MOBILE BAR -->
 <div class="sticky-mobile-bar">
   <a href="#pricing-cards">Compare Plans</a>
-  <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY" style="border-left:1px solid var(--border);">Start Free Trial</a>
+  <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/Rj2p5FuHxMnVFeVo1d6RYNYH46SZY" style="border-left:1px solid var(--border);">Start Free Trial</a>
 </div>
 
 <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">

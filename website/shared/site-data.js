@@ -113,7 +113,7 @@ window.TCT_DATA = {
 
   // Week 1 setup timeline (used on pricing page)
   timeline: [
-    { day: 0, title: 'Connect Your Number', desc: 'Forward your line to The Call Taker. Takes 2 minutes. Keep your existing number.', detail: 'You get a dedicated AI number. Set up call forwarding from your existing line \u2014 after hours, when busy, or 24/7. Works with any carrier.' },
+    { day: 0, title: 'Connect Your Number', desc: 'Forward your line after your setup packet is ready. Keep your existing number.', detail: 'You get a dedicated AI number. Set up call forwarding from your existing line \u2014 after hours, when busy, or 24/7. Works with any carrier.' },
     { day: 1, title: 'Industry Tuning', desc: 'We configure the AI for your exact business \u2014 services, pricing, hours, scripts.', detail: 'Tell us your services, pricing, business hours, and how you want calls handled. The AI learns your business in minutes.' },
     { day: 2, title: 'Go Live + Summaries', desc: 'AI starts taking real calls. You get a text summary after every call.', detail: 'Every call: caller name, number, what they need, and whether an appointment was booked. Sent to your phone instantly.' },
     { day: 7, title: 'Review Results', desc: 'Check how many calls were caught, jobs booked, and revenue recovered.', detail: 'Most businesses catch 5\u201315 calls in the first week they would have missed. That\u2019s real money that was walking out the door.' }
