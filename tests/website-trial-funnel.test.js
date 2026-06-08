@@ -20,6 +20,7 @@ function listFiles(relativeDir) {
 const publicTrialPages = [
   "website/index.html",
   "website/pricing.html",
+  "website/pre-checkout.html",
   "website/checkout.html",
   "website/pay.html",
   "website/demo.html",
@@ -37,6 +38,11 @@ const squareCheckout = {
   full247: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
   premium: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY"
 };
+const preCheckoutRoutes = {
+  afterhours: "/pre-checkout.html?plan=afterhours",
+  full247: "/pre-checkout.html?plan=full247",
+  custom: "/pre-checkout.html?plan=custom"
+};
 
 assert.strictEqual(
   publicTrialHtml.includes("buy.stripe.com"),
@@ -51,28 +57,30 @@ assert.strictEqual(
 );
 
 [
-  ["website/index.html", squareCheckout.afterhours],
-  ["website/index.html", squareCheckout.full247],
-  ["website/index.html", squareCheckout.premium],
-  ["website/pricing.html", squareCheckout.afterhours],
-  ["website/pricing.html", squareCheckout.full247],
-  ["website/pricing.html", squareCheckout.premium],
-  ["website/demo.html", squareCheckout.afterhours],
-  ["website/demo.html", squareCheckout.full247],
-  ["website/demo.html", squareCheckout.premium],
-  ["website/faq.html", squareCheckout.full247],
-].forEach(([page, expectedHref]) => {
+  ["website/index.html", preCheckoutRoutes.afterhours],
+  ["website/index.html", preCheckoutRoutes.full247],
+  ["website/index.html", preCheckoutRoutes.custom],
+  ["website/pricing.html", preCheckoutRoutes.afterhours],
+  ["website/pricing.html", preCheckoutRoutes.full247],
+  ["website/pricing.html", preCheckoutRoutes.custom],
+  ["website/demo.html", preCheckoutRoutes.afterhours],
+  ["website/demo.html", preCheckoutRoutes.full247],
+  ["website/demo.html", preCheckoutRoutes.custom],
+  ["website/faq.html", preCheckoutRoutes.full247],
+].forEach(([page, expectedRoute]) => {
   assert.ok(
-    read(page).includes(expectedHref),
-    `${page} should route trial CTA directly to Square checkout: ${expectedHref}`
+    read(page).includes(expectedRoute),
+    `${page} should route trial CTA through pre-checkout handoff: ${expectedRoute}`
   );
 });
 
 const checkoutHtml = read("website/checkout.html");
+const preCheckoutHtml = read("website/pre-checkout.html");
 const intakeHtml = read("website/onboarding/intake.html");
 const customerBuyerPathPages = [
   "website/index.html",
   "website/pricing.html",
+  "website/pre-checkout.html",
   "website/checkout.html",
   "website/pay.html",
   "website/demo.html",
@@ -143,6 +151,9 @@ const customerBuyerPathPages = [
   ["website/pricing.html", "thecalltaker.com/setup.html"],
   ["website/pricing.html", "If Square does not automatically send you back"],
   ["website/pricing.html", "setup packet"],
+  ["website/pre-checkout.html", "You’re almost set up"],
+  ["website/pre-checkout.html", "After checkout, you’ll be directed or guided to answer a few setup questions"],
+  ["website/pre-checkout.html", "No setup starts until we have your business details"],
   ["website/faq.html", "After checkout, complete your setup form"],
   ["website/faq.html", "What happens after I pay?"],
   ["website/faq.html", "If Square does not automatically send you back"],
@@ -166,6 +177,32 @@ assert.ok(
   "legacy checkout redirect should use the configured Square checkout URL for the public $97 trial path"
 );
 
+[
+  squareCheckout.afterhours,
+  squareCheckout.full247,
+  squareCheckout.premium,
+].forEach((expectedSquareLink) => {
+  assert.ok(
+    preCheckoutHtml.includes(expectedSquareLink),
+    `pre-checkout should preserve the approved Square destination: ${expectedSquareLink}`
+  );
+});
+
+[
+  "website/index.html",
+  "website/pricing.html",
+  "website/demo.html",
+  "website/faq.html",
+].forEach((page) => {
+  Object.values(squareCheckout).forEach((squareLink) => {
+    assert.strictEqual(
+      read(page).includes(squareLink),
+      false,
+      `${page} should not bypass the pre-checkout handoff with direct Square CTA: ${squareLink}`
+    );
+  });
+});
+
 assert.ok(
   checkoutHtml.includes(squareCheckout.full247) &&
     checkoutHtml.includes(squareCheckout.premium),
@@ -183,6 +220,47 @@ assert.ok(
     checkoutHtml.includes("Taking you to Square checkout"),
   "legacy checkout should redirect immediately instead of showing an intermediate checkout page"
 );
+
+[
+  "prefetch",
+  "preload",
+  "prerender",
+  "preconnect",
+  "dns-prefetch",
+].forEach((rel) => {
+  ["website/index.html", "website/pricing.html", "website/faq.html", "website/pre-checkout.html"].forEach((page) => {
+    assert.strictEqual(
+      new RegExp(`<link[^>]+rel=["']${rel}["'][^>]+(?:href=["'](?:https:)?//checkout\\.square\\.site|href=["']https://checkout\\.square\\.site)`, "i").test(read(page)),
+      false,
+      `${page} should not ${rel} Square checkout before buyer intent`
+    );
+  });
+});
+
+assert.ok(Buffer.byteLength(preCheckoutHtml, "utf8") < 15000, "pre-checkout should stay under 15 KB");
+[
+  "<script src=",
+  "fetch(",
+  "gtag",
+  "fbq",
+  "cbq",
+  "googletagmanager",
+  "connect.facebook.net",
+  "tracking.thecalltaker.com",
+  "script.js",
+  "<img",
+  "<picture",
+  "<source",
+  "background-image",
+  "gideon-service-homepage-hero",
+  "247-call-coverage-v3",
+].forEach((heavyMarker) => {
+  assert.strictEqual(
+    preCheckoutHtml.toLowerCase().includes(heavyMarker.toLowerCase()),
+    false,
+    `pre-checkout should stay lightweight and avoid heavy marker: ${heavyMarker}`
+  );
+});
 
 [
   "/checkout.html?plan=afterhours",
@@ -238,9 +316,9 @@ assert.strictEqual(
 );
 
 [
-  "after-hours-capture-v3.png",
-  "247-call-coverage-v3.png",
-  "custom-call-coverage-v3.png",
+  "after-hours-capture-v3.webp",
+  "247-call-coverage-v3.webp",
+  "custom-call-coverage-v3.webp",
 ].forEach((expected) => {
   assert.ok(pricingHtml.includes(expected), `pricing should use the upgraded plan visual: ${expected}`);
 });

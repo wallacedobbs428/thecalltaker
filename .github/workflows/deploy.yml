@@ -30,17 +30,64 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare clean Pages artifact
+        run: |
+          set -euo pipefail
+          CLEAN=".pages-deploy"
+          rm -rf "$CLEAN"
+          mkdir -p "$CLEAN"
+
+          for f in \
+            CNAME 404.html index.html pricing.html pre-checkout.html setup.html setup-form.js setup-confirmation.html faq.html demo.html privacy.html terms.html \
+            styles.css script.js text-us.css funnel-experience.css site.webmanifest tct-tracking.js \
+            favicon.svg favicon.ico favicon-16x16.png favicon-32x32.png favicon-48x48.png favicon-64x64.png favicon-96x96.png favicon-128x128.png favicon-180x180.png favicon-192x192.png favicon-512x512.png apple-touch-icon.png og-image.png og-image.svg gideon-hologram.png gideon-hologram.webp; do
+            if [ -f "website/$f" ]; then
+              mkdir -p "$CLEAN/$(dirname "$f")"
+              cp -p "website/$f" "$CLEAN/$f"
+            fi
+          done
+
+          rsync -a --exclude='*.md' --exclude='.DS_Store' website/assets/images/ "$CLEAN/assets/images/"
+          rsync -a --exclude='*.md' --exclude='.DS_Store' website/assets/demo/ "$CLEAN/assets/demo/"
+
+          mkdir -p "$CLEAN/shared"
+          for f in ui-dark.css ui-dark.js ui.css ui.js mobile-guard.css demo-console.css demo-console.js tct-intent.js tct-convert.js share-demo.js; do
+            if [ -f "website/shared/$f" ]; then
+              cp -p "website/shared/$f" "$CLEAN/shared/$f"
+            fi
+          done
+
+          mkdir -p "$CLEAN/demo/carolina-locksmith" "$CLEAN/demos"
+          if [ -f "website/demo/carolina-locksmith/index.html" ]; then
+            cp -p "website/demo/carolina-locksmith/index.html" "$CLEAN/demo/carolina-locksmith/index.html"
+          fi
+          if [ -f "website/demos/houston-hvac.html" ]; then
+            cp -p "website/demos/houston-hvac.html" "$CLEAN/demos/houston-hvac.html"
+          fi
+
+          find "$CLEAN" -type f -name '*.html' -print0 | xargs -0 perl -0pi -e 's/href=("|'\'')services\.html\1/href="\/pricing.html"/g; s/href=("|'\'')calculator\.html\1/href="\/pricing.html"/g; s/href=("|'\'')your-audit\.html\1/href="\/pricing.html"/g; s/href=("|'\'')book\.html\1/href="\/demo.html"/g; s/>Services</>Pricing</g; s/>Calculator</>Pricing</g; s/>Get a Free Audit</>View Pricing</g; s/>Book a Demo</>View Demo</g;'
+
+          if find "$CLEAN" -type f \( -name '*.md' -o -name '.env*' -o -name '*.pem' -o -name '*.key' -o -iname '*secret*' -o -iname '*credential*' -o -path '*/client-portal/*' -o -path '*/ads/*' -o -path '*/tests/*' -o -path '*/tools/*' -o -path '*/scripts/*' -o -name '*backup*' -o -name '*vault*' \) | grep -q .; then
+            echo "Unsafe files found in clean Pages artifact"
+            exit 1
+          fi
+
+          if grep -RIEq --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.webp' --exclude='*.ico' --exclude='*.mp3' --exclude='*.wav' 'AI setup call within 2 minutes|Three steps\. Five minutes|Verified production handoff|Redacted client proof|CALLS EVALUATED|TEAM-WORTHY|LOW-VALUE SUPPRESSED|14 CALLS REVIEWED|4 QUALIFIED|10 SUPPRESSED|American Surgical|Carolina Locksmith|Houston HVAC|\$13,200|under 2 rings|pays for itself|PUBLIC PROOF METRICS' "$CLEAN"; then
+            echo "Risky public copy found in clean Pages artifact"
+            exit 1
+          fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: website/
+          path: .pages-deploy/
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
       - name: Notify ntfy on deploy
-        if: success()
+        if: ${{ false }}
         run: |
           CHANGED=$(git log -1 --pretty=format:"%s")
           curl -s \
@@ -57,7 +104,7 @@ jobs:
             https://ntfy.sh/tct-finishtask || true
 
       - name: Notify ntfy on failure
-        if: failure()
+        if: ${{ false }}
         run: |
           curl -s \
             -H "Title: [MILLS] Deploy FAILED" \

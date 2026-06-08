@@ -19,6 +19,7 @@ const fallbackFixtures = {
     owner_cell: "(615) 555-2202",
     summary_email: "garage-owner@example.com",
     summary_sms_number: "(615) 555-2202",
+    setup_guide_sms_recipient: "(615) 555-2202",
     business_hours: "Monday-Friday 8:00 AM-5:00 PM",
     after_hours_rules: "Answer after hours and collect caller name, number, door issue, and urgency.",
     services_offered: "Garage door repair, spring replacement, opener repair, new door estimates.",
@@ -122,6 +123,7 @@ setupForm.REQUIRED_FIELDS.forEach((field) => {
 [
   "square_checkout_reference",
   "summary_sms_number",
+  "setup_guide_sms_recipient",
   "appointment_booking_rules",
   "phone_provider",
   "current_forwarding_status",
@@ -180,6 +182,8 @@ assert.strictEqual(
   "Already checked out?",
   "After checkout, complete your setup form at",
   "Review, forwarding, and testing happen before launch.",
+  "Mobile number to text your setup/forwarding guide",
+  "Use the mobile number that should receive forwarding and test-call instructions.",
 ].forEach((marker) => {
   assert.ok(
     setupHtml.includes(marker),
@@ -198,6 +202,7 @@ assert.ok(
   "Setup form submitted",
   "Your setup packet is now in review",
   "We are reviewing your hours, services, call rules, summary destinations, and forwarding details",
+  "We received your setup details. Next, we'll text the phone number you provided with a setup guide for forwarding your calls and testing your AI answering system.",
   "Setup form",
   "Received",
   "Checkout reference",
@@ -206,9 +211,10 @@ assert.ok(
   "Review pending",
   "Same-day setup",
   "Available after review + testing",
-  "forwarding/testing next steps",
+  "We text the submitted setup-guide phone number with forwarding and test-call instructions.",
   "Your AI receptionist goes live after test confirmation",
   "Do not change your phone system yet unless instructed",
+  "Review the setup guide first. The Call Taker will help verify forwarding and test calls before go-live.",
   "Return Home",
   "View Pricing",
   "Review FAQ",
@@ -351,6 +357,7 @@ const browserPayload = setupForm.buildPayloadFromObject({
   service_area: "Nashville",
   emergency_rules: "No heat and no AC are urgent",
   transfer_number: "(629) 555-0103",
+  setup_guide_sms_recipient: "(629) 555-0102",
   callback_rules: "Text owner for urgent leads",
   ai_greeting_preference: "Thanks for calling Acme.",
   authorized_to_configure_forwarding: "on",
@@ -366,6 +373,11 @@ assert.strictEqual(
   browserPayload.payment_verification_status,
   "paid_unverified",
   "public browser payload should not claim payment is verified by default"
+);
+assert.strictEqual(
+  browserPayload.setup_guide_sms_recipient,
+  "(629) 555-0102",
+  "browser form payload should preserve the setup guide SMS recipient for LEFT's guide workflow"
 );
 assert.strictEqual(
   setupForm.deriveSetupResponse(browserPayload).status,

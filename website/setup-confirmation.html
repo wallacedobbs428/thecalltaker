@@ -120,17 +120,23 @@
     html.light .theme-toggle .icon-sun { display: none; }
     html.light .theme-toggle .icon-moon { display: block; }
     @media (max-width: 640px) {
+      .setup-confirmation-page,
+      .setup-review-main {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
       .setup-confirmation-page .header-inner { padding: 0 18px; }
       .setup-hero { padding: 104px 18px 34px; }
-      .setup-hero .wrap { padding: 0; max-width: 100%; }
-      .setup-hero h1 { max-width: 330px; margin-left: auto; margin-right: auto; font-size: 31px; line-height: 1.08; }
-      .setup-hero p { max-width: 330px; font-size: 15px; }
-      .setup-note { max-width: 330px; }
-      .setup-shell { width: calc(100vw - 40px); padding: 0; max-width: calc(100vw - 40px); margin-bottom: 64px; }
-      .setup-review-card { width: 100%; padding: 22px; max-width: 100%; overflow: hidden; }
+      .setup-hero .wrap { width: min(354px, 100%); padding: 0; max-width: 354px; margin-left: 0; margin-right: auto; }
+      .setup-hero h1 { max-width: min(330px, 100%); margin-left: auto; margin-right: auto; font-size: 26px; line-height: 1.15; letter-spacing: 0; overflow-wrap: anywhere; }
+      .setup-hero p { max-width: min(330px, 100%); font-size: 15px; overflow-wrap: anywhere; }
+      .setup-note { max-width: min(330px, 100%); overflow-wrap: anywhere; }
+      .setup-shell { width: min(354px, calc(100% - 36px)); padding: 0; max-width: 354px; margin-left: 18px; margin-right: auto; margin-bottom: 64px; }
+      .setup-review-card { width: 100%; padding: 18px; max-width: 100%; overflow: hidden; }
       .setup-progress { grid-template-columns: 1fr; }
       .setup-status-grid, .setup-prepare-grid { grid-template-columns: 1fr; }
-      .setup-section, .setup-prepare-panel, .receipt-id, .receipt-warning { width: 100%; min-width: 0; max-width: 100%; overflow-wrap: break-word; }
+      .setup-section, .setup-prepare-panel, .receipt-id, .receipt-warning, .setup-status-card, .setup-review-timeline p { width: 100%; min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
       .receipt-actions .btn { width: 100%; justify-content: center; }
       .receipt-actions .text-us-button { max-width: 100%; }
       .theme-toggle { width: 42px; height: 42px; right: 14px; bottom: 14px; }
@@ -158,7 +164,7 @@
       <div class="setup-kicker">Setup form submitted</div>
       <h1 id="receipt-title">Your setup packet is now in review</h1>
       <p>We are reviewing your hours, services, call rules, summary destinations, and forwarding details before configuration begins.</p>
-      <div class="setup-note">Your setup details are reviewed before anything goes live. Checkout references may still need verification before configuration is completed.</div>
+      <div class="setup-note">We received your setup details. Next, we'll text the phone number you provided with a setup guide for forwarding your calls and testing your AI answering system. Checkout references may still need verification before configuration is completed.</div>
     </div>
   </section>
 
@@ -200,7 +206,7 @@
         <ol class="setup-review-timeline">
           <li><span>1</span><p>We review your setup details.</p></li>
           <li><span>2</span><p>We flag anything missing.</p></li>
-          <li><span>3</span><p>We prepare your call flow and forwarding/testing next steps.</p></li>
+          <li><span>3</span><p>We text the submitted setup-guide phone number with forwarding and test-call instructions.</p></li>
           <li><span>4</span><p>Your AI receptionist goes live after test confirmation.</p></li>
         </ol>
       </section>
@@ -216,7 +222,7 @@
         <p class="setup-trust-line">Your setup details are reviewed before anything goes live.</p>
       </section>
 
-      <div class="receipt-warning"><strong>Do not change your phone system yet unless instructed.</strong> We will confirm forwarding/testing next steps after the review.</div>
+      <div class="receipt-warning"><strong>Do not change your phone system yet unless instructed.</strong> Review the setup guide first. The Call Taker will help verify forwarding and test calls before go-live.</div>
 
       <div class="receipt-actions" aria-label="Setup confirmation actions">
         <a href="/" class="btn btn-secondary btn-lg">Return Home</a>

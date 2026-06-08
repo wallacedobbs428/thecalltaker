@@ -10,6 +10,11 @@ const squareLinks = [
   "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
   "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY",
 ];
+const preCheckoutRoutes = [
+  "/pre-checkout.html?plan=afterhours",
+  "/pre-checkout.html?plan=full247",
+  "/pre-checkout.html?plan=custom",
+];
 
 function read(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), "utf8");
@@ -89,14 +94,14 @@ assert.ok(
   assert.ok(pages[page].includes(demoTel), `${page} should keep the existing Gideon demo phone CTA`);
 });
 
-squareLinks.forEach((squareLink) => {
-  assert.ok(pages["website/index.html"].includes(squareLink), `homepage should keep Square checkout link: ${squareLink}`);
-  assert.ok(pages["website/pricing.html"].includes(squareLink), `pricing should keep Square checkout link: ${squareLink}`);
+preCheckoutRoutes.forEach((route) => {
+  assert.ok(pages["website/index.html"].includes(route), `homepage should route checkout CTA through pre-checkout: ${route}`);
+  assert.ok(pages["website/pricing.html"].includes(route), `pricing should route checkout CTA through pre-checkout: ${route}`);
 });
 
 assert.ok(
-  pages["website/faq.html"].includes(squareLinks[1]),
-  "FAQ should keep the existing recommended Square checkout CTA"
+  pages["website/faq.html"].includes(preCheckoutRoutes[1]),
+  "FAQ should route the recommended checkout CTA through pre-checkout"
 );
 
 Object.entries(pages).forEach(([page, html]) => {
@@ -128,7 +133,7 @@ Object.entries(pages).forEach(([page, html]) => {
 
 assert.ok(
   pages["website/pricing.html"].indexOf("Questions before checkout?") >
-    pages["website/pricing.html"].indexOf(squareLinks[1]),
+    pages["website/pricing.html"].indexOf(preCheckoutRoutes[1]),
   "pricing Text Us support should appear after the main plan checkout CTAs, not above them"
 );
 

@@ -31,6 +31,7 @@
     "square_payment_id",
     "payment_verification_status",
     "summary_sms_number",
+    "setup_guide_sms_recipient",
     "appointment_booking_rules",
     "phone_provider",
     "current_forwarding_status",
@@ -134,6 +135,7 @@
       square_payment_id: emptyToNull(data.square_payment_id || params.get("paymentId") || params.get("payment_id")),
       payment_verification_status: paymentStatusFromInput(data.payment_verification_status),
       summary_sms_number: emptyToNull(data.summary_sms_number),
+      setup_guide_sms_recipient: emptyToNull(data.setup_guide_sms_recipient),
       appointment_booking_rules: emptyToNull(data.appointment_booking_rules),
       phone_provider: emptyToNull(data.phone_provider),
       current_forwarding_status: emptyToNull(data.current_forwarding_status),
@@ -174,7 +176,7 @@
     if (payload.summary_email && !emailIsUsable(payload.summary_email)) {
       errors.push({ field: "summary_email", message: "Use a real email address for setup summaries." });
     }
-    ["business_phone", "owner_cell", "transfer_number", "summary_sms_number"].forEach(function (field) {
+    ["business_phone", "owner_cell", "transfer_number", "summary_sms_number", "setup_guide_sms_recipient"].forEach(function (field) {
       if (payload[field] && !phoneIsUsable(payload[field])) {
         errors.push({ field: field, message: "Use a phone number with at least 10 digits." });
       }
