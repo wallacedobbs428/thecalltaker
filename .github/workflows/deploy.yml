@@ -47,6 +47,7 @@ jobs:
             fi
           done
 
+          mkdir -p "$CLEAN/assets/images" "$CLEAN/assets/demo"
           rsync -a --exclude='*.md' --exclude='.DS_Store' website/assets/images/ "$CLEAN/assets/images/"
           rsync -a --exclude='*.md' --exclude='.DS_Store' website/assets/demo/ "$CLEAN/assets/demo/"
 
