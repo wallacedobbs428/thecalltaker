@@ -18,6 +18,7 @@ function read(relativePath) {
 const pages = {
   "website/index.html": read("website/index.html"),
   "website/pricing.html": read("website/pricing.html"),
+  "website/paid.html": read("website/paid.html"),
   "website/pre-checkout.html": read("website/pre-checkout.html"),
   "website/faq.html": read("website/faq.html"),
   "website/setup.html": read("website/setup.html"),
@@ -65,8 +66,8 @@ assert.ok(
 );
 
 [
-  "The Call Taker - AI receptionist setup for service businesses",
-  "Missed-call capture, clean summaries, and a setup packet reviewed before launch.",
+  "The Call Taker - AI Call Answering For Missed Calls",
+  "Gideon answers calls, collects caller details, and sends clean summaries after your setup is reviewed.",
   "summary_large_image",
   "https://thecalltaker.com/og-image.png",
   "site.webmanifest",
@@ -214,6 +215,7 @@ Object.entries(pages).forEach(([page, html]) => {
 squareLinks.forEach((link) => {
   assert.ok(pages["website/pre-checkout.html"].includes(link), `pre-checkout should keep current Square link: ${link}`);
   assert.strictEqual(pages["website/pricing.html"].includes(link), false, `pricing should route to pre-checkout before Square: ${link}`);
+  assert.strictEqual(pages["website/paid.html"].includes(link), false, `paid landing should route to pre-checkout before Square: ${link}`);
   assert.strictEqual(pages["website/index.html"].includes(link), false, `homepage should route to pre-checkout before Square: ${link}`);
 });
 

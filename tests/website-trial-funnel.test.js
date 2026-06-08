@@ -20,6 +20,7 @@ function listFiles(relativeDir) {
 const publicTrialPages = [
   "website/index.html",
   "website/pricing.html",
+  "website/paid.html",
   "website/pre-checkout.html",
   "website/checkout.html",
   "website/pay.html",
@@ -66,6 +67,9 @@ assert.strictEqual(
   ["website/demo.html", preCheckoutRoutes.afterhours],
   ["website/demo.html", preCheckoutRoutes.full247],
   ["website/demo.html", preCheckoutRoutes.custom],
+  ["website/paid.html", preCheckoutRoutes.afterhours],
+  ["website/paid.html", preCheckoutRoutes.full247],
+  ["website/paid.html", preCheckoutRoutes.custom],
   ["website/faq.html", preCheckoutRoutes.full247],
 ].forEach(([page, expectedRoute]) => {
   assert.ok(
@@ -80,6 +84,7 @@ const intakeHtml = read("website/onboarding/intake.html");
 const customerBuyerPathPages = [
   "website/index.html",
   "website/pricing.html",
+  "website/paid.html",
   "website/pre-checkout.html",
   "website/checkout.html",
   "website/pay.html",

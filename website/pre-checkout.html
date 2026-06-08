@@ -209,9 +209,18 @@
       gap: 8px;
       margin-top: 14px;
     }
+    .fallback-list p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
     .fallback-list a {
       font-weight: 800;
       color: var(--green);
+    }
+    body.js-ready .fallback-list {
+      display: none;
     }
     @media (max-width: 780px) {
       .handoff-shell { padding: 16px; align-items: start; }
@@ -256,20 +265,19 @@
         <p class="summary-label">Selected plan</p>
         <p class="summary-plan" id="planName">24/7 Call Coverage</p>
         <p class="summary-price" id="planPrice">14 days free, then $497/mo unless canceled.</p>
-        <a class="checkout-button" id="checkoutButton" href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY">Continue to secure checkout</a>
+        <a class="checkout-button" id="checkoutButton" href="#plan-checkout-links">Continue to secure checkout</a>
         <p class="reassurance">No setup starts until we have your business details.</p>
         <div class="fine-print">
           <p>Card payment is handled by Square. Apple Pay, Google Pay, and Cash App Pay may be available depending on your device, browser, and Square eligibility.</p>
           <p>You do not need to change your phone system yet. We guide setup and forwarding after your details are submitted.</p>
         </div>
         <a class="back-link" href="/pricing.html">Back to plans</a>
-        <noscript>
-          <div class="fallback-list" aria-label="Plan checkout links">
-            <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY">After-Hours Capture checkout</a>
-            <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY">24/7 Call Coverage checkout</a>
-            <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY">Custom Call Coverage checkout</a>
-          </div>
-        </noscript>
+        <div class="fallback-list" id="plan-checkout-links" aria-label="Plan checkout links">
+          <p>If the checkout button does not update, choose your plan here:</p>
+          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY">After-Hours Capture checkout</a>
+          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY">24/7 Call Coverage checkout</a>
+          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY">Custom Call Coverage checkout</a>
+        </div>
       </aside>
     </section>
   </main>
@@ -315,6 +323,7 @@
       document.getElementById("planName").textContent = plan.name;
       document.getElementById("planPrice").textContent = plan.price;
       button.href = squareLinks[planKey];
+      document.body.classList.add("js-ready");
     })();
   </script>
 </body>
