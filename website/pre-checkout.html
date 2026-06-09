@@ -236,7 +236,7 @@
     }
   </style>
 </head>
-<body>
+<body data-tct-view="precheckout_view" data-tct-page="precheckout" data-tct-learning-tag="precheckout_intent">
   <main class="handoff-shell">
     <section class="handoff-card" aria-labelledby="handoffTitle">
       <div>
@@ -265,7 +265,7 @@
         <p class="summary-label">Selected plan</p>
         <p class="summary-plan" id="planName">24/7 Call Coverage</p>
         <p class="summary-price" id="planPrice">14 days free, then $497/mo unless canceled.</p>
-        <a class="checkout-button" id="checkoutButton" href="#plan-checkout-links">Continue to secure checkout</a>
+        <a class="checkout-button" id="checkoutButton" href="#plan-checkout-links" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-cta="Continue to secure checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Continue to secure checkout</a>
         <p class="reassurance">No setup starts until we have your business details.</p>
         <div class="fine-print">
           <p>Card payment is handled by Square. Apple Pay, Google Pay, and Cash App Pay may be available depending on your device, browser, and Square eligibility.</p>
@@ -274,9 +274,9 @@
         <a class="back-link" href="/pricing.html">Back to plans</a>
         <div class="fallback-list" id="plan-checkout-links" aria-label="Plan checkout links">
           <p>If the checkout button does not update, choose your plan here:</p>
-          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY">After-Hours Capture checkout</a>
-          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY">24/7 Call Coverage checkout</a>
-          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY">Custom Call Coverage checkout</a>
+          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="afterhours" data-tct-cta="After-Hours Capture checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">After-Hours Capture checkout</a>
+          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="full247" data-tct-cta="24/7 Call Coverage checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">24/7 Call Coverage checkout</a>
+          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="custom" data-tct-cta="Custom Call Coverage checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Custom Call Coverage checkout</a>
         </div>
       </aside>
     </section>
@@ -323,7 +323,33 @@
       document.getElementById("planName").textContent = plan.name;
       document.getElementById("planPrice").textContent = plan.price;
       button.href = squareLinks[planKey];
+      button.setAttribute("data-tct-plan", planKey);
       document.body.classList.add("js-ready");
+
+      var dryRunEvents = window.__tctFunnelEvents = window.__tctFunnelEvents || [];
+      function buildDryRunPayload(eventName, element) {
+        return {
+          event_name: eventName,
+          page: document.body.getAttribute("data-tct-page") || "precheckout",
+          plan: element.getAttribute("data-tct-plan") || planKey,
+          cta: element.getAttribute("data-tct-cta") || "",
+          destination_type: element.getAttribute("data-tct-destination") || "",
+          source: element.getAttribute("data-tct-source") || params.get("source") || "",
+          utm_source: params.get("utm_source") || "",
+          utm_campaign: params.get("utm_campaign") || "",
+          device_hint: window.innerWidth < 768 ? "mobile" : "desktop",
+          timestamp: new Date().toISOString(),
+          session_placeholder: "not_collected",
+          ctos_learning_tag: element.getAttribute("data-tct-learning-tag") || "square_intent"
+        };
+      }
+      document.addEventListener("click", function (event) {
+        var target = event.target && event.target.closest ? event.target.closest("[data-tct-event]") : null;
+        if (!target) return;
+        var payload = buildDryRunPayload(target.getAttribute("data-tct-event"), target);
+        dryRunEvents.push(payload);
+        document.dispatchEvent(new CustomEvent("tct:funnel-event", { detail: payload }));
+      });
     })();
   </script>
 </body>

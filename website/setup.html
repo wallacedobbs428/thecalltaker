@@ -183,7 +183,7 @@
     }
   </style>
 </head>
-<body class="setup-page">
+<body class="setup-page" data-tct-view="setup_view" data-tct-page="setup" data-tct-learning-tag="setup_intent">
 <header class="header">
   <div class="header-inner">
     <a href="/" class="logo">
@@ -202,7 +202,7 @@
   <a href="/">Home</a>
   <a href="/pricing.html">Pricing</a>
   <a href="/faq.html">FAQ</a>
-  <a class="text-us-button text-us-button--nav" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue">
+  <a class="text-us-button text-us-button--nav" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="setup" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
     <span>Text Us</span>
   </a>
@@ -220,10 +220,10 @@
         <strong>Already checked out?</strong>
         <p>After checkout, complete your setup form at <a href="https://thecalltaker.com/setup.html">thecalltaker.com/setup.html</a> so we can configure your AI receptionist. Review, forwarding, and testing happen before launch.</p>
       </div>
-      <a href="#tct-setup-form" class="btn btn-primary btn-lg">Start setup form</a>
+      <a href="#tct-setup-form" class="btn btn-primary btn-lg" data-tct-event="setup_form_started" data-tct-page="setup" data-tct-cta="Start setup form" data-tct-destination="setup_form" data-tct-learning-tag="setup_intent">Start setup form</a>
       <div class="text-us-support text-us-support--plain" aria-label="Setup text support">
         <p class="text-us-inline-note">Need help with setup?</p>
-        <a class="text-us-button text-us-button--small" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue">
+        <a class="text-us-button text-us-button--small" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="setup" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           <span>Text Us</span>
         </a>
@@ -248,7 +248,7 @@
       </ol>
       <div class="setup-progress-footnote">Not sure on phone setup? Say so. We review forwarding/testing before anything goes live.</div>
     </aside>
-    <form class="setup-form" id="tct-setup-form" novalidate>
+    <form class="setup-form" id="tct-setup-form" novalidate data-tct-form="setup" data-tct-page="setup" data-tct-event-start="setup_form_started" data-tct-event-submit="setup_form_submitted" data-tct-destination="confirmation" data-tct-learning-tag="setup_intent">
       <div class="setup-form-message" data-setup-form-message hidden></div>
       <input type="hidden" name="payment_verification_status" value="paid_unverified">
 
@@ -449,7 +449,7 @@
         <a href="/">Home</a>
         <a href="/pricing.html">Pricing</a>
         <a href="/faq.html">FAQ</a>
-        <a class="text-us-button text-us-button--small" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue">
+        <a class="text-us-button text-us-button--small" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="setup" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           <span>Text Us</span>
         </a>
@@ -469,6 +469,7 @@
 
 <script src="script.js"></script>
 <script src="setup-form.js"></script>
+<script src="/tct-funnel-events.js" defer></script>
 <script>
 (function () {
   var menuToggle = document.querySelector('.setup-page .menu-toggle');
