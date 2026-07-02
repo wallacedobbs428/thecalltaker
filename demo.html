@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17970510102');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Try the Revenue Recovery Demo | Call (629) 269-9697 | The Call Taker</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="description" content="Preview how Gideon captures calls, filters the details, and prepares clean handoffs for your service business. Call the demo line when you want to hear the voice experience.">
+  <meta name="robots" content="index, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Preview Gideon for Your Business &mdash; The Call Taker">
+  <meta property="og:description" content="Build a safe call-flow preview, then choose the revenue recovery layer that fits your business.">
+  <meta property="og:image" content="https://thecalltaker.com/og-image.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thecalltaker.com/demo">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Preview Gideon for Your Business &mdash; The Call Taker">
+  <meta name="twitter:description" content="Build a safe call-flow preview, then choose the revenue recovery layer that fits your business.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://thecalltaker.com/demo">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #000;
+      --bg-card: #111111;
+      --bg-card-hover: #161616;
+      --green: #00dc82;
+      --green-dim: rgba(34,197,94,0.12);
+      --green-glow: rgba(34,197,94,0.25);
+      --blue: #00dc82;
+      --blue-dim: rgba(59,130,246,0.12);
+      --blue-glow: rgba(59,130,246,0.3);
+      --text-1: #ffffff;
+      --text-2: #a1a1aa;
+      --text-3: #71717a;
+      --border: rgba(255,255,255,0.08);
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-1);
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg { width: 18px; height: 18px; }
+    .logo span { color: var(--green); }
+
+    .nav { display: flex; gap: 24px; align-items: center; }
+    .nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-2);
+      transition: color 0.2s;
+    }
+    .nav a:hover, .nav a.active { color: var(--text-1); }
+
+    .header-cta {
+      padding: 8px 18px;
+      background: var(--green);
+      color: #000;
+      font-weight: 600;
+      font-size: 13px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .header-cta:hover { background: #00b86e; }
+
+    @media (max-width: 768px) {
+      .nav, .header-cta { display: none; }
+    }
+
+    /* ===== HERO / FORM SECTION ===== */
+    .hero-section {
+      padding: 100px 0 60px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-dim);
+      border: 1px solid rgba(34,197,94,0.2);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge svg { width: 14px; height: 14px; }
+
+    .hero-title {
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: var(--text-2);
+      max-width: 500px;
+      margin: 0 auto 18px;
+      line-height: 1.5;
+    }
+
+    .hero-trust {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 auto 32px;
+    }
+
+    .hero-trust span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      color: var(--text-2);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ===== FORM ===== */
+    .demo-form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .form-card-head {
+      margin-bottom: 22px;
+      text-align: left;
+    }
+
+    .form-card-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .form-card-sub {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 6px;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-1);
+      font-size: 16px;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px var(--green-dim);
+    }
+
+    .form-input::placeholder { color: var(--text-3); }
+
+    .form-input[aria-invalid="true"] {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.14);
+    }
+
+    .form-error {
+      min-height: 18px;
+      margin-top: 6px;
+      color: #f87171;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .form-input.large {
+      font-size: 20px;
+      font-weight: 600;
+      padding: 16px 18px;
+      letter-spacing: -0.01em;
+    }
+
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2371717a' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 6l3.5 4 3.5-4z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    .form-select option {
+      background: #1a1a1a;
+      color: var(--text-1);
+    }
+
+    .btn-demo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 24px;
+      background: var(--green);
+      color: #000;
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      margin-top: 8px;
+      line-height: 1.25;
+      text-align: center;
+    }
+
+    .btn-demo:hover {
+      background: #00b86e;
+      box-shadow: 0 0 30px var(--green-glow);
+    }
+
+    .btn-demo:active { transform: scale(0.98); }
+
+    .btn-demo:disabled {
+      cursor: not-allowed;
+      opacity: 0.58;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-demo svg { width: 20px; height: 20px; }
+
+    .form-expectations {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .expectation-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .expectation-item span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .expectation-item svg {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+      margin-top: 2px;
+      stroke: var(--green);
+      fill: none;
+      stroke-width: 2.5;
+    }
+
+    /* ===== PRE-SUBMIT INFO ===== */
+    .pre-submit {
+      padding: 0 0 80px;
+    }
+
+    .pre-submit.hidden { display: none; }
+
+    .section-label {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      text-align: center;
+      color: var(--text-2);
+      font-size: 15px;
+      max-width: 500px;
+      margin: 0 auto 40px;
+    }
+
+    /* What is The Call Taker */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 640px) {
+      .features-grid { grid-template-columns: 1fr; }
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .feature-card:hover { border-color: rgba(255,255,255,0.15); }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--green-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+
+    .feature-icon svg { width: 22px; height: 22px; stroke: var(--green); fill: none; stroke-width: 2; }
+
+    .feature-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .feature-card p {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    /* Industry grid */
+    .industry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+      max-width: 600px;
+      margin: 0 auto 60px;
+    }
+
+    .industry-pill {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-align: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .industry-pill:hover {
+      border-color: var(--green);
+      color: var(--text-1);
+    }
+
+    /* Preview trust bar */
+    .preview-bar {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .preview-item {
+      text-align: center;
+    }
+
+    .preview-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -0.02em;
+    }
+
+    .preview-label {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+
+    .preview-note {
+      max-width: 520px;
+      margin: 14px auto 0;
+      text-align: center;
+      color: var(--text-3);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    /* ===== DEMO EXPERIENCE (post-submit) ===== */
+    .demo-experience {
+      display: none;
+      padding: 0 0 60px;
+      animation: slideUp 0.6s ease-out;
+    }
+
+    .demo-experience.active { display: block; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ready-label {
+      text-align: center;
+      font-size: clamp(20px, 3.5vw, 28px);
+      font-weight: 700;
+      margin-bottom: 32px;
+      line-height: 1.3;
+    }
+
+    .ready-label .biz-name { color: var(--green); }
+
+    /* Phone mockup */
+    .phone-mockup {
+      width: 280px;
+      margin: 0 auto 32px;
+      background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
+      border: 2px solid rgba(59,130,246,0.3);
+      border-radius: 36px;
+      padding: 16px 12px;
+      box-shadow: 0 0 60px var(--blue-glow), 0 20px 60px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .phone-notch {
+      width: 100px;
+      height: 6px;
+      background: #222;
+      border-radius: 10px;
+      margin: 0 auto 16px;
+    }
+
+    .phone-screen {
+      background: #0d0d12;
+      border-radius: 20px;
+      padding: 24px 16px;
+      text-align: center;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .call-status {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-3);
+      margin-bottom: 12px;
+      animation: pulse-text 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-text {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .call-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .call-biz-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 4px;
+      word-break: break-word;
+    }
+
+    .call-industry-label {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-bottom: 20px;
+    }
+
+    .call-buttons {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+    }
+
+    .call-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+    }
+
+    .call-btn.decline {
+      background: #ef4444;
+    }
+
+    .call-btn.answer {
+      background: var(--green);
+      animation: ring 1.5s ease-in-out infinite;
+    }
+
+    @keyframes ring {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+      50% { box-shadow: 0 0 0 12px rgba(34,197,94,0); }
+    }
+
+    .call-btn svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 2; }
+
+    /* Call to action below phone */
+    .call-cta {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .call-cta p {
+      font-size: 15px;
+      color: var(--text-2);
+      margin-bottom: 12px;
+    }
+
+    .next-step-card {
+      max-width: 520px;
+      margin: 0 auto 28px;
+      padding: 18px 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-align: left;
+    }
+
+    .next-step-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .next-step-card p {
+      margin: 0;
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .call-cta-number {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -0.02em;
+      transition: text-shadow 0.2s;
+    }
+
+    .call-cta-number:hover {
+      text-shadow: 0 0 30px var(--green-glow);
+    }
+
+    .call-cta-number svg { width: 28px; height: 28px; stroke: var(--green); fill: none; stroke-width: 2.5; }
+
+    /* Transcript */
+    .transcript {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      max-width: 520px;
+      margin: 0 auto 16px;
+    }
+
+    .transcript-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .transcript-title::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(34,197,94,0); }
+    }
+
+    .transcript-line {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      animation: fadeInLine 0.5s ease-out both;
+    }
+
+    .transcript-line:nth-child(2) { animation-delay: 0.8s; }
+    .transcript-line:nth-child(3) { animation-delay: 1.6s; }
+    .transcript-line:nth-child(4) { animation-delay: 2.4s; }
+
+    @keyframes fadeInLine {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .transcript-speaker {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .transcript-speaker.gideon {
+      background: var(--green-dim);
+      color: var(--green);
+      border: 1px solid rgba(34,197,94,0.25);
+    }
+
+    .transcript-speaker.caller {
+      background: var(--blue-dim);
+      color: var(--blue);
+      border: 1px solid rgba(59,130,246,0.25);
+    }
+
+    .transcript-bubble {
+      flex: 1;
+    }
+
+    .transcript-name {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .transcript-name.gideon { color: var(--green); }
+    .transcript-name.caller { color: var(--blue); }
+
+    .transcript-text {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    .transcript-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* ===== BOTTOM CTA ===== */
+    .bottom-cta {
+      display: none;
+      padding: 60px 0 80px;
+      text-align: center;
+      animation: slideUp 0.6s ease-out 0.3s both;
+    }
+
+    .bottom-cta.active { display: block; }
+
+    .cta-box {
+      background: linear-gradient(145deg, rgba(34,197,94,0.06), rgba(34,197,94,0.02));
+      border: 1px solid rgba(34,197,94,0.15);
+      border-radius: 20px;
+      padding: 48px 32px;
+    }
+
+    .cta-title {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .cta-title .biz-name { color: var(--green); }
+
+    .cta-sub {
+      font-size: 15px;
+      color: var(--text-2);
+      margin-bottom: 28px;
+    }
+
+    .post-demo-plans {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 28px;
+      text-align: left;
+    }
+
+    .post-demo-plan {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 100%;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.035);
+      color: var(--text-1);
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+
+    .post-demo-plan:hover {
+      border-color: rgba(34,197,94,0.35);
+      background: rgba(34,197,94,0.07);
+      transform: translateY(-1px);
+    }
+
+    .post-demo-plan.featured {
+      border-color: rgba(34,197,94,0.38);
+      background: rgba(34,197,94,0.08);
+    }
+
+    .post-demo-plan-kicker {
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-demo-plan-name {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .post-demo-plan-price {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .post-demo-plan-price span {
+      color: var(--text-3);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+
+    .post-demo-plan-copy {
+      color: var(--text-2);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .post-demo-plan-action {
+      margin-top: auto;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .trust-signals {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    .trust-item svg { width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2.5; }
+
+    .post-demo-note {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .post-demo-note p {
+      max-width: 680px;
+      margin: 0 auto;
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.65;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--text-3);
+      margin-top: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text-1); }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 20px auto 0;
+      padding: 16px 20px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .footer-bottom a { color: var(--text-3); }
+
+    /* ===== MOBILE STICKY BAR ===== */
+    .sticky-mobile-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      z-index: 90;
+    }
+
+    .sticky-mobile-bar a {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+
+    .sticky-mobile-bar a:first-child {
+      background: var(--green);
+      color: #000;
+    }
+
+    .sticky-mobile-bar a svg { width: 16px; height: 16px; }
+
+    @media (max-width: 768px) {
+      .sticky-mobile-bar {
+        display: flex;
+        width: 100vw;
+        max-width: 100vw;
+      }
+      body { padding-bottom: 60px; }
+      .wrap {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+        overflow-x: hidden;
+      }
+      .hero-section {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+      .hero-section > .wrap {
+        width: 100%;
+        max-width: 100%;
+      }
+      .hero-title {
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 29px;
+      }
+      .hero-sub {
+        max-width: 300px;
+        font-size: 14px;
+      }
+      .hero-trust {
+        max-width: 300px;
+        flex-wrap: wrap;
+      }
+      .hero-trust span {
+        max-width: 100%;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      .section-title {
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 26px;
+      }
+      .demo-form-card {
+        width: min(320px, calc(100vw - 48px));
+        max-width: calc(100vw - 48px);
+        padding: 24px 20px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .form-input,
+      .form-select,
+      .btn-demo {
+        max-width: 100%;
+        min-width: 0;
+      }
+      .form-card-head { text-align: center; }
+      .btn-demo {
+        font-size: 15px;
+        padding: 15px 18px;
+        white-space: normal;
+      }
+      .btn-demo svg {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 18px;
+      }
+      .btn-demo span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      .phone-mockup { width: 260px; }
+      .post-demo-plans { grid-template-columns: 1fr; }
+      .sticky-mobile-bar a {
+        flex: 0 0 50%;
+        max-width: 50%;
+        min-width: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    /* ===== UTILITIES ===== */
+    .hidden { display: none !important; }
+  </style>
+<!-- Signals Gateway Pixel + Meta Pixel Code -->
+<script>
+  function assign(t){for(var i=1;i<arguments.length;i++){var s=arguments[i];if(s)for(var k in s)if(Object.prototype.hasOwnProperty.call(s,k))t[k]=s[k]}return t;}
+  !(function(f,b,e,v,vv,n,nn,t,s,tt,ss){
+    if (!f.cbq){nn = f.cbq = function(){nn.initialized ? nn.apply(f.cbq, arguments) : nn.queue.push(arguments);};
+    if(!f._cbq) f._cbq = nn;
+    nn.push = nn; nn.loaded = !0; nn.version = '2.0'; nn.queue = [];
+    tt = b.createElement(e); tt.async = !0; tt.src = vv; ss=b.getElementsByTagName(e)[0]; ss.parentNode.insertBefore(tt,ss);}
+    if (f.xbq) return; if (f.fbq) f.xbq=f.fbq;
+    n = f.fbq = function()
+    { var args = Array.prototype.slice.call(arguments);
+      var m = args[0]; var isT = m === 'track' || m === 'trackCustom'; var isS = m === 'trackSingle' || m === 'trackSingleCustom';
+      var mId = args[isT?1:2] + "." + Date.now() + Math.random().toString(36);
+      if (isT && args.length < 4)
+        arguments = args.concat((args.length < 3 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
+      else if (isS && arguments.length < 5)
+        arguments = args.concat((args.length < 4 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
+      if (isT && (!arguments[3] || !arguments[3].eventID)) arguments[3] = assign({}, arguments[3] || {}, { eventID: mId });
+      if (isS && (!arguments[4] || !arguments[4].eventID)) arguments[4] = assign({}, arguments[4] || {}, { eventID: mId });
+      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      if (typeof m === 'string' && m.indexOf('track') === 0) {
+        if (isS) {
+          for (var newArgs = [arguments[0] === "trackSingle" ? "track" : "trackCustom"], i = 2; i < arguments.length; i++) newArgs.push(arguments[i]);
+          arguments = newArgs;
+        }
+        if (arguments[1]) (f.cbq.initialized ? f.cbq.apply(f.cbq, arguments) : f.cbq.queue.push(arguments));}
+    }
+    if(!f._fbq) f._fbq = n;
+    n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = (f.xbq)?f.xbq.queue:[];
+    t = b.createElement(e); t.async = !0; t.src = v;s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
+  })
+  (window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', 'https://tracking.thecalltaker.com/sdk/3084877078917435530/events.js');
+  fbq('init', '2129562004253413');
+  cbq('setHost', 'https://tracking.thecalltaker.com');
+  cbq('init','3084877078917435530');
+  cbq('set', 'integrationMethod', 'forkFromSnippetCode@1.0');
+  fbq('track', 'PageView');
+</script>
+<!-- End Signals Gateway Pixel + Meta Pixel Code -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="funnel-experience.css">
+</head>
+<body class="funnel-page demo-page" data-tct-view="demo_view" data-tct-page="demo" data-tct-learning-tag="demo_view">
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      <span class="logo-text">The Call<span>Taker</span></span>
+    </a>
+    <nav class="nav">
+      <a href="index.html#features">Features</a>
+      <a href="/ai-receptionist/">AI Receptionist</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="tel:+16292699697" class="active" data-tct-event="demo_call_tap" data-tct-page="demo" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+    </nav>
+    <a href="/pricing.html" class="header-cta">See Plans</a>
+    <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<nav class="mobile-nav">
+  <a href="index.html#features">Features</a>
+  <a href="/ai-receptionist/">AI Receptionist</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="faq.html">FAQ</a>
+  <a href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="demo" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+  <a href="/pricing.html" class="btn btn-primary btn-lg">See Plans</a>
+</nav>
+
+
+
+
+
+
+
+
+<!-- HEADER -->
+<section class="hero-section">
+  <div class="wrap">
+    <div class="hero-badge">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Revenue recovery preview
+    </div>
+    <h1 class="hero-title">See how a missed call becomes a clean handoff.</h1>
+    <p class="hero-sub">Type your business name and industry to build a safe preview of Gideon's call flow. Then call the demo line if you want to hear the voice experience.</p>
+    <div class="hero-trust" aria-label="Demo expectations">
+      <span>No signup</span>
+      <span>Setup reviewed</span>
+      <span>Live demo line</span>
+    </div>
+
+    <div class="demo-form-card" id="demo-form">
+      <div class="form-card-head">
+        <div class="form-card-title">Build your preview</div>
+        <p class="form-card-sub">This personalizes the sample below. It does not start provider routing, submit a phone number, or make your business live.</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="biz-name">Your Business Name</label>
+        <input class="form-input large" type="text" id="biz-name" placeholder="e.g., Johnson's Plumbing" maxlength="80" autocomplete="organization" required aria-describedby="biz-name-error">
+        <div class="form-error" id="biz-name-error" aria-live="polite"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="biz-industry">Your Industry</label>
+        <select class="form-select" id="biz-industry">
+          <option value="hvac">HVAC</option>
+          <option value="plumbing" selected>Plumbing</option>
+          <option value="electrical">Electrical</option>
+          <option value="locksmith">Locksmith</option>
+          <option value="roofing">Roofing</option>
+          <option value="dental">Dental</option>
+          <option value="legal">Legal</option>
+          <option value="property_management">Property Management</option>
+          <option value="pest_control">Pest Control</option>
+          <option value="auto_repair">Auto Repair</option>
+          <option value="cleaning">Cleaning</option>
+          <option value="landscaping">Landscaping</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <button class="btn-demo" id="btn-submit" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span>Show My Demo Preview</span>
+      </button>
+      <div class="form-expectations" aria-label="What happens after preview">
+        <div class="expectation-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Step 1: See how Gideon would capture the request for your business.</span>
+        </div>
+        <div class="expectation-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Step 2: Call the demo line if you want to hear the voice experience.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRE-SUBMIT INFO ===== -->
+<section class="pre-submit" id="pre-submit">
+  <div class="wrap">
+
+    <!-- What is The Call Taker -->
+    <div class="section-label">What is The Call Taker?</div>
+    <h2 class="section-title">An AI receptionist for missed calls</h2>
+    <p class="section-desc">Gideon answers routed calls, captures the caller details, and gives your team a clean next step instead of another voicemail.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h3>Answers Routed Calls</h3>
+        <p>Use Gideon after hours, for overflow, or as a front line call capture layer when your team is busy.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>Captures the Details</h3>
+        <p>Name, phone number, service need, urgency, and the best next step are captured for follow up.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Reviewed Before Launch</h3>
+        <p>Your services, hours, service area, and handoff rules are confirmed before calls go live.</p>
+      </div>
+    </div>
+
+    <!-- Works for any industry -->
+    <div class="section-label">Works for any service business</div>
+    <h2 class="section-title" style="margin-bottom: 24px;">Built for your industry</h2>
+
+    <div class="industry-grid">
+      <div class="industry-pill">HVAC</div>
+      <div class="industry-pill">Plumbing</div>
+      <div class="industry-pill">Electrical</div>
+      <div class="industry-pill">Locksmith</div>
+      <div class="industry-pill">Roofing</div>
+      <div class="industry-pill">Dental</div>
+      <div class="industry-pill">Legal</div>
+      <div class="industry-pill">Property Mgmt</div>
+      <div class="industry-pill">Pest Control</div>
+      <div class="industry-pill">Auto Repair</div>
+      <div class="industry-pill">Cleaning</div>
+      <div class="industry-pill">Landscaping</div>
+      <div class="industry-pill">Towing</div>
+      <div class="industry-pill">Med Spa</div>
+      <div class="industry-pill">Veterinary</div>
+      <div class="industry-pill">& More</div>
+    </div>
+
+    <!-- Preview trust -->
+    <div class="preview-bar">
+      <div class="preview-item">
+        <div class="preview-val">Preview only</div>
+        <div class="preview-label">For this preview</div>
+      </div>
+      <div class="preview-item">
+        <div class="preview-val">Live line</div>
+        <div class="preview-label">Call to judge it</div>
+      </div>
+      <div class="preview-item">
+        <div class="preview-val">Approved</div>
+        <div class="preview-label">Call flow first</div>
+      </div>
+      <div class="preview-item">
+        <div class="preview-val">Founder</div>
+        <div class="preview-label">Setup review</div>
+      </div>
+    </div>
+    <p class="preview-note">The preview is a fast way to understand the call flow. Real setup is reviewed before launch so Gideon follows your actual business rules.</p>
+
+  </div>
+</section>
+
+<section class="funnel-transition" aria-label="From demo to checkout">
+  <div class="funnel-transition-card">
+    <div class="funnel-frame">
+      <img src="/assets/images/hero-phone.jpeg" alt="">
+    </div>
+    <div class="funnel-transition-copy">
+      <div class="funnel-kicker">What this proves</div>
+      <h2>The demo is not the product. The handoff system is.</h2>
+      <p>The preview lets you hear the call flow. The checkout starts the operational setup: hours, services, urgency rules, greeting, handoff logic, and the plan level that fits how your business actually works.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DEMO EXPERIENCE (revealed on submit) ===== -->
+<section class="demo-experience" id="demo-experience" aria-live="polite">
+  <div class="wrap">
+
+    <div class="ready-label">Preview built for <span class="biz-name" id="demo-biz-name">Your Business</span></div>
+
+    <!-- Phone Mockup -->
+    <div class="phone-mockup">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="call-status">incoming call</div>
+        <div class="call-avatar" id="call-avatar">J</div>
+        <div class="call-biz-name" id="call-biz-name">Johnson's Plumbing</div>
+        <div class="call-industry-label" id="call-industry-label">Plumbing</div>
+        <div class="call-buttons">
+          <div class="call-btn decline">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.82.24 1.63.48 2.81.7a2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </div>
+          <a href="tel:+16292699697" class="call-btn answer" aria-label="Call demo line" data-tct-event="demo_call_tap" data-tct-page="demo" data-tct-cta="Call demo line" data-tct-destination="tel" data-tct-learning-tag="demo_intent">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call CTA -->
+    <div class="call-cta">
+      <p>Call our demo line now to preview Gideon:</p>
+      <a href="tel:+16292699697" class="call-cta-number" data-tct-event="demo_call_tap" data-tct-page="demo" data-tct-cta="Call demo number" data-tct-destination="tel" data-tct-learning-tag="demo_intent">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (629) 269-9697
+      </a>
+    </div>
+    <div class="next-step-card">
+      <div class="next-step-title">What happens next</div>
+      <p>If the preview feels right, call the demo line to hear the voice. After checkout, complete your setup form so we can configure the call flow, summaries, transfer rules, and forwarding/testing steps before launch.</p>
+    </div>
+
+    <!-- Transcript Preview -->
+    <div class="transcript">
+      <div class="transcript-title">Sample Conversation Preview</div>
+
+      <div class="transcript-line">
+        <div class="transcript-speaker gideon">J</div>
+        <div class="transcript-bubble">
+          <div class="transcript-name gideon">Gideon</div>
+          <div class="transcript-text" id="t-line-1">"Thank you for calling Johnson's Plumbing. This is Gideon. How can I help you today?"</div>
+        </div>
+      </div>
+
+      <div class="transcript-line">
+        <div class="transcript-speaker caller">C</div>
+        <div class="transcript-bubble">
+          <div class="transcript-name caller">Caller</div>
+          <div class="transcript-text" id="t-line-2">"I need to schedule a plumbing repair..."</div>
+        </div>
+      </div>
+
+      <div class="transcript-line">
+        <div class="transcript-speaker gideon">J</div>
+        <div class="transcript-bubble">
+          <div class="transcript-name gideon">Gideon</div>
+          <div class="transcript-text">"I'd be happy to help with that. Let me get you scheduled right away. Can I get your name and address?"</div>
+        </div>
+      </div>
+
+      <div class="transcript-line">
+        <div class="transcript-speaker gideon">J</div>
+        <div class="transcript-bubble">
+          <div class="transcript-name gideon">Gideon</div>
+          <div class="transcript-text">"Perfect. I've got you down. Someone from the team will be in touch shortly to confirm the time. Is there anything else I can help with?"</div>
+        </div>
+      </div>
+    </div>
+    <p class="transcript-note">This is a preview. Call the demo line to hear the full experience live.</p>
+
+  </div>
+</section>
+
+<!-- ===== BOTTOM CTA (revealed on submit) ===== -->
+<section class="bottom-cta" id="bottom-cta">
+  <div class="wrap">
+    <div class="cta-box">
+      <h2 class="cta-title">Choose the setup path for <span class="biz-name" id="cta-biz-name">Your Business</span>.</h2>
+      <p class="cta-sub">Pick the operating layer you want. Square shows the post-trial price before checkout. After checkout, complete your setup form so same-day configuration can begin.</p>
+
+      <div class="post-demo-plans" aria-label="Choose a plan after preview">
+        <a class="post-demo-plan" href="/pre-checkout.html?plan=afterhours&source=demo" data-tct-event="pricing_plan_click" data-tct-page="demo" data-tct-plan="afterhours" data-tct-cta="Start free trial" data-tct-destination="precheckout" data-tct-source="demo" data-tct-learning-tag="plan_interest">
+          <span class="post-demo-plan-kicker">Entry coverage</span>
+          <span class="post-demo-plan-name">After-Hours Capture</span>
+          <span class="post-demo-plan-price">$97<span>/mo after trial</span></span>
+          <span class="post-demo-plan-copy">For nights, weekends, holidays, and urgent calls when the team is offline.</span>
+          <span class="post-demo-plan-action">Start free trial</span>
+        </a>
+        <a class="post-demo-plan featured" href="/pre-checkout.html?plan=full247&source=demo" data-tct-event="pricing_plan_click" data-tct-page="demo" data-tct-plan="full247" data-tct-cta="Start free trial" data-tct-destination="precheckout" data-tct-source="demo" data-tct-learning-tag="plan_interest">
+          <span class="post-demo-plan-kicker">Main system</span>
+          <span class="post-demo-plan-name">Revenue Recovery System</span>
+          <span class="post-demo-plan-price">$497<span>/mo after trial</span></span>
+          <span class="post-demo-plan-copy">For 24/7 and overflow capture, missed-call recovery, and cleaner lead handoff.</span>
+          <span class="post-demo-plan-action">Start free trial</span>
+        </a>
+        <a class="post-demo-plan" href="/pre-checkout.html?plan=custom&source=demo" data-tct-event="pricing_plan_click" data-tct-page="demo" data-tct-plan="custom" data-tct-cta="Start free trial" data-tct-destination="precheckout" data-tct-source="demo" data-tct-learning-tag="plan_interest">
+          <span class="post-demo-plan-kicker">Custom operations</span>
+          <span class="post-demo-plan-name">Operational Infrastructure</span>
+          <span class="post-demo-plan-price">$997+<span>/mo after trial</span></span>
+          <span class="post-demo-plan-copy">For call-flow design, handoff planning, and operational rules around real workflows.</span>
+          <span class="post-demo-plan-action">Start free trial</span>
+        </a>
+      </div>
+
+      <div class="trust-signals">
+        <div class="trust-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Setup review
+        </div>
+        <div class="trust-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Trial terms shown
+        </div>
+        <div class="trust-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Cancel anytime
+        </div>
+        <div class="trust-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Setup form first
+        </div>
+      </div>
+
+      <div class="post-demo-note">
+        <p>The useful work is not just a voice answering. It is filtering noise, capturing the details your team needs, and handing off the calls that are actually worth attention. No SMS, provider routing, booking, or backend sync is implied from this preview alone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- === FOOTER === -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <span class="logo-text">The Call<span>Taker</span></span>
+        </a>
+        <p>AI receptionist for service businesses.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="/ai-receptionist/">AI Receptionist</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="demo.html">Demo</a>
+        <a href="faq.html">FAQ</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
+        <a href="https://www.instagram.com/thecalltaker" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+      <span>The Call Taker &middot; Brentwood, TN &middot; <a href="mailto:wallacemdobbs@icloud.com" style="color:var(--text-3);">wallacemdobbs@icloud.com</a></span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Mobile Sticky Bar -->
+<div class="sticky-mobile-bar">
+  </div>
+
+<script defer src="tct-tracking.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  // ===== Industry service mapping =====
+  var INDUSTRY_DATA = {
+    hvac:                { label: 'HVAC',                service: 'AC repair',                   job: 'service call' },
+    plumbing:            { label: 'Plumbing',            service: 'plumbing repair',             job: 'service call' },
+    electrical:          { label: 'Electrical',          service: 'electrical repair',           job: 'service call' },
+    locksmith:           { label: 'Locksmith',           service: 'lockout service',             job: 'lockout' },
+    roofing:             { label: 'Roofing',             service: 'roof inspection',             job: 'estimate' },
+    dental:              { label: 'Dental',              service: 'dental cleaning appointment', job: 'appointment' },
+    legal:               { label: 'Legal',               service: 'consultation',                job: 'consultation' },
+    property_management: { label: 'Property Management', service: 'maintenance request',         job: 'work order' },
+    pest_control:        { label: 'Pest Control',        service: 'pest inspection',             job: 'service call' },
+    auto_repair:         { label: 'Auto Repair',         service: 'vehicle repair',              job: 'repair' },
+    cleaning:            { label: 'Cleaning',            service: 'cleaning service',            job: 'cleaning' },
+    landscaping:         { label: 'Landscaping',         service: 'lawn care estimate',          job: 'estimate' },
+    other:               { label: 'Service',             service: 'service appointment',         job: 'appointment' }
+  };
+
+  // ===== DOM refs =====
+  var bizInput      = document.getElementById('biz-name');
+  var industrySelect= document.getElementById('biz-industry');
+  var btnSubmit     = document.getElementById('btn-submit');
+  var preSubmit     = document.getElementById('pre-submit');
+  var demoExp       = document.getElementById('demo-experience');
+  var bottomCta     = document.getElementById('bottom-cta');
+  var bizError      = document.getElementById('biz-name-error');
+
+  // Demo display elements
+  var demoBizName   = document.getElementById('demo-biz-name');
+  var callAvatar    = document.getElementById('call-avatar');
+  var callBizName   = document.getElementById('call-biz-name');
+  var callIndLabel  = document.getElementById('call-industry-label');
+  var tLine1        = document.getElementById('t-line-1');
+  var tLine2        = document.getElementById('t-line-2');
+  var ctaBizName    = document.getElementById('cta-biz-name');
+
+  // ===== Sanitize =====
+  function sanitize(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML.trim();
+  }
+
+  function setBizError(message) {
+    bizInput.setAttribute('aria-invalid', message ? 'true' : 'false');
+    if (bizError) bizError.textContent = message || '';
+  }
+
+  // ===== Submit handler =====
+  btnSubmit.addEventListener('click', function() {
+    var rawName = bizInput.value.trim();
+    if (!rawName) {
+      setBizError('Add your business name so the preview can personalize Gideon.');
+      bizInput.focus();
+      return;
+    }
+    setBizError('');
+
+    var bizName   = sanitize(rawName);
+    var industry  = industrySelect.value;
+    var data      = INDUSTRY_DATA[industry] || INDUSTRY_DATA.other;
+
+    // Get first letter for avatar
+    var initial = bizName.charAt(0).toUpperCase();
+
+    // Populate demo experience
+    demoBizName.textContent = bizName;
+    callAvatar.textContent  = initial;
+    callBizName.textContent = bizName;
+    callIndLabel.textContent = data.label;
+    ctaBizName.textContent  = bizName;
+
+    // Transcript lines
+    tLine1.textContent = '"Thank you for calling ' + bizName + '. This is Gideon. How can I help you today?"';
+    tLine2.textContent = '"I need to schedule a ' + data.service + '..."';
+
+    // Hide pre-submit, show demo experience + CTA
+    preSubmit.classList.add('hidden');
+    demoExp.classList.add('active');
+    bottomCta.classList.add('active');
+
+    // Scroll to demo experience smoothly
+    demoExp.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Fire GA event
+    if (typeof gtag === 'function') {
+      gtag('event', 'demo_personalized', {
+        event_category: 'engagement',
+        event_label: industry,
+        business_name: bizName
+      });
+    }
+  });
+
+  // ===== Allow Enter key to submit =====
+  bizInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      btnSubmit.click();
+    }
+  });
+  bizInput.addEventListener('input', function() {
+    if (bizInput.value.trim()) setBizError('');
+  });
+
+  // ===== Auto-focus business name on load =====
+  if (window.innerWidth > 768) {
+    setTimeout(function() { bizInput.focus(); }, 500);
+  }
+
+})();
+</script>
+
+  <script src="script.js" defer></script>
+  <script src="/tct-funnel-events.js" defer></script>
+
+
+</body>
+</html>

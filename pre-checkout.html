@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure checkout handoff - The Call Taker</title>
+  <meta name="description" content="Review what happens after The Call Taker checkout before continuing to secure Square payment.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://thecalltaker.com/pre-checkout.html">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg: #f6f3eb;
+      --ink: #111815;
+      --muted: #59645f;
+      --line: rgba(17, 24, 21, 0.12);
+      --surface: #fffdfa;
+      --green: #2d7352;
+      --green-dark: #1f513a;
+      --soft: rgba(45, 115, 82, 0.09);
+      --shadow: 0 24px 70px rgba(20, 30, 26, 0.12);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(45, 115, 82, 0.12), transparent 30%),
+        linear-gradient(145deg, #fbfaf5 0%, var(--bg) 100%);
+    }
+    a { color: inherit; }
+    .handoff-shell {
+      width: min(100%, 1040px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 28px 22px;
+      display: grid;
+      align-items: center;
+    }
+    .handoff-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.75fr);
+      gap: 28px;
+      padding: clamp(24px, 5vw, 54px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 253, 250, 0.92);
+      box-shadow: var(--shadow);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      margin-bottom: 18px;
+      padding: 7px 10px;
+      border: 1px solid rgba(45, 115, 82, 0.18);
+      border-radius: 999px;
+      color: var(--green);
+      background: var(--soft);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 5px rgba(45, 115, 82, 0.10);
+    }
+    h1 {
+      margin: 0;
+      max-width: 640px;
+      font-size: clamp(38px, 7vw, 68px);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+    }
+    .subtitle {
+      max-width: 680px;
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2.2vw, 21px);
+      line-height: 1.55;
+    }
+    .plan-pill {
+      display: inline-flex;
+      margin: 24px 0 0;
+      padding: 10px 13px;
+      border-radius: 12px;
+      background: #121815;
+      color: #f8fff9;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin: 30px 0;
+      padding: 0;
+      list-style: none;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      color: var(--green-dark);
+      background: var(--soft);
+      font-weight: 900;
+    }
+    .step strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 15px;
+    }
+    .step span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .cta-panel {
+      align-self: center;
+      padding: 22px;
+      border: 1px solid rgba(45, 115, 82, 0.18);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(45, 115, 82, 0.08), rgba(255, 255, 255, 0.82));
+    }
+    .summary-label {
+      margin: 0 0 8px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .summary-plan {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+    .summary-price {
+      margin: 6px 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .checkout-button {
+      display: flex;
+      width: 100%;
+      min-height: 54px;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 18px;
+      border-radius: 14px;
+      color: #fff;
+      background: var(--green);
+      text-decoration: none;
+      font-weight: 900;
+      box-shadow: 0 16px 30px rgba(45, 115, 82, 0.24);
+    }
+    .checkout-button:hover,
+    .checkout-button:focus {
+      background: var(--green-dark);
+    }
+    .reassurance {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .fine-print {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .back-link {
+      display: inline-flex;
+      margin-top: 20px;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .fallback-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .fallback-list p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .fallback-list a {
+      font-weight: 800;
+      color: var(--green);
+    }
+    body.js-ready .fallback-list {
+      display: none;
+    }
+    @media (max-width: 780px) {
+      .handoff-shell { padding: 16px; align-items: start; }
+      .handoff-card {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 22px;
+        border-radius: 20px;
+      }
+      .subtitle { font-size: 16px; }
+      .steps { margin: 22px 0; }
+      .cta-panel { padding: 18px; }
+    }
+  </style>
+</head>
+<body data-tct-view="precheckout_view" data-tct-page="precheckout" data-tct-learning-tag="precheckout_intent">
+  <main class="handoff-shell">
+    <section class="handoff-card" aria-labelledby="handoffTitle">
+      <div>
+        <div class="eyebrow">Secure Square checkout</div>
+        <h1 id="handoffTitle">You’re almost set up</h1>
+        <p class="subtitle">Checkout is handled securely through Square. After checkout, you’ll be directed or guided to answer a few setup questions so we can configure your AI call answering system.</p>
+        <div class="plan-pill" id="planPill">$497 / 24/7 Call Coverage</div>
+
+        <ol class="steps" aria-label="What happens next">
+          <li class="step">
+            <span class="step-number">1</span>
+            <span><strong>Complete secure Square checkout</strong><span>Square collects your contact and payment details for the 14-day trial.</span></span>
+          </li>
+          <li class="step">
+            <span class="step-number">2</span>
+            <span><strong>Answer setup questions</strong><span>Tell us your hours, services, call rules, and where summaries should go.</span></span>
+          </li>
+          <li class="step">
+            <span class="step-number">3</span>
+            <span><strong>We configure your AI call answering system</strong><span>The Call Taker uses your answers to prepare the setup packet and guide forwarding/testing.</span></span>
+          </li>
+        </ol>
+      </div>
+
+      <aside class="cta-panel" aria-label="Checkout summary">
+        <p class="summary-label">Selected plan</p>
+        <p class="summary-plan" id="planName">24/7 Call Coverage</p>
+        <p class="summary-price" id="planPrice">14 days free, then $497/mo unless canceled.</p>
+        <a class="checkout-button" id="checkoutButton" href="#plan-checkout-links" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-cta="Continue to secure checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Continue to secure checkout</a>
+        <p class="reassurance">No setup starts until we have your business details.</p>
+        <div class="fine-print">
+          <p>Card payment is handled by Square. Apple Pay, Google Pay, and Cash App Pay may be available depending on your device, browser, and Square eligibility.</p>
+          <p>You do not need to change your phone system yet. We guide setup and forwarding after your details are submitted.</p>
+        </div>
+        <a class="back-link" href="/pricing.html">Back to plans</a>
+        <div class="fallback-list" id="plan-checkout-links" aria-label="Plan checkout links">
+          <p>If the checkout button does not update, choose your plan here:</p>
+          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="afterhours" data-tct-cta="After-Hours Capture checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">After-Hours Capture checkout</a>
+          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="full247" data-tct-cta="24/7 Call Coverage checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">24/7 Call Coverage checkout</a>
+          <a href="https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="custom" data-tct-cta="Custom Call Coverage checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Custom Call Coverage checkout</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var squareLinks = {
+        afterhours: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY",
+        full247: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
+        custom: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY"
+      };
+      var plans = {
+        afterhours: {
+          pill: "$97 / After-Hours Capture",
+          name: "After-Hours Capture",
+          price: "14 days free, then $97/mo unless canceled."
+        },
+        full247: {
+          pill: "$497 / 24/7 Call Coverage",
+          name: "24/7 Call Coverage",
+          price: "14 days free, then $497/mo unless canceled."
+        },
+        custom: {
+          pill: "$997+ / Custom Call Coverage",
+          name: "Custom Call Coverage",
+          price: "14 days free, then $997+/mo unless canceled."
+        }
+      };
+      var aliases = {
+        "after-hours": "afterhours",
+        starter: "full247",
+        revenue: "full247",
+        premium: "custom",
+        pro: "custom",
+        operational: "custom"
+      };
+      var params = new URLSearchParams(window.location.search);
+      var requestedPlan = (params.get("plan") || "full247").toLowerCase();
+      var planKey = plans[requestedPlan] ? requestedPlan : (aliases[requestedPlan] || "full247");
+      var plan = plans[planKey];
+      var button = document.getElementById("checkoutButton");
+      document.getElementById("planPill").textContent = plan.pill;
+      document.getElementById("planName").textContent = plan.name;
+      document.getElementById("planPrice").textContent = plan.price;
+      button.href = squareLinks[planKey];
+      button.setAttribute("data-tct-plan", planKey);
+      document.body.classList.add("js-ready");
+
+      var dryRunEvents = window.__tctFunnelEvents = window.__tctFunnelEvents || [];
+      function buildDryRunPayload(eventName, element) {
+        return {
+          event_name: eventName,
+          page: document.body.getAttribute("data-tct-page") || "precheckout",
+          plan: element.getAttribute("data-tct-plan") || planKey,
+          cta: element.getAttribute("data-tct-cta") || "",
+          destination_type: element.getAttribute("data-tct-destination") || "",
+          source: element.getAttribute("data-tct-source") || params.get("source") || "",
+          utm_source: params.get("utm_source") || "",
+          utm_campaign: params.get("utm_campaign") || "",
+          device_hint: window.innerWidth < 768 ? "mobile" : "desktop",
+          timestamp: new Date().toISOString(),
+          session_placeholder: "not_collected",
+          ctos_learning_tag: element.getAttribute("data-tct-learning-tag") || "square_intent"
+        };
+      }
+      document.addEventListener("click", function (event) {
+        var target = event.target && event.target.closest ? event.target.closest("[data-tct-event]") : null;
+        if (!target) return;
+        var payload = buildDryRunPayload(target.getAttribute("data-tct-event"), target);
+        dryRunEvents.push(payload);
+        document.dispatchEvent(new CustomEvent("tct:funnel-event", { detail: payload }));
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Call Taker - AI Call Answering For Missed Calls</title>
+  <meta name="description" content="Gideon answers calls, collects caller details, and sends clean summaries after your setup is reviewed.">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Call Taker - AI Call Answering For Missed Calls">
+  <meta property="og:description" content="Gideon answers calls, collects caller details, and sends clean summaries after your setup is reviewed.">
+  <meta property="og:image" content="https://thecalltaker.com/og-image.png">
+  <meta property="og:url" content="https://thecalltaker.com/paid.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Call Taker - AI Call Answering For Missed Calls">
+  <meta name="twitter:description" content="Gideon answers calls, collects caller details, and sends clean summaries after your setup is reviewed.">
+  <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
+  <link rel="canonical" href="https://thecalltaker.com/paid.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg: #07110c;
+      --surface: #0e1a13;
+      --surface-2: #f8f4ec;
+      --ink: #f4fbf6;
+      --muted: rgba(244, 251, 246, 0.72);
+      --line: rgba(244, 251, 246, 0.12);
+      --green: #35b982;
+      --green-dark: #267354;
+      --paper-ink: #102018;
+      --paper-muted: #5f6d65;
+      --red-soft: #ffdeda;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 0;
+    }
+    .brand { font-weight: 900; letter-spacing: -0.03em; text-decoration: none; }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .nav-actions a, .btn {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 17px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      font-weight: 850;
+      font-size: 14px;
+    }
+    .btn-primary { color: #04120b; background: var(--green); border-color: var(--green); }
+    .btn-secondary { color: var(--ink); background: rgba(255,255,255,0.06); }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.78fr);
+      gap: 48px;
+      align-items: center;
+      min-height: calc(100svh - 86px);
+      padding: 34px 0 72px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      margin-bottom: 18px;
+      padding: 7px 10px;
+      border: 1px solid rgba(53,185,130,0.24);
+      border-radius: 999px;
+      color: var(--green);
+      background: rgba(53,185,130,0.09);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(44px, 7vw, 86px);
+      line-height: 0.95;
+      letter-spacing: -0.055em;
+    }
+    .sub {
+      max-width: 660px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: clamp(18px, 2.2vw, 23px);
+      line-height: 1.52;
+    }
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+    .hero-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025));
+      overflow: hidden;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.28);
+    }
+    .hero-card img { display: block; width: 100%; height: auto; }
+    .hero-card-body { padding: 20px; }
+    .summary {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+    }
+    .summary div {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.18);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .summary strong { color: var(--ink); }
+    .section {
+      padding: 74px 0;
+      border-top: 1px solid var(--line);
+    }
+    .section h2 {
+      max-width: 660px;
+      margin: 0 0 14px;
+      font-size: clamp(30px, 4.4vw, 54px);
+      line-height: 1;
+      letter-spacing: -0.045em;
+    }
+    .section p { max-width: 690px; color: var(--muted); font-size: 17px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 30px;
+    }
+    .tile {
+      min-width: 0;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+    }
+    .tile strong { display: block; margin-bottom: 8px; font-size: 17px; }
+    .tile span { color: var(--muted); font-size: 14px; }
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .plan {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface-2);
+      color: var(--paper-ink);
+    }
+    .plan.featured { border-color: rgba(53,185,130,0.56); box-shadow: 0 18px 44px rgba(53,185,130,0.12); }
+    .plan h3 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.03em; }
+    .price { margin: 0 0 14px; color: var(--green-dark); font-weight: 900; }
+    .plan p { color: var(--paper-muted); font-size: 14px; margin: 0 0 18px; }
+    .plan .btn { width: 100%; }
+    .warning {
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 16px;
+      background: var(--red-soft);
+      color: #45140f;
+      font-size: 14px;
+    }
+    footer {
+      padding: 34px 0 46px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 820px) {
+      .nav { align-items: flex-start; }
+      .nav-actions { flex-wrap: wrap; justify-content: flex-end; }
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 18px; gap: 28px; }
+      .grid, .plans { grid-template-columns: 1fr; }
+      .btn, .nav-actions a { width: 100%; }
+      .cta-row .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body data-tct-view="paid_view" data-tct-page="paid" data-tct-learning-tag="paid_page_signal">
+  <header class="wrap nav">
+    <a class="brand" href="/">The Call Taker</a>
+    <div class="nav-actions">
+      <a href="tel:+16292699697" data-tct-event="paid_demo_click" data-tct-page="paid" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="paid_demo_intent">Call Gideon Live</a>
+      <a href="/pricing.html">Pricing</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <div>
+        <div class="eyebrow">AI call answering for missed calls</div>
+        <h1>When you miss the call, Gideon gets the details.</h1>
+        <p class="sub">The Call Taker answers missed, after-hours, and overflow calls, asks the questions you approve, and sends clean summaries after your setup is reviewed.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="/pre-checkout.html?plan=full247&source=paid-landing-hero" data-tct-event="paid_cta_click" data-tct-page="paid" data-tct-plan="full247" data-tct-cta="Start 14-day trial" data-tct-destination="precheckout" data-tct-source="paid-landing-hero" data-tct-learning-tag="paid_page_signal">Start 14-day trial</a>
+          <a class="btn btn-secondary" href="tel:+16292699697" data-tct-event="paid_demo_click" data-tct-page="paid" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="paid_demo_intent">Call Gideon Live</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Example call summary">
+        <picture>
+          <source srcset="/assets/images/gideon-service-mobile-hero.webp" type="image/webp">
+          <img src="/assets/images/gideon-service-mobile-hero.png" width="669" height="1200" alt="Gideon call answering preview">
+        </picture>
+        <div class="hero-card-body">
+          <dl class="summary">
+            <div><dt>Caller</dt><dd><strong>Name and callback</strong></dd></div>
+            <div><dt>Need</dt><dd><strong>Job type captured</strong></dd></div>
+            <div><dt>Next step</dt><dd><strong>Owner summary sent</strong></dd></div>
+          </dl>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Voicemail does not chase the lead.</h2>
+        <p>When a customer has an urgent problem, they usually keep calling until someone answers. Gideon gives you a safer backup when your team is busy, closed, or asleep.</p>
+        <div class="grid">
+          <div class="tile"><strong>Answers the call</strong><span>Gideon greets the caller and follows the call flow you approve.</span></div>
+          <div class="tile"><strong>Collects the useful details</strong><span>Name, number, need, urgency, preferred language, and next step can be captured.</span></div>
+          <div class="tile"><strong>Sends a clean summary</strong><span>Your team sees what happened without digging through voicemail.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Built for service businesses that rely on phone calls.</h2>
+        <p>HVAC, plumbing, roofing, locksmith, dental, medical, legal, restaurants, salons, auto repair, towing, property management, and more. Setup is based on your hours, services, rules, and follow-up process.</p>
+        <div class="grid">
+          <div class="tile"><strong>After hours</strong><span>Nights, weekends, holidays, and urgent calls.</span></div>
+          <div class="tile"><strong>Overflow</strong><span>When your office, techs, or sales team cannot pick up.</span></div>
+          <div class="tile"><strong>Setup reviewed first</strong><span>No live routing starts from checkout alone.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Choose the coverage level.</h2>
+        <p>Start through secure checkout, then complete the setup form so review, forwarding, and test-call steps can begin.</p>
+        <div class="plans">
+          <article class="plan">
+            <h3>After-Hours Capture</h3>
+            <div class="price">14 days free, then $97/mo</div>
+            <p>For evenings, weekends, and holiday call capture.</p>
+            <a class="btn btn-primary" href="/pre-checkout.html?plan=afterhours&source=paid-landing-plans" data-tct-event="paid_cta_click" data-tct-page="paid" data-tct-plan="afterhours" data-tct-cta="Start trial" data-tct-destination="precheckout" data-tct-source="paid-landing-plans" data-tct-learning-tag="paid_page_signal">Start trial</a>
+          </article>
+          <article class="plan featured">
+            <h3>24/7 Call Coverage</h3>
+            <div class="price">14 days free, then $497/mo</div>
+            <p>For day, night, and overflow call answering.</p>
+            <a class="btn btn-primary" href="/pre-checkout.html?plan=full247&source=paid-landing-plans" data-tct-event="paid_cta_click" data-tct-page="paid" data-tct-plan="full247" data-tct-cta="Start trial" data-tct-destination="precheckout" data-tct-source="paid-landing-plans" data-tct-learning-tag="paid_page_signal">Start trial</a>
+          </article>
+          <article class="plan">
+            <h3>Custom Call Coverage</h3>
+            <div class="price">14 days free, then $997+/mo</div>
+            <p>For custom call paths, routing, and deeper setup review.</p>
+            <a class="btn btn-primary" href="/pre-checkout.html?plan=custom&source=paid-landing-plans" data-tct-event="paid_cta_click" data-tct-page="paid" data-tct-plan="custom" data-tct-cta="Start trial" data-tct-destination="precheckout" data-tct-source="paid-landing-plans" data-tct-learning-tag="paid_page_signal">Start trial</a>
+          </article>
+        </div>
+        <div class="warning">Do not change your phone system yet. After checkout, complete the setup form so The Call Taker can review your setup packet before forwarding and testing.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">The Call Taker. Setup reviewed before launch. <a href="/faq.html">FAQ</a> · <a href="/pricing.html">Pricing</a> · <a href="tel:+16292699697" data-tct-event="paid_demo_click" data-tct-page="paid" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="paid_demo_intent">Call Gideon Live</a></div>
+  </footer>
+  <script src="/tct-funnel-events.js" defer></script>
+</body>
+</html>

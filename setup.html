@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>The Call Taker - Setup Form</title>
+  <meta name="description" content="Complete The Call Taker setup form after checkout so your AI receptionist packet can be reviewed.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Call Taker setup form">
+  <meta property="og:description" content="Complete your setup packet after checkout. Review, forwarding, and testing happen before launch.">
+  <meta property="og:image" content="https://thecalltaker.com/og-image.png">
+  <meta property="og:url" content="https://thecalltaker.com/setup.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Call Taker setup form">
+  <meta name="twitter:description" content="A guided setup packet for Gideon call coverage.">
+  <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
+  <link rel="canonical" href="https://thecalltaker.com/setup.html">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="text-us.css">
+  <style>
+    body.setup-page { background: var(--bg); color: var(--text-1); overflow-x: hidden; }
+    html.light body.setup-page {
+      --bg: #f7f8f5;
+      --surface: #ffffff;
+      --border: rgba(6,22,16,0.12);
+      --text-1: #061610;
+      --text-2: #4b5563;
+      --text-3: #6b7280;
+    }
+    html.dark body.setup-page {
+      --bg: #000000;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.10);
+      --text-1: #ffffff;
+      --text-2: #a1a1aa;
+      --text-3: #71717a;
+    }
+    .setup-page .header { background: rgba(0,0,0,0.84); backdrop-filter: blur(18px); }
+    html.light .setup-page .header { background: rgba(255,255,255,0.86); }
+    html.light .setup-page .logo, html.light .setup-page .logo-text { color: #061610; }
+    .setup-page .header-inner { max-width: 1120px; }
+    .setup-page .header-cta { display: none; background: var(--green); color: #03140c; margin-left: auto; }
+    .setup-page .menu-toggle { display: none !important; }
+    .setup-page .mobile-nav { background: rgba(5, 12, 9, 0.97); }
+    html.light .setup-page .mobile-nav { background: rgba(255,255,255,0.98); }
+    .setup-hero { padding: 126px 20px 36px; text-align: center; }
+    .setup-hero .wrap { max-width: 760px; }
+    .setup-kicker { color: var(--green); font-size: 12px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 12px; }
+    .setup-hero h1 { color: var(--text-1); font-size: clamp(34px, 7vw, 58px); line-height: 1.02; letter-spacing: -0.04em; margin: 0 0 16px; }
+    .setup-hero p { color: var(--text-2); font-size: 17px; line-height: 1.6; max-width: 680px; margin: 0 auto; }
+    .setup-note { margin: 22px auto 0; max-width: 660px; border: 1px solid rgba(0,220,130,0.22); background: rgba(0,220,130,0.08); color: var(--text-2); border-radius: 8px; padding: 14px 16px; font-size: 14px; line-height: 1.55; }
+    .setup-handoff-card { margin: 16px auto 0; max-width: 660px; display: grid; gap: 10px; text-align: left; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.04); border-radius: 12px; padding: 16px; }
+    html.light .setup-handoff-card { background: #fff; border-color: rgba(6,22,16,0.12); }
+    .setup-handoff-card strong { color: var(--text-1); font-size: 15px; }
+    .setup-handoff-card p { color: var(--text-2); font-size: 13px; line-height: 1.5; margin: 0; max-width: none; }
+    .setup-handoff-card a { color: var(--green); font-weight: 800; text-decoration: none; }
+    .setup-shell { max-width: 1120px; margin: 0 auto 84px; padding: 0 20px; display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 22px; align-items: start; }
+    .setup-progress-card { position: sticky; top: 88px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); padding: 18px; box-shadow: 0 20px 46px rgba(0,0,0,0.12); }
+    html.light .setup-progress-card { background: #fff; box-shadow: 0 18px 44px rgba(5,30,18,0.07); }
+    .setup-progress-card h2 { color: var(--text-1); font-size: 15px; letter-spacing: -0.01em; margin: 0 0 12px; }
+    .setup-progress-card p { color: var(--text-3); font-size: 12px; line-height: 1.5; margin: 0 0 14px; }
+    .setup-progress-list { display: grid; gap: 8px; list-style: none; margin: 0; padding: 0; }
+    .setup-progress-list li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 9px; align-items: center; color: var(--text-2); font-size: 13px; font-weight: 750; line-height: 1.25; }
+    .setup-progress-list span { width: 24px; height: 24px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(0,220,130,0.22); background: rgba(0,220,130,0.08); color: var(--green); font-size: 11px; font-weight: 900; }
+    .setup-progress-footnote { border-top: 1px solid var(--border); margin-top: 14px; padding-top: 14px; color: var(--text-3); font-size: 12px; line-height: 1.5; }
+    .setup-form { display: grid; gap: 18px; min-width: 0; }
+    .setup-section { border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin: 0; background: var(--surface); box-shadow: 0 20px 54px rgba(0,0,0,0.14); min-width: 0; }
+    html.light .setup-section { background: #fff; box-shadow: 0 18px 44px rgba(5,30,18,0.07); }
+    .setup-section legend { width: 100%; padding: 0; margin: 0 0 10px; }
+    .setup-step-heading { display: flex; align-items: center; gap: 12px; width: 100%; color: var(--text-1); }
+    .setup-step-badge { width: 38px; height: 38px; border-radius: 10px; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; background: rgba(0,220,130,0.11); border: 1px solid rgba(0,220,130,0.26); color: var(--green); font-size: 12px; font-weight: 900; letter-spacing: 0.06em; }
+    .setup-step-copy { display: grid; gap: 2px; min-width: 0; }
+    .setup-step-title { color: var(--text-1); font-size: 20px; font-weight: 850; letter-spacing: -0.02em; line-height: 1.15; }
+    .setup-step-subtitle { color: var(--text-3); font-size: 13px; line-height: 1.4; font-weight: 650; }
+    .setup-section > p { color: var(--text-3); font-size: 13px; line-height: 1.55; margin: 0 0 18px; max-width: 680px; }
+    .setup-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; min-width: 0; }
+    .setup-field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+    .setup-field.full { grid-column: 1 / -1; }
+    .setup-field label, .setup-checkbox span { color: var(--text-1); font-size: 13px; font-weight: 800; }
+    .setup-field label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .optional-badge { flex: 0 0 auto; border: 1px solid var(--border); border-radius: 999px; padding: 3px 8px; color: var(--text-3); background: rgba(255,255,255,0.04); font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+    html.light .optional-badge { background: #f8faf9; }
+    .setup-field small, .setup-checkbox small { color: var(--text-3); font-size: 12px; line-height: 1.45; }
+    .setup-field .helper-positive { color: var(--green); font-weight: 750; }
+    .setup-field input, .setup-field select, .setup-field textarea {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text-1);
+      font: inherit;
+      font-size: 15px;
+      line-height: 1.4;
+      padding: 13px 14px;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    }
+    html.light .setup-field input, html.light .setup-field select, html.light .setup-field textarea { background: #fff; color: #061610; }
+    .setup-field textarea { min-height: 92px; resize: vertical; }
+    .setup-field textarea[name="callback_rules"],
+    .setup-field textarea[name="services_offered"],
+    .setup-field textarea[name="business_hours"],
+    .setup-field textarea[name="after_hours_rules"],
+    .setup-field textarea[name="emergency_rules"] { min-height: 104px; }
+    .setup-field input:focus, .setup-field select:focus, .setup-field textarea:focus { border-color: var(--green); box-shadow: 0 0 0 4px rgba(0,220,130,0.12); }
+    .setup-field .is-invalid, .setup-field input.is-invalid, .setup-field select.is-invalid, .setup-field textarea.is-invalid { border-color: #dc2626; box-shadow: 0 0 0 4px rgba(220,38,38,0.12); }
+    .setup-checkbox { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; border: 1px solid rgba(0,220,130,0.22); border-radius: 10px; padding: 14px; background: rgba(0,220,130,0.06); }
+    html.light .setup-checkbox { background: #f8faf9; }
+    .setup-checkbox input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--green); }
+    .setup-form-message { border: 1px solid rgba(0,220,130,0.24); background: rgba(0,220,130,0.08); color: var(--text-2); border-radius: 8px; padding: 13px 15px; font-size: 14px; line-height: 1.5; margin-bottom: 22px; }
+    .setup-form-message[data-state="error"] { border-color: rgba(220,38,38,0.28); background: rgba(220,38,38,0.08); color: #fca5a5; }
+    html.light .setup-form-message[data-state="error"] { color: #991b1b; }
+    .setup-checkpoint-card { border: 1px solid rgba(220,38,38,0.22); border-radius: 12px; padding: 18px; background: rgba(220,38,38,0.06); }
+    .setup-checkpoint-card h2 { color: var(--text-1); font-size: 18px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -0.02em; }
+    .setup-checklist { display: grid; gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; }
+    .setup-checklist li { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 9px; color: var(--text-2); font-size: 13px; line-height: 1.45; }
+    .setup-checklist li::before { content: ""; width: 8px; height: 8px; margin-top: 6px; border-radius: 999px; background: var(--green); box-shadow: 0 0 0 4px rgba(0,220,130,0.10); }
+    .setup-submit-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-top: 1px solid var(--border); margin-top: 18px; padding-top: 18px; }
+    .setup-submit-row p { color: var(--text-3); font-size: 13px; line-height: 1.5; margin: 0; max-width: 520px; }
+    .setup-submit-row .btn { white-space: nowrap; }
+    .theme-toggle {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 999;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.18);
+    }
+    .theme-toggle svg { width: 20px; height: 20px; stroke: var(--text-2); fill: none; stroke-width: 2; }
+    .theme-toggle .icon-sun { display: block; }
+    .theme-toggle .icon-moon { display: none; }
+    html.light .theme-toggle .icon-sun { display: none; }
+    html.light .theme-toggle .icon-moon { display: block; }
+    @media (max-width: 760px) {
+      .setup-page .header-inner { padding: 0 18px; }
+      .setup-hero { padding: 104px 18px 34px; }
+      .setup-hero .wrap { padding: 0; max-width: 100%; }
+      .setup-hero h1 { max-width: 286px; margin-left: auto; margin-right: auto; font-size: 31px; line-height: 1.08; }
+      .setup-hero p { max-width: 306px; font-size: 15px; }
+      .setup-note { max-width: 306px; }
+      .setup-handoff-card { max-width: 306px; }
+      .setup-shell { width: calc(100vw - 40px); padding: 0; max-width: calc(100vw - 40px); display: block; }
+      .setup-progress-card { position: static; margin-bottom: 18px; padding: 16px; }
+      .setup-progress-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; }
+      .setup-progress-list li { grid-template-columns: 22px minmax(0, 1fr); font-size: 12px; }
+      .setup-progress-list span { width: 22px; height: 22px; font-size: 10px; }
+      .setup-form { width: 100%; max-width: 100%; overflow: hidden; }
+      .setup-section { padding: 20px; overflow: hidden; }
+      .setup-step-heading { align-items: flex-start; }
+      .setup-step-badge { width: 34px; height: 34px; border-radius: 9px; }
+      .setup-step-title { font-size: 18px; }
+      .setup-section, .setup-section > p { width: 100%; min-width: 0; max-width: 100%; overflow-wrap: break-word; }
+      .setup-grid { grid-template-columns: 1fr; }
+      .setup-submit-row { align-items: stretch; flex-direction: column; }
+      .setup-submit-row .btn { width: 100%; justify-content: center; }
+      .theme-toggle { width: 42px; height: 42px; right: 14px; bottom: 14px; }
+    }
+    @media (min-width: 768px) {
+      .setup-page .header-cta { display: inline-flex; }
+    }
+  </style>
+</head>
+<body class="setup-page" data-tct-view="setup_view" data-tct-page="setup" data-tct-learning-tag="setup_intent">
+<header class="header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      <span class="logo-text">The Call<span>Taker</span></span>
+    </a>
+    <a href="/pricing.html" class="header-cta">Back to Plans</a>
+    <button class="menu-toggle" aria-label="Menu" aria-expanded="false">
+      <span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      <strong>Menu</strong>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav">
+  <a href="/">Home</a>
+  <a href="/pricing.html">Pricing</a>
+  <a href="/faq.html">FAQ</a>
+  <a class="text-us-button text-us-button--nav" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="setup" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    <span>Text Us</span>
+  </a>
+  <a href="/pricing.html" class="btn btn-primary btn-lg">Back to Plans</a>
+</nav>
+
+<main>
+  <section class="setup-hero">
+    <div class="wrap">
+      <div class="setup-kicker">After checkout</div>
+      <h1>Complete your setup form.</h1>
+      <p>Use this form after checkout so we can configure your AI receptionist around your hours, services, urgent-call rules, and where call summaries should go.</p>
+      <div class="setup-note">Already checked out? You are in the right place. If Square did not send you back automatically, complete this form so the setup packet can be reviewed cleanly. This form starts the setup packet. We may still need to verify your checkout reference before configuration is completed.</div>
+      <div class="setup-handoff-card" aria-label="Already checked out handoff">
+        <strong>Already checked out?</strong>
+        <p>After checkout, complete your setup form at <a href="https://thecalltaker.com/setup.html">thecalltaker.com/setup.html</a> so we can configure your AI receptionist. Review, forwarding, and testing happen before launch.</p>
+      </div>
+      <a href="#tct-setup-form" class="btn btn-primary btn-lg" data-tct-event="setup_form_started" data-tct-page="setup" data-tct-cta="Start setup form" data-tct-destination="setup_form" data-tct-learning-tag="setup_intent">Start setup form</a>
+      <div class="text-us-support text-us-support--plain" aria-label="Setup text support">
+        <p class="text-us-inline-note">Need help with setup?</p>
+        <a class="text-us-button text-us-button--small" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="setup" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <span>Text Us</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="setup-shell" aria-label="Setup form">
+    <aside class="setup-progress-card" aria-label="Setup progress">
+      <h2>Setup progress</h2>
+      <p>Work down the cards. Required details keep your setup packet clean; optional details help us tune the flow.</p>
+      <ol class="setup-progress-list">
+        <li><span>01</span>Business basics</li>
+        <li><span>02</span>Summaries</li>
+        <li><span>03</span>Services</li>
+        <li><span>04</span>Hours</li>
+        <li><span>05</span>Urgent rules</li>
+        <li><span>06</span>Greeting</li>
+        <li><span>07</span>Phone setup</li>
+        <li><span>08</span>Go live</li>
+        <li><span>09</span>Confirm</li>
+      </ol>
+      <div class="setup-progress-footnote">Not sure on phone setup? Say so. We review forwarding/testing before anything goes live.</div>
+    </aside>
+    <form class="setup-form" id="tct-setup-form" novalidate data-tct-form="setup" data-tct-page="setup" data-tct-event-start="setup_form_started" data-tct-event-submit="setup_form_submitted" data-tct-destination="confirmation" data-tct-learning-tag="setup_intent">
+      <div class="setup-form-message" data-setup-form-message hidden></div>
+      <input type="hidden" name="payment_verification_status" value="paid_unverified">
+
+      <fieldset class="setup-section">
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">01</span><span class="setup-step-copy"><span class="setup-step-title">Business basics</span><span class="setup-step-subtitle">Plan, owner, and contact details.</span></span></span></legend>
+        <p>Use the business and owner details that should appear in the setup packet.</p>
+        <div class="setup-grid">
+          <div class="setup-field">
+            <label for="plan_purchased">Plan purchased</label>
+            <select id="plan_purchased" name="plan_purchased" required>
+              <option value="$97 After-Hours Capture">$97 After-Hours Capture</option>
+              <option value="$497 Revenue Recovery System">$497 Revenue Recovery System</option>
+              <option value="$997+ Operational Infrastructure">$997+ Operational Infrastructure</option>
+            </select>
+          </div>
+          <div class="setup-field">
+            <label for="business_name">Business name</label>
+            <input id="business_name" name="business_name" type="text" autocomplete="organization" required>
+          </div>
+          <div class="setup-field">
+            <label for="owner_name">Owner name</label>
+            <input id="owner_name" name="owner_name" type="text" autocomplete="name" required>
+          </div>
+          <div class="setup-field">
+            <label for="business_phone">Main business phone</label>
+            <input id="business_phone" name="business_phone" type="tel" autocomplete="tel" required>
+          </div>
+          <div class="setup-field">
+            <label for="owner_cell">Owner cell</label>
+            <input id="owner_cell" name="owner_cell" type="tel" autocomplete="tel" required>
+          </div>
+          <div class="setup-field">
+            <label for="summary_email">Summary email</label>
+            <input id="summary_email" name="summary_email" type="email" autocomplete="email" required>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="setup-section">
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">02</span><span class="setup-step-copy"><span class="setup-step-title">Where summaries go</span><span class="setup-step-subtitle">Who gets call notes and urgent handoffs.</span></span></span></legend>
+        <p>Tell us where call summaries and transfer-ready calls should go.</p>
+        <div class="setup-grid">
+          <div class="setup-field">
+            <label for="summary_sms_number"><span>Summary text number</span><span class="optional-badge">Optional</span></label>
+            <input id="summary_sms_number" name="summary_sms_number" type="tel" placeholder="Optional">
+          </div>
+          <div class="setup-field">
+            <label for="setup_guide_sms_recipient"><span>Mobile number to text your setup/forwarding guide</span><span class="optional-badge">Optional</span></label>
+            <input id="setup_guide_sms_recipient" name="setup_guide_sms_recipient" type="tel" placeholder="Defaults to owner cell if blank">
+            <small>Use the mobile number that should receive forwarding and test-call instructions.</small>
+          </div>
+          <div class="setup-field">
+            <label for="transfer_number">Transfer number</label>
+            <input id="transfer_number" name="transfer_number" type="tel" required>
+            <small>Use the number urgent callers should be transferred to when your rules say to transfer.</small>
+          </div>
+          <div class="setup-field full">
+            <label for="callback_rules">Callback rules</label>
+            <textarea id="callback_rules" name="callback_rules" required placeholder="Who should call back, how fast, and what should be marked high priority?"></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="setup-section">
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">03</span><span class="setup-step-copy"><span class="setup-step-title">What Gideon should answer</span><span class="setup-step-subtitle">Services, service area, and booking boundaries.</span></span></span></legend>
+        <p>List the work you want Gideon to understand before calls are configured.</p>
+        <div class="setup-grid">
+          <div class="setup-field full">
+            <label for="services_offered">Services offered</label>
+            <textarea id="services_offered" name="services_offered" required placeholder="List the main services you want Gideon to understand."></textarea>
+          </div>
+          <div class="setup-field full">
+            <label for="service_area">Service area</label>
+            <textarea id="service_area" name="service_area" required placeholder="Cities, counties, mileage radius, excluded areas, or service limits."></textarea>
+          </div>
+          <div class="setup-field full">
+            <label for="appointment_booking_rules"><span>Appointment booking rules</span><span class="optional-badge">Optional</span></label>
+            <textarea id="appointment_booking_rules" name="appointment_booking_rules" placeholder="Booking windows, dispatch rules, pricing boundaries, or scheduling tools."></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="setup-section">
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">04</span><span class="setup-step-copy"><span class="setup-step-title">When Gideon should answer</span><span class="setup-step-subtitle">Normal hours and after-hours coverage rules.</span></span></span></legend>
+        <p>Define your normal schedule and when callers should reach the AI receptionist.</p>
+        <div class="setup-grid">
+          <div class="setup-field full">
+            <label for="business_hours">Business hours</label>
+            <textarea id="business_hours" name="business_hours" required placeholder="Example: Monday-Friday 8am-5pm, Saturday emergency only, Sunday closed."></textarea>
+          </div>
+          <div class="setup-field full">
+            <label for="after_hours_rules">After-hours rules</label>
+            <textarea id="after_hours_rules" name="after_hours_rules" required placeholder="When should Gideon answer, when should calls transfer, and what should happen after hours?"></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="setup-section">
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">05</span><span class="setup-step-copy"><span class="setup-step-title">Urgent call rules</span><span class="setup-step-subtitle">What needs faster owner or team attention.</span></span></span></legend>
+        <p>Define what should be marked urgent before configuration starts.</p>
+        <div class="setup-grid">
+          <div class="setup-field full">
+            <label for="emergency_rules">Emergency rules</label>
+            <textarea id="emergency_rules" name="emergency_rules" required placeholder="Examples: no heat, no AC for elderly customer, active leak, lockout, legal emergency."></textarea>
+          </div>
+          <div class="setup-field full">
+            <label for="what_ai_should_never_say"><span>What Gideon should never say</span><span class="optional-badge">Optional</span></label>
+            <textarea id="what_ai_should_never_say" name="what_ai_should_never_say" placeholder="Claims, prices, guarantees, service promises, or phrases to avoid."></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="setup-section">
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">06</span><span class="setup-step-copy"><span class="setup-step-title">Greeting preference</span><span class="setup-step-subtitle">The opening tone callers should hear.</span></span></span></legend>
+        <p>Give Gideon the greeting style and opening callers should hear.</p>
+        <div class="setup-grid">
+          <div class="setup-field full">
+            <label for="ai_greeting_preference">AI greeting preference</label>
+            <textarea id="ai_greeting_preference" name="ai_greeting_preference" required placeholder="Example: Thanks for calling [Business]. This is Gideon. How can I help today?"></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="setup-section">
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">07</span><span class="setup-step-copy"><span class="setup-step-title">Phone and forwarding info</span><span class="setup-step-subtitle">What you know about the current phone setup.</span></span></span></legend>
+        <p>You do not need every phone-system detail. If you are unsure, say so and we will flag the packet for forwarding instructions.</p>
+        <div class="setup-grid">
+          <div class="setup-field">
+            <label for="phone_provider"><span>Phone provider</span><span class="optional-badge">Optional</span></label>
+            <input id="phone_provider" name="phone_provider" type="text" placeholder="RingCentral, Google Voice, AT&amp;T, not sure">
+            <small class="helper-positive">Not sure is okay. We will review forwarding/testing before launch.</small>
+          </div>
+          <div class="setup-field">
+            <label for="current_forwarding_status"><span>Current forwarding status</span><span class="optional-badge">Optional</span></label>
+            <select id="current_forwarding_status" name="current_forwarding_status">
+              <option value="">Select one</option>
+              <option>Forwarding is already set up</option>
+              <option>Forwarding is not set up yet</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="setup-section">
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">08</span><span class="setup-step-copy"><span class="setup-step-title">Go-live preference</span><span class="setup-step-subtitle">Timing, checkout reference, and notes.</span></span></span></legend>
+        <p>Same-day setup can move faster when the packet is complete and forwarding/testing is confirmed.</p>
+        <div class="setup-grid">
+          <div class="setup-field">
+            <label for="preferred_go_live_time"><span>Preferred go-live time</span><span class="optional-badge">Optional</span></label>
+            <input id="preferred_go_live_time" name="preferred_go_live_time" type="text" placeholder="Today, tomorrow morning, after 5pm, etc.">
+          </div>
+          <div class="setup-field">
+            <label for="square_checkout_reference"><span>Checkout reference</span><span class="optional-badge">Optional</span></label>
+            <input id="square_checkout_reference" name="square_checkout_reference" type="text" placeholder="Optional Square order/reference">
+          </div>
+          <div class="setup-field full">
+            <label for="special_notes"><span>Special notes</span><span class="optional-badge">Optional</span></label>
+            <textarea id="special_notes" name="special_notes" placeholder="Anything else your setup reviewer should know?"></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="setup-section">
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">09</span><span class="setup-step-copy"><span class="setup-step-title">Final confirmation</span><span class="setup-step-subtitle">Safety checkpoint before review.</span></span></span></legend>
+        <div class="setup-checkpoint-card">
+          <h2>Before we review your setup</h2>
+          <ul class="setup-checklist">
+            <li>We use this to prepare your setup packet.</li>
+            <li>Do not change your phone system yet.</li>
+            <li>Live routing starts only after forwarding/testing is confirmed.</li>
+          </ul>
+          <label class="setup-checkbox" for="authorized_to_configure_forwarding">
+            <input id="authorized_to_configure_forwarding" name="authorized_to_configure_forwarding" type="checkbox" required>
+            <span>Yes, The Call Taker can use these details to prepare forwarding and configuration instructions for this business.<br><small>Do not change your phone system yet unless you are instructed to.</small></span>
+          </label>
+          <div class="setup-submit-row">
+            <p>We'll review your details before configuration. No live phone routing starts from this form alone.</p>
+            <button type="submit" class="btn btn-green btn-lg">Submit setup packet</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <span class="logo-text">The Call<span>Taker</span></span>
+        </a>
+        <p>AI receptionist setup for service businesses.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/faq.html">FAQ</a>
+        <a class="text-us-button text-us-button--small" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="setup" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <span>Text Us</span>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 The Call Taker. All rights reserved.</span>
+      <span>Setup form</span>
+    </div>
+  </div>
+</footer>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
+  <svg class="icon-moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+
+<script src="script.js"></script>
+<script src="setup-form.js"></script>
+<script src="/tct-funnel-events.js" defer></script>
+<script>
+(function () {
+  var menuToggle = document.querySelector('.setup-page .menu-toggle');
+  var mobileNav = document.querySelector('.setup-page .mobile-nav');
+  if (menuToggle && mobileNav) {
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.addEventListener('click', function () {
+      var open = !mobileNav.classList.contains('open');
+      menuToggle.classList.toggle('open', open);
+      mobileNav.classList.toggle('open', open);
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    mobileNav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        menuToggle.classList.remove('open');
+        mobileNav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  var toggle = document.getElementById('themeToggle');
+  if (toggle) {
+    function getSavedTheme() {
+      try { return localStorage.getItem('tct-theme'); } catch (error) { return null; }
+    }
+    function saveTheme(theme) {
+      try { localStorage.setItem('tct-theme', theme); } catch (error) {}
+    }
+    function applyTheme(theme) {
+      var isLight = theme !== 'dark';
+      document.documentElement.classList.toggle('light', isLight);
+      document.documentElement.classList.toggle('dark', !isLight);
+      toggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+      toggle.setAttribute('aria-pressed', isLight ? 'false' : 'true');
+    }
+    applyTheme(getSavedTheme() || 'light');
+    toggle.addEventListener('click', function () {
+      var nextTheme = document.documentElement.classList.contains('light') ? 'dark' : 'light';
+      applyTheme(nextTheme);
+      saveTheme(nextTheme);
+    });
+  }
+
+  window.TCTSetupForm.initSetupForm();
+})();
+</script>
+</body>
+</html>
