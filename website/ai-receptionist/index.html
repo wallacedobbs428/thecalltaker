@@ -4,12 +4,510 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Receptionist For Service Businesses | The Call Taker</title>
-  <meta name="description" content="The Call Taker is an AI receptionist for service businesses. Gideon answers calls, collects caller details, and sends clean summaries after setup is reviewed.">
+  <meta name="description" content="The Call Taker is an AI receptionist for service businesses. Gideon answers missed, after-hours, and overflow calls, collects caller details, and sends clean summaries after setup review.">
+  <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://thecalltaker.com/ai-receptionist/">
   <meta property="og:title" content="AI Receptionist For Service Businesses | The Call Taker">
-  <meta property="og:description" content="Gideon answers calls, collects caller details, and sends clean summaries after setup is reviewed.">
+  <meta property="og:description" content="Gideon answers missed and after-hours calls, captures job details, and sends clean summaries so service businesses can follow up faster.">
   <meta property="og:url" content="https://thecalltaker.com/ai-receptionist/">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://thecalltaker.com/og-image.png">
+  <link rel="icon" href="/favicon.ico">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { overflow-x: hidden; }
+    :root {
+      --ink: #10211b;
+      --muted: #53615b;
+      --soft: #eef7f2;
+      --paper: #fffdf8;
+      --line: #d9e5dd;
+      --green: #2a9d7a;
+      --green-dark: #16725a;
+      --gold: #c18931;
+      --charcoal: #07100d;
+      --white: #ffffff;
+      --shadow: 0 24px 80px rgba(16, 33, 27, 0.16);
+    }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      min-width: 0;
+    }
+    a { color: inherit; }
+    .skip {
+      position: absolute;
+      left: -999px;
+      top: 16px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 6px;
+      z-index: 20;
+    }
+    .skip:focus { left: 16px; }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 253, 248, 0.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+    }
+    .nav-inner {
+      width: min(1120px, calc(100% - 40px));
+      min-height: 68px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand {
+      font-weight: 900;
+      letter-spacing: 0;
+      text-decoration: none;
+      font-size: 19px;
+      white-space: nowrap;
+    }
+    .brand span { color: var(--green); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .nav-links a { text-decoration: none; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 800;
+      line-height: 1.1;
+      border: 1px solid transparent;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--green);
+      color: var(--white);
+      box-shadow: 0 14px 36px rgba(42, 157, 122, 0.24);
+    }
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-outline {
+      border-color: rgba(42, 157, 122, 0.36);
+      color: var(--green-dark);
+      background: rgba(255, 255, 255, 0.72);
+    }
+    .hero {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 78px 0 54px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.78fr);
+      gap: 48px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(42, 157, 122, 0.12);
+    }
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(42px, 7vw, 78px);
+      line-height: 0.94;
+      letter-spacing: 0;
+    }
+    .hero-copy {
+      max-width: 650px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: 20px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+    .proof-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .proof-strip li {
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
+    .visual {
+      position: relative;
+      min-height: 480px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--charcoal);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+    .visual img {
+      width: 100%;
+      height: 100%;
+      min-height: 480px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.82;
+    }
+    .visual-panel {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 22px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(7, 16, 13, 0.78);
+      color: var(--white);
+      backdrop-filter: blur(16px);
+    }
+    .visual-panel strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+    .visual-panel p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 13px;
+    }
+    section {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 62px 0;
+    }
+    .section-kicker {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.04;
+      letter-spacing: 0;
+      overflow-wrap: break-word;
+    }
+    .lead {
+      margin: 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+    .card {
+      min-height: 188px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 10px 28px rgba(16, 33, 27, 0.05);
+    }
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: 0.78fr 1fr;
+      gap: 30px;
+      align-items: start;
+      padding: 42px;
+      border-radius: 8px;
+      background: var(--charcoal);
+      color: var(--white);
+    }
+    .steps .lead { color: rgba(255, 255, 255, 0.72); }
+    .step-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+    .step-list li {
+      counter-increment: steps;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .step-list li::before {
+      content: counter(steps);
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: var(--white);
+      font-weight: 900;
+    }
+    .step-list strong { display: block; margin-bottom: 4px; }
+    .step-list span { color: rgba(255, 255, 255, 0.72); }
+    .comparison {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin-top: 30px;
+      background: var(--line);
+    }
+    .compare-col {
+      background: var(--white);
+      padding: 24px;
+    }
+    .compare-col.highlight {
+      background: var(--soft);
+      border-top: 4px solid var(--green);
+    }
+    .compare-col h3 { margin: 0 0 14px; }
+    .compare-col ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    .compare-col li + li { margin-top: 9px; }
+    .cta-band {
+      width: 100%;
+      max-width: none;
+      margin-top: 20px;
+      padding: 72px 20px;
+      background: var(--soft);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+    }
+    .cta-band > div {
+      width: min(760px, 100%);
+      margin: 0 auto;
+    }
+    .cta-band .hero-actions { justify-content: center; }
+    .faq {
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+    }
+    details {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      padding: 18px 20px;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 900;
+      color: var(--ink);
+    }
+    details p {
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+    footer {
+      padding: 42px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+    @media (max-width: 860px) {
+      .nav-inner {
+        width: 362px;
+        max-width: calc(100vw - 28px);
+        margin-left: 14px;
+        margin-right: 14px;
+        gap: 12px;
+      }
+      .brand {
+        font-size: 18px;
+        min-width: 0;
+      }
+      .nav-links { display: none; }
+      .hero {
+        width: 362px;
+        max-width: calc(100vw - 28px);
+        margin-left: 14px;
+        margin-right: 14px;
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding-top: 48px;
+      }
+      .hero > *,
+      section > * {
+        min-width: 0;
+      }
+      h1 {
+        font-size: clamp(30px, 8vw, 42px);
+        line-height: 1.06;
+        max-width: 100%;
+        overflow-wrap: break-word;
+      }
+      .hero-copy { font-size: 18px; }
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .hero-actions .btn {
+        width: 100%;
+        min-width: 0;
+      }
+      .proof-strip {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .proof-strip li {
+        min-width: 0;
+      }
+      .visual,
+      .visual img { min-height: 340px; }
+      .visual-panel {
+        left: 14px;
+        right: 14px;
+        padding: 16px;
+      }
+      .visual-panel strong,
+      .visual-panel p {
+        overflow-wrap: break-word;
+      }
+      section {
+        width: 362px;
+        max-width: calc(100vw - 28px);
+        margin-left: 14px;
+        margin-right: 14px;
+        padding: 46px 0;
+      }
+      .grid,
+      .comparison,
+      .steps { grid-template-columns: 1fr; }
+      .steps { padding: 26px; }
+    }
+    @media (max-width: 430px) {
+      .nav-inner {
+        width: calc(100% - 24px);
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: start;
+      }
+      .brand { font-size: 17px; }
+      .nav-links {
+        display: none;
+      }
+      .hero,
+      section {
+        width: calc(100% - 28px);
+        max-width: calc(100% - 28px);
+        min-width: 0;
+      }
+      h1 {
+        font-size: 34px;
+        line-height: 1.06;
+        max-width: 100%;
+      }
+      h2 {
+        font-size: 28px;
+        line-height: 1.12;
+        max-width: 100%;
+      }
+      .hero-copy,
+      .lead,
+      .card p,
+      .visual-panel strong,
+      .visual-panel p {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      .hero-actions .btn {
+        width: 100%;
+        min-width: 0;
+      }
+      .proof-strip {
+        grid-template-columns: 1fr;
+      }
+      .visual,
+      .visual img,
+      .visual-panel,
+      .grid,
+      .card,
+      .comparison,
+      .steps {
+        max-width: 100%;
+        min-width: 0;
+      }
+      .visual-panel {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -19,7 +517,8 @@
         "@id": "https://thecalltaker.com/#organization",
         "name": "The Call Taker",
         "url": "https://thecalltaker.com/",
-        "description": "The Call Taker provides AI call answering for service businesses."
+        "description": "The Call Taker provides AI call answering for service businesses.",
+        "logo": "https://thecalltaker.com/og-image.png"
       },
       {
         "@type": "Service",
@@ -30,7 +529,25 @@
         },
         "serviceType": "AI receptionist and AI call answering",
         "areaServed": "United States",
-        "description": "Gideon answers calls, collects caller details, and sends clean summaries after setup is reviewed."
+        "description": "Gideon answers missed, after-hours, and overflow calls, collects caller details, and sends clean summaries after setup review.",
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "After-Hours Capture",
+            "price": "97",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://thecalltaker.com/pricing.html"
+          },
+          {
+            "@type": "Offer",
+            "name": "Revenue Recovery System",
+            "price": "497",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://thecalltaker.com/pricing.html"
+          }
+        ]
       },
       {
         "@type": "FAQPage",
@@ -41,7 +558,7 @@
             "name": "What is an AI receptionist?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "An AI receptionist is a call-answering system that can answer business calls, ask approved questions, collect caller details, and prepare summaries for follow-up."
+              "text": "An AI receptionist is a call-answering system that answers business calls, asks approved intake questions, collects caller details, and prepares follow-up summaries."
             }
           },
           {
@@ -58,6 +575,14 @@
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "No. Setup is reviewed before forwarding, testing, and launch. The setup form alone does not start live call routing."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I hear the AI receptionist before choosing a plan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You can call Gideon Live from the website to hear a demo interaction before choosing a plan."
             }
           }
         ]
@@ -85,78 +610,187 @@
   </script>
 </head>
 <body data-tct-view="ai_receptionist_view" data-tct-page="ai-receptionist" data-tct-learning-tag="search_intent">
-  <header>
-    <a href="/">The Call Taker</a>
-    <nav aria-label="Primary">
-      <a href="/pricing.html">Pricing</a>
-      <a href="/demo.html">Demo</a>
-      <a href="/faq.html">FAQ</a>
-    </nav>
+  <a href="#main" class="skip">Skip to content</a>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/">The Call<span>Taker</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="/pricing.html">Pricing</a>
+        <a href="/faq.html">FAQ</a>
+        <a class="btn btn-outline" href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="ai-receptionist" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <section>
-      <p>AI receptionist for service businesses</p>
-      <h1>AI Receptionist For Missed Calls, After-Hours Calls, And Overflow</h1>
-      <p>The Call Taker helps service businesses answer more calls, collect caller details, and send cleaner summaries after setup is reviewed.</p>
-      <a href="/demo.html" data-tct-event="demo_call_tap" data-tct-page="ai-receptionist" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
-      <a href="/pricing.html" data-tct-event="pricing_plan_click" data-tct-page="ai-receptionist" data-tct-cta="See plans" data-tct-destination="pricing" data-tct-learning-tag="pricing_interest">See Plans</a>
+  <main id="main">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">AI receptionist for service businesses</p>
+        <h1>Stop losing ready buyers to voicemail.</h1>
+        <p class="hero-copy">The Call Taker answers missed, after-hours, and overflow calls with Gideon, then captures the caller details your team needs to follow up fast.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/pricing.html" data-tct-event="pricing_plan_click" data-tct-page="ai-receptionist" data-tct-cta="See plans" data-tct-destination="pricing" data-tct-learning-tag="pricing_interest">See Plans</a>
+          <a class="btn btn-outline" href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="ai-receptionist" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+        </div>
+        <ul class="proof-strip" aria-label="Setup rules">
+          <li>Setup reviewed first</li>
+          <li>Approved call flow</li>
+          <li>Clean call summaries</li>
+          <li>No live routing before testing</li>
+        </ul>
+      </div>
+      <div class="visual" aria-label="Gideon answering business calls">
+        <img src="/assets/images/gideon-service-homepage-hero.webp" alt="Gideon answering service-business calls and sending organized caller details.">
+        <div class="visual-panel">
+          <strong>When the phone rings, the lead still gets captured.</strong>
+          <p>Gideon asks approved questions, filters the need, and sends a useful summary for follow-up.</p>
+        </div>
+      </div>
     </section>
 
     <section>
-      <h2>Who It Is For</h2>
-      <p>The Call Taker is for service-business owners who miss calls while working, driving, helping customers, or handling after-hours demand.</p>
+      <p class="section-kicker">What it does</p>
+      <h2>An AI receptionist built for call capture, not chatbot theater.</h2>
+      <p class="lead">Service businesses lose money when the phone rings during jobs, after hours, or while the owner is driving. The Call Taker gives those calls a front door: answer, collect the essentials, and hand the information back cleanly.</p>
+      <div class="grid">
+        <article class="card">
+          <h3>Answers the call</h3>
+          <p>Gideon answers with your approved greeting and follows a reviewed intake path instead of dumping callers into voicemail.</p>
+        </article>
+        <article class="card">
+          <h3>Captures the job details</h3>
+          <p>Name, need, urgency, location, callback number, and service-specific fields can be collected before your team follows up.</p>
+        </article>
+        <article class="card">
+          <h3>Sends the summary</h3>
+          <p>Your team receives a cleaner summary so follow-up starts with context, not a mystery missed-call notification.</p>
+        </article>
+      </div>
     </section>
 
-    <section>
-      <h2>The Problem</h2>
-      <p>Missed calls turn into missed conversations. Voicemail often leaves owners with incomplete details and slow follow-up.</p>
-    </section>
-
-    <section>
-      <h2>How The Call Taker Works</h2>
-      <ol>
-        <li>Gideon answers using an approved call flow.</li>
-        <li>Gideon asks for the details your business needs.</li>
-        <li>The Call Taker sends a clean summary for follow-up.</li>
-        <li>Setup, forwarding, and testing are reviewed before calls go live.</li>
+    <section class="steps">
+      <div>
+        <p class="section-kicker">How setup works</p>
+        <h2>Reviewed before launch.</h2>
+        <p class="lead">The Call Taker is not a random phone bot that goes live the second someone checks out. Setup, forwarding, test calls, and escalation rules are reviewed first.</p>
+      </div>
+      <ol class="step-list">
+        <li>
+          <div><strong>Choose the coverage level.</strong><span>Start with pricing so the call volume, coverage window, and support level are clear.</span></div>
+        </li>
+        <li>
+          <div><strong>Complete the setup form.</strong><span>Share business hours, service area, intake questions, urgency rules, and notification preferences.</span></div>
+        </li>
+        <li>
+          <div><strong>Review the call flow.</strong><span>Gideon uses approved language and tested routing before any production calls are forwarded.</span></div>
+        </li>
+        <li>
+          <div><strong>Launch after testing.</strong><span>Call forwarding and summary delivery are tested before the AI receptionist becomes part of your daily operation.</span></div>
+        </li>
       </ol>
     </section>
 
     <section>
-      <h2>Try The Demo Before You Choose A Plan</h2>
-      <p>Call Gideon Live to hear the voice experience. The demo is a preview of the interaction, not a public proof claim or a production setup promise.</p>
-      <a href="/demo.html" data-tct-event="demo_call_tap" data-tct-page="ai-receptionist" data-tct-cta="Try demo" data-tct-destination="demo" data-tct-learning-tag="demo_intent">Try The Demo</a>
+      <p class="section-kicker">Best fit</p>
+      <h2>Made for owners who cannot afford to miss the call.</h2>
+      <p class="lead">The strongest fit is a service business where one missed call can become a lost appointment, emergency job, estimate, repair, or repeat customer.</p>
+      <div class="grid">
+        <article class="card">
+          <h3>HVAC, plumbing, roofing</h3>
+          <p>Capture emergency and after-hours calls when the owner or tech is already on another job.</p>
+        </article>
+        <article class="card">
+          <h3>Dental, medspa, veterinary</h3>
+          <p>Collect appointment requests, urgent needs, and caller details when the front desk is unavailable.</p>
+        </article>
+        <article class="card">
+          <h3>Locksmith, towing, property management</h3>
+          <p>Filter urgent requests and route clean summaries so the next action is obvious.</p>
+        </article>
+      </div>
     </section>
 
     <section>
-      <h2>Plans And Setup</h2>
-      <p>Choose the coverage level that fits your business. After checkout, complete the setup form so your call flow, summaries, forwarding, and testing can be reviewed.</p>
-      <a href="/pricing.html" data-tct-event="pricing_plan_click" data-tct-page="ai-receptionist" data-tct-cta="View pricing" data-tct-destination="pricing" data-tct-learning-tag="pricing_interest">View Pricing</a>
+      <p class="section-kicker">Comparison</p>
+      <h2>AI receptionist vs answering service vs voicemail.</h2>
+      <p class="lead">The right solution depends on the call. This is where The Call Taker fits.</p>
+      <div class="comparison">
+        <div class="compare-col">
+          <h3>Voicemail</h3>
+          <ul>
+            <li>Cheap but easy for callers to abandon.</li>
+            <li>Usually leaves incomplete details.</li>
+            <li>Follow-up depends on the owner noticing fast.</li>
+          </ul>
+        </div>
+        <div class="compare-col highlight">
+          <h3>The Call Taker</h3>
+          <ul>
+            <li>Answers with a reviewed call flow.</li>
+            <li>Collects service-specific details.</li>
+            <li>Sends a clean summary for follow-up.</li>
+          </ul>
+        </div>
+        <div class="compare-col">
+          <h3>Human answering service</h3>
+          <ul>
+            <li>Can handle nuance and emotional calls well.</li>
+            <li>Often costs more as coverage expands.</li>
+            <li>Quality depends on the script and operator.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <section>
-      <h2>Frequently Asked Questions</h2>
-      <h3>Is The Call Taker an AI receptionist?</h3>
-      <p>Yes. The Call Taker provides AI receptionist and AI call-answering coverage for service businesses.</p>
-      <h3>Can I hear it first?</h3>
-      <p>Yes. Use the demo page to call Gideon Live and hear the experience before choosing a plan.</p>
-      <h3>Does setup start live routing automatically?</h3>
-      <p>No. Review, forwarding, and testing happen before launch.</p>
-      <h3>Does The Call Taker publish client results?</h3>
-      <p>Only approved, permissioned proof should be public. This page does not use private client details or unapproved metrics.</p>
+      <p class="section-kicker">Limitations</p>
+      <h2>Clear promises beat hype.</h2>
+      <p class="lead">The Call Taker is for structured call capture and follow-up. It should not pretend to be a licensed professional, make medical/legal decisions, or promise service availability your business cannot honor. Escalation rules are part of setup.</p>
+    </section>
+
+    <section class="cta-band">
+      <div>
+        <p class="section-kicker">Try the voice</p>
+        <h2>Hear Gideon before you choose a plan.</h2>
+        <p class="lead">Call the demo line, listen to the intake experience, then use pricing to choose the coverage level that fits your business.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="ai-receptionist" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+          <a class="btn btn-outline" href="/pricing.html" data-tct-event="pricing_plan_click" data-tct-page="ai-receptionist" data-tct-cta="View pricing" data-tct-destination="pricing" data-tct-learning-tag="pricing_interest">View Pricing</a>
+        </div>
+      </div>
     </section>
 
     <section>
-      <h2>Related Pages</h2>
-      <ul>
-        <li><a href="/pricing.html">Pricing</a></li>
-        <li><a href="/demo.html">Call Gideon Live</a></li>
-        <li><a href="/faq.html">FAQ</a></li>
-        <li><a href="/after-hours-answering-service/">After-Hours Answering Service</a></li>
-        <li><a href="/pricing.html">Start with plan options</a></li>
-      </ul>
+      <p class="section-kicker">FAQ</p>
+      <h2>Questions service owners ask first.</h2>
+      <div class="faq">
+        <details>
+          <summary>What is an AI receptionist?</summary>
+          <p>An AI receptionist answers business calls, asks approved questions, captures caller details, and prepares a summary so your team can follow up with context.</p>
+        </details>
+        <details>
+          <summary>Can it replace a human receptionist?</summary>
+          <p>It can cover missed, after-hours, and overflow calls. A human is still better for complex judgment calls, sensitive conversations, and situations where your business wants a person to make decisions.</p>
+        </details>
+        <details>
+          <summary>Does The Call Taker go live immediately?</summary>
+          <p>No. Setup, call flow, forwarding, test calls, and escalation rules are reviewed before production call routing starts.</p>
+        </details>
+        <details>
+          <summary>What does it cost?</summary>
+          <p>Plans currently start at $97/month for After-Hours Capture, with Revenue Recovery System coverage at $497/month and custom operational infrastructure from $997+/month.</p>
+        </details>
+        <details>
+          <summary>What should I do next?</summary>
+          <p>Call Gideon Live to hear the experience, then review pricing and complete setup when you are ready to choose a coverage level.</p>
+        </details>
+      </div>
     </section>
   </main>
+
+  <footer>
+    <p>The Call Taker answers missed and after-hours calls for service businesses. Built in Nashville, TN.</p>
+    <p><a href="/">Home</a> · <a href="/pricing.html">Pricing</a> · <a href="/faq.html">FAQ</a> · <a href="/after-hours-answering-service/">After-Hours Answering Service</a></p>
+  </footer>
 </body>
 </html>
