@@ -17,7 +17,7 @@ function listFiles(relativeDir) {
   });
 }
 
-const publicTrialPages = [
+const publicCheckoutPages = [
   "website/index.html",
   "website/pricing.html",
   "website/paid.html",
@@ -32,12 +32,12 @@ const publicTrialPages = [
   "website/try-funnel/checkout.html",
 ];
 
-const publicTrialHtml = publicTrialPages.map(read).join("\n");
+const publicCheckoutHtml = publicCheckoutPages.map(read).join("\n");
 const publicWebsiteCodeFiles = listFiles("website").filter((file) => /\.(html|js)$/.test(file));
 const squareCheckout = {
-  afterhours: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY",
-  full247: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
-  premium: "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY"
+  afterhours: "https://square.link/u/cSiXiuLx",
+  full247: "https://square.link/u/TQseWnAY",
+  custom: "https://square.link/u/RSjzTrCn"
 };
 const preCheckoutRoutes = {
   afterhours: "/pre-checkout.html?plan=afterhours",
@@ -46,15 +46,15 @@ const preCheckoutRoutes = {
 };
 
 assert.strictEqual(
-  publicTrialHtml.includes("buy.stripe.com"),
+  publicCheckoutHtml.includes("buy.stripe.com"),
   false,
-  "public trial funnel should not send buyers to Stripe checkout links"
+  "public checkout funnel should not send buyers to Stripe checkout links"
 );
 
 assert.strictEqual(
-  publicTrialHtml.includes("Stripe"),
+  publicCheckoutHtml.includes("Stripe"),
   false,
-  "public trial funnel copy should not imply Stripe checkout"
+  "public checkout funnel copy should not imply Stripe checkout"
 );
 
 [
@@ -74,7 +74,7 @@ assert.strictEqual(
 ].forEach(([page, expectedRoute]) => {
   assert.ok(
     read(page).includes(expectedRoute),
-    `${page} should route trial CTA through pre-checkout handoff: ${expectedRoute}`
+    `${page} should route checkout CTA through pre-checkout handoff: ${expectedRoute}`
   );
 });
 
@@ -138,7 +138,7 @@ const customerBuyerPathPages = [
   [/Gideon.{0,80}setup call/i, "Gideon should not be positioned as the post-payment setup caller"],
   [/Gideon.{0,80}after checkout/i, "Gideon should not be promised immediately after checkout"],
   [/Gideon.{0,80}payment/i, "Gideon should not be tied to payment completion"],
-  [/setup.{0,80}before Gideon goes live/i, "setup copy should describe setup form, packet, forwarding, and testing instead of a vague Gideon-goes-live review"],
+  [/setup.{0,80}before Gideon goes live/i, "setup copy should describe questions, internal build, forwarding, and testing instead of a vague Gideon-goes-live review"],
 ].forEach(([unsafeRegex, message]) => {
   customerBuyerPathPages.forEach((page) => {
     assert.strictEqual(
@@ -150,25 +150,25 @@ const customerBuyerPathPages = [
 });
 
 [
-  ["website/index.html", "After checkout, complete your setup form"],
-  ["website/index.html", "Same-day setup is available after review, forwarding, and test-call confirmation"],
-  ["website/pricing.html", "After checkout, complete your setup form"],
+  ["website/index.html", "60-second setup questions after payment"],
+  ["website/index.html", "Choose a plan, pay through secure Square checkout"],
+  ["website/pricing.html", "After payment, answer the 60-second setup questions"],
   ["website/pricing.html", "thecalltaker.com/setup.html"],
-  ["website/pricing.html", "If Square does not automatically send you back"],
-  ["website/pricing.html", "setup packet"],
-  ["website/pre-checkout.html", "You’re almost set up"],
-  ["website/pre-checkout.html", "After checkout, you’ll be directed or guided to answer a few setup questions"],
-  ["website/pre-checkout.html", "No setup starts until we have your business details"],
-  ["website/faq.html", "After checkout, complete your setup form"],
+  ["website/pricing.html", "If Square does not send you back"],
+  ["website/pricing.html", "the internal build can start"],
+  ["website/pre-checkout.html", "Checkout, then 60-second setup."],
+  ["website/pre-checkout.html", "After payment, you’ll answer the short setup questions"],
+  ["website/pre-checkout.html", "After payment, setup questions take about 60 seconds"],
+  ["website/faq.html", "After payment, answer the 60-second setup questions"],
   ["website/faq.html", "What happens after I pay?"],
   ["website/faq.html", "If Square does not automatically send you back"],
-  ["website/faq.html", "You do not need to know your phone system perfectly"],
-  ["website/checkout.html", "After checkout, complete your setup form at"],
-  ["website/checkout.html", "I already checked out"],
-  ["website/pay.html", "After checkout, complete your setup form at"],
-  ["website/pay.html", "I already checked out"],
+  ["website/faq.html", "Do not change your phone system during checkout"],
+  ["website/checkout.html", "After payment, answer the 60-second setup questions"],
+  ["website/checkout.html", "I already paid"],
+  ["website/pay.html", "After payment, answer the 60-second setup questions"],
+  ["website/pay.html", "I already paid"],
 ].forEach(([page, expected]) => {
-  assert.ok(read(page).includes(expected), `${page} should explain the form-first setup path: ${expected}`);
+  assert.ok(read(page).includes(expected), `${page} should explain the payment-to-setup path: ${expected}`);
 });
 
 assert.strictEqual(
@@ -179,13 +179,13 @@ assert.strictEqual(
 
 assert.ok(
   checkoutHtml.includes(squareCheckout.afterhours),
-  "legacy checkout redirect should use the configured Square checkout URL for the public $97 trial path"
+  "legacy checkout redirect should use the configured Square checkout URL for the public $97 path"
 );
 
 [
   squareCheckout.afterhours,
   squareCheckout.full247,
-  squareCheckout.premium,
+  squareCheckout.custom,
 ].forEach((expectedSquareLink) => {
   assert.ok(
     preCheckoutHtml.includes(expectedSquareLink),
@@ -210,14 +210,14 @@ assert.ok(
 
 assert.ok(
   checkoutHtml.includes(squareCheckout.full247) &&
-    checkoutHtml.includes(squareCheckout.premium),
-  "legacy checkout redirect should use the configured Square checkout URLs for the public $497 and $997 trial paths"
+    checkoutHtml.includes(squareCheckout.custom),
+  "legacy checkout redirect should use the configured Square checkout URLs for the public $497 and $997 paths"
 );
 
 assert.strictEqual(
-  publicTrialHtml.includes("https://square.link/u/POTLUBKa"),
+  publicCheckoutHtml.includes("https://square.link/u/POTLUBKa"),
   false,
-  "public funnel pages should not use the deprecated single-plan Square trial link"
+  "public funnel pages should not use the deprecated single-plan Square link"
 );
 
 assert.ok(
@@ -340,7 +340,7 @@ assert.strictEqual(
 
 assert.ok(
   demoHtml.includes("Choose the setup path") &&
-    demoHtml.includes("Square shows the post-trial price") &&
+    demoHtml.includes("Square handles checkout") &&
     demoHtml.includes("No SMS, provider routing, booking, or backend sync is implied"),
   "demo page should move preview users into a clear, provider-safe plan-selection follow-up"
 );
@@ -380,4 +380,4 @@ assert.ok(
   "intake should be able to preselect a plan from the checkout success URL"
 );
 
-console.log("website trial funnel regression tests passed");
+console.log("website payment setup funnel regression tests passed");

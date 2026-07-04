@@ -14,14 +14,15 @@
     "business_phone",
     "owner_cell",
     "summary_email",
+    "gideon_answer_mode",
     "business_hours",
-    "after_hours_rules",
     "services_offered",
     "service_area",
     "emergency_rules",
-    "transfer_number",
-    "callback_rules",
-    "ai_greeting_preference",
+    "urgent_action_preference",
+    "summary_destination",
+    "forwarding_ability",
+    "what_ai_should_never_say",
     "authorized_to_configure_forwarding"
   ];
 
@@ -32,11 +33,14 @@
     "payment_verification_status",
     "summary_sms_number",
     "setup_guide_sms_recipient",
+    "transfer_number",
+    "after_hours_rules",
+    "callback_rules",
     "appointment_booking_rules",
+    "ai_greeting_preference",
     "phone_provider",
     "current_forwarding_status",
     "preferred_go_live_time",
-    "what_ai_should_never_say",
     "special_notes",
     "source_url",
     "submitted_at"
@@ -48,6 +52,28 @@
     "unknown",
     "not_applicable"
   ];
+
+  var ANSWER_MODE_OPTIONS = [
+    "after-hours",
+    "overflow",
+    "all calls",
+    "not sure"
+  ];
+
+  var URGENT_ACTION_OPTIONS = [
+    "transfer",
+    "text/call the owner",
+    "summarize only",
+    "not sure"
+  ];
+
+  var FORWARDING_ABILITY_OPTIONS = [
+    "yes",
+    "no",
+    "not sure"
+  ];
+
+  var SETUP_PACKET_ENDPOINT = "/.netlify/functions/public-lead";
 
   function trim(value) {
     return String(value == null ? "" : value).trim();
@@ -89,6 +115,15 @@
     return "paid_unverified";
   }
 
+  function normalizeOption(value, options) {
+    var raw = trim(value);
+    var lower = raw.toLowerCase();
+    for (var index = 0; index < options.length; index += 1) {
+      if (options[index].toLowerCase() === lower) return options[index];
+    }
+    return raw;
+  }
+
   function phoneIsUsable(value) {
     var digits = trim(value).replace(/\D/g, "");
     return digits.length >= 10;
@@ -113,6 +148,9 @@
     var url = sourceUrl || data.source_url || "";
     var params = new URLSearchParams(url.indexOf("?") === -1 ? "" : url.split("?")[1]);
     var submittedAt = data.submitted_at || now || new Date().toISOString();
+    var answerMode = normalizeOption(data.gideon_answer_mode, ANSWER_MODE_OPTIONS);
+    var urgentAction = normalizeOption(data.urgent_action_preference, URGENT_ACTION_OPTIONS);
+    var forwardingAbility = normalizeOption(data.forwarding_ability, FORWARDING_ABILITY_OPTIONS);
 
     return {
       plan_purchased: normalizePlan(data.plan_purchased || planFromQuery(params.toString())),
@@ -121,14 +159,18 @@
       business_phone: trim(data.business_phone),
       owner_cell: trim(data.owner_cell),
       summary_email: trim(data.summary_email),
+      gideon_answer_mode: answerMode,
       business_hours: trim(data.business_hours),
-      after_hours_rules: trim(data.after_hours_rules),
+      after_hours_rules: emptyToNull(data.after_hours_rules) || (answerMode ? "Answer mode: " + answerMode : ""),
       services_offered: trim(data.services_offered),
       service_area: trim(data.service_area),
       emergency_rules: trim(data.emergency_rules),
       transfer_number: trim(data.transfer_number),
-      callback_rules: trim(data.callback_rules),
+      urgent_action_preference: urgentAction,
+      callback_rules: emptyToNull(data.callback_rules) || (urgentAction ? "Urgent action preference: " + urgentAction : ""),
+      summary_destination: trim(data.summary_destination),
       ai_greeting_preference: trim(data.ai_greeting_preference),
+      forwarding_ability: forwardingAbility,
       authorized_to_configure_forwarding: normalizeBoolean(data.authorized_to_configure_forwarding),
       square_checkout_reference: emptyToNull(data.square_checkout_reference || params.get("checkout") || params.get("reference")),
       square_order_id: emptyToNull(data.square_order_id || params.get("orderId") || params.get("order_id")),
@@ -184,6 +226,15 @@
     if (payload.payment_verification_status && PAYMENT_STATUSES.indexOf(payload.payment_verification_status) === -1) {
       errors.push({ field: "payment_verification_status", message: "Payment verification status is not recognized." });
     }
+    if (payload.gideon_answer_mode && ANSWER_MODE_OPTIONS.indexOf(payload.gideon_answer_mode) === -1) {
+      errors.push({ field: "gideon_answer_mode", message: "Choose when Gideon should answer." });
+    }
+    if (payload.urgent_action_preference && URGENT_ACTION_OPTIONS.indexOf(payload.urgent_action_preference) === -1) {
+      errors.push({ field: "urgent_action_preference", message: "Choose what should happen with urgent calls." });
+    }
+    if (payload.forwarding_ability && FORWARDING_ABILITY_OPTIONS.indexOf(payload.forwarding_ability) === -1) {
+      errors.push({ field: "forwarding_ability", message: "Choose whether you can forward calls." });
+    }
 
     return {
       valid: missing.length === 0 && errors.length === 0,
@@ -194,10 +245,10 @@
 
   function deriveSetupResponse(payload) {
     var validation = validatePayload(payload);
-    var forwardingStatus = trim(payload.current_forwarding_status).toLowerCase();
-    var provider = trim(payload.phone_provider).toLowerCase();
-    var needsForwardingHelp = !provider || provider.indexOf("not sure") !== -1 || !forwardingStatus || forwardingStatus.indexOf("not sure") !== -1;
-    var status = needsForwardingHelp ? "forwarding_instructions_needed" : "ready_for_configuration";
+    var plan = trim(payload.plan_purchased).toLowerCase();
+    var isCustomPlan = plan.indexOf("997") !== -1 || plan.indexOf("operational") !== -1 || plan.indexOf("custom") !== -1;
+    var forwardingHelpNeeded = payload.forwarding_ability === "no" || payload.forwarding_ability === "not sure";
+    var status = isCustomPlan ? "manual_review_needed" : (forwardingHelpNeeded ? "setup_help_needed" : "internal_build_ready");
 
     if (!validation.valid) {
       return {
@@ -216,9 +267,95 @@
       missing_fields: [],
       errors: [],
       setup_packet_id: makeSetupPacketId(payload),
-      setup_readiness_score: needsForwardingHelp ? 82 : 100,
+      setup_readiness_score: isCustomPlan ? 90 : (forwardingHelpNeeded ? 95 : 100),
+      forwarding_help_needed: forwardingHelpNeeded,
       payment_verification_status: payload.payment_verification_status
     };
+  }
+
+  function buildSetupNotes(payload, response) {
+    return [
+      "Setup packet ID: " + response.setup_packet_id,
+      "Plan: " + payload.plan_purchased,
+      "Payment verification: " + payload.payment_verification_status,
+      "Business: " + payload.business_name,
+      "Best contact: " + payload.owner_name,
+      "Business phone: " + payload.business_phone,
+      "Best setup mobile: " + payload.owner_cell,
+      "Summary destination: " + payload.summary_destination,
+      "When Gideon should answer: " + payload.gideon_answer_mode,
+      "Business hours: " + payload.business_hours,
+      "After-hours rules: " + payload.after_hours_rules,
+      "Top call types: " + payload.services_offered,
+      "Service area: " + payload.service_area,
+      "Urgent/emergency definition: " + payload.emergency_rules,
+      "Urgent action preference: " + payload.urgent_action_preference,
+      "Derived urgent action detail: " + payload.callback_rules,
+      "Forwarding ability: " + payload.forwarding_ability,
+      "Hard do-not-say/do-not-promise rules: " + payload.what_ai_should_never_say,
+      "Source URL: " + payload.source_url
+    ].join("\n");
+  }
+
+  function buildSetupLeadPayload(payload, response) {
+    var nameParts = trim(payload.owner_name).split(/\s+/).filter(Boolean);
+    return {
+      kind: "website_setup_packet",
+      source: "website_setup_form",
+      page: "/setup.html",
+      firstName: nameParts[0] || "",
+      lastName: nameParts.slice(1).join(" "),
+      name: payload.owner_name,
+      company: payload.business_name,
+      companyName: payload.business_name,
+      business_name: payload.business_name,
+      email: payload.summary_email,
+      phone: payload.owner_cell || payload.business_phone,
+      tags: [
+        "website_setup_packet",
+        "buyer_path",
+        "plan:" + payload.plan_purchased.replace(/[^a-z0-9]+/gi, "_").toLowerCase(),
+        "answer_mode:" + payload.gideon_answer_mode.replace(/[^a-z0-9]+/gi, "_").toLowerCase(),
+        "forwarding:" + payload.forwarding_ability.replace(/[^a-z0-9]+/gi, "_").toLowerCase()
+      ],
+      notes: buildSetupNotes(payload, response),
+      setup_packet_id: response.setup_packet_id,
+      setup_status: response.status,
+      setup_readiness_score: response.setup_readiness_score,
+      setup_packet: payload,
+      payment_verification_status: payload.payment_verification_status,
+      submitted_at: payload.submitted_at
+    };
+  }
+
+  function submitSetupPacket(payload, response) {
+    if (!root.fetch) {
+      return Promise.resolve({
+        ok: false,
+        forwarded: false,
+        reason: "fetch_unavailable"
+      });
+    }
+
+    return root.fetch(SETUP_PACKET_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(buildSetupLeadPayload(payload, response))
+    }).then(function (httpResponse) {
+      if (!httpResponse.ok) {
+        throw new Error("setup_packet_intake_failed_" + httpResponse.status);
+      }
+      return httpResponse.json().catch(function () {
+        return {};
+      });
+    }).then(function (body) {
+      return {
+        ok: true,
+        forwarded: body.forwarded === true,
+        id: body.id || null,
+        template_key: body.template_key || null
+      };
+    });
   }
 
   function markInvalidFields(form, validation) {
@@ -256,26 +393,44 @@
 
     form.addEventListener("submit", function (event) {
       event.preventDefault();
+      if (form.dataset.submitting === "true") return;
+
       var payload = buildPayloadFromForm(form, root.location.href);
       var validation = validatePayload(payload);
       markInvalidFields(form, validation);
 
       if (!validation.valid) {
-        showFormMessage("A few setup details are missing. Fill the highlighted fields so we can build the packet cleanly.", "error");
+        showFormMessage("A few required setup answers are missing. Fill the highlighted fields so the internal build can start cleanly.", "error");
         return;
       }
 
+      form.dataset.submitting = "true";
+      showFormMessage("Sending your setup questions...", "info");
       var response = deriveSetupResponse(payload);
-      try {
-        root.sessionStorage.setItem("tct_setup_payload", JSON.stringify(payload));
-        root.sessionStorage.setItem("tct_setup_receipt", JSON.stringify(response));
-      } catch (error) {
-        // Private browsing can block storage; the confirmation page still works from the URL.
-      }
 
-      var next = "setup-confirmation.html?status=" + encodeURIComponent(response.status) +
-        "&packet=" + encodeURIComponent(response.setup_packet_id);
-      root.location.assign(next);
+      submitSetupPacket(payload, response).then(function (intake) {
+        response.intake_status = intake.ok ? "ctos_packet_received" : "manual_followup_required";
+        response.intake_id = intake.id || null;
+        response.intake_forwarded = intake.forwarded === true;
+      }).catch(function (error) {
+        response.intake_status = "manual_followup_required";
+        response.intake_error = String(error && error.message ? error.message : error).slice(0, 160);
+      }).then(function () {
+        try {
+          root.sessionStorage.setItem("tct_setup_payload", JSON.stringify(payload));
+          root.sessionStorage.setItem("tct_setup_receipt", JSON.stringify(response));
+        } catch (error) {
+          // Private browsing can block storage; the confirmation page still works from the URL.
+        }
+
+        var next = "setup-confirmation.html?status=" + encodeURIComponent(response.status) +
+          "&packet=" + encodeURIComponent(response.setup_packet_id) +
+          "&intake=" + encodeURIComponent(response.intake_status || "manual_followup_required");
+        if (response.intake_id) {
+          next += "&intake_id=" + encodeURIComponent(response.intake_id);
+        }
+        root.location.assign(next);
+      });
     });
   }
 
@@ -283,6 +438,7 @@
     if (!root.document) return;
     var packetTarget = root.document.querySelector("[data-setup-packet-id]");
     var statusTarget = root.document.querySelector("[data-setup-status]");
+    var intakeTarget = root.document.querySelector("[data-setup-intake-status]");
     var params = new URLSearchParams(root.location.search || "");
     var receipt = null;
 
@@ -294,12 +450,20 @@
 
     var packet = (receipt && receipt.setup_packet_id) || params.get("packet") || "setup packet";
     var status = (receipt && receipt.status) || params.get("status") || "received";
+    var intakeStatus = (receipt && receipt.intake_status) || params.get("intake") || "manual_followup_required";
 
     if (packetTarget) packetTarget.textContent = packet;
     if (statusTarget) {
-      statusTarget.textContent = status === "forwarding_instructions_needed"
-        ? "Forwarding details may need one extra confirmation step."
-        : "Your packet has the core setup details.";
+      statusTarget.textContent = status === "manual_review_needed"
+        ? "Your custom setup has the core details and may get manual review before the internal build."
+        : (status === "setup_help_needed"
+          ? "Your setup questions have the core details. We may send forwarding instructions or walk you through setup."
+          : "Your setup questions have the core details needed for the internal build.");
+    }
+    if (intakeTarget) {
+      intakeTarget.textContent = intakeStatus === "ctos_packet_received"
+        ? "Setup packet received by The Call Taker."
+        : "If we do not text you shortly, use the Text Us button below with your packet ID.";
     }
   }
 
@@ -307,10 +471,15 @@
     PLAN_OPTIONS: PLAN_OPTIONS,
     REQUIRED_FIELDS: REQUIRED_FIELDS,
     OPTIONAL_FIELDS: OPTIONAL_FIELDS,
+    ANSWER_MODE_OPTIONS: ANSWER_MODE_OPTIONS,
+    URGENT_ACTION_OPTIONS: URGENT_ACTION_OPTIONS,
+    FORWARDING_ABILITY_OPTIONS: FORWARDING_ABILITY_OPTIONS,
     buildPayloadFromObject: buildPayloadFromObject,
     buildPayloadFromForm: buildPayloadFromForm,
+    buildSetupLeadPayload: buildSetupLeadPayload,
     validatePayload: validatePayload,
     deriveSetupResponse: deriveSetupResponse,
+    submitSetupPacket: submitSetupPacket,
     planFromQuery: planFromQuery,
     initSetupForm: initSetupForm,
     initConfirmationPage: initConfirmationPage

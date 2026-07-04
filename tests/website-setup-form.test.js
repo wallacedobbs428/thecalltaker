@@ -20,13 +20,17 @@ const fallbackFixtures = {
     summary_email: "garage-owner@example.com",
     summary_sms_number: "(615) 555-2202",
     setup_guide_sms_recipient: "(615) 555-2202",
+    gideon_answer_mode: "overflow",
     business_hours: "Monday-Friday 8:00 AM-5:00 PM",
     after_hours_rules: "Answer after hours and collect caller name, number, door issue, and urgency.",
     services_offered: "Garage door repair, spring replacement, opener repair, new door estimates.",
     service_area: "Brentwood, Franklin, Nashville.",
     emergency_rules: "If the door is stuck open or the customer cannot secure the home, mark urgent.",
     transfer_number: "(615) 555-2202",
+    urgent_action_preference: "text/call the owner",
     callback_rules: "Urgent calls get same-day callback. Routine calls get next-business-day callback.",
+    summary_destination: "Email garage-owner@example.com and text the owner.",
+    forwarding_ability: "yes",
     appointment_booking_rules: "Collect preferred day and time but do not confirm.",
     phone_provider: "Comcast Business",
     current_forwarding_status: "No",
@@ -45,14 +49,19 @@ const fallbackFixtures = {
     business_phone: "(615) 555-3001",
     owner_cell: "(615) 555-3002",
     summary_email: "owner@example.com",
+    gideon_answer_mode: "after-hours",
     business_hours: "Monday-Friday 8:00 AM-5:00 PM",
     after_hours_rules: "Answer after hours and collect caller details.",
     services_offered: "Primary service, repair service, estimate requests.",
     service_area: "Brentwood, Franklin, Nashville.",
     emergency_rules: "If urgent or unsafe, request immediate callback.",
     transfer_number: "(615) 555-3002",
+    urgent_action_preference: "summarize only",
     callback_rules: "Urgent calls get same-day callback. Non-urgent calls get next-business-day callback.",
+    summary_destination: "Email owner@example.com.",
+    forwarding_ability: "yes",
     ai_greeting_preference: "Thanks for calling Minimum Sample Co. How can I help?",
+    what_ai_should_never_say: "None.",
     authorized_to_configure_forwarding: true,
   },
   "unknown-phone-provider-payload.json": {
@@ -64,16 +73,21 @@ const fallbackFixtures = {
     business_phone: "(615) 555-3101",
     owner_cell: "(615) 555-3102",
     summary_email: "owner@example.com",
+    gideon_answer_mode: "not sure",
     business_hours: "Monday-Friday 8:00 AM-5:00 PM",
     after_hours_rules: "Answer after hours and collect caller details.",
     services_offered: "Repair, maintenance, estimates.",
     service_area: "Nashville and surrounding areas.",
     emergency_rules: "If urgent, request immediate callback.",
     transfer_number: "(615) 555-3102",
+    urgent_action_preference: "text/call the owner",
     callback_rules: "Urgent same-day callback. Routine next-business-day callback.",
+    summary_destination: "Email owner@example.com.",
+    forwarding_ability: "not sure",
     ai_greeting_preference: "Thanks for calling Unknown Provider Sample Co. How can I help?",
     phone_provider: "not sure",
     current_forwarding_status: "Not sure",
+    what_ai_should_never_say: "None.",
     authorized_to_configure_forwarding: true,
   },
   "missing-required-fields-payload.json": {
@@ -82,14 +96,19 @@ const fallbackFixtures = {
     owner_name: "Jordan Owner",
     owner_cell: "(615) 555-3202",
     summary_email: "owner@example.com",
+    gideon_answer_mode: "after-hours",
     business_hours: "Monday-Friday 8:00 AM-5:00 PM",
     after_hours_rules: "Answer after hours.",
     services_offered: "Repair and estimates.",
     service_area: "Nashville.",
     emergency_rules: "If urgent, request immediate callback.",
     transfer_number: "(615) 555-3202",
+    urgent_action_preference: "text/call the owner",
     callback_rules: "Urgent same-day callback.",
+    summary_destination: "Email owner@example.com.",
+    forwarding_ability: "yes",
     ai_greeting_preference: "Thanks for calling Missing Required Sample Co.",
+    what_ai_should_never_say: "None.",
     authorized_to_configure_forwarding: true,
   },
 };
@@ -121,73 +140,90 @@ setupForm.REQUIRED_FIELDS.forEach((field) => {
 });
 
 [
-  "square_checkout_reference",
-  "summary_sms_number",
-  "setup_guide_sms_recipient",
-  "appointment_booking_rules",
-  "phone_provider",
-  "current_forwarding_status",
-  "preferred_go_live_time",
+  "business_name",
+  "business_phone",
+  "owner_name",
+  "summary_email",
+  "owner_cell",
+  "gideon_answer_mode",
+  "business_hours",
+  "service_area",
+  "services_offered",
+  "emergency_rules",
+  "summary_destination",
+  "urgent_action_preference",
   "what_ai_should_never_say",
-  "special_notes",
-  "payment_verification_status",
+  "forwarding_ability",
 ].forEach((field) => {
   assert.ok(
+    setupForm.REQUIRED_FIELDS.includes(field),
+    `${field} should be required to launch`
+  );
+});
+
+[
+  "after_hours_rules",
+  "callback_rules",
+  "ai_greeting_preference",
+  "appointment_booking_rules",
+  "phone_provider",
+  "preferred_go_live_time",
+  "special_notes",
+].forEach((field) => {
+  assert.strictEqual(
     setupHtml.includes(`name="${field}"`),
-    `setup.html should collect or preserve optional setup field: ${field}`
+    false,
+    `${field} should not be asked on the 60-second setup form`
   );
 });
 
 assert.ok(
-  setupHtml.includes("This form starts the setup packet") &&
-    setupHtml.includes("We may still need to verify your checkout reference"),
+  setupHtml.includes("This takes about 60 seconds") &&
+    setupHtml.includes("We may still verify your checkout reference"),
   "setup form should be clear that checkout verification may still happen before configuration"
 );
 
 assert.ok(
-  setupHtml.includes("Use this form after checkout so we can configure your AI receptionist") &&
+  setupHtml.includes("Answer your setup questions") &&
     setupHtml.includes("If Square did not send you back automatically") &&
-    setupHtml.includes("Start setup form"),
+    setupHtml.includes("Start setup questions"),
   "setup form should give paid buyers a clear post-checkout handoff"
 );
 
 assert.strictEqual(
   (setupHtml.match(/<fieldset class="setup-section">/g) || []).length,
-  9,
-  "setup form should keep the nine approved setup sections"
+  4,
+  "setup form should keep the four short setup sections"
 );
 
 [
   "Setup progress",
   "Business basics",
-  "Summaries",
-  "Services",
-  "Hours",
-  "Urgent rules",
-  "Phone setup",
-  "Go live",
+  "Calls and hours",
+  "Urgency and forwarding",
   "Confirm",
   "setup-progress-card",
   "setup-step-badge",
   "setup-step-title",
-  "optional-badge",
-  "Not sure is okay. We will review forwarding/testing before launch.",
-  "Before we review your setup",
-  "We use this to prepare your setup packet.",
+  "Best mobile for urgent setup issues",
+  "When should Gideon answer?",
+  "For urgent calls, what should Gideon do?",
+  "Are you able to forward calls to the number we give you?",
+  "Do not write Gideon's script here.",
+  "Before we build",
+  "We use these answers to configure your call taker.",
   "Do not change your phone system yet.",
   "Live routing starts only after forwarding/testing is confirmed.",
-  "Submit setup packet",
-  "No live phone routing starts from this form alone.",
+  "Submit setup questions",
+  "No live phone routing starts from this page alone.",
   "setup-handoff-card",
-  "Already checked out?",
-  "After checkout, complete your setup form at",
-  "Review, forwarding, and testing happen before launch.",
-  "Mobile number to text your setup/forwarding guide",
-  "Use the mobile number that should receive forwarding and test-call instructions.",
+  "Already paid?",
+  "After payment, answer the setup questions at",
+  "Anything else can be tuned later.",
 ].forEach((marker) => {
   assert.ok(
     setupHtml.includes(marker),
-    `setup form should include guided wizard marker: ${marker}`
+    `setup form should include V2 setup marker: ${marker}`
   );
 });
 
@@ -199,19 +235,18 @@ assert.ok(
 );
 
 [
-  "Setup form submitted",
-  "Your setup packet is now in review",
-  "We are reviewing your hours, services, call rules, summary destinations, and forwarding details",
-  "We received your setup details. Next, we'll text the phone number you provided with a setup guide for forwarding your calls and testing your AI answering system.",
-  "Setup form",
+  "Setup questions submitted",
+  "Your setup questions were received",
+  "The internal build starts from these basics",
+  "We have the basics needed to start the internal build",
+  "Next, The Call Taker builds from these answers and sends forwarding instructions or walks you through setup if needed",
+  "Setup Questions",
   "Received",
   "Checkout reference",
   "May still need verification",
-  "Forwarding details",
-  "Review pending",
-  "Same-day setup",
-  "Available after review + testing",
-  "We text the submitted setup-guide phone number with forwarding and test-call instructions.",
+  "Build status",
+  "Core details received",
+  "After build + testing",
   "Your AI receptionist goes live after test confirmation",
   "Do not change your phone system yet unless instructed",
   "Review the setup guide first. The Call Taker will help verify forwarding and test calls before go-live.",
@@ -219,13 +254,12 @@ assert.ok(
   "View Pricing",
   "Review FAQ",
   "What we're preparing",
-  "AI greeting and call flow",
+  "First call path",
   "Urgent-call rules",
   "Summary delivery rules",
-  "Your setup details are reviewed before anything goes live",
+  "Manual review is only for $997+ custom builds",
   "Checkout",
-  "Setup Form",
-  "Setup Review",
+  "Internal Build",
   "Forwarding/Test",
   "Live",
   "AI receptionist setup for service businesses.",
@@ -240,7 +274,7 @@ assert.ok(
 ].forEach((marker) => {
   assert.ok(
     confirmationHtml.includes(marker),
-    `confirmation page should include approved setup review marker: ${marker}`
+    `confirmation page should include V2 setup marker: ${marker}`
   );
 });
 
@@ -329,8 +363,8 @@ assert.strictEqual(
 );
 assert.strictEqual(
   unknownProviderResponse.status,
-  "forwarding_instructions_needed",
-  "unknown phone provider should produce forwarding_instructions_needed status"
+  "setup_help_needed",
+  "unknown forwarding ability should produce setup_help_needed status"
 );
 
 const missingRequiredValidation = setupForm.validatePayload(missingRequiredPayload);
@@ -351,15 +385,17 @@ const browserPayload = setupForm.buildPayloadFromObject({
   business_phone: "(629) 555-0101",
   owner_cell: "(629) 555-0102",
   summary_email: "owner@example.com",
+  gideon_answer_mode: "not sure",
   business_hours: "Monday-Friday 8am-5pm",
-  after_hours_rules: "Answer all calls after 5pm",
   services_offered: "HVAC repair",
   service_area: "Nashville",
   emergency_rules: "No heat and no AC are urgent",
   transfer_number: "(629) 555-0103",
   setup_guide_sms_recipient: "(629) 555-0102",
-  callback_rules: "Text owner for urgent leads",
-  ai_greeting_preference: "Thanks for calling Acme.",
+  urgent_action_preference: "text/call the owner",
+  summary_destination: "Email owner@example.com",
+  forwarding_ability: "not sure",
+  what_ai_should_never_say: "Do not promise exact arrival times.",
   authorized_to_configure_forwarding: "on",
   phone_provider: "Not sure",
 }, "https://thecalltaker.com/setup.html?plan=full247", "2026-06-07T12:00:00.000Z");
@@ -381,8 +417,8 @@ assert.strictEqual(
 );
 assert.strictEqual(
   setupForm.deriveSetupResponse(browserPayload).status,
-  "forwarding_instructions_needed",
-  "browser form payload with unknown phone provider should be staged for forwarding instructions"
+  "setup_help_needed",
+  "browser form payload with unknown forwarding ability should be staged for setup help"
 );
 
 [

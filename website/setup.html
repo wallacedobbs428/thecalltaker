@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>The Call Taker - Setup Form</title>
-  <meta name="description" content="Complete The Call Taker setup form after checkout so your AI receptionist packet can be reviewed.">
+  <title>The Call Taker - Setup Questions</title>
+  <meta name="description" content="Answer The Call Taker's 60-second setup questions after payment so your call taker can be configured.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="The Call Taker setup form">
-  <meta property="og:description" content="Complete your setup packet after checkout. Review, forwarding, and testing happen before launch.">
+  <meta property="og:title" content="The Call Taker setup questions">
+  <meta property="og:description" content="This takes about 60 seconds. We only need the basics to configure your call taker.">
   <meta property="og:image" content="https://thecalltaker.com/og-image.png">
   <meta property="og:url" content="https://thecalltaker.com/setup.html">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Call Taker setup form">
-  <meta name="twitter:description" content="A guided setup packet for Gideon call coverage.">
+  <meta name="twitter:title" content="The Call Taker setup questions">
+  <meta name="twitter:description" content="A short post-payment setup questionnaire for The Call Taker.">
   <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
   <link rel="canonical" href="https://thecalltaker.com/setup.html">
   <link rel="manifest" href="site.webmanifest">
@@ -53,7 +53,7 @@
     html.light .setup-page .logo, html.light .setup-page .logo-text { color: #061610; }
     .setup-page .header-inner { max-width: 1120px; }
     .setup-page .header-cta { display: none; background: var(--green); color: #03140c; margin-left: auto; }
-    .setup-page .menu-toggle { display: none !important; }
+    .setup-page .menu-toggle { display: inline-flex !important; }
     .setup-page .mobile-nav { background: rgba(5, 12, 9, 0.97); }
     html.light .setup-page .mobile-nav { background: rgba(255,255,255,0.98); }
     .setup-hero { padding: 126px 20px 36px; text-align: center; }
@@ -112,10 +112,8 @@
     }
     html.light .setup-field input, html.light .setup-field select, html.light .setup-field textarea { background: #fff; color: #061610; }
     .setup-field textarea { min-height: 92px; resize: vertical; }
-    .setup-field textarea[name="callback_rules"],
     .setup-field textarea[name="services_offered"],
     .setup-field textarea[name="business_hours"],
-    .setup-field textarea[name="after_hours_rules"],
     .setup-field textarea[name="emergency_rules"] { min-height: 104px; }
     .setup-field input:focus, .setup-field select:focus, .setup-field textarea:focus { border-color: var(--green); box-shadow: 0 0 0 4px rgba(0,220,130,0.12); }
     .setup-field .is-invalid, .setup-field input.is-invalid, .setup-field select.is-invalid, .setup-field textarea.is-invalid { border-color: #dc2626; box-shadow: 0 0 0 4px rgba(220,38,38,0.12); }
@@ -180,6 +178,7 @@
     }
     @media (min-width: 768px) {
       .setup-page .header-cta { display: inline-flex; }
+      .setup-page .menu-toggle { display: none !important; }
     }
   </style>
 </head>
@@ -213,14 +212,14 @@
   <section class="setup-hero">
     <div class="wrap">
       <div class="setup-kicker">After checkout</div>
-      <h1>Complete your setup form.</h1>
-      <p>Use this form after checkout so we can configure your AI receptionist around your hours, services, urgent-call rules, and where call summaries should go.</p>
-      <div class="setup-note">Already checked out? You are in the right place. If Square did not send you back automatically, complete this form so the setup packet can be reviewed cleanly. This form starts the setup packet. We may still need to verify your checkout reference before configuration is completed.</div>
+      <h1>Answer your setup questions.</h1>
+      <p>This takes about 60 seconds. We only need the basics to configure your call taker.</p>
+      <div class="setup-note">Already paid? You are in the right place. If Square did not send you back automatically, answer these setup questions so the internal build can start. We may still verify your checkout reference before configuration is completed.</div>
       <div class="setup-handoff-card" aria-label="Already checked out handoff">
-        <strong>Already checked out?</strong>
-        <p>After checkout, complete your setup form at <a href="https://thecalltaker.com/setup.html">thecalltaker.com/setup.html</a> so we can configure your AI receptionist. Review, forwarding, and testing happen before launch.</p>
+        <strong>Already paid?</strong>
+        <p>After payment, answer the setup questions at <a href="https://thecalltaker.com/setup.html">thecalltaker.com/setup.html</a>. We only ask for launch-critical details: business, contact, answer mode, hours, service area, call types, urgent rules, summary destination, urgent action, forwarding ability, and hard rules.</p>
       </div>
-      <a href="#tct-setup-form" class="btn btn-primary btn-lg" data-tct-event="setup_form_started" data-tct-page="setup" data-tct-cta="Start setup form" data-tct-destination="setup_form" data-tct-learning-tag="setup_intent">Start setup form</a>
+      <a href="#tct-setup-form" class="btn btn-primary btn-lg" data-tct-event="setup_form_started" data-tct-page="setup" data-tct-cta="Start setup questions" data-tct-destination="setup_questions" data-tct-learning-tag="setup_intent">Start setup questions</a>
       <div class="text-us-support text-us-support--plain" aria-label="Setup text support">
         <p class="text-us-inline-note">Need help with setup?</p>
         <a class="text-us-button text-us-button--small" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="setup" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
@@ -231,33 +230,28 @@
     </div>
   </section>
 
-  <section class="setup-shell" aria-label="Setup form">
+  <section class="setup-shell" aria-label="Setup questions">
     <aside class="setup-progress-card" aria-label="Setup progress">
       <h2>Setup progress</h2>
-      <p>Work down the cards. Required details keep your setup packet clean; optional details help us tune the flow.</p>
+      <p>Answer only the basics needed to launch. Anything else can be tuned later.</p>
       <ol class="setup-progress-list">
         <li><span>01</span>Business basics</li>
-        <li><span>02</span>Summaries</li>
-        <li><span>03</span>Services</li>
-        <li><span>04</span>Hours</li>
-        <li><span>05</span>Urgent rules</li>
-        <li><span>06</span>Greeting</li>
-        <li><span>07</span>Phone setup</li>
-        <li><span>08</span>Go live</li>
-        <li><span>09</span>Confirm</li>
+        <li><span>02</span>Calls and hours</li>
+        <li><span>03</span>Handoff rules</li>
+        <li><span>04</span>Confirm</li>
       </ol>
-      <div class="setup-progress-footnote">Not sure on phone setup? Say so. We review forwarding/testing before anything goes live.</div>
+      <div class="setup-progress-footnote">Do not write Gideon's script here. The Call Taker will configure and tune the call flow from these basics.</div>
     </aside>
     <form class="setup-form" id="tct-setup-form" novalidate data-tct-form="setup" data-tct-page="setup" data-tct-event-start="setup_form_started" data-tct-event-submit="setup_form_submitted" data-tct-destination="confirmation" data-tct-learning-tag="setup_intent">
       <div class="setup-form-message" data-setup-form-message hidden></div>
       <input type="hidden" name="payment_verification_status" value="paid_unverified">
 
       <fieldset class="setup-section">
-        <legend><span class="setup-step-heading"><span class="setup-step-badge">01</span><span class="setup-step-copy"><span class="setup-step-title">Business basics</span><span class="setup-step-subtitle">Plan, owner, and contact details.</span></span></span></legend>
-        <p>Use the business and owner details that should appear in the setup packet.</p>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">01</span><span class="setup-step-copy"><span class="setup-step-title">Business basics</span><span class="setup-step-subtitle">Plan, business, and best contact.</span></span></span></legend>
+        <p>Use the details we need to identify the business and reach the setup contact.</p>
         <div class="setup-grid">
           <div class="setup-field">
-            <label for="plan_purchased">Plan purchased</label>
+            <label for="plan_purchased">Plan paid for</label>
             <select id="plan_purchased" name="plan_purchased" required>
               <option value="$97 After-Hours Capture">$97 After-Hours Capture</option>
               <option value="$497 Revenue Recovery System">$497 Revenue Recovery System</option>
@@ -269,7 +263,7 @@
             <input id="business_name" name="business_name" type="text" autocomplete="organization" required>
           </div>
           <div class="setup-field">
-            <label for="owner_name">Owner name</label>
+            <label for="owner_name">Best contact name</label>
             <input id="owner_name" name="owner_name" type="text" autocomplete="name" required>
           </div>
           <div class="setup-field">
@@ -277,157 +271,102 @@
             <input id="business_phone" name="business_phone" type="tel" autocomplete="tel" required>
           </div>
           <div class="setup-field">
-            <label for="owner_cell">Owner cell</label>
-            <input id="owner_cell" name="owner_cell" type="tel" autocomplete="tel" required>
-          </div>
-          <div class="setup-field">
-            <label for="summary_email">Summary email</label>
+            <label for="summary_email">Best contact email</label>
             <input id="summary_email" name="summary_email" type="email" autocomplete="email" required>
           </div>
-        </div>
-      </fieldset>
-
-      <fieldset class="setup-section">
-        <legend><span class="setup-step-heading"><span class="setup-step-badge">02</span><span class="setup-step-copy"><span class="setup-step-title">Where summaries go</span><span class="setup-step-subtitle">Who gets call notes and urgent handoffs.</span></span></span></legend>
-        <p>Tell us where call summaries and transfer-ready calls should go.</p>
-        <div class="setup-grid">
           <div class="setup-field">
-            <label for="summary_sms_number"><span>Summary text number</span><span class="optional-badge">Optional</span></label>
-            <input id="summary_sms_number" name="summary_sms_number" type="tel" placeholder="Optional">
-          </div>
-          <div class="setup-field">
-            <label for="setup_guide_sms_recipient"><span>Mobile number to text your setup/forwarding guide</span><span class="optional-badge">Optional</span></label>
-            <input id="setup_guide_sms_recipient" name="setup_guide_sms_recipient" type="tel" placeholder="Defaults to owner cell if blank">
-            <small>Use the mobile number that should receive forwarding and test-call instructions.</small>
-          </div>
-          <div class="setup-field">
-            <label for="transfer_number">Transfer number</label>
-            <input id="transfer_number" name="transfer_number" type="tel" required>
-            <small>Use the number urgent callers should be transferred to when your rules say to transfer.</small>
-          </div>
-          <div class="setup-field full">
-            <label for="callback_rules">Callback rules</label>
-            <textarea id="callback_rules" name="callback_rules" required placeholder="Who should call back, how fast, and what should be marked high priority?"></textarea>
+            <label for="owner_cell">Best mobile for urgent setup issues</label>
+            <input id="owner_cell" name="owner_cell" type="tel" autocomplete="tel" placeholder="Use if different from main number" required>
           </div>
         </div>
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend><span class="setup-step-heading"><span class="setup-step-badge">03</span><span class="setup-step-copy"><span class="setup-step-title">What Gideon should answer</span><span class="setup-step-subtitle">Services, service area, and booking boundaries.</span></span></span></legend>
-        <p>List the work you want Gideon to understand before calls are configured.</p>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">02</span><span class="setup-step-copy"><span class="setup-step-title">Calls and hours</span><span class="setup-step-subtitle">When you are open and what callers need.</span></span></span></legend>
+        <p>Give the basics. The Call Taker will turn this into the actual call flow.</p>
         <div class="setup-grid">
           <div class="setup-field full">
-            <label for="services_offered">Services offered</label>
-            <textarea id="services_offered" name="services_offered" required placeholder="List the main services you want Gideon to understand."></textarea>
+            <label for="gideon_answer_mode">When should Gideon answer?</label>
+            <select id="gideon_answer_mode" name="gideon_answer_mode" required>
+              <option value="">Choose one</option>
+              <option value="after-hours">After-hours</option>
+              <option value="overflow">Overflow</option>
+              <option value="all calls">All calls</option>
+              <option value="not sure">Not sure</option>
+            </select>
+            <small>Not sure is okay. We can tune this after setup.</small>
           </div>
-          <div class="setup-field full">
-            <label for="service_area">Service area</label>
-            <textarea id="service_area" name="service_area" required placeholder="Cities, counties, mileage radius, excluded areas, or service limits."></textarea>
-          </div>
-          <div class="setup-field full">
-            <label for="appointment_booking_rules"><span>Appointment booking rules</span><span class="optional-badge">Optional</span></label>
-            <textarea id="appointment_booking_rules" name="appointment_booking_rules" placeholder="Booking windows, dispatch rules, pricing boundaries, or scheduling tools."></textarea>
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset class="setup-section">
-        <legend><span class="setup-step-heading"><span class="setup-step-badge">04</span><span class="setup-step-copy"><span class="setup-step-title">When Gideon should answer</span><span class="setup-step-subtitle">Normal hours and after-hours coverage rules.</span></span></span></legend>
-        <p>Define your normal schedule and when callers should reach the AI receptionist.</p>
-        <div class="setup-grid">
           <div class="setup-field full">
             <label for="business_hours">Business hours</label>
             <textarea id="business_hours" name="business_hours" required placeholder="Example: Monday-Friday 8am-5pm, Saturday emergency only, Sunday closed."></textarea>
           </div>
           <div class="setup-field full">
-            <label for="after_hours_rules">After-hours rules</label>
-            <textarea id="after_hours_rules" name="after_hours_rules" required placeholder="When should Gideon answer, when should calls transfer, and what should happen after hours?"></textarea>
+            <label for="services_offered">Top call types</label>
+            <textarea id="services_offered" name="services_offered" required placeholder="Example: new estimate, emergency repair, existing customer, warranty question, billing question."></textarea>
+          </div>
+          <div class="setup-field full">
+            <label for="service_area">Service area</label>
+            <textarea id="service_area" name="service_area" required placeholder="Cities, counties, mileage radius, excluded areas, or service limits."></textarea>
           </div>
         </div>
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend><span class="setup-step-heading"><span class="setup-step-badge">05</span><span class="setup-step-copy"><span class="setup-step-title">Urgent call rules</span><span class="setup-step-subtitle">What needs faster owner or team attention.</span></span></span></legend>
-        <p>Define what should be marked urgent before configuration starts.</p>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">03</span><span class="setup-step-copy"><span class="setup-step-title">Urgency and forwarding</span><span class="setup-step-subtitle">Emergency rules, summary routing, and hard limits.</span></span></span></legend>
+        <p>Tell us what counts as urgent and what the call taker should never promise.</p>
         <div class="setup-grid">
           <div class="setup-field full">
-            <label for="emergency_rules">Emergency rules</label>
+            <label for="emergency_rules">Urgent / emergency definition</label>
             <textarea id="emergency_rules" name="emergency_rules" required placeholder="Examples: no heat, no AC for elderly customer, active leak, lockout, legal emergency."></textarea>
           </div>
           <div class="setup-field full">
-            <label for="what_ai_should_never_say"><span>What Gideon should never say</span><span class="optional-badge">Optional</span></label>
-            <textarea id="what_ai_should_never_say" name="what_ai_should_never_say" placeholder="Claims, prices, guarantees, service promises, or phrases to avoid."></textarea>
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset class="setup-section">
-        <legend><span class="setup-step-heading"><span class="setup-step-badge">06</span><span class="setup-step-copy"><span class="setup-step-title">Greeting preference</span><span class="setup-step-subtitle">The opening tone callers should hear.</span></span></span></legend>
-        <p>Give Gideon the greeting style and opening callers should hear.</p>
-        <div class="setup-grid">
-          <div class="setup-field full">
-            <label for="ai_greeting_preference">AI greeting preference</label>
-            <textarea id="ai_greeting_preference" name="ai_greeting_preference" required placeholder="Example: Thanks for calling [Business]. This is Gideon. How can I help today?"></textarea>
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset class="setup-section">
-        <legend><span class="setup-step-heading"><span class="setup-step-badge">07</span><span class="setup-step-copy"><span class="setup-step-title">Phone and forwarding info</span><span class="setup-step-subtitle">What you know about the current phone setup.</span></span></span></legend>
-        <p>You do not need every phone-system detail. If you are unsure, say so and we will flag the packet for forwarding instructions.</p>
-        <div class="setup-grid">
-          <div class="setup-field">
-            <label for="phone_provider"><span>Phone provider</span><span class="optional-badge">Optional</span></label>
-            <input id="phone_provider" name="phone_provider" type="text" placeholder="RingCentral, Google Voice, AT&amp;T, not sure">
-            <small class="helper-positive">Not sure is okay. We will review forwarding/testing before launch.</small>
-          </div>
-          <div class="setup-field">
-            <label for="current_forwarding_status"><span>Current forwarding status</span><span class="optional-badge">Optional</span></label>
-            <select id="current_forwarding_status" name="current_forwarding_status">
-              <option value="">Select one</option>
-              <option>Forwarding is already set up</option>
-              <option>Forwarding is not set up yet</option>
-              <option>Not sure</option>
+            <label for="urgent_action_preference">For urgent calls, what should Gideon do?</label>
+            <select id="urgent_action_preference" name="urgent_action_preference" required>
+              <option value="">Choose one</option>
+              <option value="transfer">Transfer</option>
+              <option value="text/call the owner">Text/call the owner</option>
+              <option value="summarize only">Summarize only</option>
+              <option value="not sure">Not sure</option>
             </select>
           </div>
-        </div>
-      </fieldset>
-
-      <fieldset class="setup-section">
-        <legend><span class="setup-step-heading"><span class="setup-step-badge">08</span><span class="setup-step-copy"><span class="setup-step-title">Go-live preference</span><span class="setup-step-subtitle">Timing, checkout reference, and notes.</span></span></span></legend>
-        <p>Same-day setup can move faster when the packet is complete and forwarding/testing is confirmed.</p>
-        <div class="setup-grid">
-          <div class="setup-field">
-            <label for="preferred_go_live_time"><span>Preferred go-live time</span><span class="optional-badge">Optional</span></label>
-            <input id="preferred_go_live_time" name="preferred_go_live_time" type="text" placeholder="Today, tomorrow morning, after 5pm, etc.">
-          </div>
-          <div class="setup-field">
-            <label for="square_checkout_reference"><span>Checkout reference</span><span class="optional-badge">Optional</span></label>
-            <input id="square_checkout_reference" name="square_checkout_reference" type="text" placeholder="Optional Square order/reference">
+          <div class="setup-field full">
+            <label for="summary_destination">Where should call summaries go?</label>
+            <textarea id="summary_destination" name="summary_destination" required placeholder="Example: email office@example.com, text the owner, or both."></textarea>
           </div>
           <div class="setup-field full">
-            <label for="special_notes"><span>Special notes</span><span class="optional-badge">Optional</span></label>
-            <textarea id="special_notes" name="special_notes" placeholder="Anything else your setup reviewer should know?"></textarea>
+            <label for="forwarding_ability">Are you able to forward calls to the number we give you?</label>
+            <select id="forwarding_ability" name="forwarding_ability" required>
+              <option value="">Choose one</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="not sure">Not sure</option>
+            </select>
+            <small>Not sure is okay. We can send instructions or walk you through it.</small>
+          </div>
+          <div class="setup-field full">
+            <label for="what_ai_should_never_say">Hard do-not-say / do-not-promise rules</label>
+            <textarea id="what_ai_should_never_say" name="what_ai_should_never_say" required placeholder="Type none if there are no hard limits. Otherwise list prices, guarantees, claims, or promises to avoid."></textarea>
           </div>
         </div>
       </fieldset>
 
       <fieldset class="setup-section">
-        <legend><span class="setup-step-heading"><span class="setup-step-badge">09</span><span class="setup-step-copy"><span class="setup-step-title">Final confirmation</span><span class="setup-step-subtitle">Safety checkpoint before review.</span></span></span></legend>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">04</span><span class="setup-step-copy"><span class="setup-step-title">Final confirmation</span><span class="setup-step-subtitle">Safety checkpoint before build.</span></span></span></legend>
         <div class="setup-checkpoint-card">
-          <h2>Before we review your setup</h2>
+          <h2>Before we build</h2>
           <ul class="setup-checklist">
-            <li>We use this to prepare your setup packet.</li>
+            <li>We use these answers to configure your call taker.</li>
             <li>Do not change your phone system yet.</li>
+            <li>$997+ custom setups may receive manual review before the internal build.</li>
             <li>Live routing starts only after forwarding/testing is confirmed.</li>
           </ul>
           <label class="setup-checkbox" for="authorized_to_configure_forwarding">
             <input id="authorized_to_configure_forwarding" name="authorized_to_configure_forwarding" type="checkbox" required>
-            <span>Yes, The Call Taker can use these details to prepare forwarding and configuration instructions for this business.<br><small>Do not change your phone system yet unless you are instructed to.</small></span>
+            <span>Yes, The Call Taker can use these setup answers to prepare configuration and forwarding instructions for this business.<br><small>Do not change your phone system yet unless you are instructed to.</small></span>
           </label>
           <div class="setup-submit-row">
-            <p>We'll review your details before configuration. No live phone routing starts from this form alone.</p>
-            <button type="submit" class="btn btn-green btn-lg">Submit setup packet</button>
+            <p>This is the short setup questionnaire. No live phone routing starts from this page alone.</p>
+            <button type="submit" class="btn btn-green btn-lg">Submit setup questions</button>
           </div>
         </div>
       </fieldset>
@@ -457,7 +396,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 The Call Taker. All rights reserved.</span>
-      <span>Setup form</span>
+      <span>Setup questions</span>
     </div>
   </div>
 </footer>
