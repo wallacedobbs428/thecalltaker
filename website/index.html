@@ -585,23 +585,14 @@ html.light {
 
 html.light body::after { opacity: 0.15; }
 html.light .nav { background: rgba(245,243,240,0.85); }
-html.light .phone { background: linear-gradient(170deg, #e8e5e0 0%, #ddd9d4 100%); box-shadow: 0 40px 100px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06); }
-html.light .phone-screen { background: #f5f3f0; }
-html.light .phone-notch { background: #f5f3f0; }
 html.light .ambient-inner { background: radial-gradient(ellipse at 65% 35%, rgba(26,122,92,0.06) 0%, transparent 55%), radial-gradient(ellipse at 25% 75%, rgba(194,124,58,0.03) 0%, transparent 45%); }
-html.light .ring-btn.yes { box-shadow: 0 0 24px rgba(26,122,92,0.15); }
-html.light .ring-btn.no { background: rgba(200,80,70,0.5); }
-html.light .ring-btn svg { stroke: var(--t100); }
 html.light .feature-card { background: #fff; border-color: rgba(0,0,0,0.06); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 html.light .test-card { background: #fff; border-color: rgba(0,0,0,0.06); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 html.light .price-card { background: #fff; border-color: rgba(0,0,0,0.06); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 html.light .price-card.featured { box-shadow: 0 4px 24px rgba(26,122,92,0.1); }
-html.light .msg-bubble { background: #fff; border-color: rgba(0,0,0,0.06); }
-html.light .cap-field { background: rgba(0,0,0,0.03); }
 html.light .btn-primary { color: #fff; }
 html.light .nav-cta { color: #fff !important; }
 html.light .mobile-bar a { color: #fff; }
-html.light .book-d.sel { color: #fff; }
 html.light .industry-trust { background: linear-gradient(180deg, var(--bg) 0%, rgba(234,231,226,0.6) 50%, var(--bg) 100%); }
 html.light .trust-badge { color: var(--t70); background: var(--surface); }
 html.light .marquee-track { color: var(--t40); }
@@ -696,7 +687,6 @@ html.light .theme-toggle .icon-moon { display: block; }
 @media(max-width:900px) {
   .hero { grid-template-columns: 1fr; padding: 100px 24px 48px; gap: 40px; }
   .hero-copy { text-align: center; order: 2; }
-  .hero-phone { order: 1; }
 }
 
 .hero-copy { z-index: 2; }
@@ -790,84 +780,6 @@ html.light .theme-toggle .icon-moon { display: block; }
 .step-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
 .step-desc { font-size: 15px; color: var(--t40); line-height: 1.7; max-width: 340px; }
 @media(max-width:900px) { .step-display { justify-content: center; } .step-desc { margin: 0 auto; } }
-
-/* ═══ PHONE ANIMATION ═══ */
-.hero-phone { position: relative; display: flex; justify-content: center; align-items: center; min-height: 580px; z-index: 2; overflow: hidden; }
-.phone-glow { position: absolute; width: 420px; height: 520px; background: radial-gradient(ellipse at center, rgba(26,122,92,0.06) 0%, rgba(194,124,58,0.015) 40%, transparent 70%); top: 50%; left: 55%; transform: translate(-50%,-50%); pointer-events: none; animation: glow-drift 14s ease-in-out infinite; }
-@keyframes glow-drift { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1} 50%{transform:translate(-48%,-52%) scale(1.04);opacity:0.5} }
-.particle-field { position: absolute; width: 300px; height: 540px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
-.particle { position: absolute; width: 2px; height: 2px; border-radius: 50%; opacity: 0; will-change: transform, opacity; }
-.particle.a { background: var(--accent); width: 3px; height: 3px; }
-.particle.b { background: var(--t10); }
-.particle.c { background: var(--green); width: 2px; height: 2px; }
-@media(max-width:900px) {
-  .hero-secondary,
-  .hero-phone {
-    max-width: 100vw;
-    overflow: hidden;
-    contain: paint;
-  }
-  .phone-glow {
-    left: 50%;
-    width: min(360px, 100vw);
-  }
-  .particle-field {
-    display: none;
-  }
-}
-.phone { position: relative; width: 250px; height: 510px; background: linear-gradient(170deg, #0a1510 0%, var(--surface) 100%); border-radius: 44px; border: 1px solid rgba(42,157,122,0.15); overflow: hidden; opacity: 0; transform: scale(0.97); box-shadow: 0 0 0 0.5px rgba(42,157,122,0.08), 0 40px 100px rgba(0,0,0,0.6), 0 0 80px rgba(42,157,122,0.06); will-change: transform, opacity; }
-.phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 90px; height: 22px; background: var(--bg); border-radius: 0 0 14px 14px; z-index: 10; }
-.phone-screen { position: absolute; inset: 6px; background: var(--bg); border-radius: 40px; overflow: hidden; }
-.status-bar { position: absolute; top: 28px; left: 16px; right: 16px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 8px; color: var(--t20); letter-spacing: 0.08em; z-index: 5; }
-.screen-state { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; opacity: 0; }
-.ring-time { font-size: 42px; font-weight: 200; color: var(--t100); letter-spacing: -0.02em; margin-bottom: 2px; }
-.ring-date { font-family: var(--mono); font-size: 10px; color: var(--t20); letter-spacing: 0.1em; margin-bottom: 40px; }
-.ring-divider { width: 24px; height: 1px; background: var(--t10); margin-bottom: 28px; }
-.ring-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--green); margin-bottom: 12px; }
-.ring-name { font-size: 18px; font-weight: 500; color: var(--t100); margin-bottom: 4px; }
-.ring-desc { font-size: 12px; color: var(--t40); margin-bottom: 36px; }
-.ring-btns { display: flex; gap: 40px; }
-.ring-btn { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; }
-.ring-btn svg { width: 20px; height: 20px; stroke: var(--t100); fill: none; stroke-width: 2; }
-.ring-btn.yes { background: var(--accent); box-shadow: 0 0 24px rgba(26,122,92,0.3); }
-.ring-btn.no { background: rgba(180,60,50,0.6); }
-.conn-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--green); margin-bottom: 20px; }
-.conn-name { font-family: var(--serif); font-size: 26px; font-weight: 400; color: var(--t100); margin-bottom: 4px; }
-.conn-timer { font-family: var(--mono); font-size: 13px; color: var(--t20); margin-bottom: 32px; }
-.waveform { display: flex; gap: 3px; align-items: center; height: 48px; margin-bottom: 24px; }
-.waveform span { width: 2px; background: var(--accent); border-radius: 1px; opacity: 0.6; transition: height 0.12s ease; }
-.conn-transcript { font-size: 12px; color: var(--t40); text-align: center; line-height: 1.7; max-width: 200px; font-style: italic; opacity: 0; }
-.cap-title { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--accent); text-align: center; margin-bottom: 24px; }
-.cap-field { background: var(--t06); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; width: 100%; opacity: 0; transform: translateY(6px); }
-.cap-label { font-family: var(--mono); font-size: 8px; color: var(--t20); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
-.cap-val { font-size: 13px; color: var(--t100); font-weight: 500; }
-.cap-cursor { display: inline-block; width: 1px; height: 14px; background: var(--accent); margin-left: 1px; animation: blink 0.7s infinite; vertical-align: middle; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-.book-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--green); margin-bottom: 20px; }
-.book-cal { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; width: 100%; margin-bottom: 14px; }
-.book-d { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 9px; color: var(--t10); border-radius: 4px; }
-.book-d.hdr { font-size: 8px; color: var(--t20); }
-.book-d.act { color: var(--t20); }
-.book-d.sel { background: var(--accent); color: var(--t100); font-weight: 600; box-shadow: 0 0 12px rgba(26,122,92,0.3); }
-.book-detail { background: var(--accent-soft); border: 1px solid rgba(26,122,92,0.12); border-radius: 8px; padding: 12px 16px; text-align: center; width: 100%; margin-bottom: 10px; opacity: 0; transform: translateY(6px); }
-.book-detail-time { font-size: 20px; font-weight: 300; color: var(--t100); }
-.book-detail-day { font-family: var(--mono); font-size: 10px; color: var(--t40); }
-.book-ok { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; color: var(--green); letter-spacing: 0.05em; opacity: 0; }
-.book-ok svg { width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2.5; }
-.text-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--amber); text-align: center; margin-bottom: 20px; }
-.msg-bubble { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px 12px 12px 4px; padding: 12px 14px; margin-bottom: 8px; width: 100%; opacity: 0; transform: translateY(6px); }
-.msg-bubble.reply { background: var(--accent-soft); border-color: rgba(26,122,92,0.12); border-radius: 12px 12px 4px 12px; }
-.msg-from { font-family: var(--mono); font-size: 8px; color: var(--t20); margin-bottom: 4px; letter-spacing: 0.05em; }
-.msg-body { font-size: 12px; line-height: 1.6; color: var(--t70); }
-.msg-bubble.reply .msg-body { color: var(--accent); }
-.msg-ts { font-family: var(--mono); font-size: 8px; color: var(--t10); text-align: right; margin-top: 4px; }
-.result { text-align: center; margin-top: 20px; opacity: 0; }
-.result-num { font-family: var(--serif); font-size: 36px; font-weight: 400; color: var(--amber); letter-spacing: -0.02em; }
-.result-label { font-family: var(--mono); font-size: 10px; color: var(--t20); letter-spacing: 0.1em; margin-top: 4px; }
-.frame-line { position: absolute; background: var(--accent); opacity: 0; }
-.frame-line.top { top: -1px; left: 60px; width: 40px; height: 1px; }
-.frame-line.btm { bottom: -1px; right: 60px; width: 40px; height: 1px; }
-.phone-readout { position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 8px; color: var(--t10); letter-spacing: 0.15em; white-space: nowrap; opacity: 0; }
 
 /* ═══ SCROLLING MARQUEE ═══ */
 .marquee { max-width: 100vw; overflow: hidden; contain: paint; }
@@ -1903,7 +1815,6 @@ html.light .feature-icon svg { stroke: var(--accent); }
   line-height: 1.13;
   max-width: 620px;
 }
-.hero-secondary .hero-phone { min-height: 480px; }
 
 /* ── BRANDED SERVICE-SELLING HERO OVERRIDE ── */
 .gideon-hero.service-selling {

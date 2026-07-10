@@ -86,6 +86,15 @@ def main() -> int:
 
     assert 'id="phone"' not in index, "deployed homepage still renders the fake phone UI"
     assert '<div class="phone-screen">' not in index, "fake phone screen remains visible"
+    for legacy_phone_css in (
+        "PHONE ANIMATION",
+        ".phone-screen",
+        ".phone-notch",
+        ".screen-state",
+        ".ring-btn",
+        ".phone-readout",
+    ):
+        assert legacy_phone_css not in index, f"dormant fake-phone styling remains: {legacy_phone_css}"
     for legacy_tech_theater in ('ENTER THE VAULT', 'id="gHudFrame"', 'id="gDepthCanvas"', 'id="gFigure"'):
         assert legacy_tech_theater not in index, f"dormant fake technology theater remains: {legacy_tech_theater}"
 
@@ -156,6 +165,7 @@ def main() -> int:
         "non_higgsfield_media_references": len(non_higgsfield_media),
         "manifest_asset_count": len(assets),
         "fake_phone_ui_visible": False,
+        "fake_phone_ui_css_present": False,
         "provider_calls": False,
     })
     return 0
