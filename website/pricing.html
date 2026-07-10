@@ -26,13 +26,11 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Pricing - The Call Taker AI receptionist setup">
   <meta property="og:description" content="Choose $97, $497, or $997+ call coverage. After payment, answer 60-second setup questions so the internal build can begin.">
-  <meta property="og:image" content="https://thecalltaker.com/og-image.png">
-  <meta property="og:url" content="https://thecalltaker.com/pricing.html">
+<meta property="og:url" content="https://thecalltaker.com/pricing.html">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Pricing - The Call Taker AI receptionist setup">
   <meta name="twitter:description" content="Start with After-Hours Capture, Revenue Recovery System, or Operational Infrastructure. Payment goes through Square.">
-  <meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
-  <link rel="canonical" href="https://thecalltaker.com/pricing.html">
+<link rel="canonical" href="https://thecalltaker.com/pricing.html">
   <link rel="prefetch" href="/pre-checkout.html?plan=afterhours" as="document">
   <link rel="prefetch" href="/pre-checkout.html?plan=full247" as="document">
   <link rel="prefetch" href="/pre-checkout.html?plan=custom" as="document">
@@ -686,6 +684,25 @@
       }
     }
   </style>
+<style>
+  .plan-visual[data-higgsfield-container]:not(.has-approved-higgsfield) {
+    min-height: 0 !important;
+    background: var(--surface, #f3f1ec);
+  }
+  .plan-visual[data-higgsfield-container]:not(.has-approved-higgsfield)::before { display: none; }
+  .plan-visual[data-higgsfield-container]:not(.has-approved-higgsfield) .plan-visual-content {
+    position: relative !important;
+    inset: auto !important;
+    max-width: none !important;
+    padding: 30px;
+  }
+  .plan-visual[data-higgsfield-container]:not(.has-approved-higgsfield) .plan-visual-content h3 { color: var(--text-1); }
+  .plan-visual[data-higgsfield-container]:not(.has-approved-higgsfield) .plan-visual-content p { color: var(--text-2); }
+  .plan-visual[data-higgsfield-container]:not(.has-approved-higgsfield) .plan-visual-tag {
+    color: var(--text-1); background: var(--surface); border-color: var(--border);
+  }
+</style>
+<link rel="stylesheet" href="/higgsfield-media.css">
 </head>
 <body class="funnel-page pricing-page" style="overflow-x:hidden" data-tct-view="pricing_view" data-tct-page="pricing" data-tct-learning-tag="pricing_view">
 <header class="header">
@@ -739,8 +756,12 @@
     <button class="plan-switch-option" type="button" data-plan-visual="full247">$497 <span>Revenue Recovery System</span></button>
     <button class="plan-switch-option" type="button" data-plan-visual="custom">$997+ <span>Operational Infrastructure</span></button>
   </div>
-  <div class="plan-visual plan-visual-featured reveal" id="pricingPlanVisual">
-    <div class="plan-visual-media" id="pricingPlanImage" style="background-image:url('/assets/images/plan-visuals/after-hours-capture-v3.webp?v=20260608-speed');"></div>
+  <div class="plan-visual plan-visual-featured reveal" id="pricingPlanVisual" data-higgsfield-container>
+    <div class="plan-visual-media higgsfield-media-slot"
+         data-higgsfield-slot="pricing-plan-story"
+         data-capability-family="cinema_short_form"
+         data-playback="autoplay"
+         hidden></div>
     <div class="plan-visual-content">
       <div class="plan-visual-tag" id="pricingPlanTag">$97 / After-Hours Capture</div>
       <h3 id="pricingPlanHeadline">Closed-hours calls stop dying in voicemail.</h3>
@@ -1037,32 +1058,28 @@
 
 	  var plans = {
 	    afterhours: {
-	      image: '/assets/images/plan-visuals/after-hours-capture-v3.webp?v=20260608-speed',
 	      tag: '$97 / After-Hours Capture',
 	      headline: 'Closed-hours calls stop dying in voicemail.',
 	      copy: 'Built for the owner who needs nights, weekends, and urgent calls captured while the team is offline.'
 	    },
 	    full247: {
-	      image: '/assets/images/plan-visuals/247-call-coverage-v3.webp?v=20260608-speed',
 	      tag: '$497 / Revenue Recovery System',
 	      headline: 'Leads get organized before they go cold.',
 	      copy: 'For 24/7 and overflow call answering, fast follow-up support, and cleaner handoff to the people who close work.'
 	    },
 	    custom: {
-	      image: '/assets/images/plan-visuals/custom-call-coverage-v3.webp?v=20260608-speed',
 	      tag: '$997+ / Operational Infrastructure',
 	      headline: 'Your call flow matches how your business works.',
       copy: 'For businesses that need custom call questions, approved handoffs, owner notifications, and reviewed setup before launch.'
     }
   };
 
-  var image = document.getElementById('pricingPlanImage');
   var tag = document.getElementById('pricingPlanTag');
   var headline = document.getElementById('pricingPlanHeadline');
   var copy = document.getElementById('pricingPlanCopy');
   var buttons = document.querySelectorAll('.plan-switch-option');
 
-  if (!image || !tag || !headline || !copy || !buttons.length) return;
+  if (!tag || !headline || !copy || !buttons.length) return;
 
   buttons.forEach(function (button) {
     button.addEventListener('click', function () {
@@ -1074,7 +1091,6 @@
       });
 
       button.classList.add('is-active');
-      image.style.backgroundImage = "url('" + plan.image + "')";
       tag.textContent = plan.tag;
       headline.textContent = plan.headline;
       copy.textContent = plan.copy;
@@ -1113,5 +1129,6 @@
 })();
 </script>
 
+<script src="/higgsfield-media.js" defer></script>
 </body>
 </html>
