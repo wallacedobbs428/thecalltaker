@@ -13,6 +13,7 @@ WEBSITE = Path(__file__).resolve().parents[1]
 INDEX = WEBSITE / "index.html"
 MANIFEST = WEBSITE / "assets" / "higgsfield" / "approved-assets.json"
 SHARED_LOADER = WEBSITE / "higgsfield-media.js"
+PAGES_WORKFLOW = WEBSITE.parent / ".github" / "workflows" / "deploy.yml"
 BANNED_PUBLIC_ASSETS = (
     "hero-phone.jpeg",
     "gideon-service-homepage-hero.png",
@@ -44,6 +45,7 @@ ASSET_REFERENCE = re.compile(
 def main() -> int:
     index = INDEX.read_text(encoding="utf-8")
     loader = SHARED_LOADER.read_text(encoding="utf-8")
+    pages_workflow = PAGES_WORKFLOW.read_text(encoding="utf-8")
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     assets = manifest.get("assets", [])
     asset_ids = {asset.get("asset_id") for asset in assets}
@@ -124,6 +126,14 @@ def main() -> int:
     ):
         assert requirement in loader, f"loader missing proof gate: {requirement}"
 
+    for deployed_policy_asset in (
+        "higgsfield-media.css",
+        "higgsfield-media.js",
+        'website/assets/higgsfield/ "$CLEAN/assets/higgsfield/"',
+        'test -f "$CLEAN/assets/higgsfield/approved-assets.json"',
+    ):
+        assert deployed_policy_asset in pages_workflow, f"Pages artifact omits Higgsfield policy asset: {deployed_policy_asset}"
+
     assert manifest["schema_version"] == "tct_higgsfield_website_asset_manifest.v1"
     assert isinstance(manifest["provider_actions_performed"], bool)
     if not assets:
@@ -180,6 +190,7 @@ def main() -> int:
         "fake_phone_ui_visible": False,
         "fake_phone_ui_css_present": False,
         "legacy_tech_theater_css_present": False,
+        "pages_artifact_policy_assets_proven": True,
         "provider_calls": False,
     })
     return 0
