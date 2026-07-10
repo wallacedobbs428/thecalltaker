@@ -57,12 +57,10 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Call Taker - AI Call Answering For Missed Calls">
 <meta property="og:description" content="Gideon answers calls, collects caller details, and sends clean summaries after your setup questions are in.">
-<meta property="og:image" content="https://thecalltaker.com/og-image.png">
 <meta property="og:url" content="https://thecalltaker.com/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Call Taker - AI Call Answering For Missed Calls">
 <meta name="twitter:description" content="Gideon answers calls, collects caller details, and sends clean summaries after your setup questions are in.">
-<meta name="twitter:image" content="https://thecalltaker.com/og-image.png">
 <link rel="canonical" href="https://thecalltaker.com/">
 <link rel="manifest" href="site.webmanifest">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -2374,9 +2372,62 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   }
 }
 
+/* Higgsfield technology media stays invisible until manifest provenance, QA,
+   approval, hash, capability, and published-path checks all pass. */
+.higgsfield-media-slot[hidden] { display: none !important; }
+.higgsfield-media-slot.is-approved { position: relative; overflow: hidden; background: #020504; }
+.higgsfield-media-slot video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gideon-hero.service-selling {
+  min-height: 720px;
+  background:
+    radial-gradient(circle at 78% 34%, rgba(42,157,122,0.17), transparent 28%),
+    radial-gradient(circle at 18% 82%, rgba(42,157,122,0.09), transparent 34%),
+    linear-gradient(135deg, #020504 0%, #07120e 52%, #020504 100%);
+}
+.gideon-hero.service-selling > .higgsfield-media-slot.is-approved {
+  position: absolute; inset: 0; z-index: 0; min-height: 720px; opacity: 0.62;
+}
+.gideon-hero.service-selling .g-vault-inner {
+  min-height: 720px; align-items: center; padding-top: 126px; padding-bottom: 88px;
+}
+.gideon-hero.service-selling .g-left {
+  background: rgba(2,8,6,0.82); border-color: rgba(42,157,122,0.28);
+}
+.hero-secondary.higgsfield-pending {
+  grid-template-columns: minmax(0, 760px); justify-content: center;
+  padding-top: 88px; padding-bottom: 88px;
+}
+.hero-secondary.higgsfield-pending .hero-copy { width: 100%; }
+.hf-sequence { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 34px; }
+.hf-sequence-step { padding: 22px; border: 1px solid var(--t06); border-radius: 14px; background: var(--surface); }
+.hf-sequence-step span { display: block; margin-bottom: 18px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; color: var(--accent); }
+.hf-sequence-step strong { display: block; margin-bottom: 8px; color: var(--t100); font-size: 15px; }
+.hf-sequence-step p { color: var(--t40); font-size: 13px; line-height: 1.55; }
+.hero-secondary > .higgsfield-media-slot.is-approved { min-height: 520px; border-radius: 18px; }
+@media (max-width: 900px) {
+  .gideon-hero.service-selling { min-height: auto; padding-top: 98px; padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+  .gideon-hero.service-selling .g-vault-inner {
+    min-height: auto; width: 100%; max-width: 100%; margin-top: 0 !important;
+    padding: 0 16px 22px; justify-content: center; overflow: visible;
+  }
+  .gideon-hero.service-selling .g-left {
+    width: min(358px, calc(100vw - 32px)) !important;
+    max-width: calc(100vw - 32px) !important;
+    padding: 18px 16px 17px;
+  }
+  .gideon-hero.service-selling .gideon-name {
+    font-size: clamp(2.05rem, 9.2vw, 2.7rem); line-height: 0.99; letter-spacing: -0.04em;
+  }
+  .gideon-hero.service-selling .gideon-subtitle { font-size: 0.9rem; line-height: 1.45; margin: 13px 0 14px; }
+  .gideon-hero.service-selling .g-offer-kicker { font-size: 0.56rem; margin-bottom: 9px; }
+  .hf-sequence { grid-template-columns: 1fr; }
+  .hero-secondary.higgsfield-pending { padding: 64px 24px; }
+}
+
 </style>
 <!-- styles.css removed — was overriding inline light mode with hardcoded #000 backgrounds.
      All styles are now handled by inline <style> blocks with CSS variable theming. -->
+<link rel="stylesheet" href="/higgsfield-media.css">
 </head>
 <body data-tct-view="homepage_view" data-tct-page="homepage" data-tct-learning-tag="homepage_view">
 
@@ -2425,54 +2476,13 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <a href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon</a>
 </nav>
 
-<!-- ==================== Gideon hero — time vault (The Flash) ==================== -->
-	<section class="gideon-hero service-selling">
-	  <picture class="g-service-picture">
-	    <source media="(max-width: 700px)" srcset="assets/images/gideon-service-mobile-hero.webp" type="image/webp">
-	    <source media="(max-width: 700px)" srcset="assets/images/gideon-service-mobile-hero.png">
-	    <source srcset="assets/images/gideon-service-homepage-hero.webp" type="image/webp">
-	    <img class="g-service-bg" src="assets/images/gideon-service-homepage-hero.png" width="1920" height="1071" loading="eager" fetchpriority="high" decoding="async" alt="Gideon answering business calls, collecting caller details, and notifying the owner.">
-	  </picture>
-
-  <!-- TAP GATE -->
-  <div class="g-tap-gate" id="gTapGate">
-    <div class="g-tap-inner">
-      <div class="g-tap-pulse"></div>
-      <div class="g-tap-icon">&#9654;</div>
-      <div class="g-tap-text">ENTER THE VAULT</div>
-      <div class="g-tap-sub">Sound on · 30 seconds</div>
-    </div>
-  </div>
-
-  <!-- Vault atmosphere -->
-  <div class="g-vault-bg"></div>
-  <div class="g-vault-walls" id="gVaultWalls">
-    <div class="g-wall-h-top"></div>
-    <div class="g-wall-h-bot"></div>
-  </div>
-
-  <!-- Environment — floor grid + particles + glow + projection beam -->
-  <div class="g-environment" aria-hidden="true">
-    <div class="g-floor" id="gFloor"><div class="g-floor-grid"></div></div>
-    <canvas id="gDepthCanvas" class="g-depth-canvas"></canvas>
-    <div class="g-ring g-ring-1" id="gRing1"></div>
-    <div class="g-ring g-ring-2" id="gRing2"></div>
-    <div class="g-ring g-ring-3" id="gRing3"></div>
-    <div class="g-bg-glow" id="gBgGlow"></div>
-    <div class="g-projection-beam" id="gBeam"></div>
-  </div>
-
-  <!-- Dual scan lines -->
-  <div class="g-scanline" id="gScanline"></div>
-  <div class="g-scanline-2" id="gScanline2"></div>
-
-  <!-- HUD Frame -->
-  <div class="g-hud-frame" id="gHudFrame">
-    <div class="g-hud-corner g-hud-tl"></div>
-    <div class="g-hud-corner g-hud-tr"></div>
-    <div class="g-hud-corner g-hud-bl"></div>
-    <div class="g-hud-corner g-hud-br"></div>
-  </div>
+<!-- ==================== Gideon service hero ==================== -->
+	<section class="gideon-hero service-selling" data-higgsfield-container>
+  <div class="higgsfield-media-slot"
+       data-higgsfield-slot="homepage-service-hero"
+       data-capability-family="cinema_short_form"
+       data-playback="autoplay"
+       hidden></div>
 
   <!-- SPLIT LAYOUT -->
   <div class="g-vault-inner">
@@ -2507,44 +2517,11 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       </div>
     </div>
 
-    <!-- RIGHT — Hologram (TOWERS over you) -->
-    <div class="g-right">
-      <div class="gideon-stage">
-        <div class="g-figure" id="gFigure">
-          <canvas class="g-voice-ring" id="gVoiceRing" width="320" height="320"></canvas>
-          <div class="g-speech-pulse" id="gSpeechPulse"></div>
-	          <picture>
-	            <source srcset="gideon-hologram.webp" type="image/webp">
-	            <img src="gideon-hologram.png" width="784" height="1168" decoding="async" alt="Gideon, AI call answering assistant"
-	                 class="g-img" id="gideonImg"/>
-	          </picture>
-        </div>
-        <canvas class="g-particles-canvas" id="gParticles"></canvas>
-
-        <!-- HUD stat panels -->
-        <div class="g-stat-overlay" id="gStatOverlay">
-          <div class="g-stat-card">
-            <div class="g-stat-label">CALL COVERAGE</div>
-            <div class="g-stat-value">After-hours + overflow</div>
-          </div>
-          <div class="g-stat-card">
-            <div class="g-stat-label">HANDOFF</div>
-            <div class="g-stat-value">Caller details sent</div>
-          </div>
-          <div class="g-stat-card">
-            <div class="g-stat-label">LAUNCH</div>
-            <div class="g-stat-value">Setup questions first</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
-
 </section>
 
 <!-- HERO SECONDARY -->
-<section class="hero hero-secondary" id="hero">
+<section class="hero hero-secondary higgsfield-pending" id="hero" data-higgsfield-container>
   <div class="hero-copy">
     <div class="eyebrow"><span class="blink"></span>SYSTEM ACTIVE</div>
     <h2>It's 2 AM.<br>Your phone rings.<br><strong><span class="no-break-word">Gideon answers.</span></strong><span class="cycle-badge"><span class="cycle-badge-dot"></span><span class="cycle-text" id="cycleText">HVAC</span></span></h2>
@@ -2576,35 +2553,23 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <a href="tel:+16292699697" class="btn btn-primary" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent"><span>Call Gideon Live</span></a>
       <a href="#pricing" class="hero-ghost" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="See pricing" data-tct-destination="pricing_section" data-tct-learning-tag="homepage_intent">See pricing</a>
     </div>
-    <div class="step-display">
-      <div class="step-num" id="stepNum">01</div>
-      <div class="step-text">
-        <div class="step-label" id="stepLabel">INCOMING</div>
-        <div class="step-desc" id="stepDesc">Waiting for first call...</div>
-      </div>
+    <div class="hf-sequence" aria-label="Call handoff sequence">
+      <div class="hf-sequence-step"><span>01 / ANSWER</span><strong>The caller reaches Gideon.</strong><p>Your approved greeting and questions guide the conversation.</p></div>
+      <div class="hf-sequence-step"><span>02 / CAPTURE</span><strong>The useful details are collected.</strong><p>Name, callback number, reason for calling, and requested next step.</p></div>
+      <div class="hf-sequence-step"><span>03 / HANDOFF</span><strong>Your team gets a clear summary.</strong><p>You decide how and when the follow-up happens.</p></div>
     </div>
   </div>
-
-  <div class="hero-phone">
-    <div class="phone-glow"></div>
-    <div class="particle-field" id="pf"></div>
-    <div class="phone" id="phone">
-      <div class="phone-notch"></div>
-      <div class="phone-screen">
-        <div class="status-bar"><span>2:17 AM</span><span>THE CALL TAKER</span><span>LIVE</span></div>
-        <div class="screen-state" id="s1"><div class="ring-time">2:17</div><div class="ring-date">SAT MAR 19</div><div class="ring-divider"></div><div class="ring-tag">INCOMING CALL</div><div class="ring-name">Sarah Martinez</div><div class="ring-desc">Emergency Lockout</div><div class="ring-btns"><div class="ring-btn no"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013 5.18 2 2 0 015.11 3h3" transform="rotate(135 12 12)"/></svg></div><div class="ring-btn yes" id="ansBtn"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 5.18 2 2 0 014.11 3h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div></div></div>
-        <div class="screen-state" id="s2"><div class="conn-tag">CONNECTED</div><div class="conn-name">Gideon</div><div class="conn-timer" id="timer">00:00</div><div class="waveform" id="wf"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="conn-transcript" id="transcript">"Hi Sarah, thanks for calling. I can get a locksmith to you right away."</div></div>
-        <div class="screen-state" id="s3" style="padding:48px 18px 20px;align-items:stretch;"><div class="cap-title">DETAILS CAPTURED</div><div class="cap-field" id="f1"><div class="cap-label">NAME</div><div class="cap-val"><span id="t1"></span><span class="cap-cursor"></span></div></div><div class="cap-field" id="f2"><div class="cap-label">ISSUE</div><div class="cap-val"><span id="t2"></span><span class="cap-cursor"></span></div></div><div class="cap-field" id="f3"><div class="cap-label">ADDRESS</div><div class="cap-val"><span id="t3"></span><span class="cap-cursor"></span></div></div><div class="cap-field" id="f4"><div class="cap-label">URGENCY</div><div class="cap-val"><span id="t4"></span><span class="cap-cursor"></span></div></div></div>
-        <div class="screen-state" id="s4"><div class="book-tag">APPOINTMENT REQUEST</div><div class="book-cal" id="cal"></div><div class="book-detail" id="bd"><div class="book-detail-time">8:00 AM</div><div class="book-detail-day">SUN MAR 19</div></div><div class="book-ok" id="bk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>CONFIRMED</div></div>
-        <div class="screen-state" id="s5" style="align-items:stretch;"><div class="text-tag">TEAM ALERT SENT</div><div class="msg-bubble" id="b1"><div class="msg-from">Gideon</div><div class="msg-body">New lead captured:<br>Sarah Martinez<br>Lockout, 412 Oak St<br>8:00 AM Sunday</div><div class="msg-ts">2:18 AM</div></div><div class="msg-bubble reply" id="b2"><div class="msg-body">Got it. Sending my guy.</div><div class="msg-ts">2:19 AM</div></div><div class="result" id="res"><div class="result-num">Lead saved</div><div class="result-label">WHILE YOU SLEPT</div></div></div>
-      </div>
-      <div class="frame-line top" id="flt"></div>
-      <div class="frame-line btm" id="flb"></div>
-    </div>
-    <div class="phone-readout" id="readout">Gideon &middot; ACTIVE</div>
-  </div>
+  <div class="higgsfield-media-slot"
+       data-higgsfield-slot="callback-window-story"
+       data-capability-family="cinema_short_form"
+       data-playback="autoplay"
+       hidden></div>
+  <div class="higgsfield-media-slot"
+       data-higgsfield-slot="one-minute-explainer"
+       data-capability-family="explainer_long_form"
+       data-playback="controls"
+       hidden></div>
 </section>
-
 
 <!-- ═══ SECTION 1: SCROLLING MARQUEE — industries ticker ═══ -->
 <div class="marquee reveal" style="border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);padding:20px 0;overflow:hidden;">
@@ -3418,32 +3383,6 @@ setTimeout(function() {
 <!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-<!-- PHONE ANIMATION -->
-<script>
-(function(){
-  'use strict';
-  const pf=document.getElementById('pf'),ps=[];
-  const cls=['a','b','b','c','a','b'];
-  for(let i=0;i<50;i++){const p=document.createElement('div');p.className='particle '+cls[i%cls.length];const a=Math.random()*Math.PI*2,r=250+Math.random()*200;p.dataset.sx=Math.cos(a)*r;p.dataset.sy=Math.sin(a)*r;p.dataset.tx=(Math.random()>0.5?1:-1)*(110+Math.random()*15);p.dataset.ty=-240+Math.random()*480;p.style.left='50%';p.style.top='50%';pf.appendChild(p);ps.push(p);}
-  const cal=document.getElementById('cal');['S','M','T','W','T','F','S'].forEach(d=>{const e=document.createElement('div');e.className='book-d hdr';e.textContent=d;cal.appendChild(e);});for(let d=1;d<=31;d++){const e=document.createElement('div');e.className='book-d'+(d>=17?' act':'')+(d===19?' sel':'');e.textContent=d;cal.appendChild(e);}
-  function type(id,txt,dur){const el=document.getElementById(id);let i=0;const ms=(dur/txt.length)*1000;return new Promise(r=>{const iv=setInterval(()=>{el.textContent=txt.substring(0,++i);if(i>=txt.length){clearInterval(iv);r();}},ms);});}
-  const bars=document.querySelectorAll('#wf span');let wIv;function startW(){wIv=setInterval(()=>bars.forEach(b=>b.style.height=(4+Math.random()*36)+'px'),150);}function stopW(){clearInterval(wIv);bars.forEach(b=>b.style.height='3px');}
-  let tIv,sec=0;function startT(){sec=0;const el=document.getElementById('timer');tIv=setInterval(()=>{sec++;el.textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');},1000);}function stopT(){clearInterval(tIv);}
-  function step(num,label,desc){const n=document.getElementById('stepNum'),l=document.getElementById('stepLabel'),d=document.getElementById('stepDesc');gsap.to([n,l,d],{opacity:0,y:-6,duration:0.2,ease:'power2.in',onComplete:()=>{n.textContent=String(num).padStart(2,'0');n.classList.add('active');l.textContent=label;d.textContent=desc;gsap.fromTo(n,{opacity:0,y:10},{opacity:1,y:0,duration:0.4,ease:'power2.out'});gsap.fromTo(l,{opacity:0,y:8},{opacity:1,y:0,duration:0.35,delay:0.05,ease:'power2.out'});gsap.fromTo(d,{opacity:0,y:8},{opacity:1,y:0,duration:0.4,delay:0.1,ease:'power2.out'});}});}
-  function reset(){stopT();stopW();document.getElementById('timer').textContent='00:00';['t1','t2','t3','t4'].forEach(id=>document.getElementById(id).textContent='');gsap.set(['#s1','#s2','#s3','#s4','#s5'],{opacity:0});gsap.set(['#f1','#f2','#f3','#f4'],{opacity:0,y:6});gsap.set('#bd',{opacity:0,y:6});gsap.set('#bk',{opacity:0});gsap.set(['#b1','#b2'],{opacity:0,y:6});gsap.set('#res',{opacity:0});gsap.set('#transcript',{opacity:0});gsap.set('.ring-btn',{opacity:0});gsap.set('#phone',{x:0});document.getElementById('stepNum').classList.remove('active');}
-  const tl=gsap.timeline({repeat:-1,repeatDelay:3,onRepeat:reset});
-  tl.set(ps,{x:i=>+ps[i].dataset.sx,y:i=>+ps[i].dataset.sy,opacity:0.5});
-  tl.to(ps,{x:i=>+ps[i].dataset.tx,y:i=>+ps[i].dataset.ty,opacity:0.6,duration:3,stagger:{amount:1.2,from:'random'},ease:'power1.inOut'},0);
-  tl.to('#phone',{opacity:1,scale:1,duration:1.2,ease:'power1.out'},1.8);tl.to('#flt',{opacity:0.3,duration:0.6},2.2);tl.to('#flb',{opacity:0.3,duration:0.6},2.4);tl.to('#readout',{opacity:1,duration:0.6},2.6);tl.to(ps,{opacity:0,duration:1.2},2.8);
-  tl.to('#s1',{opacity:1,duration:0.5},3);tl.call(()=>step(1,'INCOMING','A customer calls at 2:17 AM with an emergency lockout. Most businesses send this to voicemail.'),null,3);tl.to('#phone',{x:-2,duration:0.04,repeat:14,yoyo:true,ease:'none'},3.5);tl.to('.ring-btn',{opacity:1,duration:0.5,stagger:0.1},4.5);
-  tl.call(()=>step(2,'CONNECTED','Gideon picks up on the first ring. Greets Sarah by name and asks the right questions.'),null,7);tl.to('#s1',{opacity:0,duration:0.3},7);tl.to('#s2',{opacity:1,duration:0.4},7.2);tl.call(startT,null,7.4);tl.call(startW,null,7.4);tl.to('#transcript',{opacity:1,duration:0.8},8.5);
-  tl.call(()=>{stopT();stopW();},null,12);tl.call(()=>step(3,'CAPTURING','Every detail captured automatically. Name, address, issue, urgency. Ready before anyone wakes up.'),null,12);tl.to('#s2',{opacity:0,duration:0.3},12);tl.to('#s3',{opacity:1,duration:0.4},12.2);tl.to('#f1',{opacity:1,y:0,duration:0.4},12.6);tl.call(()=>type('t1','Sarah Martinez',0.7),null,12.6);tl.to('#f2',{opacity:1,y:0,duration:0.4},13.6);tl.call(()=>type('t2','Locked out, front door',0.7),null,13.6);tl.to('#f3',{opacity:1,y:0,duration:0.4},14.6);tl.call(()=>type('t3','412 Oak St, Nashville',0.7),null,14.6);tl.to('#f4',{opacity:1,y:0,duration:0.4},15.6);tl.call(()=>type('t4','High, stranded outside',0.6),null,15.6);
-  tl.call(()=>step(4,'BOOKED','Gideon captures the appointment request and sends the details for confirmation.'),null,17.5);tl.to('#s3',{opacity:0,duration:0.3},17.5);tl.to('#s4',{opacity:1,duration:0.4},17.7);tl.to('#bd',{opacity:1,y:0,duration:0.5,ease:'power2.out'},19);tl.to('#bk',{opacity:1,duration:0.5},20);
-  tl.call(()=>step(5,'DELIVERED','You wake up to a text with every detail. The request is captured. You didn\'t miss the lead.'),null,22.5);tl.to('#s4',{opacity:0,duration:0.3},22.5);tl.to('#s5',{opacity:1,duration:0.4},22.7);tl.to('#b1',{opacity:1,y:0,duration:0.5},23.5);tl.to('#b2',{opacity:1,y:0,duration:0.5},25);tl.to('#res',{opacity:1,duration:0.6},26.5);
-  tl.to('#s5',{opacity:0,duration:0.6},29);tl.to(['#flt','#flb','#readout'],{opacity:0,duration:0.4},29);tl.set(ps,{opacity:0.4},29);tl.to(ps,{x:i=>+ps[i].dataset.sx*1.3,y:i=>+ps[i].dataset.sy*1.3,opacity:0,duration:1.8,stagger:{amount:0.5,from:'random'},ease:'power1.in'},29);tl.to('#phone',{opacity:0,scale:0.97,duration:1.2,ease:'power1.in'},29);tl.call(()=>{const n=document.getElementById('stepNum');gsap.to([n,'#stepLabel','#stepDesc'],{opacity:0,duration:0.4});},null,30);
-})();
-</script>
-
 <!-- SCROLL REVEALS + FAQ + THEME -->
 <script>
 // Mobile header nav — keeps desktop links available on phones
@@ -3810,672 +3749,20 @@ document.querySelectorAll('.faq-q').forEach(q => {
 (function(){var f=false;function l(){if(f)return;f=true;var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV';s.async=true;document.head.appendChild(s);s.onload=function(){window.dataLayer=window.dataLayer||[];function g(){dataLayer.push(arguments)}g('js',new Date());g('config','G-29LL5GPBQV');g('config','AW-17970510102');};};['scroll','click','mousemove','touchstart'].forEach(function(e){window.addEventListener(e,l,{once:true});});})();
 </script>
 
-<!-- ==================== Gideon hero — time vault JS ==================== -->
+<script src="/higgsfield-media.js" defer></script>
+
+<!-- Static fallback behavior while no Higgsfield asset is approved. -->
 <script>
 (function() {
-  'use strict';
-
-  /* ── CONFIG ── */
-  var CHAR_SPEED = 22, LINE_PAUSE = 350, BLOCK_PAUSE = 1800, CTA_DELAY = 600, LOOP_DELAY = 7000;
-
-  var speeches = [
-    { lines: ["When you cannot pick up, Gideon asks the right questions and sends you the name, number, reason for calling, and next step."], pause: BLOCK_PAUSE, showCTA: true }
-  ];
-
-  var el = document.getElementById('gideonSpeaks');
-  var ctaEl = document.getElementById('gideonCTA');
-  var nameEl = document.getElementById('gideonName');
-  var heroEl = document.querySelector('.gideon-hero');
-  var isServiceHero = heroEl && heroEl.classList.contains('service-selling');
-  var figureEl = document.getElementById('gFigure');
-  var subtitleEl = document.getElementById('gideonSubtitle');
-  var statusBar = document.getElementById('gStatusBar');
-  var statOverlay = document.getElementById('gStatOverlay');
-  var imgEl = document.getElementById('gideonImg');
-  var tapGate = document.getElementById('gTapGate');
-
-  if (!el || !heroEl) return;
-
-  var isMob = window.innerWidth <= 900;
-
-  function wait(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
-
-  /* ── AUDIO ──
-     Audio is intentionally disabled until a synced, user-controlled demo is ready.
-     Previous behavior loaded gideon-intro.mp3 / gideon-intro-short.mp3 and auto-started after 1.3s. */
-  var AUDIO_ENABLED = false;
-  var gideonAudio = AUDIO_ENABLED ? new Audio(isMob ? 'gideon-intro-short.mp3' : 'gideon-intro.mp3') : null;
-  if (gideonAudio) gideonAudio.preload = 'auto';
-  var audioUnlocked = false;
-
-  /* ── AUDIO ANALYZER — reactive hologram ── */
-  var audioCtx = null, analyser = null, audioSource = null, audioDataArray = null;
-  var voiceRingCanvas = document.getElementById('gVoiceRing');
-  var voiceRingCtx = voiceRingCanvas ? voiceRingCanvas.getContext('2d') : null;
-  var particlesCanvas = document.getElementById('gParticles');
-  var speechPulseEl = document.getElementById('gSpeechPulse');
-  var particles = [];
-  var isSpeaking = false;
-  var lastPulseTime = 0;
-
-  function setupAudioAnalyzer() {
-    try {
-      var AC = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AC();
-      analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 256;
-      analyser.smoothingTimeConstant = 0.8;
-      audioSource = audioCtx.createMediaElementSource(gideonAudio);
-      audioSource.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      audioDataArray = new Uint8Array(analyser.frequencyBinCount);
-    } catch (e) { /* Analyzer optional */ }
-  }
-
-  function getAudioLevel() {
-    if (!analyser || !audioDataArray) return 0;
-    analyser.getByteFrequencyData(audioDataArray);
-    var sum = 0;
-    for (var i = 0; i < audioDataArray.length; i++) sum += audioDataArray[i];
-    return sum / audioDataArray.length / 255;
-  }
-
-  /* ── VOICE RING — circular waveform around hologram ── */
-  function drawVoiceRing(level) {
-    if (!voiceRingCtx || !voiceRingCanvas) return;
-    var w = voiceRingCanvas.width, h = voiceRingCanvas.height;
-    var cx = w / 2, cy = h / 2, r = 130;
-    voiceRingCtx.clearRect(0, 0, w, h);
-    if (level < 0.02) return;
-
-    var segments = 64;
-    voiceRingCtx.beginPath();
-    for (var i = 0; i <= segments; i++) {
-      var angle = (i / segments) * Math.PI * 2 - Math.PI / 2;
-      var freqIdx = Math.floor((i / segments) * (audioDataArray ? audioDataArray.length : 64));
-      var amp = audioDataArray ? audioDataArray[freqIdx] / 255 : level;
-      var radius = r + amp * 25 * level;
-      var x = cx + Math.cos(angle) * radius;
-      var y = cy + Math.sin(angle) * radius;
-      if (i === 0) voiceRingCtx.moveTo(x, y);
-      else voiceRingCtx.lineTo(x, y);
-    }
-    voiceRingCtx.closePath();
-    voiceRingCtx.strokeStyle = 'rgba(42,157,122,' + (0.3 + level * 0.5) + ')';
-    voiceRingCtx.lineWidth = 1.5;
-    voiceRingCtx.shadowBlur = 15 + level * 25;
-    voiceRingCtx.shadowColor = 'rgba(42,157,122,0.6)';
-    voiceRingCtx.stroke();
-
-    /* Inner ring */
-    voiceRingCtx.beginPath();
-    voiceRingCtx.arc(cx, cy, r - 8, 0, Math.PI * 2);
-    voiceRingCtx.strokeStyle = 'rgba(42,157,122,' + (0.1 + level * 0.15) + ')';
-    voiceRingCtx.lineWidth = 0.5;
-    voiceRingCtx.shadowBlur = 0;
-    voiceRingCtx.stroke();
-  }
-
-  /* ── PARTICLES — floating holographic dust ── */
-  function initParticles() {
-    if (!particlesCanvas) return;
-    var rect = particlesCanvas.parentElement.getBoundingClientRect();
-    particlesCanvas.width = rect.width;
-    particlesCanvas.height = rect.height;
-  }
-
-  function spawnParticle(level) {
-    if (!particlesCanvas || particles.length > 80) return;
-    var w = particlesCanvas.width, h = particlesCanvas.height;
-    /* Spawn around the hologram center-right area */
-    var cx = w * 0.5, cy = h * 0.45;
-    var spread = 200 + level * 100;
-    particles.push({
-      x: cx + (Math.random() - 0.5) * spread,
-      y: cy + (Math.random() - 0.5) * spread * 1.4,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: -0.2 - Math.random() * 0.5,
-      size: 1 + Math.random() * 2.5,
-      life: 1,
-      decay: 0.005 + Math.random() * 0.01,
-      hue: Math.random() > 0.7 ? 160 : (Math.random() > 0.5 ? 150 : 140)
-    });
-  }
-
-  function updateParticles(level) {
-    if (!particlesCanvas) return;
-    var ctx = particlesCanvas.getContext('2d');
-    if (!ctx) return;
-    ctx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
-
-    for (var i = particles.length - 1; i >= 0; i--) {
-      var p = particles[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      p.life -= p.decay;
-      if (p.life <= 0) { particles.splice(i, 1); continue; }
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-      ctx.fillStyle = 'hsla(' + p.hue + ',60%,55%,' + (p.life * 0.6) + ')';
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = 'hsla(' + p.hue + ',60%,55%,0.4)';
-      ctx.fill();
-    }
-
-    /* Spawn based on audio level */
-    var spawnRate = level > 0.1 ? 3 : 1;
-    for (var s = 0; s < spawnRate; s++) {
-      if (Math.random() < 0.3 + level * 0.5) spawnParticle(level);
-    }
-  }
-
-  /* ── SPEECH PULSE — ring expands from figure when speaking ── */
-  function fireSpeechPulse() {
-    if (!speechPulseEl) return;
-    var now = Date.now();
-    if (now - lastPulseTime < 1500) return;
-    lastPulseTime = now;
-    speechPulseEl.classList.remove('pulse');
-    void speechPulseEl.offsetWidth;
-    speechPulseEl.classList.add('pulse');
-  }
-
-  /* ── ANIMATION LOOP — runs every frame ── */
-  var animRunning = false;
-  function startReactiveLoop() {
-    if (animRunning) return;
-    animRunning = true;
-    if (voiceRingCanvas) { voiceRingCanvas.classList.add('active'); }
-    if (particlesCanvas) { particlesCanvas.classList.add('active'); initParticles(); }
-
-    function tick() {
-      if (!animRunning) return;
-      var level = getAudioLevel();
-
-      /* Speaking state toggle */
-      var nowSpeaking = level > 0.08;
-      if (nowSpeaking !== isSpeaking) {
-        isSpeaking = nowSpeaking;
-        if (figureEl) {
-          if (isSpeaking) figureEl.classList.add('speaking');
-          else figureEl.classList.remove('speaking');
-        }
-      }
-
-      /* Voice ring */
-      drawVoiceRing(level);
-
-      /* Particles */
-      updateParticles(level);
-
-      /* Speech pulse */
-      if (level > 0.15) fireSpeechPulse();
-
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  var audioPlaying = false;
-  function tryPlayAudio() {
-    if (!AUDIO_ENABLED) return;
-    if (audioPlaying) return;
-    setupAudioAnalyzer();
-    if (audioCtx) audioCtx.resume().catch(function(){});
-    gideonAudio.volume = isMob ? 1.0 : 0.85;
-    gideonAudio.play().then(function() {
-      audioPlaying = true;
-      startReactiveLoop();
-    }).catch(function() {
-      /* Autoplay blocked — play on next user touch/click anywhere */
-      function retryOnce() {
-        gideonAudio.play().then(function() {
-          audioPlaying = true;
-          setupAudioAnalyzer();
-          if (audioCtx) audioCtx.resume().catch(function(){});
-          startReactiveLoop();
-        }).catch(function(){});
-        document.removeEventListener('click', retryOnce);
-        document.removeEventListener('touchstart', retryOnce);
-      }
-      document.addEventListener('click', retryOnce, { once: true });
-      document.addEventListener('touchstart', retryOnce, { once: true });
-    });
-  }
-  function unlockAndPlay() {
-    if (!AUDIO_ENABLED) {
-      if (tapGate) {
-        tapGate.classList.add('dismissed');
-        tapGate.style.display = 'none';
-      }
-      return;
-    }
-    if (audioUnlocked) return;
-    audioUnlocked = true;
-    tapGate.classList.add('dismissed');
-    setTimeout(function() {
-      tapGate.style.display = 'none';
-      tryPlayAudio();
-    }, 600);
-  }
-
-  if (tapGate) {
-    tapGate.addEventListener('click', unlockAndPlay);
-    tapGate.addEventListener('touchend', function(e) { e.preventDefault(); unlockAndPlay(); }, { passive: false });
-  }
-  /* Audio autoplay/click-to-play is disabled until the demo copy and audio are synced. */
-
-  /* ── TYPEWRITER ── */
-  async function typeText(text) {
-    for (var i = 0; i < text.length; i++) { el.textContent += text[i]; await wait(CHAR_SPEED); }
-  }
-  async function fadeOutText() {
-    el.style.transition = 'opacity 0.4s'; el.style.opacity = '0';
-    await wait(420); el.textContent = ''; el.style.opacity = '1'; el.style.transition = '';
-  }
-  async function runSpeeches() {
-    for (var i = 0; i < speeches.length; i++) {
-      var b = speeches[i];
-      startSpeakingMotion(); /* Gideon moves when talking */
-      for (var j = 0; j < b.lines.length; j++) {
-        if (j > 0) { el.textContent += '\n'; await wait(LINE_PAUSE); }
-        await typeText(b.lines[j]);
-      }
-      stopSpeakingMotion(); /* Gideon stills between blocks */
-      if (b.showCTA) {
-        await wait(CTA_DELAY); ctaEl.style.display = 'flex'; await wait(30);
-        ctaEl.classList.add('visible'); await wait(LOOP_DELAY);
-        ctaEl.classList.remove('visible'); await wait(400); ctaEl.style.display = 'none';
-        await fadeOutText();
-      } else { await wait(b.pause); await fadeOutText(); await wait(250); }
-    }
-    runSpeeches();
-  }
-
-  function showStaticHeroMessage() {
-    stopSpeakingMotion();
-    el.textContent = "When you cannot pick up, Gideon asks the right questions and sends you the name, number, reason for calling, and next step.";
-    if (ctaEl) {
-      ctaEl.style.display = 'flex';
-      ctaEl.classList.add('visible');
-    }
-  }
-
-  /* ── DEPTH PARTICLES ── */
-  function initParticles() {
-    var cv = document.getElementById('gDepthCanvas');
-    if (!cv) return;
-    var ctx = cv.getContext('2d');
-    function resize() { cv.width = cv.offsetWidth; cv.height = cv.offsetHeight; }
-    resize(); window.addEventListener('resize', resize);
-
-    var pts = [], mouseX = 0, mouseY = 0;
-    [[30, 0.12, 1.0, 0.5, 0.3], [18, 0.2, 1.3, 0.35, 0.6], [10, 0.35, 1.8, 0.25, 0.9]].forEach(function(L) {
-      for (var i = 0; i < L[0]; i++) pts.push({
-        x: Math.random()*cv.width, y: Math.random()*cv.height,
-        vy: -(L[1]+Math.random()*0.08), vx: (Math.random()-0.5)*0.12,
-        size: L[2]+Math.random()*0.4, opacity: L[3]*(0.5+Math.random()*0.5), z: L[4]
-      });
-    });
-
-    document.addEventListener('mousemove', function(e) {
-      mouseX = (e.clientX/window.innerWidth-0.5)*2;
-      mouseY = (e.clientY/window.innerHeight-0.5)*2;
-    });
-    window.addEventListener('deviceorientation', function(e) {
-      mouseX = (e.gamma||0)/30; mouseY = (e.beta||0)/30;
-    }, { passive: true });
-
-    (function draw() {
-      ctx.clearRect(0,0,cv.width,cv.height);
-      pts.forEach(function(p) {
-        ctx.beginPath();
-        ctx.arc(p.x+mouseX*p.z*15, p.y+mouseY*p.z*10, p.size, 0, Math.PI*2);
-        ctx.fillStyle = 'rgba(42,157,122,'+p.opacity+')';
-        ctx.fill();
-        p.y += p.vy; p.x += p.vx;
-        if (p.y < -8) { p.y = cv.height+8; p.x = cv.width*0.5+(Math.random()-0.5)*180; }
-        if (p.x < -8) p.x = cv.width+8;
-        if (p.x > cv.width+8) p.x = -8;
-      });
-      requestAnimationFrame(draw);
-    })();
-  }
-
-  /* ── GAZE TRACKING ── */
-  function initGaze() {
-    if (!figureEl || isMob) return;
-    var tX=0, tY=0, cX=0, cY=0;
-    document.addEventListener('mousemove', function(e) {
-      var r = figureEl.getBoundingClientRect();
-      tX = ((e.clientX-r.left-r.width/2)/window.innerWidth)*6;
-      tY = ((e.clientY-r.top-r.height/3)/window.innerHeight)*4;
-    });
-    (function track() {
-      cX += (tX-cX)*0.05; cY += (tY-cY)*0.05;
-      figureEl.style.marginLeft = cX+'px';
-      figureEl.style.marginTop = cY+'px';
-      requestAnimationFrame(track);
-    })();
-  }
-
-  /* ── FLICKER ── */
-  function initFlicker() {
-    if (!imgEl) return;
-    imgEl.style.animation = 'gBloom 3.5s ease-in-out infinite';
-    function flicker() {
-      setTimeout(function() {
-        imgEl.style.transition = 'opacity 0.04s';
-        imgEl.style.opacity = (0.55+Math.random()*0.15).toString();
-        setTimeout(function() {
-          imgEl.style.transition = 'opacity 0.12s';
-          imgEl.style.opacity = '0.92';
-          flicker();
-        }, 40+Math.random()*50);
-      }, 4000+Math.random()*8000);
-    }
-    flicker();
-  }
-
-  /* ── CHROMATIC ABERRATION ── */
-  function initChroma() {
-    if (!imgEl) return;
-    function pulse() {
-      setTimeout(function() {
-        imgEl.style.filter = 'hue-rotate(25deg) drop-shadow(-3px 0 2px rgba(255,0,80,0.35)) drop-shadow(3px 0 2px rgba(0,180,255,0.35)) drop-shadow(0 0 40px rgba(42,157,122,0.6))';
-        setTimeout(function() { imgEl.style.filter = ''; pulse(); }, 60+Math.random()*40);
-      }, 3000+Math.random()*5000);
-    }
-    pulse();
-  }
-
-  /* ── ELEMENT REFS FOR ENTRANCE ── */
-  var vaultWalls = document.getElementById('gVaultWalls');
-  var gFloor = document.getElementById('gFloor');
-  var gBeam = document.getElementById('gBeam');
-  var gBgGlow = document.getElementById('gBgGlow');
-  var gScanline = document.getElementById('gScanline');
-  var gScanline2 = document.getElementById('gScanline2');
-  var gHudFrame = document.getElementById('gHudFrame');
-  var gDivider = document.getElementById('gDivider');
-  var gRing1 = document.getElementById('gRing1');
-  var gRing2 = document.getElementById('gRing2');
-  var gRing3 = document.getElementById('gRing3');
-  var gLeft = document.getElementById('gLeft');
-
-  function fadeIn(el, dur, delay) {
-    if (!el) return;
-    el.style.transition = 'opacity ' + dur + 's ease ' + (delay||0) + 's';
-    el.style.opacity = '1';
-  }
-
-  /* ── TIME VAULT ENTRANCE — The Flash sequence ── */
-  async function entrance() {
-    if (isServiceHero) {
-      heroEl.style.opacity = '1';
-      [nameEl, subtitleEl, statusBar, gDivider].forEach(function(node) {
-        if (node) node.style.opacity = '1';
-      });
-      showStaticHeroMessage();
-      return;
-    }
-
-    if (isMob) {
-      heroEl.style.opacity = '1';
-      [nameEl, subtitleEl, statusBar, gDivider].forEach(function(node) {
-        if (node) node.style.opacity = '1';
-      });
-      if (figureEl) {
-        figureEl.style.opacity = '1';
-        figureEl.style.transform = 'scale(1) translateY(0)';
-      }
-      if (gBgGlow) gBgGlow.style.opacity = '0.5';
-      if (ctaEl) ctaEl.classList.add('visible');
-      showStaticHeroMessage();
-      return;
-    }
-
-    /* ═══ PHASE 0: Total darkness. You've stepped inside. ═══ */
-    heroEl.style.opacity = '0';
-    await wait(300);
-
-    /* ═══ PHASE 1: The vault ACTIVATES — room powers on ═══ */
-    /* Section fades from black */
-    heroEl.style.transition = 'opacity 1.8s ease';
-    heroEl.style.opacity = '1';
-    await wait(600);
-
-    /* Vault walls flicker on — the room recognizes you */
-    if (vaultWalls) {
-      vaultWalls.style.transition = 'none'; vaultWalls.style.opacity = '0';
-      await wait(50);
-      vaultWalls.style.transition = 'opacity 0.08s'; vaultWalls.style.opacity = '0.5';
-      await wait(80);
-      vaultWalls.style.opacity = '0'; await wait(60);
-      vaultWalls.style.opacity = '0.7'; await wait(50);
-      vaultWalls.style.opacity = '0.2'; await wait(70);
-      vaultWalls.style.transition = 'opacity 0.8s ease';
-      vaultWalls.style.opacity = '1';
-    }
-
-    /* Floor grid fades in */
-    if (gFloor) { fadeIn(gFloor, 1.2); }
-    await wait(400);
-
-    /* HUD frame appears */
-    if (gHudFrame) { fadeIn(gHudFrame, 0.8); }
-    await wait(300);
-
-    /* ═══ PHASE 2: PROJECTION BEAM activates from the floor ═══ */
-    if (gBeam) {
-      gBeam.style.transition = 'opacity 0.6s ease';
-      gBeam.style.opacity = '1';
-    }
-
-    /* Rings pulse on */
-    [gRing1, gRing2, gRing3].forEach(function(r, i) {
-      if (!r) return;
-      setTimeout(function() {
-        r.style.transition = 'opacity 0.5s ease';
-        r.style.opacity = '1';
-        r.style.animation = 'gRingPulse 3.5s ease-in-out infinite ' + (i * 0.5) + 's';
-      }, i * 150);
-    });
-
-    /* Background glow breathes to life */
-    if (gBgGlow) { fadeIn(gBgGlow, 1.5); }
-    await wait(500);
-
-    /* ═══ PHASE 3: Gideon materializes — hologram projects from beam ═══ */
-    if (figureEl) {
-      figureEl.style.transition = 'none';
-      figureEl.style.transform = 'scale(0.1) translateY(80px)';
-      figureEl.style.opacity = '0';
-      await wait(30);
-
-      /* SNAP — hologram bursts into partial form (fast, aggressive) */
-      figureEl.style.transition = 'opacity 0.3s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1)';
-      figureEl.style.opacity = '0.35';
-      figureEl.style.transform = 'scale(0.7) translateY(15px)';
-      await wait(200);
-
-      /* Glitch flicker */
-      figureEl.style.opacity = '0.15'; await wait(40);
-      figureEl.style.opacity = '0.5'; await wait(30);
-      figureEl.style.opacity = '0.2'; await wait(50);
-
-      /* Settle to full size — Gideon is HERE */
-      figureEl.style.transition = 'opacity 1s ease, transform 1s cubic-bezier(0.22,1,0.36,1)';
-      figureEl.style.opacity = '1';
-      figureEl.style.transform = 'scale(1) translateY(0)';
-    }
-
-    /* Scan lines activate */
-    if (gScanline) { fadeIn(gScanline, 0.5); }
-    if (gScanline2) { setTimeout(function() { fadeIn(gScanline2, 0.5); }, 300); }
-    await wait(800);
-
-    /* ═══ PHASE 4: "Gideon" types out — the AI identifies itself ═══ */
-    if (nameEl) {
-      var n = nameEl.textContent;
-      nameEl.textContent = '';
-      nameEl.style.opacity = '1';
-      for (var i = 0; i < n.length; i++) {
-        nameEl.textContent += n[i];
-        await wait(90);
-      }
-    }
-    await wait(150);
-
-    /* Subtitle + divider */
-    if (subtitleEl) { fadeIn(subtitleEl, 0.5); }
-    await wait(200);
-    if (gDivider) { gDivider.style.transition = 'opacity 0.4s ease, width 0.6s ease'; gDivider.style.opacity = '1'; }
-    await wait(200);
-
-    /* Left decorative line */
-    if (gLeft) {
-      var leftLine = gLeft.querySelector(':scope::before');
-    }
-
-    /* Status bar */
-    if (statusBar) { fadeIn(statusBar, 0.4); }
-    await wait(300);
-
-    /* ═══ PHASE 5: HUD stat cards slide in ═══ */
-    if (statOverlay) {
-      statOverlay.style.opacity = '1';
-      var cards = statOverlay.querySelectorAll('.g-stat-card');
-      for (var c = 0; c < cards.length; c++) {
-        cards[c].style.transition = 'opacity 0.5s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1)';
-        cards[c].style.opacity = '1';
-        cards[c].style.transform = 'translateX(0)';
-        await wait(180);
-      }
-    }
-
-    await wait(500);
-
-    /* ═══ PHASE 6: Static message until synced audio demo is ready ═══ */
-    showStaticHeroMessage();
-  }
-
-  /* ── GSAP MOVEMENT — Flash Gideon style: alive, breathing, reactive ── */
-  var gsapTimeline = null;
-  var isSpeakingNow = false;
-
-  function initGSAP() {
-    if (typeof gsap === 'undefined' || !figureEl) return;
-
-    /* BREATHING — constant rhythmic scale pulse like a living being */
-    gsap.to(figureEl, {
-      scaleX: 1.015, scaleY: 1.02,
-      duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1,
-      transformOrigin: '50% 40%'
-    });
-
-    /* FLOATING — slow vertical hover */
-    gsap.to(figureEl, {
-      y: -20, duration: 3.5, ease: 'sine.inOut', yoyo: true, repeat: -1
-    });
-
-    if (!isMob) {
-      /* HEAD TURN — slow side-to-side like scanning the room */
-      gsap.to(figureEl, {
-        rotationY: 8, duration: 6, ease: 'sine.inOut', yoyo: true, repeat: -1,
-        transformOrigin: '50% 30%'
-      });
-
-      /* HEAD TILT — subtle forward lean like paying attention */
-      gsap.to(figureEl, {
-        rotationX: -3, duration: 8, ease: 'sine.inOut', yoyo: true, repeat: -1
-      });
-
-      /* WEIGHT SHIFT — subtle horizontal sway */
-      gsap.to(figureEl, {
-        x: 6, duration: 5, ease: 'sine.inOut', yoyo: true, repeat: -1
-      });
-    }
-  }
-
-  /* SPEAKING ANIMATION — triggers when typewriter is active */
-  function startSpeakingMotion() {
-    if (!figureEl || typeof gsap === 'undefined' || isSpeakingNow) return;
-    isSpeakingNow = true;
-
-    /* Head nods while speaking — like Flash Gideon emphasizing points */
-    gsapTimeline = gsap.timeline({ repeat: -1, yoyo: true });
-    gsapTimeline.to(figureEl, {
-      rotationX: -5, rotationY: 3, duration: 0.8, ease: 'power1.inOut'
-    });
-    gsapTimeline.to(figureEl, {
-      rotationX: -1, rotationY: -4, duration: 1.0, ease: 'power1.inOut'
-    });
-    gsapTimeline.to(figureEl, {
-      rotationX: -4, rotationY: 1, duration: 0.7, ease: 'power1.inOut'
-    });
-
-    /* Glow intensifies when speaking */
-    if (imgEl) {
-      imgEl.style.transition = 'filter 0.3s ease';
-      imgEl.style.filter = 'hue-rotate(25deg) drop-shadow(0 0 80px rgba(42,157,122,1)) drop-shadow(0 0 160px rgba(42,157,122,0.6)) brightness(1.12)';
-    }
-
-    figureEl.classList.add('speaking');
-  }
-
-  function stopSpeakingMotion() {
-    if (!isSpeakingNow) return;
-    isSpeakingNow = false;
-    if (gsapTimeline) { gsapTimeline.kill(); gsapTimeline = null; }
-
-    /* Return to resting glow */
-    if (imgEl) {
-      imgEl.style.filter = '';
-    }
-
-    figureEl.classList.remove('speaking');
-  }
-
-  /* HOLOGRAPHIC INTERFERENCE — random aggressive displacement */
-  function initHoloInterference() {
-    if (!figureEl || !imgEl || isMob) return;
-
-    function glitch() {
-      var delay = 3000 + Math.random() * 6000;
-      setTimeout(function() {
-        /* RGB split — chromatic displacement */
-        var dx = (Math.random() > 0.5 ? 1 : -1) * (3 + Math.random() * 5);
-        imgEl.style.transition = 'none';
-        imgEl.style.filter = 'hue-rotate(25deg) drop-shadow(' + dx + 'px 0 2px rgba(255,20,80,0.5)) drop-shadow(' + (-dx) + 'px 0 2px rgba(0,180,255,0.5)) drop-shadow(0 0 40px rgba(42,157,122,0.6))';
-
-        /* Horizontal displacement */
-        figureEl.style.transition = 'none';
-        figureEl.style.marginLeft = (dx * 2) + 'px';
-
-        /* Snap back */
-        setTimeout(function() {
-          figureEl.style.transition = 'margin-left 0.15s ease';
-          figureEl.style.marginLeft = '0px';
-          imgEl.style.transition = 'filter 0.2s ease';
-          imgEl.style.filter = '';
-        }, 50 + Math.random() * 40);
-
-        /* Second micro-glitch */
-        setTimeout(function() {
-          imgEl.style.opacity = (0.4 + Math.random() * 0.3).toString();
-          setTimeout(function() { imgEl.style.opacity = '0.94'; }, 30);
-        }, 100 + Math.random() * 80);
-
-        glitch();
-      }, delay);
-    }
-    glitch();
-  }
-
-  /* ── INIT ── */
-  function init() { entrance(); initParticles(); initGaze(); initFlicker(); initGSAP(); initHoloInterference(); }
-  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+  var hero = document.querySelector('.gideon-hero.service-selling');
+  if (!hero) return;
+  hero.style.opacity = '1';
+  ['gideonName', 'gideonSubtitle', 'gStatusBar', 'gDivider'].forEach(function(id) {
+    var node = document.getElementById(id);
+    if (node) node.style.opacity = '1';
+  });
+  var cta = document.getElementById('gideonCTA');
+  if (cta) { cta.style.display = 'flex'; cta.classList.add('visible'); }
 })();
 </script>
 <script>

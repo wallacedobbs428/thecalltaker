@@ -11,8 +11,7 @@
   <meta property="og:description" content="Gideon answers missed and after-hours calls, captures job details, and sends clean summaries so service businesses can follow up faster.">
   <meta property="og:url" content="https://thecalltaker.com/ai-receptionist/">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://thecalltaker.com/og-image.png">
-  <link rel="icon" href="/favicon.ico">
+<link rel="icon" href="/favicon.ico">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html, body { overflow-x: hidden; }
@@ -333,6 +332,7 @@
     }
     .compare-col li + li { margin-top: 9px; }
     .cta-band {
+      box-sizing: border-box;
       width: 100%;
       max-width: none;
       margin-top: 20px;
@@ -341,6 +341,17 @@
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
       text-align: center;
+    }
+    .visual[data-higgsfield-container]:not(.has-approved-higgsfield) {
+      min-height: 0;
+      background: transparent;
+      border: 0;
+      overflow: visible;
+    }
+    .visual[data-higgsfield-container]:not(.has-approved-higgsfield) .visual-panel {
+      position: relative;
+      inset: auto;
+      margin: 0;
     }
     .cta-band > div {
       width: min(760px, 100%);
@@ -507,6 +518,15 @@
         bottom: 12px;
       }
     }
+    @media (max-width: 860px) {
+      section.cta-band {
+        box-sizing: border-box;
+        width: calc(100vw - 28px);
+        max-width: calc(100vw - 28px);
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
   </style>
   <script type="application/ld+json">
   {
@@ -518,7 +538,7 @@
         "name": "The Call Taker",
         "url": "https://thecalltaker.com/",
         "description": "The Call Taker provides AI call answering for service businesses.",
-        "logo": "https://thecalltaker.com/og-image.png"
+        "logo":[]
       },
       {
         "@type": "Service",
@@ -608,6 +628,7 @@
     ]
   }
   </script>
+<link rel="stylesheet" href="/higgsfield-media.css">
 </head>
 <body data-tct-view="ai_receptionist_view" data-tct-page="ai-receptionist" data-tct-learning-tag="search_intent">
   <a href="#main" class="skip">Skip to content</a>
@@ -639,8 +660,12 @@
           <li>No live routing before testing</li>
         </ul>
       </div>
-      <div class="visual" aria-label="Gideon answering business calls">
-        <img src="/assets/images/gideon-service-homepage-hero.webp" alt="Gideon answering service-business calls and sending organized caller details.">
+      <div class="visual" aria-label="Gideon answering business calls" data-higgsfield-container>
+        <div class="higgsfield-media-slot"
+             data-higgsfield-slot="ai-receptionist-hero"
+             data-capability-family="cinema_short_form"
+             data-playback="autoplay"
+             hidden></div>
         <div class="visual-panel">
           <strong>When the phone rings, the lead still gets captured.</strong>
           <p>Gideon asks approved questions, filters the need, and sends a useful summary for follow-up.</p>
@@ -792,5 +817,6 @@
     <p>The Call Taker answers missed and after-hours calls for service businesses. Built in Nashville, TN.</p>
     <p><a href="/">Home</a> · <a href="/pricing.html">Pricing</a> · <a href="/faq.html">FAQ</a> · <a href="/after-hours-answering-service/">After-Hours Answering Service</a></p>
   </footer>
+<script src="/higgsfield-media.js" defer></script>
 </body>
 </html>

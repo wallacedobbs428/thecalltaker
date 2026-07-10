@@ -6,6 +6,8 @@ on:
       - 'website/index.html'
       - 'website/shared/**'
       - 'website/tests/hero-regression.py'
+      - 'website/tests/higgsfield-visual-policy.py'
+      - 'website/assets/higgsfield/**'
       - '.github/workflows/hero-regression.yml'
   push:
     branches: [main]
@@ -13,6 +15,8 @@ on:
       - 'website/index.html'
       - 'website/shared/**'
       - 'website/tests/hero-regression.py'
+      - 'website/tests/higgsfield-visual-policy.py'
+      - 'website/assets/higgsfield/**'
       - '.github/workflows/hero-regression.yml'
 
 jobs:
@@ -23,7 +27,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run static regression test
-        run: python3 website/tests/hero-regression.py
+        run: |
+          python3 website/tests/hero-regression.py
+          python3 website/tests/higgsfield-visual-policy.py
 
       - name: Run live regression test + capture screenshots
         run: |
