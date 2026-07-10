@@ -320,12 +320,23 @@ assert.strictEqual(
   "homepage floating demo widget should not send webhook notifications from the public page"
 );
 
+assert.ok(
+  pricingHtml.includes('data-higgsfield-slot="pricing-plan-story"') &&
+    pricingHtml.includes("/higgsfield-media.js") &&
+    pricingHtml.includes("/higgsfield-media.css"),
+  "pricing should reserve the named fail-closed Higgsfield plan-story slot"
+);
+
 [
   "after-hours-capture-v3.webp",
   "247-call-coverage-v3.webp",
   "custom-call-coverage-v3.webp",
-].forEach((expected) => {
-  assert.ok(pricingHtml.includes(expected), `pricing should use the upgraded plan visual: ${expected}`);
+].forEach((legacyVisual) => {
+  assert.strictEqual(
+    pricingHtml.includes(legacyVisual),
+    false,
+    `pricing should not fall back to a non-Higgsfield plan visual: ${legacyVisual}`
+  );
 });
 
 const demoHtml = read("website/demo.html");
