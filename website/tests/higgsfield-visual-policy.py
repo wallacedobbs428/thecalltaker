@@ -97,6 +97,19 @@ def main() -> int:
         assert legacy_phone_css not in index, f"dormant fake-phone styling remains: {legacy_phone_css}"
     for legacy_tech_theater in ('ENTER THE VAULT', 'id="gHudFrame"', 'id="gDepthCanvas"', 'id="gFigure"'):
         assert legacy_tech_theater not in index, f"dormant fake technology theater remains: {legacy_tech_theater}"
+    lower_index = index.lower()
+    for legacy_tech_css in (
+        "time vault",
+        ".g-vault",
+        "hologram",
+        ".g-hud",
+        ".g-depth",
+        ".g-figure",
+        ".g-projection",
+        ".g-scanline",
+        ".g-tap-gate",
+    ):
+        assert legacy_tech_css not in lower_index, f"dormant fake-technology styling remains: {legacy_tech_css}"
 
     slots = re.findall(r'<div class="higgsfield-media-slot"(?P<attrs>.*?)></div>', index, re.S)
     assert len(slots) == 3, f"expected 3 Higgsfield slots, found {len(slots)}"
@@ -166,6 +179,7 @@ def main() -> int:
         "manifest_asset_count": len(assets),
         "fake_phone_ui_visible": False,
         "fake_phone_ui_css_present": False,
+        "legacy_tech_theater_css_present": False,
         "provider_calls": False,
     })
     return 0
