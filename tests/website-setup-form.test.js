@@ -234,6 +234,12 @@ assert.ok(
   "setup form submit should still stage receipt data and route to setup-confirmation"
 );
 
+assert.ok(
+  setupFormJs.includes("https://thecalltaker.vercel.app/api/public/lead") &&
+    !setupFormJs.includes("/.netlify/functions/public-lead"),
+  "setup form should post setup packets to the approved live Vercel intake endpoint"
+);
+
 [
   "Setup questions submitted",
   "Your setup questions were received",

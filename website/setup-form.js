@@ -73,7 +73,7 @@
     "not sure"
   ];
 
-  var SETUP_PACKET_ENDPOINT = "/.netlify/functions/public-lead";
+  var SETUP_PACKET_ENDPOINT = "https://thecalltaker.vercel.app/api/public/lead";
 
   function trim(value) {
     return String(value == null ? "" : value).trim();
