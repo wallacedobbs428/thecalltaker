@@ -188,6 +188,16 @@
       font-size: 13px;
       line-height: 1.55;
     }
+    .continuity-panel {
+      margin-top: 18px;
+      border: 1px solid rgba(45, 115, 82, 0.24);
+      border-radius: 16px;
+      background: rgba(45, 115, 82, 0.08);
+    }
+    .continuity-panel[hidden] { display: none; }
+    .continuity-panel p { color: var(--muted); font-size: 13px; }
+    .setup-button { background: #b8f5d5; color: #061610; box-shadow: none; }
+    .setup-button:hover, .setup-button:focus { background: #95e8be; }
     .fine-print {
       display: grid;
       gap: 10px;
@@ -243,7 +253,7 @@
         <div class="eyebrow">Secure Square checkout</div>
         <h1 id="handoffTitle">Checkout, then 60-second setup.</h1>
         <p class="subtitle">Checkout is handled securely through Square. After payment, you’ll answer the short setup questions we need to configure your call taker.</p>
-        <div class="plan-pill" id="planPill">$497 / Revenue Recovery System</div>
+        <div class="plan-pill" id="planPill">Loading plan</div>
 
         <ol class="steps" aria-label="What happens next">
           <li class="step">
@@ -263,10 +273,15 @@
 
       <aside class="cta-panel" aria-label="Checkout summary">
         <p class="summary-label">Selected plan</p>
-        <p class="summary-plan" id="planName">Revenue Recovery System</p>
-        <p class="summary-price" id="planPrice">$497/mo through Square checkout.</p>
-        <a class="checkout-button" id="checkoutButton" href="#plan-checkout-links" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-cta="Continue to Square Checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Continue to Square checkout</a>
-        <p class="reassurance">After payment, setup questions take about 60 seconds.</p>
+        <p class="summary-plan" id="planName">Choose your selected plan</p>
+        <p class="summary-price" id="planPrice">Plan and price appear here before Square checkout.</p>
+        <a class="checkout-button" id="checkoutButton" href="#plan-checkout-links" target="_blank" rel="noopener" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-cta="Continue to Square Checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Open Square checkout in a new tab</a>
+        <p class="reassurance">This page stays open. After payment, return here for the 60-second setup questions.</p>
+        <section class="continuity-panel" id="setupContinuity" hidden aria-live="polite" tabindex="-1">
+          <strong>Square opened in a separate tab.</strong>
+          <p>After you finish there, return here. This button does not verify or claim payment; verification remains separate.</p>
+          <a class="checkout-button setup-button" id="continueSetupButton" href="/setup.html?plan=full247" data-tct-event="setup_continuation_click" data-tct-page="precheckout" data-tct-cta="Payment complete — continue setup" data-tct-destination="setup" data-tct-learning-tag="setup_intent">Payment complete — continue setup</a>
+        </section>
         <div class="fine-print">
           <p>Card payment is handled by Square. Apple Pay, Google Pay, and Cash App Pay may be available depending on your device, browser, and Square eligibility.</p>
           <p>You do not need to change your phone system yet. We guide setup and forwarding after your setup questions are submitted.</p>
@@ -274,9 +289,9 @@
         <a class="back-link" href="/pricing.html">Back to plans</a>
         <div class="fallback-list" id="plan-checkout-links" aria-label="Plan checkout links">
           <p>If the checkout button does not update, choose your plan here:</p>
-          <a href="https://square.link/u/cSiXiuLx" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="afterhours" data-tct-cta="After-Hours Capture checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">After-Hours Capture checkout</a>
-          <a href="https://square.link/u/TQseWnAY" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="full247" data-tct-cta="Revenue Recovery System checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Revenue Recovery System checkout</a>
-          <a href="https://square.link/u/RSjzTrCn" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="custom" data-tct-cta="Operational Infrastructure checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Operational Infrastructure checkout</a>
+          <a href="https://square.link/u/cSiXiuLx" target="_blank" rel="noopener" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="afterhours" data-tct-cta="After-Hours Capture checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">After-Hours Capture checkout</a>
+          <a href="https://square.link/u/TQseWnAY" target="_blank" rel="noopener" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="full247" data-tct-cta="Revenue Recovery System checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Revenue Recovery System checkout</a>
+          <a href="https://square.link/u/RSjzTrCn" target="_blank" rel="noopener" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-plan="custom" data-tct-cta="Operational Infrastructure checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Operational Infrastructure checkout</a>
         </div>
       </aside>
     </section>
@@ -319,11 +334,19 @@
       var planKey = plans[requestedPlan] ? requestedPlan : (aliases[requestedPlan] || "full247");
       var plan = plans[planKey];
       var button = document.getElementById("checkoutButton");
+      var continuation = document.getElementById("setupContinuity");
+      var setupButton = document.getElementById("continueSetupButton");
+      var setupUrl = new URL("/setup.html", window.location.origin);
+      setupUrl.searchParams.set("plan", planKey);
+      var orderId = params.get("orderId") || params.get("order_id");
+      if (orderId && /^[A-Za-z0-9._:-]{1,160}$/.test(orderId)) setupUrl.searchParams.set("orderId", orderId);
       document.getElementById("planPill").textContent = plan.pill;
       document.getElementById("planName").textContent = plan.name;
       document.getElementById("planPrice").textContent = plan.price;
       button.href = squareLinks[planKey];
       button.setAttribute("data-tct-plan", planKey);
+      setupButton.href = setupUrl.pathname + setupUrl.search;
+      setupButton.setAttribute("data-tct-plan", planKey);
       document.body.classList.add("js-ready");
 
       var dryRunEvents = window.__tctFunnelEvents = window.__tctFunnelEvents || [];
@@ -346,6 +369,10 @@
       document.addEventListener("click", function (event) {
         var target = event.target && event.target.closest ? event.target.closest("[data-tct-event]") : null;
         if (!target) return;
+        if (target.getAttribute("data-tct-event") === "square_outbound_click") {
+          continuation.hidden = false;
+          window.setTimeout(function () { continuation.focus(); }, 0);
+        }
         var payload = buildDryRunPayload(target.getAttribute("data-tct-event"), target);
         dryRunEvents.push(payload);
         document.dispatchEvent(new CustomEvent("tct:funnel-event", { detail: payload }));

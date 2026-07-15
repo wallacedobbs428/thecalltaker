@@ -16,6 +16,9 @@
     "summary_email",
     "gideon_answer_mode",
     "business_hours",
+    "business_default_open_time",
+    "business_default_close_time",
+    "business_timezone",
     "services_offered",
     "service_area",
     "emergency_rules",
@@ -71,6 +74,16 @@
     "yes",
     "no",
     "not sure"
+  ];
+
+  var BUSINESS_TIMEZONE_OPTIONS = [
+    "America/New_York",
+    "America/Chicago",
+    "America/Denver",
+    "America/Phoenix",
+    "America/Los_Angeles",
+    "America/Anchorage",
+    "Pacific/Honolulu"
   ];
 
   var SETUP_PACKET_ENDPOINT = "https://thecalltaker.vercel.app/api/public/lead";
@@ -133,6 +146,10 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trim(value));
   }
 
+  function timeIsUsable(value) {
+    return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(trim(value));
+  }
+
   function makeSetupPacketId(payload) {
     var date = trim(payload.submitted_at).slice(0, 10) || new Date().toISOString().slice(0, 10);
     var business = trim(payload.business_name)
@@ -161,6 +178,9 @@
       summary_email: trim(data.summary_email),
       gideon_answer_mode: answerMode,
       business_hours: trim(data.business_hours),
+      business_default_open_time: trim(data.business_default_open_time),
+      business_default_close_time: trim(data.business_default_close_time),
+      business_timezone: normalizeOption(data.business_timezone, BUSINESS_TIMEZONE_OPTIONS),
       after_hours_rules: emptyToNull(data.after_hours_rules) || (answerMode ? "Answer mode: " + answerMode : ""),
       services_offered: trim(data.services_offered),
       service_area: trim(data.service_area),
@@ -217,6 +237,22 @@
     }
     if (payload.summary_email && !emailIsUsable(payload.summary_email)) {
       errors.push({ field: "summary_email", message: "Use a real email address for setup summaries." });
+    }
+    if (payload.business_default_open_time && !timeIsUsable(payload.business_default_open_time)) {
+      errors.push({ field: "business_default_open_time", message: "Use a valid default opening time." });
+    }
+    if (payload.business_default_close_time && !timeIsUsable(payload.business_default_close_time)) {
+      errors.push({ field: "business_default_close_time", message: "Use a valid default closing time." });
+    }
+    if (
+      timeIsUsable(payload.business_default_open_time) &&
+      timeIsUsable(payload.business_default_close_time) &&
+      payload.business_default_open_time === payload.business_default_close_time
+    ) {
+      errors.push({ field: "business_default_close_time", message: "Default opening and closing times must be different." });
+    }
+    if (payload.business_timezone && BUSINESS_TIMEZONE_OPTIONS.indexOf(payload.business_timezone) === -1) {
+      errors.push({ field: "business_timezone", message: "Choose a listed IANA business timezone." });
     }
     ["business_phone", "owner_cell", "transfer_number", "summary_sms_number", "setup_guide_sms_recipient"].forEach(function (field) {
       if (payload[field] && !phoneIsUsable(payload[field])) {
@@ -285,6 +321,9 @@
       "Summary destination: " + payload.summary_destination,
       "When Gideon should answer: " + payload.gideon_answer_mode,
       "Business hours: " + payload.business_hours,
+      "Default open time: " + payload.business_default_open_time,
+      "Default close time: " + payload.business_default_close_time,
+      "Business timezone: " + payload.business_timezone,
       "After-hours rules: " + payload.after_hours_rules,
       "Top call types: " + payload.services_offered,
       "Service area: " + payload.service_area,
@@ -474,6 +513,7 @@
     ANSWER_MODE_OPTIONS: ANSWER_MODE_OPTIONS,
     URGENT_ACTION_OPTIONS: URGENT_ACTION_OPTIONS,
     FORWARDING_ABILITY_OPTIONS: FORWARDING_ABILITY_OPTIONS,
+    BUSINESS_TIMEZONE_OPTIONS: BUSINESS_TIMEZONE_OPTIONS,
     buildPayloadFromObject: buildPayloadFromObject,
     buildPayloadFromForm: buildPayloadFromForm,
     buildSetupLeadPayload: buildSetupLeadPayload,

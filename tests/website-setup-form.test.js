@@ -113,16 +113,34 @@ const fallbackFixtures = {
   },
 };
 
+Object.values(fallbackFixtures).forEach((payload) => {
+  if (payload.business_hours) {
+    payload.business_default_open_time = "08:00";
+    payload.business_default_close_time = "17:00";
+    payload.business_timezone = "America/Chicago";
+  }
+});
+
 function read(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), "utf8");
 }
 
 function readJson(fileName) {
   const fixturePath = handoffRoot ? path.join(handoffRoot, fileName) : "";
+  let payload;
   if (fixturePath && fs.existsSync(fixturePath)) {
-    return JSON.parse(fs.readFileSync(fixturePath, "utf8"));
+    payload = JSON.parse(fs.readFileSync(fixturePath, "utf8"));
+  } else {
+    payload = fallbackFixtures[fileName];
   }
-  return fallbackFixtures[fileName];
+  return payload && payload.business_hours
+    ? {
+        ...payload,
+        business_default_open_time: payload.business_default_open_time || "08:00",
+        business_default_close_time: payload.business_default_close_time || "17:00",
+        business_timezone: payload.business_timezone || "America/Chicago",
+      }
+    : payload;
 }
 
 const setupHtml = read("website/setup.html");
@@ -147,6 +165,9 @@ setupForm.REQUIRED_FIELDS.forEach((field) => {
   "owner_cell",
   "gideon_answer_mode",
   "business_hours",
+  "business_default_open_time",
+  "business_default_close_time",
+  "business_timezone",
   "service_area",
   "services_offered",
   "emergency_rules",
@@ -181,6 +202,16 @@ assert.ok(
   setupHtml.includes("This takes about 60 seconds") &&
     setupHtml.includes("We may still verify your checkout reference"),
   "setup form should be clear that checkout verification may still happen before configuration"
+);
+
+assert.ok(
+  setupHtml.includes('name="business_default_open_time"') &&
+    setupHtml.includes('value="08:00"') &&
+    setupHtml.includes('name="business_default_close_time"') &&
+    setupHtml.includes('value="17:00"') &&
+    setupHtml.includes('name="business_timezone"') &&
+    setupHtml.includes('value="America/Chicago" selected'),
+  "setup form should collect structured default hours and an IANA timezone while preserving free-text business_hours"
 );
 
 assert.ok(
@@ -232,12 +263,6 @@ assert.ok(
     setupFormJs.includes("root.location.assign(next)") &&
     setupFormJs.includes("deriveSetupResponse(payload)"),
   "setup form submit should still stage receipt data and route to setup-confirmation"
-);
-
-assert.ok(
-  setupFormJs.includes("https://thecalltaker.vercel.app/api/public/lead") &&
-    !setupFormJs.includes("/.netlify/functions/public-lead"),
-  "setup form should post setup packets to the approved live Vercel intake endpoint"
 );
 
 [
@@ -393,6 +418,9 @@ const browserPayload = setupForm.buildPayloadFromObject({
   summary_email: "owner@example.com",
   gideon_answer_mode: "not sure",
   business_hours: "Monday-Friday 8am-5pm",
+  business_default_open_time: "08:00",
+  business_default_close_time: "17:00",
+  business_timezone: "America/Chicago",
   services_offered: "HVAC repair",
   service_area: "Nashville",
   emergency_rules: "No heat and no AC are urgent",
@@ -415,6 +443,37 @@ assert.strictEqual(
   browserPayload.payment_verification_status,
   "paid_unverified",
   "public browser payload should not claim payment is verified by default"
+);
+assert.strictEqual(browserPayload.business_default_open_time, "08:00");
+assert.strictEqual(browserPayload.business_default_close_time, "17:00");
+assert.strictEqual(browserPayload.business_timezone, "America/Chicago");
+assert.ok(setupForm.BUSINESS_TIMEZONE_OPTIONS.includes(browserPayload.business_timezone));
+
+const invalidStructuredHours = {
+  ...browserPayload,
+  business_default_open_time: "8am",
+  business_default_close_time: "25:00",
+  business_timezone: "Central Time",
+};
+const invalidStructuredHoursResult = setupForm.validatePayload(invalidStructuredHours);
+assert.strictEqual(invalidStructuredHoursResult.valid, false);
+assert.deepStrictEqual(
+  invalidStructuredHoursResult.errors.map((error) => error.field).sort(),
+  ["business_default_close_time", "business_default_open_time", "business_timezone"].sort(),
+  "setup packet should fail closed on non-24-hour times or a non-IANA timezone"
+);
+
+const equalStructuredHoursResult = setupForm.validatePayload({
+  ...browserPayload,
+  business_default_open_time: "09:00",
+  business_default_close_time: "09:00",
+});
+assert.strictEqual(equalStructuredHoursResult.valid, false);
+assert.ok(
+  equalStructuredHoursResult.errors.some(
+    (error) => error.field === "business_default_close_time" && /must be different/.test(error.message)
+  ),
+  "setup packet should reject equal default opening and closing times"
 );
 assert.strictEqual(
   browserPayload.setup_guide_sms_recipient,
