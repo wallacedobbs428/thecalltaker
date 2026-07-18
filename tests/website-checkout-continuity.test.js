@@ -11,9 +11,9 @@ const pages = [
   "website/pay.html",
 ];
 const squareLinks = [
-  "https://square.link/u/2Rsp3ELj",
-  "https://square.link/u/27lLm9JP",
-  "https://square.link/u/BfQxAAG4",
+  "https://square.link/u/nAgP58ki",
+  "https://square.link/u/EslC0nAq",
+  "https://square.link/u/J9Fpp46N",
 ];
 
 assert.strictEqual(new Set(squareLinks).size, 3, "each public plan must use a distinct Square checkout");

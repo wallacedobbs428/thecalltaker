@@ -35,9 +35,9 @@ const publicCheckoutPages = [
 const publicCheckoutHtml = publicCheckoutPages.map(read).join("\n");
 const publicWebsiteCodeFiles = listFiles("website").filter((file) => /\.(html|js)$/.test(file));
 const squareCheckout = {
-  afterhours: "https://square.link/u/2Rsp3ELj",
-  full247: "https://square.link/u/27lLm9JP",
-  custom: "https://square.link/u/BfQxAAG4"
+  afterhours: "https://square.link/u/nAgP58ki",
+  full247: "https://square.link/u/EslC0nAq",
+  custom: "https://square.link/u/J9Fpp46N"
 };
 const preCheckoutRoutes = {
   afterhours: "/pre-checkout.html?plan=afterhours",
@@ -357,10 +357,11 @@ assert.strictEqual(
 );
 
 assert.ok(
-  pricingHtml.includes('data-higgsfield-slot="pricing-plan-story"') &&
-    pricingHtml.includes("/higgsfield-media.js") &&
-    pricingHtml.includes("/higgsfield-media.css"),
-  "pricing should reserve the named fail-closed Higgsfield plan-story slot"
+  pricingHtml.includes('/assets/images/plan-visuals/after-hours-capture.jpg') &&
+    pricingHtml.includes('/assets/images/plan-visuals/revenue-recovery-system.jpg') &&
+    pricingHtml.includes('/assets/images/plan-visuals/operational-infrastructure.jpg') &&
+    read("website/assets/images/approved-editorial-visuals.json").includes('tct_approved_editorial_visuals.v1'),
+  "pricing should render only the hash-approved restored plan visuals"
 );
 
 [
