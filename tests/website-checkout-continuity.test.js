@@ -43,6 +43,15 @@ assert.ok(read("website/card-checkout.html").includes('id="summaryPlan"'), "chec
 assert.ok(read("website/card-checkout.html").includes('id="summaryRenewal"'), "checkout must render the renewal amount in its billing timeline");
 assert.ok(read("website/card-checkout.html").includes("No charge today · Cancel before renewal"), "checkout must keep the trial terms beside the primary action");
 assert.strictEqual(/id=["'](?:apple|google|cash|afterpay)[^"']*-button/i.test(read("website/card-checkout.html")), false, "checkout must not offer one-time wallets as recurring methods");
+assert.ok(
+  read("website/card-checkout.html").includes("location.assign('/setup.html?plan='+encodeURIComponent(key)+'&trial=started&receipt='+encodeURIComponent(result.receipt))"),
+  "successful trial enrollment must redirect to setup questions with the selected plan and receipt"
+);
+assert.ok(
+  read("website/card-checkout.html").indexOf("if(!response.ok||!result.ok)") <
+    read("website/card-checkout.html").indexOf("location.assign('/setup.html?plan='"),
+  "setup redirect must only run after the enrollment endpoint confirms success"
+);
 assert.ok(read(".github/workflows/deploy.yml").includes("checkout.html card-checkout.html signup.html"), "Pages artifact must include card checkout");
 assert.strictEqual(
   fs.readFileSync(path.join(siblingRoot, "website/checkout.html"), "utf8"),
