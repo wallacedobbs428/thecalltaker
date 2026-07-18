@@ -34,6 +34,7 @@ assert.ok(read("website/pay.html").includes(cardRoutes[0]), "legacy $97 pay entr
 assert.ok(read("website/card-checkout.html").includes("https://web.squarecdn.com/v1/square.js"), "card checkout must load Square's production SDK");
 assert.ok(read("website/card-checkout.html").includes("intent:'STORE'"), "card checkout must explicitly tokenize for card storage");
 assert.ok(read("website/card-checkout.html").includes("consentToStoreCard"), "card checkout must require stored-card consent");
+assert.ok(read(".github/workflows/deploy.yml").includes("checkout.html card-checkout.html signup.html"), "Pages artifact must include card checkout");
 assert.strictEqual(
   fs.readFileSync(path.join(siblingRoot, "website/checkout.html"), "utf8"),
   read("website/checkout.html"),
