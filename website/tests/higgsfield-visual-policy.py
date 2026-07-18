@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 from pathlib import Path
 from urllib.parse import urlparse
@@ -12,11 +13,11 @@ from urllib.parse import urlparse
 WEBSITE = Path(__file__).resolve().parents[1]
 INDEX = WEBSITE / "index.html"
 MANIFEST = WEBSITE / "assets" / "higgsfield" / "approved-assets.json"
+EDITORIAL_MANIFEST = WEBSITE / "assets" / "images" / "approved-editorial-visuals.json"
 SHARED_LOADER = WEBSITE / "higgsfield-media.js"
 PAGES_WORKFLOW = WEBSITE.parent / ".github" / "workflows" / "deploy.yml"
 BANNED_PUBLIC_ASSETS = (
     "hero-phone.jpeg",
-    "gideon-service-homepage-hero.png",
     "gideon-service-homepage-hero.webp",
     "gideon-service-mobile-hero.png",
     "gideon-service-mobile-hero.webp",
@@ -47,6 +48,20 @@ def main() -> int:
     loader = SHARED_LOADER.read_text(encoding="utf-8")
     pages_workflow = PAGES_WORKFLOW.read_text(encoding="utf-8")
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    editorial_manifest = json.loads(EDITORIAL_MANIFEST.read_text(encoding="utf-8"))
+    editorial_assets = editorial_manifest.get("assets", [])
+    editorial_sources = {asset.get("website_src") for asset in editorial_assets}
+    assert editorial_manifest.get("schema_version") == "tct_approved_editorial_visuals.v1"
+    assert editorial_manifest.get("provider_actions_performed") is False
+    assert None not in editorial_sources and len(editorial_sources) == len(editorial_assets)
+    for asset in editorial_assets:
+        source = asset["website_src"]
+        assert re.fullmatch(r"/assets/images/[a-z0-9._/-]+\.(jpg|jpeg|png|webp)", source, re.I)
+        assert re.fullmatch(r"[a-f0-9]{64}", asset.get("sha256", ""), re.I)
+        assert asset.get("qa_status", "").startswith("pass_")
+        source_file = WEBSITE / source.lstrip("/")
+        assert source_file.is_file(), f"approved editorial asset missing: {source}"
+        assert hashlib.sha256(source_file.read_bytes()).hexdigest() == asset["sha256"], f"approved editorial asset hash drift: {source}"
     assets = manifest.get("assets", [])
     asset_ids = {asset.get("asset_id") for asset in assets}
     assert None not in asset_ids, "every manifest asset needs an asset_id"
@@ -76,11 +91,12 @@ def main() -> int:
             is_brand_icon = basename.startswith("favicon") or basename == "apple-touch-icon.png"
             media_path = urlparse(media_url).path
             is_higgsfield = media_path.startswith("/assets/higgsfield/published/") and media_path in manifest_sources
-            if not is_brand_icon and not is_higgsfield:
+            is_approved_editorial = media_path in editorial_sources
+            if not is_brand_icon and not is_higgsfield and not is_approved_editorial:
                 non_higgsfield_media.append((path, media_url))
         for media_url in ASSET_REFERENCE.findall(text):
             media_path = urlparse(media_url).path
-            if not (media_path.startswith("/assets/higgsfield/published/") and media_path in manifest_sources):
+            if not (media_path.startswith("/assets/higgsfield/published/") and media_path in manifest_sources) and media_path not in editorial_sources:
                 non_higgsfield_media.append((path, media_url))
         if "og:image:width" in text or "og:image:height" in text:
             assert 'property="og:image"' in text, f"orphaned social-image dimensions remain: {path}"
@@ -147,7 +163,6 @@ def main() -> int:
         "site-social-preview",
         "ai-receptionist-hero",
         "paid-landing-hero",
-        "pricing-plan-story",
     }
     for slot_id, item in manifest_slots.items():
         asset_id = item["asset_id"]
@@ -166,12 +181,13 @@ def main() -> int:
         "index.html": {"homepage-service-hero", "callback-window-story", "one-minute-explainer"},
         "ai-receptionist/index.html": {"ai-receptionist-hero"},
         "paid.html": {"paid-landing-hero"},
-        "pricing.html": {"pricing-plan-story"},
+        "pricing.html": set(),
     }
     for page, expected_slots in expected_page_slots.items():
         text = (WEBSITE / page).read_text(encoding="utf-8")
-        assert '<script src="/higgsfield-media.js" defer></script>' in text, f"shared loader missing: {page}"
-        assert '<link rel="stylesheet" href="/higgsfield-media.css">' in text, f"shared media CSS missing: {page}"
+        if expected_slots:
+            assert '<script src="/higgsfield-media.js" defer></script>' in text, f"shared loader missing: {page}"
+            assert '<link rel="stylesheet" href="/higgsfield-media.css">' in text, f"shared media CSS missing: {page}"
         page_slots = set(re.findall(r'data-higgsfield-slot="([^"]+)"', text))
         assert page_slots == expected_slots, f"unexpected Higgsfield slots on {page}: {page_slots}"
 
@@ -187,6 +203,7 @@ def main() -> int:
         "public_html_scanned": len(public_html),
         "non_higgsfield_media_references": len(non_higgsfield_media),
         "manifest_asset_count": len(assets),
+        "approved_editorial_asset_count": len(editorial_assets),
         "fake_phone_ui_visible": False,
         "fake_phone_ui_css_present": False,
         "legacy_tech_theater_css_present": False,

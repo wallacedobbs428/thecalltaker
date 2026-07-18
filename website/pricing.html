@@ -702,7 +702,6 @@
     color: var(--text-1); background: var(--surface); border-color: var(--border);
   }
 </style>
-<link rel="stylesheet" href="/higgsfield-media.css">
 </head>
 <body class="funnel-page pricing-page" style="overflow-x:hidden" data-tct-view="pricing_view" data-tct-page="pricing" data-tct-learning-tag="pricing_view">
 <header class="header">
@@ -712,11 +711,11 @@
       <span class="logo-text">The Call<span>Taker</span></span>
     </a>
     <a href="#pricing-cards" class="header-cta" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-cta="Choose Plan" data-tct-destination="pricing_cards" data-tct-learning-tag="pricing_intent">Choose Plan</a>
-    <button class="menu-toggle" aria-label="Menu"><span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span><strong>Menu</strong></button>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="pricingMobileNav" aria-expanded="false"><span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span><strong>Menu</strong></button>
   </div>
 </header>
 
-<nav class="mobile-nav">
+<nav class="mobile-nav" id="pricingMobileNav" aria-label="Mobile navigation">
   <a href="/#features">Features</a>
   <a href="/ai-receptionist/">AI Receptionist</a>
   <a href="pricing.html">Pricing</a>
@@ -752,23 +751,19 @@
 <!-- PLAN VISUALIZATION -->
 <section class="funnel-transition" aria-label="Plan visualizations">
   <div class="plan-switcher reveal" aria-label="Switch pricing plan visual">
-    <button class="plan-switch-option is-active" type="button" data-plan-visual="afterhours">$97 <span>After-Hours Capture</span></button>
-    <button class="plan-switch-option" type="button" data-plan-visual="full247">$497 <span>Revenue Recovery System</span></button>
-    <button class="plan-switch-option" type="button" data-plan-visual="custom">$997+ <span>Operational Infrastructure</span></button>
+    <button class="plan-switch-option is-active" type="button" data-plan-visual="afterhours" aria-pressed="true">$97 <span>After-Hours Capture</span></button>
+    <button class="plan-switch-option" type="button" data-plan-visual="full247" aria-pressed="false">$497 <span>Revenue Recovery System</span></button>
+    <button class="plan-switch-option" type="button" data-plan-visual="custom" aria-pressed="false">$997+ <span>Operational Infrastructure</span></button>
   </div>
-  <div class="plan-visual plan-visual-featured reveal" id="pricingPlanVisual" data-higgsfield-container>
-    <div class="plan-visual-media higgsfield-media-slot"
-         data-higgsfield-slot="pricing-plan-story"
-         data-capability-family="cinema_short_form"
-         data-playback="autoplay"
-         hidden></div>
+  <div class="plan-visual plan-visual-featured reveal" id="pricingPlanVisual" aria-live="polite">
+    <img class="plan-visual-media" id="pricingPlanImage" src="/assets/images/plan-visuals/after-hours-capture.jpg" alt="An after-hours service desk ready to capture calls while the team is away" width="1024" height="1024" decoding="async">
     <div class="plan-visual-content">
       <div class="plan-visual-tag" id="pricingPlanTag">$97 / After-Hours Capture</div>
       <h3 id="pricingPlanHeadline">Closed-hours calls stop dying in voicemail.</h3>
       <p id="pricingPlanCopy">Built for the owner who needs nights, weekends, and urgent calls captured while the team is offline.</p>
     </div>
   </div>
-  <p class="higgsfield-note">Illustrative operational visuals, not dashboards or customer results. Your 60-second setup answers give us the basics before Gideon is treated as live for your business.</p>
+  <p class="higgsfield-note">Illustrative plan visuals, not dashboards or customer results. Select a plan above to see the kind of call operation it supports.</p>
 </section>
 
 <!-- PRICING CARDS -->
@@ -791,7 +786,7 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Simple appointment request capture</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Best for closed-hours coverage only</div>
         </div>
-        <a href="/pre-checkout.html?plan=afterhours&source=pricing" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-plan="afterhours" data-tct-cta="Continue to Square Checkout" data-tct-destination="precheckout" data-tct-source="pricing" data-tct-learning-tag="plan_interest">Continue to Checkout</a>
+        <a href="/pre-checkout.html?plan=afterhours&source=pricing" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-plan="afterhours" data-tct-cta="Start Free Trial" data-tct-destination="precheckout" data-tct-source="pricing" data-tct-learning-tag="plan_interest">Start Free Trial</a>
         <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">Pay through secure Square checkout. After payment, answer the 60-second setup questions so we can capture your business name, answer mode, hours, service area, call types, urgent rules, summary destination, urgent action, forwarding ability, and hard limits. <a href="/setup.html?plan=afterhours" style="color: var(--green); font-weight: 700;" data-tct-event="setup_view" data-tct-page="pricing" data-tct-plan="afterhours" data-tct-cta="Open setup questions after payment" data-tct-destination="setup" data-tct-learning-tag="setup_intent">Open setup questions after payment</a>.</div>
       </div>
 
@@ -812,7 +807,7 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Hot-lead team notifications</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Monthly call summary report</div>
         </div>
-        <a href="/pre-checkout.html?plan=full247&source=pricing" class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: auto;" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-plan="full247" data-tct-cta="Continue to Square Checkout" data-tct-destination="precheckout" data-tct-source="pricing" data-tct-learning-tag="plan_interest">Continue to Checkout</a>
+        <a href="/pre-checkout.html?plan=full247&source=pricing" class="btn btn-green btn-lg" style="width: 100%; justify-content: center; margin-top: auto;" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-plan="full247" data-tct-cta="Start Free Trial" data-tct-destination="precheckout" data-tct-source="pricing" data-tct-learning-tag="plan_interest">Start Free Trial</a>
         <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">Pay through secure Square checkout. After payment, answer the 60-second setup questions so we can capture your business name, answer mode, hours, service area, call types, urgent rules, summary destination, urgent action, forwarding ability, and hard limits. <a href="/setup.html?plan=full247" style="color: var(--green); font-weight: 700;" data-tct-event="setup_view" data-tct-page="pricing" data-tct-plan="full247" data-tct-cta="Open setup questions after payment" data-tct-destination="setup" data-tct-learning-tag="setup_intent">Open setup questions after payment</a>.</div>
       </div>
 
@@ -835,7 +830,7 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Quarterly optimization review</div>
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Founder/operator review</div>
         </div>
-        <a href="/pre-checkout.html?plan=custom&source=pricing" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-plan="custom" data-tct-cta="Continue to Square Checkout" data-tct-destination="precheckout" data-tct-source="pricing" data-tct-learning-tag="plan_interest">Continue to Checkout</a>
+        <a href="/pre-checkout.html?plan=custom&source=pricing" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-plan="custom" data-tct-cta="Start Free Trial" data-tct-destination="precheckout" data-tct-source="pricing" data-tct-learning-tag="plan_interest">Start Free Trial</a>
         <a href="tel:+16292699697" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: 10px;" data-tct-event="demo_call_tap" data-tct-page="pricing" data-tct-plan="custom" data-tct-cta="Talk Through Custom Fit" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Talk Through Custom Fit</a>
         <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">Pay through secure Square checkout. After payment, answer the 60-second setup questions. For $997+ custom builds, Wallace may add manual review before the internal build so the custom scope is clear. <a href="/setup.html?plan=custom" style="color: var(--green); font-weight: 700;" data-tct-event="setup_view" data-tct-page="pricing" data-tct-plan="custom" data-tct-cta="Open setup questions after payment" data-tct-destination="setup" data-tct-learning-tag="setup_intent">Open setup questions after payment</a>.</div>
       </div>
@@ -1003,7 +998,7 @@
 <!-- MOBILE BAR -->
 <div class="sticky-mobile-bar">
   <a href="#pricing-cards">Compare Plans</a>
-  <a href="/pre-checkout.html?plan=full247&source=pricing-sticky" style="border-left:1px solid var(--border);" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-plan="full247" data-tct-cta="Continue to Square Checkout" data-tct-destination="precheckout" data-tct-source="pricing-sticky" data-tct-learning-tag="plan_interest">Checkout</a>
+  <a href="/pre-checkout.html?plan=full247&source=pricing-sticky" style="border-left:1px solid var(--border);" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-plan="full247" data-tct-cta="Start Free Trial" data-tct-destination="precheckout" data-tct-source="pricing-sticky" data-tct-learning-tag="plan_interest">Start Free Trial</a>
 </div>
 
 <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
@@ -1013,32 +1008,6 @@
 
 <script src="script.js"></script>
 <script src="/tct-funnel-events.js" defer></script>
-<script>
-(function () {
-  var menuToggle = document.querySelector('.pricing-page .menu-toggle');
-  var mobileNav = document.querySelector('.pricing-page .mobile-nav');
-  if (!menuToggle || !mobileNav) return;
-
-  function setOpen(open) {
-    menuToggle.classList.toggle('open', open);
-    mobileNav.classList.toggle('open', open);
-    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  }
-
-  menuToggle.setAttribute('aria-expanded', 'false');
-  menuToggle.addEventListener('click', function () {
-    setOpen(!mobileNav.classList.contains('open'));
-  });
-
-  mobileNav.querySelectorAll('a').forEach(function (link) {
-    link.addEventListener('click', function () { setOpen(false); });
-  });
-
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') setOpen(false);
-  });
-})();
-</script>
 <script>
 (function () {
   document.querySelectorAll('.pricing-card .btn, .header-cta, .sticky-mobile-bar a').forEach(function (button) {
@@ -1060,26 +1029,33 @@
 	    afterhours: {
 	      tag: '$97 / After-Hours Capture',
 	      headline: 'Closed-hours calls stop dying in voicemail.',
-	      copy: 'Built for the owner who needs nights, weekends, and urgent calls captured while the team is offline.'
+	      copy: 'Built for the owner who needs nights, weekends, and urgent calls captured while the team is offline.',
+	      image: '/assets/images/plan-visuals/after-hours-capture.jpg',
+	      alt: 'An after-hours service desk ready to capture calls while the team is away'
 	    },
 	    full247: {
 	      tag: '$497 / Revenue Recovery System',
 	      headline: 'Leads get organized before they go cold.',
-	      copy: 'For 24/7 and overflow call answering, fast follow-up support, and cleaner handoff to the people who close work.'
+	      copy: 'For 24/7 and overflow call answering, fast follow-up support, and cleaner handoff to the people who close work.',
+	      image: '/assets/images/plan-visuals/revenue-recovery-system.jpg',
+	      alt: 'A service-business desk receiving and organizing an incoming call'
 	    },
 	    custom: {
 	      tag: '$997+ / Operational Infrastructure',
 	      headline: 'Your call flow matches how your business works.',
-      copy: 'For businesses that need custom call questions, approved handoffs, owner notifications, and reviewed setup before launch.'
+      copy: 'For businesses that need custom call questions, approved handoffs, owner notifications, and reviewed setup before launch.',
+      image: '/assets/images/plan-visuals/operational-infrastructure.jpg',
+      alt: 'An operator working through a structured service-business call process'
     }
   };
 
   var tag = document.getElementById('pricingPlanTag');
   var headline = document.getElementById('pricingPlanHeadline');
   var copy = document.getElementById('pricingPlanCopy');
+  var image = document.getElementById('pricingPlanImage');
   var buttons = document.querySelectorAll('.plan-switch-option');
 
-  if (!tag || !headline || !copy || !buttons.length) return;
+  if (!tag || !headline || !copy || !image || !buttons.length) return;
 
   buttons.forEach(function (button) {
     button.addEventListener('click', function () {
@@ -1088,12 +1064,18 @@
 
       buttons.forEach(function (other) {
         other.classList.remove('is-active');
+        other.setAttribute('aria-pressed', 'false');
       });
 
       button.classList.add('is-active');
+      button.setAttribute('aria-pressed', 'true');
       tag.textContent = plan.tag;
       headline.textContent = plan.headline;
       copy.textContent = plan.copy;
+      image.style.opacity = '0.2';
+      image.src = plan.image;
+      image.alt = plan.alt;
+      window.setTimeout(function () { image.style.opacity = '0.82'; }, 80);
     });
   });
 })();
@@ -1129,6 +1111,5 @@
 })();
 </script>
 
-<script src="/higgsfield-media.js" defer></script>
 </body>
 </html>

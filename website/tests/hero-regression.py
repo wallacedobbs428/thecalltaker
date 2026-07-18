@@ -76,7 +76,8 @@ def run_static():
         fail(".no-break-word class missing or lacks white-space: nowrap")
 
     # 6. HTML: secondary hero heading keeps its protected multi-word phrase
-    secondary_heading = re.search(r'<h2\b[^>]*>(.*?)</h2>', src, re.DOTALL)
+    secondary_section = re.search(r'<section\s+class="hero hero-secondary[^>]*>(.*?)</section>', src, re.DOTALL)
+    secondary_heading = re.search(r'<h2\b[^>]*>(.*?)</h2>', secondary_section.group(1), re.DOTALL) if secondary_section else None
     if secondary_heading and re.search(
         r'<span\s+class="no-break-word">[^<]+</span>',
         secondary_heading.group(1),

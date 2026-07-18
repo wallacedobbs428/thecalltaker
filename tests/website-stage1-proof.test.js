@@ -6,9 +6,9 @@ const root = path.join(__dirname, "..");
 const smsHref = "sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service";
 const demoTel = "tel:+16292699697";
 const squareLinks = [
-  "https://square.link/u/2Rsp3ELj",
-  "https://square.link/u/27lLm9JP",
-  "https://square.link/u/BfQxAAG4",
+  "https://square.link/u/nAgP58ki",
+  "https://square.link/u/EslC0nAq",
+  "https://square.link/u/J9Fpp46N",
 ];
 
 function read(relativePath) {
@@ -232,7 +232,7 @@ squareLinks.forEach((link) => {
 [
   "Checkout, then 60-second setup.",
   "A card is required for the 14-day trial.",
-  "Open Square checkout in a new tab",
+  "Start Free Trial in Square",
   "This button does not verify or claim payment",
 ].forEach((marker) => {
   assert.ok(pages["website/pre-checkout.html"].includes(marker), `pre-checkout should include trust marker: ${marker}`);
