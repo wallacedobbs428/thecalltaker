@@ -35,9 +35,9 @@ const publicCheckoutPages = [
 const publicCheckoutHtml = publicCheckoutPages.map(read).join("\n");
 const publicWebsiteCodeFiles = listFiles("website").filter((file) => /\.(html|js)$/.test(file));
 const squareCheckout = {
-  afterhours: "https://square.link/u/cSiXiuLx",
-  full247: "https://square.link/u/TQseWnAY",
-  custom: "https://square.link/u/RSjzTrCn"
+  afterhours: "https://square.link/u/ONo7eqGt",
+  full247: "https://square.link/u/oPAJSalQ",
+  custom: "https://square.link/u/0L3Z4auQ"
 };
 const preCheckoutRoutes = {
   afterhours: "/pre-checkout.html?plan=afterhours",

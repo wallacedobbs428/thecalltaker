@@ -11,10 +11,14 @@ const pages = [
   "website/pay.html",
 ];
 const squareLinks = [
-  "https://square.link/u/cSiXiuLx",
-  "https://square.link/u/TQseWnAY",
-  "https://square.link/u/RSjzTrCn",
+  "https://square.link/u/ONo7eqGt",
+  "https://square.link/u/oPAJSalQ",
+  "https://square.link/u/0L3Z4auQ",
 ];
+
+assert.strictEqual(new Set(squareLinks).size, 3, "each public plan must use a distinct Square checkout");
+assert.notStrictEqual(squareLinks[0], squareLinks[1], "$97 must never collapse into the $497 checkout");
+assert.notStrictEqual(squareLinks[2], squareLinks[1], "$997+ must never collapse into the $497 checkout");
 
 pages.forEach((page) => {
   const html = read(page);
@@ -46,9 +50,9 @@ assert.strictEqual(
   "split marketing-site pay source must match the deploy source",
 );
 
-const authoritativePath = path.join(siblingRoot, "ctos/product/square-links.json");
+const authoritativePath = path.join(root, "ctos/product/square-links.json");
 const authoritative = JSON.parse(fs.readFileSync(authoritativePath, "utf8"));
 assert.ok(authoritative.links.every((row) => row.checkout_redirect_url === null), "test must remain bound to the no-provider-redirect defect");
-assert.deepStrictEqual(authoritative.links.map((row) => row.url), squareLinks, "source links must match authoritative Square state exactly");
+assert.deepStrictEqual(authoritative.links.map((row) => row.url), squareLinks, "source links must match the provider-verified Square URLs exactly");
 
 console.log("website checkout continuity tests passed");
