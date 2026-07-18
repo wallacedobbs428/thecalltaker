@@ -35,9 +35,9 @@ const publicCheckoutPages = [
 const publicCheckoutHtml = publicCheckoutPages.map(read).join("\n");
 const publicWebsiteCodeFiles = listFiles("website").filter((file) => /\.(html|js)$/.test(file));
 const squareCheckout = {
-  afterhours: "https://square.link/u/cSiXiuLx",
-  full247: "https://square.link/u/TQseWnAY",
-  custom: "https://square.link/u/RSjzTrCn"
+  afterhours: "https://square.link/u/ONo7eqGt",
+  full247: "https://square.link/u/oPAJSalQ",
+  custom: "https://square.link/u/0L3Z4auQ"
 };
 const preCheckoutRoutes = {
   afterhours: "/pre-checkout.html?plan=afterhours",
@@ -80,6 +80,7 @@ assert.strictEqual(
 
 const checkoutHtml = read("website/checkout.html");
 const preCheckoutHtml = read("website/pre-checkout.html");
+const preCheckoutStaticHtml = preCheckoutHtml.split("<script>", 1)[0];
 const intakeHtml = read("website/onboarding/intake.html");
 const customerBuyerPathPages = [
   "website/index.html",
@@ -158,15 +159,15 @@ const customerBuyerPathPages = [
   ["website/pricing.html", "the internal build can start"],
   ["website/pre-checkout.html", "Checkout, then 60-second setup."],
   ["website/pre-checkout.html", "After payment, you’ll answer the short setup questions"],
-  ["website/pre-checkout.html", "After payment, setup questions take about 60 seconds"],
+  ["website/pre-checkout.html", "After payment, return here for the 60-second setup questions"],
   ["website/faq.html", "After payment, answer the 60-second setup questions"],
   ["website/faq.html", "What happens after I pay?"],
   ["website/faq.html", "If Square does not automatically send you back"],
   ["website/faq.html", "Do not change your phone system during checkout"],
   ["website/checkout.html", "After payment, answer the 60-second setup questions"],
-  ["website/checkout.html", "I already paid"],
+  ["website/checkout.html", "Payment complete — continue setup"],
   ["website/pay.html", "After payment, answer the 60-second setup questions"],
-  ["website/pay.html", "I already paid"],
+  ["website/pay.html", "Payment complete — continue setup"],
 ].forEach(([page, expected]) => {
   assert.ok(read(page).includes(expected), `${page} should explain the payment-to-setup path: ${expected}`);
 });
@@ -180,6 +181,13 @@ assert.strictEqual(
 assert.ok(
   checkoutHtml.includes(squareCheckout.afterhours),
   "legacy checkout redirect should use the configured Square checkout URL for the public $97 path"
+);
+
+assert.ok(
+  preCheckoutStaticHtml.includes('<div class="plan-pill" id="planPill">Loading plan</div>') &&
+    preCheckoutStaticHtml.includes('<p class="summary-plan" id="planName">Choose your selected plan</p>') &&
+    preCheckoutStaticHtml.includes("Plan and price appear here before Square checkout."),
+  "pre-checkout static fallback must not falsely preselect the $497 plan before query-aware JavaScript runs"
 );
 
 [
@@ -221,9 +229,12 @@ assert.strictEqual(
 );
 
 assert.ok(
-  checkoutHtml.includes("window.location.replace") &&
-    checkoutHtml.includes("Taking you to Square checkout"),
-  "legacy checkout should redirect immediately instead of showing an intermediate checkout page"
+  !checkoutHtml.includes("window.location.replace") &&
+    checkoutHtml.includes('target="_blank"') &&
+    checkoutHtml.includes('rel="noopener"') &&
+    checkoutHtml.includes("Payment complete — continue setup") &&
+    checkoutHtml.includes('params.get("orderId")'),
+  "legacy checkout should preserve a separate-tab Square handoff and plan-bound setup continuity"
 );
 
 [

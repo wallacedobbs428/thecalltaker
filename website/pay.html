@@ -4,16 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<meta http-equiv="refresh" content="0; url=https://square.link/u/cSiXiuLx">
-<title>The Call Taker - Secure Checkout</title>
-<link rel="manifest" href="site.webmanifest">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<script>window.location.replace('https://square.link/u/cSiXiuLx');</script>
+<title>The Call Taker - After-Hours Capture Checkout</title>
+<style>
+  body { max-width: 680px; margin: 0 auto; padding: 48px 22px; color: #111815; background: #f6f3eb; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+  main { padding: 32px; border-radius: 20px; background: #fffdfa; }
+  a.button { display: block; margin: 16px 0; padding: 15px 18px; border-radius: 12px; text-align: center; color: #fff; background: #2d7352; text-decoration: none; font-weight: 900; }
+  #setupContinuity[hidden] { display: none; }
+  #setupContinuity { margin-top: 20px; padding: 16px; border-radius: 14px; background: #e5f7ed; }
+  #setupContinuity .button { color: #061610; background: #b8f5d5; }
+</style>
 </head>
 <body>
-<p>Taking you to the $97 After-Hours Capture checkout. After payment, answer the 60-second setup questions at <a href="https://thecalltaker.com/setup.html?plan=afterhours">thecalltaker.com/setup.html</a> so we can configure your call taker. If Square does not automatically send you back, use the setup questions link below. You can also <a href="https://square.link/u/cSiXiuLx">continue to Square</a>.</p>
-<p><a href="https://thecalltaker.com/setup.html?plan=afterhours">I already paid &mdash; start setup questions</a></p>
+<main>
+  <h1>After-Hours Capture checkout</h1>
+  <p>Square opens in a separate tab so this page stays available for setup afterward.</p>
+  <a class="button" id="squareCheckoutButton" href="https://square.link/u/ONo7eqGt" target="_blank" rel="noopener">Open secure $97 Square checkout</a>
+  <section id="setupContinuity" hidden aria-live="polite">
+    <strong>Square opened in a separate tab.</strong>
+    <p>After payment, answer the 60-second setup questions. This button does not verify or claim payment.</p>
+    <a class="button" id="continueSetupButton" href="/setup.html?plan=afterhours">Payment complete — continue setup</a>
+  </section>
+  <a href="/pricing.html">Back to plans</a>
+</main>
+<script>
+  (function () {
+    var params = new URLSearchParams(window.location.search || "");
+    var setupUrl = new URL("/setup.html", window.location.origin);
+    setupUrl.searchParams.set("plan", "afterhours");
+    var orderId = params.get("orderId") || params.get("order_id");
+    if (orderId && /^[A-Za-z0-9._:-]{1,160}$/.test(orderId)) setupUrl.searchParams.set("orderId", orderId);
+    document.getElementById("continueSetupButton").href = setupUrl.pathname + setupUrl.search;
+    document.getElementById("squareCheckoutButton").addEventListener("click", function () {
+      document.getElementById("setupContinuity").hidden = false;
+    });
+  })();
+</script>
 </body>
 </html>
