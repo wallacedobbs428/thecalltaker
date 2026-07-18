@@ -39,6 +39,10 @@ for (const brand of ["Visa", "Mastercard", "American Express", "Discover", "JCB"
   assert.ok(read("website/card-checkout.html").includes(`<span>${brand}</span>`), `card checkout must display ${brand}`);
 }
 assert.ok(read("website/card-checkout.html").includes("enabled for one-time purchases"), "wallet availability must be explained without implying recurring support");
+assert.ok(read("website/card-checkout.html").includes('id="summaryPlan"'), "checkout must render a selected-plan summary");
+assert.ok(read("website/card-checkout.html").includes('id="summaryRenewal"'), "checkout must render the renewal amount in its billing timeline");
+assert.ok(read("website/card-checkout.html").includes("No charge today · Cancel before renewal"), "checkout must keep the trial terms beside the primary action");
+assert.strictEqual(/id=["'](?:apple|google|cash|afterpay)[^"']*-button/i.test(read("website/card-checkout.html")), false, "checkout must not offer one-time wallets as recurring methods");
 assert.ok(read(".github/workflows/deploy.yml").includes("checkout.html card-checkout.html signup.html"), "Pages artifact must include card checkout");
 assert.strictEqual(
   fs.readFileSync(path.join(siblingRoot, "website/checkout.html"), "utf8"),

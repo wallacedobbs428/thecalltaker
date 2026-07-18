@@ -4,60 +4,171 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,follow">
+  <meta name="theme-color" content="#eef0e8">
   <title>Start your free trial — The Call Taker</title>
   <meta name="description" content="Securely add a card through Square and start The Call Taker's 14-day free trial.">
   <script src="https://web.squarecdn.com/v1/square.js"></script>
   <style>
-    *{box-sizing:border-box} :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#102019;background:#f4f1e9;--green:#246b4a;--line:rgba(16,32,25,.14);--muted:#5a6861} body{margin:0;min-height:100vh;background:radial-gradient(circle at 12% 0,rgba(36,107,74,.13),transparent 30%),#f4f1e9}.shell{width:min(100%,720px);margin:auto;padding:28px 18px 54px}.brand{display:inline-flex;margin-bottom:24px;color:#102019;font-weight:900;text-decoration:none}.card{padding:clamp(22px,5vw,46px);border:1px solid var(--line);border-radius:24px;background:#fffdfa;box-shadow:0 24px 70px rgba(20,30,26,.12)}.eyebrow{color:var(--green);font-size:12px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}h1{margin:10px 0 12px;font-size:clamp(34px,7vw,54px);line-height:1;letter-spacing:-.04em}.terms{margin:0 0 26px;color:var(--muted);line-height:1.6}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}label{font-size:13px;font-weight:800}input{width:100%;min-height:48px;padding:12px 13px;border:1px solid var(--line);border-radius:11px;background:#fff;font:inherit}input:focus{outline:3px solid rgba(36,107,74,.16);border-color:var(--green)}#square-card{min-height:90px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}.accepted{grid-column:1/-1;display:grid;gap:9px}.accepted-label{color:var(--muted);font-size:12px;font-weight:800}.accepted-list{display:flex;flex-wrap:wrap;gap:7px}.accepted-list span{padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#f8f7f2;color:#26362f;font-size:11px;font-weight:900}.consent{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;margin:18px 0;color:var(--muted);font-size:13px;line-height:1.5}.consent input{width:18px;min-height:18px;margin-top:2px}.submit{width:100%;min-height:54px;border:0;border-radius:13px;background:var(--green);color:#fff;font:inherit;font-weight:900;cursor:pointer}.submit:disabled{cursor:wait;opacity:.65}.status{min-height:24px;margin:14px 0 0;color:#8a2d22;font-size:13px;font-weight:700}.trust{display:grid;gap:8px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.5}.back{display:inline-flex;margin-top:20px;color:var(--green);font-weight:800;text-decoration:none}.honeypot{position:absolute!important;left:-10000px!important}@media(max-width:580px){.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{border-radius:18px}.shell{padding:18px 12px 40px}}
+    *{box-sizing:border-box}
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#102019;background:#eef0e8;--ink:#102019;--green:#216f4d;--green-dark:#17583c;--green-soft:#e8f1eb;--paper:#fffdf9;--line:#d7dcd6;--muted:#5c6962;--shadow:0 28px 80px rgba(28,43,35,.12)}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at 10% 4%,rgba(55,126,89,.13),transparent 28%),radial-gradient(circle at 95% 94%,rgba(191,159,92,.10),transparent 27%),#f4f2eb;color:var(--ink)}
+    button,input{font:inherit}
+    a{color:inherit}
+    .topbar{width:min(100% - 36px,1080px);min-height:82px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{font-size:18px;font-weight:950;letter-spacing:-.025em;text-decoration:none}
+    .secure-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid rgba(33,111,77,.18);border-radius:999px;background:rgba(255,255,255,.55);color:var(--green-dark);font-size:12px;font-weight:850}
+    .secure-chip svg{width:14px;height:14px}
+    .layout{width:min(100% - 36px,1080px);margin:8px auto 64px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.75fr);gap:22px;align-items:start}
+    .panel{border:1px solid rgba(16,32,25,.12);border-radius:26px;background:var(--paper);box-shadow:var(--shadow)}
+    .checkout{padding:clamp(26px,4vw,48px)}
+    .eyebrow{display:flex;align-items:center;gap:8px;margin:0 0 13px;color:var(--green);font-size:11px;font-weight:950;letter-spacing:.12em;text-transform:uppercase}
+    .eyebrow:before{content:"";width:22px;height:2px;border-radius:2px;background:var(--green)}
+    h1{max-width:620px;margin:0;font-size:clamp(38px,5.6vw,62px);line-height:.98;letter-spacing:-.055em}
+    .intro{max-width:620px;margin:16px 0 26px;color:var(--muted);font-size:16px;line-height:1.6}
+    .steps{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 28px}
+    .step{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:12px;font-weight:800}
+    .step b{display:grid;width:23px;height:23px;place-items:center;border-radius:50%;background:#edf0ec;color:var(--muted);font-size:10px}
+    .step.done{border-color:rgba(33,111,77,.18);background:var(--green-soft);color:var(--green-dark)}
+    .step.done b{background:var(--green);color:white}
+    .section-label{display:flex;align-items:center;gap:10px;margin:0 0 15px;font-size:14px;font-weight:950}
+    .section-label span{display:grid;width:25px;height:25px;place-items:center;border-radius:8px;background:#edf0ec;color:var(--green-dark);font-size:11px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+    .field{display:grid;gap:7px}.field.full{grid-column:1/-1}
+    label{font-size:12px;font-weight:850}
+    input:not([type=checkbox]){width:100%;min-height:50px;padding:12px 14px;border:1px solid #ccd3cd;border-radius:11px;background:#fff;color:var(--ink);transition:border-color .16s,box-shadow .16s}
+    input:not([type=checkbox]):focus{outline:0;border-color:var(--green);box-shadow:0 0 0 4px rgba(33,111,77,.12)}
+    input::placeholder{color:#89928d}
+    .payment-block{margin-top:27px;padding-top:25px;border-top:1px solid #e2e5e1}
+    #square-card{min-height:94px;padding:11px;border:1px solid #ccd3cd;border-radius:13px;background:#fff;box-shadow:inset 0 1px 0 rgba(16,32,25,.02)}
+    .accepted{display:grid;gap:9px;margin-top:11px}
+    .accepted-label{color:var(--muted);font-size:11px;font-weight:800}
+    .accepted-list{display:flex;flex-wrap:wrap;gap:6px}
+    .accepted-list span{padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#f8f8f4;color:#314039;font-size:10px;font-weight:900}
+    .consent{display:grid;grid-template-columns:20px 1fr;gap:11px;align-items:start;margin:22px 0 16px;padding:15px;border:1px solid var(--line);border-radius:12px;background:#faf9f5;color:#4f5e56;font-size:12px;line-height:1.5;cursor:pointer}
+    .consent input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--green)}
+    .submit{display:flex;width:100%;min-height:56px;align-items:center;justify-content:center;gap:9px;border:0;border-radius:13px;background:var(--green);color:white;font-weight:950;box-shadow:0 10px 24px rgba(33,111,77,.20);cursor:pointer;transition:transform .16s,background .16s,box-shadow .16s}
+    .submit:hover:not(:disabled){transform:translateY(-1px);background:var(--green-dark);box-shadow:0 14px 30px rgba(33,111,77,.24)}
+    .submit:focus-visible{outline:3px solid rgba(33,111,77,.28);outline-offset:3px}
+    .submit:disabled{cursor:wait;opacity:.68;box-shadow:none}
+    .submit svg{width:16px;height:16px}
+    .microcopy{margin:10px 0 0;text-align:center;color:var(--muted);font-size:11px}
+    .status{display:none;margin:14px 0 0;padding:11px 12px;border-radius:10px;background:#fff0ed;color:#8a2d22;font-size:12px;font-weight:800;line-height:1.45}
+    .status:not(:empty){display:block}
+    .summary{position:sticky;top:18px;overflow:hidden}
+    .summary-head{padding:25px 25px 22px;background:linear-gradient(145deg,#173c2d,#215f43);color:white}
+    .summary-kicker{margin:0 0 9px;color:rgba(255,255,255,.66);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+    .summary-plan{margin:0;font-size:22px;line-height:1.15;letter-spacing:-.025em}
+    .trial-pill{display:inline-flex;margin-top:14px;padding:7px 9px;border:1px solid rgba(255,255,255,.20);border-radius:999px;background:rgba(255,255,255,.10);font-size:11px;font-weight:850}
+    .summary-body{padding:25px}
+    .price-now{display:flex;align-items:end;justify-content:space-between;gap:16px;padding-bottom:19px;border-bottom:1px solid var(--line)}
+    .price-now span{color:var(--muted);font-size:12px;font-weight:800}.price-now strong{font-size:27px;letter-spacing:-.04em}
+    .timeline{display:grid;gap:17px;margin:22px 0}
+    .timeline-row{display:grid;grid-template-columns:13px 1fr;gap:11px;position:relative}
+    .timeline-row:not(:last-child):after{content:"";position:absolute;left:5px;top:15px;width:1px;height:28px;background:#ccd6cf}
+    .timeline-dot{width:11px;height:11px;margin-top:3px;border:3px solid #c8d7ce;border-radius:50%;background:white}
+    .timeline-row:first-child .timeline-dot{border-color:var(--green);background:var(--green)}
+    .timeline-row b{display:block;margin-bottom:3px;font-size:12px}.timeline-row p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}
+    .trust-list{display:grid;gap:11px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .trust-row{display:grid;grid-template-columns:20px 1fr;gap:9px;align-items:start;color:#44534b;font-size:11px;line-height:1.5}
+    .trust-row svg{width:16px;height:16px;color:var(--green)}
+    .wallet-note{margin:17px 0 0;color:var(--muted);font-size:10px;line-height:1.5}
+    .back{display:inline-flex;align-items:center;gap:7px;margin-top:18px;color:var(--green-dark);font-size:12px;font-weight:900;text-decoration:none}
+    .back:hover{text-decoration:underline}
+    .honeypot{position:absolute!important;left:-10000px!important}
+    @media(max-width:820px){.layout{grid-template-columns:1fr;max-width:670px}.summary{position:static;grid-row:1}.checkout{grid-row:2}.summary-head{padding:21px 22px}.summary-body{padding:21px 22px}.timeline{grid-template-columns:1fr 1fr;gap:15px}.timeline-row:not(:last-child):after{display:none}.trust-list{grid-template-columns:1fr 1fr}.wallet-note{display:none}}
+    @media(max-width:580px){.topbar{width:min(100% - 26px,1080px);min-height:68px}.secure-chip span{display:none}.secure-chip{padding:8px}.layout{width:min(100% - 24px,1080px);margin:2px auto 34px;gap:12px}.panel{border-radius:20px}.checkout{padding:24px 21px 27px}.summary-head{padding:18px 20px}.summary-body{padding:18px 20px}.summary-plan{font-size:19px}.trial-pill{margin-top:10px}.price-now strong{font-size:24px}.timeline{margin:18px 0}.trust-list{display:grid;grid-template-columns:1fr;gap:8px;padding-bottom:0;border-bottom:0}.trust-row:nth-child(3){display:none}.wallet-note{display:none}h1{font-size:39px}.intro{margin:12px 0 21px;font-size:14px}.steps{margin-bottom:23px}.step{padding:9px 10px}.grid{grid-template-columns:1fr;gap:13px}.field.full{grid-column:auto}.payment-block{margin-top:23px;padding-top:22px}.consent{margin-top:18px}.accepted-list span{padding:5px 7px}.microcopy{line-height:1.45}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
   </style>
 </head>
 <body>
-  <main class="shell">
+  <header class="topbar">
     <a class="brand" href="/">The Call Taker</a>
-    <section class="card" aria-labelledby="checkoutTitle">
-      <div class="eyebrow">Secure card setup by Square</div>
-      <h1 id="checkoutTitle">Start your 14-day free trial.</h1>
-      <p class="terms" id="planTerms">Loading your selected plan…</p>
+    <span class="secure-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Secure checkout</span></span>
+  </header>
+
+  <main class="layout">
+    <section class="panel checkout" aria-labelledby="checkoutTitle">
+      <p class="eyebrow">Card setup by Square</p>
+      <h1 id="checkoutTitle">Start your free trial.</h1>
+      <p class="intro">Add a card securely. Nothing is charged today, and you can cancel before the first monthly payment.</p>
+
+      <div class="steps" aria-label="Checkout progress">
+        <div class="step done"><b aria-hidden="true">✓</b><span>Plan selected</span></div>
+        <div class="step"><b aria-hidden="true">2</b><span>Secure card</span></div>
+      </div>
+
       <form id="trialForm">
+        <h2 class="section-label"><span aria-hidden="true">1</span>Contact details</h2>
         <div class="grid">
           <div class="field"><label for="givenName">First name</label><input id="givenName" name="givenName" autocomplete="given-name" maxlength="100" required></div>
           <div class="field"><label for="familyName">Last name</label><input id="familyName" name="familyName" autocomplete="family-name" maxlength="100" required></div>
-          <div class="field full"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required></div>
-          <div class="field full"><label for="phone">Mobile phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" required></div>
-          <div class="field full"><label for="cardholderName">Name on card</label><input id="cardholderName" name="cardholderName" autocomplete="cc-name" maxlength="200" required></div>
+          <div class="field full"><label for="email">Work email</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" inputmode="email" required></div>
+          <div class="field full"><label for="phone">Mobile phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" inputmode="tel" required></div>
           <div class="field full honeypot" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
-          <div class="field full"><label>Card information</label><div id="square-card" aria-label="Secure Square card information"></div></div>
+        </div>
+
+        <div class="payment-block">
+          <h2 class="section-label"><span aria-hidden="true">2</span>Payment method</h2>
+          <div class="grid">
+            <div class="field full"><label for="cardholderName">Name on card</label><input id="cardholderName" name="cardholderName" autocomplete="cc-name" maxlength="200" required></div>
+            <div class="field full"><label>Card information</label><div id="square-card" aria-label="Secure Square card information"></div></div>
+          </div>
           <div class="accepted" aria-label="Accepted recurring payment cards"><span class="accepted-label">Accepted credit and debit cards</span><div class="accepted-list"><span>Visa</span><span>Mastercard</span><span>American Express</span><span>Discover</span><span>JCB</span><span>UnionPay</span></div></div>
         </div>
+
         <label class="consent"><input id="consent" type="checkbox" required><span>I authorize The Call Taker to securely store this card with Square and charge the selected monthly price after the 14-day free trial unless I cancel before renewal.</span></label>
-        <button class="submit" id="submitButton" type="submit" disabled>Loading secure card form…</button>
+        <button class="submit" id="submitButton" type="submit" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Loading secure card form…</span></button>
+        <p class="microcopy">No charge today · Cancel before renewal · Securely processed by Square</p>
         <p class="status" id="status" role="alert" aria-live="polite"></p>
       </form>
-      <div class="trust"><span>$0 is charged today. Square runs a $0 card verification, then stores the approved card for renewal.</span><span>Card details go directly to Square and never touch The Call Taker's servers.</span><span>Square has Apple Pay, Google Pay, Cash App Pay, and Afterpay enabled for one-time purchases. Square does not permit those wallet tokens to be stored for this recurring free-trial subscription.</span></div>
-      <a class="back" href="/pricing.html">Back to pricing</a>
     </section>
+
+    <aside class="panel summary" aria-label="Order summary">
+      <div class="summary-head">
+        <p class="summary-kicker">Selected plan</p>
+        <h2 class="summary-plan" id="summaryPlan">After-Hours Capture</h2>
+        <span class="trial-pill">14-day free trial</span>
+      </div>
+      <div class="summary-body">
+        <div class="price-now"><span>Due today</span><strong>$0</strong></div>
+        <div class="timeline" aria-label="Billing timeline">
+          <div class="timeline-row"><span class="timeline-dot" aria-hidden="true"></span><div><b>Today</b><p>Square verifies and stores your card. No charge.</p></div></div>
+          <div class="timeline-row"><span class="timeline-dot" aria-hidden="true"></span><div><b id="renewalDate">In 14 days</b><p id="summaryRenewal">$97/month unless canceled.</p></div></div>
+        </div>
+        <div class="trust-list">
+          <div class="trust-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Raw card details go directly to Square and never touch our servers.</span></div>
+          <div class="trust-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Square runs a $0 verification before storing the approved card.</span></div>
+          <div class="trust-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Cancel before renewal to avoid the first monthly charge.</span></div>
+        </div>
+        <p class="wallet-note">Square has Apple Pay, Google Pay, Cash App Pay, and Afterpay enabled for one-time purchases. Square does not permit those wallet tokens to be stored for this recurring free-trial subscription.</p>
+        <a class="back" href="/pricing.html" aria-label="Return to pricing">← Back to pricing</a>
+      </div>
+    </aside>
   </main>
+
   <script>
   (function(){
     var API='https://call-taker-os.vercel.app/api/public/square-trial';
-    var plans={afterhours:{name:'After-Hours Capture',amount:'97.00',terms:'$0 today for 14 days, then $97/month unless canceled before renewal.'},full247:{name:'Revenue Recovery System',amount:'497.00',terms:'$0 today for 14 days, then $497/month unless canceled before renewal.'},custom:{name:'Operational Infrastructure',amount:'997.00',terms:'$0 today for 14 days, then $997 base/month unless canceled before renewal.'}};
-    var params=new URLSearchParams(location.search), key=params.get('plan')||'full247'; if(!plans[key])key='full247'; var plan=plans[key];
-    var form=document.getElementById('trialForm'),button=document.getElementById('submitButton'),status=document.getElementById('status'),card;
-    document.getElementById('planTerms').textContent=plan.name+' — '+plan.terms;
-    function fail(message){status.textContent=message;button.disabled=false;button.textContent='Start Free Trial';}
+    var plans={afterhours:{name:'After-Hours Capture',amount:'97.00',renewal:'$97/month unless canceled.'},full247:{name:'Revenue Recovery System',amount:'497.00',renewal:'$497/month unless canceled.'},custom:{name:'Operational Infrastructure',amount:'997.00',renewal:'$997 base/month unless canceled.'}};
+    var params=new URLSearchParams(location.search),key=params.get('plan')||'full247';if(!plans[key])key='full247';var plan=plans[key];
+    var form=document.getElementById('trialForm'),button=document.getElementById('submitButton'),buttonText=button.querySelector('span'),status=document.getElementById('status'),card;
+    document.getElementById('summaryPlan').textContent=plan.name;
+    document.getElementById('summaryRenewal').textContent=plan.renewal;
+    var renewal=new Date();renewal.setDate(renewal.getDate()+14);document.getElementById('renewalDate').textContent=renewal.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
+    function fail(message){status.textContent=message;button.disabled=false;buttonText.textContent='Start Free Trial';}
     fetch(API,{headers:{Accept:'application/json'}}).then(function(response){if(!response.ok)throw new Error('config');return response.json();}).then(async function(config){
       if(!window.Square)throw new Error('sdk');
-      var payments=window.Square.payments(config.applicationId,config.locationId); card=await payments.card(); await card.attach('#square-card'); button.disabled=false;button.textContent='Start Free Trial';
-    }).catch(function(){fail('Secure card entry is temporarily unavailable. Please try again shortly.');});
+      var payments=window.Square.payments(config.applicationId,config.locationId);card=await payments.card();await card.attach('#square-card');button.disabled=false;buttonText.textContent='Start Free Trial';
+    }).catch(function(){fail('Secure card entry is temporarily unavailable. Refresh the page or try again shortly.');});
     form.addEventListener('submit',async function(event){
-      event.preventDefault();if(!card)return fail('Secure card entry has not loaded yet.');button.disabled=true;button.textContent='Securing your trial…';status.textContent='';
+      event.preventDefault();if(!card)return fail('Secure card entry has not loaded yet.');button.disabled=true;buttonText.textContent='Securing your trial…';status.textContent='';
       var givenName=document.getElementById('givenName').value.trim(),familyName=document.getElementById('familyName').value.trim(),email=document.getElementById('email').value.trim(),phone=document.getElementById('phone').value.trim(),cardholderName=document.getElementById('cardholderName').value.trim();
       try{
         var token=await card.tokenize({amount:plan.amount,currencyCode:'USD',intent:'STORE',customerInitiated:true,sellerKeyedIn:false,billingContact:{givenName:givenName,familyName:familyName,email:email,phone:phone,countryCode:'US'}});
         if(token.status!=='OK')throw new Error('tokenize');
         var response=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:key,sourceId:token.token,idempotencyKey:crypto.randomUUID(),givenName:givenName,familyName:familyName,email:email,phone:phone,cardholderName:cardholderName,consentToStoreCard:document.getElementById('consent').checked,website:document.getElementById('website').value})});
         var result=await response.json().catch(function(){return{};});if(!response.ok||!result.ok)throw new Error(result.error||'submit');
-        location.assign('/setup.html?plan='+encodeURIComponent(key)+'&trial=started&receipt='+encodeURIComponent(result.receipt));
+        buttonText.textContent='Trial started — redirecting…';location.assign('/setup.html?plan='+encodeURIComponent(key)+'&trial=started&receipt='+encodeURIComponent(result.receipt));
       }catch(error){fail('We could not start the trial. Check the card details and try again. No charge was made.');}
     });
   })();
