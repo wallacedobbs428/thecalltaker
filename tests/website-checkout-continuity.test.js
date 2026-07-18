@@ -11,9 +11,9 @@ const pages = [
   "website/pay.html",
 ];
 const squareLinks = [
-  "https://square.link/u/ONo7eqGt",
-  "https://square.link/u/oPAJSalQ",
-  "https://square.link/u/0L3Z4auQ",
+  "https://square.link/u/2Rsp3ELj",
+  "https://square.link/u/27lLm9JP",
+  "https://square.link/u/BfQxAAG4",
 ];
 
 assert.strictEqual(new Set(squareLinks).size, 3, "each public plan must use a distinct Square checkout");
@@ -52,7 +52,7 @@ assert.strictEqual(
 
 const authoritativePath = path.join(root, "ctos/product/square-links.json");
 const authoritative = JSON.parse(fs.readFileSync(authoritativePath, "utf8"));
-assert.ok(authoritative.links.every((row) => row.checkout_redirect_url === null), "test must remain bound to the no-provider-redirect defect");
+assert.ok(authoritative.links.every((row) => row.checkout_redirect_url === "https://thecalltaker.com/setup.html"), "all provider links must return to secure setup");
 assert.deepStrictEqual(authoritative.links.map((row) => row.url), squareLinks, "source links must match the provider-verified Square URLs exactly");
 
 console.log("website checkout continuity tests passed");

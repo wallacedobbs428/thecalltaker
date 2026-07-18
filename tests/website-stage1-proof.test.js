@@ -6,9 +6,9 @@ const root = path.join(__dirname, "..");
 const smsHref = "sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service";
 const demoTel = "tel:+16292699697";
 const squareLinks = [
-  "https://square.link/u/ONo7eqGt",
-  "https://square.link/u/oPAJSalQ",
-  "https://square.link/u/0L3Z4auQ",
+  "https://square.link/u/2Rsp3ELj",
+  "https://square.link/u/27lLm9JP",
+  "https://square.link/u/BfQxAAG4",
 ];
 
 function read(relativePath) {
