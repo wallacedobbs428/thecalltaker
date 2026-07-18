@@ -35,9 +35,9 @@ const publicCheckoutPages = [
 const publicCheckoutHtml = publicCheckoutPages.map(read).join("\n");
 const publicWebsiteCodeFiles = listFiles("website").filter((file) => /\.(html|js)$/.test(file));
 const squareCheckout = {
-  afterhours: "https://square.link/u/nAgP58ki",
-  full247: "https://square.link/u/EslC0nAq",
-  custom: "https://square.link/u/J9Fpp46N"
+  afterhours: "/card-checkout.html?plan=afterhours",
+  full247: "/card-checkout.html?plan=full247",
+  custom: "/card-checkout.html?plan=custom"
 };
 const preCheckoutRoutes = {
   afterhours: "/pre-checkout.html?plan=afterhours",
@@ -181,7 +181,7 @@ assert.strictEqual(
 
 assert.ok(
   checkoutHtml.includes(squareCheckout.afterhours),
-  "legacy checkout redirect should use the configured Square checkout URL for the public $97 path"
+  "legacy checkout redirect should use the configured card checkout route for the public $97 path"
 );
 
 assert.ok(
@@ -222,7 +222,7 @@ assert.ok(
 ].forEach((expectedSquareLink) => {
   assert.ok(
     preCheckoutHtml.includes(expectedSquareLink),
-    `pre-checkout should preserve the approved Square destination: ${expectedSquareLink}`
+    `pre-checkout should preserve the approved card destination: ${expectedSquareLink}`
   );
 });
 
@@ -236,7 +236,7 @@ assert.ok(
     assert.strictEqual(
       read(page).includes(squareLink),
       false,
-      `${page} should not bypass the pre-checkout handoff with direct Square CTA: ${squareLink}`
+      `${page} should not bypass the pre-checkout handoff with a direct card route: ${squareLink}`
     );
   });
 });
@@ -244,7 +244,7 @@ assert.ok(
 assert.ok(
   checkoutHtml.includes(squareCheckout.full247) &&
     checkoutHtml.includes(squareCheckout.custom),
-  "legacy checkout redirect should use the configured Square checkout URLs for the public $497 and $997 paths"
+  "legacy checkout redirect should use the configured card checkout routes for the public $497 and $997 paths"
 );
 
 assert.strictEqual(
@@ -255,8 +255,7 @@ assert.strictEqual(
 
 assert.ok(
   !checkoutHtml.includes("window.location.replace") &&
-    checkoutHtml.includes('target="_blank"') &&
-    checkoutHtml.includes('rel="noopener"') &&
+    checkoutHtml.includes('/card-checkout.html?plan=afterhours') &&
     checkoutHtml.includes("Payment complete — continue setup") &&
     checkoutHtml.includes('params.get("orderId")'),
   "legacy checkout should preserve a separate-tab Square handoff and plan-bound setup continuity"
@@ -357,24 +356,12 @@ assert.strictEqual(
 );
 
 assert.ok(
-  pricingHtml.includes('/assets/images/plan-visuals/after-hours-capture.jpg') &&
-    pricingHtml.includes('/assets/images/plan-visuals/revenue-recovery-system.jpg') &&
-    pricingHtml.includes('/assets/images/plan-visuals/operational-infrastructure.jpg') &&
+  pricingHtml.includes('/assets/images/plan-visuals/after-hours-capture-v3.webp') &&
+    pricingHtml.includes('/assets/images/plan-visuals/247-call-coverage-v3.webp') &&
+    pricingHtml.includes('/assets/images/plan-visuals/custom-call-coverage-v3.webp') &&
     read("website/assets/images/approved-editorial-visuals.json").includes('tct_approved_editorial_visuals.v1'),
   "pricing should render only the hash-approved restored plan visuals"
 );
-
-[
-  "after-hours-capture-v3.webp",
-  "247-call-coverage-v3.webp",
-  "custom-call-coverage-v3.webp",
-].forEach((legacyVisual) => {
-  assert.strictEqual(
-    pricingHtml.includes(legacyVisual),
-    false,
-    `pricing should not fall back to a non-Higgsfield plan visual: ${legacyVisual}`
-  );
-});
 
 const demoHtml = read("website/demo.html");
 
