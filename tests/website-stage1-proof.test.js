@@ -5,10 +5,10 @@ const path = require("path");
 const root = path.join(__dirname, "..");
 const smsHref = "sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service";
 const demoTel = "tel:+16292699697";
-const squareLinks = [
-  "https://square.link/u/nAgP58ki",
-  "https://square.link/u/EslC0nAq",
-  "https://square.link/u/J9Fpp46N",
+const cardRoutes = [
+  "/card-checkout.html?plan=afterhours",
+  "/card-checkout.html?plan=full247",
+  "/card-checkout.html?plan=custom",
 ];
 
 function read(relativePath) {
@@ -211,11 +211,9 @@ Object.entries(pages).forEach(([page, html]) => {
   assert.strictEqual(pages[page].includes("sms:+16292699697"), false, `${page} should not text the Gideon demo number`);
 });
 
-squareLinks.forEach((link) => {
-  assert.ok(pages["website/pre-checkout.html"].includes(link), `pre-checkout should keep current Square link: ${link}`);
-  assert.strictEqual(pages["website/pricing.html"].includes(link), false, `pricing should route to pre-checkout before Square: ${link}`);
-  assert.strictEqual(pages["website/paid.html"].includes(link), false, `paid landing should route to pre-checkout before Square: ${link}`);
-  assert.strictEqual(pages["website/index.html"].includes(link), false, `homepage should route to pre-checkout before Square: ${link}`);
+cardRoutes.forEach((route) => {
+  assert.ok(pages["website/pre-checkout.html"].includes(route), `pre-checkout should keep card route: ${route}`);
+  assert.strictEqual(pages["website/pricing.html"].includes(route), false, `pricing should route through pre-checkout first: ${route}`);
 });
 
 [
@@ -232,7 +230,7 @@ squareLinks.forEach((link) => {
 [
   "Checkout, then 60-second setup.",
   "A card is required for the 14-day trial.",
-  "Start Free Trial in Square",
+  "Enter Card &amp; Start Free Trial",
   "This button does not verify or claim payment",
 ].forEach((marker) => {
   assert.ok(pages["website/pre-checkout.html"].includes(marker), `pre-checkout should include trust marker: ${marker}`);

@@ -84,7 +84,7 @@ launchPages.forEach((page) => {
 [
   'data-tct-event="homepage_cta_click"',
   'data-tct-event="pricing_plan_click"',
-  'data-tct-event="square_outbound_click"',
+  'data-tct-event="card_checkout_start"',
   'data-tct-form="setup"',
   'data-tct-event-start="setup_form_started"',
   'data-tct-event-submit="setup_form_submitted"',
@@ -106,8 +106,8 @@ const squareLinksOutsidePrecheckout = launchPages
 assert.deepStrictEqual(squareLinksOutsidePrecheckout, [], "Square links should remain contained to pre-checkout");
 
 assert.ok(
-    read(preCheckoutPage).includes('data-tct-event="square_outbound_click"'),
-  "pre-checkout should mark Square outbound clicks"
+    read(preCheckoutPage).includes('data-tct-event="card_checkout_start"'),
+  "pre-checkout should mark secure card-checkout starts"
 );
 
 [

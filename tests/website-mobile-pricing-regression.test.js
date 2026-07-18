@@ -16,9 +16,9 @@ assert.ok(sharedScript.includes("aria-expanded"), "shared menu must expose expan
 assert.ok(sharedScript.includes("event.key === 'Escape'"), "shared menu must close with Escape");
 
 [
-  "/assets/images/plan-visuals/after-hours-capture.jpg",
-  "/assets/images/plan-visuals/revenue-recovery-system.jpg",
-  "/assets/images/plan-visuals/operational-infrastructure.jpg",
+  "/assets/images/plan-visuals/after-hours-capture-v3.webp",
+  "/assets/images/plan-visuals/247-call-coverage-v3.webp",
+  "/assets/images/plan-visuals/custom-call-coverage-v3.webp",
 ].forEach((source) => assert.ok(pricing.includes(source), `pricing must restore ${source}`));
 assert.ok(pricing.includes("image.src = plan.image"), "plan selection must update the visible image");
 assert.ok(pricing.includes("other.setAttribute('aria-pressed', 'false')"), "plan selector must expose selection state");

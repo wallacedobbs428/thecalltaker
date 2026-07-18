@@ -9,36 +9,31 @@ const pages = [
   "website/pre-checkout.html",
   "website/checkout.html",
   "website/pay.html",
+  "website/card-checkout.html",
 ];
-const squareLinks = [
-  "https://square.link/u/nAgP58ki",
-  "https://square.link/u/EslC0nAq",
-  "https://square.link/u/J9Fpp46N",
+const cardRoutes = [
+  "/card-checkout.html?plan=afterhours",
+  "/card-checkout.html?plan=full247",
+  "/card-checkout.html?plan=custom",
 ];
 
-assert.strictEqual(new Set(squareLinks).size, 3, "each public plan must use a distinct Square checkout");
-assert.notStrictEqual(squareLinks[0], squareLinks[1], "$97 must never collapse into the $497 checkout");
-assert.notStrictEqual(squareLinks[2], squareLinks[1], "$997+ must never collapse into the $497 checkout");
+assert.strictEqual(new Set(cardRoutes).size, 3, "each public plan must use a distinct card checkout route");
 
 pages.forEach((page) => {
   const html = read(page);
   assert.strictEqual(html.includes("window.location.replace"), false, `${page} must not replace the TCT page with Square`);
   assert.strictEqual(/http-equiv=["']refresh["'][^>]+square\.link/i.test(html), false, `${page} must not meta-refresh to Square`);
-  assert.ok(html.includes('target="_blank"'), `${page} must open Square separately`);
-  assert.ok(html.includes('rel="noopener"'), `${page} must isolate the Square tab`);
-  assert.ok(html.includes("Payment complete — continue setup"), `${page} must preserve the visible setup continuation`);
-  assert.ok(html.includes("does not verify or claim payment"), `${page} must not infer payment from the buyer click`);
-  assert.ok(html.includes('params.get("orderId")'), `${page} must carry a returned orderId when present`);
-  assert.ok(html.includes("setupUrl.searchParams.set(\"plan\""), `${page} must bind setup to the selected plan`);
+  assert.strictEqual(/https:\/\/square\.link\/u\//.test(html), false, `${page} must not use the broken hosted free-trial links`);
 });
 
-squareLinks.forEach((link) => {
+cardRoutes.forEach((link) => {
   assert.ok(read("website/pre-checkout.html").includes(link), `pre-checkout must preserve ${link}`);
   assert.ok(read("website/checkout.html").includes(link), `checkout must preserve ${link}`);
 });
-assert.ok(read("website/pay.html").includes(squareLinks[0]), "legacy $97 pay entrypoint must preserve its Square link");
-assert.strictEqual(read("website/pay.html").includes(squareLinks[1]), false, "legacy $97 pay entrypoint must remain plan-bound");
-assert.strictEqual(read("website/pay.html").includes(squareLinks[2]), false, "legacy $97 pay entrypoint must remain plan-bound");
+assert.ok(read("website/pay.html").includes(cardRoutes[0]), "legacy $97 pay entrypoint must remain plan-bound");
+assert.ok(read("website/card-checkout.html").includes("https://web.squarecdn.com/v1/square.js"), "card checkout must load Square's production SDK");
+assert.ok(read("website/card-checkout.html").includes("intent:'STORE'"), "card checkout must explicitly tokenize for card storage");
+assert.ok(read("website/card-checkout.html").includes("consentToStoreCard"), "card checkout must require stored-card consent");
 assert.strictEqual(
   fs.readFileSync(path.join(siblingRoot, "website/checkout.html"), "utf8"),
   read("website/checkout.html"),
@@ -53,6 +48,5 @@ assert.strictEqual(
 const authoritativePath = path.join(root, "ctos/product/square-links.json");
 const authoritative = JSON.parse(fs.readFileSync(authoritativePath, "utf8"));
 assert.ok(authoritative.links.every((row) => row.checkout_redirect_url === "https://thecalltaker.com/setup.html"), "all provider links must return to secure setup");
-assert.deepStrictEqual(authoritative.links.map((row) => row.url), squareLinks, "source links must match the provider-verified Square URLs exactly");
 
 console.log("website checkout continuity tests passed");

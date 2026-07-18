@@ -2040,9 +2040,9 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   width: min(1120px, 100%);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
-  gap: 34px;
-  align-items: center;
+  grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
+  gap: 0;
+  align-items: stretch;
   overflow: hidden;
   border: 1px solid rgba(42,157,122,0.22);
   border-radius: 24px;
@@ -2056,7 +2056,13 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   min-height: 360px;
   object-fit: cover;
 }
-.gideon-portrait-copy { padding: 34px 34px 34px 0; }
+.gideon-portrait-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 42px;
+  border-left: 1px solid rgba(42,157,122,0.16);
+}
 .gideon-portrait-copy span {
   color: var(--accent-hover);
   font-family: var(--mono);
@@ -2065,8 +2071,11 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.gideon-portrait-copy h2 { margin: 12px 0; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.02; }
-.gideon-portrait-copy p { margin: 0; color: rgba(255,255,255,0.72); line-height: 1.7; }
+.gideon-portrait-copy h2 { margin: 12px 0 16px; max-width: 12ch; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.03; }
+.gideon-portrait-copy > p { margin: 0; color: rgba(255,255,255,0.72); line-height: 1.65; }
+.gideon-capabilities { display: grid; gap: 0; margin: 24px 0 0; padding: 0; list-style: none; border-top: 1px solid rgba(255,255,255,0.10); }
+.gideon-capabilities li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.10); color: rgba(255,255,255,0.88); font-size: 0.9rem; font-weight: 700; }
+.gideon-capabilities b { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(42,157,122,0.16); color: var(--accent-hover); font-family: var(--mono); font-size: 0.66rem; }
 @media (max-width: 900px) {
   .gideon-hero.service-selling { min-height: auto; padding-top: 98px; padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
   .gideon-hero.service-selling .g-service-inner {
@@ -2090,9 +2099,10 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   .gideon-hero.service-selling .gideon-name,
   .gideon-hero.service-selling .gideon-subtitle { text-align: center; }
   .gideon-portrait-section { padding: 44px 16px; }
-  .gideon-portrait-card { grid-template-columns: 1fr; gap: 0; }
-  .gideon-portrait-card img { min-height: 0; aspect-ratio: 16 / 9; }
-  .gideon-portrait-copy { padding: 26px 24px 30px; text-align: center; }
+  .gideon-portrait-card { grid-template-columns: 1fr; }
+  .gideon-portrait-card img { min-height: 0; aspect-ratio: 16 / 10; object-position: center; }
+  .gideon-portrait-copy { padding: 28px 24px 30px; border-top: 1px solid rgba(42,157,122,0.16); border-left: 0; text-align: left; }
+  .gideon-portrait-copy h2 { max-width: 14ch; font-size: clamp(1.9rem, 9vw, 2.6rem); }
 }
 
 </style>
@@ -2196,8 +2206,13 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <img src="/assets/images/gideon-service-homepage-hero.png" alt="Gideon, The Call Taker AI receptionist, illustrating the incoming-call to team-alert workflow" width="1920" height="1071" loading="lazy" decoding="async">
     <div class="gideon-portrait-copy">
       <span>Meet Gideon</span>
-      <h2 id="meetGideonTitle">The call gets answered. Your team gets the next step.</h2>
-      <p>Gideon represents the call-answering experience: receive the call, capture the useful details, and send your team a clear alert for follow-up.</p>
+      <h2 id="meetGideonTitle">A professional first response, every time.</h2>
+      <p>Gideon answers in your business's voice, captures why the caller reached out, and gives your team a clean next step.</p>
+      <ul class="gideon-capabilities" aria-label="What Gideon does">
+        <li><b>01</b><span>Answers with your approved greeting</span></li>
+        <li><b>02</b><span>Captures caller details and intent</span></li>
+        <li><b>03</b><span>Routes the follow-up to your team</span></li>
+      </ul>
     </div>
   </div>
 </section>
