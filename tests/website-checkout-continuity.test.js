@@ -34,6 +34,11 @@ assert.ok(read("website/pay.html").includes(cardRoutes[0]), "legacy $97 pay entr
 assert.ok(read("website/card-checkout.html").includes("https://web.squarecdn.com/v1/square.js"), "card checkout must load Square's production SDK");
 assert.ok(read("website/card-checkout.html").includes("intent:'STORE'"), "card checkout must explicitly tokenize for card storage");
 assert.ok(read("website/card-checkout.html").includes("consentToStoreCard"), "card checkout must require stored-card consent");
+assert.ok(read("website/card-checkout.html").includes("Accepted credit and debit cards"), "card checkout must identify eligible recurring payment methods");
+for (const brand of ["Visa", "Mastercard", "American Express", "Discover", "JCB", "UnionPay"]) {
+  assert.ok(read("website/card-checkout.html").includes(`<span>${brand}</span>`), `card checkout must display ${brand}`);
+}
+assert.ok(read("website/card-checkout.html").includes("enabled for one-time purchases"), "wallet availability must be explained without implying recurring support");
 assert.ok(read(".github/workflows/deploy.yml").includes("checkout.html card-checkout.html signup.html"), "Pages artifact must include card checkout");
 assert.strictEqual(
   fs.readFileSync(path.join(siblingRoot, "website/checkout.html"), "utf8"),
