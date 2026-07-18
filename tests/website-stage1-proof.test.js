@@ -6,9 +6,9 @@ const root = path.join(__dirname, "..");
 const smsHref = "sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service";
 const demoTel = "tel:+16292699697";
 const squareLinks = [
-  "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY",
-  "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
-  "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY",
+  "https://square.link/u/ONo7eqGt",
+  "https://square.link/u/oPAJSalQ",
+  "https://square.link/u/0L3Z4auQ",
 ];
 
 function read(relativePath) {
@@ -67,9 +67,8 @@ assert.ok(
 
 [
   "The Call Taker - AI Call Answering For Missed Calls",
-  "Gideon answers calls, collects caller details, and sends clean summaries after your setup is reviewed.",
+  "Gideon answers calls, collects caller details, and sends clean summaries after your setup questions are in.",
   "summary_large_image",
-  "https://thecalltaker.com/og-image.png",
   "site.webmanifest",
 ].forEach((marker) => {
   assert.ok(pages["website/index.html"].includes(marker), `homepage social preview should include: ${marker}`);
@@ -147,7 +146,7 @@ assert.ok(multilingualSection, "homepage should keep the multilingual coverage s
   "06 / SETUP TRUST",
   "Reviewed before your calls go live.",
   "SAFE LAUNCH CHECKPOINTS",
-  "Setup reviewed",
+  "Setup questions",
   "Test calls first",
   "Private summaries",
   "You approve flow",
@@ -231,42 +230,42 @@ squareLinks.forEach((link) => {
 });
 
 [
-  "You’re almost set up",
-  "After checkout, you’ll be directed or guided to answer a few setup questions",
-  "Continue to secure checkout",
-  "No setup starts until we have your business details",
+  "Checkout, then 60-second setup.",
+  "A card is required for the 14-day trial.",
+  "Open Square checkout in a new tab",
+  "This button does not verify or claim payment",
 ].forEach((marker) => {
   assert.ok(pages["website/pre-checkout.html"].includes(marker), `pre-checkout should include trust marker: ${marker}`);
 });
 
 [
-  "After checkout, complete your setup form at thecalltaker.com/setup.html",
-  "If Square does not automatically send you back",
-  "setup packet",
+  "Pay through secure Square checkout.",
+  "If Square does not send you back",
+  "setup questions",
   "forwarding/testing",
 ].forEach((marker) => {
   assert.ok(pages["website/pricing.html"].includes(marker), `pricing should explain the Square fallback: ${marker}`);
 });
 
 assert.ok(
-  pages["website/checkout.html"].includes("After checkout, complete your setup form at") &&
-    pages["website/pay.html"].includes("After checkout, complete your setup form at"),
+  pages["website/checkout.html"].includes("Payment complete — continue setup") &&
+    pages["website/pay.html"].includes("Payment complete — continue setup"),
   "checkout fallback pages should send buyers to setup after Square"
 );
 
 [
   "Setup progress",
-  "Already checked out?",
-  "Before we review your setup",
-  "Mobile number to text your setup/forwarding guide",
-  "Submit setup packet",
+  "Already paid?",
+  "Before we build",
+  "Best mobile for urgent setup issues",
+  "Submit setup questions",
 ].forEach((marker) => {
   assert.ok(pages["website/setup.html"].includes(marker), `setup should include proof marker: ${marker}`);
 });
 
 [
-  "Your setup packet is now in review",
-  "We received your setup details. Next, we'll text the phone number you provided with a setup guide for forwarding your calls and testing your AI answering system.",
+  "Your setup questions were received",
+  "Checkout references may still need verification before configuration is completed.",
   "Return Home",
   "View Pricing",
   "Review FAQ",

@@ -27,16 +27,22 @@
 <body data-tct-view="checkout_continuity_view" data-tct-page="checkout">
 <main>
   <h1>Checkout, then continue setup here.</h1>
-  <p>Square opens in a separate tab so this page stays available. Complete checkout there, then return here for the 60-second setup questions.</p>
-  <div class="plan" id="planLabel">Revenue Recovery System — $497/mo</div>
-  <a class="button checkout" id="squareCheckoutButton" href="https://square.link/u/oPAJSalQ" target="_blank" rel="noopener" data-tct-event="square_outbound_click" data-tct-destination="square">Open secure Square checkout</a>
+  <p>Square opens in a separate tab so this page stays available. A card is required. $0 is due today for a 14-day trial; unless canceled before renewal, your selected plan then renews monthly. Complete checkout there, then return here for setup.</p>
+  <div class="plan" id="planLabel">Choose your selected plan</div>
+  <a class="button checkout" id="squareCheckoutButton" href="#plan-checkout-links" target="_blank" rel="noopener" data-tct-event="square_outbound_click" data-tct-destination="square">Select the exact Square checkout</a>
   <section class="continuity" id="setupContinuity" hidden aria-live="polite" tabindex="-1">
     <strong>Square opened in a separate tab.</strong>
     <p>After you finish there, return to this page. This button does not verify or claim payment; verification remains separate.</p>
     <a class="button setup" id="continueSetupButton" href="/setup.html?plan=full247">Payment complete — continue setup</a>
     <p class="fine">If checkout was not completed, you can still submit setup details; they remain pending payment correlation.</p>
   </section>
-  <noscript><p>After payment, answer the 60-second setup questions at <a href="/setup.html?plan=full247">thecalltaker.com/setup.html</a>.</p></noscript>
+  <div id="plan-checkout-links">
+    <p>If the main button does not update, choose the exact plan:</p>
+    <p><a href="https://square.link/u/ONo7eqGt" target="_blank" rel="noopener">After-Hours Capture — $0 today, then $97/month after 14 days</a></p>
+    <p><a href="https://square.link/u/oPAJSalQ" target="_blank" rel="noopener">Revenue Recovery System — $0 today, then $497/month after 14 days</a></p>
+    <p><a href="https://square.link/u/0L3Z4auQ" target="_blank" rel="noopener">Operational Infrastructure — $0 today, then $997 base/month after 14 days</a></p>
+  </div>
+  <noscript><p>Choose the exact plan above. After checkout, continue to <a href="/setup.html">thecalltaker.com/setup.html</a>; setup remains pending billing verification.</p></noscript>
   <a class="back" href="/pricing.html">Back to plans</a>
 </main>
 <script>
@@ -47,9 +53,9 @@
       custom: "https://square.link/u/0L3Z4auQ"
     };
     var plans = {
-      afterhours: "After-Hours Capture — $97/mo",
-      full247: "Revenue Recovery System — $497/mo",
-      custom: "Operational Infrastructure — $997+/mo"
+      afterhours: "After-Hours Capture — $0 today, then $97/mo after 14 days",
+      full247: "Revenue Recovery System — $0 today, then $497/mo after 14 days",
+      custom: "Operational Infrastructure — $0 today, then $997 base/mo after 14 days"
     };
     var aliases = {
       "after-hours": "afterhours",

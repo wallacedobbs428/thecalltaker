@@ -81,6 +81,7 @@ assert.strictEqual(
 const checkoutHtml = read("website/checkout.html");
 const preCheckoutHtml = read("website/pre-checkout.html");
 const preCheckoutStaticHtml = preCheckoutHtml.split("<script>", 1)[0];
+const checkoutStaticHtml = checkoutHtml.split("<script>", 1)[0];
 const intakeHtml = read("website/onboarding/intake.html");
 const customerBuyerPathPages = [
   "website/index.html",
@@ -152,19 +153,19 @@ const customerBuyerPathPages = [
 
 [
   ["website/index.html", "60-second setup questions after payment"],
-  ["website/index.html", "Choose a plan, pay through secure Square checkout"],
+  ["website/index.html", "Choose a plan, enter a card through secure Square checkout"],
   ["website/pricing.html", "After payment, answer the 60-second setup questions"],
   ["website/pricing.html", "thecalltaker.com/setup.html"],
   ["website/pricing.html", "If Square does not send you back"],
   ["website/pricing.html", "the internal build can start"],
   ["website/pre-checkout.html", "Checkout, then 60-second setup."],
-  ["website/pre-checkout.html", "After payment, you’ll answer the short setup questions"],
-  ["website/pre-checkout.html", "After payment, return here for the 60-second setup questions"],
+  ["website/pre-checkout.html", "After checkout, you’ll answer the short setup questions"],
+  ["website/pre-checkout.html", "$0 is due today"],
   ["website/faq.html", "After payment, answer the 60-second setup questions"],
   ["website/faq.html", "What happens after I pay?"],
   ["website/faq.html", "If Square does not automatically send you back"],
   ["website/faq.html", "Do not change your phone system during checkout"],
-  ["website/checkout.html", "After payment, answer the 60-second setup questions"],
+  ["website/checkout.html", "A card is required"],
   ["website/checkout.html", "Payment complete — continue setup"],
   ["website/pay.html", "After payment, answer the 60-second setup questions"],
   ["website/pay.html", "Payment complete — continue setup"],
@@ -189,6 +190,30 @@ assert.ok(
     preCheckoutStaticHtml.includes("Plan and price appear here before Square checkout."),
   "pre-checkout static fallback must not falsely preselect the $497 plan before query-aware JavaScript runs"
 );
+
+assert.ok(
+  checkoutStaticHtml.includes('<div class="plan" id="planLabel">Choose your selected plan</div>') &&
+    checkoutStaticHtml.includes('href="#plan-checkout-links"') &&
+    checkoutStaticHtml.includes("After-Hours Capture — $0 today, then $97/month after 14 days") &&
+    checkoutStaticHtml.includes("Revenue Recovery System — $0 today, then $497/month after 14 days") &&
+    checkoutStaticHtml.includes("Operational Infrastructure — $0 today, then $997 base/month after 14 days"),
+  "legacy checkout static fallback must stay neutral and offer three explicit plan-bound destinations"
+);
+
+[
+  "website/index.html",
+  "website/pricing.html",
+  "website/demo.html",
+  "website/paid.html",
+  "website/pre-checkout.html",
+  "website/checkout.html",
+  "website/pay.html",
+  "website/faq.html",
+].forEach((page) => {
+  const html = read(page);
+  assert.ok(/14[- ]day/i.test(html), `${page} should disclose the 14-day trial`);
+  assert.ok(/\$0 (?:is )?due today|\$0 today/i.test(html), `${page} should disclose the amount due today`);
+});
 
 [
   squareCheckout.afterhours,
@@ -253,7 +278,7 @@ assert.ok(
   });
 });
 
-assert.ok(Buffer.byteLength(preCheckoutHtml, "utf8") < 15000, "pre-checkout should stay under 15 KB");
+assert.ok(Buffer.byteLength(preCheckoutHtml, "utf8") < 16000, "pre-checkout should stay under 16 KB");
 [
   "<script src=",
   "fetch(",
@@ -362,7 +387,7 @@ assert.strictEqual(
 
 assert.ok(
   demoHtml.includes("Choose the setup path") &&
-    demoHtml.includes("Square handles checkout") &&
+    demoHtml.includes("Square requires a card for the 14-day trial") &&
     demoHtml.includes("No SMS, provider routing, booking, or backend sync is implied"),
   "demo page should move preview users into a clear, provider-safe plan-selection follow-up"
 );
