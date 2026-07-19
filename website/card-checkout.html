@@ -8,6 +8,7 @@
   <title>Start your free trial — The Call Taker</title>
   <meta name="description" content="Securely add a card through Square and start The Call Taker's 14-day free trial.">
   <script src="https://web.squarecdn.com/v1/square.js"></script>
+  <script src="/card-checkout-state.js"></script>
   <style>
     *{box-sizing:border-box}
     :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#102019;background:#eef0e8;--ink:#102019;--green:#216f4d;--green-dark:#17583c;--green-soft:#e8f1eb;--paper:#fffdf9;--line:#d7dcd6;--muted:#5c6962;--shadow:0 28px 80px rgba(28,43,35,.12)}
@@ -50,9 +51,12 @@
     .submit{display:flex;width:100%;min-height:56px;align-items:center;justify-content:center;gap:9px;border:0;border-radius:13px;background:var(--green);color:white;font-weight:950;box-shadow:0 10px 24px rgba(33,111,77,.20);cursor:pointer;transition:transform .16s,background .16s,box-shadow .16s}
     .submit:hover:not(:disabled){transform:translateY(-1px);background:var(--green-dark);box-shadow:0 14px 30px rgba(33,111,77,.24)}
     .submit:focus-visible{outline:3px solid rgba(33,111,77,.28);outline-offset:3px}
-    .submit:disabled{cursor:wait;opacity:.68;box-shadow:none}
+    .submit:disabled{cursor:not-allowed;opacity:.68;box-shadow:none}
     .submit svg{width:16px;height:16px}
     .microcopy{margin:10px 0 0;text-align:center;color:var(--muted);font-size:11px}
+    .legal{margin:11px auto 0;max-width:520px;text-align:center;color:var(--muted);font-size:10px;line-height:1.5}
+    .legal a{color:var(--green-dark);font-weight:800;text-underline-offset:2px}
+    .legal a:hover,.legal a:focus-visible{color:var(--green);text-decoration-thickness:2px}
     .status{display:none;margin:14px 0 0;padding:11px 12px;border-radius:10px;background:#fff0ed;color:#8a2d22;font-size:12px;font-weight:800;line-height:1.45}
     .status:not(:empty){display:block}
     .summary{position:sticky;top:18px;overflow:hidden}
@@ -130,6 +134,7 @@
         <label class="consent"><input id="consent" type="checkbox" required><span>I authorize The Call Taker to securely store this card with Square and charge the selected monthly price after the 14-day free trial unless I cancel before renewal.</span></label>
         <button class="submit" id="submitButton" type="submit" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Loading secure card form…</span></button>
         <p class="microcopy">No charge today · Cancel before renewal · Securely processed by Square</p>
+        <p class="legal">By starting your trial, you agree to The Call Taker's <a href="/terms.html">Terms</a> and acknowledge the <a href="/privacy.html">Privacy Policy</a>.</p>
         <p class="status" id="status" role="alert" aria-live="polite"></p>
       </form>
     </section>
@@ -163,17 +168,25 @@
     var plans={afterhours:{name:'After-Hours Capture',amount:'97.00',renewal:'$97/month unless canceled.'},full247:{name:'Revenue Recovery System',amount:'497.00',renewal:'$497/month unless canceled.'},custom:{name:'Operational Infrastructure',amount:'997.00',renewal:'$997 base/month unless canceled.'}};
     var params=new URLSearchParams(location.search),key=params.get('plan')||'';if(!plans[key]){location.replace('/pricing.html?checkout=select-plan#pricing-cards');return;}var plan=plans[key];
     var form=document.getElementById('trialForm'),button=document.getElementById('submitButton'),buttonText=button.querySelector('span'),status=document.getElementById('status'),card;
+    var consent=document.getElementById('consent'),identityInputs=['givenName','familyName','email','phone','cardholderName'].map(function(id){return document.getElementById(id);});
+    var checkoutState={cardMounted:false,cardFields:{cardNumber:false,expirationDate:false,cvv:false},submitting:false};
     document.getElementById('summaryPlan').textContent=plan.name;
     document.getElementById('summaryRenewal').textContent=plan.renewal;
     var renewal=new Date();renewal.setDate(renewal.getDate()+14);document.getElementById('renewalDate').textContent=renewal.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
-    function fail(message){status.textContent=message;button.disabled=false;buttonText.textContent='Start Free Trial';}
+    function identity(){return{givenName:document.getElementById('givenName').value,familyName:document.getElementById('familyName').value,email:document.getElementById('email').value,phone:document.getElementById('phone').value,cardholderName:document.getElementById('cardholderName').value};}
+    function updateSubmitState(){button.disabled=!TCTCheckoutState.checkoutReady({cardMounted:checkoutState.cardMounted,cardFields:checkoutState.cardFields,identity:identity(),consent:consent.checked,submitting:checkoutState.submitting});if(!checkoutState.submitting)buttonText.textContent=checkoutState.cardMounted?'Start Free Trial':'Loading secure card form…';}
+    function fail(message){status.textContent=message;checkoutState.submitting=false;updateSubmitState();}
     function handoffFail(){status.textContent='Your trial was started, but secure setup did not open. Do not submit again. Contact support so we can open your setup safely.';button.disabled=true;buttonText.textContent='Trial started — setup needs help';}
+    identityInputs.forEach(function(input){input.addEventListener('input',updateSubmitState);input.addEventListener('change',updateSubmitState);});
+    consent.addEventListener('change',updateSubmitState);
     fetch(API,{headers:{Accept:'application/json'}}).then(function(response){if(!response.ok)throw new Error('config');return response.json();}).then(async function(config){
       if(!window.Square)throw new Error('sdk');
-      var payments=window.Square.payments(config.applicationId,config.locationId);card=await payments.card();await card.attach('#square-card');button.disabled=false;buttonText.textContent='Start Free Trial';
-    }).catch(function(){fail('Secure card entry is temporarily unavailable. Refresh the page or try again shortly.');});
+      var payments=window.Square.payments(config.applicationId,config.locationId);card=await payments.card();
+      ['cardBrandChanged','errorClassAdded','errorClassRemoved','focusClassAdded','focusClassRemoved','postalCodeChanged','submit'].forEach(function(eventName){card.addEventListener(eventName,function(event){checkoutState.cardFields=TCTCheckoutState.recordCardEvent(checkoutState.cardFields,event);updateSubmitState();});});
+      await card.attach('#square-card');checkoutState.cardMounted=true;updateSubmitState();
+    }).catch(function(){fail('Secure card entry is temporarily unavailable. Refresh the page or try again shortly.');buttonText.textContent='Secure card unavailable';});
     form.addEventListener('submit',async function(event){
-      event.preventDefault();if(!card)return fail('Secure card entry has not loaded yet.');button.disabled=true;buttonText.textContent='Securing your trial…';status.textContent='';
+      event.preventDefault();if(!card)return fail('Secure card entry has not loaded yet.');if(!TCTCheckoutState.checkoutReady({cardMounted:checkoutState.cardMounted,cardFields:checkoutState.cardFields,identity:identity(),consent:consent.checked,submitting:false}))return fail('Complete the contact, card, and authorization fields before starting your trial.');checkoutState.submitting=true;button.disabled=true;buttonText.textContent='Securing your trial…';status.textContent='';
       var givenName=document.getElementById('givenName').value.trim(),familyName=document.getElementById('familyName').value.trim(),email=document.getElementById('email').value.trim(),phone=document.getElementById('phone').value.trim(),cardholderName=document.getElementById('cardholderName').value.trim();
       var enrollmentConfirmed=false;
       try{
