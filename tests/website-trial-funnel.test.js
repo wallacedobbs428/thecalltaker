@@ -152,23 +152,23 @@ const customerBuyerPathPages = [
 });
 
 [
-  ["website/index.html", "60-second setup questions after payment"],
+  ["website/index.html", "Confirmed checkout opens setup automatically"],
   ["website/index.html", "Choose a plan, enter a card through secure Square checkout"],
-  ["website/pricing.html", "After payment, answer the 60-second setup questions"],
-  ["website/pricing.html", "thecalltaker.com/setup.html"],
-  ["website/pricing.html", "If Square does not send you back"],
+  ["website/pricing.html", "After confirmed enrollment, setup opens automatically"],
+  ["website/pricing.html", "purchased plan locked"],
+  ["website/pricing.html", "Square confirms enrollment"],
   ["website/pricing.html", "the internal build can start"],
   ["website/pre-checkout.html", "Checkout, then 60-second setup."],
   ["website/pre-checkout.html", "After checkout, you’ll answer the short setup questions"],
   ["website/pre-checkout.html", "$0 is due today"],
-  ["website/faq.html", "After payment, answer the 60-second setup questions"],
+  ["website/faq.html", "setup opens automatically with the purchased plan locked"],
   ["website/faq.html", "What happens after I pay?"],
-  ["website/faq.html", "If Square does not automatically send you back"],
+  ["website/faq.html", "contact support instead of opening an unverified setup link"],
   ["website/faq.html", "Do not change your phone system during checkout"],
-  ["website/checkout.html", "A card is required"],
-  ["website/checkout.html", "Payment complete — continue setup"],
-  ["website/pay.html", "After payment, answer the 60-second setup questions"],
-  ["website/pay.html", "Payment complete — continue setup"],
+  ["website/checkout.html", "no valid plan was selected"],
+  ["website/checkout.html", "checkout=select-plan"],
+  ["website/pay.html", "Successful enrollment opens the signed setup flow automatically"],
+  ["website/pay.html", "/card-checkout.html?plan=afterhours"],
 ].forEach(([page, expected]) => {
   assert.ok(read(page).includes(expected), `${page} should explain the payment-to-setup path: ${expected}`);
 });
@@ -193,7 +193,7 @@ assert.ok(
 
 assert.ok(
   checkoutStaticHtml.includes('<div class="plan" id="planLabel">Choose your selected plan</div>') &&
-    checkoutStaticHtml.includes('href="#plan-checkout-links"') &&
+    checkoutStaticHtml.includes('href="/pricing.html#pricing-cards"') &&
     checkoutStaticHtml.includes("After-Hours Capture — $0 today, then $97/month after 14 days") &&
     checkoutStaticHtml.includes("Revenue Recovery System — $0 today, then $497/month after 14 days") &&
     checkoutStaticHtml.includes("Operational Infrastructure — $0 today, then $997 base/month after 14 days"),
@@ -254,11 +254,11 @@ assert.strictEqual(
 );
 
 assert.ok(
-  !checkoutHtml.includes("window.location.replace") &&
+  checkoutHtml.includes("window.location.replace") &&
     checkoutHtml.includes('/card-checkout.html?plan=afterhours') &&
-    checkoutHtml.includes("Payment complete — continue setup") &&
-    checkoutHtml.includes('params.get("orderId")'),
-  "legacy checkout should preserve a separate-tab Square handoff and plan-bound setup continuity"
+    !checkoutHtml.includes("Payment complete — continue setup") &&
+    checkoutHtml.includes("checkout=select-plan"),
+  "legacy checkout should preserve exact plan routing and reject payment-complete bypasses"
 );
 
 [

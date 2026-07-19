@@ -65,7 +65,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="prefetch" href="/pricing.html" as="document">
 <link rel="prefetch" href="/pre-checkout.html?plan=full247" as="document">
-<link rel="prefetch" href="/setup.html?source=faq" as="document">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="text-us.css">
 
@@ -435,6 +434,11 @@ html.dark .faq-item {
 /* FOOTER */
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
 @media(max-width:768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:380px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-col { min-width: 0; }
+  .footer-col a { overflow-wrap: anywhere; }
+}
 .footer-brand { font-family: var(--serif); font-size: 18px; color: var(--t100); margin-bottom: 12px; }
 .footer-brand span { color: var(--accent); }
 .footer-tagline { font-size: 13px; color: var(--t40); line-height: 1.6; max-width: 280px; }
@@ -622,7 +626,7 @@ html.light .theme-toggle .icon-moon { display: block; }
         <span class="faq-toggle">+</span>
       </div>
       <div class="faq-answer">
-        <p>After payment, answer the 60-second setup questions. If Square does not automatically send you back, go to thecalltaker.com/setup.html so we can configure your call taker from the basics you submit.</p>
+        <p>After Square confirms enrollment, setup opens automatically with the purchased plan locked. If that transition fails, contact support instead of opening an unverified setup link.</p>
       </div>
     </div>
 
@@ -632,7 +636,7 @@ html.light .theme-toggle .icon-moon { display: block; }
         <span class="faq-toggle">+</span>
       </div>
       <div class="faq-answer">
-        <p>After payment, the setup questions take about 60 seconds. We only need the basics to configure your call taker and start the internal build.</p>
+        <p>After confirmed enrollment, the setup questions take about 60 seconds. We only need the basics to configure your call taker and start the internal build.</p>
       </div>
     </div>
 
@@ -662,7 +666,7 @@ html.light .theme-toggle .icon-moon { display: block; }
         <span class="faq-toggle">+</span>
       </div>
       <div class="faq-answer">
-        <p>Choose a plan, continue to secure Square checkout, then answer the 60-second setup questions after payment. The internal build starts from the basics you submit.</p>
+        <p>Choose a plan, continue to secure Square checkout, then answer the 60-second setup questions after confirmed enrollment. The internal build starts from the basics you submit.</p>
       </div>
     </div>
 
@@ -875,7 +879,7 @@ html.light .theme-toggle .icon-moon { display: block; }
   </div>
   <br>
   <a href="/pre-checkout.html?plan=full247&source=faq" class="cta-pilot" data-tct-event="pricing_plan_click" data-tct-page="faq" data-tct-plan="full247" data-tct-cta="Start Free Trial" data-tct-destination="precheckout" data-tct-source="faq" data-tct-learning-tag="plan_interest">Start Free Trial &rarr;</a>
-  <p style="margin-top:14px;font-size:13px;color:var(--t40);"><a href="/setup.html?source=faq" style="color:var(--accent);text-decoration:none;font-weight:600;">Open setup questions after payment</a></p>
+  <p style="margin-top:14px;font-size:13px;color:var(--t40);">Setup opens automatically after confirmed enrollment.</p>
 </section>
 
 <!-- FOOTER -->

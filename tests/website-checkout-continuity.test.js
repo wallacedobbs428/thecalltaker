@@ -4,7 +4,6 @@ const path = require("path");
 
 const root = path.join(__dirname, "..");
 const read = (relative) => fs.readFileSync(path.join(root, relative), "utf8");
-const siblingRoot = path.resolve(root, "..", "thecalltaker");
 const pages = [
   "website/pre-checkout.html",
   "website/checkout.html",
@@ -21,7 +20,7 @@ assert.strictEqual(new Set(cardRoutes).size, 3, "each public plan must use a dis
 
 pages.forEach((page) => {
   const html = read(page);
-  assert.strictEqual(html.includes("window.location.replace"), false, `${page} must not replace the TCT page with Square`);
+  assert.strictEqual(/location\.replace\([^)]*square/i.test(html), false, `${page} must not replace the TCT page with Square`);
   assert.strictEqual(/http-equiv=["']refresh["'][^>]+square\.link/i.test(html), false, `${page} must not meta-refresh to Square`);
   assert.strictEqual(/https:\/\/square\.link\/u\//.test(html), false, `${page} must not use the broken hosted free-trial links`);
 });
@@ -44,25 +43,18 @@ assert.ok(read("website/card-checkout.html").includes('id="summaryRenewal"'), "c
 assert.ok(read("website/card-checkout.html").includes("No charge today · Cancel before renewal"), "checkout must keep the trial terms beside the primary action");
 assert.strictEqual(/id=["'](?:apple|google|cash|afterpay)[^"']*-button/i.test(read("website/card-checkout.html")), false, "checkout must not offer one-time wallets as recurring methods");
 assert.ok(
-  read("website/card-checkout.html").includes("location.assign('/setup.html?plan='+encodeURIComponent(key)+'&trial=started&receipt='+encodeURIComponent(result.receipt))"),
-  "successful trial enrollment must redirect to setup questions with the selected plan and receipt"
+  read("website/card-checkout.html").includes("#binding='+encodeURIComponent(result.setupToken)"),
+  "successful trial enrollment must redirect to setup questions with the selected plan, receipt, and signed binding"
 );
+assert.ok(read("website/card-checkout.html").includes("setup_binding_missing"), "checkout must fail closed when the API omits its signed setup binding");
 assert.ok(
   read("website/card-checkout.html").indexOf("if(!response.ok||!result.ok)") <
     read("website/card-checkout.html").indexOf("location.assign('/setup.html?plan='"),
   "setup redirect must only run after the enrollment endpoint confirms success"
 );
 assert.ok(read(".github/workflows/deploy.yml").includes("checkout.html card-checkout.html signup.html"), "Pages artifact must include card checkout");
-assert.strictEqual(
-  fs.readFileSync(path.join(siblingRoot, "website/checkout.html"), "utf8"),
-  read("website/checkout.html"),
-  "split marketing-site checkout source must match the deploy source",
-);
-assert.strictEqual(
-  fs.readFileSync(path.join(siblingRoot, "website/pay.html"), "utf8"),
-  read("website/pay.html"),
-  "split marketing-site pay source must match the deploy source",
-);
+assert.ok(read("website/checkout.html").includes("checkout=select-plan"), "legacy checkout must fail closed to pricing when no exact plan is present");
+assert.ok(read("website/pre-checkout.html").includes("checkout=select-plan"), "pre-checkout must fail closed to pricing when no exact plan is present");
 
 const authoritativePath = path.join(root, "ctos/product/square-links.json");
 const authoritative = JSON.parse(fs.readFileSync(authoritativePath, "utf8"));

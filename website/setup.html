@@ -121,6 +121,10 @@
     .setup-form-message { border: 1px solid rgba(0,220,130,0.24); background: rgba(0,220,130,0.08); color: var(--text-2); border-radius: 8px; padding: 13px 15px; font-size: 14px; line-height: 1.5; margin-bottom: 22px; }
     .setup-form-message[data-state="error"] { border-color: rgba(220,38,38,0.28); background: rgba(220,38,38,0.08); color: #fca5a5; }
     html.light .setup-form-message[data-state="error"] { color: #991b1b; }
+    .setup-plan-lock { display: grid; gap: 5px; min-height: 50px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+    .setup-plan-lock strong { color: var(--text-1); font-size: 15px; }
+    .setup-plan-lock small { color: var(--text-3); }
+    .setup-access-blocked { border-color: rgba(153,27,27,0.28); background: rgba(153,27,27,0.06); }
     .setup-checkpoint-card { border: 1px solid rgba(220,38,38,0.22); border-radius: 12px; padding: 18px; background: rgba(220,38,38,0.06); }
     .setup-checkpoint-card h2 { color: var(--text-1); font-size: 18px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -0.02em; }
     .setup-checklist { display: grid; gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; }
@@ -211,11 +215,11 @@
     <div class="wrap">
       <div class="setup-kicker">After checkout</div>
       <h1>Answer your setup questions.</h1>
-      <p>This takes about 60 seconds. We only need the basics to configure your call taker.</p>
-      <div class="setup-note">Already paid? You are in the right place. If Square did not send you back automatically, answer these setup questions so the internal build can start. We may still verify your checkout reference before configuration is completed.</div>
-      <div class="setup-handoff-card" aria-label="Already checked out handoff">
-        <strong>Already paid?</strong>
-        <p>After payment, answer the setup questions at <a href="https://thecalltaker.com/setup.html">thecalltaker.com/setup.html</a>. We only ask for launch-critical details: business, contact, answer mode, hours, service area, call types, urgent rules, summary destination, urgent action, forwarding ability, and hard rules.</p>
+      <p>This short form collects the launch-critical details needed to prepare your call flow.</p>
+      <div class="setup-note">Setup unlocks only after Square confirms enrollment and returns a signed plan binding. The purchased plan is attached automatically and cannot be changed on this page.</div>
+      <div class="setup-handoff-card" aria-label="Confirmed checkout handoff">
+        <strong>What you will provide</strong>
+        <p>Business identity, answer mode, hours, service area, top call types, urgent-call rules, summary destination, forwarding readiness, and hard limits. Live routing still requires review and test-call confirmation.</p>
       </div>
       <a href="#tct-setup-form" class="btn btn-primary btn-lg" data-tct-event="setup_form_started" data-tct-page="setup" data-tct-cta="Start setup questions" data-tct-destination="setup_questions" data-tct-learning-tag="setup_intent">Start setup questions</a>
       <div class="text-us-support text-us-support--plain" aria-label="Setup text support">
@@ -243,18 +247,19 @@
     <form class="setup-form" id="tct-setup-form" novalidate data-tct-form="setup" data-tct-page="setup" data-tct-event-start="setup_form_started" data-tct-event-submit="setup_form_submitted" data-tct-destination="confirmation" data-tct-learning-tag="setup_intent">
       <div class="setup-form-message" data-setup-form-message hidden></div>
       <input type="hidden" name="payment_verification_status" value="paid_unverified">
+      <input type="hidden" id="plan_purchased" name="plan_purchased" value="">
+      <input type="hidden" id="square_checkout_reference" name="square_checkout_reference" value="">
 
       <fieldset class="setup-section">
         <legend><span class="setup-step-heading"><span class="setup-step-badge">01</span><span class="setup-step-copy"><span class="setup-step-title">Business basics</span><span class="setup-step-subtitle">Plan, business, and best contact.</span></span></span></legend>
         <p>Use the details we need to identify the business and reach the setup contact.</p>
         <div class="setup-grid">
           <div class="setup-field">
-            <label for="plan_purchased">Plan paid for</label>
-            <select id="plan_purchased" name="plan_purchased" required>
-              <option value="$97 After-Hours Capture">$97 After-Hours Capture</option>
-              <option value="$497 Revenue Recovery System">$497 Revenue Recovery System</option>
-              <option value="$997+ Operational Infrastructure">$997+ Operational Infrastructure</option>
-            </select>
+            <label>Confirmed checkout plan</label>
+            <div class="setup-plan-lock" id="planPurchasedDisplay" role="status" aria-live="polite">
+              <strong>Confirming your plan…</strong>
+              <small>The plan comes from confirmed checkout and cannot be changed here.</small>
+            </div>
           </div>
           <div class="setup-field">
             <label for="business_name">Business name</label>

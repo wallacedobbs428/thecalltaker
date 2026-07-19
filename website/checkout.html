@@ -26,23 +26,17 @@
 </head>
 <body data-tct-view="checkout_continuity_view" data-tct-page="checkout">
 <main>
-  <h1>Checkout, then continue setup here.</h1>
-  <p>Square opens in a separate tab so this page stays available. A card is required. $0 is due today for a 14-day trial; unless canceled before renewal, your selected plan then renews monthly. Complete checkout there, then return here for setup.</p>
+  <h1>Taking you to secure checkout.</h1>
+  <p>This legacy route now preserves only an exact plan choice. If no valid plan was selected, you will return to pricing instead of being assigned a default.</p>
   <div class="plan" id="planLabel">Choose your selected plan</div>
-  <a class="button checkout" id="squareCheckoutButton" href="#plan-checkout-links" target="_blank" rel="noopener" data-tct-event="square_outbound_click" data-tct-destination="square">Select the exact Square checkout</a>
-  <section class="continuity" id="setupContinuity" hidden aria-live="polite" tabindex="-1">
-    <strong>Square opened in a separate tab.</strong>
-    <p>After you finish there, return to this page. This button does not verify or claim payment; verification remains separate.</p>
-    <a class="button setup" id="continueSetupButton" href="/setup.html?plan=full247">Payment complete — continue setup</a>
-    <p class="fine">If checkout was not completed, you can still submit setup details; they remain pending payment correlation.</p>
-  </section>
+  <a class="button checkout" id="squareCheckoutButton" href="/pricing.html#pricing-cards" data-tct-event="card_checkout_start" data-tct-destination="card_checkout">Continue</a>
   <div id="plan-checkout-links">
     <p>If the main button does not update, choose the exact plan:</p>
     <p><a href="/card-checkout.html?plan=afterhours">After-Hours Capture — $0 today, then $97/month after 14 days</a></p>
     <p><a href="/card-checkout.html?plan=full247">Revenue Recovery System — $0 today, then $497/month after 14 days</a></p>
     <p><a href="/card-checkout.html?plan=custom">Operational Infrastructure — $0 today, then $997 base/month after 14 days</a></p>
   </div>
-  <noscript><p>Choose the exact plan above. After checkout, continue to <a href="/setup.html">thecalltaker.com/setup.html</a>; setup remains pending billing verification.</p></noscript>
+  <noscript><p>Choose the exact plan above. Successful enrollment returns you to setup automatically.</p></noscript>
   <a class="back" href="/pricing.html">Back to plans</a>
 </main>
 <script>
@@ -57,32 +51,17 @@
       full247: "Revenue Recovery System — $0 today, then $497/mo after 14 days",
       custom: "Operational Infrastructure — $0 today, then $997 base/mo after 14 days"
     };
-    var aliases = {
-      "after-hours": "afterhours",
-      starter: "full247",
-      revenue: "full247",
-      premium: "custom",
-      pro: "custom",
-      operational: "custom"
-    };
     var params = new URLSearchParams(window.location.search || "");
-    var requested = (params.get("plan") || "full247").toLowerCase();
-    var plan = plans[requested] ? requested : (aliases[requested] || "full247");
+    var requested = (params.get("plan") || "").toLowerCase();
+    if (!plans[requested]) {
+      window.location.replace("/pricing.html?checkout=select-plan#pricing-cards");
+      return;
+    }
+    var plan = requested;
     var checkout = document.getElementById("squareCheckoutButton");
-    var continuation = document.getElementById("setupContinuity");
-    var setup = document.getElementById("continueSetupButton");
-    var setupUrl = new URL("/setup.html", window.location.origin);
-    setupUrl.searchParams.set("plan", plan);
-    var orderId = params.get("orderId") || params.get("order_id");
-    if (orderId && /^[A-Za-z0-9._:-]{1,160}$/.test(orderId)) setupUrl.searchParams.set("orderId", orderId);
     checkout.href = links[plan];
     checkout.setAttribute("data-tct-plan", plan);
-    setup.href = setupUrl.pathname + setupUrl.search;
     document.getElementById("planLabel").textContent = plans[plan];
-    checkout.addEventListener("click", function () {
-      continuation.hidden = false;
-      window.setTimeout(function () { continuation.focus(); }, 0);
-    });
   })();
 </script>
 </body>

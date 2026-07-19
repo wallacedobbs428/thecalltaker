@@ -231,14 +231,14 @@ cardRoutes.forEach((route) => {
   "Checkout, then 60-second setup.",
   "A card is required for the 14-day trial.",
   "Enter Card &amp; Start Free Trial",
-  "This button does not verify or claim payment",
+  "setup opens automatically",
 ].forEach((marker) => {
   assert.ok(pages["website/pre-checkout.html"].includes(marker), `pre-checkout should include trust marker: ${marker}`);
 });
 
 [
   "Pay through secure Square checkout.",
-  "If Square does not send you back",
+  "After Square confirms enrollment",
   "setup questions",
   "forwarding/testing",
 ].forEach((marker) => {
@@ -246,14 +246,14 @@ cardRoutes.forEach((route) => {
 });
 
 assert.ok(
-  pages["website/checkout.html"].includes("Payment complete — continue setup") &&
-    pages["website/pay.html"].includes("Payment complete — continue setup"),
-  "checkout fallback pages should send buyers to setup after Square"
+  !pages["website/checkout.html"].includes("Payment complete — continue setup") &&
+    pages["website/checkout.html"].includes("checkout=select-plan"),
+  "legacy checkout must not expose a buyer-controlled payment-complete bypass"
 );
 
 [
   "Setup progress",
-  "Already paid?",
+  "What you will provide",
   "Before we build",
   "Best mobile for urgent setup issues",
   "Submit setup questions",

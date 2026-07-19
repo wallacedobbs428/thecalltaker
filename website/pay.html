@@ -17,27 +17,9 @@
 <body>
 <main>
   <h1>After-Hours Capture checkout</h1>
-  <p>A card is required. $0 is due today for a 14-day trial, then After-Hours Capture renews at $97/month unless canceled before renewal. Square opens in a separate tab so this page stays available for setup afterward.</p>
+  <p>A card is required. $0 is due today for a 14-day trial, then After-Hours Capture renews at $97/month unless canceled before renewal. Successful enrollment opens the signed setup flow automatically.</p>
   <a class="button" id="squareCheckoutButton" href="/card-checkout.html?plan=afterhours">Enter card securely with Square</a>
-  <section id="setupContinuity" hidden aria-live="polite">
-    <strong>Square opened in a separate tab.</strong>
-    <p>After payment, answer the 60-second setup questions. This button does not verify or claim payment.</p>
-    <a class="button" id="continueSetupButton" href="/setup.html?plan=afterhours">Payment complete — continue setup</a>
-  </section>
   <a href="/pricing.html">Back to plans</a>
 </main>
-<script>
-  (function () {
-    var params = new URLSearchParams(window.location.search || "");
-    var setupUrl = new URL("/setup.html", window.location.origin);
-    setupUrl.searchParams.set("plan", "afterhours");
-    var orderId = params.get("orderId") || params.get("order_id");
-    if (orderId && /^[A-Za-z0-9._:-]{1,160}$/.test(orderId)) setupUrl.searchParams.set("orderId", orderId);
-    document.getElementById("continueSetupButton").href = setupUrl.pathname + setupUrl.search;
-    document.getElementById("squareCheckoutButton").addEventListener("click", function () {
-      document.getElementById("setupContinuity").hidden = false;
-    });
-  })();
-</script>
 </body>
 </html>

@@ -199,9 +199,9 @@ setupForm.REQUIRED_FIELDS.forEach((field) => {
 });
 
 assert.ok(
-  setupHtml.includes("This takes about 60 seconds") &&
-    setupHtml.includes("We may still verify your checkout reference"),
-  "setup form should be clear that checkout verification may still happen before configuration"
+  setupHtml.includes("Setup unlocks only after Square confirms enrollment") &&
+    setupHtml.includes("cannot be changed on this page"),
+  "setup form should be clear that a signed, locked checkout plan is required"
 );
 
 assert.ok(
@@ -216,7 +216,7 @@ assert.ok(
 
 assert.ok(
   setupHtml.includes("Answer your setup questions") &&
-    setupHtml.includes("If Square did not send you back automatically") &&
+    setupHtml.includes("signed plan binding") &&
     setupHtml.includes("Start setup questions"),
   "setup form should give paid buyers a clear post-checkout handoff"
 );
@@ -248,8 +248,8 @@ assert.strictEqual(
   "Submit setup questions",
   "No live phone routing starts from this page alone.",
   "setup-handoff-card",
-  "Already paid?",
-  "After payment, answer the setup questions at",
+  "What you will provide",
+  "Setup unlocks only after Square confirms enrollment",
   "Anything else can be tuned later.",
 ].forEach((marker) => {
   assert.ok(
@@ -495,11 +495,16 @@ assert.strictEqual(
   ["website/checkout.html", read("website/checkout.html")],
   ["website/pay.html", read("website/pay.html")],
 ].forEach(([page, html]) => {
-  assert.ok(
-    html.includes("setup.html"),
-    `${page} should include the public setup form path`
+  assert.strictEqual(
+    html.includes('href="/setup.html'),
+    false,
+    `${page} must not expose an unsigned direct setup bypass`
   );
 });
+assert.ok(
+  read("website/card-checkout.html").includes("#binding='+encodeURIComponent(result.setupToken)"),
+  "confirmed checkout must be the only public source of the signed setup route"
+);
 
 assert.ok(
   pricingHtml.includes("Do I need to know how to set up call forwarding?") &&

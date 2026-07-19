@@ -81,7 +81,7 @@
 <noscript><style>.reveal,.reveal-left,.reveal-right,.reveal-scale,.reveal-stagger>*{opacity:1!important;transform:none!important;}</style></noscript>
 <!-- Schema.org -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"The Call Taker","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI call answering that helps service businesses answer missed calls, collect caller details, and follow up faster.","url":"https://thecalltaker.com","telephone":"+16292699697","offers":{"@type":"AggregateOffer","lowPrice":"97","highPrice":"997","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my customers know it's not a real person?","acceptedAnswer":{"@type":"Answer","text":"Call (629) 269-9697 and judge it yourself. Gideon is designed to sound natural while The Call Taker configures the call flow from your business basics."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"After payment, answer the 60-second setup questions so we can configure your AI receptionist around your business basics, hours, service area, urgent-call rules, and summary destination."}},{"@type":"Question","name":"How does checkout work?","acceptedAnswer":{"@type":"Answer","text":"Choose a plan, continue to secure Square checkout, then answer the 60-second setup questions after payment. The internal build starts from the basics you submit."}}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"The Call Taker","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI call answering that helps service businesses answer missed calls, collect caller details, and follow up faster.","url":"https://thecalltaker.com","telephone":"+16292699697","offers":{"@type":"AggregateOffer","lowPrice":"97","highPrice":"997","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my customers know it's not a real person?","acceptedAnswer":{"@type":"Answer","text":"Call (629) 269-9697 and judge it yourself. Gideon is designed to sound natural while The Call Taker configures the call flow from your business basics."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"After confirmed enrollment, answer the 60-second setup questions so we can configure your AI receptionist around your business basics, hours, service area, urgent-call rules, and summary destination."}},{"@type":"Question","name":"How does checkout work?","acceptedAnswer":{"@type":"Answer","text":"Choose a plan, continue to secure Square checkout, then answer the 60-second setup questions after confirmed enrollment. The internal build starts from the basics you submit."}}]}]}
 </script>
 
 <style>
@@ -105,6 +105,13 @@
   --accent-glow: rgba(42,157,122,0.06);
   --amber: #d4943f;
   --green: #3ab894;
+  --gideon-section-bg: linear-gradient(180deg, #020504 0%, #08110d 100%);
+  --gideon-card-bg: rgba(5,13,10,0.96);
+  --gideon-card-border: rgba(42,157,122,0.22);
+  --gideon-copy: rgba(255,255,255,0.78);
+  --gideon-list-copy: rgba(255,255,255,0.9);
+  --gideon-divider: rgba(255,255,255,0.12);
+  --gideon-shadow: 0 28px 80px rgba(0,0,0,0.34);
   --serif: 'Inter', Georgia, serif;
   --mono: 'Inter', 'SF Mono', monospace;
 }
@@ -582,6 +589,13 @@ html.light {
   --accent-hover: #1a7a5c;
   --accent-soft: rgba(20,105,78,0.1);
   --accent-glow: rgba(20,105,78,0.06);
+  --gideon-section-bg: linear-gradient(180deg, #f5f3f0 0%, #eae7e2 100%);
+  --gideon-card-bg: #fff;
+  --gideon-card-border: rgba(20,105,78,0.18);
+  --gideon-copy: rgba(20,18,16,0.78);
+  --gideon-list-copy: rgba(20,18,16,0.9);
+  --gideon-divider: rgba(20,18,16,0.12);
+  --gideon-shadow: 0 24px 64px rgba(20,18,16,0.11);
 }
 
 html.light body::after { opacity: 0.15; }
@@ -2034,7 +2048,8 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
 .hero-secondary > .higgsfield-media-slot.is-approved { min-height: 520px; border-radius: 18px; }
 .gideon-portrait-section {
   padding: 72px 24px;
-  background: linear-gradient(180deg, #020504 0%, #08110d 100%);
+  background: var(--gideon-section-bg);
+  transition: background 0.25s ease;
 }
 .gideon-portrait-card {
   width: min(1120px, 100%);
@@ -2044,10 +2059,11 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   gap: 0;
   align-items: stretch;
   overflow: hidden;
-  border: 1px solid rgba(42,157,122,0.22);
+  border: 1px solid var(--gideon-card-border);
   border-radius: 24px;
-  background: rgba(5,13,10,0.96);
-  box-shadow: 0 28px 80px rgba(0,0,0,0.34);
+  background: var(--gideon-card-bg);
+  box-shadow: var(--gideon-shadow);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .gideon-portrait-card img {
   display: block;
@@ -2061,7 +2077,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   flex-direction: column;
   justify-content: center;
   padding: 42px;
-  border-left: 1px solid rgba(42,157,122,0.16);
+  border-left: 1px solid var(--gideon-divider);
 }
 .gideon-portrait-copy span {
   color: var(--accent-hover);
@@ -2072,10 +2088,11 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   text-transform: uppercase;
 }
 .gideon-portrait-copy h2 { margin: 12px 0 16px; max-width: 12ch; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.03; }
-.gideon-portrait-copy > p { margin: 0; color: rgba(255,255,255,0.72); line-height: 1.65; }
-.gideon-capabilities { display: grid; gap: 0; margin: 24px 0 0; padding: 0; list-style: none; border-top: 1px solid rgba(255,255,255,0.10); }
-.gideon-capabilities li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.10); color: rgba(255,255,255,0.88); font-size: 0.9rem; font-weight: 700; }
+.gideon-portrait-copy > p { margin: 0; color: var(--gideon-copy); line-height: 1.65; }
+.gideon-capabilities { display: grid; gap: 0; margin: 24px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--gideon-divider); }
+.gideon-capabilities li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--gideon-divider); color: var(--gideon-list-copy); font-size: 0.9rem; font-weight: 700; }
 .gideon-capabilities b { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(42,157,122,0.16); color: var(--accent-hover); font-family: var(--mono); font-size: 0.66rem; }
+.gideon-portrait-card:focus-within { outline: 3px solid var(--accent-soft); outline-offset: 4px; }
 @media (max-width: 900px) {
   .gideon-hero.service-selling { min-height: auto; padding-top: 98px; padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
   .gideon-hero.service-selling .g-service-inner {
@@ -2101,7 +2118,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   .gideon-portrait-section { padding: 44px 16px; }
   .gideon-portrait-card { grid-template-columns: 1fr; }
   .gideon-portrait-card img { min-height: 0; aspect-ratio: 16 / 10; object-position: center; }
-  .gideon-portrait-copy { padding: 28px 24px 30px; border-top: 1px solid rgba(42,157,122,0.16); border-left: 0; text-align: left; }
+  .gideon-portrait-copy { padding: 28px 24px 30px; border-top: 1px solid var(--gideon-divider); border-left: 0; text-align: left; }
   .gideon-portrait-copy h2 { max-width: 14ch; font-size: clamp(1.9rem, 9vw, 2.6rem); }
 }
 
@@ -2181,7 +2198,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
         <span class="g-status-sep">|</span>
         <span>LEADS CAPTURED</span>
         <span class="g-status-sep">|</span>
-        <span>TEAM ALERT SENT</span>
+        <span>SUMMARY PREPARED</span>
       </div>
 
       <div class="speech-bubble">
@@ -2207,11 +2224,11 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <div class="gideon-portrait-copy">
       <span>Meet Gideon</span>
       <h2 id="meetGideonTitle">A professional first response, every time.</h2>
-      <p>Gideon answers in your business's voice, captures why the caller reached out, and gives your team a clean next step.</p>
+      <p>Gideon follows the greeting and intake rules approved during setup, captures why the caller reached out, and prepares a clean next step for your team.</p>
       <ul class="gideon-capabilities" aria-label="What Gideon does">
         <li><b>01</b><span>Answers with your approved greeting</span></li>
         <li><b>02</b><span>Captures caller details and intent</span></li>
-        <li><b>03</b><span>Routes the follow-up to your team</span></li>
+        <li><b>03</b><span>Prepares the approved summary handoff</span></li>
       </ul>
     </div>
   </div>
@@ -2289,8 +2306,8 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <div style="font-family:var(--mono);font-size:10px;color:var(--t40);letter-spacing:0.1em;">CALL ANSWERING</div>
     </div>
     <div style="text-align:center;">
-      <div style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--t100);">24/7</div>
-      <div style="font-family:var(--mono);font-size:10px;color:var(--t40);letter-spacing:0.1em;">ALWAYS ON</div>
+      <div style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--t100);">Flexible</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--t40);letter-spacing:0.1em;">PLAN-BASED COVERAGE</div>
     </div>
     <div style="text-align:center;">
       <div style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--accent);">Clear</div>
@@ -2375,7 +2392,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
         <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:28px;">WITH THE CALL TAKER</div>
         <div style="display:flex;flex-direction:column;gap:20px;">
           <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Fast answer when Gideon gets the call</span></div>
-          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Gideon captures the job request and texts you details</span></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Gideon captures the request and prepares the approved summary handoff</span></div>
           <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Designed to sound natural and follow your rules</span></div>
           <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Starting at $97/mo for after-hours capture</span></div>
           <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:var(--accent);font-size:18px;line-height:1;">&#10003;</span><span style="color:var(--t100);font-size:14px;line-height:1.6;">Fewer missed calls. Faster follow-up.</span></div>
@@ -2405,13 +2422,13 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     </div>
     <div class="feature-card">
       <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><line x1="9" y1="10" x2="15" y2="10"/></svg></div>
-      <h3>Texts You Every Detail</h3>
-      <p>Instant text the moment a call ends. Name, number, issue, urgency. Everything you need to dispatch or follow up.</p>
+      <h3>Prepares a Clear Summary</h3>
+      <p>Name, callback number, reason for calling, and urgency are organized for the notification path approved during setup.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-      <h3>Handles Emergencies</h3>
-      <p>Burst pipe at 3 AM? Locked out at midnight? Gideon knows the difference between routine and urgent, and acts fast.</p>
+      <h3>Follows Urgent-Call Rules</h3>
+      <p>You define what counts as urgent. Gideon collects the critical details and follows the escalation or callback rule approved before launch.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
@@ -2420,8 +2437,8 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     </div>
     <div class="feature-card">
       <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
-      <h3>Never Calls In Sick</h3>
-      <p>Gideon can cover nights, weekends, busy hours, and overflow so callers do not disappear into voicemail.</p>
+      <h3>Matches Your Coverage Plan</h3>
+      <p>Configure after-hours, all-call, or overflow answering according to the plan and routing reviewed before launch.</p>
     </div>
   </div>
 </section>
@@ -2443,7 +2460,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Same way you'd forward to an employee, with forwarding and test-call steps sent after your setup packet.</p>
       <div style="margin-top:16px;background:var(--surface);border:1px solid var(--t06);border-radius:8px;padding:12px 16px;max-width:240px;margin-left:auto;margin-right:auto;">
         <div style="font-family:var(--mono);font-size:9px;color:var(--t20);letter-spacing:0.1em;margin-bottom:6px;">WORKS WITH</div>
-        <div style="font-size:12px;color:var(--t40);line-height:1.5;">iPhone, Android, Landline, VoIP. Any phone system</div>
+        <div style="font-size:12px;color:var(--t40);line-height:1.5;">Common mobile, landline, and VoIP systems. Compatibility confirmed during setup.</div>
       </div>
     </div>
 
@@ -2454,8 +2471,8 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">Gideon answers</h3>
       <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Follows your approved services, hours, and call questions. Sounds natural to callers.</p>
       <div style="margin-top:16px;background:var(--accent-soft);border:1px solid rgba(26,122,92,0.12);border-radius:8px;padding:12px 16px;max-width:240px;margin-left:auto;margin-right:auto;">
-        <div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.1em;margin-bottom:6px;">TRAINED ON</div>
-        <div style="font-size:12px;color:var(--t70);line-height:1.5;">Your services, hours, pricing, and service area</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.1em;margin-bottom:6px;">CONFIGURED AROUND</div>
+        <div style="font-size:12px;color:var(--t70);line-height:1.5;">Your approved services, hours, service area, and call rules</div>
       </div>
     </div>
 
@@ -2464,7 +2481,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
         <span style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--accent);letter-spacing:-0.02em;">03</span>
       </div>
       <h3 style="font-size:16px;font-weight:600;color:var(--t100);margin-bottom:8px;">You see the leads worth calling back</h3>
-      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">Text with name, number, what they need. Appointment requests captured.</p>
+      <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">A clear summary with name, number, what they need, and any appointment request captured.</p>
       <div style="margin-top:16px;background:var(--surface);border:1px solid var(--t06);border-radius:8px;padding:12px 16px;max-width:240px;margin-left:auto;margin-right:auto;">
         <div style="font-family:var(--mono);font-size:9px;color:var(--t20);letter-spacing:0.1em;margin-bottom:6px;">DELIVERED VIA</div>
         <div style="font-size:12px;color:var(--t40);line-height:1.5;">SMS, email, or connected business tools when approved</div>
@@ -2652,15 +2669,15 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <div class="live-counter-item">
       <div class="live-pulse"></div>
       <div>
-        <div class="live-counter-num">&lt; 2s</div>
-        <div class="live-counter-label">ANSWER TIME</div>
+        <div class="live-counter-num">Fast</div>
+        <div class="live-counter-label">CALL RESPONSE</div>
       </div>
     </div>
     <div class="live-divider"></div>
     <div class="live-counter-item">
       <div>
-        <div class="live-counter-num">24/7</div>
-        <div class="live-counter-label">AVAILABILITY</div>
+        <div class="live-counter-num">Plan</div>
+        <div class="live-counter-label">BASED COVERAGE</div>
       </div>
     </div>
     <div class="live-divider"></div>
@@ -2754,7 +2771,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <div id="liveTranscript" style="display:flex;flex-direction:column;gap:14px;">
       <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--accent);min-width:48px;padding-top:3px;">Gideon</span><span style="font-size:14px;color:var(--t70);line-height:1.6;">"Thanks for calling! This is Gideon. How can I help you tonight?"</span></div></div>
       <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--t20);min-width:48px;padding-top:3px;">CALLER</span><span style="font-size:14px;color:var(--t40);line-height:1.6;">"Hey, my AC just stopped working. It's like 90 in here and I have a baby."</span></div></div>
-      <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--accent);min-width:48px;padding-top:3px;">Gideon</span><span style="font-size:14px;color:var(--t70);line-height:1.6;">"I'm so sorry about that, especially with a baby. Let me get an emergency tech out to you. Can I grab your name and address?"</span></div></div>
+      <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--accent);min-width:48px;padding-top:3px;">Gideon</span><span style="font-size:14px;color:var(--t70);line-height:1.6;">"I'm sorry about that, especially with a baby. I'll capture this as urgent so the team can confirm the next opening. Can I grab your name and address?"</span></div></div>
       <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--t20);min-width:48px;padding-top:3px;">CALLER</span><span style="font-size:14px;color:var(--t40);line-height:1.6;">"A homeowner on the east side."</span></div></div>
       <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--accent);min-width:48px;padding-top:3px;">Gideon</span><span style="font-size:14px;color:var(--t70);line-height:1.6;">"Got it. I've captured the urgent request and will send the details so the team can confirm the next opening."</span></div></div>
       <div class="tx-line" style="opacity:0;transform:translateY(8px);"><div style="display:flex;gap:12px;"><span style="font-family:var(--mono);font-size:9px;color:var(--t20);min-width:48px;padding-top:3px;">CALLER</span><span style="font-size:14px;color:var(--t40);line-height:1.6;">"Wow, that was fast. Thanks."</span></div></div>
@@ -2799,11 +2816,11 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <p class="reveal" style="text-align:center;color:var(--t40);font-size:15px;margin-bottom:16px;">Choose a plan, enter a card through secure Square checkout, then answer the 60-second setup questions so the internal build can start.</p>
   <p class="reveal" style="text-align:center;color:var(--t70);font-size:13px;margin:0 auto 16px;max-width:760px;">Current billing model: $0 due today for a 14-day card-backed trial. Unless canceled before renewal, the selected plan renews monthly at $97, $497, or the approved $997 base amount. Custom scope above $997 requires a separate exact quote.</p>
   <div class="reveal" style="text-align:center;margin-bottom:64px;">
-    <div class="urgency-badge"><span class="urgency-dot"></span>60-second setup questions after payment, then internal build and test-call steps</div>
+    <div class="urgency-badge"><span class="urgency-dot"></span>60-second setup questions after confirmed enrollment, then internal build and test-call steps</div>
   </div>
   <div class="form-setup-steps reveal">
     <div style="border:1px solid var(--t10);border-radius:12px;padding:18px;background:var(--surface);"><div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.12em;margin-bottom:8px;">1 / CHECKOUT</div><p style="color:var(--t70);font-size:13px;line-height:1.6;">Pick the plan and continue to secure Square checkout.</p></div>
-    <div style="border:1px solid var(--t10);border-radius:12px;padding:18px;background:var(--surface);"><div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.12em;margin-bottom:8px;">2 / SETUP QUESTIONS</div><p style="color:var(--t70);font-size:13px;line-height:1.6;">After payment, answer the 60-second setup questions: answer mode, hours, service area, call types, urgent rules, summary destination, urgent action, forwarding ability, and hard limits. <a href="/setup.html" style="color:var(--accent);font-weight:700;text-decoration:none;">Open setup questions after payment</a>.</p></div>
+    <div style="border:1px solid var(--t10);border-radius:12px;padding:18px;background:var(--surface);"><div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.12em;margin-bottom:8px;">2 / SETUP QUESTIONS</div><p style="color:var(--t70);font-size:13px;line-height:1.6;">After Square confirms enrollment, setup opens automatically with the purchased plan locked. You provide hours, service area, call types, urgent rules, summary destination, forwarding ability, and hard limits.</p></div>
     <div style="border:1px solid var(--t10);border-radius:12px;padding:18px;background:var(--surface);"><div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.12em;margin-bottom:8px;">3 / LIVE CALLS</div><p style="color:var(--t70);font-size:13px;line-height:1.6;">We configure, onboard, test, then you forward calls when ready.</p></div>
   </div>
 
@@ -2817,13 +2834,13 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <ul class="price-features">
         <li>Gideon answers after-hours calls</li>
         <li>Captures caller details and urgency</li>
-        <li>Sends clear lead summaries</li>
+        <li>Prepares the approved summary handoff</li>
         <li>Flags emergency or high-intent calls</li>
         <li>Simple appointment request capture</li>
         <li>Best when you only need closed-hours coverage</li>
       </ul>
       <a href="/pre-checkout.html?plan=afterhours&source=home-pricing" class="btn btn-outline price-cta" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-plan="afterhours" data-tct-cta="Start Free Trial" data-tct-destination="precheckout" data-tct-source="home-pricing" data-tct-learning-tag="plan_interest">Start Free Trial</a>
-      <a href="/setup.html?plan=afterhours" style="display:block;text-align:center;color:var(--t40);font-size:12px;margin-top:10px;text-decoration:none;">Setup questions after payment</a>
+      <p style="text-align:center;color:var(--t40);font-size:12px;margin-top:10px;">Confirmed checkout opens setup automatically.</p>
     </div>
     <div class="price-card featured">
       <div class="price-badge">MOST POPULAR</div>
@@ -2835,15 +2852,15 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <ul class="price-features">
         <li>Everything in After-Hours Capture</li>
         <li>24/7 and overflow call capture</li>
-        <li>Missed-call follow-up support</li>
-        <li>Speed-to-lead support</li>
-        <li>Lead text notifications</li>
-        <li>Hot-lead team notifications</li>
-        <li>Monthly call summary report</li>
-        <li>Keeps working after the call</li>
+        <li>Expanded caller qualification</li>
+        <li>Approved notification path</li>
+        <li>Appointment request capture</li>
+        <li>Urgency labels for team review</li>
+        <li>Call-pattern review when configured</li>
+        <li>Broader coverage than after-hours only</li>
       </ul>
       <a href="/pre-checkout.html?plan=full247&source=home-pricing" class="btn btn-primary price-cta" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-plan="full247" data-tct-cta="Start Free Trial" data-tct-destination="precheckout" data-tct-source="home-pricing" data-tct-learning-tag="plan_interest"><span>Start Free Trial</span></a>
-      <a href="/setup.html?plan=full247" style="display:block;text-align:center;color:var(--t40);font-size:12px;margin-top:10px;text-decoration:none;">Setup questions after payment</a>
+      <p style="text-align:center;color:var(--t40);font-size:12px;margin-top:10px;">Confirmed checkout opens setup automatically.</p>
     </div>
     <div class="price-card">
       <div class="price-badge amber">WHITE GLOVE</div>
@@ -2853,17 +2870,17 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <div class="price-desc">$0 today for 14 days, then $997 base monthly; custom scope quoted separately</div>
       <div class="price-line"></div>
       <ul class="price-features">
-        <li>Everything in Revenue Recovery System</li>
+        <li>Revenue Recovery coverage foundation</li>
         <li>Custom call-flow design</li>
-        <li>Fast follow-up setup</li>
-        <li>Approved tool connections</li>
-        <li>Reminder and follow-up logic</li>
+        <li>Custom handoff and escalation design</li>
+        <li>Tool connections after feasibility review</li>
+        <li>Follow-up logic when included in scope</li>
         <li>Clear owner notification plan</li>
         <li>Simple call review notes when available</li>
         <li>Founder review before launch</li>
       </ul>
       <a href="/pre-checkout.html?plan=custom&source=home-pricing" class="btn btn-outline price-cta" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-plan="custom" data-tct-cta="Start Free Trial" data-tct-destination="precheckout" data-tct-source="home-pricing" data-tct-learning-tag="plan_interest">Start Free Trial</a>
-      <a href="/setup.html?plan=custom" style="display:block;text-align:center;color:var(--t40);font-size:12px;margin-top:10px;text-decoration:none;">Setup questions after payment</a>
+      <p style="text-align:center;color:var(--t40);font-size:12px;margin-top:10px;">Confirmed checkout opens setup automatically.</p>
     </div>
   </div>
   <p style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--t20);margin-top:32px;letter-spacing:0.05em;">SECURE SQUARE CHECKOUT &middot; 60-SECOND SETUP QUESTIONS &middot; ONBOARDING BEFORE LIVE CALLS</p>
@@ -2878,13 +2895,13 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <!-- Human -->
       <div style="text-align:center;">
         <div style="font-family:var(--mono);font-size:9px;color:rgba(200,80,60,0.85);letter-spacing:0.1em;margin-bottom:12px;">HUMAN RECEPTIONIST</div>
-        <div style="font-family:var(--serif);font-size:36px;color:var(--t100);">$2,800</div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--t20);">/month</div>
+        <div style="font-family:var(--serif);font-size:36px;color:var(--t100);">Varies</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--t20);">BY MARKET &amp; ROLE</div>
         <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;text-align:left;">
           <span style="font-size:12px;color:var(--t20);">+ Sick days &amp; vacation</span>
           <span style="font-size:12px;color:var(--t20);">+ Training costs</span>
           <span style="font-size:12px;color:var(--t20);">+ Benefits &amp; payroll tax</span>
-          <span style="font-size:12px;color:var(--t20);">+ Only works 8 hours/day</span>
+          <span style="font-size:12px;color:var(--t20);">+ Coverage depends on staffing</span>
         </div>
       </div>
       <!-- VS -->
@@ -2921,7 +2938,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <div class="faq-item"><div class="faq-q">What does Gideon actually sound like?</div><div class="faq-a"><p>Gideon is designed to sound natural while asking the questions you approve. Call (629) 269-9697 and judge the live demo yourself.</p></div></div>
     <div class="faq-item"><div class="faq-q">Can it handle appointment requests?</div><div class="faq-a"><p>It captures their name, number, what they need, and the requested timing. Direct calendar booking is available only when it is included in the plan you approve.</p></div></div>
     <div class="faq-item"><div class="faq-q">What if the caller needs a real person?</div><div class="faq-a"><p>Gideon follows your approved escalation rules. If someone needs your team, it collects the context and sends the next step to the right person.</p></div></div>
-    <div class="faq-item"><div class="faq-q">How fast can I get set up?</div><div class="faq-a"><p>After payment, the setup questions take about 60 seconds. We use those basics to configure your call flow, summary rules, urgent action, forwarding ability, and forwarding/testing instructions.</p></div></div>
+    <div class="faq-item"><div class="faq-q">How fast can I get set up?</div><div class="faq-a"><p>After confirmed enrollment, the setup questions take about 60 seconds. We use those basics to configure your call flow, summary rules, urgent action, forwarding ability, and forwarding/testing instructions.</p></div></div>
     <div class="faq-item"><div class="faq-q">How does checkout work?</div><div class="faq-a"><p>You choose the plan, enter a card through Square, and start a 14-day trial with $0 due today. Unless canceled before renewal, the selected plan renews monthly. Setup submission does not by itself verify billing or activate service.</p></div></div>
     <div class="faq-item"><div class="faq-q">How is this different from a regular answering service?</div><div class="faq-a"><p>Traditional answering services often stop at taking a message. Gideon asks your approved questions, collects the details, and sends a useful summary so your team knows what to do next.</p></div></div>
     <div class="faq-item"><div class="faq-q">Can it connect with my existing tools?</div><div class="faq-a"><p>Yes, on custom plans. We review your calendar, CRM, and scheduling tools before promising a direct connection so the setup stays reliable.</p></div></div>

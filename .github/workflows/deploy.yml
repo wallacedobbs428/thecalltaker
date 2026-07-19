@@ -83,6 +83,11 @@ jobs:
             cp -p "website/after-hours-answering-service/index.html" "$CLEAN/after-hours-answering-service/index.html"
           fi
 
+          mkdir -p "$CLEAN/pilot"
+          if [ -f "website/pilot/index.html" ]; then
+            cp -p "website/pilot/index.html" "$CLEAN/pilot/index.html"
+          fi
+
           find "$CLEAN" -type f -name '*.html' -print0 | xargs -0 perl -0pi -e 's/href=("|'\'')services\.html\1/href="\/pricing.html"/g; s/href=("|'\'')calculator\.html\1/href="\/pricing.html"/g; s/href=("|'\'')your-audit\.html\1/href="\/pricing.html"/g; s/href=("|'\'')book\.html\1/href="\/demo.html"/g; s/>Services</>Pricing</g; s/>Calculator</>Pricing</g; s/>Get a Free Audit</>View Pricing</g; s/>Book a Demo</>View Demo</g;'
 
           if find "$CLEAN" -type f \( -name '*.md' -o -name '.env*' -o -name '*.pem' -o -name '*.key' -o -iname '*secret*' -o -iname '*credential*' -o -path '*/client-portal/*' -o -path '*/ads/*' -o -path '*/tests/*' -o -path '*/tools/*' -o -path '*/scripts/*' -o -name '*backup*' -o -name '*vault*' \) | grep -q .; then

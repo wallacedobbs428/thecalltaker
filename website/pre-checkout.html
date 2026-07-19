@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secure checkout handoff - The Call Taker</title>
-  <meta name="description" content="Continue from The Call Taker pricing to secure Square checkout, then answer the 60-second setup questions after payment.">
+  <meta name="description" content="Continue from The Call Taker pricing to secure Square checkout, then answer the 60-second setup questions after confirmed enrollment.">
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="https://thecalltaker.com/pre-checkout.html">
   <link rel="manifest" href="site.webmanifest">
@@ -252,7 +252,7 @@
       <div>
         <div class="eyebrow">Secure Square checkout</div>
         <h1 id="handoffTitle">Checkout, then 60-second setup.</h1>
-        <p class="subtitle">Checkout is handled securely through Square. A card is required for the 14-day trial. After checkout, you’ll answer the short setup questions we need to configure your call taker.</p>
+        <p class="subtitle">Checkout is handled securely through Square. A card is required for the 14-day trial. After checkout, you’ll answer the short setup questions; after successful enrollment, setup opens automatically with the purchased plan locked.</p>
         <div class="plan-pill" id="planPill">Loading plan</div>
 
         <ol class="steps" aria-label="What happens next">
@@ -275,13 +275,8 @@
         <p class="summary-label">Selected plan</p>
         <p class="summary-plan" id="planName">Choose your selected plan</p>
         <p class="summary-price" id="planPrice">Plan and price appear here before Square checkout.</p>
-        <a class="checkout-button" id="checkoutButton" href="/card-checkout.html?plan=full247" data-tct-event="card_checkout_start" data-tct-page="precheckout" data-tct-cta="Start Free Trial" data-tct-destination="card_checkout" data-tct-learning-tag="square_intent">Enter Card &amp; Start Free Trial</a>
+        <a class="checkout-button" id="checkoutButton" href="/pricing.html#pricing-cards" data-tct-event="card_checkout_start" data-tct-page="precheckout" data-tct-cta="Start Free Trial" data-tct-destination="card_checkout" data-tct-learning-tag="square_intent">Enter Card &amp; Start Free Trial</a>
         <p class="reassurance">$0 is due today. Unless canceled before renewal, your selected plan renews monthly after 14 days. This page stays open so you can return for setup.</p>
-        <section class="continuity-panel" id="setupContinuity" hidden aria-live="polite" tabindex="-1">
-          <strong>Square opened in a separate tab.</strong>
-          <p>After you finish there, return here. This button does not verify or claim payment; verification remains separate.</p>
-          <a class="checkout-button setup-button" id="continueSetupButton" href="/setup.html?plan=full247" data-tct-event="setup_continuation_click" data-tct-page="precheckout" data-tct-cta="Payment complete — continue setup" data-tct-destination="setup" data-tct-learning-tag="setup_intent">Payment complete — continue setup</a>
-        </section>
         <div class="fine-print">
           <p>Card entry and storage are handled securely by Square. Apple Pay and Google Pay cannot supply the reusable card-on-file required for this recurring free trial.</p>
           <p>You do not need to change your phone system yet. We guide setup and forwarding after your setup questions are submitted.</p>
@@ -321,32 +316,20 @@
           price: "$0 today for 14 days, then $997 base/month; custom scope is quoted separately."
         }
       };
-      var aliases = {
-        "after-hours": "afterhours",
-        starter: "full247",
-        revenue: "full247",
-        premium: "custom",
-        pro: "custom",
-        operational: "custom"
-      };
       var params = new URLSearchParams(window.location.search);
-      var requestedPlan = (params.get("plan") || "full247").toLowerCase();
-      var planKey = plans[requestedPlan] ? requestedPlan : (aliases[requestedPlan] || "full247");
+      var requestedPlan = (params.get("plan") || "").toLowerCase();
+      if (!plans[requestedPlan]) {
+        window.location.replace("/pricing.html?checkout=select-plan#pricing-cards");
+        return;
+      }
+      var planKey = requestedPlan;
       var plan = plans[planKey];
       var button = document.getElementById("checkoutButton");
-      var continuation = document.getElementById("setupContinuity");
-      var setupButton = document.getElementById("continueSetupButton");
-      var setupUrl = new URL("/setup.html", window.location.origin);
-      setupUrl.searchParams.set("plan", planKey);
-      var orderId = params.get("orderId") || params.get("order_id");
-      if (orderId && /^[A-Za-z0-9._:-]{1,160}$/.test(orderId)) setupUrl.searchParams.set("orderId", orderId);
       document.getElementById("planPill").textContent = plan.pill;
       document.getElementById("planName").textContent = plan.name;
       document.getElementById("planPrice").textContent = plan.price;
       button.href = cardCheckoutRoutes[planKey];
       button.setAttribute("data-tct-plan", planKey);
-      setupButton.href = setupUrl.pathname + setupUrl.search;
-      setupButton.setAttribute("data-tct-plan", planKey);
       document.body.classList.add("js-ready");
 
       var dryRunEvents = window.__tctFunnelEvents = window.__tctFunnelEvents || [];
@@ -369,10 +352,6 @@
       document.addEventListener("click", function (event) {
         var target = event.target && event.target.closest ? event.target.closest("[data-tct-event]") : null;
         if (!target) return;
-        if (target.getAttribute("data-tct-event") === "square_outbound_click") {
-          continuation.hidden = false;
-          window.setTimeout(function () { continuation.focus(); }, 0);
-        }
         var payload = buildDryRunPayload(target.getAttribute("data-tct-event"), target);
         dryRunEvents.push(payload);
         document.dispatchEvent(new CustomEvent("tct:funnel-event", { detail: payload }));

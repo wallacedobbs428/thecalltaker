@@ -86,7 +86,7 @@
     "Pacific/Honolulu"
   ];
 
-  var SETUP_PACKET_ENDPOINT = "https://thecalltaker.vercel.app/api/public/lead";
+  var SETUP_PACKET_ENDPOINT = "https://call-taker-os.vercel.app/api/public/setup-intake";
 
   function trim(value) {
     return String(value == null ? "" : value).trim();
@@ -119,7 +119,22 @@
   function planFromQuery(search) {
     var params = new URLSearchParams(search || "");
     var plan = params.get("plan") || params.get("tier") || "";
-    return normalizePlan(plan) || PLAN_OPTIONS[1];
+    return normalizePlan(plan);
+  }
+
+  function trialReceiptFromQuery(search) {
+    var params = new URLSearchParams(search || "");
+    var receipt = trim(params.get("receipt"));
+    return params.get("trial") === "started" && /^[a-f0-9]{64}$/i.test(receipt) ? receipt.toLowerCase() : "";
+  }
+
+  function setupBindingToken(hash) {
+    var params = new URLSearchParams(String(hash || "").replace(/^#/, ""));
+    var token = trim(params.get("binding"));
+    if (!token) {
+      try { token = trim(root.sessionStorage && root.sessionStorage.getItem("tct_setup_binding")); } catch (error) { token = ""; }
+    }
+    return /^v1\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(token) ? token : "";
   }
 
   function paymentStatusFromInput(value) {
@@ -192,7 +207,7 @@
       ai_greeting_preference: trim(data.ai_greeting_preference),
       forwarding_ability: forwardingAbility,
       authorized_to_configure_forwarding: normalizeBoolean(data.authorized_to_configure_forwarding),
-      square_checkout_reference: emptyToNull(data.square_checkout_reference || params.get("checkout") || params.get("reference")),
+      square_checkout_reference: emptyToNull(data.square_checkout_reference || trialReceiptFromQuery(params.toString())),
       square_order_id: emptyToNull(data.square_order_id || params.get("orderId") || params.get("order_id")),
       square_payment_id: emptyToNull(data.square_payment_id || params.get("paymentId") || params.get("payment_id")),
       payment_verification_status: paymentStatusFromInput(data.payment_verification_status),
@@ -363,7 +378,8 @@
       setup_readiness_score: response.setup_readiness_score,
       setup_packet: payload,
       payment_verification_status: payload.payment_verification_status,
-      submitted_at: payload.submitted_at
+      submitted_at: payload.submitted_at,
+      setup_binding_token: setupBindingToken(root.location && root.location.hash)
     };
   }
 
@@ -415,11 +431,17 @@
 
   function initPlanSelection() {
     if (!root.document) return;
-    var select = root.document.querySelector("[name='plan_purchased']");
-    if (!select) return;
+    var field = root.document.querySelector("[name='plan_purchased']");
+    var display = root.document.getElementById("planPurchasedDisplay");
+    var receiptField = root.document.querySelector("[name='square_checkout_reference']");
+    if (!field) return;
     var plan = planFromQuery(root.location.search);
-    if (PLAN_OPTIONS.indexOf(plan) !== -1) {
-      select.value = plan;
+    var receipt = trialReceiptFromQuery(root.location.search);
+    field.value = PLAN_OPTIONS.indexOf(plan) !== -1 ? plan : "";
+    if (receiptField) receiptField.value = receipt;
+    if (display) {
+      display.querySelector("strong").textContent = field.value || "Checkout confirmation required";
+      display.classList.toggle("setup-access-blocked", !field.value || !receipt);
     }
   }
 
@@ -429,6 +451,15 @@
 
     var form = root.document.getElementById("tct-setup-form");
     if (!form) return;
+    var purchasedPlan = planFromQuery(root.location.search);
+    var trialReceipt = trialReceiptFromQuery(root.location.search);
+    var bindingToken = setupBindingToken(root.location.hash);
+    if (PLAN_OPTIONS.indexOf(purchasedPlan) === -1 || !trialReceipt || !bindingToken) {
+      var submitButton = form.querySelector("button[type='submit']");
+      if (submitButton) submitButton.disabled = true;
+      showFormMessage("A signed checkout confirmation is required before setup. Return to pricing and complete the exact plan checkout; setup will open automatically after Square confirms enrollment.", "error");
+      return;
+    }
 
     form.addEventListener("submit", function (event) {
       event.preventDefault();
@@ -448,16 +479,15 @@
       var response = deriveSetupResponse(payload);
 
       submitSetupPacket(payload, response).then(function (intake) {
-        response.intake_status = intake.ok ? "ctos_packet_received" : "manual_followup_required";
+        if (!intake.ok) throw new Error(intake.reason || "setup_packet_intake_failed");
+        response.intake_status = "ctos_packet_received";
         response.intake_id = intake.id || null;
         response.intake_forwarded = intake.forwarded === true;
-      }).catch(function (error) {
-        response.intake_status = "manual_followup_required";
-        response.intake_error = String(error && error.message ? error.message : error).slice(0, 160);
       }).then(function () {
         try {
           root.sessionStorage.setItem("tct_setup_payload", JSON.stringify(payload));
           root.sessionStorage.setItem("tct_setup_receipt", JSON.stringify(response));
+          root.sessionStorage.removeItem("tct_setup_binding");
         } catch (error) {
           // Private browsing can block storage; the confirmation page still works from the URL.
         }
@@ -469,6 +499,9 @@
           next += "&intake_id=" + encodeURIComponent(response.intake_id);
         }
         root.location.assign(next);
+      }).catch(function () {
+        form.dataset.submitting = "false";
+        showFormMessage("Your setup answers are still here, but the secure intake did not confirm receipt. Do not start another checkout. Please retry this setup submission or contact support.", "error");
       });
     });
   }
@@ -521,6 +554,8 @@
     deriveSetupResponse: deriveSetupResponse,
     submitSetupPacket: submitSetupPacket,
     planFromQuery: planFromQuery,
+    trialReceiptFromQuery: trialReceiptFromQuery,
+    setupBindingToken: setupBindingToken,
     initSetupForm: initSetupForm,
     initConfirmationPage: initConfirmationPage
   };

@@ -161,12 +161,13 @@
   (function(){
     var API='https://call-taker-os.vercel.app/api/public/square-trial';
     var plans={afterhours:{name:'After-Hours Capture',amount:'97.00',renewal:'$97/month unless canceled.'},full247:{name:'Revenue Recovery System',amount:'497.00',renewal:'$497/month unless canceled.'},custom:{name:'Operational Infrastructure',amount:'997.00',renewal:'$997 base/month unless canceled.'}};
-    var params=new URLSearchParams(location.search),key=params.get('plan')||'full247';if(!plans[key])key='full247';var plan=plans[key];
+    var params=new URLSearchParams(location.search),key=params.get('plan')||'';if(!plans[key]){location.replace('/pricing.html?checkout=select-plan#pricing-cards');return;}var plan=plans[key];
     var form=document.getElementById('trialForm'),button=document.getElementById('submitButton'),buttonText=button.querySelector('span'),status=document.getElementById('status'),card;
     document.getElementById('summaryPlan').textContent=plan.name;
     document.getElementById('summaryRenewal').textContent=plan.renewal;
     var renewal=new Date();renewal.setDate(renewal.getDate()+14);document.getElementById('renewalDate').textContent=renewal.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
     function fail(message){status.textContent=message;button.disabled=false;buttonText.textContent='Start Free Trial';}
+    function handoffFail(){status.textContent='Your trial was started, but secure setup did not open. Do not submit again. Contact support so we can open your setup safely.';button.disabled=true;buttonText.textContent='Trial started — setup needs help';}
     fetch(API,{headers:{Accept:'application/json'}}).then(function(response){if(!response.ok)throw new Error('config');return response.json();}).then(async function(config){
       if(!window.Square)throw new Error('sdk');
       var payments=window.Square.payments(config.applicationId,config.locationId);card=await payments.card();await card.attach('#square-card');button.disabled=false;buttonText.textContent='Start Free Trial';
@@ -174,13 +175,17 @@
     form.addEventListener('submit',async function(event){
       event.preventDefault();if(!card)return fail('Secure card entry has not loaded yet.');button.disabled=true;buttonText.textContent='Securing your trial…';status.textContent='';
       var givenName=document.getElementById('givenName').value.trim(),familyName=document.getElementById('familyName').value.trim(),email=document.getElementById('email').value.trim(),phone=document.getElementById('phone').value.trim(),cardholderName=document.getElementById('cardholderName').value.trim();
+      var enrollmentConfirmed=false;
       try{
         var token=await card.tokenize({amount:plan.amount,currencyCode:'USD',intent:'STORE',customerInitiated:true,sellerKeyedIn:false,billingContact:{givenName:givenName,familyName:familyName,email:email,phone:phone,countryCode:'US'}});
         if(token.status!=='OK')throw new Error('tokenize');
         var response=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:key,sourceId:token.token,idempotencyKey:crypto.randomUUID(),givenName:givenName,familyName:familyName,email:email,phone:phone,cardholderName:cardholderName,consentToStoreCard:document.getElementById('consent').checked,website:document.getElementById('website').value})});
         var result=await response.json().catch(function(){return{};});if(!response.ok||!result.ok)throw new Error(result.error||'submit');
-        buttonText.textContent='Trial started — redirecting…';location.assign('/setup.html?plan='+encodeURIComponent(key)+'&trial=started&receipt='+encodeURIComponent(result.receipt));
-      }catch(error){fail('We could not start the trial. Check the card details and try again. No charge was made.');}
+        enrollmentConfirmed=true;
+        if(typeof result.setupToken!=='string'||!/^v1\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(result.setupToken))throw new Error('setup_binding_missing');
+        try{sessionStorage.setItem('tct_setup_binding',result.setupToken);}catch(storageError){}
+        buttonText.textContent='Trial started — redirecting…';location.assign('/setup.html?plan='+encodeURIComponent(key)+'&trial=started&receipt='+encodeURIComponent(result.receipt)+'#binding='+encodeURIComponent(result.setupToken));
+      }catch(error){if(enrollmentConfirmed)return handoffFail();fail('We could not start the trial. Check the card details and try again. No charge was made.');}
     });
   })();
   </script>
