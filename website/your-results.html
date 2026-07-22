@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17970510102');
-  </script>
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000">
@@ -182,43 +177,7 @@
     }
   </style>
 <!-- Signals Gateway Pixel + Meta Pixel Code -->
-<script>
-  function assign(t){for(var i=1;i<arguments.length;i++){var s=arguments[i];if(s)for(var k in s)if(Object.prototype.hasOwnProperty.call(s,k))t[k]=s[k]}return t;}
-  !(function(f,b,e,v,vv,n,nn,t,s,tt,ss){
-    if (!f.cbq){nn = f.cbq = function(){nn.initialized ? nn.apply(f.cbq, arguments) : nn.queue.push(arguments);};
-    if(!f._cbq) f._cbq = nn;
-    nn.push = nn; nn.loaded = !0; nn.version = '2.0'; nn.queue = [];
-    tt = b.createElement(e); tt.async = !0; tt.src = vv; ss=b.getElementsByTagName(e)[0]; ss.parentNode.insertBefore(tt,ss);}
-    if (f.xbq) return; if (f.fbq) f.xbq=f.fbq;
-    n = f.fbq = function()
-    { var args = Array.prototype.slice.call(arguments);
-      var m = args[0]; var isT = m === 'track' || m === 'trackCustom'; var isS = m === 'trackSingle' || m === 'trackSingleCustom';
-      var mId = args[isT?1:2] + "." + Date.now() + Math.random().toString(36);
-      if (isT && args.length < 4)
-        arguments = args.concat((args.length < 3 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-      else if (isS && arguments.length < 5)
-        arguments = args.concat((args.length < 4 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-      if (isT && (!arguments[3] || !arguments[3].eventID)) arguments[3] = assign({}, arguments[3] || {}, { eventID: mId });
-      if (isS && (!arguments[4] || !arguments[4].eventID)) arguments[4] = assign({}, arguments[4] || {}, { eventID: mId });
-      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-      if (typeof m === 'string' && m.indexOf('track') === 0) {
-        if (isS) {
-          for (var newArgs = [arguments[0] === "trackSingle" ? "track" : "trackCustom"], i = 2; i < arguments.length; i++) newArgs.push(arguments[i]);
-          arguments = newArgs;
-        }
-        if (arguments[1]) (f.cbq.initialized ? f.cbq.apply(f.cbq, arguments) : f.cbq.queue.push(arguments));}
-    }
-    if(!f._fbq) f._fbq = n;
-    n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = (f.xbq)?f.xbq.queue:[];
-    t = b.createElement(e); t.async = !0; t.src = v;s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
-  })
-  (window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', 'https://tracking.thecalltaker.com/sdk/3084877078917435530/events.js');
-  fbq('init', '2129562004253413');
-  cbq('setHost', 'https://tracking.thecalltaker.com');
-  cbq('init','3084877078917435530');
-  cbq('set', 'integrationMethod', 'forkFromSnippetCode@1.0');
-  fbq('track', 'PageView');
-</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 <!-- End Signals Gateway Pixel + Meta Pixel Code -->
 </head>
 <body style="overflow-x:hidden">
@@ -374,184 +333,7 @@
 
   <div class="toast" id="toast">Link copied to clipboard!</div>
 
-  <script>
-    var INDUSTRY_DATA = {
-      'hvac':     { avgJob: 350, name: 'HVAC' },
-      'roofing':  { avgJob: 8500, name: 'Roofing' },
-      'plumbing': { avgJob: 450, name: 'Plumbing' },
-      'electrical': { avgJob: 400, name: 'Electrical' },
-      'dental':   { avgJob: 2800, name: 'Dental' },
-      'medspa':   { avgJob: 1200, name: 'Med Spa' },
-      'legal':    { avgJob: 5000, name: 'Legal' },
-      'property-management': { avgJob: 150, name: 'Property Management' },
-      'veterinary': { avgJob: 350, name: 'Veterinary' },
-      'locksmith': { avgJob: 225, name: 'Locksmith' },
-      'garage-door': { avgJob: 264, name: 'Garage Door' },
-      'towing':   { avgJob: 200, name: 'Towing' },
-      'funeral':  { avgJob: 7500, name: 'Funeral Homes' }
-    };
-
-    var CALLS_MAP = { '5-10': 7.5, '10-20': 15, '20-40': 30, '40+': 50 };
-    var MISS_MAP = { '10-20%': 0.15, '20-40%': 0.30, '40-60%': 0.50, '60%+': 0.70 };
-
-    var currentData = null;
-
-    function fmt(n) { return n.toLocaleString('en-US'); }
-    function fmtD(n) { return '$' + n.toLocaleString('en-US'); }
-
-    function generateResults() {
-      var ind = document.getElementById('sim-industry').value;
-      var calls = document.getElementById('sim-calls').value;
-      var miss = document.getElementById('sim-miss').value;
-      if (!ind || !calls || !miss) { alert('Please answer all 3 questions.'); return; }
-
-      var info = INDUSTRY_DATA[ind];
-      var callsPerDay = CALLS_MAP[calls];
-      var missPercent = MISS_MAP[miss];
-
-      var totalCalls30d = Math.round(callsPerDay * 30);
-      var missedCalls30d = Math.round(totalCalls30d * missPercent);
-      var caughtByTCT = Math.round(missedCalls30d * 0.97);
-      var bookingRate = 0.35;
-      var jobsBooked = Math.round(caughtByTCT * bookingRate);
-      var revenueSaved = jobsBooked * info.avgJob;
-      var roi = Math.round(revenueSaved / 297);
-      var stillMissed = Math.round(totalCalls30d * 0.03);
-      var beforeLost = Math.round(missedCalls30d * bookingRate * info.avgJob);
-
-      currentData = { ind: ind, calls: calls, miss: miss };
-
-      // Update URL hash for sharing
-      try { window.location.hash = btoa(JSON.stringify({ i: ind, c: calls, m: miss })); } catch(e) {}
-
-      // Fill dashboard
-      document.getElementById('dashTitle').textContent = info.name + ' Business — 30-Day Performance Preview';
-      document.getElementById('dashSub').textContent = 'Generated for ' + info.name + ' businesses receiving ' + calls + ' calls/day';
-
-      document.getElementById('numCaught').textContent = fmt(caughtByTCT);
-      document.getElementById('numJobs').textContent = fmt(jobsBooked);
-      document.getElementById('numRevenue').textContent = fmtD(revenueSaved);
-
-      document.getElementById('bfTotal').textContent = fmt(totalCalls30d);
-      document.getElementById('bfMissed').textContent = fmt(missedCalls30d);
-      document.getElementById('bfLost').textContent = fmtD(beforeLost);
-      document.getElementById('bfRate').textContent = Math.round((1 - missPercent) * 100) + '%';
-
-      document.getElementById('afTotal').textContent = fmt(totalCalls30d);
-      document.getElementById('afMissed').textContent = fmt(stillMissed);
-      document.getElementById('afRev').textContent = fmtD(revenueSaved);
-
-      document.getElementById('roiNum').textContent = roi + 'x return';
-      document.getElementById('roiSub').textContent = 'The Call Taker would recover an estimated ' + fmtD(revenueSaved) + ' in revenue during your first 30 days. That\'s ' + roi + 'x what you\'d pay at $497/mo.';
-
-      // Draw chart
-      drawChart(caughtByTCT, callsPerDay, missPercent);
-
-      // Show dashboard
-      document.getElementById('formSection').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // Analytics
-      if (typeof gtag === 'function') gtag('event', 'results_generated', { event_category: 'engagement', industry: ind });
-      if (typeof fbq !== 'undefined') fbq('track', 'ViewContent', { content_name: 'Results Simulator', industry: ind });
-    }
-
-    function drawChart(totalCaught, callsPerDay, missPercent) {
-      var svg = document.getElementById('chartSvg');
-      var dailyAvg = totalCaught / 30;
-      var points = [];
-      for (var d = 0; d < 30; d++) {
-        var variance = 0.6 + Math.random() * 0.8;
-        var ramp = d < 5 ? 0.5 + (d / 5) * 0.5 : 1;
-        var val = dailyAvg * variance * ramp;
-        points.push(val);
-      }
-      var maxVal = Math.max.apply(null, points) * 1.15;
-
-      var svgW = 840, svgH = 160, padX = 10, padY = 10;
-      var usableW = svgW - padX * 2, usableH = svgH - padY * 2;
-      var coords = points.map(function(v, i) {
-        var x = padX + (i / 29) * usableW;
-        var y = padY + usableH - (v / maxVal) * usableH;
-        return x + ',' + y;
-      });
-
-      var fillCoords = padX + ',' + (padY + usableH) + ' ' + coords.join(' ') + ' ' + (padX + usableW) + ',' + (padY + usableH);
-
-      svg.innerHTML = '<defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00dc82" stop-opacity="0.3"/><stop offset="100%" stop-color="#00dc82" stop-opacity="0"/></linearGradient></defs>' +
-        '<polygon points="' + fillCoords + '" fill="url(#cg)"/>' +
-        '<polyline points="' + coords.join(' ') + '" fill="none" stroke="#00dc82" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
-
-      // Add dots for first, middle, last
-      [0, 14, 29].forEach(function(idx) {
-        var pt = coords[idx].split(',');
-        svg.innerHTML += '<circle cx="' + pt[0] + '" cy="' + pt[1] + '" r="4" fill="#00dc82"/>';
-        svg.innerHTML += '<text x="' + pt[0] + '" y="' + (parseFloat(pt[1]) - 10) + '" fill="#94a3b8" font-size="11" font-weight="600" text-anchor="middle">Day ' + (idx + 1) + '</text>';
-      });
-    }
-
-    function copyShareLink() {
-      var url = window.location.href;
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(url);
-      } else {
-        var ta = document.createElement('textarea');
-        ta.value = url; document.body.appendChild(ta); ta.select();
-        document.execCommand('copy'); document.body.removeChild(ta);
-      }
-      var t = document.getElementById('toast');
-      t.classList.add('show');
-      setTimeout(function() { t.classList.remove('show'); }, 2000);
-    }
-
-    function captureEmail() {
-      var name = document.getElementById('capName').value.trim();
-      var email = document.getElementById('capEmail').value.trim();
-      if (!name || !email || email.indexOf('@') === -1) { alert('Please enter your name and email.'); return; }
-
-      var tags = ['results-simulator', 'high-intent'];
-      if (currentData && currentData.ind) tags.push('industry-' + currentData.ind);
-      if (typeof getTctAttributionTags === 'function') tags = tags.concat(getTctAttributionTags());
-
-      fetch('https://thecalltaker.vercel.app/api/public/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstName: name,
-          email: email,
-          tags: tags,
-          source: 'results-simulator',
-          page: window.location.pathname,
-          notes: getTctAttributionNotes ? getTctAttributionNotes() : ''
-        })
-      }).then(function(r) { return r.json(); }).then(function() {
-        document.getElementById('emailCapture').innerHTML = '<h3 style="color:#00dc82;">Sent! Check your inbox.</h3><p style="color:#94a3b8;">We\'ll send your personalized report shortly.</p>';
-      }).catch(function() {
-        document.getElementById('emailSuccess').style.display = 'block';
-        document.getElementById('emailSuccess').textContent = 'Something went wrong. Email us at thecalltakerai@gmail.com';
-        document.getElementById('emailSuccess').style.color = '#00dc82';
-      });
-
-      if (typeof gtag === 'function') gtag('event', 'results_email_capture', { event_category: 'conversion', industry: currentData ? currentData.ind : '' });
-      if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Results Simulator Email' });
-    }
-
-    // Auto-generate from hash on page load
-    (function() {
-      if (window.location.hash && window.location.hash.length > 1) {
-        try {
-          var d = JSON.parse(atob(window.location.hash.substring(1)));
-          if (d.i && d.c && d.m) {
-            document.getElementById('sim-industry').value = d.i;
-            document.getElementById('sim-calls').value = d.c;
-            document.getElementById('sim-miss').value = d.m;
-            setTimeout(generateResults, 100);
-          }
-        } catch(e) {}
-      }
-    })();
-  </script>
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
   <script src="script.js" defer></script>
 <!-- === FOOTER === -->
 <footer class="footer">

@@ -8,11 +8,11 @@
 <meta name="robots" content="noindex, nofollow">
 
 <!-- Google Ads -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17970510102');</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 
 <!-- Meta Pixel -->
-<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','PIXEL_ID_HERE');fbq('track','PageView');</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 
 <!-- Attribution Tracking -->
 <script src="../tct-tracking.js"></script>
@@ -401,97 +401,7 @@ body{
 
 </div>
 
-<script>
-(function(){
-  var GHL_API_KEY = 'GHL_KEY_REMOVED_USE_SERVER_PROXY';
-  var GHL_LOCATION_ID = 'tQb9YmrGDrdVUJYPKrsY';
-
-  var form = document.getElementById('leadForm');
-  var btn = document.getElementById('submitBtn');
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Clear errors
-    document.querySelectorAll('.form-error').forEach(function(el){ el.style.display = 'none'; });
-
-    var firstName = document.getElementById('firstName').value.trim();
-    var businessName = document.getElementById('businessName').value.trim();
-    var industry = document.getElementById('industry').value;
-    var phone = document.getElementById('phone').value.trim();
-
-    // Validate
-    var valid = true;
-    if (!firstName) { document.getElementById('nameError').style.display = 'block'; valid = false; }
-    if (!businessName) { document.getElementById('bizError').style.display = 'block'; valid = false; }
-    if (!industry) { document.getElementById('indError').style.display = 'block'; valid = false; }
-    if (!phone || phone.replace(/\D/g,'').length < 7) { document.getElementById('phoneError').style.display = 'block'; valid = false; }
-
-    if (!valid) return;
-
-    btn.disabled = true;
-    btn.textContent = 'Submitting...';
-
-    // Format phone
-    var digits = phone.replace(/\D/g,'');
-    if (digits.length === 10) digits = '1' + digits;
-    var formattedPhone = '+' + digits;
-
-    // Build tags
-    var tags = ['facebook-lead', 'hot-lead', industry, 'pilot-candidate'];
-    if (typeof getTctAttributionTags === 'function') {
-      tags = tags.concat(getTctAttributionTags());
-    }
-
-    // Attribution notes
-    var notes = 'Source: Facebook Lead Ad\nIndustry: ' + industry + '\nBusiness: ' + businessName;
-    if (typeof getTctAttributionNotes === 'function') {
-      notes += '\n' + getTctAttributionNotes();
-    }
-
-    fetch('https://thecalltaker.vercel.app/api/public/lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        firstName: firstName,
-        company: businessName,
-        phone: formattedPhone,
-        industry: industry,
-        tags: tags,
-        source: 'facebook-lead-ad',
-        page: window.location.pathname,
-        notes: notes
-      })
-    })
-    .then(function(r){ return r.json(); })
-    .then(function(){
-      // Fire tracking events
-      if (typeof gtag === 'function') {
-        gtag('event', 'lead_form_submit', {
-          event_category: 'facebook_lead',
-          event_label: industry
-        });
-      }
-      if (typeof fbq === 'function') {
-        fbq('track', 'Lead', {
-          content_name: 'facebook_lead_ad',
-          content_category: industry
-        });
-      }
-
-      // Show success
-      document.getElementById('formCard').style.display = 'none';
-      document.getElementById('successState').style.display = 'block';
-    })
-    .catch(function(err){
-      console.error('Submit error:', err);
-      btn.disabled = false;
-      btn.textContent = 'Start My Free 14-Day Pilot';
-      alert('Something went wrong. Please try again or call us at (629) 269-9697.');
-    });
-  });
-})();
-</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 
   <script src="../script.js" defer></script>
 

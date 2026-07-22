@@ -3,43 +3,7 @@
 <head>
 <!-- Meta Pixel -->
 <!-- Signals Gateway Pixel + Meta Pixel Code -->
-<script>
-  function assign(t){for(var i=1;i<arguments.length;i++){var s=arguments[i];if(s)for(var k in s)if(Object.prototype.hasOwnProperty.call(s,k))t[k]=s[k]}return t;}
-  !(function(f,b,e,v,vv,n,nn,t,s,tt,ss){
-    if (!f.cbq){nn = f.cbq = function(){nn.initialized ? nn.apply(f.cbq, arguments) : nn.queue.push(arguments);};
-    if(!f._cbq) f._cbq = nn;
-    nn.push = nn; nn.loaded = !0; nn.version = '2.0'; nn.queue = [];
-    tt = b.createElement(e); tt.async = !0; tt.src = vv; ss=b.getElementsByTagName(e)[0]; ss.parentNode.insertBefore(tt,ss);}
-    if (f.xbq) return; if (f.fbq) f.xbq=f.fbq;
-    n = f.fbq = function()
-    { var args = Array.prototype.slice.call(arguments);
-      var m = args[0]; var isT = m === 'track' || m === 'trackCustom'; var isS = m === 'trackSingle' || m === 'trackSingleCustom';
-      var mId = args[isT?1:2] + "." + Date.now() + Math.random().toString(36);
-      if (isT && args.length < 4)
-        arguments = args.concat((args.length < 3 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-      else if (isS && arguments.length < 5)
-        arguments = args.concat((args.length < 4 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-      if (isT && (!arguments[3] || !arguments[3].eventID)) arguments[3] = assign({}, arguments[3] || {}, { eventID: mId });
-      if (isS && (!arguments[4] || !arguments[4].eventID)) arguments[4] = assign({}, arguments[4] || {}, { eventID: mId });
-      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-      if (typeof m === 'string' && m.indexOf('track') === 0) {
-        if (isS) {
-          for (var newArgs = [arguments[0] === "trackSingle" ? "track" : "trackCustom"], i = 2; i < arguments.length; i++) newArgs.push(arguments[i]);
-          arguments = newArgs;
-        }
-        if (arguments[1]) (f.cbq.initialized ? f.cbq.apply(f.cbq, arguments) : f.cbq.queue.push(arguments));}
-    }
-    if(!f._fbq) f._fbq = n;
-    n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = (f.xbq)?f.xbq.queue:[];
-    t = b.createElement(e); t.async = !0; t.src = v;s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
-  })
-  (window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', 'https://tracking.thecalltaker.com/sdk/3084877078917435530/events.js');
-  fbq('init', '2129562004253413');
-  cbq('setHost', 'https://tracking.thecalltaker.com');
-  cbq('init','3084877078917435530');
-  cbq('set', 'integrationMethod', 'forkFromSnippetCode@1.0');
-  fbq('track', 'PageView');
-</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 <!-- End Signals Gateway Pixel + Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,8 +49,8 @@
   }
 }
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-17970510102');</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -543,68 +507,7 @@
 </div>
 
 <!-- FOOTER -->
-<script>
-function submitFallbackForm(e) {
-  e.preventDefault();
-  var form = document.getElementById("fallback-demo-form");
-  var btn = form.querySelector(".btn-submit");
-  var origText = btn.textContent;
-  btn.textContent = "Submitting...";
-  btn.disabled = true;
-
-  var name = (form.querySelector("#name") || {}).value || "";
-  var email = (form.querySelector("#email") || {}).value || "";
-  var phone = (form.querySelector("#phone") || {}).value || "";
-  var company = (form.querySelector("#company") || {}).value || "";
-  var time = (form.querySelector("#time") || {}).value || "";
-  var plan = (form.querySelector("#plan") || {}).value || "";
-  var message = (form.querySelector("#message") || {}).value || "";
-  var industry = window.location.pathname.replace("/industries/","").replace(".html","").replace("/","");
-
-  if (!name || !email || !phone) {
-    alert("Please fill in the required fields.");
-    btn.textContent = origText;
-    btn.disabled = false;
-    return false;
-  }
-
-  var nameParts = name.trim().split(" ");
-  var firstName = nameParts[0] || "";
-  var lastName = nameParts.slice(1).join(" ") || "";
-  var tags = ["industry-page-lead", "industry-" + industry, "demo-request"];
-  var notes = "Demo request from " + industry + " industry page";
-  if (time) notes += "\nPreferred time: " + time;
-  if (plan) notes += "\nInterested in: " + plan;
-  if (message) notes += "\nMessage: " + message;
-  if (company) notes += "\nCompany: " + company;
-
-  fetch("https://thecalltaker.vercel.app/api/public/lead", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phone: phone,
-      company: company,
-      tags: tags,
-      source: "industry-page",
-      page: window.location.pathname,
-      notes: notes + "\nIndustry: " + industry
-    })
-  }).then(function(r) { return r.json(); }).then(function() {    form.innerHTML = "<div style="text-align:center;padding:2rem"><h3 style="color:var(--green);margin-bottom:.5rem">Request Received!</h3><p style="color:var(--text-2)">We'll reach out within the hour to schedule your demo.</p><p style="margin-top:1rem"><a href="tel:+16292699697" style="color:var(--green);font-weight:700">Or call now: (629) 269-9697</a></p></div>";
-  }).catch(function() {
-    btn.textContent = origText;
-    btn.disabled = false;
-    alert("Something went wrong. Please call us at (629) 269-9697.");
-  });
-
-  if (typeof gtag === "function") gtag("event", "demo_request", { event_category: "conversion", industry: industry });
-  return false;
-}
-</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 
 <!-- Sticky Demo CTA -->
 <div class="sticky-demo" id="stickyDemo">

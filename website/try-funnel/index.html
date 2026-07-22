@@ -2,13 +2,8 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17970510102');
-  </script>
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000">
@@ -103,43 +98,7 @@
 <link rel="stylesheet" href="/shared/ui-dark.css">
 <script src="/tct-tracking.js" defer></script>
 <!-- Signals Gateway Pixel + Meta Pixel Code -->
-<script>
-  function assign(t){for(var i=1;i<arguments.length;i++){var s=arguments[i];if(s)for(var k in s)if(Object.prototype.hasOwnProperty.call(s,k))t[k]=s[k]}return t;}
-  !(function(f,b,e,v,vv,n,nn,t,s,tt,ss){
-    if (!f.cbq){nn = f.cbq = function(){nn.initialized ? nn.apply(f.cbq, arguments) : nn.queue.push(arguments);};
-    if(!f._cbq) f._cbq = nn;
-    nn.push = nn; nn.loaded = !0; nn.version = '2.0'; nn.queue = [];
-    tt = b.createElement(e); tt.async = !0; tt.src = vv; ss=b.getElementsByTagName(e)[0]; ss.parentNode.insertBefore(tt,ss);}
-    if (f.xbq) return; if (f.fbq) f.xbq=f.fbq;
-    n = f.fbq = function()
-    { var args = Array.prototype.slice.call(arguments);
-      var m = args[0]; var isT = m === 'track' || m === 'trackCustom'; var isS = m === 'trackSingle' || m === 'trackSingleCustom';
-      var mId = args[isT?1:2] + "." + Date.now() + Math.random().toString(36);
-      if (isT && args.length < 4)
-        arguments = args.concat((args.length < 3 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-      else if (isS && arguments.length < 5)
-        arguments = args.concat((args.length < 4 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-      if (isT && (!arguments[3] || !arguments[3].eventID)) arguments[3] = assign({}, arguments[3] || {}, { eventID: mId });
-      if (isS && (!arguments[4] || !arguments[4].eventID)) arguments[4] = assign({}, arguments[4] || {}, { eventID: mId });
-      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-      if (typeof m === 'string' && m.indexOf('track') === 0) {
-        if (isS) {
-          for (var newArgs = [arguments[0] === "trackSingle" ? "track" : "trackCustom"], i = 2; i < arguments.length; i++) newArgs.push(arguments[i]);
-          arguments = newArgs;
-        }
-        if (arguments[1]) (f.cbq.initialized ? f.cbq.apply(f.cbq, arguments) : f.cbq.queue.push(arguments));}
-    }
-    if(!f._fbq) f._fbq = n;
-    n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = (f.xbq)?f.xbq.queue:[];
-    t = b.createElement(e); t.async = !0; t.src = v;s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
-  })
-  (window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', 'https://tracking.thecalltaker.com/sdk/3084877078917435530/events.js');
-  fbq('init', '2129562004253413');
-  cbq('setHost', 'https://tracking.thecalltaker.com');
-  cbq('init','3084877078917435530');
-  cbq('set', 'integrationMethod', 'forkFromSnippetCode@1.0');
-  fbq('track', 'PageView');
-</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 <!-- End Signals Gateway Pixel + Meta Pixel Code -->
 </head>
 <body>
@@ -501,94 +460,7 @@
     <a href="tel:+16292699697" style="background: transparent !important; color: #fff !important;">Hear the AI</a>
   </div>
 
-  <script>
-    // Mobile nav toggle
-    var toggle = document.querySelector('.menu-toggle');
-    var mobileNav = document.querySelector('.mobile-nav');
-    if (toggle) {
-      toggle.addEventListener('click', function() {
-        toggle.classList.toggle('open');
-        mobileNav.classList.toggle('open');
-      });
-    }
-
-    // Header scroll
-    var header = document.querySelector('.header');
-    window.addEventListener('scroll', function() {
-      header.classList.toggle('scrolled', window.scrollY > 20);
-    });
-
-    async function submitTry() {
-      var btn = document.getElementById('try-submit');
-      var company = document.getElementById('t-company').value.trim();
-      var first = document.getElementById('t-first').value.trim();
-      var phone = document.getElementById('t-phone').value.trim();
-      var email = document.getElementById('t-email').value.trim();
-
-      if (!company || !first || !phone || !email) {
-        alert('Please fill in the required fields.');
-        return;
-      }
-
-      btn.textContent = 'Submitting...';
-      btn.disabled = true;
-
-      var data = {
-        company: company,
-        firstName: first,
-        lastName: document.getElementById('t-last').value.trim(),
-        phone: phone,
-        email: email,
-        industry: document.getElementById('t-industry').value
-      };
-
-      // Create GHL contact
-      try {
-        var leadBody = {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          phone: data.phone,
-          company: data.company,
-          source: 'try-funnel',
-          page: window.location.pathname,
-          tags: ['try-funnel', 'try-97', 'plan-afterhours-starter', 'industry-' + data.industry, 'self-service']
-        };
-
-        // Capture gclid for Google Ads
-        var urlParams = new URLSearchParams(window.location.search);
-        var gclid = urlParams.get('gclid');
-        if (gclid) {
-          leadBody.tags.push('google-ads', 'gclid');
-          leadBody.notes = 'gclid=' + gclid;
-        }
-
-        var leadResponse = await fetch('https://thecalltaker.vercel.app/api/public/lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(leadBody)
-        });
-
-        if (!leadResponse.ok) {
-          throw new Error('Lead save failed');
-        }
-      } catch(e) {
-        alert('We could not save your signup right now. Please call (629) 269-9697.');
-        return;
-      }
-
-      // Google Ads conversion
-      if (typeof gtag === 'function') {
-        gtag('event', 'conversion', { send_to: 'AW-17970510102/try_funnel_signup' });
-      }
-
-      // Show success
-      document.getElementById('t-company-name').textContent = data.company;
-      document.getElementById('try-form-container').style.display = 'none';
-      document.getElementById('try-success').style.display = 'block';
-      window.scrollTo({ top: document.getElementById('signup').offsetTop - 80, behavior: 'smooth' });
-    }
-  </script>
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 <script src="/shared/ui-dark.js" defer></script>
   <script src="../script.js" defer></script>
 

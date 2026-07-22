@@ -2,13 +2,8 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17970510102');
-  </script>
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000">
@@ -96,43 +91,7 @@
 <link rel="stylesheet" href="/shared/carousel.css">
 <script src="/tct-tracking.js" defer></script>
 <!-- Signals Gateway Pixel + Meta Pixel Code -->
-<script>
-  function assign(t){for(var i=1;i<arguments.length;i++){var s=arguments[i];if(s)for(var k in s)if(Object.prototype.hasOwnProperty.call(s,k))t[k]=s[k]}return t;}
-  !(function(f,b,e,v,vv,n,nn,t,s,tt,ss){
-    if (!f.cbq){nn = f.cbq = function(){nn.initialized ? nn.apply(f.cbq, arguments) : nn.queue.push(arguments);};
-    if(!f._cbq) f._cbq = nn;
-    nn.push = nn; nn.loaded = !0; nn.version = '2.0'; nn.queue = [];
-    tt = b.createElement(e); tt.async = !0; tt.src = vv; ss=b.getElementsByTagName(e)[0]; ss.parentNode.insertBefore(tt,ss);}
-    if (f.xbq) return; if (f.fbq) f.xbq=f.fbq;
-    n = f.fbq = function()
-    { var args = Array.prototype.slice.call(arguments);
-      var m = args[0]; var isT = m === 'track' || m === 'trackCustom'; var isS = m === 'trackSingle' || m === 'trackSingleCustom';
-      var mId = args[isT?1:2] + "." + Date.now() + Math.random().toString(36);
-      if (isT && args.length < 4)
-        arguments = args.concat((args.length < 3 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-      else if (isS && arguments.length < 5)
-        arguments = args.concat((args.length < 4 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-      if (isT && (!arguments[3] || !arguments[3].eventID)) arguments[3] = assign({}, arguments[3] || {}, { eventID: mId });
-      if (isS && (!arguments[4] || !arguments[4].eventID)) arguments[4] = assign({}, arguments[4] || {}, { eventID: mId });
-      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-      if (typeof m === 'string' && m.indexOf('track') === 0) {
-        if (isS) {
-          for (var newArgs = [arguments[0] === "trackSingle" ? "track" : "trackCustom"], i = 2; i < arguments.length; i++) newArgs.push(arguments[i]);
-          arguments = newArgs;
-        }
-        if (arguments[1]) (f.cbq.initialized ? f.cbq.apply(f.cbq, arguments) : f.cbq.queue.push(arguments));}
-    }
-    if(!f._fbq) f._fbq = n;
-    n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = (f.xbq)?f.xbq.queue:[];
-    t = b.createElement(e); t.async = !0; t.src = v;s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
-  })
-  (window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', 'https://tracking.thecalltaker.com/sdk/3084877078917435530/events.js');
-  fbq('init', '2129562004253413');
-  cbq('setHost', 'https://tracking.thecalltaker.com');
-  cbq('init','3084877078917435530');
-  cbq('set', 'integrationMethod', 'forkFromSnippetCode@1.0');
-  fbq('track', 'PageView');
-</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 <!-- End Signals Gateway Pixel + Meta Pixel Code -->
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -606,181 +565,7 @@
 </footer>
 
 
-<script>
-// ===== REVENUE CALCULATOR =====
-const clientSlider = document.getElementById('clientSlider');
-const clientCount = document.getElementById('clientCount');
-const sellPrice = document.getElementById('sellPrice');
-const calcRevenue = document.getElementById('calcRevenue');
-const calcCost = document.getElementById('calcCost');
-const calcProfit = document.getElementById('calcProfit');
-
-function formatMoney(n) {
-  return '$' + n.toLocaleString('en-US');
-}
-
-function updateCalc() {
-  const clients = parseInt(clientSlider.value) || 1;
-  const price = parseInt(sellPrice.value) || 497;
-  const wholesale = 197;
-
-  clientCount.textContent = clients;
-
-  const revenue = clients * price;
-  const cost = clients * wholesale;
-  const profit = revenue - cost;
-
-  calcRevenue.textContent = formatMoney(revenue);
-  calcCost.textContent = formatMoney(cost);
-  calcProfit.textContent = formatMoney(profit);
-
-  [calcRevenue, calcCost, calcProfit].forEach(el => {
-    el.style.transition = 'none';
-    el.style.opacity = '0.6';
-    el.style.transform = 'scale(0.96)';
-    requestAnimationFrame(() => {
-      el.style.transition = 'all 0.25s ease';
-      el.style.opacity = '1';
-      el.style.transform = 'scale(1)';
-    });
-  });
-}
-
-clientSlider.addEventListener('input', updateCalc);
-sellPrice.addEventListener('input', updateCalc);
-
-// ===== FAQ TOGGLE =====
-function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-// ===== MOBILE NAV =====
-const menuToggle = document.querySelector('.menu-toggle');
-const mobileNav = document.querySelector('.mobile-nav');
-if (menuToggle && mobileNav) {
-  menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('open');
-    mobileNav.classList.toggle('open');
-  });
-  mobileNav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      menuToggle.classList.remove('open');
-      mobileNav.classList.remove('open');
-    });
-  });
-}
-
-// ===== HEADER SCROLL =====
-window.addEventListener('scroll', () => {
-  document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 40);
-});
-
-// ===== FORMAT PHONE =====
-const phoneInput = document.getElementById('phone');
-phoneInput.addEventListener('input', function() {
-  let v = this.value.replace(/\D/g, '');
-  if (v.length > 10) v = v.slice(0, 10);
-  if (v.length >= 7) {
-    this.value = '(' + v.slice(0,3) + ') ' + v.slice(3,6) + '-' + v.slice(6);
-  } else if (v.length >= 4) {
-    this.value = '(' + v.slice(0,3) + ') ' + v.slice(3);
-  } else if (v.length > 0) {
-    this.value = '(' + v;
-  }
-});
-
-// ===== FORM SUBMISSION =====
-async function submitApplication() {
-  const btn = document.getElementById('submitBtn');
-  const errorDiv = document.getElementById('formError');
-  errorDiv.style.display = 'none';
-
-  const companyName = document.getElementById('companyName').value.trim();
-  const firstName = document.getElementById('contactFirst').value.trim();
-  const lastName = document.getElementById('contactLast').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const website = document.getElementById('website').value.trim();
-  const numClients = document.getElementById('numClients').value;
-
-  const industries = [];
-  document.querySelectorAll('.checkbox-grid input[type="checkbox"]:checked').forEach(cb => {
-    industries.push(cb.value);
-  });
-
-  if (!companyName || !firstName || !lastName || !email || !phone) {
-    errorDiv.textContent = 'Please fill in all required fields.';
-    errorDiv.style.display = 'block';
-    return;
-  }
-
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errorDiv.textContent = 'Please enter a valid email address.';
-    errorDiv.style.display = 'block';
-    return;
-  }
-
-  const phoneDigits = phone.replace(/\D/g, '');
-  if (phoneDigits.length < 10) {
-    errorDiv.textContent = 'Please enter a valid 10-digit phone number.';
-    errorDiv.style.display = 'block';
-    return;
-  }
-  const ghlPhone = '+1' + phoneDigits.slice(-10);
-
-  btn.disabled = true;
-  btn.textContent = 'Submitting...';
-
-  try {
-    const leadResp = await fetch('https://thecalltaker.vercel.app/api/public/lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phone: ghlPhone,
-        company: companyName,
-        source: 'agency-landing-page',
-        page: window.location.pathname,
-        tags: ['agency-target', 'agency-lead', 'white-label', 'partner-inquiry'],
-        notes: [
-          website ? 'Website: ' + website : '',
-          numClients ? 'Planned Clients: ' + numClients : '',
-          industries.length ? 'Industries: ' + industries.join(', ') : ''
-        ].filter(Boolean).join(' | ')
-      })
-    });
-
-    if (!leadResp.ok) {
-      const errText = await leadResp.text();
-      console.error('GHL error:', errText);
-    }
-
-    // Google Ads conversion
-    if (typeof gtag === 'function') {
-      gtag('event', 'conversion', {
-        'send_to': 'AW-17970510102/agency_application',
-        'value': 197.0,
-        'currency': 'USD'
-      });
-    }
-
-    document.getElementById('appForm').style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
-
-  } catch (err) {
-    console.error('Submission error:', err);
-    errorDiv.textContent = 'Something went wrong. Please try again or email thecalltakerai@gmail.com directly.';
-    errorDiv.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = 'Submit Application';
-  }
-}
-</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 
 <script src="/shared/ui-dark.js" defer></script>
 <script src="/shared/carousel.js" defer></script>

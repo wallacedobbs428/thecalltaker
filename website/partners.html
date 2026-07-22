@@ -2,14 +2,8 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970510102"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'AW-17970510102');
-  </script>
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000">
@@ -47,43 +41,7 @@
 
 <link rel="stylesheet" href="/shared/ui-dark.css">
 <!-- Signals Gateway Pixel + Meta Pixel Code -->
-<script>
-  function assign(t){for(var i=1;i<arguments.length;i++){var s=arguments[i];if(s)for(var k in s)if(Object.prototype.hasOwnProperty.call(s,k))t[k]=s[k]}return t;}
-  !(function(f,b,e,v,vv,n,nn,t,s,tt,ss){
-    if (!f.cbq){nn = f.cbq = function(){nn.initialized ? nn.apply(f.cbq, arguments) : nn.queue.push(arguments);};
-    if(!f._cbq) f._cbq = nn;
-    nn.push = nn; nn.loaded = !0; nn.version = '2.0'; nn.queue = [];
-    tt = b.createElement(e); tt.async = !0; tt.src = vv; ss=b.getElementsByTagName(e)[0]; ss.parentNode.insertBefore(tt,ss);}
-    if (f.xbq) return; if (f.fbq) f.xbq=f.fbq;
-    n = f.fbq = function()
-    { var args = Array.prototype.slice.call(arguments);
-      var m = args[0]; var isT = m === 'track' || m === 'trackCustom'; var isS = m === 'trackSingle' || m === 'trackSingleCustom';
-      var mId = args[isT?1:2] + "." + Date.now() + Math.random().toString(36);
-      if (isT && args.length < 4)
-        arguments = args.concat((args.length < 3 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-      else if (isS && arguments.length < 5)
-        arguments = args.concat((args.length < 4 ? [{}, { eventID: mId }] : [{ eventID: mId }]));
-      if (isT && (!arguments[3] || !arguments[3].eventID)) arguments[3] = assign({}, arguments[3] || {}, { eventID: mId });
-      if (isS && (!arguments[4] || !arguments[4].eventID)) arguments[4] = assign({}, arguments[4] || {}, { eventID: mId });
-      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-      if (typeof m === 'string' && m.indexOf('track') === 0) {
-        if (isS) {
-          for (var newArgs = [arguments[0] === "trackSingle" ? "track" : "trackCustom"], i = 2; i < arguments.length; i++) newArgs.push(arguments[i]);
-          arguments = newArgs;
-        }
-        if (arguments[1]) (f.cbq.initialized ? f.cbq.apply(f.cbq, arguments) : f.cbq.queue.push(arguments));}
-    }
-    if(!f._fbq) f._fbq = n;
-    n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = (f.xbq)?f.xbq.queue:[];
-    t = b.createElement(e); t.async = !0; t.src = v;s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s);
-  })
-  (window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js', 'https://tracking.thecalltaker.com/sdk/3084877078917435530/events.js');
-  fbq('init', '2129562004253413');
-  cbq('setHost', 'https://tracking.thecalltaker.com');
-  cbq('init','3084877078917435530');
-  cbq('set', 'integrationMethod', 'forkFromSnippetCode@1.0');
-  fbq('track', 'PageView');
-</script>
+<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 <!-- End Signals Gateway Pixel + Meta Pixel Code -->
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -478,91 +436,7 @@
 
 <script>if(!window.__tctUILoaded){window.__tctScriptJsOK=true;}</script>
 <script src="script.js"></script>
-  <script>
-    // Sanitize user input
-    function sanitize(str) {
-      var div = document.createElement('div');
-      div.textContent = str;
-      return div.innerHTML.trim();
-    }
-
-    // Partner Application Form Submission
-    document.getElementById('partner-application-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      // Honeypot check
-      var honeypot = this.querySelector('input[name="website_url"]');
-      if (honeypot && honeypot.value) return;
-
-      var btn = this.querySelector('button[type="submit"]');
-      var originalText = btn.innerHTML;
-      btn.innerHTML = 'Sending...';
-      btn.disabled = true;
-
-      var fullName = sanitize(document.getElementById('partner-name').value);
-      var data = {
-        firstName: fullName.split(' ')[0],
-        lastName: fullName.split(' ').slice(1).join(' ') || '',
-        email: sanitize(document.getElementById('partner-email').value),
-        phone: sanitize(document.getElementById('partner-phone').value),
-        companyName: sanitize(document.getElementById('partner-company').value),
-        partnerType: sanitize(document.getElementById('partner-type').value),
-        customerBase: sanitize(document.getElementById('partner-customers').value)
-      };
-
-      try {
-        // Submit to GHL
-        var res = await fetch('https://thecalltaker.vercel.app/api/public/lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            phone: data.phone,
-            company: data.companyName,
-            source: 'partner-application',
-            page: window.location.pathname,
-            tags: ['partner-application', data.partnerType],
-            notes: 'Partner type: ' + data.partnerType + ' | HVAC customer base: ' + data.customerBase
-          })
-        });
-
-        if (res.ok) {
-          // Conversion tracking
-          if (typeof fbq === 'function') {
-            fbq('track', 'Lead', { content_name: 'Partner Application', content_category: 'partner' });
-          }
-          if (typeof gtag === 'function') {
-            gtag('event', 'generate_lead', { event_category: 'partner', event_label: 'Partner Application' });
-          }
-
-          // Show success message, hide form
-          document.getElementById('partner-application-form').style.display = 'none';
-          document.getElementById('partner-success').style.display = 'block';
-        } else {
-          throw new Error('Failed');
-        }
-      } catch (err) {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-        alert('Something went wrong. Please email us at thecalltakerai@gmail.com and we\'ll get you set up.');
-      }
-    });
-
-    // CTA click tracking
-    document.querySelectorAll('.btn, .header-cta').forEach(function(el) {
-      el.addEventListener('click', function() {
-        var label = el.textContent.trim().substring(0, 40);
-        if (typeof gtag === 'function') {
-          gtag('event', 'cta_click', { event_label: label, event_category: 'engagement' });
-        }
-        if (typeof fbq === 'function') {
-          fbq('trackCustom', 'CTAClick', { label: label });
-        }
-      });
-    });
-  </script>
+  <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 
 <script src="/shared/ui-dark.js" defer></script>
 <script src="tct-tracking.js" defer></script>
