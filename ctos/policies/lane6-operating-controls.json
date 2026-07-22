@@ -1,0 +1,31 @@
+{
+  "policy_id": "lane6-operating-controls-v1",
+  "effective_date": "2026-07-22",
+  "review_date": "2026-07-29",
+  "lanes": {
+    "lane2_acquisition": {
+      "safe_path": "manual_b2b_email",
+      "before_send": ["record business source and date", "record approved copy ID", "verify accurate sender/subject", "include postal address and unsubscribe", "check suppression immediately before send"],
+      "stop": ["unsubscribe", "do-not-contact", "wrong-party", "missing evidence", "complaint"],
+      "hold": {"channels": ["marketing_sms", "ai_or_prerecorded_voice", "live_agent_outbound_call"], "owner": "Lane 2 + counsel", "missing_fact": "channel-specific consent/DNC/state evidence", "interim": "manual B2B email only"}
+    },
+    "lane3_buyer_path": {
+      "safe_path": "card_trial_checkout",
+      "required_copy": ["card required", "$0 due today", "14-day trial", "exact plan renewal price", "cancel before renewal", "Square handles card", "setup and test call before routing"],
+      "acceptance_evidence": ["rendered checkout capture", "plan and price", "timestamp/timezone", "Square receipt ID", "cancellation route", "no marketing-SMS enrollment"],
+      "stop": ["failed enrollment", "price/copy mismatch", "activation dispute"],
+      "interim": "do not activate routing at enrollment"
+    },
+    "lane4_growth": {
+      "safe_path": "factual_organic_content",
+      "required": ["claim-evidence ID", "testimonial permission and disclosure when used", "no outcome/guarantee claim without substantiation"],
+      "hold": {"channel": "paid_conversion_tracking", "owner": "Lane 4", "missing_fact": "event payload, audience exclusions, privacy match", "interim": "organic only; tracking code remains disabled"}
+    },
+    "lane5_healthcare": {
+      "safe_path": "american_surgical_no_phi_routing",
+      "required": ["client-approved opening", "recording off", "transcription off", "summary off", "email off", "CRM sync off", "no diagnosis/symptoms/DOB/insurance/payment-card collection", "911 emergency escalation"],
+      "hold": {"channels": ["PHI", "recording", "transcription", "summary", "email", "CRM sync"], "owner": "Lane 5 + client + counsel", "missing_fact": "CE/BA status, BAA chain, approved disclosure, retention/security readback", "interim": "no-PHI routing only"}
+    }
+  },
+  "registers": {"subprocessors": "outputs/subprocessor-register.csv", "retention": "outputs/lane-6-policy-redlines.md#5-retention--deletion-schedule", "deletion_verification": "outputs/deletion-verification-log.csv", "decision_register": "outputs/lane-6-publication-record.md"}
+}
