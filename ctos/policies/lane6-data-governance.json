@@ -1,0 +1,29 @@
+{
+  "policy_id": "lane6-data-governance-v1",
+  "effective_date": "2026-07-22",
+  "review_date": "2026-07-29",
+  "subprocessors": [
+    {"name": "Square", "purpose": "billing", "healthcare_gate": "no raw card data in TCT; no PHI workflow"},
+    {"name": "Supabase", "purpose": "operational records", "healthcare_gate": "BAA or documented no-access before PHI"},
+    {"name": "Vercel", "purpose": "application hosting", "healthcare_gate": "BAA or documented no-access before PHI"},
+    {"name": "Retell", "purpose": "voice handling", "healthcare_gate": "executed BAA before PHI"},
+    {"name": "telephony provider", "purpose": "call delivery", "healthcare_gate": "identify exact entity and BAA/no-access decision before PHI"},
+    {"name": "Resend", "purpose": "email delivery", "healthcare_gate": "no PHI without approved chain"},
+    {"name": "Meta", "purpose": "measurement", "healthcare_gate": "no health/sensitive event data; paid tracking disabled"},
+    {"name": "Instantly", "purpose": "manual B2B email support", "healthcare_gate": "no PHI"},
+    {"name": "Bland", "purpose": "voice communications", "healthcare_gate": "no PHI; outbound voice held"},
+    {"name": "SendBlue", "purpose": "SMS delivery", "healthcare_gate": "no PHI; marketing SMS held"},
+    {"name": "Clay", "purpose": "prospecting", "healthcare_gate": "no PHI"},
+    {"name": "Apollo", "purpose": "prospecting", "healthcare_gate": "no PHI"},
+    {"name": "Higgsfield", "purpose": "creative production", "healthcare_gate": "no customer/caller/health/minor data"}
+  ],
+  "retention": [
+    {"data": "website security logs", "days": 30, "deletion": "rolling deletion"},
+    {"data": "inquiry/demo record", "days": 365, "deletion": "delete or anonymize"},
+    {"data": "marketing consent and revocation", "days": 1825, "deletion": "restricted archive then delete"},
+    {"data": "non-health call audio/transcript", "days": 30, "deletion": "automatic deletion"},
+    {"data": "payment receipt references", "days": 2555, "deletion": "delete operational copy after tax period"}
+  ],
+  "deletion_verification": ["deletion ID", "system", "data type", "retention rule", "completion timestamp", "job/operator ID", "backup expiry", "downstream confirmation", "exception/hold"],
+  "responsibility": {"TCT": "configure, restrict access, log and escalate", "customer": "own business facts, emergency protocol, consent and client instructions", "provider": "process only configured service under applicable terms/BAA"}
+}
