@@ -1,7 +1,7 @@
 {
   "policy_id": "autonomous-outbound-policy-v1",
-  "status": "active",
-  "principle": "AI agents execute inside approved campaign policies. Wallace reviews escalations and performance, not every low-risk message.",
+  "status": "restricted_by_legal_channel_release_gates",
+  "principle": "AI agents may research, draft, and policy-check. Sending or channel activation is blocked unless the current legal-channel-release-gates policy explicitly clears the exact channel and its evidence is recorded.",
   "autonomous_actions_allowed": [
     "research local businesses from approved public/source inputs",
     "enrich lead records from public business info",
@@ -10,11 +10,9 @@
     "choose approved message angle by segment",
     "draft outbound messages from approved templates",
     "policy-check generated messages",
-    "send messages through approved integrations when campaign policy allows it",
-    "log sent messages and provider result",
+    "prepare manual-send packets with required evidence",
     "classify replies",
-    "draft and send low-risk replies inside approved policy",
-    "schedule follow-ups within spacing limits",
+    "draft replies for human review",
     "move leads through pipeline stages",
     "summarize lead status",
     "generate call lists from approved source notes",
@@ -22,9 +20,9 @@
     "update CTOS revenue scoreboard"
   ],
   "send_gate": {
-    "default": "send_autonomously_if_all_conditions_pass",
+    "default": "do_not_send_or_activate",
     "conditions": [
-      "campaign status allows autonomous execution",
+      "legal-channel-release-gates explicitly clears the exact channel",
       "target lead is real and source-backed",
       "message passes brand voice and truth policy",
       "channel limit has remaining capacity",
