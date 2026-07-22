@@ -14,12 +14,12 @@
       "human_or_existing_service_workflow_required": true,
       "conditions": ["requested-or-active-service", "no-marketing-content", "STOP-handler", "wrong-party-escalation"]
     },
-    "marketing_sms_mms": {"status": "HOLD_UNTIL_EXACT_FACT", "required": ["separate-attributable-consent", "carrier-program-evidence", "STOP-HELP-test", "five-year-consent-record"]},
-    "outbound_ai_or_prerecorded_voice": {"status": "HOLD_UNTIL_EXACT_FACT", "required": ["recipient-specific-consent", "AI-disclosure", "DNC-and-state-review", "five-year-evidence"]},
-    "outbound_live_agent_calls": {"status": "HOLD_UNTIL_EXACT_FACT", "required": ["state-matrix", "DNC-and-suppression", "approved-script-and-identity", "timezone-control"]},
-    "paid_conversion_tracking": {"status": "HOLD_UNTIL_EXACT_FACT", "required": ["event-payload-audit", "audience-exclusions", "privacy-copy-match"]},
-    "healthcare_phi_recording_transcription_summary_email_crm": {"status": "HOLD_UNTIL_EXACT_FACT", "required": ["CE-BA-determination", "BAA-chain", "approved-disclosure", "retention-and-security-readback"]},
-    "american_surgical_no_phi_routing": {"status": "SAFE_INTERIM_PATH", "conditions": ["client-approved-opening", "recording-off", "transcription-off", "summary-off", "email-off", "CRM-sync-off", "emergency-escalation"]}
+    "marketing_sms_mms": {"status": "HOLD_UNTIL_EXACT_FACT", "owner": "Lane 2 + counsel", "deadline": "before first marketing send", "safe_interim": "no-send", "re_review": "2026-07-29", "required": ["separate-attributable-consent", "carrier-program-evidence", "STOP-HELP-test", "five-year-consent-record"]},
+    "outbound_ai_or_prerecorded_voice": {"status": "HOLD_UNTIL_EXACT_FACT", "owner": "Lane 2 + counsel", "deadline": "before first outbound AI/pre-recorded call", "safe_interim": "manual B2B email only", "re_review": "2026-07-29", "required": ["recipient-specific-consent", "AI-disclosure", "DNC-and-state-review", "five-year-evidence"]},
+    "outbound_live_agent_calls": {"status": "HOLD_UNTIL_EXACT_FACT", "owner": "Lane 2 + counsel", "deadline": "before first outbound live-agent call", "safe_interim": "manual B2B email only", "re_review": "2026-07-29", "required": ["state-matrix", "DNC-and-suppression", "approved-script-and-identity", "timezone-control"]},
+    "paid_conversion_tracking": {"status": "HOLD_UNTIL_EXACT_FACT", "owner": "Lane 4", "deadline": "before paid spend or tracking restoration", "safe_interim": "factual organic only", "re_review": "2026-07-29", "required": ["event-payload-audit", "audience-exclusions", "privacy-copy-match"]},
+    "healthcare_phi_recording_transcription_summary_email_crm": {"status": "HOLD_UNTIL_EXACT_FACT", "owner": "Lane 5 + client + counsel", "deadline": "before healthcare data enablement", "safe_interim": "American Surgical no-PHI routing only", "re_review": "2026-07-29", "required": ["CE-BA-determination", "BAA-chain", "approved-disclosure", "retention-and-security-readback"]},
+    "american_surgical_no_phi_routing": {"status": "SAFE_INTERIM_PATH", "owner": "Lane 5 + client", "deadline": "before each flow change", "re_review": "2026-07-29", "conditions": ["client-approved-opening", "recording-off", "transcription-off", "summary-off", "email-off", "CRM-sync-off", "emergency-escalation"]}
   },
   "review": {"next_review": "2026-07-29", "trigger": ["channel-change", "provider-change", "form-or-copy-change", "client-flow-change"]}
 }
