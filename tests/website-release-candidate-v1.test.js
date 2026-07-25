@@ -43,10 +43,15 @@ for (const route of ["website/pre-checkout.html", "website/checkout.html", "webs
 }
 
 const card = read("website/card-checkout.html");
-assert.ok(card.includes("enrollmentConfirmed=true"), "checkout must distinguish confirmed enrollment from pre-enrollment failure");
-assert.ok(card.includes("Do not submit again"), "confirmed enrollment handoff failure must prevent duplicate enrollment");
-assert.ok(card.includes("button.disabled=true"), "confirmed enrollment handoff failure must leave submit disabled");
-assert.ok(card.includes("result.setupToken"), "checkout must require a signed setup token");
+for (const link of [
+  "https://square.link/u/nAgP58ki",
+  "https://square.link/u/EslC0nAq",
+  "https://square.link/u/J9Fpp46N",
+]) {
+  assert.ok(card.includes(link), `checkout must use verified Square link ${link}`);
+}
+assert.ok(card.includes("window.location.assign(plan.url)"), "checkout must hand off only after a valid plan is selected");
+assert.strictEqual(card.includes("call-taker-os.vercel.app/api/public/square-trial"), false, "retired custom card capture must not remain public");
 
 const setup = read("website/setup.html");
 const setupScript = read("website/setup-form.js");
