@@ -478,7 +478,28 @@
     });
   }
 
-  window.TCTSetupForm.initSetupForm();
+  function startSetupForm() { window.TCTSetupForm.initSetupForm(); }
+  var checkout = new URLSearchParams(window.location.search);
+  if (checkout.get('checkoutId') && checkout.get('orderId') && checkout.get('transactionId')) {
+    fetch('https://call-taker-os.vercel.app/api/public/square-checkout-return?' + checkout.toString(), { credentials: 'omit' })
+      .then(function (response) { if (!response.ok) throw new Error('checkout_not_ready'); return response.json(); })
+      .then(function (result) {
+        if (!result || !result.ok || !result.setupToken || !result.plan || !result.receipt) throw new Error('checkout_not_verified');
+        try { sessionStorage.setItem('tct_setup_binding', result.setupToken); } catch (error) {}
+        var verified = new URL(window.location.href);
+        verified.search = 'plan=' + encodeURIComponent(result.plan) + '&trial=started&receipt=' + encodeURIComponent(result.receipt);
+        verified.hash = 'binding=' + encodeURIComponent(result.setupToken);
+        window.location.replace(verified.toString());
+      })
+      .catch(function () {
+        var message = document.querySelector('[data-setup-form-message]');
+        if (message) { message.textContent = 'Square is confirming your checkout. Please wait a moment and refresh this page; do not start another checkout.'; message.dataset.state = 'info'; message.hidden = false; }
+        var button = document.querySelector('#tct-setup-form button[type="submit"]');
+        if (button) button.disabled = true;
+      });
+  } else {
+    startSetupForm();
+  }
 })();
 </script>
 </body>
