@@ -11,7 +11,6 @@ const buyerPages = [
   "website/faq.html",
   "website/start.html",
   "website/signup.html",
-  "website/pre-checkout.html",
   "website/checkout.html",
   "website/pay.html",
 ];
@@ -36,7 +35,7 @@ for (const page of buyerPages) {
   assert.strictEqual(html.includes("Payment complete — continue setup"), false, `${page} must not expose a buyer-controlled payment bypass`);
 }
 
-for (const route of ["website/pre-checkout.html", "website/checkout.html", "website/card-checkout.html"]) {
+for (const route of ["website/checkout.html", "website/card-checkout.html"]) {
   const html = read(route);
   assert.strictEqual(/params\.get\(['"]plan['"]\)\s*\|\|\s*['"]full247['"]/.test(html), false, `${route} must not silently default to $497`);
   assert.ok(html.includes("checkout=select-plan"), `${route} must send a missing or invalid plan back to pricing`);
@@ -46,6 +45,8 @@ const card = read("website/card-checkout.html");
 assert.ok(card.includes("call-taker-os.vercel.app/api/public/square-trial"), "checkout must collect a Square card on file for the $0 trial");
 assert.ok(card.includes("consentToStoreCard:true"), "checkout must obtain clear consent before storing a card");
 assert.ok(card.includes('href="/terms.html"') && card.includes('href="/privacy.html"'), "checkout must link its Terms and Privacy Policy");
+assert.ok(card.includes("window.location.replace('/setup.html?plan='"), "confirmed Square enrollment must redirect into setup automatically");
+assert.ok(card.includes("result.receipt"), "automatic setup redirect must include the verified receipt binding");
 
 const setup = read("website/setup.html");
 const setupScript = read("website/setup-form.js");

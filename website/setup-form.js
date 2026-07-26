@@ -24,6 +24,8 @@
     "emergency_rules",
     "urgent_action_preference",
     "summary_destination",
+    "phone_provider",
+    "current_forwarding_status",
     "forwarding_ability",
     "what_ai_should_never_say",
     "authorized_to_configure_forwarding"
@@ -41,8 +43,6 @@
     "callback_rules",
     "appointment_booking_rules",
     "ai_greeting_preference",
-    "phone_provider",
-    "current_forwarding_status",
     "preferred_go_live_time",
     "special_notes",
     "source_url",
@@ -234,6 +234,17 @@
     return buildPayloadFromObject(data, sourceUrl || root.location.href);
   }
 
+  function prefillCheckoutContact() {
+    if (!root.document) return;
+    var contact = null;
+    try { contact = JSON.parse(root.sessionStorage.getItem("tct_checkout_contact") || "null"); } catch (error) { contact = null; }
+    if (!contact) return;
+    ["owner_name", "summary_email", "owner_cell"].forEach(function (fieldName) {
+      var field = root.document.querySelector("[name='" + fieldName + "']");
+      if (field && !field.value && contact[fieldName]) field.value = trim(contact[fieldName]);
+    });
+  }
+
   function validatePayload(payload) {
     var missing = [];
     var errors = [];
@@ -285,6 +296,9 @@
     }
     if (payload.forwarding_ability && FORWARDING_ABILITY_OPTIONS.indexOf(payload.forwarding_ability) === -1) {
       errors.push({ field: "forwarding_ability", message: "Choose whether you can forward calls." });
+    }
+    if (payload.urgent_action_preference === "transfer" && !payload.transfer_number) {
+      errors.push({ field: "transfer_number", message: "Add the phone number Gideon should use for urgent transfers." });
     }
 
     return {
@@ -447,6 +461,7 @@
 
   function initSetupForm() {
     if (!root.document) return;
+    prefillCheckoutContact();
     initPlanSelection();
 
     var form = root.document.getElementById("tct-setup-form");
@@ -488,6 +503,7 @@
           root.sessionStorage.setItem("tct_setup_payload", JSON.stringify(payload));
           root.sessionStorage.setItem("tct_setup_receipt", JSON.stringify(response));
           root.sessionStorage.removeItem("tct_setup_binding");
+          root.sessionStorage.removeItem("tct_checkout_contact");
         } catch (error) {
           // Private browsing can block storage; the confirmation page still works from the URL.
         }

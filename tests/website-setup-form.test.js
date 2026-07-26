@@ -59,6 +59,8 @@ const fallbackFixtures = {
     urgent_action_preference: "summarize only",
     callback_rules: "Urgent calls get same-day callback. Non-urgent calls get next-business-day callback.",
     summary_destination: "Email owner@example.com.",
+    phone_provider: "Not sure",
+    current_forwarding_status: "not sure",
     forwarding_ability: "yes",
     ai_greeting_preference: "Thanks for calling Minimum Sample Co. How can I help?",
     what_ai_should_never_say: "None.",
@@ -187,7 +189,6 @@ setupForm.REQUIRED_FIELDS.forEach((field) => {
   "callback_rules",
   "ai_greeting_preference",
   "appointment_booking_rules",
-  "phone_provider",
   "preferred_go_live_time",
   "special_notes",
 ].forEach((field) => {
@@ -196,6 +197,11 @@ setupForm.REQUIRED_FIELDS.forEach((field) => {
     false,
     `${field} should not be asked on the 60-second setup form`
   );
+});
+
+["phone_provider", "current_forwarding_status"].forEach((field) => {
+  assert.ok(setupHtml.includes(`name="${field}"`), `${field} should be collected on the critical setup form`);
+  assert.ok(setupForm.REQUIRED_FIELDS.includes(field), `${field} should be required before launch setup is accepted`);
 });
 
 assert.ok(
@@ -432,6 +438,7 @@ const browserPayload = setupForm.buildPayloadFromObject({
   what_ai_should_never_say: "Do not promise exact arrival times.",
   authorized_to_configure_forwarding: "on",
   phone_provider: "Not sure",
+  current_forwarding_status: "not sure",
 }, "https://thecalltaker.com/setup.html?plan=full247", "2026-06-07T12:00:00.000Z");
 
 assert.strictEqual(
@@ -502,7 +509,8 @@ assert.strictEqual(
   );
 });
 assert.ok(
-  read("website/card-checkout.html").includes("#binding='+encodeURIComponent(result.setupToken)"),
+  read("website/card-checkout.html").includes("#binding=' + encodeURIComponent(result.setupToken)") &&
+    read("website/card-checkout.html").includes("&trial=started&receipt=' + encodeURIComponent(result.receipt)"),
   "confirmed checkout must be the only public source of the signed setup route"
 );
 

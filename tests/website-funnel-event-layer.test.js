@@ -16,8 +16,8 @@ const launchPages = [
   "website/paid.html",
   "website/faq.html"
 ];
-const preCheckoutPage = "website/pre-checkout.html";
-const eventInventoryPages = launchPages.concat(preCheckoutPage);
+const cardCheckoutPage = "website/card-checkout.html";
+const eventInventoryPages = launchPages.concat(cardCheckoutPage);
 
 const eventScript = read("website/tct-funnel-events.js");
 
@@ -32,19 +32,10 @@ launchPages.forEach((page) => {
     `${page} should include the deploy-gated funnel event script`
   );
 });
-assert.ok(
-  !read(preCheckoutPage).includes('<script src='),
-  "pre-checkout should stay lightweight and avoid external script includes"
-);
-assert.ok(
-  read(preCheckoutPage).includes("window.__tctFunnelEvents"),
-  "pre-checkout should keep local dry-run capture without external sends"
-);
-
 [
   ["website/index.html", "homepage_view"],
   ["website/pricing.html", "pricing_view"],
-  ["website/pre-checkout.html", "precheckout_view"],
+  ["website/card-checkout.html", "card_checkout_view"],
   ["website/setup.html", "setup_view"],
   ["website/setup-confirmation.html", "setup_confirmation_view"],
   ["website/demo.html", "demo_view"],
@@ -70,14 +61,14 @@ launchPages.forEach((page) => {
     );
     assert.ok(tag.includes('data-tct-destination="tel"'), `${page} tel link should use tel destination`);
   });
-  tags(html, /<a\b[^>]*href=["'][^"']*pre-checkout\.html\?plan=[^"']*["'][^>]*>/g).forEach((tag) => {
+  tags(html, /<a\b[^>]*href=["'][^"']*card-checkout\.html\?plan=[^"']*["'][^>]*>/g).forEach((tag) => {
     assert.ok(
       tag.includes('data-tct-event="homepage_cta_click"') ||
         tag.includes('data-tct-event="pricing_plan_click"') ||
         tag.includes('data-tct-event="paid_cta_click"'),
-      `${page} pre-checkout CTA should have funnel event`
+      `${page} card-checkout CTA should have funnel event`
     );
-    assert.ok(tag.includes('data-tct-destination="precheckout"'), `${page} pre-checkout CTA should identify destination`);
+    assert.ok(tag.includes('data-tct-destination="card_checkout"'), `${page} card-checkout CTA should identify destination`);
   });
 });
 
@@ -100,15 +91,9 @@ launchPages.forEach((page) => {
   );
 });
 
-const squareLinksOutsidePrecheckout = launchPages
-  .filter((page) => page !== "website/pre-checkout.html")
+const squareLinksOutsideCardCheckout = launchPages
   .filter((page) => read(page).includes("checkout.square.site"));
-assert.deepStrictEqual(squareLinksOutsidePrecheckout, [], "Square links should remain contained to pre-checkout");
-
-assert.ok(
-    read(preCheckoutPage).includes('data-tct-event="card_checkout_start"'),
-  "pre-checkout should mark secure card-checkout starts"
-);
+assert.deepStrictEqual(squareLinksOutsideCardCheckout, [], "hosted Square links should not bypass the card checkout");
 
 [
   /fetch\s*\(/,
@@ -171,8 +156,8 @@ assert.strictEqual(simulation.provider_calls_made, false, "simulation should not
 [
   "homepage_cta_click",
   "pricing_plan_click",
-  "precheckout_view",
-  "square_outbound_click",
+  "card_checkout_view",
+  "card_checkout_start",
   "setup_view",
   "setup_form_submitted",
   "setup_confirmation_view",

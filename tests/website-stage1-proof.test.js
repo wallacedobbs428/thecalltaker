@@ -19,7 +19,6 @@ const pages = {
   "website/index.html": read("website/index.html"),
   "website/pricing.html": read("website/pricing.html"),
   "website/paid.html": read("website/paid.html"),
-  "website/pre-checkout.html": read("website/pre-checkout.html"),
   "website/faq.html": read("website/faq.html"),
   "website/setup.html": read("website/setup.html"),
   "website/setup-confirmation.html": read("website/setup-confirmation.html"),
@@ -212,29 +211,13 @@ Object.entries(pages).forEach(([page, html]) => {
 });
 
 cardRoutes.forEach((route) => {
-  assert.ok(pages["website/pre-checkout.html"].includes(route), `pre-checkout should keep card route: ${route}`);
-  assert.strictEqual(pages["website/pricing.html"].includes(route), false, `pricing should route through pre-checkout first: ${route}`);
-});
-
-[
-  "/pre-checkout.html?plan=afterhours",
-  "/pre-checkout.html?plan=full247",
-  "/pre-checkout.html?plan=custom",
-].forEach((route) => {
   assert.ok(
-    pages["website/pricing.html"].includes(route) || pages["website/index.html"].includes(route),
-    `public buyer path should include pre-checkout route: ${route}`
+    pages["website/pricing.html"].includes(route) && pages["website/index.html"].includes(route),
+    `public buyer path should open card checkout directly: ${route}`
   );
 });
 
-[
-  "Checkout, then 60-second setup.",
-  "A card is required for the 14-day trial.",
-  "Enter Card &amp; Start Free Trial",
-  "setup opens automatically",
-].forEach((marker) => {
-  assert.ok(pages["website/pre-checkout.html"].includes(marker), `pre-checkout should include trust marker: ${marker}`);
-});
+assert.strictEqual(fs.existsSync(path.join(root, "website/pre-checkout.html")), false, "removed pre-checkout page should stay deleted");
 
 [
   "Pay through secure Square checkout.",
@@ -256,6 +239,8 @@ assert.ok(
   "What you will provide",
   "Before we build",
   "Best mobile for urgent setup issues",
+  "Current phone provider",
+  "What happens with forwarding today?",
   "Submit setup questions",
 ].forEach((marker) => {
   assert.ok(pages["website/setup.html"].includes(marker), `setup should include proof marker: ${marker}`);

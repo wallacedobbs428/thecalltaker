@@ -219,7 +219,7 @@
       <div class="setup-note">Setup unlocks only after Square confirms enrollment and returns a signed plan binding. The purchased plan is attached automatically and cannot be changed on this page.</div>
       <div class="setup-handoff-card" aria-label="Confirmed checkout handoff">
         <strong>What you will provide</strong>
-        <p>Business identity, answer mode, hours, service area, top call types, urgent-call rules, summary destination, forwarding readiness, and hard limits. Live routing still requires review and test-call confirmation.</p>
+        <p>Business identity, phone provider, forwarding status, answer mode, hours, service area, top call types, urgent-call rules, summary destination, and hard limits. Live routing still requires review and test-call confirmation.</p>
       </div>
       <a href="#tct-setup-form" class="btn btn-primary btn-lg" data-tct-event="setup_form_started" data-tct-page="setup" data-tct-cta="Start setup questions" data-tct-destination="setup_questions" data-tct-learning-tag="setup_intent">Start setup questions</a>
       <div class="text-us-support text-us-support--plain" aria-label="Setup text support">
@@ -359,6 +359,39 @@
             <textarea id="summary_destination" name="summary_destination" required placeholder="Example: email office@example.com, text the owner, or both."></textarea>
           </div>
           <div class="setup-field full">
+            <label for="phone_provider">Current phone provider</label>
+            <input id="phone_provider" name="phone_provider" type="text" list="phone-provider-options" required placeholder="Example: Vonage, RingCentral, Comcast Business, or Not sure">
+            <datalist id="phone-provider-options">
+              <option value="AT&T">
+              <option value="Comcast Business">
+              <option value="Dialpad">
+              <option value="GoTo Connect">
+              <option value="Google Voice">
+              <option value="Nextiva">
+              <option value="Ooma">
+              <option value="OpenPhone">
+              <option value="RingCentral">
+              <option value="Spectrum Business">
+              <option value="T-Mobile">
+              <option value="Verizon">
+              <option value="Vonage">
+              <option value="Zoom Phone">
+              <option value="Other">
+              <option value="Not sure">
+            </datalist>
+            <small>If you do not know, enter “Not sure.” We will identify the correct forwarding steps with you.</small>
+          </div>
+          <div class="setup-field full">
+            <label for="current_forwarding_status">What happens with forwarding today?</label>
+            <select id="current_forwarding_status" name="current_forwarding_status" required>
+              <option value="">Choose one</option>
+              <option value="not configured">Calls are not forwarded today</option>
+              <option value="already forwarding">Calls already forward somewhere</option>
+              <option value="conditional forwarding">Forwarding is already conditional or scheduled</option>
+              <option value="not sure">Not sure</option>
+            </select>
+          </div>
+          <div class="setup-field full">
             <label for="forwarding_ability">Are you able to forward calls to the number we give you?</label>
             <select id="forwarding_ability" name="forwarding_ability" required>
               <option value="">Choose one</option>
@@ -367,6 +400,10 @@
               <option value="not sure">Not sure</option>
             </select>
             <small>Not sure is okay. We can send instructions or walk you through it.</small>
+          </div>
+          <div class="setup-field full">
+            <label for="transfer_number">Number for urgent transfers <span class="optional-badge">Required if “Transfer” is selected</span></label>
+            <input id="transfer_number" name="transfer_number" type="tel" autocomplete="tel" placeholder="The person or team Gideon should transfer urgent callers to">
           </div>
           <div class="setup-field full">
             <label for="what_ai_should_never_say">Hard do-not-say / do-not-promise rules</label>

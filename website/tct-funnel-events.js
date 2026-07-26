@@ -18,9 +18,8 @@
     homepage_cta_click: true,
     pricing_view: true,
     pricing_plan_click: true,
-    precheckout_view: true,
-    precheckout_plan_detected: true,
-    square_outbound_click: true,
+    card_checkout_view: true,
+    card_checkout_start: true,
     setup_view: true,
     setup_form_started: true,
     setup_form_submitted: true,
@@ -113,9 +112,6 @@
     var eventName = doc.body && doc.body.getAttribute("data-tct-view");
     if (eventName) record(eventName, doc.body);
 
-    if (eventName === "precheckout_view") {
-      record("precheckout_plan_detected", doc.body);
-    }
   }
 
   function initClicks() {

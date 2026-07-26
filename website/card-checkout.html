@@ -44,7 +44,7 @@
     @media(max-width:600px) { main { margin:18px auto; } .hero,.summary,form,.success { padding-right:20px; padding-left:20px; } .grid { grid-template-columns:1fr; } .wide { grid-column:auto; } }
   </style>
 </head>
-<body>
+<body data-tct-view="card_checkout_view" data-tct-page="card-checkout" data-tct-learning-tag="square_intent">
   <main>
     <div class="brand">The Call Taker · secure Square checkout</div>
     <section class="shell" id="shell">
@@ -57,7 +57,7 @@
         <div><strong id="planName">Loading plan</strong><br><span id="planDetail">Secure call coverage</span></div>
         <div class="due"><span>Due today</span><br><b>$0.00</b></div>
       </div>
-      <form id="form" novalidate>
+      <form id="form" novalidate data-tct-event="card_checkout_start" data-tct-plan="">
         <p class="label">Your details</p>
         <div class="grid">
           <label>First name<input id="first" autocomplete="given-name" required></label>
@@ -87,6 +87,7 @@
       var key = new URLSearchParams(window.location.search).get('plan');
       if (!plans[key]) { window.location.replace('/pricing.html?checkout=select-plan#pricing-cards'); return; }
       var plan = plans[key];
+      document.getElementById('form').setAttribute('data-tct-plan', key);
       document.title = plan.name + ' — secure card checkout';
       document.getElementById('planName').textContent = plan.name;
       document.getElementById('planDetail').textContent = plan.detail;
@@ -120,13 +121,23 @@
           if (token.status !== 'OK' || !token.token) throw new Error('Please check your card details and try again.');
           var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:crypto.randomUUID(), givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim(), cardholderName:fields[4].value.trim(), consentToStoreCard:true, website:'' }) });
           var result = await response.json();
-          if (!response.ok || !result.ok || !result.setupToken) throw new Error(result.error || 'Unable to start your trial.');
-          document.getElementById('shell').innerHTML = '<div class="success"><div class="brand">Trial confirmed</div><h2>You’re in.</h2><p>Your 14-day trial is active. Complete your short setup questionnaire so we can prepare your call-flow review.</p><a href="/setup.html?plan=' + encodeURIComponent(result.plan) + '#binding='+encodeURIComponent(result.setupToken) + '">Complete setup</a></div>';
+          if (!response.ok || !result.ok || !result.setupToken || !result.plan || !result.receipt) throw new Error(result.error || 'Unable to start your trial.');
+          try {
+            sessionStorage.setItem('tct_setup_binding', result.setupToken);
+            sessionStorage.setItem('tct_checkout_contact', JSON.stringify({
+              owner_name: fields[0].value.trim() + ' ' + fields[1].value.trim(),
+              summary_email: fields[2].value.trim(),
+              owner_cell: fields[3].value.trim()
+            }));
+          } catch (error) {}
+          submit.textContent = 'Trial confirmed — opening setup…';
+          window.location.replace('/setup.html?plan=' + encodeURIComponent(result.plan) + '&trial=started&receipt=' + encodeURIComponent(result.receipt) + '#binding=' + encodeURIComponent(result.setupToken));
         } catch (error) { say(error.message || 'We could not start your trial. Please try again.'); }
         finally { if (document.getElementById('form')) { submit.textContent = 'Start 14-day free trial'; refresh(); } }
       });
       init();
     })();
   </script>
+  <script src="/tct-funnel-events.js" defer></script>
 </body>
 </html>
