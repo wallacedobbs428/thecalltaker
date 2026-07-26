@@ -265,7 +265,7 @@
         <p class="summary-label">Selected plan</p>
         <p class="summary-plan" id="planName">24/7 Call Coverage</p>
         <p class="summary-price" id="planPrice">14 days free, then $497/mo unless canceled.</p>
-        <a class="checkout-button" id="checkoutButton" href="#plan-checkout-links" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-cta="Continue to secure checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Continue to secure checkout</a>
+        <a class="checkout-button" id="checkoutButton" href="/card-checkout.html?plan=full247" data-tct-event="square_outbound_click" data-tct-page="precheckout" data-tct-cta="Continue to secure checkout" data-tct-destination="square" data-tct-learning-tag="square_intent">Continue to secure checkout</a>
         <p class="reassurance">No setup starts until we have your business details.</p>
         <div class="fine-print">
           <p>Card payment is handled by Square. Apple Pay, Google Pay, and Cash App Pay may be available depending on your device, browser, and Square eligibility.</p>
@@ -323,6 +323,7 @@
       document.getElementById("planName").textContent = plan.name;
       document.getElementById("planPrice").textContent = plan.price;
       button.href = squareLinks[planKey];
+      if (planKey === "full247") button.href = "/card-checkout.html?plan=full247";
       button.setAttribute("data-tct-plan", planKey);
       document.body.classList.add("js-ready");
 
