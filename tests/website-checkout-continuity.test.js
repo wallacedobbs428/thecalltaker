@@ -11,11 +11,6 @@ const cardRoutes = [
   "/card-checkout.html?plan=custom",
 ];
 const card = read("website/card-checkout.html");
-const expectedLinks = {
-  afterhours: "https://square.link/u/nAgP58ki",
-  full247: "https://square.link/u/EslC0nAq",
-  custom: "https://square.link/u/J9Fpp46N",
-};
 
 assert.strictEqual(new Set(cardRoutes).size, 3, "each public plan must use a distinct checkout route");
 pages.forEach((page) => {
@@ -27,13 +22,12 @@ cardRoutes.forEach((link) => {
   assert.ok(read("website/checkout.html").includes(link), `checkout must preserve ${link}`);
 });
 assert.ok(read("website/pay.html").includes(cardRoutes[0]), "legacy $97 pay entrypoint must remain plan-bound");
-for (const [plan, url] of Object.entries(expectedLinks)) {
+for (const plan of ["afterhours", "full247", "custom"]) {
   assert.ok(card.includes(`${plan}: {`), `checkout must define ${plan}`);
-  assert.ok(card.includes(url), `checkout must use the verified ${plan} Square link`);
 }
-assert.ok(card.includes("window.location.assign(plan.url)"), "a valid selected plan must hand off to Square");
 assert.ok(card.includes("checkout=select-plan"), "an invalid plan must return to pricing");
-assert.strictEqual(card.includes("call-taker-os.vercel.app/api/public/square-trial"), false, "retired custom card capture must not remain public");
-assert.strictEqual(card.includes("intent:'STORE'"), false, "retired card-storage flow must not remain public");
+assert.ok(card.includes("call-taker-os.vercel.app/api/public/square-trial"), "checkout must use the protected Square card-on-file endpoint");
+assert.ok(card.includes("consentToStoreCard:true"), "checkout must collect explicit card-storage consent");
+assert.ok(card.includes("<button id=\"submit\" type=\"submit\" disabled>"), "checkout must start disabled until required details are complete");
 
 console.log("website checkout continuity tests passed");

@@ -43,15 +43,9 @@ for (const route of ["website/pre-checkout.html", "website/checkout.html", "webs
 }
 
 const card = read("website/card-checkout.html");
-for (const link of [
-  "https://square.link/u/nAgP58ki",
-  "https://square.link/u/EslC0nAq",
-  "https://square.link/u/J9Fpp46N",
-]) {
-  assert.ok(card.includes(link), `checkout must use verified Square link ${link}`);
-}
-assert.ok(card.includes("window.location.assign(plan.url)"), "checkout must hand off only after a valid plan is selected");
-assert.strictEqual(card.includes("call-taker-os.vercel.app/api/public/square-trial"), false, "retired custom card capture must not remain public");
+assert.ok(card.includes("call-taker-os.vercel.app/api/public/square-trial"), "checkout must collect a Square card on file for the $0 trial");
+assert.ok(card.includes("consentToStoreCard:true"), "checkout must obtain clear consent before storing a card");
+assert.ok(card.includes('href="/terms.html"') && card.includes('href="/privacy.html"'), "checkout must link its Terms and Privacy Policy");
 
 const setup = read("website/setup.html");
 const setupScript = read("website/setup-form.js");

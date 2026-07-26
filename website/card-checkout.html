@@ -4,48 +4,128 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,follow">
-  <title>Secure checkout — The Call Taker</title>
+  <title>Secure card checkout — The Call Taker</title>
+  <script src="https://web.squarecdn.com/v1/square.js"></script>
   <style>
-    body { max-width: 680px; margin: 0 auto; padding: 48px 22px; color: #102019; background: #f4f2eb; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
-    main { padding: 32px; border: 1px solid #d7dcd6; border-radius: 20px; background: #fffdf9; box-shadow: 0 18px 48px rgba(16, 32, 25, .1); }
-    .eyebrow { color: #216f4d; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-    h1 { margin: 10px 0; font-size: clamp(32px, 7vw, 50px); letter-spacing: -.04em; }
-    p { color: #5c6962; line-height: 1.6; }
-    .plan { display: inline-block; margin: 10px 0; padding: 8px 12px; border-radius: 999px; color: #17583c; background: #e8f1eb; font-size: 14px; font-weight: 800; }
-    .button { display: block; margin-top: 24px; padding: 16px 18px; border-radius: 12px; color: #fff; background: #216f4d; font-weight: 900; text-align: center; text-decoration: none; }
-    .fine { margin-top: 16px; font-size: 13px; }
+    :root { --ink:#12211d; --pine:#163c31; --paper:#f6f3eb; --line:#d6dcd3; --muted:#62716a; --gold:#c7a760; --error:#a52620; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); background:var(--paper); font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { width:min(710px,calc(100% - 32px)); margin:44px auto; }
+    .brand { color:var(--pine); font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+    .shell { margin-top:18px; overflow:hidden; border:1px solid var(--line); border-radius:20px; background:#fff; box-shadow:0 20px 54px #163c3118; }
+    .hero { padding:32px; color:#fff; background:linear-gradient(135deg,#112b24,#1d4b3e); }
+    .hero .brand { color:#ddc17f; }
+    .hero h1 { margin:10px 0; font:400 clamp(34px,6vw,52px)/1 Georgia,serif; letter-spacing:-.03em; }
+    .hero p { margin:0; color:#d7e5dc; line-height:1.55; }
+    .summary { display:flex; justify-content:space-between; gap:20px; padding:20px 32px; border-bottom:1px solid var(--line); background:#fcfbf7; }
+    .summary strong { font-size:17px; }
+    .summary span { color:var(--muted); font-size:14px; }
+    .due { text-align:right; }
+    .due b { color:var(--pine); font-size:21px; }
+    form { padding:30px 32px; }
+    .label { margin:0 0 13px; color:var(--pine); font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    label { display:grid; gap:7px; color:#405149; font-size:13px; font-weight:700; }
+    .wide { grid-column:1/-1; }
+    input,#card { width:100%; min-height:48px; padding:12px; border:1px solid #c7d0c9; border-radius:9px; background:#fff; font:inherit; }
+    #card { min-height:88px; padding:14px; }
+    .consent { display:flex; gap:10px; align-items:flex-start; margin:22px 0; font-weight:400; line-height:1.5; }
+    .consent input { width:18px; min-height:18px; margin:1px 0 0; accent-color:var(--pine); }
+    button { width:100%; min-height:53px; border:0; border-radius:10px; color:#fff; background:var(--pine); font:800 16px inherit; cursor:pointer; }
+    button:disabled { opacity:.5; cursor:not-allowed; }
+    .msg { min-height:20px; margin:14px 0 0; color:var(--error); font-size:14px; }
+    .logos { color:#607069; font-size:12px; font-weight:700; letter-spacing:.06em; text-align:center; }
+    .fine { margin:16px 0 0; color:#748079; font-size:12px; line-height:1.55; text-align:center; }
+    .fine a { color:var(--pine); font-weight:700; }
+    .success { padding:42px 32px; text-align:center; }
+    .success h2 { margin:10px; font:400 36px Georgia,serif; }
+    .success p { color:var(--muted); line-height:1.6; }
+    .success a { display:inline-block; padding:14px 22px; border-radius:9px; color:#fff; background:var(--pine); font-weight:800; text-decoration:none; }
+    @media(max-width:600px) { main { margin:18px auto; } .hero,.summary,form,.success { padding-right:20px; padding-left:20px; } .grid { grid-template-columns:1fr; } .wide { grid-column:auto; } }
   </style>
 </head>
 <body>
   <main>
-    <div class="eyebrow">Secure checkout by Square</div>
-    <h1 id="title">Preparing your checkout</h1>
-    <div class="plan" id="plan">Select a plan</div>
-    <p id="terms">We will take you to Square to securely add your card and begin the selected trial.</p>
-    <a id="continue" class="button" href="/pricing.html#pricing-cards">Continue securely with Square</a>
-    <p class="fine">$0 is due today. Unless canceled before renewal, the selected plan renews monthly after 14 days. Square handles card entry and payment information.</p>
+    <div class="brand">The Call Taker · secure Square checkout</div>
+    <section class="shell" id="shell">
+      <header class="hero">
+        <div class="brand">Secure trial enrollment</div>
+        <h1>Start with 14 days on us.</h1>
+        <p id="heroTerms">Square securely stores your card today. You will not be charged today unless you cancel after the trial.</p>
+      </header>
+      <div class="summary">
+        <div><strong id="planName">Loading plan</strong><br><span id="planDetail">Secure call coverage</span></div>
+        <div class="due"><span>Due today</span><br><b>$0.00</b></div>
+      </div>
+      <form id="form" novalidate>
+        <p class="label">Your details</p>
+        <div class="grid">
+          <label>First name<input id="first" autocomplete="given-name" required></label>
+          <label>Last name<input id="last" autocomplete="family-name" required></label>
+          <label class="wide">Business email<input id="email" type="email" autocomplete="email" required></label>
+          <label class="wide">Mobile phone<input id="phone" type="tel" autocomplete="tel" required></label>
+          <label class="wide">Name on card<input id="holder" autocomplete="cc-name" required></label>
+        </div>
+        <p class="label" style="margin-top:26px">Card details</p>
+        <div id="card" aria-label="Secure card details"></div>
+        <label class="consent"><input id="consent" type="checkbox"><span>I authorize The Call Taker to securely store my card with Square and automatically charge <b id="renewalAmount"></b> after the 14-day trial unless I cancel before renewal.</span></label>
+        <button id="submit" type="submit" disabled>Start 14-day free trial</button>
+        <p class="msg" id="msg" role="alert"></p>
+        <p class="logos">SECURE PAYMENT BY SQUARE · VISA · MASTERCARD · AMERICAN EXPRESS · DISCOVER</p>
+        <p class="fine">Your card number is entered directly into Square’s protected payment fields. The Call Taker never sees your full card number. By starting your trial, you agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and acknowledge the <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+      </form>
+    </section>
   </main>
   <script>
     (function () {
+      var API = 'https://call-taker-os.vercel.app/api/public/square-trial';
       var plans = {
-        afterhours: { name: "After-Hours Capture", terms: "$0 today, then $97/month after 14 days.", url: "https://square.link/u/nAgP58ki" },
-        full247: { name: "Revenue Recovery System", terms: "$0 today, then $497/month after 14 days.", url: "https://square.link/u/EslC0nAq" },
-        custom: { name: "Operational Infrastructure", terms: "$0 today, then $997 base/month after 14 days.", url: "https://square.link/u/J9Fpp46N" }
+        afterhours: { name:'After-Hours Capture', detail:'After-hours call capture', amount:'$97/month' },
+        full247: { name:'Revenue Recovery System', detail:'Day, night & overflow call coverage', amount:'$497/month' },
+        custom: { name:'Operational Infrastructure', detail:'Custom operational coverage', amount:'$997/month' }
       };
-      var key = new URLSearchParams(window.location.search).get("plan");
-      if (!plans[key]) {
-        window.location.replace("/pricing.html?checkout=select-plan#pricing-cards");
-        return;
-      }
+      var key = new URLSearchParams(window.location.search).get('plan');
+      if (!plans[key]) { window.location.replace('/pricing.html?checkout=select-plan#pricing-cards'); return; }
       var plan = plans[key];
-      document.title = plan.name + " checkout — The Call Taker";
-      document.getElementById("title").textContent = "Start " + plan.name;
-      document.getElementById("plan").textContent = plan.name;
-      document.getElementById("terms").textContent = plan.terms + " You will complete checkout securely with Square.";
-      var link = document.getElementById("continue");
-      link.href = plan.url;
-      link.setAttribute("data-tct-plan", key);
-      window.location.assign(plan.url);
+      document.title = plan.name + ' — secure card checkout';
+      document.getElementById('planName').textContent = plan.name;
+      document.getElementById('planDetail').textContent = plan.detail;
+      document.getElementById('heroTerms').textContent = 'Square securely stores your card today. You will not be charged today; ' + plan.amount + ' begins after the 14-day trial unless you cancel.';
+      document.getElementById('renewalAmount').textContent = plan.amount;
+
+      var form = document.getElementById('form'), submit = document.getElementById('submit'), msg = document.getElementById('msg');
+      var fields = ['first','last','email','phone','holder'].map(function (id) { return document.getElementById(id); });
+      var card;
+      function detailsReady() { return fields.every(function (field) { return field.checkValidity() && field.value.trim(); }) && document.getElementById('consent').checked; }
+      function refresh() { submit.disabled = !card || !detailsReady(); }
+      function say(text) { msg.textContent = text || ''; }
+      fields.forEach(function (field) { field.addEventListener('input', refresh); field.addEventListener('change', refresh); });
+      document.getElementById('consent').addEventListener('change', refresh);
+      async function init() {
+        try {
+          var response = await fetch(API, { cache:'no-store' });
+          var config = await response.json();
+          if (!response.ok || !window.Square || !config.applicationId || !config.locationId) throw new Error('unavailable');
+          card = await window.Square.payments(config.applicationId, config.locationId).card();
+          await card.attach('#card');
+          refresh();
+        } catch (error) { say('Secure checkout is temporarily unavailable. Please call (629) 269-9697.'); }
+      }
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        if (!detailsReady() || !card) { refresh(); return; }
+        submit.disabled = true; submit.textContent = 'Securing your trial…'; say('');
+        try {
+          var token = await card.tokenize({ buyer:{ givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim() } });
+          if (token.status !== 'OK' || !token.token) throw new Error('Please check your card details and try again.');
+          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:crypto.randomUUID(), givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim(), cardholderName:fields[4].value.trim(), consentToStoreCard:true, website:'' }) });
+          var result = await response.json();
+          if (!response.ok || !result.ok || !result.setupToken) throw new Error(result.error || 'Unable to start your trial.');
+          document.getElementById('shell').innerHTML = '<div class="success"><div class="brand">Trial confirmed</div><h2>You’re in.</h2><p>Your 14-day trial is active. Complete your short setup questionnaire so we can prepare your call-flow review.</p><a href="/setup.html?plan=' + encodeURIComponent(result.plan) + '#binding='+encodeURIComponent(result.setupToken) + '">Complete setup</a></div>';
+        } catch (error) { say(error.message || 'We could not start your trial. Please try again.'); }
+        finally { if (document.getElementById('form')) { submit.textContent = 'Start 14-day free trial'; refresh(); } }
+      });
+      init();
     })();
   </script>
 </body>
