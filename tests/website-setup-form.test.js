@@ -205,8 +205,8 @@ setupForm.REQUIRED_FIELDS.forEach((field) => {
 });
 
 assert.ok(
-  setupHtml.includes("Setup unlocks only after Square confirms enrollment") &&
-    setupHtml.includes("cannot be changed on this page"),
+  setupHtml.includes("Your selected plan is locked to this setup") &&
+    setupHtml.includes("The plan comes from confirmed checkout and cannot be changed here."),
   "setup form should be clear that a signed, locked checkout plan is required"
 );
 
@@ -221,14 +221,14 @@ assert.ok(
 );
 
 assert.ok(
-  setupHtml.includes("Answer your setup questions") &&
-    setupHtml.includes("signed plan binding") &&
-    setupHtml.includes("Start setup questions"),
+  setupHtml.includes("Set up your call handling") &&
+    setupHtml.includes("Four focused steps") &&
+    setupHtml.includes("Continue to coverage"),
   "setup form should give paid buyers a clear post-checkout handoff"
 );
 
 assert.strictEqual(
-  (setupHtml.match(/<fieldset class="setup-section">/g) || []).length,
+  (setupHtml.match(/<fieldset class="setup-section" data-setup-step="/g) || []).length,
   4,
   "setup form should keep the four short setup sections"
 );
@@ -237,26 +237,24 @@ assert.strictEqual(
   "Setup progress",
   "Business basics",
   "Calls and hours",
-  "Urgency and forwarding",
+  "Phone setup and handoff",
   "Confirm",
   "setup-progress-card",
   "setup-step-badge",
   "setup-step-title",
   "Best mobile for urgent setup issues",
   "When should Gideon answer?",
+  "Who provides your business phone service?",
+  "This answer determines the forwarding instructions we prepare first.",
   "For urgent calls, what should Gideon do?",
-  "Are you able to forward calls to the number we give you?",
-  "Do not write Gideon's script here.",
+  "Can you access your phone settings or provider account?",
   "Before we build",
   "We use these answers to configure your call taker.",
   "Do not change your phone system yet.",
   "Live routing starts only after forwarding/testing is confirmed.",
   "Submit setup questions",
-  "No live phone routing starts from this page alone.",
-  "setup-handoff-card",
-  "What you will provide",
-  "Setup unlocks only after Square confirms enrollment",
-  "Anything else can be tuned later.",
+  "Continue to phone setup",
+  "Review setup",
 ].forEach((marker) => {
   assert.ok(
     setupHtml.includes(marker),

@@ -133,6 +133,131 @@
     .setup-submit-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-top: 1px solid var(--border); margin-top: 18px; padding-top: 18px; }
     .setup-submit-row p { color: var(--text-3); font-size: 13px; line-height: 1.5; margin: 0; max-width: 520px; }
     .setup-submit-row .btn { white-space: nowrap; }
+    .setup-page .header { min-height: 64px; }
+    .setup-hero { padding: 108px 20px 24px; }
+    .setup-hero .wrap { max-width: 720px; }
+    .setup-hero h1 { font-size: clamp(36px, 6vw, 54px); margin-bottom: 12px; }
+    .setup-hero p { max-width: 610px; font-size: 16px; }
+    .setup-kicker { margin-bottom: 9px; }
+    .setup-security-line {
+      align-items: center;
+      display: inline-flex;
+      gap: 8px;
+      margin-top: 16px;
+      border: 1px solid rgba(0,220,130,0.22);
+      border-radius: 999px;
+      background: rgba(0,220,130,0.07);
+      color: var(--text-2);
+      padding: 8px 13px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .setup-security-line::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(0,220,130,0.10);
+      content: "";
+    }
+    .setup-help-link {
+      margin: 12px 0 0;
+      color: var(--text-3);
+      font-size: 12px;
+    }
+    .setup-help-link a { color: var(--green); font-weight: 800; text-decoration: none; }
+    .setup-help-link a:hover { text-decoration: underline; }
+    .setup-shell {
+      display: block;
+      max-width: 820px;
+      margin: 0 auto 84px;
+      padding: 0 20px;
+    }
+    .setup-progress-card {
+      position: static;
+      margin: 0 0 14px;
+      padding: 12px;
+      border-radius: 14px;
+    }
+    .setup-progress-card h2,
+    .setup-progress-card > p,
+    .setup-progress-footnote { display: none; }
+    .setup-progress-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .setup-progress-list li { display: block; }
+    .setup-progress-list button {
+      width: 100%;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-3);
+      padding: 8px 10px;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: left;
+      cursor: pointer;
+    }
+    .setup-progress-list button:hover { background: rgba(0,220,130,0.05); color: var(--text-1); }
+    .setup-progress-list button[aria-current="step"] {
+      border-color: rgba(0,220,130,0.24);
+      background: rgba(0,220,130,0.10);
+      color: var(--text-1);
+    }
+    .setup-progress-list button[data-complete="true"] { color: var(--text-2); }
+    .setup-progress-list button span {
+      width: 27px;
+      height: 27px;
+      flex: 0 0 27px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,220,130,0.24);
+      background: rgba(0,220,130,0.08);
+      color: var(--green);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .setup-form { gap: 0; }
+    .setup-form-message { margin: 0 0 14px; }
+    .setup-section {
+      padding: clamp(22px, 4vw, 34px);
+      border-radius: 16px;
+      box-shadow: 0 22px 58px rgba(0,0,0,0.12);
+    }
+    .setup-section[hidden] { display: none; }
+    .setup-step-title { font-size: 22px; }
+    .setup-section > p { margin-bottom: 22px; }
+    .setup-field input,
+    .setup-field select,
+    .setup-field textarea { border-radius: 10px; min-height: 48px; }
+    .setup-field textarea { min-height: 92px; }
+    .setup-step-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+    .setup-step-actions .btn { min-width: 148px; justify-content: center; }
+    .setup-step-actions .setup-back {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-1);
+    }
+    .setup-checkpoint-card { padding: 20px; }
+    .setup-submit-row { margin-top: 20px; }
     .theme-toggle {
       position: fixed;
       right: 18px;
@@ -156,26 +281,25 @@
     html.light .theme-toggle .icon-moon { display: block; }
     @media (max-width: 760px) {
       .setup-page .header-inner { padding: 0 18px; }
-      .setup-hero { padding: 104px 18px 34px; }
+      .setup-hero { padding: 92px 18px 20px; }
       .setup-hero .wrap { padding: 0; max-width: 100%; }
-      .setup-hero h1 { max-width: 286px; margin-left: auto; margin-right: auto; font-size: 31px; line-height: 1.08; }
+      .setup-hero h1 { max-width: 330px; margin-left: auto; margin-right: auto; font-size: 34px; line-height: 1.05; }
       .setup-hero p { max-width: 306px; font-size: 15px; }
-      .setup-note { max-width: 306px; }
-      .setup-handoff-card { max-width: 306px; }
       .setup-shell { width: calc(100vw - 40px); padding: 0; max-width: calc(100vw - 40px); display: block; }
-      .setup-progress-card { position: static; margin-bottom: 18px; padding: 16px; }
-      .setup-progress-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 10px; }
-      .setup-progress-list li { grid-template-columns: 22px minmax(0, 1fr); font-size: 12px; }
-      .setup-progress-list span { width: 22px; height: 22px; font-size: 10px; }
+      .setup-progress-card { margin-bottom: 10px; padding: 8px; overflow-x: auto; }
+      .setup-progress-list { min-width: 500px; gap: 4px; }
+      .setup-progress-list button { min-height: 46px; padding: 6px 8px; }
       .setup-form { width: 100%; max-width: 100%; overflow: hidden; }
-      .setup-section { padding: 20px; overflow: hidden; }
+      .setup-section { padding: 22px 18px; overflow: hidden; }
       .setup-step-heading { align-items: flex-start; }
       .setup-step-badge { width: 34px; height: 34px; border-radius: 9px; }
       .setup-step-title { font-size: 18px; }
       .setup-section, .setup-section > p { width: 100%; min-width: 0; max-width: 100%; overflow-wrap: break-word; }
       .setup-grid { grid-template-columns: 1fr; }
-      .setup-submit-row { align-items: stretch; flex-direction: column; }
+      .setup-submit-row,
+      .setup-step-actions { align-items: stretch; flex-direction: column-reverse; }
       .setup-submit-row .btn { width: 100%; justify-content: center; }
+      .setup-step-actions .btn { width: 100%; }
       .theme-toggle { width: 42px; height: 42px; right: 14px; bottom: 14px; }
     }
     @media (min-width: 768px) {
@@ -213,22 +337,11 @@
 <main>
   <section class="setup-hero">
     <div class="wrap">
-      <div class="setup-kicker">After checkout</div>
-      <h1>Answer your setup questions.</h1>
-      <p>This short form collects the launch-critical details needed to prepare your call flow.</p>
-      <div class="setup-note">Setup unlocks only after Square confirms enrollment and returns a signed plan binding. The purchased plan is attached automatically and cannot be changed on this page.</div>
-      <div class="setup-handoff-card" aria-label="Confirmed checkout handoff">
-        <strong>What you will provide</strong>
-        <p>Business identity, phone provider, forwarding status, answer mode, hours, service area, top call types, urgent-call rules, summary destination, and hard limits. Live routing still requires review and test-call confirmation.</p>
-      </div>
-      <a href="#tct-setup-form" class="btn btn-primary btn-lg" data-tct-event="setup_form_started" data-tct-page="setup" data-tct-cta="Start setup questions" data-tct-destination="setup_questions" data-tct-learning-tag="setup_intent">Start setup questions</a>
-      <div class="text-us-support text-us-support--plain" aria-label="Setup text support">
-        <p class="text-us-inline-note">Need help with setup?</p>
-        <a class="text-us-button text-us-button--small" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="setup" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-          <span>Text Us</span>
-        </a>
-      </div>
+      <div class="setup-kicker">Trial confirmed</div>
+      <h1>Set up your call handling.</h1>
+      <p>Four focused steps give us the essentials to prepare your call flow. You can tune the details with us later.</p>
+      <div class="setup-security-line">Your selected plan is locked to this setup</div>
+      <p class="setup-help-link">Need help with setup? <a href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="setup" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">Text us</a></p>
     </div>
   </section>
 
@@ -237,10 +350,10 @@
       <h2>Setup progress</h2>
       <p>Answer only the basics needed to launch. Anything else can be tuned later.</p>
       <ol class="setup-progress-list">
-        <li><span>01</span>Business basics</li>
-        <li><span>02</span>Calls and hours</li>
-        <li><span>03</span>Handoff rules</li>
-        <li><span>04</span>Confirm</li>
+        <li><button type="button" data-step-target="1" aria-current="step"><span>01</span>Business</button></li>
+        <li><button type="button" data-step-target="2"><span>02</span>Coverage</button></li>
+        <li><button type="button" data-step-target="3"><span>03</span>Phone setup</button></li>
+        <li><button type="button" data-step-target="4"><span>04</span>Review</button></li>
       </ol>
       <div class="setup-progress-footnote">Do not write Gideon's script here. The Call Taker will configure and tune the call flow from these basics.</div>
     </aside>
@@ -250,7 +363,7 @@
       <input type="hidden" id="plan_purchased" name="plan_purchased" value="">
       <input type="hidden" id="square_checkout_reference" name="square_checkout_reference" value="">
 
-      <fieldset class="setup-section">
+      <fieldset class="setup-section" data-setup-step="1">
         <legend><span class="setup-step-heading"><span class="setup-step-badge">01</span><span class="setup-step-copy"><span class="setup-step-title">Business basics</span><span class="setup-step-subtitle">Plan, business, and best contact.</span></span></span></legend>
         <p>Use the details we need to identify the business and reach the setup contact.</p>
         <div class="setup-grid">
@@ -282,9 +395,13 @@
             <input id="owner_cell" name="owner_cell" type="tel" autocomplete="tel" placeholder="Use if different from main number" required>
           </div>
         </div>
+        <div class="setup-step-actions">
+          <span></span>
+          <button type="button" class="btn btn-green btn-lg" data-setup-next>Continue to coverage</button>
+        </div>
       </fieldset>
 
-      <fieldset class="setup-section">
+      <fieldset class="setup-section" data-setup-step="2" hidden>
         <legend><span class="setup-step-heading"><span class="setup-step-badge">02</span><span class="setup-step-copy"><span class="setup-step-title">Calls and hours</span><span class="setup-step-subtitle">When you are open and what callers need.</span></span></span></legend>
         <p>Give the basics. The Call Taker will turn this into the actual call flow.</p>
         <div class="setup-grid">
@@ -334,52 +451,38 @@
             <textarea id="service_area" name="service_area" required placeholder="Cities, counties, mileage radius, excluded areas, or service limits."></textarea>
           </div>
         </div>
+        <div class="setup-step-actions">
+          <button type="button" class="btn btn-lg setup-back" data-setup-back>Back</button>
+          <button type="button" class="btn btn-green btn-lg" data-setup-next>Continue to phone setup</button>
+        </div>
       </fieldset>
 
-      <fieldset class="setup-section">
-        <legend><span class="setup-step-heading"><span class="setup-step-badge">03</span><span class="setup-step-copy"><span class="setup-step-title">Urgency and forwarding</span><span class="setup-step-subtitle">Emergency rules, summary routing, and hard limits.</span></span></span></legend>
-        <p>Tell us what counts as urgent and what the call taker should never promise.</p>
+      <fieldset class="setup-section" data-setup-step="3" hidden>
+        <legend><span class="setup-step-heading"><span class="setup-step-badge">03</span><span class="setup-step-copy"><span class="setup-step-title">Phone setup and handoff</span><span class="setup-step-subtitle">Provider, forwarding, escalation, and summaries.</span></span></span></legend>
+        <p>Your current phone provider is our starting point. We use it to choose the cleanest forwarding path and the right setup instructions.</p>
         <div class="setup-grid">
           <div class="setup-field full">
-            <label for="emergency_rules">Urgent / emergency definition</label>
-            <textarea id="emergency_rules" name="emergency_rules" required placeholder="Examples: no heat, no AC for elderly customer, active leak, lockout, legal emergency."></textarea>
-          </div>
-          <div class="setup-field full">
-            <label for="urgent_action_preference">For urgent calls, what should Gideon do?</label>
-            <select id="urgent_action_preference" name="urgent_action_preference" required>
-              <option value="">Choose one</option>
-              <option value="transfer">Transfer</option>
-              <option value="text/call the owner">Text/call the owner</option>
-              <option value="summarize only">Summarize only</option>
-              <option value="not sure">Not sure</option>
+            <label for="phone_provider">Who provides your business phone service?</label>
+            <select id="phone_provider" name="phone_provider" required>
+              <option value="">Choose your provider</option>
+              <option value="AT&T">AT&amp;T</option>
+              <option value="Comcast Business">Comcast Business</option>
+              <option value="Dialpad">Dialpad</option>
+              <option value="GoTo Connect">GoTo Connect</option>
+              <option value="Google Voice">Google Voice</option>
+              <option value="Nextiva">Nextiva</option>
+              <option value="Ooma">Ooma</option>
+              <option value="OpenPhone">OpenPhone</option>
+              <option value="RingCentral">RingCentral</option>
+              <option value="Spectrum Business">Spectrum Business</option>
+              <option value="T-Mobile">T-Mobile</option>
+              <option value="Verizon">Verizon</option>
+              <option value="Vonage">Vonage</option>
+              <option value="Zoom Phone">Zoom Phone</option>
+              <option value="Other / not listed">Other / not listed</option>
+              <option value="Not sure">Not sure</option>
             </select>
-          </div>
-          <div class="setup-field full">
-            <label for="summary_destination">Where should call summaries go?</label>
-            <textarea id="summary_destination" name="summary_destination" required placeholder="Example: email office@example.com, text the owner, or both."></textarea>
-          </div>
-          <div class="setup-field full">
-            <label for="phone_provider">Current phone provider</label>
-            <input id="phone_provider" name="phone_provider" type="text" list="phone-provider-options" required placeholder="Example: Vonage, RingCentral, Comcast Business, or Not sure">
-            <datalist id="phone-provider-options">
-              <option value="AT&T">
-              <option value="Comcast Business">
-              <option value="Dialpad">
-              <option value="GoTo Connect">
-              <option value="Google Voice">
-              <option value="Nextiva">
-              <option value="Ooma">
-              <option value="OpenPhone">
-              <option value="RingCentral">
-              <option value="Spectrum Business">
-              <option value="T-Mobile">
-              <option value="Verizon">
-              <option value="Vonage">
-              <option value="Zoom Phone">
-              <option value="Other">
-              <option value="Not sure">
-            </datalist>
-            <small>If you do not know, enter “Not sure.” We will identify the correct forwarding steps with you.</small>
+            <small class="helper-positive">This answer determines the forwarding instructions we prepare first.</small>
           </div>
           <div class="setup-field full">
             <label for="current_forwarding_status">What happens with forwarding today?</label>
@@ -392,27 +495,49 @@
             </select>
           </div>
           <div class="setup-field full">
-            <label for="forwarding_ability">Are you able to forward calls to the number we give you?</label>
+            <label for="forwarding_ability">Can you access your phone settings or provider account?</label>
             <select id="forwarding_ability" name="forwarding_ability" required>
               <option value="">Choose one</option>
               <option value="yes">Yes</option>
               <option value="no">No</option>
               <option value="not sure">Not sure</option>
             </select>
-            <small>Not sure is okay. We can send instructions or walk you through it.</small>
+            <small>Not sure is okay. We can help you locate the correct settings or provider contact.</small>
+          </div>
+          <div class="setup-field full">
+            <label for="emergency_rules">What should count as urgent?</label>
+            <textarea id="emergency_rules" name="emergency_rules" required placeholder="Examples: no heat, active leak, lockout, safety concern, or legal emergency."></textarea>
+          </div>
+          <div class="setup-field full">
+            <label for="urgent_action_preference">For urgent calls, what should Gideon do?</label>
+            <select id="urgent_action_preference" name="urgent_action_preference" required>
+              <option value="">Choose one</option>
+              <option value="transfer">Transfer</option>
+              <option value="text/call the owner">Text/call the owner</option>
+              <option value="summarize only">Summarize only</option>
+              <option value="not sure">Not sure</option>
+            </select>
           </div>
           <div class="setup-field full">
             <label for="transfer_number">Number for urgent transfers <span class="optional-badge">Required if “Transfer” is selected</span></label>
             <input id="transfer_number" name="transfer_number" type="tel" autocomplete="tel" placeholder="The person or team Gideon should transfer urgent callers to">
           </div>
           <div class="setup-field full">
+            <label for="summary_destination">Where should call summaries go?</label>
+            <textarea id="summary_destination" name="summary_destination" required placeholder="Example: email office@example.com, text the owner, or both."></textarea>
+          </div>
+          <div class="setup-field full">
             <label for="what_ai_should_never_say">Hard do-not-say / do-not-promise rules</label>
             <textarea id="what_ai_should_never_say" name="what_ai_should_never_say" required placeholder="Type none if there are no hard limits. Otherwise list prices, guarantees, claims, or promises to avoid."></textarea>
           </div>
         </div>
+        <div class="setup-step-actions">
+          <button type="button" class="btn btn-lg setup-back" data-setup-back>Back</button>
+          <button type="button" class="btn btn-green btn-lg" data-setup-next>Review setup</button>
+        </div>
       </fieldset>
 
-      <fieldset class="setup-section">
+      <fieldset class="setup-section" data-setup-step="4" hidden>
         <legend><span class="setup-step-heading"><span class="setup-step-badge">04</span><span class="setup-step-copy"><span class="setup-step-title">Final confirmation</span><span class="setup-step-subtitle">Safety checkpoint before build.</span></span></span></legend>
         <div class="setup-checkpoint-card">
           <h2>Before we build</h2>
@@ -427,7 +552,7 @@
             <span>Yes, The Call Taker can use these setup answers to prepare configuration and forwarding instructions for this business.<br><small>Do not change your phone system yet unless you are instructed to.</small></span>
           </label>
           <div class="setup-submit-row">
-            <p>This is the short setup questionnaire. No live phone routing starts from this page alone.</p>
+            <button type="button" class="btn btn-lg setup-back" data-setup-back>Back</button>
             <button type="submit" class="btn btn-green btn-lg">Submit setup questions</button>
           </div>
         </div>
@@ -514,6 +639,83 @@
       saveTheme(nextTheme);
     });
   }
+
+  (function initSetupWizard() {
+    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-setup-step]'));
+    var progressButtons = Array.prototype.slice.call(document.querySelectorAll('[data-step-target]'));
+    var currentStep = 1;
+    if (!panels.length) return;
+
+    function panelFor(step) {
+      return document.querySelector('[data-setup-step="' + step + '"]');
+    }
+
+    function validatePanel(panel) {
+      var urgentAction = document.getElementById('urgent_action_preference');
+      var transferNumber = document.getElementById('transfer_number');
+      if (urgentAction && transferNumber) {
+        transferNumber.setCustomValidity(urgentAction.value === 'transfer' && !transferNumber.value.trim()
+          ? 'Add the phone number Gideon should use for urgent transfers.'
+          : '');
+      }
+      var requiredFields = Array.prototype.slice.call(panel.querySelectorAll('[required]'));
+      for (var index = 0; index < requiredFields.length; index += 1) {
+        if (!requiredFields[index].checkValidity()) {
+          requiredFields[index].classList.add('is-invalid');
+          requiredFields[index].reportValidity();
+          requiredFields[index].focus();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function showStep(step, focusHeading) {
+      currentStep = Math.max(1, Math.min(step, panels.length));
+      panels.forEach(function (panel) {
+        panel.hidden = Number(panel.getAttribute('data-setup-step')) !== currentStep;
+      });
+      progressButtons.forEach(function (button) {
+        var buttonStep = Number(button.getAttribute('data-step-target'));
+        if (buttonStep === currentStep) button.setAttribute('aria-current', 'step');
+        else button.removeAttribute('aria-current');
+        button.setAttribute('data-complete', buttonStep < currentStep ? 'true' : 'false');
+      });
+      if (focusHeading) {
+        var activePanel = panelFor(currentStep);
+        var heading = activePanel && activePanel.querySelector('.setup-step-title');
+        if (heading) {
+          heading.setAttribute('tabindex', '-1');
+          heading.focus({ preventScroll: true });
+        }
+        document.querySelector('.setup-progress-card').scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'start'
+        });
+      }
+    }
+
+    document.querySelectorAll('[data-setup-next]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var panel = panelFor(currentStep);
+        if (panel && validatePanel(panel)) showStep(currentStep + 1, true);
+      });
+    });
+    document.querySelectorAll('[data-setup-back]').forEach(function (button) {
+      button.addEventListener('click', function () { showStep(currentStep - 1, true); });
+    });
+    progressButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var targetStep = Number(button.getAttribute('data-step-target'));
+        if (targetStep < currentStep) showStep(targetStep, true);
+        else if (targetStep === currentStep + 1 && validatePanel(panelFor(currentStep))) showStep(targetStep, true);
+      });
+    });
+    document.getElementById('tct-setup-form').addEventListener('input', function (event) {
+      if (event.target && event.target.classList) event.target.classList.remove('is-invalid');
+    });
+    showStep(1, false);
+  })();
 
   function startSetupForm() { window.TCTSetupForm.initSetupForm(); }
   var checkout = new URLSearchParams(window.location.search);

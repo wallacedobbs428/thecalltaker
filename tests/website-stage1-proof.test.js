@@ -236,10 +236,10 @@ assert.ok(
 
 [
   "Setup progress",
-  "What you will provide",
+  "Four focused steps",
   "Before we build",
   "Best mobile for urgent setup issues",
-  "Current phone provider",
+  "Who provides your business phone service?",
   "What happens with forwarding today?",
   "Submit setup questions",
 ].forEach((marker) => {
