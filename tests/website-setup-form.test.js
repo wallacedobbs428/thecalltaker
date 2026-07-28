@@ -205,6 +205,24 @@ setupForm.REQUIRED_FIELDS.forEach((field) => {
 });
 
 assert.ok(
+  setupHtml.includes('value="Other / not listed"') &&
+    setupHtml.includes('name="phone_provider_other"') &&
+    setupHtml.includes("You cannot continue without it.") &&
+    setupHtml.includes("otherProviderInput.required = needsProviderName"),
+  "choosing an unlisted phone provider should reveal and require the provider name"
+);
+
+const otherProviderPayload = setupForm.buildPayloadFromObject({
+  phone_provider: "Other / not listed",
+  phone_provider_other: "Local Telecom Cooperative",
+});
+assert.strictEqual(
+  otherProviderPayload.phone_provider,
+  "Local Telecom Cooperative",
+  "the setup packet should carry the entered provider name instead of the generic Other label"
+);
+
+assert.ok(
   setupHtml.includes("Your selected plan is locked to this setup") &&
     setupHtml.includes("The plan comes from confirmed checkout and cannot be changed here."),
   "setup form should be clear that a signed, locked checkout plan is required"

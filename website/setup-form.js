@@ -183,6 +183,10 @@
     var answerMode = normalizeOption(data.gideon_answer_mode, ANSWER_MODE_OPTIONS);
     var urgentAction = normalizeOption(data.urgent_action_preference, URGENT_ACTION_OPTIONS);
     var forwardingAbility = normalizeOption(data.forwarding_ability, FORWARDING_ABILITY_OPTIONS);
+    var selectedPhoneProvider = trim(data.phone_provider);
+    var resolvedPhoneProvider = selectedPhoneProvider === "Other / not listed"
+      ? trim(data.phone_provider_other)
+      : selectedPhoneProvider;
 
     return {
       plan_purchased: normalizePlan(data.plan_purchased || planFromQuery(params.toString())),
@@ -214,7 +218,7 @@
       summary_sms_number: emptyToNull(data.summary_sms_number),
       setup_guide_sms_recipient: emptyToNull(data.setup_guide_sms_recipient),
       appointment_booking_rules: emptyToNull(data.appointment_booking_rules),
-      phone_provider: emptyToNull(data.phone_provider),
+      phone_provider: emptyToNull(resolvedPhoneProvider),
       current_forwarding_status: emptyToNull(data.current_forwarding_status),
       preferred_go_live_time: emptyToNull(data.preferred_go_live_time),
       what_ai_should_never_say: emptyToNull(data.what_ai_should_never_say),

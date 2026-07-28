@@ -86,6 +86,7 @@
     .setup-section > p { color: var(--text-3); font-size: 13px; line-height: 1.55; margin: 0 0 18px; max-width: 680px; }
     .setup-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; min-width: 0; }
     .setup-field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+    .setup-field[hidden] { display: none; }
     .setup-field.full { grid-column: 1 / -1; }
     .setup-field label, .setup-checkbox span { color: var(--text-1); font-size: 13px; font-weight: 800; }
     .setup-field label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -463,7 +464,7 @@
         <div class="setup-grid">
           <div class="setup-field full">
             <label for="phone_provider">Who provides your business phone service?</label>
-            <select id="phone_provider" name="phone_provider" required>
+            <select id="phone_provider" name="phone_provider" required aria-controls="phone_provider_other_field" aria-expanded="false">
               <option value="">Choose your provider</option>
               <option value="AT&T">AT&amp;T</option>
               <option value="Comcast Business">Comcast Business</option>
@@ -483,6 +484,11 @@
               <option value="Not sure">Not sure</option>
             </select>
             <small class="helper-positive">This answer determines the forwarding instructions we prepare first.</small>
+          </div>
+          <div class="setup-field full" id="phone_provider_other_field" hidden>
+            <label for="phone_provider_other">Enter your phone provider</label>
+            <input id="phone_provider_other" name="phone_provider_other" type="text" autocomplete="organization" placeholder="Provider or phone company name" aria-describedby="phone_provider_other_help">
+            <small id="phone_provider_other_help">Enter the company shown on your phone bill or provider account. You cannot continue without it.</small>
           </div>
           <div class="setup-field full">
             <label for="current_forwarding_status">What happens with forwarding today?</label>
@@ -645,6 +651,22 @@
     var progressButtons = Array.prototype.slice.call(document.querySelectorAll('[data-step-target]'));
     var currentStep = 1;
     if (!panels.length) return;
+    var phoneProvider = document.getElementById('phone_provider');
+    var otherProviderField = document.getElementById('phone_provider_other_field');
+    var otherProviderInput = document.getElementById('phone_provider_other');
+
+    function syncOtherProvider() {
+      if (!phoneProvider || !otherProviderField || !otherProviderInput) return;
+      var needsProviderName = phoneProvider.value === 'Other / not listed';
+      otherProviderField.hidden = !needsProviderName;
+      otherProviderInput.required = needsProviderName;
+      otherProviderInput.disabled = !needsProviderName;
+      phoneProvider.setAttribute('aria-expanded', needsProviderName ? 'true' : 'false');
+      if (!needsProviderName) {
+        otherProviderInput.value = '';
+        otherProviderInput.classList.remove('is-invalid');
+      }
+    }
 
     function panelFor(step) {
       return document.querySelector('[data-setup-step="' + step + '"]');
@@ -714,6 +736,8 @@
     document.getElementById('tct-setup-form').addEventListener('input', function (event) {
       if (event.target && event.target.classList) event.target.classList.remove('is-invalid');
     });
+    if (phoneProvider) phoneProvider.addEventListener('change', syncOtherProvider);
+    syncOtherProvider();
     showStep(1, false);
   })();
 
