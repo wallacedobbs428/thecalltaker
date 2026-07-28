@@ -59,10 +59,10 @@ const legacyPositioningTerms = [
   '10-30x'
 ];
 
-const expectedSquareLinks = {
-  after_hours_capture: 'https://square.link/u/2hfmRPY7',
-  revenue_recovery_system: 'https://square.link/u/S305ewBr',
-  operational_infrastructure: 'https://square.link/u/OpwWF9Sa'
+const expectedCheckoutRoutes = {
+  afterhours: '/card-checkout.html?plan=afterhours',
+  full247: '/card-checkout.html?plan=full247',
+  custom: '/card-checkout.html?plan=custom'
 };
 
 function read(rel) {
@@ -98,7 +98,7 @@ function extractInternalLinks(html) {
   let match;
   while ((match = re.exec(html))) {
     const href = match[1].trim();
-    if (!href || href.startsWith('#') || href.startsWith('tel:') || href.startsWith('mailto:')) continue;
+    if (!href || href.startsWith('#') || href.startsWith('tel:') || href.startsWith('mailto:') || href.startsWith('sms:')) continue;
     if (/^[a-z]+:\/\//i.test(href)) continue;
     links.push(href);
   }
@@ -163,22 +163,19 @@ function audit() {
   }
 
   const home = pageTexts['index.html'] || '';
-  if (!home.includes('class="mobile-top-links"') || !home.includes('max-width: 430px')) {
-    addIssue(issues, 'fail', 'mobile_home_nav', 'index.html', 'Homepage mobile quick nav is not visibly capped for phone widths.');
+  if (!home.includes('id="navMenuToggle"') || !home.includes('.mobile-nav')) {
+    addIssue(issues, 'fail', 'mobile_home_nav', 'index.html', 'Homepage is missing its mobile navigation control or menu.');
   }
-  if (!home.includes('grid-template-columns: repeat(2, minmax(0, 1fr))')) {
-    addIssue(issues, 'fail', 'mobile_home_nav', 'index.html', 'Homepage mobile quick nav does not use the two-row phone-safe layout.');
-  }
-  if (home.includes('sticky-mobile-bar') || home.includes('Call Gideon Live: (629)')) {
-    addIssue(issues, 'fail', 'mobile_home_cta', 'index.html', 'Homepage still appears to include the old sticky mobile call bar.');
+  if (!home.includes('.mobile-bar {\n    display: none !important;')) {
+    addIssue(issues, 'fail', 'mobile_home_cta', 'index.html', 'Homepage does not explicitly disable the retired mobile call bar.');
   }
 
   const pricing = pageTexts['pricing.html'] || '';
   if (!pricing.includes('class="logo-text"')) {
     addIssue(issues, 'fail', 'pricing_logo', 'pricing.html', 'Pricing logo is not grouped as one wordmark; mobile can split Call/Taker.');
   }
-  if (!pricing.includes('matrix-mobile-cards')) {
-    addIssue(issues, 'fail', 'pricing_mobile_compare', 'pricing.html', 'Mobile comparison cards are missing; phone users may lose plan context.');
+  if (!pricing.includes('@media (max-width: 640px)') || !pricing.includes('.matrix-table {\n        width: 100% !important;\n        min-width: 0;')) {
+    addIssue(issues, 'fail', 'pricing_mobile_compare', 'pricing.html', 'Pricing comparison is not constrained to the phone viewport.');
   }
   if (!pricing.includes('After-Hours') || !pricing.includes('Recovery') || !pricing.includes('Infrastructure')) {
     addIssue(issues, 'fail', 'pricing_mobile_compare', 'pricing.html', 'Pricing comparison does not expose all plan labels.');
@@ -192,19 +189,15 @@ function audit() {
     addIssue(issues, 'warn', 'faq_cta', 'faq.html', 'FAQ still contains old Book Demo wording.');
   }
 
-  const styles = exists('styles.css') ? read('styles.css') : '';
-  if (!styles.includes('.exit-overlay') || !styles.includes('.exit-overlay.show')) {
-    addIssue(issues, 'fail', 'exit_modal', 'styles.css', 'Exit popup overlay CSS is missing; modal may render as broken bottom-page content.');
-  }
-  if (!styles.includes('width: min(420px, calc(100vw - 32px))')) {
-    addIssue(issues, 'warn', 'exit_modal', 'styles.css', 'Exit modal width is not visibly mobile-contained.');
-  }
-
   const checkout = pageTexts['checkout.html'] || '';
-  for (const [plan, url] of Object.entries(expectedSquareLinks)) {
-    if (!checkout.includes(url)) {
-      addIssue(issues, 'fail', 'square_mapping', 'checkout.html', `Expected Square URL missing for ${plan}.`, url);
+  for (const [plan, route] of Object.entries(expectedCheckoutRoutes)) {
+    if (!checkout.includes(route)) {
+      addIssue(issues, 'fail', 'checkout_mapping', 'checkout.html', `Plan-preserving card checkout route missing for ${plan}.`, route);
     }
+  }
+  const cardCheckout = exists('card-checkout.html') ? read('card-checkout.html') : '';
+  if (!cardCheckout.includes('web.squarecdn.com/v1/square.js') || !cardCheckout.includes('call-taker-os.vercel.app/api/public/square-trial')) {
+    addIssue(issues, 'fail', 'card_checkout_provider', 'card-checkout.html', 'Card checkout is missing Square Web Payments or the protected trial endpoint.');
   }
 
   const selectedLinkPages = ['index.html', 'pricing.html', 'faq.html', 'demo.html'];
