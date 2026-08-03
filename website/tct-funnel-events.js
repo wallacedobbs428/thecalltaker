@@ -25,6 +25,8 @@
     setup_form_submitted: true,
     setup_confirmation_view: true,
     demo_view: true,
+    demo_preview_built: true,
+    lead_capture_open: true,
     demo_call_tap: true,
     text_us_tap: true,
     paid_view: true,

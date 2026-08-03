@@ -731,6 +731,25 @@
 
     .btn-trial svg { width: 18px; height: 18px; }
 
+    .lead-capture-cta {
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px 18px;
+      border: 1px solid rgba(34,197,94,0.34);
+      border-radius: 12px;
+      background: rgba(34,197,94,0.08);
+      color: var(--text-1);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .lead-capture-cta:hover,
+    .lead-capture-cta:focus-visible {
+      border-color: var(--green);
+      background: rgba(34,197,94,0.15);
+    }
+
     .trust-signals {
       display: flex;
       justify-content: center;
@@ -1147,6 +1166,8 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
 
+      <button class="lead-capture-cta" id="lead-capture-cta" type="button" data-tct-event="lead_capture_open" data-tct-page="demo" data-tct-cta="Get a free missed-call recovery plan" data-tct-destination="lead_capture" data-tct-learning-tag="lead_intent">Get a free missed-call recovery plan</button>
+
       <div class="trust-signals">
         <div class="trust-item">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1254,6 +1275,7 @@
   var tLine1        = document.getElementById('t-line-1');
   var tLine2        = document.getElementById('t-line-2');
   var ctaBizName    = document.getElementById('cta-biz-name');
+  var leadCaptureCta = document.getElementById('lead-capture-cta');
 
   // ===== Sanitize =====
   function sanitize(str) {
@@ -1302,12 +1324,17 @@
     // Scroll to demo experience smoothly
     demoExp.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    // Fire GA event
+    // Record anonymous intent only. A business name is not needed to measure
+    // conversion and must not be sent to analytics providers.
+    if (window.TCTFunnelEvents && typeof window.TCTFunnelEvents.record === 'function') {
+      window.TCTFunnelEvents.record('demo_preview_built', btnSubmit);
+    }
+
+    // Fire GA event without visitor-entered business information.
     if (typeof gtag === 'function') {
-      gtag('event', 'demo_personalized', {
+      gtag('event', 'demo_preview_built', {
         event_category: 'engagement',
-        event_label: industry,
-        business_name: bizName
+        event_label: industry
       });
     }
   });
@@ -1346,6 +1373,14 @@
       });
     }
   });
+
+  if (leadCaptureCta) {
+    leadCaptureCta.addEventListener('click', function() {
+      if (window.TCTLeadCapture && typeof window.TCTLeadCapture.open === 'function') {
+        window.TCTLeadCapture.open('demo_preview');
+      }
+    });
+  }
 
   // ===== Auto-focus business name on load =====
   if (window.innerWidth > 768) {
