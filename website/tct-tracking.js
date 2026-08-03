@@ -28,12 +28,15 @@
   // =========================================================================
   var _idleCb = window.requestIdleCallback || function(cb) { setTimeout(cb, 200); };
   _idleCb(function() {
+    // The Signals Gateway snippet on primary conversion pages already owns
+    // Meta initialization and PageView. Do not double-fire those pages.
+    if (typeof window.fbq === 'function') return;
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'XXXXXXXXXX'); // TODO: Replace with actual Meta Pixel ID
+    fbq('init', '2129562004253413');
     fbq('track', 'PageView');
   });
 
@@ -430,7 +433,8 @@
         if (!response.ok) throw new Error('Request failed');
         return response.json();
       })
-      .then(function() {
+      .then(function(body) {
+        if (!body || body.ok !== true || !body.id) throw new Error('Lead was not persisted');
         // Track conversion
         if (typeof gtag === 'function') {
           gtag('event', 'lead_form_submit', {
@@ -478,9 +482,10 @@
     return href;
   }
 
-  // Decorate outbound links on click (pilot, book, checkout, signup, stripe)
+  // Decorate outbound conversion links on click so first-touch attribution
+  // survives demo -> checkout -> provider transitions.
   document.addEventListener('click', function(e) {
-    var a = e.target.closest('a[href*="/pilot"], a[href*="/book"], a[href*="/checkout"], a[href*="/signup"], a[href*="stripe.com"]');
+    var a = e.target.closest('a[href*="/pilot"], a[href*="/book"], a[href*="/checkout"], a[href*="card-checkout"], a[href*="/signup"], a[href*="/pay"], a[href*="pay.html"], a[href*="stripe.com"], a[href*="square.link"], a[href*="checkout.square.site"]');
     if (a && a.href && !a.hasAttribute('data-utm-done')) {
       a.href = appendUtmsToLink(a.href);
       a.setAttribute('data-utm-done', '1');
@@ -505,12 +510,12 @@
     }
 
     // Track CTA / pricing button clicks
-    var ctaBtn = e.target.closest('.btn-primary, .btn-outline, .header-cta, .mobile-menu-cta, .rf-cta');
+    var ctaBtn = e.target.closest('.btn-primary, .btn-outline, .header-cta, .mobile-menu-cta, .rf-cta, .post-demo-plan, [data-tct-event="pricing_plan_click"]');
     if (ctaBtn) {
       if (!pageHasInlineTracking) {
         window.gtag('event', 'tct_cta_click', { event_category: 'conversion', event_label: ctaBtn.getAttribute('href') || '' });
       }
-      if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
+      if (typeof window.fbq === 'function') window.fbq('track', 'InitiateCheckout');
     }
   });
 
