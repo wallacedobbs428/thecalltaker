@@ -288,15 +288,15 @@
       '<div id="tct-popup-modal">' +
         '<button id="tct-popup-close" aria-label="Close">&times;</button>' +
         '<div id="tct-popup-form-wrap">' +
-          '<h2>How Much Is Your Business Losing to Missed Calls?</h2>' +
-          '<p class="tct-subhead">Get a free Missed Call Revenue Report customized for your business. We\'ll show you exactly how many calls you\'re missing and what they\'re costing you.</p>' +
+          '<h2>Get a free missed-call recovery plan.</h2>' +
+          '<p class="tct-subhead">Tell us a little about your service business and we\'ll follow up with a short recommendation for handling missed and after-hours calls.</p>' +
           '<form id="tct-popup-form" novalidate>' +
             '<input type="text" name="firstName" placeholder="First Name" required>' +
             '<input type="email" name="email" placeholder="Email Address" required>' +
             '<input type="tel" name="phone" placeholder="Phone Number" required>' +
             '<input type="text" name="companyName" placeholder="Company Name" required>' +
             '<select name="industry" required>' + industryOptions + '</select>' +
-            '<button type="submit" id="tct-popup-submit">Get My Free Report</button>' +
+            '<button type="submit" id="tct-popup-submit">Get My Recovery Plan</button>' +
             '<p id="tct-popup-error">Please fill in all fields correctly.</p>' +
           '</form>' +
         '</div>' +
@@ -322,8 +322,8 @@
     return overlay;
   }
 
-  function showPopup(overlay) {
-    if (sessionStorage.getItem('tct_popup_shown')) return;
+  function showPopup(overlay, force) {
+    if (!force && sessionStorage.getItem('tct_popup_shown')) return;
     sessionStorage.setItem('tct_popup_shown', '1');
 
     overlay.style.display = 'flex';
@@ -359,6 +359,7 @@
     overlay.addEventListener('click', function(e) {
       if (e.target === overlay) hidePopup(overlay);
     });
+
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') hidePopup(overlay);
     });
@@ -407,7 +408,7 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Submitting...';
 
-      var baseTags = ['website-popup', 'missed-call-report', 'industry-' + industry];
+      var baseTags = ['website-popup', 'missed-call-recovery-plan', 'industry-' + industry];
       var attrTags = typeof getTctAttributionTags === 'function' ? getTctAttributionTags() : [];
       var payload = {
         firstName: firstName,
@@ -416,7 +417,7 @@
         company: companyName,
         page: window.location.pathname,
         tags: baseTags.concat(attrTags),
-        source: 'website-popup-missed-call-report',
+        source: 'website-popup-missed-call-recovery-plan',
         notes: typeof getTctAttributionNotes === 'function' ? getTctAttributionNotes() : ''
       };
 
@@ -434,12 +435,12 @@
         if (typeof gtag === 'function') {
           gtag('event', 'lead_form_submit', {
             event_category: 'conversion',
-            event_label: 'popup_missed_call_report',
+            event_label: 'popup_missed_call_recovery_plan',
             industry: industry
           });
         }
         if (typeof fbq !== 'undefined') {
-          fbq('track', 'Lead', { content_name: 'Missed Call Report', industry: industry });
+          fbq('track', 'Lead', { content_name: 'Missed Call Recovery Plan', industry: industry });
         }
 
         // Show success
@@ -453,11 +454,13 @@
       })
       .catch(function() {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Get My Free Report';
+        submitBtn.textContent = 'Get My Recovery Plan';
         errorMsg.textContent = 'Something went wrong. Please try again.';
         errorMsg.style.display = 'block';
       });
     });
+
+    return overlay;
   }
 
   // =========================================================================
@@ -514,10 +517,31 @@
   // =========================================================================
   // Initialize popup when DOM is ready
   // =========================================================================
+  function exposeLeadCapture(overlay) {
+    window.TCTLeadCapture = {
+      open: function(source) {
+        if (!overlay) return false;
+        showPopup(overlay, true);
+        if (typeof gtag === 'function') {
+          gtag('event', 'lead_capture_open', {
+            event_category: 'lead_capture',
+            event_label: source || 'website'
+          });
+        }
+        return true;
+      }
+    };
+  }
+
+  function initializeLeadCapture() {
+    var overlay = initPopup();
+    exposeLeadCapture(overlay);
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPopup);
+    document.addEventListener('DOMContentLoaded', initializeLeadCapture);
   } else {
-    initPopup();
+    initializeLeadCapture();
   }
 
 })();
