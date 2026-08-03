@@ -914,6 +914,25 @@
       margin-top: 20px;
     }
 
+    .lead-capture-cta {
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px 18px;
+      border: 1px solid rgba(34,197,94,0.34);
+      border-radius: 12px;
+      background: rgba(34,197,94,0.08);
+      color: var(--text-1);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .lead-capture-cta:hover,
+    .lead-capture-cta:focus-visible {
+      border-color: var(--green);
+      background: rgba(34,197,94,0.15);
+    }
+
     .trust-item {
       display: flex;
       align-items: center;
@@ -1416,6 +1435,8 @@
         </a>
       </div>
 
+      <button class="lead-capture-cta" id="lead-capture-cta" type="button" data-tct-event="lead_capture_open" data-tct-page="demo" data-tct-cta="Get a free missed-call recovery plan" data-tct-destination="lead_capture" data-tct-learning-tag="lead_intent">Get a free missed-call recovery plan</button>
+
       <div class="trust-signals">
         <div class="trust-item">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1484,6 +1505,87 @@
 
   <script src="script.js" defer></script>
   <script src="/tct-funnel-events.js" defer></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var industryData = {
+        hvac: { label: 'HVAC', service: 'AC repair' },
+        plumbing: { label: 'Plumbing', service: 'plumbing repair' },
+        electrical: { label: 'Electrical', service: 'electrical repair' },
+        locksmith: { label: 'Locksmith', service: 'lockout service' },
+        roofing: { label: 'Roofing', service: 'roof inspection' },
+        dental: { label: 'Dental', service: 'dental cleaning appointment' },
+        legal: { label: 'Legal', service: 'consultation' },
+        property_management: { label: 'Property Management', service: 'maintenance request' },
+        pest_control: { label: 'Pest Control', service: 'pest inspection' },
+        auto_repair: { label: 'Auto Repair', service: 'vehicle repair' },
+        cleaning: { label: 'Cleaning', service: 'cleaning service' },
+        landscaping: { label: 'Landscaping', service: 'lawn care estimate' },
+        other: { label: 'Service', service: 'service appointment' }
+      };
+      var bizInput = document.getElementById('biz-name');
+      var industrySelect = document.getElementById('biz-industry');
+      var submit = document.getElementById('btn-submit');
+      var demo = document.getElementById('demo-experience');
+      var bottomCta = document.getElementById('bottom-cta');
+      var leadCapture = document.getElementById('lead-capture-cta');
+
+      function safeText(value) {
+        var node = document.createElement('div');
+        node.textContent = value;
+        return node.textContent.trim();
+      }
+
+      function buildPreview() {
+        var rawName = bizInput.value.trim();
+        if (!rawName) {
+          bizInput.focus();
+          bizInput.style.borderColor = '#ef4444';
+          window.setTimeout(function () { bizInput.style.borderColor = ''; }, 1800);
+          return;
+        }
+        var business = safeText(rawName);
+        var industry = industrySelect.value;
+        var data = industryData[industry] || industryData.other;
+        var setText = function (id, value) {
+          var element = document.getElementById(id);
+          if (element) element.textContent = value;
+        };
+
+        setText('demo-biz-name', business);
+        setText('call-avatar', business.charAt(0).toUpperCase());
+        setText('call-biz-name', business);
+        setText('call-industry-label', data.label);
+        setText('cta-biz-name', business);
+        setText('t-line-1', '“Thank you for calling ' + business + '. This is Gideon. How can I help you today?”');
+        setText('t-line-2', '“I need to schedule a ' + data.service + '...”');
+        demo.classList.add('active');
+        bottomCta.classList.add('active');
+        demo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        if (window.TCTFunnelEvents && typeof window.TCTFunnelEvents.record === 'function') {
+          window.TCTFunnelEvents.record('demo_preview_built', submit);
+        }
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'demo_preview_built', { event_category: 'engagement', event_label: industry });
+        }
+      }
+
+      submit.addEventListener('click', buildPreview);
+      bizInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          buildPreview();
+        }
+      });
+      leadCapture.addEventListener('click', function () {
+        if (window.TCTLeadCapture && typeof window.TCTLeadCapture.open === 'function') {
+          window.TCTLeadCapture.open('demo_preview');
+        }
+      });
+    }());
+  </script>
 
 
 </body>
