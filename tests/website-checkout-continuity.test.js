@@ -12,6 +12,15 @@ const cardRoutes = [
 ];
 const card = read("website/card-checkout.html");
 
+assert.ok(fs.existsSync(path.join(root, "website/meet-gideon.html")), "Meet Gideon compatibility route must be published");
+const meetGideon = read("website/meet-gideon.html");
+assert.ok(meetGideon.includes("/demo.html?source=meet-gideon"), "Meet Gideon must route to the existing demo with source context");
+assert.ok(!/setup\.html|paid\.html/.test(meetGideon), "Meet Gideon must not imply checkout or payment success");
+assert.ok(read(".github/workflows/deploy.yml").includes("meet-gideon.html"), "GitHub Pages artifact must include Meet Gideon");
+assert.ok(meetGideon.includes('href="tel:+16292699697"'), "Meet Gideon must expose the live demo line");
+assert.ok(meetGideon.includes("correlation_id"), "Meet Gideon must preserve buyer correlation context");
+assert.ok(meetGideon.includes("prefers-reduced-motion"), "Meet Gideon must respect reduced-motion preferences");
+
 assert.strictEqual(new Set(cardRoutes).size, 3, "each public plan must use a distinct checkout route");
 pages.forEach((page) => {
   const html = read(page);
