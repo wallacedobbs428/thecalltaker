@@ -1362,6 +1362,19 @@
       <div class="next-step-title">What happens next</div>
       <p>If the preview feels right, call the demo line to hear the voice. After confirmed enrollment, answer the 60-second setup questions so we can configure the call flow, summaries, urgent action, forwarding ability, and testing steps before live calls.</p>
     </div>
+    <form id="consented-demo-lead" style="max-width:680px;margin:28px auto 0;padding:24px;border:1px solid var(--border);border-radius:14px;background:#fff;display:grid;gap:12px;" data-tct-event="lead_form_submitted" data-tct-page="demo" data-tct-cta="Request human setup follow-up" data-tct-destination="consented_lead_queue">
+      <h3 style="margin:0;color:var(--text-1);">Want us to set this up for your business?</h3>
+      <p style="margin:0;color:var(--text-2);line-height:1.55;">Optional. Choose how a person may follow up—nothing is sent until you explicitly consent.</p>
+      <label>Business name<input name="company" required autocomplete="organization" style="width:100%;padding:11px;margin-top:5px;"></label>
+      <label>Your name<input name="name" required autocomplete="name" style="width:100%;padding:11px;margin-top:5px;"></label>
+      <label>Email<input name="email" type="email" autocomplete="email" style="width:100%;padding:11px;margin-top:5px;"></label>
+      <label>Phone<input name="phone" type="tel" autocomplete="tel" style="width:100%;padding:11px;margin-top:5px;"></label>
+      <label>Preferred contact method<select name="preferred_contact_method" required style="width:100%;padding:11px;margin-top:5px;"><option value="">Choose one</option><option value="phone">Phone</option><option value="email">Email</option></select></label>
+      <label style="display:flex;gap:9px;align-items:flex-start;"><input name="follow_up_consent" type="checkbox" required style="width:auto;margin-top:4px;"><span>I consent to The Call Taker contacting me about setup using my chosen method.</span></label>
+      <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+      <button type="submit" class="lead-capture-cta">Request a human setup follow-up</button>
+      <p id="consented-demo-lead-status" role="status" aria-live="polite" style="margin:0;color:var(--text-2);"></p>
+    </form>
 
     <!-- Transcript Preview -->
     <div class="transcript">
@@ -1434,8 +1447,6 @@
           <span class="post-demo-plan-action">Start Free Trial</span>
         </a>
       </div>
-
-      <button class="lead-capture-cta" id="lead-capture-cta" type="button" data-tct-event="lead_capture_open" data-tct-page="demo" data-tct-cta="Get a free missed-call recovery plan" data-tct-destination="lead_capture" data-tct-learning-tag="lead_intent">Get a free missed-call recovery plan</button>
 
       <div class="trust-signals">
         <div class="trust-item">
@@ -1579,10 +1590,37 @@
           buildPreview();
         }
       });
-      leadCapture.addEventListener('click', function () {
+      if (leadCapture) leadCapture.addEventListener('click', function () {
         if (window.TCTLeadCapture && typeof window.TCTLeadCapture.open === 'function') {
           window.TCTLeadCapture.open('demo_preview');
         }
+      });
+    }());
+  </script>
+  <script>
+    (function () {
+      var form = document.getElementById('consented-demo-lead');
+      if (!form) return;
+      var status = document.getElementById('consented-demo-lead-status');
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        var submit = form.querySelector('button[type="submit"]');
+        if (!form.reportValidity()) return;
+        submit.disabled = true; status.textContent = 'Saving your consented request…';
+        var data = new FormData(form), params = new URLSearchParams(window.location.search);
+        var correlationId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+        try {
+          var response = await fetch('https://call-taker-os.vercel.app/api/public/lead', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name:data.get('name'), company:data.get('company'), email:data.get('email'), phone:data.get('phone'), preferred_contact_method:data.get('preferred_contact_method'), follow_up_consent:data.get('follow_up_consent') === 'on', source:'gideon_demo', page:window.location.pathname, correlation_id:correlationId, website:data.get('website') || '', utm_source:params.get('utm_source') || '', utm_medium:params.get('utm_medium') || '', utm_campaign:params.get('utm_campaign') || '', utm_content:params.get('utm_content') || '', utm_term:params.get('utm_term') || '' })
+          });
+          var body = await response.json();
+          if (!response.ok || !body || !body.ok) throw new Error((body && body.error) || 'Unable to save your request.');
+          status.textContent = 'Request received. A person will follow up by your chosen method.';
+          if (window.TCTFunnelEvents) { window.TCTFunnelEvents.record('lead_form_submitted', form); window.TCTFunnelEvents.record('follow_up_consent_granted', form); }
+          form.reset();
+        } catch (error) { status.textContent = error && error.message ? error.message : 'Unable to save your request. Please try again.'; }
+        finally { submit.disabled = false; }
       });
     }());
   </script>

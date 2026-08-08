@@ -41,6 +41,9 @@
     .success h2 { margin:10px; font:400 36px Georgia,serif; }
     .success p { color:var(--muted); line-height:1.6; }
     .success a { display:inline-block; padding:14px 22px; border-radius:9px; color:#fff; background:var(--pine); font-weight:800; text-decoration:none; }
+    .pending { padding:42px 32px; text-align:center; }
+    .pending h2 { margin:10px; font:400 36px Georgia,serif; }
+    .pending p { color:var(--muted); line-height:1.6; }
     @media(max-width:600px) { main { margin:18px auto; } .hero,.summary,form,.success { padding-right:20px; padding-left:20px; } .grid { grid-template-columns:1fr; } .wide { grid-column:auto; } }
   </style>
 </head>
@@ -49,9 +52,9 @@
     <div class="brand">The Call Taker · secure Square checkout</div>
     <section class="shell" id="shell">
       <header class="hero">
-        <div class="brand">Secure trial enrollment</div>
-        <h1>Start with 14 days on us.</h1>
-        <p id="heroTerms">Square securely stores your card today. You will not be charged today; your selected plan begins after the 14-day trial unless you cancel before renewal.</p>
+        <div class="brand">Secure card authorization</div>
+        <h1>Secure your selected plan.</h1>
+        <p id="heroTerms">Square securely stores your card for the selected trial. A card form is not activation: we wait for Square's signed confirmation before creating a human-review setup handoff.</p>
       </header>
       <div class="summary">
         <div><strong id="planName">Loading plan</strong><br><span id="planDetail">Secure call coverage</span></div>
@@ -69,7 +72,7 @@
         <p class="label" style="margin-top:26px">Card details</p>
         <div id="card" aria-label="Secure card details"></div>
         <label class="consent"><input id="consent" type="checkbox"><span>I authorize The Call Taker to securely store my card with Square and automatically charge <b id="renewalAmount"></b> after the 14-day trial unless I cancel before renewal.</span></label>
-        <button id="submit" type="submit" disabled>Start 14-day free trial</button>
+        <button id="submit" type="submit" disabled>Submit secure checkout</button>
         <p class="msg" id="msg" role="alert"></p>
         <p class="logos">SECURE PAYMENT BY SQUARE · VISA · MASTERCARD · AMERICAN EXPRESS · DISCOVER</p>
         <p class="fine">Your card number is entered directly into Square’s protected payment fields. The Call Taker never sees your full card number. By starting your trial, you agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and acknowledge the <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
@@ -79,6 +82,7 @@
   <script>
     (function () {
       var API = 'https://call-taker-os.vercel.app/api/public/square-trial';
+      var STATUS_API = 'https://call-taker-os.vercel.app/api/public/square-checkout-status';
       var plans = {
         afterhours: { name:'After-Hours Capture', detail:'After-hours call capture', amount:'$97/month' },
         full247: { name:'Revenue Recovery System', detail:'Day, night & overflow call coverage', amount:'$497/month' },
@@ -91,7 +95,7 @@
       document.title = plan.name + ' — secure card checkout';
       document.getElementById('planName').textContent = plan.name;
       document.getElementById('planDetail').textContent = plan.detail;
-      document.getElementById('heroTerms').textContent = 'Square securely stores your card today. You will not be charged today; ' + plan.amount + ' begins after the 14-day trial unless you cancel.';
+      document.getElementById('heroTerms').textContent = 'Square securely stores your card for the selected trial. ' + plan.amount + ' begins after the 14-day trial unless you cancel. We only create a human-review handoff after Square sends signed confirmation.';
       document.getElementById('renewalAmount').textContent = plan.amount;
 
       var form = document.getElementById('form'), submit = document.getElementById('submit'), msg = document.getElementById('msg');
@@ -100,6 +104,37 @@
       function detailsReady() { return fields.every(function (field) { return field.checkValidity() && field.value.trim(); }) && document.getElementById('consent').checked; }
       function refresh() { submit.disabled = !card || !detailsReady(); }
       function say(text) { msg.textContent = text || ''; }
+      function attribution() {
+        var params = new URLSearchParams(window.location.search);
+        var stored = {};
+        try { stored = JSON.parse(sessionStorage.getItem('tct_attribution') || '{}'); } catch (_) {}
+        return {
+          source: params.get('source') || stored.utm_source || 'website',
+          channel: stored.utm_medium || '', campaign: stored.utm_campaign || '',
+          utm_source: stored.utm_source || '', utm_medium: stored.utm_medium || '',
+          utm_campaign: stored.utm_campaign || '', utm_content: stored.utm_content || '',
+          utm_term: stored.utm_term || '', referrer: stored.referrer || '',
+          session_id: sessionStorage.getItem('tct_buyer_session_v1') || ''
+        };
+      }
+      function showPending(result) {
+        var shell = document.getElementById('shell');
+        shell.innerHTML = '<div class="pending"><div class="brand">Checkout pending</div><h2>We are confirming your checkout.</h2><p>Your card submission is not activation. We will create a human-reviewed setup handoff only after Square sends a signed payment confirmation.</p><p id="pending-status" aria-live="polite">Status: payment pending.</p><a href="/pricing.html">Back to plans</a></div>';
+        var status = document.getElementById('pending-status');
+        var attempts = 0;
+        var poll = window.setInterval(async function () {
+          attempts += 1;
+          try {
+            var response = await fetch(STATUS_API + '?checkout_attempt_id=' + encodeURIComponent(result.checkoutAttemptId), { cache: 'no-store' });
+            var body = await response.json();
+            if (response.ok && body && body.status) {
+              status.textContent = body.status === 'payment_succeeded' ? 'Payment confirmed. A human will review onboarding before activation.' : 'Status: ' + String(body.status).replace(/_/g, ' ') + '.';
+              if (body.status !== 'payment_pending') window.clearInterval(poll);
+            }
+          } catch (_) {}
+          if (attempts >= 20) window.clearInterval(poll);
+        }, 3000);
+      }
       fields.forEach(function (field) { field.addEventListener('input', refresh); field.addEventListener('change', refresh); });
       document.getElementById('consent').addEventListener('change', refresh);
       async function init() {
@@ -115,23 +150,16 @@
       form.addEventListener('submit', async function (event) {
         event.preventDefault();
         if (!detailsReady() || !card) { refresh(); return; }
-        submit.disabled = true; submit.textContent = 'Securing your trial…'; say('');
+        submit.disabled = true; submit.textContent = 'Submitting secure checkout…'; say('');
         try {
           var token = await card.tokenize({ buyer:{ givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim() } });
           if (token.status !== 'OK' || !token.token) throw new Error('Please check your card details and try again.');
-          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:crypto.randomUUID(), givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim(), cardholderName:fields[4].value.trim(), consentToStoreCard:true, website:'' }) });
+          var correlationId = crypto.randomUUID();
+          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:crypto.randomUUID(), correlationId:correlationId, attribution:attribution(), givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim(), cardholderName:fields[4].value.trim(), consentToStoreCard:true, website:'' }) });
           var result = await response.json();
-          if (!response.ok || !result.ok || !result.setupToken || !result.plan || !result.receipt) throw new Error(result.error || 'Unable to start your trial.');
-          try {
-            sessionStorage.setItem('tct_setup_binding', result.setupToken);
-            sessionStorage.setItem('tct_checkout_contact', JSON.stringify({
-              owner_name: fields[0].value.trim() + ' ' + fields[1].value.trim(),
-              summary_email: fields[2].value.trim(),
-              owner_cell: fields[3].value.trim()
-            }));
-          } catch (error) {}
-          submit.textContent = 'Trial confirmed — opening setup…';
-          window.location.replace('/setup.html?plan=' + encodeURIComponent(result.plan) + '&trial=started&receipt=' + encodeURIComponent(result.receipt) + '#binding=' + encodeURIComponent(result.setupToken));
+          if (!response.ok || !result.ok || result.status !== 'payment_pending' || !result.checkoutAttemptId || !result.correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
+          if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_started', form);
+          showPending(result);
         } catch (error) { say(error.message || 'We could not start your trial. Please try again.'); }
         finally { if (document.getElementById('form')) { submit.textContent = 'Start 14-day free trial'; refresh(); } }
       });

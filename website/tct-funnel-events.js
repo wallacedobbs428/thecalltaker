@@ -1,7 +1,7 @@
 /*
  * The Call Taker funnel event layer.
- * Deploy-gated dry-run script: captures only buyer-path event metadata in memory.
- * No PII, cookies, storage, external endpoints, provider calls, or Square mutation.
+ * Privacy-safe buyer-path browser telemetry. It contains no lead form values,
+ * card data, or provider secrets; durable buyer truth stays server-side.
  */
 (function () {
   "use strict";
@@ -20,6 +20,13 @@
     pricing_plan_click: true,
     card_checkout_view: true,
     card_checkout_start: true,
+    checkout_started: true,
+    checkout_pending: true,
+    checkout_failed: true,
+    payment_confirmed: true,
+    lead_form_submitted: true,
+    follow_up_consent_granted: true,
+    demo_completed: true,
     setup_view: true,
     setup_form_started: true,
     setup_form_submitted: true,

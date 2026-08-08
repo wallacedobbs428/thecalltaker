@@ -539,8 +539,9 @@
   }
 
   function initializeLeadCapture() {
-    var overlay = initPopup();
-    exposeLeadCapture(overlay);
+    // Anonymous visitors stay anonymous. Public lead capture is now provided
+    // only by explicit, consented forms such as the post-Gideon setup request.
+    window.TCTLeadCapture = { open: function() { return false; } };
   }
 
   if (document.readyState === 'loading') {
