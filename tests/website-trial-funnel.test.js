@@ -31,5 +31,8 @@ assert.ok(demo.includes('name="follow_up_consent"') && demo.includes("required")
 assert.ok(demo.includes("body.request_id") && demo.includes("body.correlation_id !== correlationId"), "success requires the durable correlated server receipt");
 assert.ok(demo.includes("session_id:sessionId"), "consented lead reuses the anonymous session correlation");
 assert.equal(demo.includes('data-tct-event="lead_form_submitted"'), false, "form interaction cannot pretend submission");
+assert.ok(demo.includes("<title>Build a Revenue Recovery Preview | The Call Taker</title>"), "demo title describes the available preview without advertising an unverified phone line");
+assert.ok(demo.includes('<link rel="canonical" href="https://thecalltaker.com/demo.html">'), "demo canonical points to the deployed Pages route");
+assert.equal(/Call \(\d{3}\) \d{3}-\d{4}/.test(demo), false, "demo cannot advertise an unverified public call number");
 
 console.log("website trial funnel regression passed");
