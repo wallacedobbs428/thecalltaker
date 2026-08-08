@@ -74,6 +74,10 @@ test("checkout remains correlated and pending until signed provider truth", () =
   assert.match(checkout, /webPaymentsSdkUrl/);
   assert.match(checkout, /sandbox\\\.web|sandbox\\\./);
   assert.match(checkout, /human-reviewed setup handoff|human will review onboarding/);
+  assert.match(checkout, /id="business"[^>]*required/);
+  assert.match(checkout, /id="preferred"[^>]*required/);
+  assert.match(checkout, /consentToFollowUp:true/);
+  assert.match(checkout, /consent to a human from The Call Taker contacting me/);
   assert.doesNotMatch(checkout, /setupToken|receipt|tct_setup_binding|\/setup\.html/);
   assert.match(checkout, /trial_active_pending_human_review/);
   assert.doesNotMatch(checkout, /payment_confirmed|payment_succeeded/);

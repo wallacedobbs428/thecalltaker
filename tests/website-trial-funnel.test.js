@@ -21,6 +21,8 @@ assert.ok(checkout.includes("result.correlationId !== correlationId"), "pending 
 assert.ok(checkout.includes("correlation_id="), "status read is scoped by correlation");
 assert.ok(checkout.includes("tct_pending_checkout_v1"), "pending continuation survives refresh");
 assert.ok(checkout.includes("sessionId:sessionId"), "anonymous session is propagated outside attribution");
+assert.ok(checkout.includes("businessName:fields[0]") && checkout.includes("preferredContactMethod:fields[5]"), "checkout creates an actionable business contact receipt");
+assert.ok(checkout.includes("consentToFollowUp:true"), "checkout requires explicit human-onboarding follow-up consent");
 assert.ok(checkout.includes("trial_active_pending_human_review"), "signed trial confirmation remains pending human review");
 assert.equal(/setupToken|receipt|tct_setup_binding|\/setup\.html/.test(checkout), false, "checkout cannot mint a setup or paid browser result");
 assert.equal(/payment_confirmed|payment_succeeded/.test(checkout), false, "browser cannot emit or infer provider payment truth");

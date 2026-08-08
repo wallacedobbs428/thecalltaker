@@ -26,7 +26,7 @@
     .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
     label { display:grid; gap:7px; color:#405149; font-size:13px; font-weight:700; }
     .wide { grid-column:1/-1; }
-    input,#card { width:100%; min-height:48px; padding:12px; border:1px solid #c7d0c9; border-radius:9px; background:#fff; font:inherit; }
+    input,select,#card { width:100%; min-height:48px; padding:12px; border:1px solid #c7d0c9; border-radius:9px; background:#fff; font:inherit; }
     #card { min-height:88px; padding:14px; }
     .consent { display:flex; gap:10px; align-items:flex-start; margin:22px 0; font-weight:400; line-height:1.5; }
     .consent input { width:18px; min-height:18px; margin:1px 0 0; accent-color:var(--pine); }
@@ -62,15 +62,17 @@
       <form id="form" novalidate data-tct-plan="" data-tct-cta="Submit secure checkout" data-tct-destination="square_checkout_request">
         <p class="label">Your details</p>
         <div class="grid">
+          <label class="wide">Business name<input id="business" autocomplete="organization" required></label>
           <label>First name<input id="first" autocomplete="given-name" required></label>
           <label>Last name<input id="last" autocomplete="family-name" required></label>
           <label class="wide">Business email<input id="email" type="email" autocomplete="email" required></label>
           <label class="wide">Mobile phone<input id="phone" type="tel" autocomplete="tel" required></label>
+          <label class="wide">Preferred onboarding contact<select id="preferred" required><option value="email">Email</option><option value="phone">Phone</option></select></label>
           <label class="wide">Name on card<input id="holder" autocomplete="cc-name" required></label>
         </div>
         <p class="label" style="margin-top:26px">Card details</p>
         <div id="card" aria-label="Secure card details"></div>
-        <label class="consent"><input id="consent" type="checkbox"><span>I authorize The Call Taker to securely store my card with Square and automatically charge <b id="renewalAmount"></b> after the 14-day trial unless I cancel before renewal.</span></label>
+        <label class="consent"><input id="consent" type="checkbox"><span>I authorize The Call Taker to securely store my card with Square and automatically charge <b id="renewalAmount"></b> after the 14-day trial unless I cancel before renewal. I also consent to a human from The Call Taker contacting me at the email or phone I provided to complete onboarding for this trial.</span></label>
         <button id="submit" type="submit" disabled>Submit secure checkout</button>
         <p class="msg" id="msg" role="alert"></p>
         <p class="logos">SECURE PAYMENT BY SQUARE · VISA · MASTERCARD · AMERICAN EXPRESS · DISCOVER</p>
@@ -98,7 +100,7 @@
       document.getElementById('renewalAmount').textContent = plan.amount;
 
       var form = document.getElementById('form'), submit = document.getElementById('submit'), msg = document.getElementById('msg');
-      var fields = ['first','last','email','phone','holder'].map(function (id) { return document.getElementById(id); });
+      var fields = ['business','first','last','email','phone','preferred','holder'].map(function (id) { return document.getElementById(id); });
       var card;
       function detailsReady() { return fields.every(function (field) { return field.checkValidity() && field.value.trim(); }) && document.getElementById('consent').checked; }
       function refresh() { submit.disabled = !card || !detailsReady(); }
@@ -174,13 +176,13 @@
         submit.disabled = true; submit.textContent = 'Submitting secure checkout…'; say('');
         if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_intent_submitted', form);
         try {
-          var token = await card.tokenize({ buyer:{ givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim() } });
+          var token = await card.tokenize({ buyer:{ givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim() } });
           if (token.status !== 'OK' || !token.token) throw new Error('Please check your card details and try again.');
           var correlationId = sessionStorage.getItem('tct_correlation_id_v1') || crypto.randomUUID();
           sessionStorage.setItem('tct_correlation_id_v1', correlationId);
           var sessionId = sessionStorage.getItem('tct_buyer_session_v1') || crypto.randomUUID();
           sessionStorage.setItem('tct_buyer_session_v1', sessionId);
-          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:crypto.randomUUID(), correlationId:correlationId, sessionId:sessionId, attribution:attribution(), givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim(), cardholderName:fields[4].value.trim(), consentToStoreCard:true, website:'' }) });
+          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:crypto.randomUUID(), correlationId:correlationId, sessionId:sessionId, attribution:attribution(), businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
           var result = await response.json();
           if (!response.ok || !result.ok || result.status !== 'payment_pending' || !result.checkoutAttemptId || result.correlationId !== correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
           if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_accepted_ui', form);
