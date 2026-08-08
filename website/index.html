@@ -16,6 +16,31 @@
     }
   })();
 </script>
+<script>
+  // Temporary safety interlock: do not market an unverified live demo number.
+  // This is intentionally local-only: no event, contact data, or provider call
+  // is created while number, agent, and callback verification are incomplete.
+  document.addEventListener("click", function (event) {
+    var link = event.target && event.target.closest && event.target.closest('a[data-gideon-demo-unverified="true"]');
+    if (!link) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, true);
+  document.addEventListener("DOMContentLoaded", function () {
+    var status = document.createElement("p");
+    status.id = "gideon-demo-status";
+    status.setAttribute("role", "status");
+    status.textContent = "Live Gideon demo verification is in progress. We are not accepting demo calls at this number yet.";
+    status.style.cssText = "margin:0;padding:12px 20px;background:#fff4d6;color:#5f4300;text-align:center;font:600 14px/1.4 Arial,sans-serif";
+    document.body.insertBefore(status, document.body.firstChild);
+    document.querySelectorAll('a[data-gideon-demo-unverified="true"]').forEach(function (link) {
+      link.setAttribute("href", "#gideon-demo-status");
+      link.setAttribute("aria-disabled", "true");
+      link.setAttribute("aria-label", "Live Gideon demo verification in progress");
+      link.textContent = "Demo verification in progress";
+    });
+  });
+</script>
 <meta name="description" content="Gideon answers calls, collects caller details, and sends clean summaries after your setup questions are in.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Call Taker - AI Call Answering For Missed Calls">
@@ -43,7 +68,7 @@
 <noscript><style>.reveal,.reveal-left,.reveal-right,.reveal-scale,.reveal-stagger>*{opacity:1!important;transform:none!important;}</style></noscript>
 <!-- Schema.org -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"The Call Taker","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI call answering that helps service businesses answer missed calls, collect caller details, and follow up faster.","url":"https://thecalltaker.com","telephone":"+16292699697","offers":{"@type":"AggregateOffer","lowPrice":"97","highPrice":"997","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my customers know it's not a real person?","acceptedAnswer":{"@type":"Answer","text":"Call (629) 269-9697 and judge it yourself. Gideon is designed to sound natural while The Call Taker configures the call flow from your business basics."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"After confirmed enrollment, answer the 60-second setup questions so we can configure your AI receptionist around your business basics, hours, service area, urgent-call rules, and summary destination."}},{"@type":"Question","name":"How does checkout work?","acceptedAnswer":{"@type":"Answer","text":"Choose a plan, continue to secure Square checkout, then answer the 60-second setup questions after confirmed enrollment. The internal build starts from the basics you submit."}}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"The Call Taker","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI call answering that helps service businesses answer missed calls, collect caller details, and follow up faster.","url":"https://thecalltaker.com","offers":{"@type":"AggregateOffer","lowPrice":"97","highPrice":"997","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my customers know it's not a real person?","acceptedAnswer":{"@type":"Answer","text":"The live Gideon demo is temporarily unavailable while the verified demo path is being completed. Gideon is designed to sound natural while The Call Taker configures the call flow from your business basics."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"After confirmed enrollment, answer the 60-second setup questions so we can configure your AI receptionist around your business basics, hours, service area, urgent-call rules, and summary destination."}},{"@type":"Question","name":"How does checkout work?","acceptedAnswer":{"@type":"Answer","text":"Choose a plan, continue to secure Square checkout, then answer the 60-second setup questions after confirmed enrollment. The internal build starts from the basics you submit."}}]}]}
 </script>
 
 <style>
@@ -2102,13 +2127,13 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <div class="nav-links" aria-label="Primary navigation">
     <a href="/pricing.html">Pricing</a>
     <a href="/faq.html">FAQ</a>
-    <a href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+    <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
     <a class="text-us-button text-us-button--nav" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
       <span>Text Us</span>
     </a>
   </div>
-  <a href="tel:+16292699697" class="mobile-header-call" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="mobile-header-call" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
   <button class="nav-menu-toggle homepage-menu-button" id="navMenuToggle" type="button" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false">
     <span class="menu-lines"><span></span><span></span><span></span></span>
     <strong>Menu</strong>
@@ -2118,7 +2143,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <a href="#features">Features</a>
   <a href="/pricing.html">Pricing</a>
   <a href="/faq.html">FAQ</a>
-  <a href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
   <a class="text-us-button text-us-button--nav" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
     <span>Text Us</span>
@@ -2133,7 +2158,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <a href="#features">Features</a>
   <a href="/pricing.html">Pricing</a>
   <a href="/faq.html">FAQ</a>
-  <a href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon</a>
+  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
 </nav>
 
 <!-- ==================== Gideon service hero ==================== -->
@@ -2169,7 +2194,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
 
       <div class="gideon-cta" id="gideonCTA">
         <a href="/pricing.html" class="btn-gideon" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="See Plans & Setup Options" data-tct-destination="pricing" data-tct-learning-tag="homepage_intent">See Plans &amp; Setup Options →</a>
-        <a href="tel:+16292699697" class="btn-gideon-ghost" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+        <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn-gideon-ghost" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
         <a class="text-us-button text-us-button--hero text-us-button--support" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           <span>Text Us</span>
@@ -2226,7 +2251,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <span class="ind-pill" data-ind="electrical">Electrical</span>
     </div>
     <div class="hero-ctas">
-      <a href="tel:+16292699697" class="btn btn-primary" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent"><span>Call Gideon Live</span></a>
+      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-primary" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent"><span>Demo verification in progress</span></a>
       <a href="#pricing" class="hero-ghost" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="See pricing" data-tct-destination="pricing_section" data-tct-learning-tag="homepage_intent">See pricing</a>
     </div>
     <div class="hf-sequence" aria-label="Call handoff sequence">
@@ -2463,7 +2488,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <p style="color:var(--t70);font-size:16px;line-height:1.8;margin-bottom:24px;">Use rough numbers from your business. This is an estimate, not a promise: actual results depend on caller intent, ticket size, follow-up speed, and your close rate.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <a href="/pricing.html" class="btn btn-primary"><span>See Plans</span></a>
-        <a href="tel:+16292699697" class="btn btn-outline" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+        <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
       </div>
     </div>
     <div class="calculator-panel" style="background:var(--surface);border:1px solid var(--t10);border-radius:18px;padding:28px;box-shadow:0 18px 60px rgba(0,0,0,0.16);">
@@ -2543,7 +2568,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       </div>
       <div class="multilingual-cta-row">
         <a href="/pricing.html" class="btn btn-primary"><span>See Plans</span></a>
-        <a href="tel:+16292699697" class="btn btn-outline" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+        <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
       </div>
     </div>
     <div class="language-ops-card" aria-label="Example multilingual call handoff">
@@ -2745,7 +2770,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
         <div><span style="font-family:var(--mono);font-size:9px;color:var(--t20);display:block;">VALUE</span><span style="font-size:14px;color:var(--amber);font-weight:600;">Depends on job</span></div>
         <div><span style="font-family:var(--mono);font-size:9px;color:var(--t20);display:block;">NEXT STEP</span><span style="font-size:14px;color:var(--t40);font-weight:600;">Team follow-up</span></div>
       </div>
-      <a href="tel:+16292699697" class="btn btn-primary" style="padding:10px 20px;font-size:13px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Try It Yourself" data-tct-destination="tel" data-tct-learning-tag="demo_intent"><span>Try It Yourself</span></a>
+      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-primary" style="padding:10px 20px;font-size:13px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Try It Yourself" data-tct-destination="tel" data-tct-learning-tag="demo_intent"><span>Demo verification in progress</span></a>
     </div>
   </div>
 </section>
@@ -2893,11 +2918,11 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <div class="reveal-left">
     <div class="sec-label">07 / FAQ</div>
     <h2 class="sec-title">Questions we<br>hear every day.</h2>
-    <p style="color:var(--t40);font-size:15px;line-height:1.7;margin-top:16px;">Can't find your answer? Call us at <a href="tel:+16292699697" style="color:var(--accent);text-decoration:none;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call phone number" data-tct-destination="tel" data-tct-learning-tag="demo_intent">(629) 269-9697</a> and ask Gideon yourself, or use the contact options in the footer.</p>
+    <p style="color:var(--t40);font-size:15px;line-height:1.7;margin-top:16px;">The live Gideon demo is temporarily unavailable while verification is in progress. You can use the contact options in the footer.</p>
   </div>
   <div class="faq-list reveal-right">
     <div class="faq-item"><div class="faq-q">How does call forwarding work?</div><div class="faq-a"><p>Your customers keep calling your regular number. After your setup questions are submitted, we guide the forwarding and test-call steps for your phone setup.</p></div></div>
-    <div class="faq-item"><div class="faq-q">What does Gideon actually sound like?</div><div class="faq-a"><p>Gideon is designed to sound natural while asking the questions you approve. Call (629) 269-9697 and judge the live demo yourself.</p></div></div>
+    <div class="faq-item"><div class="faq-q">What does Gideon actually sound like?</div><div class="faq-a"><p>Gideon is designed to sound natural while asking the questions you approve. The live demo is temporarily unavailable while its verified path is completed.</p></div></div>
     <div class="faq-item"><div class="faq-q">Can it handle appointment requests?</div><div class="faq-a"><p>It captures their name, number, what they need, and the requested timing. Direct calendar booking is available only when it is included in the plan you approve.</p></div></div>
     <div class="faq-item"><div class="faq-q">What if the caller needs a real person?</div><div class="faq-a"><p>Gideon follows your approved escalation rules. If someone needs your team, it collects the context and sends the next step to the right person.</p></div></div>
     <div class="faq-item"><div class="faq-q">How fast can I get set up?</div><div class="faq-a"><p>After confirmed enrollment, the setup questions take about 60 seconds. We use those basics to configure your call flow, summary rules, urgent action, forwarding ability, and forwarding/testing instructions.</p></div></div>
@@ -2943,7 +2968,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <p style="color:var(--t40);font-size:16px;max-width:560px;margin:0 auto 40px;line-height:1.7;">Choose a plan, pay through Square, then answer the 60-second setup questions so the internal build can begin.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
     <a href="/pricing.html" class="btn btn-primary" style="font-size:16px;padding:18px 40px;"><span>See Plans</span></a>
-    <a href="tel:+16292699697" class="btn btn-outline" style="font-size:16px;padding:18px 40px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+    <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" style="font-size:16px;padding:18px 40px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
   </div>
   <div style="display:flex;justify-content:center;gap:28px;margin-top:36px;flex-wrap:wrap;">
     <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">SQUARE CHECKOUT</span>
@@ -2975,14 +3000,14 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     </div>
     <div class="footer-col">
       <h4>RESOURCES</h4>
-      <a href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
       <a href="/after-hours-answering-service/">After-Hours Answering</a>
       <a href="/pricing.html">Pricing</a>
       <a href="/faq.html">FAQ</a>
     </div>
     <div class="footer-col">
       <h4>CONTACT</h4>
-      <a href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call phone number" data-tct-destination="tel" data-tct-learning-tag="demo_intent">(629) 269-9697</a>
+      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call phone number" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
       <a class="text-us-button text-us-button--small" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
         <span>Text Us</span>
@@ -3016,7 +3041,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
 <div class="sticky-cta" id="stickyCta">
   <span class="sticky-cta-text"><strong>Setup questions</strong> before launch</span>
   <a href="/pricing.html" class="btn btn-primary" style="padding:10px 24px;font-size:13px;"><span>See Plans</span></a>
-  <a href="tel:+16292699697" class="btn btn-outline" style="padding:10px 20px;font-size:13px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" style="padding:10px 20px;font-size:13px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
 </div>
 
 <!-- THEME TOGGLE -->
@@ -3031,8 +3056,8 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <button onclick="document.getElementById('exitPopup').style.display='none'" style="position:absolute;top:12px;right:16px;background:none;border:none;color:var(--t40);font-size:24px;cursor:pointer;">&times;</button>
     <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:12px;">BEFORE YOU GO</div>
     <h3 style="font-family:var(--serif);font-size:24px;color:var(--t100);margin-bottom:12px;line-height:1.3;">Hear your receptionist answer a call right now</h3>
-    <p style="color:var(--t40);font-size:14px;margin-bottom:24px;line-height:1.6;">Call the demo line. Pretend you need a plumber at 2 AM. Takes 30 seconds.</p>
-    <a href="tel:+16292699697" style="display:block;background:var(--accent);color:#fff;padding:16px;border-radius:10px;font-size:16px;font-weight:600;text-decoration:none;margin-bottom:12px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live</a>
+    <p style="color:var(--t40);font-size:14px;margin-bottom:24px;line-height:1.6;">We are not accepting demo calls until the verified path is complete.</p>
+    <a href="#gideon-demo-status" data-gideon-demo-unverified="true" style="display:block;background:var(--accent);color:#fff;padding:16px;border-radius:10px;font-size:16px;font-weight:600;text-decoration:none;margin-bottom:12px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
     <p style="font-family:var(--mono);font-size:10px;color:var(--t20);letter-spacing:0.1em;">FREE DEMO. NO SIGNUP NEEDED.</p>
   </div>
 </div>
@@ -3056,7 +3081,7 @@ setTimeout(function() {
 
 <!-- MOBILE CALL BAR -->
 <div class="mobile-bar">
-  <a href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Call Gideon Live: (629) 269-9697</a>
+  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
 </div>
 
 <!-- GSAP -->
