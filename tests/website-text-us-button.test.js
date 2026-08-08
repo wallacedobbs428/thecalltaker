@@ -3,216 +3,61 @@ const fs = require("fs");
 const path = require("path");
 
 const root = path.join(__dirname, "..");
-const smsHref = "sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service";
-const demoTel = "tel:+16292699697";
-const squareLinks = [
-  "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/HywRLQ4aYHQ0ojpIbsnBPnrelqAZY",
-  "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/RFxESyTjwZQuIS2xceV8983Pvj8YY",
-  "https://checkout.square.site/merchant/MLETJ9R4Z5KQ1/order/PCGvURHQSoL8LnXbmQ3olB0imFBZY",
-];
-const cardCheckoutRoutes = [
-  "/card-checkout.html?plan=afterhours",
-  "/card-checkout.html?plan=full247",
-  "/card-checkout.html?plan=custom",
-];
 
 function read(relativePath) {
   return fs.readFileSync(path.join(root, relativePath), "utf8");
 }
 
-function hrefs(html) {
-  return [...html.matchAll(/href="([^"]+)"/g)].map((match) => match[1]);
-}
-
-function textUsButtonCount(html) {
-  return (html.match(/class="[^"]*\btext-us-button\b/g) || []).length;
-}
-
-function sliceBetween(html, startMarker, endMarker) {
-  const start = html.indexOf(startMarker);
-  assert.ok(start >= 0, `missing start marker: ${startMarker}`);
-  const end = html.indexOf(endMarker, start);
-  assert.ok(end > start, `missing end marker after ${startMarker}: ${endMarker}`);
-  return html.slice(start, end);
-}
-
-const pages = {
-  "website/index.html": read("website/index.html"),
-  "website/pricing.html": read("website/pricing.html"),
-  "website/faq.html": read("website/faq.html"),
-  "website/setup.html": read("website/setup.html"),
-  "website/setup-confirmation.html": read("website/setup-confirmation.html"),
-  "website/services.html": read("website/services.html"),
+const publicPages = {
+  home: read("website/index.html"),
+  pricing: read("website/pricing.html"),
+  faq: read("website/faq.html"),
+  setup: read("website/setup.html"),
+  confirmation: read("website/setup-confirmation.html"),
 };
 
-assert.ok(
-  read("website/text-us.css").includes("#0A93F6") &&
-    read("website/text-us.css").includes("#0880D9") &&
-    read("website/text-us.css").includes(".text-us-button") &&
-    read("website/text-us.css").includes(".text-us-button--support"),
-  "Text Us button should use the reusable blue button stylesheet"
-);
+const combined = Object.values(publicPages).join("\n");
+const checkoutRoutes = [
+  "/card-checkout.html?plan=afterhours",
+  "/card-checkout.html?plan=full247",
+  "/card-checkout.html?plan=custom",
+];
+
+// Direct SMS and unverified voice CTAs were retired. Support now goes through the
+// explicit-consent lead form; anonymous visitors remain analytics-only.
+assert.doesNotMatch(combined, /href=["'](?:sms:|tel:)/i);
+assert.doesNotMatch(combined, /api\.sendblue|sendblue\.com/i);
+
+[publicPages.pricing, publicPages.faq].forEach((html) => {
+  assert.match(html, /href="\/demo\.html\?source=[^"]+#consented-demo-lead"/);
+  assert.match(html, /aria-label="Request human follow-up"/);
+  assert.match(html, /data-destination="consented_lead_queue"/);
+});
+
+assert.match(publicPages.home, /data-gideon-demo-unverified="true"/);
+assert.match(publicPages.home, /Build the preview or request a human demo\./);
+assert.match(publicPages.home, /\/demo\.html\?source=homepage-status#consented-demo-lead/);
+
+checkoutRoutes.forEach((route) => {
+  assert.ok(publicPages.home.includes(route), `homepage should preserve ${route}`);
+  assert.ok(publicPages.pricing.includes(route), `pricing should preserve ${route}`);
+});
+assert.ok(publicPages.faq.includes(checkoutRoutes[1]));
+
+assert.match(publicPages.setup, /public setup form is retired/i);
+assert.match(publicPages.setup, /Nothing was activated by opening this page/);
+assert.match(publicPages.confirmation, /not a payment or setup receipt/i);
+assert.match(publicPages.setup, /retired-setup#consented-demo-lead/);
+assert.match(publicPages.confirmation, /retired-confirmation#consented-demo-lead/);
+assert.doesNotMatch(combined, /setupToken|tct_setup_binding|trial=started|receipt=/);
 
 [
-  "website/index.html",
-  "website/pricing.html",
-  "website/faq.html",
-  "website/setup.html",
-  "website/setup-confirmation.html",
-  "website/services.html",
-].forEach((page) => {
-  assert.ok(pages[page].includes('href="text-us.css"'), `${page} should load the shared Text Us stylesheet`);
-  assert.ok(pages[page].includes("text-us-button"), `${page} should include a Text Us button`);
-  assert.ok(pages[page].includes('aria-label="Text The Call Taker"'), `${page} should label the SMS CTA accessibly`);
-  assert.ok(hrefs(pages[page]).includes(smsHref), `${page} should use the approved Sendblue SMS destination`);
+  "automatic post-payment call",
+  "AI setup call within 2 minutes",
+  "setup opens automatically",
+  "confirmed checkout opens setup automatically",
+].forEach((claim) => {
+  assert.equal(combined.toLowerCase().includes(claim.toLowerCase()), false, `unsafe claim remains: ${claim}`);
 });
 
-[
-  ["website/index.html", 4],
-  ["website/pricing.html", 3],
-  ["website/faq.html", 3],
-  ["website/setup.html", 3],
-  ["website/setup-confirmation.html", 1],
-].forEach(([page, maxCount]) => {
-  assert.ok(
-    textUsButtonCount(pages[page]) <= maxCount,
-    `${page} should keep Text Us under the target max placement count`
-  );
-});
-
-assert.ok(
-  decodeURIComponent(smsHref).includes("Hi! I would love to learn more about your service"),
-  "SMS body should be URL encoded and decode to the approved prospect message"
-);
-
-[
-  "website/index.html",
-  "website/pricing.html",
-  "website/faq.html",
-  "website/services.html",
-].forEach((page) => {
-  assert.ok(pages[page].includes(demoTel), `${page} should keep the existing Gideon demo phone CTA`);
-});
-
-cardCheckoutRoutes.forEach((route) => {
-  assert.ok(pages["website/index.html"].includes(route), `homepage should route directly to card checkout: ${route}`);
-  assert.ok(pages["website/pricing.html"].includes(route), `pricing should route directly to card checkout: ${route}`);
-});
-
-assert.ok(
-  pages["website/faq.html"].includes(cardCheckoutRoutes[1]),
-  "FAQ should route the recommended checkout CTA directly to card checkout"
-);
-
-Object.entries(pages).forEach(([page, html]) => {
-  [
-    "https://sendblue",
-    "api.sendblue",
-    "sendblue.com",
-    "fetch(\"sms:",
-    "fetch('sms:",
-    "Text Wallace directly",
-    "iMessage us",
-    "Blue text us",
-    "within 2 minutes",
-    "AI setup call",
-    "AI will call",
-    "Our AI will call you",
-    "automatic post-payment call",
-    "phone-circle",
-    "callback-widget",
-    "floating-phone",
-  ].forEach((blockedMarker) => {
-    assert.strictEqual(
-      html.toLowerCase().includes(blockedMarker.toLowerCase()),
-      false,
-      `${page} should not include unsafe Text Us/provider/floating-phone marker: ${blockedMarker}`
-    );
-  });
-});
-
-assert.ok(
-  pages["website/pricing.html"].indexOf("Questions before checkout?") >
-    pages["website/pricing.html"].indexOf(cardCheckoutRoutes[1]),
-  "pricing Text Us support should appear after the main plan checkout CTAs, not above them"
-);
-
-assert.ok(
-  pages["website/pricing.html"].includes("Questions before checkout? Text us") &&
-    pages["website/faq.html"].includes("Prefer texting? Send us a quick message") &&
-    pages["website/setup.html"].includes("Need help with setup?") &&
-    pages["website/setup-confirmation.html"].includes("Need to update something? Text us."),
-  "support pages should use approved Text Us support copy"
-);
-
-assert.strictEqual(
-  sliceBetween(
-    pages["website/index.html"],
-    "<!-- ═══ SECTION 9: FINAL CTA",
-    "<!-- ═══ FOOTER"
-  ).includes("text-us-button"),
-  false,
-  "homepage final CTA should stay focused on See Plans and Call Gideon Live"
-);
-
-assert.strictEqual(
-  sliceBetween(
-    pages["website/index.html"],
-    '<section id="faq"',
-    "<!-- ═══ REVIEWED SETUP CTA"
-  ).includes("text-us-button"),
-  false,
-  "homepage FAQ preview should not duplicate Text Us close to the footer"
-);
-
-assert.strictEqual(
-  sliceBetween(
-    pages["website/pricing.html"],
-    "<!-- FINAL CTA -->",
-    "<!-- FOOTER -->"
-  ).includes("text-us-button"),
-  false,
-  "pricing final CTA should not let Text Us compete with Choose Plan and Call Gideon Live"
-);
-
-assert.strictEqual(
-  sliceBetween(
-    pages["website/setup.html"],
-    '<form class="setup-form"',
-    "</form>"
-  ).includes("text-us-button"),
-  false,
-  "setup form itself should keep the setup submission as the only form CTA"
-);
-
-const homepageHeroCta = pages["website/index.html"].slice(
-  pages["website/index.html"].indexOf('<div class="gideon-cta"'),
-  pages["website/index.html"].indexOf("</div>", pages["website/index.html"].indexOf('<div class="gideon-cta"'))
-);
-assert.ok(
-  homepageHeroCta.indexOf("See Plans &amp; Setup Options") >= 0 &&
-    homepageHeroCta.indexOf("Call Gideon Live") > homepageHeroCta.indexOf("See Plans &amp; Setup Options") &&
-    homepageHeroCta.indexOf("Text Us") > homepageHeroCta.indexOf("Call Gideon Live") &&
-    homepageHeroCta.includes("text-us-button--support"),
-  "homepage hero CTA order should remain See Plans, Call Gideon Live, then support Text Us"
-);
-
-assert.strictEqual(
-  pages["website/index.html"].includes(".gideon-hero.service-selling .btn-gideon-ghost {\n    display: none;"),
-  false,
-  "mobile homepage hero should not hide Call Gideon Live when Text Us is added"
-);
-
-assert.ok(
-  pages["website/setup.html"].includes("Submit setup questions") &&
-    pages["website/setup.html"].includes("class=\"setup-submit-row\""),
-  "setup form submit CTA should remain primary"
-);
-
-assert.ok(
-  read("website/text-us.css").includes("max-width: calc(100vw - 36px)") &&
-    read("website/text-us.css").includes(".mobile-nav .text-us-button"),
-  "Text Us support controls should keep mobile width constrained"
-);
-
-console.log("website Text Us button tests passed");
+console.log("website consented support CTA tests passed");

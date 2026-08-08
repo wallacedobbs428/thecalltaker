@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,follow">
   <title>Secure card checkout — The Call Taker</title>
-  <script src="https://web.squarecdn.com/v1/square.js"></script>
   <style>
     :root { --ink:#12211d; --pine:#163c31; --paper:#f6f3eb; --line:#d6dcd3; --muted:#62716a; --gold:#c7a760; --error:#a52620; }
     * { box-sizing:border-box; }
@@ -60,7 +59,7 @@
         <div><strong id="planName">Loading plan</strong><br><span id="planDetail">Secure call coverage</span></div>
         <div class="due"><span>Due today</span><br><b>$0.00</b></div>
       </div>
-      <form id="form" novalidate data-tct-event="card_checkout_start" data-tct-plan="">
+      <form id="form" novalidate data-tct-plan="" data-tct-cta="Submit secure checkout" data-tct-destination="square_checkout_request">
         <p class="label">Your details</p>
         <div class="grid">
           <label>First name<input id="first" autocomplete="given-name" required></label>
@@ -104,36 +103,56 @@
       function detailsReady() { return fields.every(function (field) { return field.checkValidity() && field.value.trim(); }) && document.getElementById('consent').checked; }
       function refresh() { submit.disabled = !card || !detailsReady(); }
       function say(text) { msg.textContent = text || ''; }
+      function validContentAttribution(name, value) {
+        var candidate = (value || '').toString().trim();
+        if (name === 'tct_item_id') return /^[A-Za-z0-9][A-Za-z0-9._:-]{0,119}$/.test(candidate) ? candidate : '';
+        if (name === 'tct_asset_sha256' || name === 'tct_publication_seed_sha256') return /^[a-f0-9]{64}$/i.test(candidate) ? candidate.toLowerCase() : '';
+        return '';
+      }
+      function issuedSource(value) {
+        var candidate = (value || '').toString().trim().toLowerCase();
+        var aliases = { 'meet-gideon':'website', meet_gideon:'website', homepage:'website', home:'website', demo:'website', pricing:'website' };
+        candidate = aliases[candidate] || candidate;
+        return ['bing','content','direct','email','facebook','gideon_demo','google','instagram','linkedin','organic','paid_search','paid_social','partner','referral','social','website','youtube'].indexOf(candidate) >= 0 ? candidate : 'direct';
+      }
       function attribution() {
         var params = new URLSearchParams(window.location.search);
         var stored = {};
         try { stored = JSON.parse(sessionStorage.getItem('tct_attribution') || '{}'); } catch (_) {}
+        var itemId = validContentAttribution('tct_item_id', params.get('tct_item_id')) || validContentAttribution('tct_item_id', stored.tct_item_id || stored.content_key);
+        var assetSha256 = validContentAttribution('tct_asset_sha256', params.get('tct_asset_sha256')) || validContentAttribution('tct_asset_sha256', stored.tct_asset_sha256);
+        var publicationSeedSha256 = validContentAttribution('tct_publication_seed_sha256', params.get('tct_publication_seed_sha256')) || validContentAttribution('tct_publication_seed_sha256', stored.tct_publication_seed_sha256);
         return {
-          source: params.get('source') || stored.utm_source || 'website',
-          channel: stored.utm_medium || '', campaign: stored.utm_campaign || '',
-          utm_source: stored.utm_source || '', utm_medium: stored.utm_medium || '',
-          utm_campaign: stored.utm_campaign || '', utm_content: stored.utm_content || '',
-          utm_term: stored.utm_term || '', referrer: stored.referrer || '',
-          session_id: sessionStorage.getItem('tct_buyer_session_v1') || ''
+          source: issuedSource(params.get('utm_source') || params.get('source') || stored.utm_source || stored.source || 'website'),
+          channel: params.get('utm_medium') || stored.utm_medium || '', campaign: params.get('utm_campaign') || stored.utm_campaign || '',
+          utm_source: params.get('utm_source') || stored.utm_source || '', utm_medium: params.get('utm_medium') || stored.utm_medium || '',
+          utm_campaign: params.get('utm_campaign') || stored.utm_campaign || '', utm_content: params.get('utm_content') || stored.utm_content || '',
+          utm_term: params.get('utm_term') || stored.utm_term || '', content_key: itemId,
+          source_asset_sha256: assetSha256, source_publication_seed_sha256: publicationSeedSha256
         };
       }
       function showPending(result) {
+        try { sessionStorage.setItem('tct_pending_checkout_v1', JSON.stringify({ checkoutAttemptId:result.checkoutAttemptId, correlationId:result.correlationId, plan:key })); } catch (_) {}
         var shell = document.getElementById('shell');
-        shell.innerHTML = '<div class="pending"><div class="brand">Checkout pending</div><h2>We are confirming your checkout.</h2><p>Your card submission is not activation. We will create a human-reviewed setup handoff only after Square sends a signed payment confirmation.</p><p id="pending-status" aria-live="polite">Status: payment pending.</p><a href="/pricing.html">Back to plans</a></div>';
+        shell.innerHTML = '<div class="pending"><div class="brand">Checkout pending</div><h2>We are confirming your checkout.</h2><p>Your card submission is not activation. We will create a human-reviewed setup handoff only after Square sends a signed card-backed trial confirmation.</p><p id="pending-status" aria-live="polite">Status: payment pending.</p><button id="check-status" type="button">Check status again</button><p><a href="/pricing.html">Back to plans</a></p></div>';
         var status = document.getElementById('pending-status');
+        if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_waiting_ui_shown', form);
         var attempts = 0;
-        var poll = window.setInterval(async function () {
+        async function checkStatus() {
           attempts += 1;
           try {
-            var response = await fetch(STATUS_API + '?checkout_attempt_id=' + encodeURIComponent(result.checkoutAttemptId), { cache: 'no-store' });
+            var response = await fetch(STATUS_API + '?checkout_attempt_id=' + encodeURIComponent(result.checkoutAttemptId) + '&correlation_id=' + encodeURIComponent(result.correlationId), { cache: 'no-store' });
             var body = await response.json();
             if (response.ok && body && body.status) {
-              status.textContent = body.status === 'payment_succeeded' ? 'Payment confirmed. A human will review onboarding before activation.' : 'Status: ' + String(body.status).replace(/_/g, ' ') + '.';
+              status.textContent = body.status === 'trial_active_pending_human_review' ? 'Square confirmed the card-backed trial. Human onboarding review is required before activation.' : 'Status: ' + String(body.status).replace(/_/g, ' ') + '.';
               if (body.status !== 'payment_pending') window.clearInterval(poll);
             }
-          } catch (_) {}
+          } catch (_) { status.textContent = 'Status check unavailable. Your checkout remains pending; no activation was assumed.'; }
           if (attempts >= 20) window.clearInterval(poll);
-        }, 3000);
+        }
+        document.getElementById('check-status').addEventListener('click', checkStatus);
+        var poll = window.setInterval(checkStatus, 3000);
+        checkStatus();
       }
       fields.forEach(function (field) { field.addEventListener('input', refresh); field.addEventListener('change', refresh); });
       document.getElementById('consent').addEventListener('change', refresh);
@@ -141,28 +160,38 @@
         try {
           var response = await fetch(API, { cache:'no-store' });
           var config = await response.json();
-          if (!response.ok || !window.Square || !config.applicationId || !config.locationId) throw new Error('unavailable');
+          if (!response.ok || !config.applicationId || !config.locationId || !/^https:\/\/(sandbox\.)?web\.squarecdn\.com\/v1\/square\.js$/.test(config.webPaymentsSdkUrl || '')) throw new Error('unavailable');
+          await new Promise(function (resolve, reject) { var script=document.createElement('script'); script.src=config.webPaymentsSdkUrl; script.onload=resolve; script.onerror=reject; document.head.appendChild(script); });
+          if (!window.Square) throw new Error('unavailable');
           card = await window.Square.payments(config.applicationId, config.locationId).card();
           await card.attach('#card');
           refresh();
-        } catch (error) { say('Secure checkout is temporarily unavailable. Please call (629) 269-9697.'); }
+        } catch (error) { say('Secure checkout is temporarily unavailable. Please return to the plans page or request a human follow-up from the demo page.'); }
       }
       form.addEventListener('submit', async function (event) {
         event.preventDefault();
         if (!detailsReady() || !card) { refresh(); return; }
         submit.disabled = true; submit.textContent = 'Submitting secure checkout…'; say('');
+        if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_intent_submitted', form);
         try {
           var token = await card.tokenize({ buyer:{ givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim() } });
           if (token.status !== 'OK' || !token.token) throw new Error('Please check your card details and try again.');
-          var correlationId = crypto.randomUUID();
-          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:crypto.randomUUID(), correlationId:correlationId, attribution:attribution(), givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim(), cardholderName:fields[4].value.trim(), consentToStoreCard:true, website:'' }) });
+          var correlationId = sessionStorage.getItem('tct_correlation_id_v1') || crypto.randomUUID();
+          sessionStorage.setItem('tct_correlation_id_v1', correlationId);
+          var sessionId = sessionStorage.getItem('tct_buyer_session_v1') || crypto.randomUUID();
+          sessionStorage.setItem('tct_buyer_session_v1', sessionId);
+          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:crypto.randomUUID(), correlationId:correlationId, sessionId:sessionId, attribution:attribution(), givenName:fields[0].value.trim(), familyName:fields[1].value.trim(), email:fields[2].value.trim(), phone:fields[3].value.trim(), cardholderName:fields[4].value.trim(), consentToStoreCard:true, website:'' }) });
           var result = await response.json();
-          if (!response.ok || !result.ok || result.status !== 'payment_pending' || !result.checkoutAttemptId || !result.correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
-          if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_started', form);
+          if (!response.ok || !result.ok || result.status !== 'payment_pending' || !result.checkoutAttemptId || result.correlationId !== correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
+          if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_accepted_ui', form);
           showPending(result);
-        } catch (error) { say(error.message || 'We could not start your trial. Please try again.'); }
-        finally { if (document.getElementById('form')) { submit.textContent = 'Start 14-day free trial'; refresh(); } }
+        } catch (error) { if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_error_ui', form); say(error.message || 'We could not submit secure checkout. Please try again.'); }
+        finally { if (document.getElementById('form')) { submit.textContent = 'Submit secure checkout'; refresh(); } }
       });
+      try {
+        var pending = JSON.parse(sessionStorage.getItem('tct_pending_checkout_v1') || 'null');
+        if (pending && pending.plan === key && pending.checkoutAttemptId && pending.correlationId) { showPending(pending); return; }
+      } catch (_) {}
       init();
     })();
   </script>

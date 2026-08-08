@@ -145,7 +145,7 @@
     // Track bridge impression
     if (typeof gtag === 'function') {
       gtag('event', 'tct_bridge_shown', {
-        trigger: 'demo_complete',
+        trigger: 'demo_preview_playback_end_ui',
         intent_score: window.TCT_Intent ? TCT_Intent.score() : 0
       });
     }
@@ -155,7 +155,7 @@
 
   // Trigger 1: Demo console completion
   document.addEventListener('tct:intent_update', function(e) {
-    if (e.detail && e.detail.signal === 'demo_completed') {
+    if (e.detail && e.detail.signal === 'demo_preview_playback_end_ui') {
       // Delay slightly so user sees completion state first
       setTimeout(showPilotBridge, 1500);
     }

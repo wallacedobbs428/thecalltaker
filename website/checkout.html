@@ -29,14 +29,14 @@
   <h1>Taking you to secure checkout.</h1>
   <p>This legacy route now preserves only an exact plan choice. If no valid plan was selected, you will return to pricing instead of being assigned a default.</p>
   <div class="plan" id="planLabel">Choose your selected plan</div>
-  <a class="button checkout" id="squareCheckoutButton" href="/pricing.html#pricing-cards" data-tct-event="card_checkout_start" data-tct-destination="card_checkout">Continue</a>
+  <a class="button checkout" id="squareCheckoutButton" href="/pricing.html#pricing-cards" data-tct-event="checkout_intent_opened" data-tct-destination="card_checkout">Continue</a>
   <div id="plan-checkout-links">
     <p>If the main button does not update, choose the exact plan:</p>
     <p><a href="/card-checkout.html?plan=afterhours">After-Hours Capture — $0 today, then $97/month after 14 days</a></p>
     <p><a href="/card-checkout.html?plan=full247">Revenue Recovery System — $0 today, then $497/month after 14 days</a></p>
     <p><a href="/card-checkout.html?plan=custom">Operational Infrastructure — $0 today, then $997 base/month after 14 days</a></p>
   </div>
-  <noscript><p>Choose the exact plan above. Successful enrollment returns you to setup automatically.</p></noscript>
+  <noscript><p>Choose the exact plan above. Card submission remains pending until a signed Square event is verified, and onboarding is human-reviewed.</p></noscript>
   <a class="back" href="/pricing.html">Back to plans</a>
 </main>
 <script>
@@ -59,10 +59,33 @@
     }
     var plan = requested;
     var checkout = document.getElementById("squareCheckoutButton");
-    checkout.href = links[plan];
+    var target = new URL(links[plan], window.location.origin);
+    var stored = {};
+    try { stored = JSON.parse(sessionStorage.getItem("tct_attribution") || "{}"); } catch (_) {}
+    function validContentAttribution(name, value) {
+      var candidate = (value || "").toString().trim();
+      if (name === "tct_item_id") return /^[A-Za-z0-9][A-Za-z0-9._:-]{0,119}$/.test(candidate) ? candidate : "";
+      if (name === "tct_asset_sha256" || name === "tct_publication_seed_sha256") return /^[a-f0-9]{64}$/i.test(candidate) ? candidate.toLowerCase() : "";
+      return "";
+    }
+    ["source","utm_source","utm_medium","utm_campaign","utm_content","utm_term","correlation_id","tct_item_id","tct_asset_sha256","tct_publication_seed_sha256"].forEach(function (name) {
+      var value = params.get(name);
+      if (name.indexOf("tct_") === 0) {
+        value = validContentAttribution(name, value) || validContentAttribution(name, stored[name] || (name === "tct_item_id" ? stored.content_key : ""));
+      }
+      if (!value && name === "source") value = stored.source;
+      if (!value && name.indexOf("utm_") === 0) value = stored[name];
+      if (name === "correlation_id" && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value || "")) {
+        try { value = sessionStorage.getItem("tct_correlation_id_v1") || ""; } catch (_) { value = ""; }
+      }
+      if (name === "correlation_id" && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value || "")) value = "";
+      if (value) target.searchParams.set(name, value.slice(0, 128));
+    });
+    checkout.href = target.pathname + target.search;
     checkout.setAttribute("data-tct-plan", plan);
     document.getElementById("planLabel").textContent = plans[plan];
   })();
 </script>
+<script src="/tct-funnel-events.js" defer></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Meet Gideon, The Call Taker's AI receptionist. Preview the call flow, call the live demo line, or compare plans.">
+  <meta name="description" content="Meet Gideon, preview The Call Taker call flow, request a consented human demo, or compare plans.">
   <meta name="robots" content="index,follow">
   <title>Meet Gideon | The Call Taker</title>
   <link rel="canonical" href="https://thecalltaker.com/meet-gideon.html">
@@ -84,18 +84,18 @@
         <p class="lead">When you cannot answer, Gideon can pick up, collect the reason for the call, and turn the conversation into a clean handoff for your team.</p>
         <div class="actions">
           <a class="button button-primary" href="/demo.html?source=meet-gideon" data-preserve data-tct-event="homepage_cta_click" data-tct-page="meet-gideon" data-tct-cta="Build a Free Preview" data-tct-destination="demo">Build a free preview →</a>
-          <a class="button button-secondary" href="tel:+16292699697" data-tct-event="demo_call_tap" data-tct-page="meet-gideon" data-tct-cta="Call Gideon Live" data-tct-destination="tel">Call Gideon live</a>
+          <a class="button button-secondary" href="/demo.html?source=meet-gideon#consented-demo-lead" data-preserve data-tct-event="lead_capture_open" data-tct-page="meet-gideon" data-tct-cta="Request a Human Demo" data-tct-destination="consented_lead_queue">Request a human demo</a>
         </div>
         <div class="truth" aria-label="Demo details">
           <span><i></i>No signup to preview</span>
-          <span><i></i>Live demo line</span>
+          <span><i></i>Voice line verification in progress</span>
           <span><i></i>Human-reviewed setup</span>
         </div>
       </div>
       <div class="hero-visual" aria-label="Gideon call-handling visualization">
         <img src="/assets/images/gideon-service-homepage-hero.webp" alt="Gideon visualized as an AI receptionist receiving a call and creating a team alert" width="1920" height="1080">
         <div class="status-card" aria-hidden="true">
-          <div class="status-top"><strong>Gideon is listening</strong><span class="live">Demo ready</span></div>
+          <div class="status-top"><strong>Preview available</strong><span class="live">Human demo by request</span></div>
           <div class="wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
           <p>Call → reason captured → clean summary prepared for your team.</p>
         </div>
@@ -116,7 +116,7 @@
 
     <section class="final" aria-label="Next step">
       <div class="final-inner">
-        <div><h2>Hear the experience before you choose a plan.</h2><p>Build a safe preview, call the demo line, or compare the three current options.</p></div>
+        <div><h2>Understand the experience before you choose a plan.</h2><p>Build a safe preview, request a human demo with explicit consent, or compare the three current options.</p></div>
         <div class="actions">
           <a class="button button-primary" href="/demo.html?source=meet-gideon" data-preserve data-tct-event="homepage_cta_click" data-tct-page="meet-gideon" data-tct-cta="Open the Demo" data-tct-destination="demo">Open the demo</a>
           <a class="button button-secondary" href="/pricing.html?source=meet-gideon" data-preserve data-tct-event="homepage_cta_click" data-tct-page="meet-gideon" data-tct-cta="See Plans" data-tct-destination="pricing">See plans</a>
@@ -128,13 +128,20 @@
   <footer><span>© 2026 The Call Taker</span><span><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></span></footer>
   <script>
     (function () {
-      var allowed = ["source","utm_source","utm_medium","utm_campaign","utm_content","correlation_id","lead_id","session_id"];
+      var allowed = ["source","utm_source","utm_medium","utm_campaign","utm_content","utm_term","correlation_id","tct_item_id","tct_asset_sha256","tct_publication_seed_sha256"];
       var incoming = new URLSearchParams(window.location.search);
+      function safeValue(key, raw) {
+        var value = (raw || "").toString().trim();
+        if (key === "correlation_id" && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)) return "";
+        if (key === "tct_item_id" && !/^[A-Za-z0-9][A-Za-z0-9._:-]{0,119}$/.test(value)) return "";
+        if ((key === "tct_asset_sha256" || key === "tct_publication_seed_sha256") && !/^[a-f0-9]{64}$/i.test(value)) return "";
+        return value.slice(0, 128);
+      }
       document.querySelectorAll("a[data-preserve]").forEach(function (link) {
         var target = new URL(link.href, window.location.origin);
         allowed.forEach(function (key) {
-          var value = incoming.get(key);
-          if (value && !target.searchParams.has(key)) target.searchParams.set(key, value.slice(0, 128));
+          var value = safeValue(key, incoming.get(key));
+          if (value && !target.searchParams.has(key)) target.searchParams.set(key, value);
         });
         link.href = target.pathname + target.search + target.hash;
       });

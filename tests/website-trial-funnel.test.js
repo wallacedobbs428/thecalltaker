@@ -1,91 +1,33 @@
-const assert = require("assert");
-const fs = require("fs");
-const path = require("path");
+"use strict";
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
 
-const root = path.join(__dirname, "..");
-const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), "utf8");
-
-const cardRoutes = {
-  afterhours: "/card-checkout.html?plan=afterhours",
-  full247: "/card-checkout.html?plan=full247",
-  custom: "/card-checkout.html?plan=custom",
-};
-
-const directCheckoutPages = [
-  "website/index.html",
-  "website/pricing.html",
-  "website/demo.html",
-  "website/paid.html",
-  "website/faq.html",
-];
-
-assert.strictEqual(
-  fs.existsSync(path.join(root, "website/pre-checkout.html")),
-  false,
-  "the intermediate pre-checkout handoff must remain deleted"
-);
-
-for (const [plan, route] of Object.entries(cardRoutes)) {
-  assert.ok(read("website/index.html").includes(route), `homepage must send ${plan} directly to card checkout`);
-  assert.ok(read("website/pricing.html").includes(route), `pricing must send ${plan} directly to card checkout`);
-}
-
-assert.ok(read("website/faq.html").includes(cardRoutes.full247), "FAQ must send the recommended plan directly to card checkout");
-directCheckoutPages.forEach((page) => {
-  assert.strictEqual(read(page).includes("/pre-checkout.html"), false, `${page} must not retain the deleted handoff`);
-  assert.strictEqual(read(page).includes("buy.stripe.com"), false, `${page} must not route trials to Stripe`);
-  assert.strictEqual(/https:\/\/square\.link\/u\//.test(read(page)), false, `${page} must not use legacy Square links`);
-});
-
+const root = path.resolve(__dirname, "..");
+const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
+const pricing = read("website/pricing.html");
 const checkout = read("website/card-checkout.html");
-for (const plan of Object.keys(cardRoutes)) {
-  assert.ok(checkout.includes(`${plan}: {`), `card checkout must define ${plan}`);
+const demo = read("website/demo.html");
+
+for (const [plan, label, amount] of [["afterhours","After-Hours Capture","$97"],["full247","Revenue Recovery System","$497"],["custom","Operational Infrastructure","$997"]]) {
+  assert.ok(pricing.includes(`/card-checkout.html?plan=${plan}`), `${label} opens its exact checkout`);
+  assert.ok(checkout.includes(`${plan}: { name:'${label}'`), `${label} is mapped in checkout`);
+  assert.ok(pricing.includes(amount), `${label} discloses ${amount}`);
 }
-assert.ok(checkout.includes("$0.00"), "checkout must disclose the amount due today");
-assert.ok(checkout.includes("14-day trial"), "checkout must disclose the trial term");
-assert.ok(checkout.includes("consentToStoreCard:true"), "checkout must collect reusable-card consent");
-assert.ok(checkout.includes("result.setupToken"), "checkout must require a signed setup token");
-assert.ok(checkout.includes("result.receipt"), "checkout must require the enrollment receipt");
-assert.ok(
-  checkout.includes("window.location.replace('/setup.html?plan='") &&
-    checkout.includes("&trial=started&receipt=") &&
-    checkout.includes("#binding="),
-  "successful enrollment must automatically open receipt-bound setup"
-);
 
-const setup = read("website/setup.html");
-const setupScript = read("website/setup-form.js");
-[
-  "business_name",
-  "owner_name",
-  "business_phone",
-  "owner_cell",
-  "summary_email",
-  "gideon_answer_mode",
-  "business_hours",
-  "business_timezone",
-  "services_offered",
-  "service_area",
-  "emergency_rules",
-  "urgent_action_preference",
-  "summary_destination",
-  "phone_provider",
-  "current_forwarding_status",
-  "forwarding_ability",
-  "what_ai_should_never_say",
-].forEach((field) => {
-  assert.ok(setup.includes(`name="${field}"`), `setup must collect critical field ${field}`);
-});
+assert.ok(checkout.includes("result.status !== 'payment_pending'"), "browser requires the pending backend receipt");
+assert.ok(checkout.includes("result.checkoutAttemptId") && checkout.includes("result.correlationId"), "pending receipt is correlated");
+assert.ok(checkout.includes("result.correlationId !== correlationId"), "pending receipt must match the submitted correlation");
+assert.ok(checkout.includes("correlation_id="), "status read is scoped by correlation");
+assert.ok(checkout.includes("tct_pending_checkout_v1"), "pending continuation survives refresh");
+assert.ok(checkout.includes("sessionId:sessionId"), "anonymous session is propagated outside attribution");
+assert.ok(checkout.includes("trial_active_pending_human_review"), "signed trial confirmation remains pending human review");
+assert.equal(/setupToken|receipt|tct_setup_binding|\/setup\.html/.test(checkout), false, "checkout cannot mint a setup or paid browser result");
+assert.equal(/payment_confirmed|payment_succeeded/.test(checkout), false, "browser cannot emit or infer provider payment truth");
 
-assert.ok(setupScript.includes('"phone_provider"'), "phone provider must be part of the setup payload contract");
-assert.ok(setupScript.includes('"current_forwarding_status"'), "forwarding status must be part of the setup payload contract");
-assert.ok(
-  setupScript.includes('payload.urgent_action_preference === "transfer"') &&
-    setupScript.includes('field: "transfer_number"'),
-  "urgent transfer selection must require a destination number"
-);
-assert.ok(setupScript.includes("setupBindingToken"), "setup must verify its signed enrollment binding");
-assert.ok(setupScript.includes("trialReceiptFromQuery"), "setup must verify its enrollment receipt");
-assert.ok(setupScript.includes("https://call-taker-os.vercel.app/api/public/setup-intake"), "setup must submit to protected intake");
+assert.ok(demo.includes('name="follow_up_consent"') && demo.includes("required"), "follow-up needs explicit consent");
+assert.ok(demo.includes("body.request_id") && demo.includes("body.correlation_id !== correlationId"), "success requires the durable correlated server receipt");
+assert.ok(demo.includes("session_id:sessionId"), "consented lead reuses the anonymous session correlation");
+assert.equal(demo.includes('data-tct-event="lead_form_submitted"'), false, "form interaction cannot pretend submission");
 
-console.log("website direct trial-to-setup funnel tests passed");
+console.log("website trial funnel regression passed");

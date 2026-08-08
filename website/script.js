@@ -6,26 +6,6 @@
 (function () {
   'use strict';
 
-  const LEAD_ENDPOINT = 'https://thecalltaker.vercel.app/api/public/lead';
-
-  function normalizePhone(value) {
-    const digits = String(value || '').replace(/\D/g, '');
-    if (!digits) return '';
-    if (digits.length === 10) return '+1' + digits;
-    if (digits.length === 11 && digits.startsWith('1')) return '+' + digits;
-    return value;
-  }
-
-  async function submitLead(payload) {
-    const response = await fetch(LEAD_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    if (!response.ok) throw new Error('Lead submission failed');
-    return response.json().catch(function() { return { ok: true }; });
-  }
-
   // --- Sticky Header ---
   const header = document.querySelector('.header');
   if (header) {

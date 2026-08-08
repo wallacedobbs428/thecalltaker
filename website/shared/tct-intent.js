@@ -13,7 +13,7 @@
   // === Scoring weights ===
   var WEIGHTS = {
     demo_played:      30,
-    demo_completed:   20,  // bonus on top of demo_played
+    demo_preview_playback_end_ui: 20,  // bonus on top of demo_played
     pricing_viewed:   20,
     calculator_used:  20,
     scroll_deep:      10,  // >60% page scroll
@@ -142,14 +142,14 @@
     var checkComplete = function() {
       var doneEls = document.querySelectorAll('.dc-done');
       if (doneEls.length > 0) {
-        addSignal('demo_completed', WEIGHTS.demo_completed);
+        addSignal('demo_preview_playback_end_ui', WEIGHTS.demo_preview_playback_end_ui);
       }
     };
     // demo-console.js fires audio_complete which adds .dc-done
     // We also listen for the custom event from demo-console
     document.addEventListener('tct:console-time', function(e) {
       if (e.detail && e.detail.time >= 14) {
-        addSignal('demo_completed', WEIGHTS.demo_completed);
+        addSignal('demo_preview_playback_end_ui', WEIGHTS.demo_preview_playback_end_ui);
       }
     });
   }

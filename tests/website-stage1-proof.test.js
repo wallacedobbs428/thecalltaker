@@ -3,8 +3,6 @@ const fs = require("fs");
 const path = require("path");
 
 const root = path.join(__dirname, "..");
-const smsHref = "sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service";
-const demoTel = "tel:+16292699697";
 const cardRoutes = [
   "/card-checkout.html?plan=afterhours",
   "/card-checkout.html?plan=full247",
@@ -104,7 +102,8 @@ assert.ok(multilingualSection, "homepage should keep the multilingual coverage s
   "Clean handoff",
   "Name, phone number, job need, urgency, preferred language, and next step captured in one clean summary.",
   'href="/pricing.html"',
-  'href="tel:+16292699697"',
+  'href="#gideon-demo-status"',
+  'data-gideon-demo-unverified="true"',
 ].forEach((marker) => {
   assert.ok(multilingualSection[0].includes(marker), `multilingual section should include trust marker: ${marker}`);
 });
@@ -189,26 +188,20 @@ Object.entries(pages).forEach(([page, html]) => {
   });
 });
 
-[
-  "website/index.html",
-  "website/pricing.html",
-  "website/faq.html",
-].forEach((page) => {
-  assert.ok(pages[page].includes(demoTel), `${page} should label Call Gideon Live with the demo number`);
-  assert.ok(pages[page].includes("Call Gideon"), `${page} should keep the demo CTA label clear`);
+Object.entries(pages).forEach(([page, html]) => {
+  assert.doesNotMatch(html, /href=["'](?:tel:|sms:)/i, `${page} must not expose an unverified voice or SMS CTA`);
 });
 
-[
-  "website/index.html",
-  "website/pricing.html",
-  "website/faq.html",
-  "website/setup.html",
-  "website/setup-confirmation.html",
-].forEach((page) => {
-  assert.ok(pages[page].includes(smsHref), `${page} should use the approved SMS Text Us number`);
-  assert.strictEqual(pages[page].includes("tel:+17073208712"), false, `${page} should not call the Text Us number`);
-  assert.strictEqual(pages[page].includes("sms:+16292699697"), false, `${page} should not text the Gideon demo number`);
-});
+assert.ok(
+  pages["website/index.html"].includes("Build the preview or request a human demo.") &&
+    pages["website/index.html"].includes("/demo.html?source=homepage-status#consented-demo-lead"),
+  "homepage should give visitors a safe preview and explicit-consent human follow-up"
+);
+assert.ok(
+  pages["website/pricing.html"].includes("/demo.html?source=pricing#consented-demo-lead") &&
+    pages["website/faq.html"].includes("/demo.html?source=faq#consented-demo-lead"),
+  "pricing and FAQ should route human follow-up through the consented lead form"
+);
 
 cardRoutes.forEach((route) => {
   assert.ok(
@@ -220,12 +213,12 @@ cardRoutes.forEach((route) => {
 assert.strictEqual(fs.existsSync(path.join(root, "website/pre-checkout.html")), false, "removed pre-checkout page should stay deleted");
 
 [
-  "Pay through secure Square checkout.",
-  "After Square confirms enrollment",
+  "Secure Square checkout remains pending until signed confirmation",
+  "Only Square's validated signed event creates the internal payment and client records.",
   "setup questions",
   "forwarding/testing",
 ].forEach((marker) => {
-  assert.ok(pages["website/pricing.html"].includes(marker), `pricing should explain the Square fallback: ${marker}`);
+  assert.ok(pages["website/pricing.html"].includes(marker), `pricing should explain the pending Square flow: ${marker}`);
 });
 
 assert.ok(
@@ -234,26 +227,18 @@ assert.ok(
   "legacy checkout must not expose a buyer-controlled payment-complete bypass"
 );
 
-[
-  "Setup progress",
-  "Four focused steps",
-  "Before we build",
-  "Best mobile for urgent setup issues",
-  "Who provides your business phone service?",
-  "What happens with forwarding today?",
-  "Submit setup questions",
-].forEach((marker) => {
-  assert.ok(pages["website/setup.html"].includes(marker), `setup should include proof marker: ${marker}`);
-});
+assert.ok(
+  pages["website/setup.html"].includes("This public setup form is retired.") &&
+    pages["website/setup.html"].includes("Nothing was activated by opening this page.") &&
+    !pages["website/setup.html"].includes("<form"),
+  "legacy setup must be an honest, non-activating compatibility page"
+);
 
-[
-  "Your setup questions were received",
-  "Checkout references may still need verification before configuration is completed.",
-  "Return Home",
-  "View Pricing",
-  "Review FAQ",
-].forEach((marker) => {
-  assert.ok(pages["website/setup-confirmation.html"].includes(marker), `confirmation should include proof marker: ${marker}`);
-});
+assert.ok(
+  pages["website/setup-confirmation.html"].includes("This page is not a payment or setup receipt.") &&
+    pages["website/setup-confirmation.html"].includes("Only a validated signed Square event") &&
+    pages["website/setup-confirmation.html"].includes("Return to plans"),
+  "legacy confirmation must not claim payment, setup, or activation"
+);
 
 console.log("website Stage 1 proof tests passed");

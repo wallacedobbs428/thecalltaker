@@ -10,7 +10,8 @@
   var doc = document;
   var counter = 0;
   var config = root.TCT_FUNNEL_CONFIG || {};
-  var dryRun = config.dryRun !== false;
+  var endpoint = config.endpoint || "https://call-taker-os.vercel.app/api/public/buyer-event";
+  var dryRun = config.dryRun === true;
   var allowGtag = config.allowGtag === true;
   var debug = config.debug === true || /(?:^|[?&])tct_debug=1(?:&|$)/.test(root.location.search);
   var allowedEvents = {
@@ -19,29 +20,117 @@
     pricing_view: true,
     pricing_plan_click: true,
     card_checkout_view: true,
-    card_checkout_start: true,
-    checkout_started: true,
-    checkout_pending: true,
-    checkout_failed: true,
-    payment_confirmed: true,
-    lead_form_submitted: true,
-    follow_up_consent_granted: true,
-    demo_completed: true,
-    setup_view: true,
-    setup_form_started: true,
-    setup_form_submitted: true,
-    setup_confirmation_view: true,
+    checkout_intent_opened: true,
+    checkout_intent_submitted: true,
+    checkout_request_accepted_ui: true,
+    checkout_request_error_ui: true,
+    checkout_waiting_ui_shown: true,
+    lead_form_started: true,
+    follow_up_consent_selected_ui: true,
+    lead_request_submitted_ui: true,
+    lead_request_accepted_ui: true,
+    lead_request_error_ui: true,
     demo_view: true,
-    demo_preview_built: true,
+    demo_preview_intent: true,
+    demo_preview_rendered_ui: true,
     lead_capture_open: true,
-    demo_call_tap: true,
-    text_us_tap: true,
     paid_view: true,
     paid_cta_click: true,
     paid_demo_click: true
+    ,checkout_continuity_view: true
+    ,after_hours_answering_service_view: true
+    ,after_hours_call_checklist_view: true
+    ,ai_receptionist_view: true
   };
 
   root.__tctFunnelEvents = root.__tctFunnelEvents || [];
+
+  function uuid() {
+    return root.crypto && typeof root.crypto.randomUUID === "function" ? root.crypto.randomUUID() : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, function (character) { var number = Number(character); return (number ^ (root.crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (number / 4)))).toString(16); });
+  }
+
+  function sessionValue(key) {
+    try {
+      var value = root.sessionStorage.getItem(key);
+      if (validUuid(value)) return value;
+      value = uuid(); root.sessionStorage.setItem(key, value); return value;
+    } catch (_) { return uuid(); }
+  }
+
+  function validUuid(value) {
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value || "");
+  }
+
+  function validContentAttribution(name, value) {
+    var candidate = (value || "").toString().trim();
+    if (name === "tct_item_id") {
+      return /^[A-Za-z0-9][A-Za-z0-9._:-]{0,119}$/.test(candidate) ? candidate : "";
+    }
+    if (name === "tct_asset_sha256" || name === "tct_publication_seed_sha256") {
+      return /^[a-f0-9]{64}$/i.test(candidate) ? candidate.toLowerCase() : "";
+    }
+    return "";
+  }
+
+  function issuedSource(value) {
+    var candidate = (value || "").toString().trim().toLowerCase();
+    var aliases = { "meet-gideon":"website", meet_gideon:"website", homepage:"website", home:"website", demo:"website", pricing:"website" };
+    candidate = aliases[candidate] || candidate;
+    return ["bing","content","direct","email","facebook","gideon_demo","google","instagram","linkedin","organic","paid_search","paid_social","partner","referral","social","website","youtube"].indexOf(candidate) >= 0 ? candidate : "direct";
+  }
+
+  function attribution() {
+    var stored = {};
+    try { stored = JSON.parse(root.sessionStorage.getItem("tct_attribution") || "{}"); } catch (_) {}
+    var itemId = validContentAttribution("tct_item_id", getParam("tct_item_id")) || validContentAttribution("tct_item_id", stored.tct_item_id || stored.content_key);
+    var assetSha256 = validContentAttribution("tct_asset_sha256", getParam("tct_asset_sha256")) || validContentAttribution("tct_asset_sha256", stored.tct_asset_sha256);
+    var publicationSeedSha256 = validContentAttribution("tct_publication_seed_sha256", getParam("tct_publication_seed_sha256")) || validContentAttribution("tct_publication_seed_sha256", stored.tct_publication_seed_sha256);
+    return {
+      source: issuedSource(getParam("utm_source") || getParam("source") || stored.utm_source || stored.source || "direct"),
+      source_param: getParam("source") || stored.source || "",
+      utm_source: getParam("utm_source") || stored.utm_source || "",
+      channel: getParam("utm_medium") || stored.utm_medium || "",
+      campaign: getParam("utm_campaign") || stored.utm_campaign || "",
+      utm_content: getParam("utm_content") || stored.utm_content || "",
+      utm_term: getParam("utm_term") || stored.utm_term || "",
+      content_key: itemId,
+      tct_item_id: itemId,
+      tct_asset_sha256: assetSha256,
+      tct_publication_seed_sha256: publicationSeedSha256
+    };
+  }
+
+  function captureAttribution() {
+    var stored = {};
+    try { stored = JSON.parse(root.sessionStorage.getItem("tct_attribution") || "{}"); } catch (_) {}
+    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(function (key) {
+      var value = scrub(getParam(key), ""); if (value) stored[key] = value;
+    });
+    var source = scrub(getParam("source"), ""); if (source) stored.source = source;
+    ["tct_item_id","tct_asset_sha256","tct_publication_seed_sha256"].forEach(function (key) {
+      var value = validContentAttribution(key, getParam(key)) || validContentAttribution(key, stored[key] || (key === "tct_item_id" ? stored.content_key : ""));
+      if (value) stored[key] = value;
+      else delete stored[key];
+    });
+    if (stored.tct_item_id) stored.content_key = stored.tct_item_id;
+    else delete stored.content_key;
+    try { root.sessionStorage.setItem("tct_attribution", JSON.stringify(stored)); } catch (_) {}
+    var incomingCorrelation = getParam("correlation_id");
+    if (validUuid(incomingCorrelation)) {
+      try { root.sessionStorage.setItem("tct_correlation_id_v1", incomingCorrelation); } catch (_) {}
+    }
+  }
+
+  function canonicalEvent(eventName, payload) {
+    if (["homepage_view","demo_view","card_checkout_view","paid_view","checkout_continuity_view","after_hours_answering_service_view","after_hours_call_checklist_view","ai_receptionist_view"].indexOf(eventName) >= 0) return "page_view";
+    if (["homepage_cta_click","pricing_plan_click","paid_cta_click","paid_demo_click","lead_capture_open"].indexOf(eventName) >= 0) {
+      if (payload && payload.destination_type === "demo") return "demo_preview_intent";
+      if (payload && payload.destination_type === "card_checkout") return "checkout_intent_opened";
+      return "cta_intent";
+    }
+    if (eventName === "pricing_view") return "pricing_viewed";
+    return eventName;
+  }
 
   function getParam(name) {
     try {
@@ -83,20 +172,44 @@
       utm_campaign: scrub(getParam("utm_campaign"), ""),
       device_hint: deviceHint(),
       timestamp: new Date().toISOString(),
-      session_placeholder: "",
+      session_id: sessionValue("tct_buyer_session_v1"),
+      correlation_id: sessionValue("tct_correlation_id_v1"),
       ctos_learning_tag: scrub(dataset.tctLearningTag, ""),
-      event_id: "tct_" + Date.now().toString(36) + "_" + counter
+      event_id: uuid()
     };
+  }
+
+  function persist(payload) {
+    if (dryRun) return;
+    var attr = attribution();
+    var planMap = { afterhours:"afterhours_97", full247:"recommended_497", custom:"operational_997_plus" };
+    var body = {
+      event_id: payload.event_id, event_type: payload.event_name, occurred_at: payload.timestamp,
+      session_id: payload.session_id, correlation_id: payload.correlation_id, page_path: root.location.pathname || "/",
+      source: attr.source, channel: attr.channel, campaign: attr.campaign, utm_content: attr.utm_content || null, utm_term: attr.utm_term || null,
+      plan_key: planMap[payload.plan] || payload.plan || null,
+      content_key: attr.tct_item_id || null,
+      source_asset_sha256: attr.tct_asset_sha256 || null,
+      source_publication_seed_sha256: attr.tct_publication_seed_sha256 || null,
+      details: {
+        cta: payload.cta,
+        destination: payload.destination_type,
+        content_key: attr.content_key || ""
+      }
+    };
+    root.fetch(endpoint, { method:"POST", headers:{ "Content-Type":"application/json" }, credentials:"omit", keepalive:true, body:JSON.stringify(body) }).catch(function () {});
   }
 
   function record(eventName, target) {
     if (!allowedEvents[eventName]) return null;
 
     var payload = payloadFrom(target || doc.body, eventName);
+    payload.event_name = canonicalEvent(eventName, payload);
     root.__tctFunnelEvents.push(payload);
+    persist(payload);
 
     if (allowGtag && typeof root.gtag === "function") {
-      root.gtag("event", eventName, {
+      root.gtag("event", payload.event_name, {
         event_category: "tct_funnel",
         event_label: payload.cta || payload.page,
         page_path: payload.page,
@@ -131,28 +244,47 @@
     }, true);
   }
 
-  function initSetupForm() {
-    var form = doc.querySelector("[data-tct-form='setup']");
+  function initConsentedLeadForm() {
+    var form = doc.querySelector("[data-tct-form='consented-lead']");
     if (!form) return;
-
     var started = false;
-    function start() {
-      if (started) return;
-      started = true;
-      record(form.getAttribute("data-tct-event-start") || "setup_form_started", form);
-    }
-
+    function start() { if (started) return; started = true; record("lead_form_started", form); }
     form.addEventListener("focusin", start, true);
     form.addEventListener("input", start, true);
-    form.addEventListener("submit", function () {
-      record(form.getAttribute("data-tct-event-submit") || "setup_form_submitted", form);
-    }, true);
+  }
+
+  function preservePublicAttributionOnCtas() {
+    var attr = attribution();
+    var values = {
+      source: attr.source_param,
+      utm_source: attr.utm_source,
+      utm_medium: getParam("utm_medium") || attr.channel || "",
+      utm_campaign: getParam("utm_campaign") || attr.campaign || "",
+      utm_content: getParam("utm_content") || attr.utm_content || "",
+      utm_term: getParam("utm_term") || attr.utm_term || "",
+      correlation_id: sessionValue("tct_correlation_id_v1"),
+      tct_item_id: attr.tct_item_id,
+      tct_asset_sha256: attr.tct_asset_sha256,
+      tct_publication_seed_sha256: attr.tct_publication_seed_sha256
+    };
+    doc.querySelectorAll("a[data-tct-event],a[data-preserve]").forEach(function (link) {
+      var target;
+      try { target = new URL(link.href, root.location.origin); } catch (_) { return; }
+      if (target.origin !== root.location.origin) return;
+      Object.keys(values).forEach(function (key) {
+        var value = values[key];
+        if (value && !target.searchParams.has(key)) target.searchParams.set(key, value.slice(0, 128));
+      });
+      link.href = target.pathname + target.search + target.hash;
+    });
   }
 
   function init() {
+    captureAttribution();
+    preservePublicAttributionOnCtas();
     initPageView();
     initClicks();
-    initSetupForm();
+    initConsentedLeadForm();
   }
 
   if (doc.readyState === "loading") {

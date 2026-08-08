@@ -10,9 +10,16 @@ on:
       - 'website/pre-checkout.html'
       - 'website/card-checkout.html'
       - 'website/demo.html'
+      - 'website/book.html'
+      - 'website/setup.html'
+      - 'website/setup-confirmation.html'
+      - 'website/tct-funnel-events.js'
+      - 'website/tct-tracking.js'
+      - 'website/meet-gideon.html'
       - 'website/pilot/**'
       - 'website/onboarding/**'
       - 'tests/website-trial-funnel.test.js'
+      - 'tests/website-buyer-consent-release.test.js'
       - '.github/workflows/website-trial-funnel.yml'
   push:
     branches: [main]
@@ -24,9 +31,16 @@ on:
       - 'website/pre-checkout.html'
       - 'website/card-checkout.html'
       - 'website/demo.html'
+      - 'website/book.html'
+      - 'website/setup.html'
+      - 'website/setup-confirmation.html'
+      - 'website/tct-funnel-events.js'
+      - 'website/tct-tracking.js'
+      - 'website/meet-gideon.html'
       - 'website/pilot/**'
       - 'website/onboarding/**'
       - 'tests/website-trial-funnel.test.js'
+      - 'tests/website-buyer-consent-release.test.js'
       - '.github/workflows/website-trial-funnel.yml'
 
 jobs:
@@ -37,4 +51,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run trial funnel regression
-        run: node tests/website-trial-funnel.test.js
+        run: node --test tests/website-buyer-consent-release.test.js tests/website-trial-funnel.test.js

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-<script src="/tct-first-party-attribution.js" defer></script>
 <!-- Paid conversion tracking is disabled pending the Lane 4 payload and audience audit. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,8 +29,13 @@
     var status = document.createElement("p");
     status.id = "gideon-demo-status";
     status.setAttribute("role", "status");
-    status.textContent = "Live Gideon demo and text-channel verification are in progress. We are not accepting demo calls or texts at these numbers yet.";
+    status.textContent = "Live Gideon demo and text-channel verification are in progress. We are not accepting demo calls or texts at these numbers yet. ";
     status.style.cssText = "margin:0;padding:12px 20px;background:#fff4d6;color:#5f4300;text-align:center;font:600 14px/1.4 Arial,sans-serif";
+    var safeDemoLink = document.createElement("a");
+    safeDemoLink.href = "/demo.html?source=homepage-status#consented-demo-lead";
+    safeDemoLink.textContent = "Build the preview or request a human demo.";
+    safeDemoLink.style.cssText = "color:inherit;text-decoration:underline";
+    status.appendChild(safeDemoLink);
     document.body.insertBefore(status, document.body.firstChild);
     document.querySelectorAll('a[data-gideon-demo-unverified="true"]').forEach(function (link) {
       link.setAttribute("href", "#gideon-demo-status");
@@ -74,7 +78,7 @@
 <noscript><style>.reveal,.reveal-left,.reveal-right,.reveal-scale,.reveal-stagger>*{opacity:1!important;transform:none!important;}</style></noscript>
 <!-- Schema.org -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"The Call Taker","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI call answering that helps service businesses answer missed calls, collect caller details, and follow up faster.","url":"https://thecalltaker.com","offers":{"@type":"AggregateOffer","lowPrice":"97","highPrice":"997","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my customers know it's not a real person?","acceptedAnswer":{"@type":"Answer","text":"The live Gideon demo is temporarily unavailable while the verified demo path is being completed. Gideon is designed to sound natural while The Call Taker configures the call flow from your business basics."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"After confirmed enrollment, answer the 60-second setup questions so we can configure your AI receptionist around your business basics, hours, service area, urgent-call rules, and summary destination."}},{"@type":"Question","name":"How does checkout work?","acceptedAnswer":{"@type":"Answer","text":"Choose a plan, continue to secure Square checkout, then answer the 60-second setup questions after confirmed enrollment. The internal build starts from the basics you submit."}}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"The Call Taker","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"AI call answering that helps service businesses answer missed calls, collect caller details, and follow up faster.","url":"https://thecalltaker.com","offers":{"@type":"AggregateOffer","lowPrice":"97","highPrice":"997","priceCurrency":"USD"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will my customers know it's not a real person?","acceptedAnswer":{"@type":"Answer","text":"The live Gideon demo is temporarily unavailable while the verified demo path is being completed. Gideon is designed to sound natural while The Call Taker configures the call flow from your business basics."}},{"@type":"Question","name":"How long does setup take?","acceptedAnswer":{"@type":"Answer","text":"A signed Square billing event creates a human-owned onboarding review. A person confirms the setup questions and launch timing before anything is activated."}},{"@type":"Question","name":"How does checkout work?","acceptedAnswer":{"@type":"Answer","text":"Choose a plan and submit the secure Square checkout. The page remains pending until the backend validates Square's signed billing event; checkout or a redirect never activates service."}}]}]}
 </script>
 
 <style>
@@ -2133,13 +2137,13 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <div class="nav-links" aria-label="Primary navigation">
     <a href="/pricing.html">Pricing</a>
     <a href="/faq.html">FAQ</a>
-    <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
-    <a class="text-us-button text-us-button--nav" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+    <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+    <a class="text-us-button text-us-button--nav" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-verification" data-channel="status" data-destination="demo_status" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Text Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="verification_status">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
       <span>Text availability verification in progress</span>
     </a>
   </div>
-  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="mobile-header-call" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="mobile-header-call" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
   <button class="nav-menu-toggle homepage-menu-button" id="navMenuToggle" type="button" aria-label="Open navigation" aria-controls="mobileNav" aria-expanded="false">
     <span class="menu-lines"><span></span><span></span><span></span></span>
     <strong>Menu</strong>
@@ -2149,8 +2153,8 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <a href="#features">Features</a>
   <a href="/pricing.html">Pricing</a>
   <a href="/faq.html">FAQ</a>
-  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
-  <a class="text-us-button text-us-button--nav" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+  <a class="text-us-button text-us-button--nav" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-verification" data-channel="status" data-destination="demo_status" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Text Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="verification_status">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
     <span>Text availability verification in progress</span>
   </a>
@@ -2164,7 +2168,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <a href="#features">Features</a>
   <a href="/pricing.html">Pricing</a>
   <a href="/faq.html">FAQ</a>
-  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
 </nav>
 
 <!-- ==================== Gideon service hero ==================== -->
@@ -2200,8 +2204,8 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
 
       <div class="gideon-cta" id="gideonCTA">
         <a href="/pricing.html" class="btn-gideon" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="See Plans & Setup Options" data-tct-destination="pricing" data-tct-learning-tag="homepage_intent">See Plans &amp; Setup Options →</a>
-        <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn-gideon-ghost" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
-        <a class="text-us-button text-us-button--hero text-us-button--support" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+        <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn-gideon-ghost" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+        <a class="text-us-button text-us-button--hero text-us-button--support" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-verification" data-channel="status" data-destination="demo_status" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Text Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="verification_status">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
           <span>Text availability verification in progress</span>
         </a>
@@ -2257,7 +2261,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <span class="ind-pill" data-ind="electrical">Electrical</span>
     </div>
     <div class="hero-ctas">
-      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-primary" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent"><span>Demo verification in progress</span></a>
+      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-primary" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent"><span>Demo verification in progress</span></a>
       <a href="#pricing" class="hero-ghost" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="See pricing" data-tct-destination="pricing_section" data-tct-learning-tag="homepage_intent">See pricing</a>
     </div>
     <div class="hf-sequence" aria-label="Call handoff sequence">
@@ -2494,7 +2498,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <p style="color:var(--t70);font-size:16px;line-height:1.8;margin-bottom:24px;">Use rough numbers from your business. This is an estimate, not a promise: actual results depend on caller intent, ticket size, follow-up speed, and your close rate.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <a href="/pricing.html" class="btn btn-primary"><span>See Plans</span></a>
-        <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+        <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
       </div>
     </div>
     <div class="calculator-panel" style="background:var(--surface);border:1px solid var(--t10);border-radius:18px;padding:28px;box-shadow:0 18px 60px rgba(0,0,0,0.16);">
@@ -2574,7 +2578,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       </div>
       <div class="multilingual-cta-row">
         <a href="/pricing.html" class="btn btn-primary"><span>See Plans</span></a>
-        <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+        <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
       </div>
     </div>
     <div class="language-ops-card" aria-label="Example multilingual call handoff">
@@ -2776,7 +2780,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
         <div><span style="font-family:var(--mono);font-size:9px;color:var(--t20);display:block;">VALUE</span><span style="font-size:14px;color:var(--amber);font-weight:600;">Depends on job</span></div>
         <div><span style="font-family:var(--mono);font-size:9px;color:var(--t20);display:block;">NEXT STEP</span><span style="font-size:14px;color:var(--t40);font-weight:600;">Team follow-up</span></div>
       </div>
-      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-primary" style="padding:10px 20px;font-size:13px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Try It Yourself" data-tct-destination="tel" data-tct-learning-tag="demo_intent"><span>Demo verification in progress</span></a>
+      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-primary" style="padding:10px 20px;font-size:13px;" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent"><span>Demo verification in progress</span></a>
     </div>
   </div>
 </section>
@@ -2806,14 +2810,14 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
 <section id="pricing" style="padding:120px 40px;max-width:1100px;margin:0 auto;border-top:1px solid var(--t06);">
   <div class="sec-label reveal" style="text-align:center;">07 / PRICING</div>
   <h2 class="sec-title reveal" style="text-align:center;max-width:520px;margin:0 auto 12px;">Choose the call coverage you need.</h2>
-  <p class="reveal" style="text-align:center;color:var(--t40);font-size:15px;margin-bottom:16px;">Choose a plan, enter a card through secure Square checkout, then answer the 60-second setup questions so the internal build can start.</p>
+  <p class="reveal" style="text-align:center;color:var(--t40);font-size:15px;margin-bottom:16px;">Choose a plan and enter a card through secure Square checkout. The checkout remains pending until a signed Square event creates a human-owned onboarding review.</p>
   <p class="reveal" style="text-align:center;color:var(--t70);font-size:13px;margin:0 auto 16px;max-width:760px;">Current billing model: $0 due today for a 14-day card-backed trial. Unless canceled before renewal, the selected plan renews monthly at $97, $497, or the approved $997 base amount. Custom scope above $997 requires a separate exact quote.</p>
   <div class="reveal" style="text-align:center;margin-bottom:64px;">
-    <div class="urgency-badge"><span class="urgency-dot"></span>60-second setup questions after confirmed enrollment, then internal build and test-call steps</div>
+    <div class="urgency-badge"><span class="urgency-dot"></span>Signed payment confirmation, then a human-owned onboarding review</div>
   </div>
   <div class="form-setup-steps reveal">
     <div style="border:1px solid var(--t10);border-radius:12px;padding:18px;background:var(--surface);"><div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.12em;margin-bottom:8px;">1 / CHECKOUT</div><p style="color:var(--t70);font-size:13px;line-height:1.6;">Pick the plan and continue to secure Square checkout.</p></div>
-    <div style="border:1px solid var(--t10);border-radius:12px;padding:18px;background:var(--surface);"><div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.12em;margin-bottom:8px;">2 / SETUP QUESTIONS</div><p style="color:var(--t70);font-size:13px;line-height:1.6;">After Square confirms enrollment, setup opens automatically with the purchased plan locked. You provide hours, service area, call types, urgent rules, summary destination, forwarding ability, and hard limits.</p></div>
+    <div style="border:1px solid var(--t10);border-radius:12px;padding:18px;background:var(--surface);"><div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.12em;margin-bottom:8px;">2 / HUMAN REVIEW</div><p style="color:var(--t70);font-size:13px;line-height:1.6;">Only a validated signed Square event creates the client record and one human-owned onboarding task. A person then confirms the setup questions and launch timing.</p></div>
     <div style="border:1px solid var(--t10);border-radius:12px;padding:18px;background:var(--surface);"><div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:0.12em;margin-bottom:8px;">3 / LIVE CALLS</div><p style="color:var(--t70);font-size:13px;line-height:1.6;">We configure, onboard, test, then you forward calls when ready.</p></div>
   </div>
 
@@ -2833,7 +2837,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
         <li>Best when you only need closed-hours coverage</li>
       </ul>
       <a href="/card-checkout.html?plan=afterhours" class="btn btn-outline price-cta" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-plan="afterhours" data-tct-cta="Start Free Trial" data-tct-destination="card_checkout" data-tct-source="home-pricing" data-tct-learning-tag="plan_interest">Start Free Trial</a>
-      <p style="text-align:center;color:var(--t40);font-size:12px;margin-top:10px;">Confirmed checkout opens setup automatically.</p>
+      <p style="text-align:center;color:var(--t40);font-size:12px;margin-top:10px;">Signed Square confirmation creates a human review—not automatic activation.</p>
     </div>
     <div class="price-card featured">
       <div class="price-badge">MOST POPULAR</div>
@@ -2853,7 +2857,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
         <li>Broader coverage than after-hours only</li>
       </ul>
       <a href="/card-checkout.html?plan=full247" class="btn btn-primary price-cta" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-plan="full247" data-tct-cta="Start Free Trial" data-tct-destination="card_checkout" data-tct-source="home-pricing" data-tct-learning-tag="plan_interest"><span>Start Free Trial</span></a>
-      <p style="text-align:center;color:var(--t40);font-size:12px;margin-top:10px;">Confirmed checkout opens setup automatically.</p>
+      <p style="text-align:center;color:var(--t40);font-size:12px;margin-top:10px;">Signed Square confirmation creates a human review—not automatic activation.</p>
     </div>
     <div class="price-card">
       <div class="price-badge amber">WHITE GLOVE</div>
@@ -2873,7 +2877,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
         <li>Founder review before launch</li>
       </ul>
       <a href="/card-checkout.html?plan=custom" class="btn btn-outline price-cta" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-plan="custom" data-tct-cta="Start Free Trial" data-tct-destination="card_checkout" data-tct-source="home-pricing" data-tct-learning-tag="plan_interest">Start Free Trial</a>
-      <p style="text-align:center;color:var(--t40);font-size:12px;margin-top:10px;">Confirmed checkout opens setup automatically.</p>
+      <p style="text-align:center;color:var(--t40);font-size:12px;margin-top:10px;">Signed Square confirmation creates a human review—not automatic activation.</p>
     </div>
   </div>
   <p style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--t20);margin-top:32px;letter-spacing:0.05em;">SECURE SQUARE CHECKOUT &middot; 60-SECOND SETUP QUESTIONS &middot; ONBOARDING BEFORE LIVE CALLS</p>
@@ -2931,7 +2935,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <div class="faq-item"><div class="faq-q">What does Gideon actually sound like?</div><div class="faq-a"><p>Gideon is designed to sound natural while asking the questions you approve. The live demo is temporarily unavailable while its verified path is completed.</p></div></div>
     <div class="faq-item"><div class="faq-q">Can it handle appointment requests?</div><div class="faq-a"><p>It captures their name, number, what they need, and the requested timing. Direct calendar booking is available only when it is included in the plan you approve.</p></div></div>
     <div class="faq-item"><div class="faq-q">What if the caller needs a real person?</div><div class="faq-a"><p>Gideon follows your approved escalation rules. If someone needs your team, it collects the context and sends the next step to the right person.</p></div></div>
-    <div class="faq-item"><div class="faq-q">How fast can I get set up?</div><div class="faq-a"><p>After confirmed enrollment, the setup questions take about 60 seconds. We use those basics to configure your call flow, summary rules, urgent action, forwarding ability, and forwarding/testing instructions.</p></div></div>
+    <div class="faq-item"><div class="faq-q">How fast can I get set up?</div><div class="faq-a"><p>After a signed Square confirmation, a person reviews onboarding and confirms the setup questions, call flow, forwarding steps, testing, and launch timing. Checkout itself never starts service.</p></div></div>
     <div class="faq-item"><div class="faq-q">How does checkout work?</div><div class="faq-a"><p>You choose the plan, enter a card through Square, and start a 14-day trial with $0 due today. Unless canceled before renewal, the selected plan renews monthly. Setup submission does not by itself verify billing or activate service.</p></div></div>
     <div class="faq-item"><div class="faq-q">How is this different from a regular answering service?</div><div class="faq-a"><p>Traditional answering services often stop at taking a message. Gideon asks your approved questions, collects the details, and sends a useful summary so your team knows what to do next.</p></div></div>
     <div class="faq-item"><div class="faq-q">Can it connect with my existing tools?</div><div class="faq-a"><p>Yes, on custom plans. We review your calendar, CRM, and scheduling tools before promising a direct connection so the setup stays reliable.</p></div></div>
@@ -2955,7 +2959,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <div style="position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);"></div>
     <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(42,157,122,0.12);border:1px solid rgba(42,157,122,0.2);border-radius:20px;padding:6px 16px;margin-bottom:20px;">
       <span style="width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;"></span>
-      <span style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.12em;color:var(--accent);">60-SECOND SETUP AFTER PAYMENT</span>
+      <span style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.12em;color:var(--accent);">HUMAN REVIEW AFTER SIGNED PAYMENT CONFIRMATION</span>
     </div>
     <h2 style="font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.2rem);color:var(--t100);font-weight:400;margin-bottom:16px;">Start with clear call coverage.</h2>
     <p style="color:var(--t70);font-size:15px;line-height:1.7;max-width:500px;margin:0 auto 28px;">Pay through Square, then answer the 60-second setup questions. We use those basics to configure your call taker and send forwarding/testing next steps before anything goes live.</p>
@@ -2971,10 +2975,10 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
 <!-- ═══ SECTION 9: FINAL CTA — full-bleed dark with giant serif ═══ -->
 <section class="reveal-scale" style="text-align:center;padding:140px 40px;background:var(--surface);border-top:1px solid var(--t06);border-bottom:1px solid var(--t06);">
   <h2 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;color:var(--t100);letter-spacing:-0.02em;max-width:700px;margin:0 auto 32px;line-height:1.15;">Your competitors are <span class="highlight-on-scroll">answering their phones</span> right now.</h2>
-    <p style="color:var(--t40);font-size:16px;max-width:560px;margin:0 auto 40px;line-height:1.7;">Choose a plan, pay through Square, then answer the 60-second setup questions so the internal build can begin.</p>
+    <p style="color:var(--t40);font-size:16px;max-width:560px;margin:0 auto 40px;line-height:1.7;">Choose a plan and submit secure Square checkout. Signed confirmation creates a human review; a person confirms onboarding before any activation.</p>
   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
     <a href="/pricing.html" class="btn btn-primary" style="font-size:16px;padding:18px 40px;"><span>See Plans</span></a>
-    <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" style="font-size:16px;padding:18px 40px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+    <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" style="font-size:16px;padding:18px 40px;" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
   </div>
   <div style="display:flex;justify-content:center;gap:28px;margin-top:36px;flex-wrap:wrap;">
     <span style="font-family:var(--mono);font-size:11px;color:var(--t20);letter-spacing:0.05em;">SQUARE CHECKOUT</span>
@@ -3006,15 +3010,15 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     </div>
     <div class="footer-col">
       <h4>RESOURCES</h4>
-      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
       <a href="/after-hours-answering-service/">After-Hours Answering</a>
       <a href="/pricing.html">Pricing</a>
       <a href="/faq.html">FAQ</a>
     </div>
     <div class="footer-col">
       <h4>CONTACT</h4>
-      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call phone number" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
-      <a class="text-us-button text-us-button--small" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+      <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+      <a class="text-us-button text-us-button--small" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-verification" data-channel="status" data-destination="demo_status" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Text Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="verification_status">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
         <span>Text availability verification in progress</span>
       </a>
@@ -3047,7 +3051,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
 <div class="sticky-cta" id="stickyCta">
   <span class="sticky-cta-text"><strong>Setup questions</strong> before launch</span>
   <a href="/pricing.html" class="btn btn-primary" style="padding:10px 24px;font-size:13px;"><span>See Plans</span></a>
-  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" style="padding:10px 20px;font-size:13px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn btn-outline" style="padding:10px 20px;font-size:13px;" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
 </div>
 
 <!-- THEME TOGGLE -->
@@ -3061,9 +3065,9 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <div style="background:var(--surface);border:1px solid var(--border-bright);border-radius:16px;padding:40px 32px;max-width:420px;width:90%;text-align:center;position:relative;">
     <button onclick="document.getElementById('exitPopup').style.display='none'" style="position:absolute;top:12px;right:16px;background:none;border:none;color:var(--t40);font-size:24px;cursor:pointer;">&times;</button>
     <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.15em;margin-bottom:12px;">BEFORE YOU GO</div>
-    <h3 style="font-family:var(--serif);font-size:24px;color:var(--t100);margin-bottom:12px;line-height:1.3;">Hear your receptionist answer a call right now</h3>
+    <h3 style="font-family:var(--serif);font-size:24px;color:var(--t100);margin-bottom:12px;line-height:1.3;">Preview the call flow before you choose a plan</h3>
     <p style="color:var(--t40);font-size:14px;margin-bottom:24px;line-height:1.6;">We are not accepting demo calls until the verified path is complete.</p>
-    <a href="#gideon-demo-status" data-gideon-demo-unverified="true" style="display:block;background:var(--accent);color:#fff;padding:16px;border-radius:10px;font-size:16px;font-weight:600;text-decoration:none;margin-bottom:12px;" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+    <a href="#gideon-demo-status" data-gideon-demo-unverified="true" style="display:block;background:var(--accent);color:#fff;padding:16px;border-radius:10px;font-size:16px;font-weight:600;text-decoration:none;margin-bottom:12px;" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
     <p style="font-family:var(--mono);font-size:10px;color:var(--t20);letter-spacing:0.1em;">FREE DEMO. NO SIGNUP NEEDED.</p>
   </div>
 </div>
@@ -3087,7 +3091,7 @@ setTimeout(function() {
 
 <!-- MOBILE CALL BAR -->
 <div class="mobile-bar">
-  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
+  <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Demo Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
 </div>
 
 <!-- GSAP -->

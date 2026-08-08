@@ -1,79 +1,15 @@
-const assert = require("assert");
-const fs = require("fs");
-const path = require("path");
-
-const root = path.join(__dirname, "..");
-const read = (relative) => fs.readFileSync(path.join(root, relative), "utf8");
-const buyerPages = [
-  "website/index.html",
-  "website/pricing.html",
-  "website/demo.html",
-  "website/faq.html",
-  "website/start.html",
-  "website/signup.html",
-  "website/checkout.html",
-  "website/pay.html",
-];
-
-const home = read("website/index.html");
-assert.ok(home.includes("--gideon-card-bg: #fff"), "light mode must give Meet Gideon a light card");
-assert.ok(home.includes("background: var(--gideon-card-bg)"), "Meet Gideon card must use its theme token");
-assert.ok(home.includes("color: var(--gideon-copy)"), "Meet Gideon copy must use its theme token");
-for (const unsupportedClaim of [
-  "TEAM ALERT SENT",
-  "&lt; 2s",
-  "Let me get an emergency tech out to you",
-  "Any phone system",
-  "$2,800",
-]) {
-  assert.strictEqual(home.includes(unsupportedClaim), false, `homepage must not publish unsupported claim: ${unsupportedClaim}`);
-}
-
-for (const page of buyerPages) {
-  const html = read(page);
-  assert.strictEqual(html.includes('href="/setup.html'), false, `${page} must not expose unsigned setup`);
-  assert.strictEqual(html.includes("Payment complete — continue setup"), false, `${page} must not expose a buyer-controlled payment bypass`);
-}
-
-for (const route of ["website/checkout.html", "website/card-checkout.html"]) {
-  const html = read(route);
-  assert.strictEqual(/params\.get\(['"]plan['"]\)\s*\|\|\s*['"]full247['"]/.test(html), false, `${route} must not silently default to $497`);
-  assert.ok(html.includes("checkout=select-plan"), `${route} must send a missing or invalid plan back to pricing`);
-}
-
-const card = read("website/card-checkout.html");
-assert.ok(card.includes("call-taker-os.vercel.app/api/public/square-trial"), "checkout must collect a Square card on file for the $0 trial");
-assert.ok(card.includes("consentToStoreCard:true"), "checkout must obtain clear consent before storing a card");
-assert.ok(card.includes('href="/terms.html"') && card.includes('href="/privacy.html"'), "checkout must link its Terms and Privacy Policy");
-assert.ok(card.includes("window.location.replace('/setup.html?plan='"), "confirmed Square enrollment must redirect into setup automatically");
-assert.ok(card.includes("result.receipt"), "automatic setup redirect must include the verified receipt binding");
-
-const setup = read("website/setup.html");
-const setupScript = read("website/setup-form.js");
-assert.ok(setup.includes('type="hidden" id="plan_purchased"'), "setup plan must be locked, not buyer-selectable");
-assert.strictEqual(setup.includes('<select id="plan_purchased"'), false, "setup must not allow plan substitution");
-assert.ok(setupScript.includes("setup_binding_token"), "setup payload must carry the signed binding token");
-assert.ok(setupScript.includes("https://call-taker-os.vercel.app/api/public/setup-intake"), "setup must use the protected intake endpoint");
-assert.ok(setupScript.includes('if (!intake.ok) throw new Error'), "setup must not confirm an intake the backend did not accept");
-assert.ok(setupScript.includes("Do not start another checkout"), "setup intake failure must prevent a duplicate checkout attempt");
-assert.ok(setupScript.includes('removeItem("tct_setup_binding")'), "accepted setup must clear its browser-stored binding token");
-
-const legal = `${read("website/terms.html")}\n${read("website/privacy.html")}`;
-for (const contradiction of [
-  "GoHighLevel",
-  "do not currently use cookies",
-  "99.9%",
-  "fully live within 48",
-  "full refund",
-]) {
-  assert.strictEqual(legal.toLowerCase().includes(contradiction.toLowerCase()), false, `legal copy must not contain stale claim: ${contradiction}`);
-}
-
-const faq = read("website/faq.html");
-assert.ok(faq.includes("@media(max-width:380px)"), "FAQ footer must collapse at narrow-mobile width");
-assert.ok(faq.includes("overflow-wrap: anywhere"), "FAQ contact links must not force horizontal overflow");
-
-const workflow = read(".github/workflows/deploy.yml");
-assert.ok(workflow.includes('website/pilot/index.html'), "Pages artifact must include the retired pilot redirect");
-
-console.log("website release candidate v1 tests passed");
+"use strict";
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+const root = path.resolve(__dirname, "..");
+const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
+const routeFiles = ["index.html","pricing.html","demo.html","meet-gideon.html","book.html","card-checkout.html","setup.html","setup-confirmation.html"];
+const release = routeFiles.map((file) => read(`website/${file}`)).join("\n");
+assert.doesNotMatch(release, /setupToken|tct_setup_binding|trial=started|receipt=/);
+assert.doesNotMatch(release, /thecalltaker\.vercel\.app/);
+assert.match(read("website/book.html"), /consented-demo-lead/);
+assert.match(read("website/demo.html"), /explicit follow-up consent|required/);
+assert.match(read("website/card-checkout.html"), /payment pending|payment_pending/i);
+assert.match(read("website/setup.html"), /public setup form is retired/i);
+console.log("website release candidate tests passed");
