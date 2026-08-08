@@ -44,6 +44,9 @@ test("Meet Gideon and the legacy booking path keep only public attribution", () 
   for (const key of ["source","utm_source","utm_medium","utm_campaign","utm_content","utm_term","correlation_id","tct_item_id","tct_asset_sha256","tct_publication_seed_sha256"]) {
     assert.ok(meet.includes(`"${key}"`) || book.includes(`'${key}'`), `public attribution includes ${key}`);
   }
+  assert.match(meet, /utm_campaign[\s\S]*match\(\/\[0-9\]\/g\)/);
+  assert.match(book, /sourceAliases/);
+  assert.doesNotMatch(book, /set\('source', 'legacy-book-route'\)/);
 });
 
 test("the optional Gideon follow-up is explicit, durable, and never anonymous outreach", () => {
@@ -52,6 +55,7 @@ test("the optional Gideon follow-up is explicit, durable, and never anonymous ou
   assert.match(demo, /name="follow_up_consent"[^>]*required/);
   assert.match(demo, /name="preferred_contact_method"/);
   assert.match(demo, /name="phone"[^>]*required/);
+  assert.match(demo, /Required by the current human follow-up queue, even when email is your preferred contact method/);
   assert.match(demo, /follow_up_consent:data\.get\('follow_up_consent'\) === 'on'/);
   assert.doesNotMatch(demo, /body\.id/);
   assert.match(demo, /body\.request_id/);
@@ -59,6 +63,7 @@ test("the optional Gideon follow-up is explicit, durable, and never anonymous ou
   assert.match(demo, /session_id:sessionId/);
   for (const key of ["content_key","source_asset_sha256","source_publication_seed_sha256"]) assert.match(demo, new RegExp(`${key}:`));
   for (const event of ["follow_up_consent_selected_ui","lead_request_submitted_ui","lead_request_accepted_ui","lead_request_error_ui"]) assert.match(demo, new RegExp(event));
+  for (const normalizer of ["issuedUtmSource", "issuedUtmChannel", "issuedUtmSlug"]) assert.match(demo, new RegExp(normalizer));
   assert.doesNotMatch(demo, /data-tct-event="lead_form_submitted"/);
   assert.doesNotMatch(read("website/tct-tracking.js"), /^\s*initPopup\(\);/m);
 });
@@ -67,9 +72,12 @@ test("checkout remains correlated and pending until signed provider truth", () =
   const checkout = read("website/card-checkout.html");
   assert.match(checkout, /status !== 'payment_pending'/);
   assert.match(checkout, /tct_pending_checkout_v1/);
+  assert.match(checkout, /state: 'checkout_request_pending'/);
+  assert.match(checkout, /idempotencyKey:requestIdentity\.idempotencyKey/);
+  assert.doesNotMatch(checkout, /idempotencyKey:crypto\.randomUUID\(\)/);
   assert.match(checkout, /checkout_attempt_id=/);
   assert.match(checkout, /correlation_id=/);
-  assert.match(checkout, /sessionId:sessionId/);
+  assert.match(checkout, /sessionId:requestIdentity\.sessionId/);
   for (const key of ["tct_item_id","tct_asset_sha256","tct_publication_seed_sha256"]) assert.match(checkout, new RegExp(key));
   assert.match(checkout, /webPaymentsSdkUrl/);
   assert.match(checkout, /sandbox\\\.web|sandbox\\\./);
@@ -82,6 +90,8 @@ test("checkout remains correlated and pending until signed provider truth", () =
   assert.match(checkout, /trial_active_pending_human_review/);
   assert.doesNotMatch(checkout, /payment_confirmed|payment_succeeded/);
   assert.doesNotMatch(checkout, /<script src="https:\/\/web\.squarecdn\.com/);
+  assert.match(checkout, /\$997 base\/month/);
+  assert.match(checkout, /custom scope above the \$997 base is quoted separately and is not authorized by this checkout/i);
 });
 
 test("unverified Gideon voice paths fail closed and still offer a consented next step", () => {
@@ -91,6 +101,8 @@ test("unverified Gideon voice paths fail closed and still offer a consented next
   assert.match(read("website/demo.html"), /consented-demo-lead/);
   assert.match(read("website/index.html"), /Build the preview or request a human demo/);
   assert.match(read("website/meet-gideon.html"), /Request a human demo/);
+  assert.match(read("website/meet-gideon.html"), /\/assets\/images\/gideon-service-homepage-hero\.png/);
+  assert.doesNotMatch(read("website/meet-gideon.html"), /gideon-service-homepage-hero\.webp/);
 });
 
 test("the Pages build does not secretly rewrite the canonical booking route", () => {
@@ -113,6 +125,10 @@ test("plan CTAs map exactly and no legacy setup page can activate a buyer", () =
   assert.match(read("website/setup.html"), /Nothing was activated by opening this page/);
   assert.match(read("website/setup-confirmation.html"), /not a payment or setup receipt/);
   assert.equal(read("website/setup.html").includes("<form"), false);
+  assert.doesNotMatch(read("website/demo.html"), /60-second setup/i);
+  assert.doesNotMatch(read("website/index.html"), /60-second setup/i);
+  assert.match(read("website/demo.html"), /Signed payment &rarr; human review/);
+  assert.match(read("website/index.html"), /SIGNED CONFIRMATION &middot; HUMAN REVIEW BEFORE LIVE CALLS/);
 });
 
 test("deployed source contains no stale backend alias or Stripe buyer path", () => {

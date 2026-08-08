@@ -68,6 +68,17 @@
       if (name === "tct_asset_sha256" || name === "tct_publication_seed_sha256") return /^[a-f0-9]{64}$/i.test(candidate) ? candidate.toLowerCase() : "";
       return "";
     }
+    function safeAttribution(name, value) {
+      var candidate = (value || "").toString().trim().toLowerCase();
+      var sources = ["bing","content","direct","email","facebook","gideon_demo","google","instagram","linkedin","organic","paid_search","paid_social","partner","referral","social","website","youtube"];
+      var sourceAliases = { meta:"facebook",fb:"facebook",ig:"instagram",li:"linkedin",demo:"website",pricing:"website","meet-gideon":"website",meet_gideon:"website" };
+      var channels = ["direct","email","organic","organic_social","paid_search","paid_social","partner","referral","search","social","voice","web"];
+      var channelAliases = { cpc:"paid_search",ppc:"paid_search",sem:"paid_search",paidsocial:"paid_social" };
+      if (name === "source" || name === "utm_source") { candidate = sourceAliases[candidate] || candidate; return sources.indexOf(candidate) >= 0 ? candidate : ""; }
+      if (name === "utm_medium") { candidate = candidate.replace(/[\s-]+/g,"_"); candidate = channelAliases[candidate] || candidate; return channels.indexOf(candidate) >= 0 ? candidate : ""; }
+      if (["utm_campaign","utm_content","utm_term"].indexOf(name) >= 0) return candidate.length <= 120 && (candidate.match(/[0-9]/g) || []).length <= 6 && /^[a-z][a-z0-9]*(?:[_-][a-z0-9]+)*$/.test(candidate) ? candidate : "";
+      return candidate;
+    }
     ["source","utm_source","utm_medium","utm_campaign","utm_content","utm_term","correlation_id","tct_item_id","tct_asset_sha256","tct_publication_seed_sha256"].forEach(function (name) {
       var value = params.get(name);
       if (name.indexOf("tct_") === 0) {
@@ -79,6 +90,7 @@
         try { value = sessionStorage.getItem("tct_correlation_id_v1") || ""; } catch (_) { value = ""; }
       }
       if (name === "correlation_id" && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value || "")) value = "";
+      if (name === "source" || name.indexOf("utm_") === 0) value = safeAttribution(name, value);
       if (value) target.searchParams.set(name, value.slice(0, 128));
     });
     checkout.href = target.pathname + target.search;

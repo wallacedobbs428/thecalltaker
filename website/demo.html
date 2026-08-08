@@ -1368,7 +1368,7 @@
       <label>Business name<input name="company" required autocomplete="organization" style="width:100%;padding:11px;margin-top:5px;"></label>
       <label>Your name<input name="name" required autocomplete="name" style="width:100%;padding:11px;margin-top:5px;"></label>
       <label>Email<input name="email" type="email" autocomplete="email" style="width:100%;padding:11px;margin-top:5px;"></label>
-      <label>Phone<input name="phone" type="tel" autocomplete="tel" required style="width:100%;padding:11px;margin-top:5px;"></label>
+      <label>Phone <span id="demo-phone-help" style="display:block;margin-top:3px;color:var(--text-3);font-size:12px;font-weight:400;line-height:1.45;">Required by the current human follow-up queue, even when email is your preferred contact method.</span><input name="phone" type="tel" autocomplete="tel" aria-describedby="demo-phone-help" required style="width:100%;padding:11px;margin-top:5px;"></label>
       <label>Preferred contact method<select name="preferred_contact_method" required style="width:100%;padding:11px;margin-top:5px;"><option value="">Choose one</option><option value="phone">Phone</option><option value="email">Email</option></select></label>
       <label style="display:flex;gap:9px;align-items:flex-start;"><input name="follow_up_consent" type="checkbox" required style="width:auto;margin-top:4px;"><span>I consent to The Call Taker contacting me about setup using my chosen method.</span></label>
       <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
@@ -1463,7 +1463,7 @@
         </div>
         <div class="trust-item">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          60-second setup
+          Signed payment &rarr; human review
         </div>
       </div>
 
@@ -1611,6 +1611,22 @@
         if (name === 'tct_asset_sha256' || name === 'tct_publication_seed_sha256') return /^[a-f0-9]{64}$/i.test(candidate) ? candidate.toLowerCase() : '';
         return '';
       }
+      function issuedUtmSource(value) {
+        var candidate = (value || '').toString().trim().toLowerCase();
+        var aliases = { meta:'facebook',fb:'facebook',ig:'instagram',li:'linkedin',newsletter:'email',googleads:'google',google_ads:'google' };
+        candidate = aliases[candidate] || candidate;
+        return ['bing','content','direct','email','facebook','gideon_demo','google','instagram','linkedin','organic','paid_search','paid_social','partner','referral','social','website','youtube'].indexOf(candidate) >= 0 ? candidate : '';
+      }
+      function issuedUtmChannel(value) {
+        var candidate = (value || '').toString().trim().toLowerCase().replace(/[\s-]+/g,'_');
+        var aliases = { cpc:'paid_search',ppc:'paid_search',sem:'paid_search',paidsocial:'paid_social' };
+        candidate = aliases[candidate] || candidate;
+        return ['direct','email','organic','organic_social','paid_search','paid_social','partner','referral','search','social','voice','web'].indexOf(candidate) >= 0 ? candidate : '';
+      }
+      function issuedUtmSlug(value) {
+        var candidate = (value || '').toString().trim().toLowerCase();
+        return candidate.length <= 120 && (candidate.match(/[0-9]/g) || []).length <= 6 && /^[a-z][a-z0-9]*(?:[_-][a-z0-9]+)*$/.test(candidate) ? candidate : '';
+      }
       form.addEventListener('submit', async function (event) {
         event.preventDefault();
         var submit = form.querySelector('button[type="submit"]');
@@ -1630,7 +1646,7 @@
         try {
           var response = await fetch('https://call-taker-os.vercel.app/api/public/lead', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name:data.get('name'), company:data.get('company'), email:data.get('email'), phone:data.get('phone'), preferred_contact_method:data.get('preferred_contact_method'), follow_up_consent:data.get('follow_up_consent') === 'on', source:'gideon_demo', page:window.location.pathname, correlation_id:correlationId, session_id:sessionId, website:data.get('website') || '', utm_source:params.get('utm_source') || stored.utm_source || '', utm_medium:params.get('utm_medium') || stored.utm_medium || '', utm_campaign:params.get('utm_campaign') || stored.utm_campaign || '', utm_content:params.get('utm_content') || stored.utm_content || '', utm_term:params.get('utm_term') || stored.utm_term || '', content_key:itemId, source_asset_sha256:assetSha256, source_publication_seed_sha256:publicationSeedSha256 })
+            body: JSON.stringify({ name:data.get('name'), company:data.get('company'), email:data.get('email'), phone:data.get('phone'), preferred_contact_method:data.get('preferred_contact_method'), follow_up_consent:data.get('follow_up_consent') === 'on', source:'gideon_demo', page:window.location.pathname, correlation_id:correlationId, session_id:sessionId, website:data.get('website') || '', utm_source:issuedUtmSource(params.get('utm_source') || stored.utm_source), utm_medium:issuedUtmChannel(params.get('utm_medium') || stored.utm_medium), utm_campaign:issuedUtmSlug(params.get('utm_campaign') || stored.utm_campaign), utm_content:issuedUtmSlug(params.get('utm_content') || stored.utm_content), utm_term:issuedUtmSlug(params.get('utm_term') || stored.utm_term), content_key:itemId, source_asset_sha256:assetSha256, source_publication_seed_sha256:publicationSeedSha256 })
           });
           var body = await response.json();
           if (!response.ok || !body || !body.ok || !body.request_id || body.correlation_id !== correlationId) throw new Error((body && body.error) || 'Unable to verify your saved request.');

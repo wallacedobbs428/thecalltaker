@@ -72,11 +72,27 @@
     return "";
   }
 
-  function issuedSource(value) {
+  function optionalIssuedSource(value) {
     var candidate = (value || "").toString().trim().toLowerCase();
-    var aliases = { "meet-gideon":"website", meet_gideon:"website", homepage:"website", home:"website", demo:"website", pricing:"website" };
+    var aliases = { "meet-gideon":"website", meet_gideon:"website", homepage:"website", home:"website", demo:"website", pricing:"website", meta:"facebook", fb:"facebook", ig:"instagram", li:"linkedin", newsletter:"email", googleads:"google", google_ads:"google" };
     candidate = aliases[candidate] || candidate;
-    return ["bing","content","direct","email","facebook","gideon_demo","google","instagram","linkedin","organic","paid_search","paid_social","partner","referral","social","website","youtube"].indexOf(candidate) >= 0 ? candidate : "direct";
+    return ["bing","content","direct","email","facebook","gideon_demo","google","instagram","linkedin","organic","paid_search","paid_social","partner","referral","social","website","youtube"].indexOf(candidate) >= 0 ? candidate : "";
+  }
+
+  function issuedSource(value) {
+    return optionalIssuedSource(value) || "direct";
+  }
+
+  function issuedChannel(value) {
+    var candidate = (value || "").toString().trim().toLowerCase().replace(/[\s-]+/g, "_");
+    var aliases = { cpc:"paid_search", ppc:"paid_search", sem:"paid_search", paidsocial:"paid_social" };
+    candidate = aliases[candidate] || candidate;
+    return ["direct","email","organic","organic_social","paid_search","paid_social","partner","referral","search","social","voice","web"].indexOf(candidate) >= 0 ? candidate : "";
+  }
+
+  function issuedSlug(value) {
+    var candidate = (value || "").toString().trim().toLowerCase();
+    return candidate.length <= 120 && (candidate.match(/[0-9]/g) || []).length <= 6 && /^[a-z][a-z0-9]*(?:[_-][a-z0-9]+)*$/.test(candidate) ? candidate : "";
   }
 
   function attribution() {
@@ -87,12 +103,12 @@
     var publicationSeedSha256 = validContentAttribution("tct_publication_seed_sha256", getParam("tct_publication_seed_sha256")) || validContentAttribution("tct_publication_seed_sha256", stored.tct_publication_seed_sha256);
     return {
       source: issuedSource(getParam("utm_source") || getParam("source") || stored.utm_source || stored.source || "direct"),
-      source_param: getParam("source") || stored.source || "",
-      utm_source: getParam("utm_source") || stored.utm_source || "",
-      channel: getParam("utm_medium") || stored.utm_medium || "",
-      campaign: getParam("utm_campaign") || stored.utm_campaign || "",
-      utm_content: getParam("utm_content") || stored.utm_content || "",
-      utm_term: getParam("utm_term") || stored.utm_term || "",
+      source_param: optionalIssuedSource(getParam("source") || stored.source),
+      utm_source: optionalIssuedSource(getParam("utm_source") || stored.utm_source),
+      channel: issuedChannel(getParam("utm_medium") || stored.utm_medium),
+      campaign: issuedSlug(getParam("utm_campaign") || stored.utm_campaign),
+      utm_content: issuedSlug(getParam("utm_content") || stored.utm_content),
+      utm_term: issuedSlug(getParam("utm_term") || stored.utm_term),
       content_key: itemId,
       tct_item_id: itemId,
       tct_asset_sha256: assetSha256,
@@ -103,10 +119,16 @@
   function captureAttribution() {
     var stored = {};
     try { stored = JSON.parse(root.sessionStorage.getItem("tct_attribution") || "{}"); } catch (_) {}
-    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(function (key) {
-      var value = scrub(getParam(key), ""); if (value) stored[key] = value;
+    var normalizers = { utm_source: optionalIssuedSource, utm_medium: issuedChannel, utm_campaign: issuedSlug, utm_content: issuedSlug, utm_term: issuedSlug };
+    Object.keys(normalizers).forEach(function (key) {
+      var raw = getParam(key) || stored[key] || "";
+      var value = normalizers[key](raw);
+      if (value) stored[key] = value;
+      else delete stored[key];
     });
-    var source = scrub(getParam("source"), ""); if (source) stored.source = source;
+    var source = optionalIssuedSource(getParam("source") || stored.source);
+    if (source) stored.source = source;
+    else delete stored.source;
     ["tct_item_id","tct_asset_sha256","tct_publication_seed_sha256"].forEach(function (key) {
       var value = validContentAttribution(key, getParam(key)) || validContentAttribution(key, stored[key] || (key === "tct_item_id" ? stored.content_key : ""));
       if (value) stored[key] = value;
@@ -152,6 +174,10 @@
     return text.slice(0, 90);
   }
 
+  function detailSlug(value) {
+    return scrub(value, "").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 90);
+  }
+
   function payloadFrom(target, eventName) {
     var dataset = target ? target.dataset || {} : {};
     var page = dataset.tctPage || doc.body.getAttribute("data-tct-page") || root.location.pathname || "/";
@@ -186,14 +212,14 @@
     var body = {
       event_id: payload.event_id, event_type: payload.event_name, occurred_at: payload.timestamp,
       session_id: payload.session_id, correlation_id: payload.correlation_id, page_path: root.location.pathname || "/",
-      source: attr.source, channel: attr.channel, campaign: attr.campaign, utm_content: attr.utm_content || null, utm_term: attr.utm_term || null,
+      source: attr.source, channel: attr.channel || null, campaign: attr.campaign || null, utm_content: attr.utm_content || null, utm_term: attr.utm_term || null,
       plan_key: planMap[payload.plan] || payload.plan || null,
       content_key: attr.tct_item_id || null,
       source_asset_sha256: attr.tct_asset_sha256 || null,
       source_publication_seed_sha256: attr.tct_publication_seed_sha256 || null,
       details: {
-        cta: payload.cta,
-        destination: payload.destination_type,
+        cta: detailSlug(payload.cta),
+        destination: detailSlug(payload.destination_type),
         content_key: attr.content_key || ""
       }
     };
@@ -258,10 +284,10 @@
     var values = {
       source: attr.source_param,
       utm_source: attr.utm_source,
-      utm_medium: getParam("utm_medium") || attr.channel || "",
-      utm_campaign: getParam("utm_campaign") || attr.campaign || "",
-      utm_content: getParam("utm_content") || attr.utm_content || "",
-      utm_term: getParam("utm_term") || attr.utm_term || "",
+      utm_medium: attr.channel,
+      utm_campaign: attr.campaign,
+      utm_content: attr.utm_content,
+      utm_term: attr.utm_term,
       correlation_id: sessionValue("tct_correlation_id_v1"),
       tct_item_id: attr.tct_item_id,
       tct_asset_sha256: attr.tct_asset_sha256,

@@ -93,7 +93,7 @@
         </div>
       </div>
       <div class="hero-visual" aria-label="Gideon call-handling visualization">
-        <img src="/assets/images/gideon-service-homepage-hero.webp" alt="Gideon visualized as an AI receptionist receiving a call and creating a team alert" width="1920" height="1080">
+        <img src="/assets/images/gideon-service-homepage-hero.png" alt="Gideon visualized as an AI receptionist receiving a call and creating a team alert" width="1920" height="1071">
         <div class="status-card" aria-hidden="true">
           <div class="status-top"><strong>Preview available</strong><span class="live">Human demo by request</span></div>
           <div class="wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
@@ -132,6 +132,13 @@
       var incoming = new URLSearchParams(window.location.search);
       function safeValue(key, raw) {
         var value = (raw || "").toString().trim();
+        var sources = ["bing","content","direct","email","facebook","gideon_demo","google","instagram","linkedin","organic","paid_search","paid_social","partner","referral","social","website","youtube"];
+        var sourceAliases = { meta:"facebook",fb:"facebook",ig:"instagram",li:"linkedin",demo:"website",pricing:"website","meet-gideon":"website",meet_gideon:"website" };
+        var channels = ["direct","email","organic","organic_social","paid_search","paid_social","partner","referral","search","social","voice","web"];
+        var channelAliases = { cpc:"paid_search",ppc:"paid_search",sem:"paid_search",paidsocial:"paid_social" };
+        if (key === "source" || key === "utm_source") { value = value.toLowerCase(); value = sourceAliases[value] || value; return sources.indexOf(value) >= 0 ? value : ""; }
+        if (key === "utm_medium") { value = value.toLowerCase().replace(/[\s-]+/g,"_"); value = channelAliases[value] || value; return channels.indexOf(value) >= 0 ? value : ""; }
+        if (key === "utm_campaign" || key === "utm_content" || key === "utm_term") return value.length <= 120 && (value.match(/[0-9]/g) || []).length <= 6 && /^[a-z][a-z0-9]*(?:[_-][a-z0-9]+)*$/i.test(value) ? value.toLowerCase() : "";
         if (key === "correlation_id" && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)) return "";
         if (key === "tct_item_id" && !/^[A-Za-z0-9][A-Za-z0-9._:-]{0,119}$/.test(value)) return "";
         if ((key === "tct_asset_sha256" || key === "tct_publication_seed_sha256") && !/^[a-f0-9]{64}$/i.test(value)) return "";

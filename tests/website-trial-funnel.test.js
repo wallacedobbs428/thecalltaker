@@ -17,10 +17,10 @@ for (const [plan, label, amount] of [["afterhours","After-Hours Capture","$97"],
 
 assert.ok(checkout.includes("result.status !== 'payment_pending'"), "browser requires the pending backend receipt");
 assert.ok(checkout.includes("result.checkoutAttemptId") && checkout.includes("result.correlationId"), "pending receipt is correlated");
-assert.ok(checkout.includes("result.correlationId !== correlationId"), "pending receipt must match the submitted correlation");
+assert.ok(checkout.includes("result.correlationId !== requestIdentity.correlationId"), "pending receipt must match the persisted submitted correlation");
 assert.ok(checkout.includes("correlation_id="), "status read is scoped by correlation");
 assert.ok(checkout.includes("tct_pending_checkout_v1"), "pending continuation survives refresh");
-assert.ok(checkout.includes("sessionId:sessionId"), "anonymous session is propagated outside attribution");
+assert.ok(checkout.includes("sessionId:requestIdentity.sessionId"), "persisted anonymous session is propagated outside attribution");
 assert.ok(checkout.includes("businessName:fields[0]") && checkout.includes("preferredContactMethod:fields[5]"), "checkout creates an actionable business contact receipt");
 assert.ok(checkout.includes("consentToFollowUp:true"), "checkout requires explicit human-onboarding follow-up consent");
 assert.ok(checkout.includes("trial_active_pending_human_review"), "signed trial confirmation remains pending human review");

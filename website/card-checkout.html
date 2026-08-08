@@ -72,7 +72,7 @@
         </div>
         <p class="label" style="margin-top:26px">Card details</p>
         <div id="card" aria-label="Secure card details"></div>
-        <label class="consent"><input id="consent" type="checkbox"><span>I authorize The Call Taker to securely store my card with Square and automatically charge <b id="renewalAmount"></b> after the 14-day trial unless I cancel before renewal. I also consent to a human from The Call Taker contacting me at the email or phone I provided to complete onboarding for this trial.</span></label>
+        <label class="consent"><input id="consent" type="checkbox"><span>I authorize The Call Taker to securely store my card with Square and automatically charge <b id="renewalAmount"></b> after the 14-day trial unless I cancel before renewal.<span id="scopeTerms"></span> I also consent to a human from The Call Taker contacting me at the email or phone I provided to complete onboarding for this trial.</span></label>
         <button id="submit" type="submit" disabled>Submit secure checkout</button>
         <p class="msg" id="msg" role="alert"></p>
         <p class="logos">SECURE PAYMENT BY SQUARE · VISA · MASTERCARD · AMERICAN EXPRESS · DISCOVER</p>
@@ -87,7 +87,7 @@
       var plans = {
         afterhours: { name:'After-Hours Capture', detail:'After-hours call capture', amount:'$97/month' },
         full247: { name:'Revenue Recovery System', detail:'Day, night & overflow call coverage', amount:'$497/month' },
-        custom: { name:'Operational Infrastructure', detail:'Custom operational coverage', amount:'$997/month' }
+        custom: { name:'Operational Infrastructure', detail:'$997 base with separately quoted custom scope', amount:'$997 base/month', scope:'Any custom scope above the $997 base is quoted separately and is not authorized by this checkout.' }
       };
       var key = new URLSearchParams(window.location.search).get('plan');
       if (!plans[key]) { window.location.replace('/pricing.html?checkout=select-plan#pricing-cards'); return; }
@@ -96,15 +96,65 @@
       document.title = plan.name + ' — secure card checkout';
       document.getElementById('planName').textContent = plan.name;
       document.getElementById('planDetail').textContent = plan.detail;
-      document.getElementById('heroTerms').textContent = 'Square securely stores your card for the selected trial. ' + plan.amount + ' begins after the 14-day trial unless you cancel. We only create a human-review handoff after Square sends signed confirmation.';
+      document.getElementById('heroTerms').textContent = 'Square securely stores your card for the selected trial. ' + plan.amount + ' begins after the 14-day trial unless you cancel.' + (plan.scope ? ' ' + plan.scope : '') + ' We only create a human-review handoff after Square sends signed confirmation.';
       document.getElementById('renewalAmount').textContent = plan.amount;
+      document.getElementById('scopeTerms').textContent = plan.scope ? ' ' + plan.scope : '';
 
       var form = document.getElementById('form'), submit = document.getElementById('submit'), msg = document.getElementById('msg');
       var fields = ['business','first','last','email','phone','preferred','holder'].map(function (id) { return document.getElementById(id); });
       var card;
+      var PENDING_CHECKOUT_KEY = 'tct_pending_checkout_v1';
       function detailsReady() { return fields.every(function (field) { return field.checkValidity() && field.value.trim(); }) && document.getElementById('consent').checked; }
       function refresh() { submit.disabled = !card || !detailsReady(); }
       function say(text) { msg.textContent = text || ''; }
+      // BEGIN checkout request identity
+      function validCheckoutUuid(value) {
+        return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test((value || '').toString());
+      }
+      function validCheckoutIdempotency(value) {
+        return /^[A-Za-z0-9-]{16,80}$/.test((value || '').toString());
+      }
+      function readCheckoutIdentity() {
+        try {
+          var pending = JSON.parse(sessionStorage.getItem(PENDING_CHECKOUT_KEY) || 'null');
+          return pending && pending.plan === key ? pending : null;
+        } catch (_) { return null; }
+      }
+      function freshCheckoutUuid() {
+        if (!window.crypto || typeof window.crypto.randomUUID !== 'function') throw new Error('Secure checkout requires a current browser with secure random IDs.');
+        return window.crypto.randomUUID();
+      }
+      function checkoutRequestIdentity() {
+        var pending = readCheckoutIdentity();
+        if (pending && validCheckoutIdempotency(pending.idempotencyKey) && validCheckoutUuid(pending.correlationId) && validCheckoutUuid(pending.sessionId)) return pending;
+        var correlationId = '';
+        var sessionId = '';
+        try {
+          correlationId = sessionStorage.getItem('tct_correlation_id_v1') || '';
+          sessionId = sessionStorage.getItem('tct_buyer_session_v1') || '';
+        } catch (_) {}
+        if (!validCheckoutUuid(correlationId)) correlationId = freshCheckoutUuid();
+        if (!validCheckoutUuid(sessionId)) sessionId = freshCheckoutUuid();
+        var identity = {
+          version: 1,
+          plan: key,
+          idempotencyKey: freshCheckoutUuid(),
+          correlationId: correlationId,
+          sessionId: sessionId,
+          state: 'checkout_request_pending'
+        };
+        try {
+          sessionStorage.setItem('tct_correlation_id_v1', correlationId);
+          sessionStorage.setItem('tct_buyer_session_v1', sessionId);
+          sessionStorage.setItem(PENDING_CHECKOUT_KEY, JSON.stringify(identity));
+          var stored = JSON.parse(sessionStorage.getItem(PENDING_CHECKOUT_KEY) || 'null');
+          if (!stored || stored.idempotencyKey !== identity.idempotencyKey) throw new Error('identity_not_persisted');
+        } catch (_) {
+          throw new Error('Secure checkout requires session storage so a lost response can be retried safely.');
+        }
+        return identity;
+      }
+      // END checkout request identity
       function validContentAttribution(name, value) {
         var candidate = (value || '').toString().trim();
         if (name === 'tct_item_id') return /^[A-Za-z0-9][A-Za-z0-9._:-]{0,119}$/.test(candidate) ? candidate : '';
@@ -113,9 +163,19 @@
       }
       function issuedSource(value) {
         var candidate = (value || '').toString().trim().toLowerCase();
-        var aliases = { 'meet-gideon':'website', meet_gideon:'website', homepage:'website', home:'website', demo:'website', pricing:'website' };
+        var aliases = { 'meet-gideon':'website', meet_gideon:'website', homepage:'website', home:'website', demo:'website', pricing:'website', meta:'facebook', fb:'facebook', ig:'instagram', li:'linkedin', newsletter:'email', googleads:'google', google_ads:'google' };
         candidate = aliases[candidate] || candidate;
         return ['bing','content','direct','email','facebook','gideon_demo','google','instagram','linkedin','organic','paid_search','paid_social','partner','referral','social','website','youtube'].indexOf(candidate) >= 0 ? candidate : 'direct';
+      }
+      function issuedChannel(value) {
+        var candidate = (value || '').toString().trim().toLowerCase().replace(/[\s-]+/g,'_');
+        var aliases = { cpc:'paid_search', ppc:'paid_search', sem:'paid_search', paidsocial:'paid_social' };
+        candidate = aliases[candidate] || candidate;
+        return ['direct','email','organic','organic_social','paid_search','paid_social','partner','referral','search','social','voice','web'].indexOf(candidate) >= 0 ? candidate : '';
+      }
+      function issuedSlug(value) {
+        var candidate = (value || '').toString().trim().toLowerCase();
+        return candidate.length <= 120 && (candidate.match(/[0-9]/g) || []).length <= 6 && /^[a-z][a-z0-9]*(?:[_-][a-z0-9]+)*$/.test(candidate) ? candidate : '';
       }
       function attribution() {
         var params = new URLSearchParams(window.location.search);
@@ -126,15 +186,25 @@
         var publicationSeedSha256 = validContentAttribution('tct_publication_seed_sha256', params.get('tct_publication_seed_sha256')) || validContentAttribution('tct_publication_seed_sha256', stored.tct_publication_seed_sha256);
         return {
           source: issuedSource(params.get('utm_source') || params.get('source') || stored.utm_source || stored.source || 'website'),
-          channel: params.get('utm_medium') || stored.utm_medium || '', campaign: params.get('utm_campaign') || stored.utm_campaign || '',
-          utm_source: params.get('utm_source') || stored.utm_source || '', utm_medium: params.get('utm_medium') || stored.utm_medium || '',
-          utm_campaign: params.get('utm_campaign') || stored.utm_campaign || '', utm_content: params.get('utm_content') || stored.utm_content || '',
-          utm_term: params.get('utm_term') || stored.utm_term || '', content_key: itemId,
+          channel: issuedChannel(params.get('utm_medium') || stored.utm_medium), campaign: issuedSlug(params.get('utm_campaign') || stored.utm_campaign),
+          utm_source: issuedSource(params.get('utm_source') || stored.utm_source || 'website'), utm_medium: issuedChannel(params.get('utm_medium') || stored.utm_medium),
+          utm_campaign: issuedSlug(params.get('utm_campaign') || stored.utm_campaign), utm_content: issuedSlug(params.get('utm_content') || stored.utm_content),
+          utm_term: issuedSlug(params.get('utm_term') || stored.utm_term), content_key: itemId,
           source_asset_sha256: assetSha256, source_publication_seed_sha256: publicationSeedSha256
         };
       }
       function showPending(result) {
-        try { sessionStorage.setItem('tct_pending_checkout_v1', JSON.stringify({ checkoutAttemptId:result.checkoutAttemptId, correlationId:result.correlationId, plan:key })); } catch (_) {}
+        var prior = readCheckoutIdentity() || {};
+        var acceptedIdentity = {
+          version: 1,
+          plan: key,
+          idempotencyKey: prior.idempotencyKey || result.idempotencyKey || '',
+          correlationId: result.correlationId,
+          sessionId: prior.sessionId || result.sessionId || '',
+          checkoutAttemptId: result.checkoutAttemptId,
+          state: 'payment_pending'
+        };
+        try { sessionStorage.setItem(PENDING_CHECKOUT_KEY, JSON.stringify(acceptedIdentity)); } catch (_) {}
         var shell = document.getElementById('shell');
         shell.innerHTML = '<div class="pending"><div class="brand">Checkout pending</div><h2>We are confirming your checkout.</h2><p>Your card submission is not activation. We will create a human-reviewed setup handoff only after Square sends a signed card-backed trial confirmation.</p><p id="pending-status" aria-live="polite">Status: payment pending.</p><button id="check-status" type="button">Check status again</button><p><a href="/pricing.html">Back to plans</a></p></div>';
         var status = document.getElementById('pending-status');
@@ -175,24 +245,26 @@
         if (!detailsReady() || !card) { refresh(); return; }
         submit.disabled = true; submit.textContent = 'Submitting secure checkout…'; say('');
         if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_intent_submitted', form);
+        var requestSent = false;
         try {
+          var requestIdentity = checkoutRequestIdentity();
           var token = await card.tokenize({ buyer:{ givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim() } });
           if (token.status !== 'OK' || !token.token) throw new Error('Please check your card details and try again.');
-          var correlationId = sessionStorage.getItem('tct_correlation_id_v1') || crypto.randomUUID();
-          sessionStorage.setItem('tct_correlation_id_v1', correlationId);
-          var sessionId = sessionStorage.getItem('tct_buyer_session_v1') || crypto.randomUUID();
-          sessionStorage.setItem('tct_buyer_session_v1', sessionId);
-          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:crypto.randomUUID(), correlationId:correlationId, sessionId:sessionId, attribution:attribution(), businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
+          requestSent = true;
+          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, attribution:attribution(), businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
           var result = await response.json();
-          if (!response.ok || !result.ok || result.status !== 'payment_pending' || !result.checkoutAttemptId || result.correlationId !== correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
+          if (!response.ok || !result.ok || result.status !== 'payment_pending' || !result.checkoutAttemptId || result.correlationId !== requestIdentity.correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
           if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_accepted_ui', form);
           showPending(result);
-        } catch (error) { if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_error_ui', form); say(error.message || 'We could not submit secure checkout. Please try again.'); }
+        } catch (error) {
+          if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_error_ui', form);
+          say(requestSent ? 'We could not verify the checkout response. Your next submission will reuse the same protected checkout request identity; no activation is assumed.' : (error.message || 'We could not submit secure checkout. Please try again.'));
+        }
         finally { if (document.getElementById('form')) { submit.textContent = 'Submit secure checkout'; refresh(); } }
       });
       try {
-        var pending = JSON.parse(sessionStorage.getItem('tct_pending_checkout_v1') || 'null');
-        if (pending && pending.plan === key && pending.checkoutAttemptId && pending.correlationId) { showPending(pending); return; }
+        var pending = readCheckoutIdentity();
+        if (pending && validCheckoutUuid(pending.checkoutAttemptId) && validCheckoutUuid(pending.correlationId)) { showPending(pending); return; }
       } catch (_) {}
       init();
     })();

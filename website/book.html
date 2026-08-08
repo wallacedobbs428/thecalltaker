@@ -12,6 +12,13 @@
       try { stored = JSON.parse(sessionStorage.getItem('tct_attribution') || '{}'); } catch (_) {}
       function safeValue(key, raw) {
         var value = (raw || '').toString().trim();
+        var sources = ['bing','content','direct','email','facebook','gideon_demo','google','instagram','linkedin','organic','paid_search','paid_social','partner','referral','social','website','youtube'];
+        var sourceAliases = { meta:'facebook',fb:'facebook',ig:'instagram',li:'linkedin',demo:'website',pricing:'website','meet-gideon':'website',meet_gideon:'website','legacy-book-route':'website' };
+        var channels = ['direct','email','organic','organic_social','paid_search','paid_social','partner','referral','search','social','voice','web'];
+        var channelAliases = { cpc:'paid_search',ppc:'paid_search',sem:'paid_search',paidsocial:'paid_social' };
+        if (key === 'source' || key === 'utm_source') { value = value.toLowerCase(); value = sourceAliases[value] || value; return sources.indexOf(value) >= 0 ? value : ''; }
+        if (key === 'utm_medium') { value = value.toLowerCase().replace(/[\s-]+/g,'_'); value = channelAliases[value] || value; return channels.indexOf(value) >= 0 ? value : ''; }
+        if (key === 'utm_campaign' || key === 'utm_content' || key === 'utm_term') return value.length <= 120 && (value.match(/[0-9]/g) || []).length <= 6 && /^[a-z][a-z0-9]*(?:[_-][a-z0-9]+)*$/i.test(value) ? value.toLowerCase() : '';
         if (key === 'correlation_id' && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)) return '';
         if (key === 'tct_item_id' && !/^[A-Za-z0-9][A-Za-z0-9._:-]{0,119}$/.test(value)) return '';
         if ((key === 'tct_asset_sha256' || key === 'tct_publication_seed_sha256') && !/^[a-f0-9]{64}$/i.test(value)) return '';
@@ -28,11 +35,11 @@
         value = safeValue(key, value);
         if (value) target.searchParams.set(key, value);
       });
-      if (!target.searchParams.has('source')) target.searchParams.set('source', 'legacy-book-route');
+      if (!target.searchParams.has('source')) target.searchParams.set('source', 'website');
       target.hash = 'consented-demo-lead';
       window.location.replace(target.pathname + target.search + target.hash);
     }());
   </script>
 </head>
-<body><p>Continuing to the <a href="/demo.html?source=legacy-book-route#consented-demo-lead">Gideon demo and optional follow-up request</a>…</p></body>
+<body><p>Continuing to the <a href="/demo.html?source=website#consented-demo-lead">Gideon demo and optional follow-up request</a>…</p></body>
 </html>

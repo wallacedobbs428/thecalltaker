@@ -122,6 +122,24 @@ test("invalid content identifiers fail closed instead of entering session, links
   assert.equal(env.requests[0].body.source_publication_seed_sha256, null);
 });
 
+test("private or unissued UTM values are never stored, forwarded, or emitted", () => {
+  const env = environment("?utm_source=meta&utm_medium=cpc&utm_campaign=owner%40example.com&utm_content=6155551234&utm_term=plumbing%20owner");
+  vm.runInContext(canonical, env.context);
+  const stored = JSON.parse(env.storage.get("tct_attribution"));
+  const target = new URL(env.anchor.href, "https://thecalltaker.com");
+  assert.equal(stored.utm_source, "facebook");
+  assert.equal(stored.utm_medium, "paid_search");
+  for (const key of ["utm_campaign", "utm_content", "utm_term"]) {
+    assert.equal(Object.hasOwn(stored, key), false);
+    assert.equal(target.searchParams.has(key), false);
+    assert.equal(env.requests[0].body[key === "utm_campaign" ? "campaign" : key], null);
+  }
+  assert.equal(target.searchParams.get("utm_source"), "facebook");
+  assert.equal(target.searchParams.get("utm_medium"), "paid_search");
+  assert.equal(env.requests[0].body.source, "facebook");
+  assert.equal(env.requests[0].body.channel, "paid_search");
+});
+
 test("CTA observations are emitted as intent, never provider or activation truth", () => {
   const env = environment("");
   vm.runInContext(canonical, env.context);
@@ -135,4 +153,10 @@ test("CTA observations are emitted as intent, never provider or activation truth
     "demo_preview_intent",
     "demo_preview_rendered_ui",
   ]);
+});
+
+test("durable CTA details are bounded public slugs, not free-form page text", () => {
+  assert.match(canonical, /function detailSlug\(value\)/);
+  assert.match(canonical, /cta: detailSlug\(payload\.cta\)/);
+  assert.match(canonical, /destination: detailSlug\(payload\.destination_type\)/);
 });
