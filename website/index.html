@@ -17,11 +17,11 @@
   })();
 </script>
 <script>
-  // Temporary safety interlock: do not market an unverified live demo number.
-  // This is intentionally local-only: no event, contact data, or provider call
-  // is created while number, agent, and callback verification are incomplete.
+  // Temporary safety interlock: do not market an unverified live demo or text path.
+  // This is intentionally local-only: no event, contact data, text, or provider
+  // call is created while number, agent, and callback verification are incomplete.
   document.addEventListener("click", function (event) {
-    var link = event.target && event.target.closest && event.target.closest('a[data-gideon-demo-unverified="true"]');
+    var link = event.target && event.target.closest && event.target.closest('a[data-gideon-demo-unverified="true"], a[data-text-channel-unverified="true"]');
     if (!link) return;
     event.preventDefault();
     event.stopImmediatePropagation();
@@ -30,7 +30,7 @@
     var status = document.createElement("p");
     status.id = "gideon-demo-status";
     status.setAttribute("role", "status");
-    status.textContent = "Live Gideon demo verification is in progress. We are not accepting demo calls at this number yet.";
+    status.textContent = "Live Gideon demo and text-channel verification are in progress. We are not accepting demo calls or texts at these numbers yet.";
     status.style.cssText = "margin:0;padding:12px 20px;background:#fff4d6;color:#5f4300;text-align:center;font:600 14px/1.4 Arial,sans-serif";
     document.body.insertBefore(status, document.body.firstChild);
     document.querySelectorAll('a[data-gideon-demo-unverified="true"]').forEach(function (link) {
@@ -38,6 +38,12 @@
       link.setAttribute("aria-disabled", "true");
       link.setAttribute("aria-label", "Live Gideon demo verification in progress");
       link.textContent = "Demo verification in progress";
+    });
+    document.querySelectorAll('a[data-text-channel-unverified="true"]').forEach(function (link) {
+      link.setAttribute("href", "#gideon-demo-status");
+      link.setAttribute("aria-disabled", "true");
+      link.setAttribute("aria-label", "Text-channel verification in progress");
+      link.textContent = "Text availability verification in progress";
     });
   });
 </script>
@@ -2128,9 +2134,9 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <a href="/pricing.html">Pricing</a>
     <a href="/faq.html">FAQ</a>
     <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
-    <a class="text-us-button text-us-button--nav" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+    <a class="text-us-button text-us-button--nav" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-      <span>Text Us</span>
+      <span>Text availability verification in progress</span>
     </a>
   </div>
   <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="mobile-header-call" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
@@ -2144,9 +2150,9 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   <a href="/pricing.html">Pricing</a>
   <a href="/faq.html">FAQ</a>
   <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
-  <a class="text-us-button text-us-button--nav" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+  <a class="text-us-button text-us-button--nav" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-    <span>Text Us</span>
+    <span>Text availability verification in progress</span>
   </a>
   <a href="/pricing.html" class="mobile-nav-cta">See Plans</a>
 </nav>
@@ -2195,9 +2201,9 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <div class="gideon-cta" id="gideonCTA">
         <a href="/pricing.html" class="btn-gideon" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="See Plans & Setup Options" data-tct-destination="pricing" data-tct-learning-tag="homepage_intent">See Plans &amp; Setup Options →</a>
         <a href="#gideon-demo-status" data-gideon-demo-unverified="true" class="btn-gideon-ghost" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call Gideon Live" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
-        <a class="text-us-button text-us-button--hero text-us-button--support" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+        <a class="text-us-button text-us-button--hero text-us-button--support" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-          <span>Text Us</span>
+          <span>Text availability verification in progress</span>
         </a>
       </div>
     </div>
@@ -3008,9 +3014,9 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <div class="footer-col">
       <h4>CONTACT</h4>
       <a href="#gideon-demo-status" data-gideon-demo-unverified="true" data-tct-event="demo_call_tap" data-tct-page="homepage" data-tct-cta="Call phone number" data-tct-destination="tel" data-tct-learning-tag="demo_intent">Demo verification in progress</a>
-      <a class="text-us-button text-us-button--small" href="sms:+17073208712?body=Hi!%20I%20would%20love%20to%20learn%20more%20about%20your%20service" aria-label="Text The Call Taker" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
+      <a class="text-us-button text-us-button--small" href="#gideon-demo-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-us" data-channel="sms" data-destination="sendblue" data-tct-event="text_us_tap" data-tct-page="homepage" data-tct-cta="Text Us" data-tct-destination="sms" data-tct-learning-tag="sms_intent">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Text Us</span>
+        <span>Text availability verification in progress</span>
       </a>
       <a href="mailto:thecalltakerservice@gmail.com">thecalltakerservice@gmail.com</a>
       <a href="/pricing.html">Plans</a>
