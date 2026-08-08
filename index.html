@@ -48,10 +48,40 @@
     var launchedFromHomeScreen =
       window.navigator.standalone === true ||
       (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
-    if (launchedFromHomeScreen) {
+  if (launchedFromHomeScreen) {
       window.location.replace("https://call-taker-os.vercel.app/api/call-taker-os/logout?fresh=2026-04-29%3Av2-unlock-bridge");
     }
   })();
+</script>
+<script>
+  // Temporary safety interlock: do not market an unverified live demo number.
+  // This intercepts every static 629 CTA before navigation and makes the
+  // temporary status visible without collecting contact data or making a call.
+  document.addEventListener("click", function (event) {
+    var link = event.target && event.target.closest && event.target.closest('a[href="tel:+16292699697"]');
+    if (link) event.preventDefault();
+  }, true);
+  document.addEventListener("DOMContentLoaded", function () {
+    var status = document.createElement("p");
+    status.id = "gideon-demo-status";
+    status.setAttribute("role", "status");
+    status.textContent = "Live Gideon demo verification is in progress. We are not accepting demo calls at this number yet.";
+    status.style.cssText = "margin:0;padding:12px 20px;background:#fff4d6;color:#5f4300;text-align:center;font:600 14px/1.4 Arial,sans-serif";
+    document.body.insertBefore(status, document.body.firstChild);
+    document.querySelectorAll('a[href="tel:+16292699697"]').forEach(function (link) {
+      link.setAttribute("href", "#gideon-demo-status");
+      link.setAttribute("aria-disabled", "true");
+      link.setAttribute("aria-label", "Live Gideon demo verification in progress");
+      link.textContent = "Demo verification in progress";
+    });
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.parentElement && !/^(SCRIPT|STYLE)$/i.test(node.parentElement.tagName)) {
+        node.nodeValue = node.nodeValue.replace(/\(629\)\s*269(?:\u2011|-)?9697/g, "the live demo line");
+      }
+    }
+  });
 </script>
 <meta name="description" content="Gideon answers missed and after-hours calls, collects caller details, and sends you a clear summary so you can follow up fast.">
 <meta property="og:title" content="AI Call Answering for Local Businesses | The Call Taker">
