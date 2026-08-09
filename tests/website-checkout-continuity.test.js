@@ -22,6 +22,8 @@ assert.match(card, /payment_pending/);
 assert.match(card, /intent:'STORE'/);
 assert.match(card, /token\.details\.billing\.postalCode/);
 assert.match(card, /billingPostalCode:billingPostalCode/);
+assert.match(card, /http-equiv="Content-Security-Policy"/);
+assert.match(card, /pci-connect\.squareupsandbox\.com/);
 assert.match(card, /requiresHumanReview|human will review onboarding|human-reviewed/);
 assert.doesNotMatch(card, /setupToken|\/setup\.html|clientActive:\s*true/);
 
