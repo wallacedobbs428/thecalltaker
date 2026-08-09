@@ -23,7 +23,9 @@ assert.ok(checkout.includes("tct_pending_checkout_v1"), "pending continuation su
 assert.ok(checkout.includes("sessionId:requestIdentity.sessionId"), "persisted anonymous session is propagated outside attribution");
 assert.ok(checkout.includes("businessName:fields[0]") && checkout.includes("preferredContactMethod:fields[5]"), "checkout creates an actionable business contact receipt");
 assert.ok(checkout.includes("consentToFollowUp:true"), "checkout requires explicit human-onboarding follow-up consent");
-assert.ok(checkout.includes("trial_active_pending_human_review"), "signed trial confirmation remains pending human review");
+assert.ok(checkout.includes("subscription_scheduled_pending_human_review"), "signed scheduled-subscription evidence remains pending human review");
+assert.ok(checkout.includes("intent:'STORE'") && checkout.includes("customerInitiated:true") && checkout.includes("sellerKeyedIn:false"), "Square tokenization explicitly requests card-on-file verification");
+assert.ok(checkout.includes("token.details.billing.postalCode") && checkout.includes("billingPostalCode:billingPostalCode"), "the secure Square postal result reaches CreateCard without local persistence");
 assert.equal(/setupToken|receipt|tct_setup_binding|\/setup\.html/.test(checkout), false, "checkout cannot mint a setup or paid browser result");
 assert.equal(/payment_confirmed|payment_succeeded/.test(checkout), false, "browser cannot emit or infer provider payment truth");
 

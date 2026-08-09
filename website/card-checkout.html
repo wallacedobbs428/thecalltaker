@@ -82,8 +82,10 @@
   </main>
   <script>
     (function () {
-      var API = 'https://call-taker-os.vercel.app/api/public/square-trial';
-      var STATUS_API = 'https://call-taker-os.vercel.app/api/public/square-checkout-status';
+      var SANDBOX_CHECKOUT_HOST = 'call-taker-square-sandbox-checkout.vercel.app';
+      var API_ORIGIN = window.location.hostname === SANDBOX_CHECKOUT_HOST ? 'https://call-taker-square-sandbox.vercel.app' : 'https://call-taker-os.vercel.app';
+      var API = API_ORIGIN + '/api/public/square-trial';
+      var STATUS_API = API_ORIGIN + '/api/public/square-checkout-status';
       var plans = {
         afterhours: { name:'After-Hours Capture', detail:'After-hours call capture', amount:'$97/month' },
         full247: { name:'Revenue Recovery System', detail:'Day, night & overflow call coverage', amount:'$497/month' },
@@ -206,7 +208,7 @@
         };
         try { sessionStorage.setItem(PENDING_CHECKOUT_KEY, JSON.stringify(acceptedIdentity)); } catch (_) {}
         var shell = document.getElementById('shell');
-        shell.innerHTML = '<div class="pending"><div class="brand">Checkout pending</div><h2>We are confirming your checkout.</h2><p>Your card submission is not activation. We will create a human-reviewed setup handoff only after Square sends a signed card-backed trial confirmation.</p><p id="pending-status" aria-live="polite">Status: payment pending.</p><button id="check-status" type="button">Check status again</button><p><a href="/pricing.html">Back to plans</a></p></div>';
+        shell.innerHTML = '<div class="pending"><div class="brand">Checkout pending</div><h2>We are confirming your checkout.</h2><p>Your card submission is not activation. We will create a human-reviewed setup handoff only after Square sends signed stored-card subscription evidence.</p><p id="pending-status" aria-live="polite">Status: payment pending.</p><button id="check-status" type="button">Check status again</button><p><a href="/pricing.html">Back to plans</a></p></div>';
         var status = document.getElementById('pending-status');
         if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_waiting_ui_shown', form);
         var attempts = 0;
@@ -216,7 +218,11 @@
             var response = await fetch(STATUS_API + '?checkout_attempt_id=' + encodeURIComponent(result.checkoutAttemptId) + '&correlation_id=' + encodeURIComponent(result.correlationId), { cache: 'no-store' });
             var body = await response.json();
             if (response.ok && body && body.status) {
-              status.textContent = body.status === 'trial_active_pending_human_review' ? 'Square confirmed the card-backed trial. Human onboarding review is required before activation.' : 'Status: ' + String(body.status).replace(/_/g, ' ') + '.';
+              status.textContent = body.status === 'subscription_scheduled_pending_human_review'
+                ? 'Square confirmed a stored card and scheduled subscription. No money moved. Human onboarding review is required before activation.'
+                : body.status === 'trial_active_pending_human_review'
+                  ? 'Square confirmed the card-backed trial. Human onboarding review is required before activation.'
+                  : 'Status: ' + String(body.status).replace(/_/g, ' ') + '.';
               if (body.status !== 'payment_pending') window.clearInterval(poll);
             }
           } catch (_) { status.textContent = 'Status check unavailable. Your checkout remains pending; no activation was assumed.'; }
@@ -248,10 +254,17 @@
         var requestSent = false;
         try {
           var requestIdentity = checkoutRequestIdentity();
-          var token = await card.tokenize({ buyer:{ givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim() } });
+          var token = await card.tokenize({
+            intent:'STORE',
+            billingContact:{ givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), countryCode:'US' },
+            customerInitiated:true,
+            sellerKeyedIn:false
+          });
           if (token.status !== 'OK' || !token.token) throw new Error('Please check your card details and try again.');
+          var billingPostalCode = token.details && token.details.billing && token.details.billing.postalCode ? String(token.details.billing.postalCode).trim() : '';
+          if (!/^\d{5}(?:-\d{4})?$/.test(billingPostalCode)) throw new Error('Please enter a valid billing ZIP code in the secure card form.');
           requestSent = true;
-          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, attribution:attribution(), businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
+          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, attribution:attribution(), businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), billingPostalCode:billingPostalCode, consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
           var result = await response.json();
           if (!response.ok || !result.ok || result.status !== 'payment_pending' || !result.checkoutAttemptId || result.correlationId !== requestIdentity.correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
           if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_accepted_ui', form);
@@ -268,6 +281,11 @@
       } catch (_) {}
       init();
     })();
+  </script>
+  <script>
+    if (window.location.hostname === 'call-taker-square-sandbox-checkout.vercel.app') {
+      window.TCT_FUNNEL_CONFIG = { endpoint:'https://call-taker-square-sandbox.vercel.app/api/public/buyer-event' };
+    }
   </script>
   <script src="/tct-funnel-events.js" defer></script>
 </body>

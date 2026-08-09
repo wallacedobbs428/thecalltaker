@@ -13,9 +13,15 @@ for (const key of ["tct_item_id","tct_asset_sha256","tct_publication_seed_sha256
   assert.match(legacy, new RegExp(key));
   assert.match(card, new RegExp(key));
 }
-assert.match(card, /call-taker-os\.vercel\.app\/api\/public\/square-trial/);
+assert.match(card, /API_ORIGIN = window\.location\.hostname === SANDBOX_CHECKOUT_HOST/);
+assert.match(card, /call-taker-square-sandbox\.vercel\.app/);
+assert.match(card, /call-taker-os\.vercel\.app/);
+assert.match(card, /API_ORIGIN \+ '\/api\/public\/square-trial'/);
 assert.match(card, /square-checkout-status/);
 assert.match(card, /payment_pending/);
+assert.match(card, /intent:'STORE'/);
+assert.match(card, /token\.details\.billing\.postalCode/);
+assert.match(card, /billingPostalCode:billingPostalCode/);
 assert.match(card, /requiresHumanReview|human will review onboarding|human-reviewed/);
 assert.doesNotMatch(card, /setupToken|\/setup\.html|clientActive:\s*true/);
 

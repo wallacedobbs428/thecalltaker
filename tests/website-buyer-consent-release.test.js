@@ -87,7 +87,9 @@ test("checkout remains correlated and pending until signed provider truth", () =
   assert.match(checkout, /consentToFollowUp:true/);
   assert.match(checkout, /consent to a human from The Call Taker contacting me/);
   assert.doesNotMatch(checkout, /setupToken|receipt|tct_setup_binding|\/setup\.html/);
-  assert.match(checkout, /trial_active_pending_human_review/);
+  assert.match(checkout, /subscription_scheduled_pending_human_review/);
+  assert.match(checkout, /intent:'STORE'/);
+  assert.match(checkout, /billingPostalCode:billingPostalCode/);
   assert.doesNotMatch(checkout, /payment_confirmed|payment_succeeded/);
   assert.doesNotMatch(checkout, /<script src="https:\/\/web\.squarecdn\.com/);
   assert.match(checkout, /\$997 base\/month/);
