@@ -233,6 +233,14 @@
         var poll = window.setInterval(checkStatus, 3000);
         checkStatus();
       }
+      function showHumanSetupFallback() {
+        var shell = document.getElementById('shell');
+        var subject = encodeURIComponent('Setup review request — ' + plan.name);
+        var body = encodeURIComponent('I would like a human setup review for ' + plan.name + '.\n\nBusiness name:\nBest contact:\nPhone:\nWhat calls need coverage:\n');
+        shell.innerHTML = '<div class="pending"><div class="brand">Human setup review</div><h2>Let\'s get your call coverage scoped correctly.</h2><p>Secure card intake is temporarily unavailable. No card was collected and no service was activated.</p><p>Send the business name, best contact, phone number, and the calls you need covered. A person will confirm scope, trial terms, and launch steps before anything starts.</p><p><a id="human-setup-link" href="mailto:thecalltakerservice@gmail.com?subject=' + subject + '&body=' + body + '">Request a setup review</a></p><p><a href="/pricing.html">Back to plans</a></p></div>';
+        var link = document.getElementById('human-setup-link');
+        if (link && window.TCTFunnelEvents) link.addEventListener('click', function () { window.TCTFunnelEvents.record('checkout_human_setup_fallback_clicked', form); });
+      }
       fields.forEach(function (field) { field.addEventListener('input', refresh); field.addEventListener('change', refresh); });
       document.getElementById('consent').addEventListener('change', refresh);
       async function init() {
@@ -245,7 +253,7 @@
           card = await window.Square.payments(config.applicationId, config.locationId).card();
           await card.attach('#card');
           refresh();
-        } catch (error) { say('Secure checkout is temporarily unavailable. Please return to the plans page or request a human follow-up from the demo page.'); }
+        } catch (error) { showHumanSetupFallback(); }
       }
       form.addEventListener('submit', async function (event) {
         event.preventDefault();
