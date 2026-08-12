@@ -18,7 +18,10 @@ const publicPages = [
   'pilot/index.html'
 ];
 
-const coreNavPages = ['index.html', 'pricing.html', 'faq.html', 'demo.html', 'pay.html', 'pilot/index.html'];
+// Only the homepage has the shared sitewide navigation. The conversion pages
+// intentionally use focused layouts, so auditing them against homepage labels
+// creates false alarms and hides meaningful funnel regressions.
+const coreNavPages = ['index.html'];
 
 const outerPagePatterns = [
   /^ai-receptionist-/,
@@ -152,7 +155,10 @@ function audit() {
     }
   }
 
-  const navLabels = ['Features', 'Pricing', 'FAQ', 'Call Gideon'];
+  // A live-call CTA must stay unavailable until its verified path exists.
+  // The production site deliberately renders the safe status label instead
+  // of advertising an unverified phone demo.
+  const navLabels = ['Features', 'Pricing', 'FAQ', 'Demo verification in progress'];
   for (const page of coreNavPages) {
     const html = pageTexts[page] || '';
     for (const label of navLabels) {
@@ -196,7 +202,12 @@ function audit() {
     }
   }
   const cardCheckout = exists('card-checkout.html') ? read('card-checkout.html') : '';
-  if (!cardCheckout.includes('web.squarecdn.com/v1/square.js') || !cardCheckout.includes('call-taker-os.vercel.app/api/public/square-trial')) {
+  const hasSquareSdk = cardCheckout.includes('webPaymentsSdkUrl')
+    && cardCheckout.includes('sandbox.web.squarecdn.com')
+    && cardCheckout.includes('web.squarecdn.com');
+  const hasProtectedTrialEndpoint = cardCheckout.includes("API_ORIGIN + '/api/public/square-trial'")
+    && cardCheckout.includes("'https://call-taker-os.vercel.app'");
+  if (!hasSquareSdk || !hasProtectedTrialEndpoint) {
     addIssue(issues, 'fail', 'card_checkout_provider', 'card-checkout.html', 'Card checkout is missing Square Web Payments or the protected trial endpoint.');
   }
 
