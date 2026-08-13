@@ -26,6 +26,9 @@ assert.match(card, /http-equiv="Content-Security-Policy"/);
 assert.match(card, /pci-connect\.squareupsandbox\.com/);
 assert.match(card, /requiresHumanReview|human will review onboarding|human-reviewed/);
 assert.doesNotMatch(card, /setupToken|\/setup\.html|clientActive:\s*true/);
+assert.match(card, /setupContinuation/);
+assert.match(card, /sessionStorage\.setItem\(SETUP_CONTINUATION_KEY/);
+assert.doesNotMatch(card, /[?&](?:continuationToken|setupToken)=/);
 
 // A server may durably accept the POST and return 202 while the browser loses
 // the response. The next submission must reuse the identity persisted before

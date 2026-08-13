@@ -1,0 +1,56 @@
+"use strict";
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+
+const root = path.resolve(__dirname, "..");
+const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
+const checkout = read("website/card-checkout.html");
+const intake = read("website/onboarding/intake.html");
+const deploy = read(".github/workflows/deploy.yml");
+const nextSteps = read("website/onboarding/next-steps.html");
+
+assert.match(checkout, /tct_setup_continuation_v1/, "checkout stores the server-issued setup continuation");
+assert.match(checkout, /result\.setupContinuation/, "checkout accepts only the server-issued continuation");
+assert.match(checkout, /sessionStorage\.setItem\(SETUP_CONTINUATION_KEY/, "continuation stays in session storage");
+assert.match(checkout, /\/onboarding\/intake\.html#setup/, "accepted checkout immediately opens the existing questionnaire");
+assert.match(checkout, /subscription_scheduled_pending_human_review/, "checkout replay may continue after signed evidence advances state");
+assert.match(checkout, /trial_active_pending_human_review/, "legacy eligible human-review state remains resumable");
+assert.match(checkout, /\/api\/public\/setup-continuation/, "checkout uses the payment-free recovery route");
+assert.match(checkout, /getElementById\('resume-setup'\)\.addEventListener\('click', resumeSetup\)/, "resume control is wired to recovery");
+assert.match(checkout, /billingConfirmed !== false/, "recovered continuation rejects a billing claim");
+assert.match(checkout, /setup\.providerActionPerformed !== false/, "recovered continuation rejects a provider-action claim");
+assert.match(checkout, /body\.ok === true/, "recovery requires the exact success envelope");
+assert.match(checkout, /checkoutAttemptId: pending\.checkoutAttemptId,[\s\S]*correlationId: pending\.correlationId,[\s\S]*sessionId: pending\.sessionId,[\s\S]*website: ''/, "recovery sends only the protected checkout binding");
+assert.doesNotMatch(checkout, /[?&](?:continuationToken|setupToken)=/, "continuation is never put in a query string");
+
+assert.match(intake, /BEGIN checkout-bound setup questionnaire/, "existing intake is connected to the protected setup route");
+assert.match(intake, /http-equiv="Content-Security-Policy"/, "token-bearing questionnaire has an explicit content policy");
+assert.doesNotMatch(intake, /googletagmanager|google-analytics|connect\.facebook|fbq\(/, "token-bearing questionnaire loads no third-party analytics");
+assert.match(intake, /tct_setup_continuation_v1/, "intake reads the same browser-session handoff");
+assert.match(intake, /\/api\/public\/setup-questionnaire/, "intake submits to the canonical setup route");
+assert.match(intake, /function readRecoveryBinding\(\)/, "expired intake preserves only the protected binding needed for recovery");
+assert.match(intake, /binding\.apiOrigin \+ '\/api\/public\/setup-continuation'/, "expired intake reissues payment-free without returning to checkout");
+assert.match(intake, /if \(recoveryBinding\) \{ recoverExpiredContext\(recoveryBinding\); return; \}/, "initialization executes expired-context recovery");
+assert.match(intake, /validRecoveredContinuation\(recovered, binding\)/, "expired intake validates the entire recovered continuation contract");
+assert.match(intake, /submissionIdempotencyKey/, "setup submission uses a persisted idempotency identity");
+assert.match(intake, /tct_setup_submission_idempotency_v1:' \+ checkoutAttemptId/, "submission identity is namespaced to the exact checkout");
+assert.match(intake, /'setup:' \+ checkoutAttemptId \+ ':'/, "submitted idempotency value is bound to the exact checkout");
+assert.doesNotMatch(intake, /getItem\('tct_setup_submission_idempotency_v1'\)/, "a global cross-checkout submission identity is forbidden");
+assert.match(intake, /if \(!\/\^\[A-Za-z_\+\-\]\+\(\?:\\\/\[A-Za-z0-9_\+\-\]\+\)\+\$\/.test\(timezone\)\) timezone = 'America\/Chicago'/, "browser timezone falls back to an accepted multi-segment IANA zone");
+assert.match(intake, /timezone === 'UTC' \|\| timezone === 'GMT'\) timezone = 'Etc\/UTC'/, "UTC browsers retain their truthful timezone");
+assert.match(intake, /setup_received_pending_human_review/, "browser requires the durable pending-human-review receipt");
+assert.match(intake, /result\.billingConfirmed !== false/, "browser fails closed on a billing claim");
+assert.match(intake, /result\.moneyMoved !== false/, "browser fails closed on a money-movement claim");
+assert.match(intake, /result\.clientActive !== false/, "browser fails closed on an activation claim");
+assert.match(intake, /result\.providerActionPerformed !== false/, "setup cannot silently perform a provider action");
+assert.match(intake, /value\.providerActionPerformed !== false/, "expired-context recovery rejects a provider-action claim");
+assert.doesNotMatch(intake, /name="plan"/, "setup cannot change the checkout-bound plan");
+const setupScript = intake.match(/\/\/ BEGIN checkout-bound setup questionnaire([\s\S]*?)\/\/ END checkout-bound setup questionnaire/);
+assert.ok(setupScript, "checkout-bound setup script is delimited for review");
+assert.doesNotMatch(setupScript[1], /ownerEmail|ownerPhone|paymentMethod|sourceId/, "setup body excludes duplicate contact and payment data");
+
+assert.match(deploy, /onboarding\/intake\.html/, "Pages artifact explicitly includes the setup questionnaire");
+assert.doesNotMatch(nextSteps, /(?:Payment|Setup questionnaire) received/i, "a directly opened next-steps URL makes no durable receipt claim");
+assert.match(nextSteps, /This page alone does not prove submission, payment, provider routing, or activation/, "next steps is explicitly non-evidentiary");
+console.log("website setup continuation tests passed");
