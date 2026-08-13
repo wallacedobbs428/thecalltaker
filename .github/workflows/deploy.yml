@@ -69,6 +69,11 @@ jobs:
             fi
           done
 
+          mkdir -p "$CLEAN/onboarding"
+          cp -p website/onboarding/intake.html "$CLEAN/onboarding/intake.html"
+          cp -p website/onboarding/next-steps.html "$CLEAN/onboarding/next-steps.html"
+          test -f "$CLEAN/onboarding/intake.html"
+
           mkdir -p "$CLEAN/demo/carolina-locksmith" "$CLEAN/demos"
           if [ -f "website/demo/carolina-locksmith/index.html" ]; then
             cp -p "website/demo/carolina-locksmith/index.html" "$CLEAN/demo/carolina-locksmith/index.html"

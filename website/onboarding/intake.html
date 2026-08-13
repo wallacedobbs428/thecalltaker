@@ -4,24 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000">
-<title>The Call Taker — AI Receptionist for Service Businesses</title>
-<meta name="description" content="Complete this form so we can review your AI receptionist setup details. Provider activation is verified separately.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https://call-taker-os.vercel.app https://call-taker-square-sandbox.vercel.app; upgrade-insecure-requests">
+<title>Setup questionnaire | The Call Taker</title>
+<meta name="description" content="Complete the setup questionnaire bound to your accepted checkout. Payment and activation remain separately verified.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://thecalltaker.com/onboarding/intake.html">
-
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-29LL5GPBQV"></script>
-<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
-<!-- Google Ads -->
-<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
-<!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
-<!-- Attribution -->
-<script src="/tct-tracking.js" defer></script>
 
 <style>
 /* ============================================
@@ -572,6 +559,21 @@ textarea.error {
 .form-error-banner.show {
   display: block;
 }
+.setup-gate {
+  display: block;
+  background: rgba(0,220,130,.06);
+  border: 1px solid rgba(0,220,130,.28);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+  font-size: .9rem;
+}
+.setup-gate.blocked {
+  background: rgba(239,68,68,.08);
+  border-color: rgba(239,68,68,.35);
+}
+.setup-gate strong { color: var(--text); }
 
 /* ===== FOOTER ===== */
 .site-footer {
@@ -738,8 +740,10 @@ textarea.error {
   </div>
 
   <div class="form-card">
-    <h1>Client Intake Form</h1>
-    <p class="form-subtitle">Complete this form so we can review and configure your AI receptionist setup. Live activation is confirmed separately after provider setup is verified.</p>
+    <h1>Setup questionnaire</h1>
+    <p class="form-subtitle">Tell us how your business handles calls. This questionnaire is bound to the checkout you just submitted; payment, provider configuration, and live activation remain separately verified and human-reviewed.</p>
+
+    <div class="setup-gate" id="setupGate" role="status" aria-live="polite"><strong>Checking your checkout handoff…</strong><br>Submission stays disabled until the protected continuation is verified in this browser session.</div>
 
     <div class="form-error-banner" id="formErrorBanner">Please fix the highlighted fields below before submitting.</div>
 
@@ -756,32 +760,6 @@ textarea.error {
           <label for="businessName">Business Name <span class="required">*</span></label>
           <input type="text" id="businessName" name="businessName" placeholder="e.g. Comfort Pro HVAC" required>
           <div class="field-error" id="err-businessName">Business name is required.</div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="ownerFirst">Owner First Name <span class="required">*</span></label>
-            <input type="text" id="ownerFirst" name="ownerFirst" placeholder="First name" required>
-            <div class="field-error" id="err-ownerFirst">First name is required.</div>
-          </div>
-          <div class="form-group">
-            <label for="ownerLast">Owner Last Name <span class="required">*</span></label>
-            <input type="text" id="ownerLast" name="ownerLast" placeholder="Last name" required>
-            <div class="field-error" id="err-ownerLast">Last name is required.</div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="ownerEmail">Owner Email <span class="required">*</span></label>
-            <input type="email" id="ownerEmail" name="ownerEmail" placeholder="you@company.com" required>
-            <div class="field-error" id="err-ownerEmail">Please enter a valid email address.</div>
-          </div>
-          <div class="form-group">
-            <label for="ownerPhone">Owner Phone <span class="required">*</span></label>
-            <input type="tel" id="ownerPhone" name="ownerPhone" placeholder="(555) 123-4567" required>
-            <div class="field-error" id="err-ownerPhone">Please enter a valid phone number.</div>
-          </div>
         </div>
 
         <div class="form-group-stack">
@@ -801,6 +779,7 @@ textarea.error {
             <option value="electrical">Electrical</option>
             <option value="garage-door">Garage Door</option>
             <option value="funeral">Funeral</option>
+            <option value="other">Other service business</option>
           </select>
           <div class="field-error" id="err-industry">Please select your industry.</div>
         </div>
@@ -949,8 +928,8 @@ textarea.error {
         </div>
 
         <div class="form-group-stack">
-          <label for="currentHandling">How are calls currently handled?</label>
-          <select id="currentHandling" name="currentHandling">
+          <label for="currentHandling">How are calls currently handled? <span class="required">*</span></label>
+          <select id="currentHandling" name="currentHandling" required>
             <option value="">Select one</option>
             <option value="I answer myself">I answer myself</option>
             <option value="Voicemail">Voicemail</option>
@@ -961,8 +940,8 @@ textarea.error {
         </div>
 
         <div class="form-group-stack">
-          <label for="monthlyVolume">Estimated Monthly Call Volume</label>
-          <select id="monthlyVolume" name="monthlyVolume">
+          <label for="monthlyVolume">Estimated Monthly Call Volume <span class="required">*</span></label>
+          <select id="monthlyVolume" name="monthlyVolume" required>
             <option value="">Select one</option>
             <option value="Under 50">Under 50</option>
             <option value="50-100">50 - 100</option>
@@ -972,35 +951,14 @@ textarea.error {
         </div>
       </div>
 
-      <!-- ===== SECTION 4: Plan & Preferences ===== -->
+      <!-- ===== SECTION 4: Preferences ===== -->
       <div class="form-section">
         <div class="form-section-title">
           <div class="section-icon">4</div>
-          Plan &amp; Preferences
+          Receptionist Preferences
         </div>
 
-        <div class="form-group-stack">
-          <label>Select Your Plan <span class="required">*</span></label>
-          <div class="plan-cards" id="planCards">
-            <label class="plan-card" data-plan="afterhours">
-              <input type="radio" name="plan" value="After-Hours Capture ($97/mo)">
-              <div class="plan-name">After-Hours Capture</div>
-              <div class="plan-price">$97<span>/mo</span></div>
-            </label>
-            <label class="plan-card selected" data-plan="full247">
-              <div class="plan-badge">Most Popular</div>
-              <input type="radio" name="plan" value="Revenue Recovery System ($497/mo)" checked>
-              <div class="plan-name">Revenue Recovery System</div>
-              <div class="plan-price">$497<span>/mo</span></div>
-            </label>
-            <label class="plan-card" data-plan="premium">
-              <input type="radio" name="plan" value="Operational Infrastructure ($997+/mo)">
-              <div class="plan-name">Operational Infrastructure</div>
-              <div class="plan-price">$997+<span>/mo</span></div>
-            </label>
-          </div>
-          <div class="field-error" id="err-plan">Please select a plan.</div>
-        </div>
+        <p class="setup-gate"><strong>Your selected plan stays bound to checkout.</strong><br>This form cannot change a price, claim payment, or activate service.</p>
 
         <div class="form-group-stack">
           <label for="aiName">Preferred AI Receptionist Name <span class="optional">(optional)</span></label>
@@ -1015,7 +973,7 @@ textarea.error {
 
       <!-- ===== SUBMIT ===== -->
       <div class="submit-wrap">
-        <button type="submit" class="btn-submit" id="submitBtn">Submit Intake Form</button>
+        <button type="submit" class="btn-submit" id="submitBtn" disabled>Submit setup questionnaire</button>
         <p class="submit-note">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd"/></svg>
           Your information is secure and only used to set up your AI receptionist.
@@ -1059,6 +1017,249 @@ textarea.error {
 
 <!-- ===== JAVASCRIPT ===== -->
 <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
+
+<script>
+  // BEGIN checkout-bound setup questionnaire
+  (function () {
+    'use strict';
+    var STORAGE_KEY = 'tct_setup_continuation_v1';
+    var ALLOWED_API_ORIGINS = ['https://call-taker-os.vercel.app', 'https://call-taker-square-sandbox.vercel.app'];
+    var form = document.getElementById('intakeForm');
+    var submit = document.getElementById('submitBtn');
+    var gate = document.getElementById('setupGate');
+    var errorBanner = document.getElementById('formErrorBanner');
+    var context = null;
+    var submissionIdempotencyKey = '';
+
+    function uuid(value) {
+      return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test((value || '').toString());
+    }
+    function validContext(value) {
+      if (!value || typeof value !== 'object') return false;
+      if (!uuid(value.checkoutAttemptId) || !uuid(value.correlationId) || !uuid(value.sessionId)) return false;
+      if (!/^l4sc1_[A-Za-z0-9_-]{43}$/.test((value.continuationToken || '').toString())) return false;
+      if (value.submitPath !== '/api/public/setup-questionnaire' || ALLOWED_API_ORIGINS.indexOf(value.apiOrigin) < 0) return false;
+      var expiresAt = Date.parse(value.expiresAt || '');
+      return Number.isFinite(expiresAt) && expiresAt > Date.now() && expiresAt <= Date.now() + (2 * 60 * 60 * 1000) + 60000;
+    }
+    function readContext() {
+      try {
+        var value = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+        return validContext(value) ? value : null;
+      } catch (_) { return null; }
+    }
+    function readRecoveryBinding() {
+      try {
+        var value = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || 'null');
+        if (!value || !uuid(value.checkoutAttemptId) || !uuid(value.correlationId) || !uuid(value.sessionId)
+            || ALLOWED_API_ORIGINS.indexOf(value.apiOrigin) < 0) return null;
+        return {
+          checkoutAttemptId: value.checkoutAttemptId,
+          correlationId: value.correlationId,
+          sessionId: value.sessionId,
+          apiOrigin: value.apiOrigin
+        };
+      } catch (_) { return null; }
+    }
+    function validRecoveredContinuation(value, binding) {
+      if (!value || typeof value !== 'object' || value.checkoutAttemptId !== binding.checkoutAttemptId
+          || value.correlationId !== binding.correlationId || !/^l4sc1_[A-Za-z0-9_-]{43}$/.test((value.continuationToken || '').toString())
+          || value.submitPath !== '/api/public/setup-questionnaire' || value.reissuePath !== '/api/public/setup-continuation'
+          || value.status !== 'setup_questionnaire_available'
+          || ['payment_pending', 'subscription_scheduled_pending_human_review', 'trial_active_pending_human_review'].indexOf(value.paymentStatus) < 0
+          || value.billingConfirmed !== false || value.moneyMoved !== false || value.clientActive !== false
+          || value.requiresHumanReview !== true || value.providerActionPerformed !== false) return false;
+      var expiresAt = Date.parse(value.expiresAt || '');
+      return Number.isFinite(expiresAt) && expiresAt > Date.now() && expiresAt <= Date.now() + (2 * 60 * 60 * 1000) + 60000;
+    }
+    function idempotencyStorageKey(checkoutAttemptId) {
+      return 'tct_setup_submission_idempotency_v1:' + checkoutAttemptId;
+    }
+    function issueIdempotencyKey(checkoutAttemptId) {
+      if (!uuid(checkoutAttemptId)) return '';
+      if (!window.crypto || typeof window.crypto.randomUUID !== 'function') return '';
+      try {
+        var storageKey = idempotencyStorageKey(checkoutAttemptId);
+        var expectedPrefix = 'setup:' + checkoutAttemptId + ':';
+        var existing = sessionStorage.getItem(storageKey) || '';
+        if (existing.indexOf(expectedPrefix) === 0 && uuid(existing.slice(expectedPrefix.length))) return existing;
+        var created = expectedPrefix + window.crypto.randomUUID();
+        sessionStorage.setItem(storageKey, created);
+        return created;
+      } catch (_) { return ''; }
+    }
+    function selectedValues(name) {
+      return Array.prototype.slice.call(form.querySelectorAll('[name="' + name + '"]:checked')).map(function (item) { return item.value; });
+    }
+    function slug(value) {
+      return (value || '').toString().trim().toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 64);
+    }
+    function enumValue(value, aliases) {
+      var key = (value || '').toString().trim();
+      return aliases[key] || '';
+    }
+    function answerPayload() {
+      var emergencyOnCall = document.getElementById('emergencyOnCall').value === 'yes';
+      var givePricing = document.getElementById('givePricing').value === 'yes';
+      var timezone = 'America/Chicago';
+      try { timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || timezone; } catch (_) {}
+      if (timezone === 'UTC' || timezone === 'GMT') timezone = 'Etc/UTC';
+      if (!/^[A-Za-z_+-]+(?:\/[A-Za-z0-9_+-]+)+$/.test(timezone)) timezone = 'America/Chicago';
+      return {
+        businessName: document.getElementById('businessName').value.trim(),
+        industry: document.getElementById('industry').value,
+        timeZone: timezone,
+        openTime: document.getElementById('openTime').value,
+        closeTime: document.getElementById('closeTime').value,
+        daysOpen: selectedValues('days').map(function (day) { return day.toLowerCase(); }),
+        services: selectedValues('services').map(slug).filter(Boolean),
+        serviceArea: document.getElementById('serviceArea').value.trim(),
+        businessPhone: document.getElementById('businessPhone').value.trim(),
+        emergencyOnCall: emergencyOnCall,
+        emergencyContactName: emergencyOnCall ? document.getElementById('techName').value.trim() : '',
+        emergencyContactPhone: emergencyOnCall ? document.getElementById('techPhone').value.trim() : '',
+        callbackWindow: enumValue(document.getElementById('callbackTime').value, {
+          'Within 5 min':'within_5_minutes', 'Within 15 min':'within_15_minutes',
+          'Within 30 min':'within_30_minutes', 'Within 1 hour':'within_1_hour', 'ASAP':'asap'
+        }),
+        givePricing: givePricing,
+        pricingInfo: givePricing ? document.getElementById('pricingInfo').value.trim() : '',
+        currentHandling: enumValue(document.getElementById('currentHandling').value, {
+          'I answer myself':'self', 'Voicemail':'voicemail', 'Answering service':'answering_service',
+          'Staff answers':'staff', 'Goes to voicemail after hours':'after_hours_voicemail'
+        }),
+        monthlyCallVolume: enumValue(document.getElementById('monthlyVolume').value, {
+          'Under 50':'under_50', '50-100':'50_100', '100-200':'100_200', '200+':'over_200'
+        }),
+        aiName: document.getElementById('aiName').value.trim(),
+        specialInstructions: document.getElementById('specialInstructions').value.trim()
+      };
+    }
+    function showBlocked(message) {
+      context = null;
+      submit.disabled = true;
+      gate.classList.add('blocked');
+      gate.innerHTML = '<strong>Protected checkout handoff required.</strong><br>' + message + ' <a href="/pricing.html">Return to pricing</a>.';
+    }
+    async function recoverExpiredContext(binding) {
+      gate.classList.add('blocked');
+      gate.innerHTML = '<strong>Refreshing protected checkout handoff…</strong><br>Payment and activation remain unconfirmed.';
+      try {
+        var response = await fetch(binding.apiOrigin + '/api/public/setup-continuation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            checkoutAttemptId: binding.checkoutAttemptId,
+            correlationId: binding.correlationId,
+            sessionId: binding.sessionId,
+            website: ''
+          })
+        });
+        var body = await response.json();
+        var recovered = body && body.ok === true ? body.setupContinuation : null;
+        if (!response.ok || !validRecoveredContinuation(recovered, binding)) throw new Error('setup_continuation_unavailable');
+        context = {
+          version: 1,
+          checkoutAttemptId: recovered.checkoutAttemptId,
+          correlationId: recovered.correlationId,
+          sessionId: binding.sessionId,
+          continuationToken: recovered.continuationToken,
+          expiresAt: recovered.expiresAt,
+          submitPath: recovered.submitPath,
+          apiOrigin: binding.apiOrigin,
+          state: 'setup_continuation_issued'
+        };
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(context));
+        submissionIdempotencyKey = issueIdempotencyKey(context.checkoutAttemptId);
+        if (!validContext(context) || !submissionIdempotencyKey) throw new Error('setup_context_not_persisted');
+        gate.classList.remove('blocked');
+        gate.innerHTML = '<strong>Checkout handoff refreshed.</strong><br>Your answers will attach to pending human review. This does not claim payment or activate service.';
+        submit.disabled = false;
+      } catch (_) {
+        showBlocked('The protected handoff could not be refreshed. No setup was submitted.');
+      }
+    }
+    function initToggles(groupId, inputId, fieldsId) {
+      var group = document.getElementById(groupId), input = document.getElementById(inputId), fields = document.getElementById(fieldsId);
+      group.addEventListener('click', function (event) {
+        var button = event.target.closest('button[data-value]');
+        if (!button) return;
+        Array.prototype.forEach.call(group.querySelectorAll('button[data-value]'), function (item) { item.classList.toggle('active', item === button); });
+        input.value = button.getAttribute('data-value');
+        if (fields) fields.classList.toggle('show', input.value === 'yes');
+        if (inputId === 'emergencyOnCall') {
+          document.getElementById('techName').required = input.value === 'yes';
+          document.getElementById('techPhone').required = input.value === 'yes';
+        }
+        if (inputId === 'givePricing') document.getElementById('pricingInfo').required = input.value === 'yes';
+      });
+    }
+    function initCheckboxes() {
+      Array.prototype.forEach.call(form.querySelectorAll('.checkbox-item input[type="checkbox"]'), function (item) {
+        item.addEventListener('change', function () { item.closest('.checkbox-item').classList.toggle('checked', item.checked); });
+      });
+    }
+    function initialize() {
+      initToggles('emergencyToggle', 'emergencyOnCall', 'emergencyFields');
+      initToggles('pricingToggle', 'givePricing', 'pricingFields');
+      initCheckboxes();
+      context = readContext();
+      submissionIdempotencyKey = context ? issueIdempotencyKey(context.checkoutAttemptId) : '';
+      if (!context || !submissionIdempotencyKey) {
+        var recoveryBinding = readRecoveryBinding();
+        if (recoveryBinding) { recoverExpiredContext(recoveryBinding); return; }
+        showBlocked('Open this questionnaire from the accepted secure checkout in the same browser tab. No setup was submitted.');
+        return;
+      }
+      gate.classList.remove('blocked');
+      gate.innerHTML = '<strong>Checkout handoff verified.</strong><br>Your answers will be attached to the pending human-review record. This does not claim payment or activate service.';
+      submit.disabled = false;
+    }
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      errorBanner.classList.remove('show');
+      if (!context || !validContext(context)) { showBlocked('The protected setup continuation is missing or expired. No setup was submitted.'); return; }
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      submit.disabled = true;
+      submit.textContent = 'Submitting setup questionnaire…';
+      try {
+        var response = await fetch(context.apiOrigin + context.submitPath, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            checkoutAttemptId: context.checkoutAttemptId,
+            correlationId: context.correlationId,
+            sessionId: context.sessionId,
+            continuationToken: context.continuationToken,
+            submissionIdempotencyKey: submissionIdempotencyKey,
+            website: '',
+            answers: answerPayload()
+          })
+        });
+        var result = await response.json();
+        if (!response.ok || !result || result.status !== 'setup_received_pending_human_review'
+            || result.checkoutAttemptId !== context.checkoutAttemptId || result.correlationId !== context.correlationId
+            || result.billingConfirmed !== false || result.moneyMoved !== false || result.clientActive !== false
+            || result.requiresHumanReview !== true || result.providerActionPerformed !== false || !uuid(result.questionnaireReceiptId)) {
+          throw new Error('setup_receipt_unavailable');
+        }
+        try {
+          sessionStorage.removeItem(STORAGE_KEY);
+          sessionStorage.removeItem(idempotencyStorageKey(context.checkoutAttemptId));
+        } catch (_) {}
+        form.innerHTML = '<div class="setup-gate"><strong>Setup questionnaire received.</strong><br>Your answers are attached to the pending human-review record. Payment and live activation are not implied. Wallace will review the provider and launch evidence before anything goes live.</div><p><a class="btn btn-primary" href="/onboarding/next-steps.html">See next steps</a></p>';
+        gate.style.display = 'none';
+      } catch (_) {
+        errorBanner.textContent = 'We could not verify a durable setup receipt. Your answers remain in this page; retrying uses the same protected submission identity.';
+        errorBanner.classList.add('show');
+        submit.disabled = false;
+        submit.textContent = 'Submit setup questionnaire';
+      }
+    });
+    initialize();
+  })();
+  // END checkout-bound setup questionnaire
+</script>
 
 <script src="/shared/ui-dark.js" defer></script>
   <script src="../script.js" defer></script>

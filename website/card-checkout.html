@@ -54,7 +54,7 @@
       <header class="hero">
         <div class="brand">Secure card authorization</div>
         <h1>Secure your selected plan.</h1>
-        <p id="heroTerms">Square securely stores your card for the selected trial. A card form is not activation: we wait for Square's signed confirmation before creating a human-review setup handoff.</p>
+        <p id="heroTerms">Square securely stores your card for the selected trial. An accepted checkout can open a human-reviewed setup handoff before billing confirmation; it does not confirm payment or activate service.</p>
       </header>
       <div class="summary">
         <div><strong id="planName">Loading plan</strong><br><span id="planDetail">Secure call coverage</span></div>
@@ -87,6 +87,7 @@
       var API_ORIGIN = window.location.hostname === SANDBOX_CHECKOUT_HOST ? 'https://call-taker-square-sandbox.vercel.app' : 'https://call-taker-os.vercel.app';
       var API = API_ORIGIN + '/api/public/square-trial';
       var STATUS_API = API_ORIGIN + '/api/public/square-checkout-status';
+      var SETUP_RECOVERY_API = API_ORIGIN + '/api/public/setup-continuation';
       var plans = {
         afterhours: { name:'After-Hours Capture', detail:'After-hours call capture', amount:'$97/month' },
         full247: { name:'Revenue Recovery System', detail:'Day, night & overflow call coverage', amount:'$497/month' },
@@ -99,7 +100,7 @@
       document.title = plan.name + ' — secure card checkout';
       document.getElementById('planName').textContent = plan.name;
       document.getElementById('planDetail').textContent = plan.detail;
-      document.getElementById('heroTerms').textContent = 'Square securely stores your card for the selected trial. ' + plan.amount + ' begins after the 14-day trial unless you cancel.' + (plan.scope ? ' ' + plan.scope : '') + ' We only create a human-review handoff after Square sends signed confirmation.';
+      document.getElementById('heroTerms').textContent = 'Square securely stores your card for the selected trial. ' + plan.amount + ' begins after the 14-day trial unless you cancel.' + (plan.scope ? ' ' + plan.scope : '') + ' An accepted checkout can open a human-reviewed setup handoff before billing confirmation; it does not confirm payment or activate service.';
       document.getElementById('renewalAmount').textContent = plan.amount;
       document.getElementById('scopeTerms').textContent = plan.scope ? ' ' + plan.scope : '';
 
@@ -107,6 +108,8 @@
       var fields = ['business','first','last','email','phone','preferred','holder'].map(function (id) { return document.getElementById(id); });
       var card;
       var PENDING_CHECKOUT_KEY = 'tct_pending_checkout_v1';
+      var SETUP_CONTINUATION_KEY = 'tct_setup_continuation_v1';
+      var SETUP_ELIGIBLE_STATES = ['payment_pending', 'subscription_scheduled_pending_human_review', 'trial_active_pending_human_review'];
       function detailsReady() { return fields.every(function (field) { return field.checkValidity() && field.value.trim(); }) && document.getElementById('consent').checked; }
       function refresh() { submit.disabled = !card || !detailsReady(); }
       function say(text) { msg.textContent = text || ''; }
@@ -158,6 +161,50 @@
         return identity;
       }
       // END checkout request identity
+      // BEGIN setup continuation handoff
+      function validSetupContinuation(value, expectedCheckoutAttemptId, expectedCorrelationId) {
+        if (!value || typeof value !== 'object') return false;
+        if (value.checkoutAttemptId !== expectedCheckoutAttemptId || value.correlationId !== expectedCorrelationId) return false;
+        if (!validCheckoutUuid(value.checkoutAttemptId) || !validCheckoutUuid(value.correlationId)) return false;
+        if (!/^l4sc1_[A-Za-z0-9_-]{43}$/.test((value.continuationToken || '').toString())) return false;
+        if (value.submitPath !== '/api/public/setup-questionnaire') return false;
+        var expiresAt = Date.parse(value.expiresAt || '');
+        return Number.isFinite(expiresAt) && expiresAt > Date.now() && expiresAt <= Date.now() + (2 * 60 * 60 * 1000) + 60000;
+      }
+      function storeSetupContinuation(result, prior) {
+        var setup = result && result.setupContinuation;
+        if (!validSetupContinuation(setup, result.checkoutAttemptId, result.correlationId) || !validCheckoutUuid(prior.sessionId)) return false;
+        if (setup.status !== 'setup_questionnaire_available' || SETUP_ELIGIBLE_STATES.indexOf(setup.paymentStatus) < 0
+            || setup.reissuePath !== '/api/public/setup-continuation' || setup.billingConfirmed !== false
+            || setup.moneyMoved !== false || setup.clientActive !== false || setup.requiresHumanReview !== true
+            || setup.providerActionPerformed !== false) return false;
+        var handoff = {
+          version: 1,
+          checkoutAttemptId: setup.checkoutAttemptId,
+          correlationId: setup.correlationId,
+          sessionId: prior.sessionId,
+          continuationToken: setup.continuationToken,
+          expiresAt: setup.expiresAt,
+          submitPath: setup.submitPath,
+          apiOrigin: API_ORIGIN,
+          state: 'setup_continuation_issued'
+        };
+        try {
+          sessionStorage.setItem(SETUP_CONTINUATION_KEY, JSON.stringify(handoff));
+          var stored = JSON.parse(sessionStorage.getItem(SETUP_CONTINUATION_KEY) || 'null');
+          if (!stored || stored.continuationToken !== handoff.continuationToken || stored.sessionId !== handoff.sessionId) return false;
+        } catch (_) { return false; }
+        window.location.assign('/onboarding/intake.html#setup');
+        return true;
+      }
+      function hasStoredSetupContinuation() {
+        try {
+          var value = JSON.parse(sessionStorage.getItem(SETUP_CONTINUATION_KEY) || 'null');
+          return value && validSetupContinuation(value, value.checkoutAttemptId, value.correlationId) && validCheckoutUuid(value.sessionId)
+            && (value.apiOrigin === 'https://call-taker-os.vercel.app' || value.apiOrigin === 'https://call-taker-square-sandbox.vercel.app');
+        } catch (_) { return false; }
+      }
+      // END setup continuation handoff
       function validContentAttribution(name, value) {
         var candidate = (value || '').toString().trim();
         if (name === 'tct_item_id') return /^[A-Za-z0-9][A-Za-z0-9._:-]{0,119}$/.test(candidate) ? candidate : '';
@@ -205,11 +252,12 @@
           correlationId: result.correlationId,
           sessionId: prior.sessionId || result.sessionId || '',
           checkoutAttemptId: result.checkoutAttemptId,
-          state: 'payment_pending'
+          state: SETUP_ELIGIBLE_STATES.indexOf(result.status) >= 0 ? result.status : 'payment_pending'
         };
         try { sessionStorage.setItem(PENDING_CHECKOUT_KEY, JSON.stringify(acceptedIdentity)); } catch (_) {}
+        if (storeSetupContinuation(result, prior)) return;
         var shell = document.getElementById('shell');
-        shell.innerHTML = '<div class="pending"><div class="brand">Checkout pending</div><h2>We are confirming your checkout.</h2><p>Your card submission is not activation. We will create a human-reviewed setup handoff only after Square sends signed stored-card subscription evidence.</p><p id="pending-status" aria-live="polite">Status: payment pending.</p><button id="check-status" type="button">Check status again</button><p><a href="/pricing.html">Back to plans</a></p></div>';
+        shell.innerHTML = '<div class="pending"><div class="brand">Checkout accepted for review</div><h2>Continue your setup.</h2><p>You may submit setup details for human review while billing confirmation remains pending. No payment, provider work, or activation is assumed.</p><p id="pending-status" aria-live="polite">Status: payment pending.</p><button id="resume-setup" type="button">Resume setup questionnaire</button> <button id="check-status" type="button">Check billing status</button><p><a href="/pricing.html">Back to plans</a></p></div>';
         var status = document.getElementById('pending-status');
         if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_waiting_ui_shown', form);
         var attempts = 0;
@@ -229,6 +277,42 @@
           } catch (_) { status.textContent = 'Status check unavailable. Your checkout remains pending; no activation was assumed.'; }
           if (attempts >= 20) window.clearInterval(poll);
         }
+        async function resumeSetup() {
+          var pending = readCheckoutIdentity();
+          if (!pending || pending.checkoutAttemptId !== result.checkoutAttemptId
+              || pending.correlationId !== result.correlationId || !validCheckoutUuid(pending.sessionId)) {
+            status.textContent = 'Setup recovery is unavailable because the protected browser binding is missing. No payment or activation is assumed.';
+            return;
+          }
+          var resume = document.getElementById('resume-setup');
+          resume.disabled = true;
+          status.textContent = 'Refreshing the protected setup handoff…';
+          try {
+            var response = await fetch(SETUP_RECOVERY_API, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                checkoutAttemptId: pending.checkoutAttemptId,
+                correlationId: pending.correlationId,
+                sessionId: pending.sessionId,
+                website: ''
+              })
+            });
+            var body = await response.json();
+            var recovered = body && body.ok === true ? {
+              checkoutAttemptId: pending.checkoutAttemptId,
+              correlationId: pending.correlationId,
+              setupContinuation: body.setupContinuation
+            } : null;
+            if (!response.ok || !recovered || !storeSetupContinuation(recovered, pending)) {
+              throw new Error(body && body.error ? body.error : 'setup_continuation_unavailable');
+            }
+          } catch (_) {
+            status.textContent = 'We could not verify a protected setup handoff. Retry from this button; billing and activation remain unconfirmed.';
+            resume.disabled = false;
+          }
+        }
+        document.getElementById('resume-setup').addEventListener('click', resumeSetup);
         document.getElementById('check-status').addEventListener('click', checkStatus);
         var poll = window.setInterval(checkStatus, 3000);
         checkStatus();
@@ -275,7 +359,7 @@
           requestSent = true;
           var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, attribution:attribution(), businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), billingPostalCode:billingPostalCode, consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
           var result = await response.json();
-          if (!response.ok || !result.ok || result.status !== 'payment_pending' || !result.checkoutAttemptId || result.correlationId !== requestIdentity.correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
+          if (!response.ok || !result.ok || SETUP_ELIGIBLE_STATES.indexOf(result.status) < 0 || !result.checkoutAttemptId || result.correlationId !== requestIdentity.correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
           if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_accepted_ui', form);
           showPending(result);
         } catch (error) {
@@ -285,6 +369,7 @@
         finally { if (document.getElementById('form')) { submit.textContent = 'Submit secure checkout'; refresh(); } }
       });
       try {
+        if (hasStoredSetupContinuation()) { window.location.assign('/onboarding/intake.html#setup'); return; }
         var pending = readCheckoutIdentity();
         if (pending && validCheckoutUuid(pending.checkoutAttemptId) && validCheckoutUuid(pending.correlationId)) { showPending(pending); return; }
       } catch (_) {}

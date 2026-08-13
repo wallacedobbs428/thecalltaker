@@ -15,7 +15,7 @@ for (const [plan, label, amount] of [["afterhours","After-Hours Capture","$97"],
   assert.ok(pricing.includes(amount), `${label} discloses ${amount}`);
 }
 
-assert.ok(checkout.includes("result.status !== 'payment_pending'"), "browser requires the pending backend receipt");
+assert.ok(checkout.includes("SETUP_ELIGIBLE_STATES.indexOf(result.status) < 0"), "browser requires a setup-eligible backend receipt");
 assert.ok(checkout.includes("result.checkoutAttemptId") && checkout.includes("result.correlationId"), "pending receipt is correlated");
 assert.ok(checkout.includes("result.correlationId !== requestIdentity.correlationId"), "pending receipt must match the persisted submitted correlation");
 assert.ok(checkout.includes("correlation_id="), "status read is scoped by correlation");
@@ -27,7 +27,8 @@ assert.ok(checkout.includes("subscription_scheduled_pending_human_review"), "sig
 assert.ok(checkout.includes("intent:'STORE'") && checkout.includes("customerInitiated:true") && checkout.includes("sellerKeyedIn:false"), "Square tokenization explicitly requests card-on-file verification");
 assert.ok(checkout.includes("token.details.billing.postalCode") && checkout.includes("billingPostalCode:billingPostalCode"), "the secure Square postal result reaches CreateCard without local persistence");
 assert.ok(checkout.includes('http-equiv="Content-Security-Policy"') && checkout.includes("pci-connect.squareupsandbox.com") && checkout.includes("pci-connect.squareup.com"), "Square checkout has an explicit sandbox and production CSP");
-assert.equal(/setupToken|receipt|tct_setup_binding|\/setup\.html/.test(checkout), false, "checkout cannot mint a setup or paid browser result");
+assert.equal(/setupToken|tct_setup_binding|\/setup\.html/.test(checkout), false, "checkout cannot mint a legacy setup binding or paid browser result");
+assert.ok(checkout.includes("result.setupContinuation") && checkout.includes("tct_setup_continuation_v1"), "checkout carries only the server-issued setup continuation into session storage");
 assert.equal(/payment_confirmed|payment_succeeded/.test(checkout), false, "browser cannot emit or infer provider payment truth");
 
 assert.ok(demo.includes('name="follow_up_consent"') && demo.includes("required"), "follow-up needs explicit consent");
