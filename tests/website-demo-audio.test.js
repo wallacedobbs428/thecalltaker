@@ -22,6 +22,9 @@ assert.match(demo, /recorded_ai_sample_load_error/);
 assert.match(demo, /This is a recorded sample, not a live call\./);
 assert.doesNotMatch(demo, /href=["'](?:tel:|sms:)/i);
 assert.match(eventClient, /cta_intent: true/);
-assert.ok(fs.statSync(audio).size > 10_000, "the deployed audio asset is non-empty");
+// A ~1 second placeholder was previously large enough to pass a non-empty
+// assertion.  This floor preserves a real, multi-second browser sample while
+// keeping the test independent of a platform-specific audio decoder.
+assert.ok(fs.statSync(audio).size > 200_000, "the deployed audio asset is a real multi-second sample, not a placeholder");
 
 console.log("website demo audio contract passed");
