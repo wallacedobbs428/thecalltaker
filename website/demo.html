@@ -679,6 +679,49 @@
       line-height: 1.6;
     }
 
+    .browser-audio-card {
+      max-width: 620px;
+      margin: 0 auto 28px;
+      padding: 24px;
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(34,197,94,0.12), rgba(255,255,255,0.025));
+      text-align: left;
+    }
+
+    .browser-audio-kicker {
+      margin-bottom: 8px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .browser-audio-card h3 {
+      margin: 0 0 8px;
+      font-size: 21px;
+      letter-spacing: -0.02em;
+    }
+
+    .browser-audio-card p {
+      margin: 0;
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .browser-audio-player {
+      width: 100%;
+      margin: 18px 0 10px;
+    }
+
+    .browser-audio-status {
+      min-height: 20px;
+      color: var(--text-3) !important;
+      font-size: 12px !important;
+    }
+
     .call-cta-number {
       display: inline-flex;
       align-items: center;
@@ -1362,6 +1405,16 @@
       <div class="next-step-title">What happens next</div>
       <p>If the preview feels right, request a human demo or compare plans. Signed Square confirmation creates a human-owned onboarding review before configuration, forwarding, testing, or live calls.</p>
     </div>
+    <section class="browser-audio-card" aria-labelledby="browser-audio-title">
+      <div class="browser-audio-kicker">Recorded browser sample</div>
+      <h3 id="browser-audio-title">Listen to a 15-second AI receptionist example.</h3>
+      <p>This is a recorded sample, not a live call. Playing it does not call, text, or submit contact information for anyone.</p>
+      <audio id="gideon-browser-audio" class="browser-audio-player" controls preload="metadata" controlslist="nodownload noplaybackrate" data-tct-cta="listen_recorded_ai_sample" data-tct-destination="browser_audio">
+        <source src="assets/demo/demo-call-15s.mp3" type="audio/mpeg">
+        Your browser does not support audio playback. The conversation preview remains available below.
+      </audio>
+      <p id="gideon-browser-audio-status" class="browser-audio-status" role="status" aria-live="polite">The sample is anonymous. When connectivity is available, CTOS receives a privacy-safe browser interaction receipt without your business name or contact details.</p>
+    </section>
     <form id="consented-demo-lead" style="max-width:680px;margin:28px auto 0;padding:24px;border:1px solid var(--border);border-radius:14px;background:#fff;display:grid;gap:12px;" data-tct-form="consented-lead" data-tct-page="demo" data-tct-cta="Request human setup follow-up" data-tct-destination="consented_lead_queue">
       <h3 style="margin:0;color:var(--text-1);">Want us to set this up for your business?</h3>
       <p style="margin:0;color:var(--text-2);line-height:1.55;">Optional. Choose how a person may follow up—nothing is sent until you explicitly consent.</p>
@@ -1541,6 +1594,11 @@
       var demo = document.getElementById('demo-experience');
       var bottomCta = document.getElementById('bottom-cta');
       var leadCapture = document.getElementById('lead-capture-cta');
+      var audioSample = document.getElementById('gideon-browser-audio');
+      var audioStatus = document.getElementById('gideon-browser-audio-status');
+      var audioInteractionRecorded = false;
+      var audioCompletionRecorded = false;
+      var audioErrorRecorded = false;
 
       function safeText(value) {
         var node = document.createElement('div');
@@ -1559,6 +1617,10 @@
         var business = safeText(rawName);
         var industry = industrySelect.value;
         var data = industryData[industry] || industryData.other;
+
+        if (window.TCTFunnelEvents && typeof window.TCTFunnelEvents.record === 'function') {
+          window.TCTFunnelEvents.record('demo_preview_intent', submit);
+        }
         var setText = function (id, value) {
           var element = document.getElementById(id);
           if (element) element.textContent = value;
@@ -1595,6 +1657,32 @@
           window.TCTLeadCapture.open('demo_preview');
         }
       });
+      if (audioSample) {
+        audioSample.addEventListener('play', function () {
+          if (!audioInteractionRecorded && window.TCTFunnelEvents && typeof window.TCTFunnelEvents.record === 'function') {
+            audioSample.dataset.tctCta = 'recorded_ai_sample_played';
+            window.TCTFunnelEvents.record('cta_intent', audioSample);
+            audioInteractionRecorded = true;
+          }
+          if (audioStatus) audioStatus.textContent = 'Playing recorded sample. This is browser audio only; no live call or text is being sent.';
+        });
+        audioSample.addEventListener('ended', function () {
+          if (!audioCompletionRecorded && window.TCTFunnelEvents && typeof window.TCTFunnelEvents.record === 'function') {
+            audioSample.dataset.tctCta = 'recorded_ai_sample_completed';
+            window.TCTFunnelEvents.record('cta_intent', audioSample);
+            audioCompletionRecorded = true;
+          }
+          if (audioStatus) audioStatus.textContent = 'Sample finished. Compare plans or request a human demo only if you want a person to follow up.';
+        });
+        audioSample.addEventListener('error', function () {
+          if (!audioErrorRecorded && window.TCTFunnelEvents && typeof window.TCTFunnelEvents.record === 'function') {
+            audioSample.dataset.tctCta = 'recorded_ai_sample_load_error';
+            window.TCTFunnelEvents.record('cta_intent', audioSample);
+            audioErrorRecorded = true;
+          }
+          if (audioStatus) audioStatus.textContent = 'The recorded sample could not load in this browser. The written conversation preview is still available below.';
+        });
+      }
     }());
   </script>
   <script>
