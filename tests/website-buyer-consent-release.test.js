@@ -96,12 +96,18 @@ test("checkout remains correlated and pending until signed provider truth", () =
   assert.match(checkout, /custom scope above the \$997 base is quoted separately and is not authorized by this checkout/i);
 });
 
-test("unverified Gideon voice paths fail closed and still offer a consented next step", () => {
-  const combined = deployedVoiceSurfaces.map((page) => read(`website/${page}`)).join("\n");
-  assert.doesNotMatch(combined, /href=["']tel:\+16292699697/i);
-  assert.doesNotMatch(combined, />\s*Call Gideon Live\s*</i);
+test("only the homepage exposes the canonical live demo call CTA; recorded and consent surfaces remain separate", () => {
+  const homepage = read("website/index.html");
+  const nonHomepageVoiceSurfaces = deployedVoiceSurfaces
+    .filter((page) => page !== "index.html")
+    .map((page) => read(`website/${page}`))
+    .join("\n");
+  assert.match(homepage, /href=["']tel:\+16292699697/i);
+  assert.match(homepage, /data-tct-destination="live_demo_phone"/);
+  assert.doesNotMatch(homepage, /data-gideon-demo-unverified/);
+  assert.match(homepage, /data-text-channel-unverified="true"/);
+  assert.doesNotMatch(nonHomepageVoiceSurfaces, /href=["']tel:\+16292699697/i);
   assert.match(read("website/demo.html"), /consented-demo-lead/);
-  assert.match(read("website/index.html"), /Build the preview or request a human demo/);
   assert.match(read("website/meet-gideon.html"), /Request a human demo/);
   assert.match(read("website/meet-gideon.html"), /\/assets\/images\/gideon-service-homepage-hero\.png/);
   assert.doesNotMatch(read("website/meet-gideon.html"), /gideon-service-homepage-hero\.webp/);
