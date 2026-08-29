@@ -148,6 +148,9 @@
     if (["homepage_view","demo_view","card_checkout_view","paid_view","checkout_continuity_view","after_hours_answering_service_view","after_hours_call_checklist_view","ai_receptionist_view"].indexOf(eventName) >= 0) return "page_view";
     if (["homepage_cta_click","pricing_plan_click","paid_cta_click","paid_demo_click","lead_capture_open"].indexOf(eventName) >= 0) {
       if (payload && payload.destination_type === "demo") return "demo_preview_intent";
+      // A browser click is not a call receipt. It is a distinct, anonymous
+      // live-phone intent; Retell's signed callback is the call receipt.
+      if (payload && payload.destination_type === "live_demo_phone") return "demo_live_phone_cta_intent";
       if (payload && payload.destination_type === "card_checkout") return "checkout_intent_opened";
       return "cta_intent";
     }
@@ -159,6 +162,17 @@
     try {
       return new URLSearchParams(root.location.search).get(name) || "";
     } catch (error) {
+      return "";
+    }
+  }
+
+  // Keep only the normalized referring hostname. Never persist a referrer
+  // path, query string, fragment, credentials, or the raw URL.
+  function referrerHost() {
+    try {
+      var host = new URL(doc.referrer || "").hostname.toLowerCase().replace(/\.$/, "");
+      return /^[a-z0-9.-]{1,253}$/.test(host) ? host : "";
+    } catch (_) {
       return "";
     }
   }
@@ -194,9 +208,11 @@
       plan: scrub(plan, ""),
       cta: scrub(cta, ""),
       destination_type: scrub(destinationType, ""),
+      receipt_role: destinationType === "live_demo_phone" ? "live_demo_phone_browser_cta" : "",
       source: scrub(source, ""),
       utm_source: scrub(getParam("utm_source"), ""),
       utm_campaign: scrub(getParam("utm_campaign"), ""),
+      referrer_host: referrerHost(),
       device_hint: deviceHint(),
       timestamp: new Date().toISOString(),
       session_id: sessionValue("tct_buyer_session_v1"),
@@ -214,6 +230,7 @@
       event_id: payload.event_id, event_type: payload.event_name, occurred_at: payload.timestamp,
       session_id: payload.session_id, correlation_id: payload.correlation_id, page_path: root.location.pathname || "/",
       source: attr.source, channel: attr.channel || null, campaign: attr.campaign || null, utm_content: attr.utm_content || null, utm_term: attr.utm_term || null,
+      referrer_host: payload.referrer_host || null,
       plan_key: planMap[payload.plan] || payload.plan || null,
       content_key: attr.tct_item_id || null,
       source_asset_sha256: attr.tct_asset_sha256 || null,
@@ -221,6 +238,7 @@
       details: {
         cta: detailSlug(payload.cta),
         destination: detailSlug(payload.destination_type),
+        receipt_role: payload.receipt_role || "",
         content_key: attr.content_key || ""
       }
     };
