@@ -148,9 +148,10 @@
     if (["homepage_view","demo_view","card_checkout_view","paid_view","checkout_continuity_view","after_hours_answering_service_view","after_hours_call_checklist_view","ai_receptionist_view"].indexOf(eventName) >= 0) return "page_view";
     if (["homepage_cta_click","pricing_plan_click","paid_cta_click","paid_demo_click","lead_capture_open"].indexOf(eventName) >= 0) {
       if (payload && payload.destination_type === "demo") return "demo_preview_intent";
-      // A browser click is not a call receipt. It is a distinct, anonymous
-      // live-phone intent; Retell's signed callback is the call receipt.
-      if (payload && payload.destination_type === "live_demo_phone") return "demo_live_phone_cta_intent";
+      // A browser click is not a call receipt. It is an anonymous existing CTA
+      // fact marked by its destination and receipt role; Retell's signed
+      // callback remains the separate provider call receipt.
+      if (payload && payload.destination_type === "live_demo_phone") return "cta_intent";
       if (payload && payload.destination_type === "card_checkout") return "checkout_intent_opened";
       return "cta_intent";
     }

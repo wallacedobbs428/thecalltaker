@@ -17,7 +17,7 @@ test("homepage exposes the public live-call CTA without allowing a text channel"
   assert.match(homepage, /data-tct-destination="live_demo_phone"/);
   assert.match(homepage, /data-tct-learning-tag="demo_call_intent"/);
   const funnelClient = read("website/tct-funnel-events.js");
-  assert.match(funnelClient, /destination_type === "live_demo_phone"\) return "demo_live_phone_cta_intent"/);
+  assert.match(funnelClient, /destination_type === "live_demo_phone"\) return "cta_intent"/);
   assert.match(funnelClient, /receipt_role: destinationType === "live_demo_phone" \? "live_demo_phone_browser_cta" : ""/);
   assert.match(funnelClient, /receipt_role: payload\.receipt_role \|\| ""/);
   assert.match(funnelClient, /new URL\(doc\.referrer \|\| ""\)\.hostname/);
