@@ -20,6 +20,7 @@ assert.match(demo, /recorded_ai_sample_played/);
 assert.match(demo, /recorded_ai_sample_completed/);
 assert.match(demo, /recorded_ai_sample_load_error/);
 assert.match(demo, /This is a recorded sample, not a live call\./);
+assert.doesNotMatch(demo, /voice (?:demo|line) is being verified/i);
 assert.doesNotMatch(demo, /href=["'](?:tel:|sms:)/i);
 assert.match(eventClient, /cta_intent: true/);
 // A ~1 second placeholder was previously large enough to pass a non-empty
