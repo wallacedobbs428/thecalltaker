@@ -147,11 +147,15 @@ test("CTA observations are emitted as intent, never provider or activation truth
   env.anchor.dataset.tctDestination = "demo";
   env.window.TCTFunnelEvents.record("homepage_cta_click", env.anchor);
   env.window.TCTFunnelEvents.record("demo_preview_rendered_ui", env.anchor);
+  env.anchor.dataset.tctCta = "Recorded AI sample completed";
+  env.anchor.dataset.tctDestination = "browser_audio";
+  env.window.TCTFunnelEvents.record("cta_intent", env.anchor);
   assert.deepEqual(env.requests.map((request) => request.body.event_type), [
     "page_view",
     "checkout_intent_opened",
     "demo_preview_intent",
     "demo_preview_rendered_ui",
+    "cta_intent",
   ]);
 });
 

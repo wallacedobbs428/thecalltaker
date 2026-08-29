@@ -15,6 +15,7 @@
   var allowGtag = config.allowGtag === true;
   var debug = config.debug === true || /(?:^|[?&])tct_debug=1(?:&|$)/.test(root.location.search);
   var allowedEvents = {
+    cta_intent: true,
     homepage_view: true,
     homepage_cta_click: true,
     pricing_view: true,

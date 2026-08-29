@@ -27,6 +27,7 @@ assert.ok(checkout.includes("subscription_scheduled_pending_human_review"), "sig
 assert.ok(checkout.includes("intent:'STORE'") && checkout.includes("customerInitiated:true") && checkout.includes("sellerKeyedIn:false"), "Square tokenization explicitly requests card-on-file verification");
 assert.ok(checkout.includes("token.details.billing.postalCode") && checkout.includes("billingPostalCode:billingPostalCode"), "the secure Square postal result reaches CreateCard without local persistence");
 assert.ok(checkout.includes('http-equiv="Content-Security-Policy"') && checkout.includes("pci-connect.squareupsandbox.com") && checkout.includes("pci-connect.squareup.com"), "Square checkout has an explicit sandbox and production CSP");
+assert.match(checkout, /font-src[^;]*https:\/\/cash-f\.squarecdn\.com/, "Square-hosted payment fields may load their current font host without widening script or frame policy");
 assert.equal(/setupToken|tct_setup_binding|\/setup\.html/.test(checkout), false, "checkout cannot mint a legacy setup binding or paid browser result");
 assert.ok(checkout.includes("result.setupContinuation") && checkout.includes("tct_setup_continuation_v1"), "checkout carries only the server-issued setup continuation into session storage");
 assert.equal(/payment_confirmed|payment_succeeded/.test(checkout), false, "browser cannot emit or infer provider payment truth");
