@@ -27,4 +27,7 @@ test("homepage exposes the public live-call CTA without allowing a text channel"
   assert.doesNotMatch(homepage, /Live Gideon demo and text-channel verification/);
   assert.match(homepage, /data-text-channel-unverified="true"/);
   assert.doesNotMatch(homepage, /href=["']sms:/i);
+  assert.doesNotMatch(homepage, /Text messaging is not available from this site\./);
+  assert.doesNotMatch(homepage, /homepage-text-status/);
+  assert.doesNotMatch(homepage, /document\.body\.insertBefore\(status/);
 });
