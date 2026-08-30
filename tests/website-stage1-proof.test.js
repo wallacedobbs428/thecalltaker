@@ -102,8 +102,8 @@ assert.ok(multilingualSection, "homepage should keep the multilingual coverage s
   "Clean handoff",
   "Name, phone number, job need, urgency, preferred language, and next step captured in one clean summary.",
   'href="/pricing.html"',
-  'href="#gideon-demo-status"',
-  'data-gideon-demo-unverified="true"',
+  'href="tel:+16292699697"',
+  'data-tct-destination="live_demo_phone"',
 ].forEach((marker) => {
   assert.ok(multilingualSection[0].includes(marker), `multilingual section should include trust marker: ${marker}`);
 });
@@ -189,13 +189,17 @@ Object.entries(pages).forEach(([page, html]) => {
 });
 
 Object.entries(pages).forEach(([page, html]) => {
-  assert.doesNotMatch(html, /href=["'](?:tel:|sms:)/i, `${page} must not expose an unverified voice or SMS CTA`);
+  assert.doesNotMatch(html, /href=["']sms:/i, `${page} must not expose an SMS CTA`);
+  if (page !== "website/index.html") {
+    assert.doesNotMatch(html, /href=["']tel:/i, `${page} must not expose the homepage-only live demo CTA`);
+  }
 });
 
 assert.ok(
-  pages["website/index.html"].includes("Build the preview or request a human demo.") &&
-    pages["website/index.html"].includes("/demo.html?source=homepage-status#consented-demo-lead"),
-  "homepage should give visitors a safe preview and explicit-consent human follow-up"
+  pages["website/index.html"].includes('href="tel:+16292699697"') &&
+    pages["website/index.html"].includes('data-tct-destination="live_demo_phone"') &&
+    pages["website/index.html"].includes('data-text-channel-unverified="true"'),
+  "homepage should expose only the verified live demo while text remains guarded"
 );
 assert.ok(
   pages["website/pricing.html"].includes("/demo.html?source=pricing#consented-demo-lead") &&

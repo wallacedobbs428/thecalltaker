@@ -25,25 +25,6 @@
     event.preventDefault();
     event.stopImmediatePropagation();
   }, true);
-  document.addEventListener("DOMContentLoaded", function () {
-    var status = document.createElement("p");
-    status.id = "text-channel-status";
-    status.setAttribute("role", "status");
-    status.textContent = "Text messaging is not available from this site. The live call demo and consented human-demo request remain available. ";
-    status.style.cssText = "margin:0;padding:12px 20px;background:#fff4d6;color:#5f4300;text-align:center;font:600 14px/1.4 Arial,sans-serif";
-    var safeDemoLink = document.createElement("a");
-    safeDemoLink.href = "/demo.html?source=homepage-text-status#consented-demo-lead";
-    safeDemoLink.textContent = "Request a human demo.";
-    safeDemoLink.style.cssText = "color:inherit;text-decoration:underline";
-    status.appendChild(safeDemoLink);
-    document.body.insertBefore(status, document.body.firstChild);
-    document.querySelectorAll('a[data-text-channel-unverified="true"]').forEach(function (link) {
-      link.setAttribute("href", "#text-channel-status");
-      link.setAttribute("aria-disabled", "true");
-      link.setAttribute("aria-label", "Text-channel verification in progress");
-      link.textContent = "Text availability verification in progress";
-    });
-  });
 </script>
 <meta name="description" content="Gideon answers calls, collects caller details, and sends clean summaries after your setup questions are in.">
 <meta property="og:type" content="website">
