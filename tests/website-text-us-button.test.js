@@ -40,7 +40,8 @@ assert.match(publicPages.home, /data-tct-destination="live_demo_phone"/);
 
 assert.doesNotMatch(publicPages.home, /data-gideon-demo-unverified="true"/);
 assert.match(publicPages.home, /Call the live demo/);
-assert.match(publicPages.home, /\/demo\.html\?source=homepage-text-status#consented-demo-lead/);
+assert.match(publicPages.home, /data-text-channel-unverified="true"/);
+assert.doesNotMatch(publicPages.home, /Text messaging is not available from this site\./);
 
 checkoutRoutes.forEach((route) => {
   assert.ok(publicPages.home.includes(route), `homepage should preserve ${route}`);

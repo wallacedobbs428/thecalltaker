@@ -199,8 +199,8 @@ Object.entries(pages)
 
 assert.ok(
   pages["website/index.html"].includes("Call the live demo") &&
-    pages["website/index.html"].includes("/demo.html?source=homepage-text-status#consented-demo-lead"),
-  "homepage should expose the verified public demo while preserving explicit-consent human follow-up"
+    pages["website/index.html"].includes('data-text-channel-unverified="true"'),
+  "homepage should expose the verified public demo while text remains guarded"
 );
 assert.ok(
   pages["website/pricing.html"].includes("/demo.html?source=pricing#consented-demo-lead") &&
