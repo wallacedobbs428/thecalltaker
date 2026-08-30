@@ -102,8 +102,8 @@ assert.ok(multilingualSection, "homepage should keep the multilingual coverage s
   "Clean handoff",
   "Name, phone number, job need, urgency, preferred language, and next step captured in one clean summary.",
   'href="/pricing.html"',
-  'href="#gideon-demo-status"',
-  'data-gideon-demo-unverified="true"',
+  'href="tel:+16292699697"',
+  'data-tct-destination="live_demo_phone"',
 ].forEach((marker) => {
   assert.ok(multilingualSection[0].includes(marker), `multilingual section should include trust marker: ${marker}`);
 });
@@ -188,14 +188,19 @@ Object.entries(pages).forEach(([page, html]) => {
   });
 });
 
-Object.entries(pages).forEach(([page, html]) => {
-  assert.doesNotMatch(html, /href=["'](?:tel:|sms:)/i, `${page} must not expose an unverified voice or SMS CTA`);
-});
+assert.doesNotMatch(pages["website/index.html"], /href=["']sms:/i, "homepage must keep cold SMS disabled");
+assert.match(pages["website/index.html"], /href=["']tel:\+16292699697/i, "homepage must expose the verified live demo only");
+assert.match(pages["website/index.html"], /data-tct-destination="live_demo_phone"/, "homepage demo CTA must remain receipt-attributed");
+Object.entries(pages)
+  .filter(([page]) => page !== "website/index.html")
+  .forEach(([page, html]) => {
+    assert.doesNotMatch(html, /href=["'](?:tel:|sms:)/i, `${page} must not expose voice or SMS CTA`);
+  });
 
 assert.ok(
-  pages["website/index.html"].includes("Build the preview or request a human demo.") &&
-    pages["website/index.html"].includes("/demo.html?source=homepage-status#consented-demo-lead"),
-  "homepage should give visitors a safe preview and explicit-consent human follow-up"
+  pages["website/index.html"].includes("Call the live demo") &&
+    pages["website/index.html"].includes("/demo.html?source=homepage-text-status#consented-demo-lead"),
+  "homepage should expose the verified public demo while preserving explicit-consent human follow-up"
 );
 assert.ok(
   pages["website/pricing.html"].includes("/demo.html?source=pricing#consented-demo-lead") &&

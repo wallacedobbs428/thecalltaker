@@ -100,6 +100,7 @@ test("valid content attribution survives session, CTA navigation, and event pers
   assert.deepEqual(env.requests[0].body.details, {
     cta: "",
     destination: "",
+    receipt_role: "",
     content_key: ITEM_ID,
   });
 });
