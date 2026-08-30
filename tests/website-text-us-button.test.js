@@ -23,10 +23,14 @@ const checkoutRoutes = [
   "/card-checkout.html?plan=custom",
 ];
 
-// Direct SMS and unverified voice CTAs were retired. Support now goes through the
-// explicit-consent lead form; anonymous visitors remain analytics-only.
-assert.doesNotMatch(combined, /href=["'](?:sms:|tel:)/i);
+// SMS remains off. The verified public demo number is intentionally homepage-only;
+// anonymous callers remain separate from consented human follow-up.
+assert.doesNotMatch(combined, /href=["']sms:/i);
 assert.doesNotMatch(combined, /api\.sendblue|sendblue\.com/i);
+const nonHomepage = [publicPages.pricing, publicPages.faq, publicPages.setup, publicPages.confirmation].join("\n");
+assert.doesNotMatch(nonHomepage, /href=["']tel:/i);
+assert.match(publicPages.home, /href=["']tel:\+16292699697/i);
+assert.match(publicPages.home, /data-tct-destination="live_demo_phone"/);
 
 [publicPages.pricing, publicPages.faq].forEach((html) => {
   assert.match(html, /href="\/demo\.html\?source=[^"]+#consented-demo-lead"/);
@@ -34,9 +38,9 @@ assert.doesNotMatch(combined, /api\.sendblue|sendblue\.com/i);
   assert.match(html, /data-destination="consented_lead_queue"/);
 });
 
-assert.match(publicPages.home, /data-gideon-demo-unverified="true"/);
-assert.match(publicPages.home, /Build the preview or request a human demo\./);
-assert.match(publicPages.home, /\/demo\.html\?source=homepage-status#consented-demo-lead/);
+assert.doesNotMatch(publicPages.home, /data-gideon-demo-unverified="true"/);
+assert.match(publicPages.home, /Call the live demo/);
+assert.match(publicPages.home, /\/demo\.html\?source=homepage-text-status#consented-demo-lead/);
 
 checkoutRoutes.forEach((route) => {
   assert.ok(publicPages.home.includes(route), `homepage should preserve ${route}`);
