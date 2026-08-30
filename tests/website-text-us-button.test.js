@@ -37,6 +37,10 @@ assert.match(publicPages.home, /data-tct-destination="live_demo_phone"/);
   assert.match(html, /aria-label="Request human follow-up"/);
   assert.match(html, /data-destination="consented_lead_queue"/);
 });
+assert.doesNotMatch(publicPages.pricing, /Text us if/i, "pricing must not promise an SMS route that the CTA does not open");
+assert.doesNotMatch(publicPages.pricing, /data-tct-learning-tag="sms_intent"/, "human follow-up must not be attributed as SMS intent");
+assert.match(publicPages.pricing, /Request a human follow-up if you need a custom fit or help choosing the right plan\./);
+assert.match(publicPages.pricing, /data-tct-learning-tag="human_followup_intent"/);
 
 assert.doesNotMatch(publicPages.home, /data-gideon-demo-unverified="true"/);
 assert.match(publicPages.home, /Call the live demo/);
