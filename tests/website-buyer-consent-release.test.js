@@ -57,8 +57,8 @@ test("the optional Gideon follow-up is explicit, durable, and never anonymous ou
   assert.match(demo, /name="phone"[^>]*required/);
   assert.match(demo, /Required by the current human follow-up queue, even when email is your preferred contact method/);
   assert.match(demo, /follow_up_consent:data\.get\('follow_up_consent'\) === 'on'/);
-  assert.doesNotMatch(demo, /body\.id/);
-  assert.match(demo, /body\.request_id/);
+  assert.match(demo, /body\.id/);
+  assert.doesNotMatch(demo, /body\.request_id/);
   assert.match(demo, /body\.correlation_id !== correlationId/);
   assert.match(demo, /session_id:sessionId/);
   for (const key of ["content_key","source_asset_sha256","source_publication_seed_sha256"]) assert.match(demo, new RegExp(`${key}:`));

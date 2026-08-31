@@ -14,6 +14,7 @@ const ITEM_ID = "ready_007";
 const ASSET_SHA256 = "39a11584815d2f75189849055e5cdc4859d5dbd5a337a8d0f2669c8d57319c57";
 const PUBLICATION_SEED_SHA256 = "8bcaf881d4598dce804da777dc76c6f336210cd3fc76d22d37db7bca93821000";
 const CORRELATION_ID = "32345678-1234-4123-8123-123456789012";
+const TEST_RUN_ID = "42345678-1234-4123-8123-123456789012";
 
 function environment(search, initialAttribution) {
   const storage = new Map();
@@ -103,6 +104,17 @@ test("valid content attribution survives session, CTA navigation, and event pers
     receipt_role: "",
     content_key: ITEM_ID,
   });
+});
+
+test("a controlled attribution run is explicitly tagged and forwarded without touching real attribution state", () => {
+  const env = environment(`?tct_attribution_test=${TEST_RUN_ID}`);
+  vm.runInContext(canonical, env.context);
+  const target = new URL(env.anchor.href, "https://thecalltaker.com");
+  assert.equal(target.searchParams.get("tct_attribution_test"), TEST_RUN_ID);
+  assert.equal(env.requests[0].body.traffic_kind, "controlled_test");
+  assert.equal(env.requests[0].body.test_run_id, TEST_RUN_ID);
+  assert.equal(env.requests[0].body.source, "direct");
+  assert.equal("email" in env.requests[0].body, false);
 });
 
 test("invalid content identifiers fail closed instead of entering session, links, or events", () => {

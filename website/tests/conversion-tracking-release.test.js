@@ -14,4 +14,6 @@ assert.match(canonical, /credentials:\s*"omit"/);
 assert.match(canonical, /2129562004253413/);
 assert.doesNotMatch(canonical, /XXXXXXXXXX/);
 assert.match(canonical, /__TCT_FUNNEL_EVENTS_INITIALIZED__/);
+assert.match(canonical, /tct_attribution_test/);
+assert.match(canonical, /traffic_kind = "controlled_test"/);
 console.log("privacy-safe conversion tracking release tests passed");

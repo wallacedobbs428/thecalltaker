@@ -85,6 +85,14 @@
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value || "");
   }
 
+  // A UUID passed only by the controlled production smoke harness marks every
+  // browser event in that run as non-business technical evidence. It is never
+  // stored as a lead, payment, customer, or provider action.
+  function controlledTestRunId() {
+    var candidate = getParam("tct_attribution_test");
+    return validUuid(candidate) ? candidate : "";
+  }
+
   function validContentAttribution(name, value) {
     var candidate = (value || "").toString().trim();
     if (name === "tct_item_id") {
@@ -266,6 +274,11 @@
         content_key: attr.content_key || ""
       }
     };
+    var testRunId = controlledTestRunId();
+    if (testRunId) {
+      body.traffic_kind = "controlled_test";
+      body.test_run_id = testRunId;
+    }
     root.fetch(endpoint, { method:"POST", headers:{ "Content-Type":"application/json" }, credentials:"omit", keepalive:true, body:JSON.stringify(body) }).catch(function () {});
   }
 
@@ -332,6 +345,7 @@
       utm_content: attr.utm_content,
       utm_term: attr.utm_term,
       correlation_id: sessionValue("tct_correlation_id_v1"),
+      tct_attribution_test: controlledTestRunId(),
       tct_item_id: attr.tct_item_id,
       tct_asset_sha256: attr.tct_asset_sha256,
       tct_publication_seed_sha256: attr.tct_publication_seed_sha256
