@@ -1737,7 +1737,7 @@
             body: JSON.stringify({ name:data.get('name'), company:data.get('company'), email:data.get('email'), phone:data.get('phone'), preferred_contact_method:data.get('preferred_contact_method'), follow_up_consent:data.get('follow_up_consent') === 'on', source:'gideon_demo', page:window.location.pathname, correlation_id:correlationId, session_id:sessionId, website:data.get('website') || '', utm_source:issuedUtmSource(params.get('utm_source') || stored.utm_source), utm_medium:issuedUtmChannel(params.get('utm_medium') || stored.utm_medium), utm_campaign:issuedUtmSlug(params.get('utm_campaign') || stored.utm_campaign), utm_content:issuedUtmSlug(params.get('utm_content') || stored.utm_content), utm_term:issuedUtmSlug(params.get('utm_term') || stored.utm_term), content_key:itemId, source_asset_sha256:assetSha256, source_publication_seed_sha256:publicationSeedSha256 })
           });
           var body = await response.json();
-          if (!response.ok || !body || !body.ok || !body.request_id || body.correlation_id !== correlationId) throw new Error((body && body.error) || 'Unable to verify your saved request.');
+          if (!response.ok || !body || body.ok !== true || !body.id || body.correlation_id !== correlationId) throw new Error((body && body.error) || 'Unable to verify your saved request.');
           recordLeadUi('lead_request_accepted_ui');
           status.textContent = 'Request received. A person will follow up by your chosen method.';
           form.reset();

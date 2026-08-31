@@ -8,6 +8,29 @@
 
   var root = window;
   var doc = document;
+  if (root.__TCT_FUNNEL_EVENTS_INITIALIZED__) return;
+  root.__TCT_FUNNEL_EVENTS_INITIALIZED__ = true;
+
+  // Meta is initialized exactly once here, alongside the only canonical CTOS
+  // browser producer. No email, phone, card, lead form value, or secret is
+  // passed to Meta from this client.
+  function initMetaPixel() {
+    if (typeof root.fbq === "function") return;
+    var fbq = function () { fbq.callMethod ? fbq.callMethod.apply(fbq, arguments) : fbq.queue.push(arguments); };
+    fbq.queue = [];
+    fbq.loaded = true;
+    fbq.version = "2.0";
+    root.fbq = fbq;
+    root._fbq = fbq;
+    fbq("init", "2129562004253413");
+    fbq("track", "PageView");
+    if (!doc.createElement || !(doc.head || doc.documentElement)) return;
+    var script = doc.createElement("script");
+    script.async = true;
+    script.src = "https://connect.facebook.net/en_US/fbevents.js";
+    (doc.head || doc.documentElement).appendChild(script);
+  }
+  initMetaPixel();
   var counter = 0;
   var config = root.TCT_FUNNEL_CONFIG || {};
   var endpoint = config.endpoint || "https://call-taker-os.vercel.app/api/public/buyer-event";
