@@ -6,6 +6,7 @@ const root = path.resolve(__dirname, "..", "..");
 const entrypoint = fs.readFileSync(path.join(root, "website/tct-tracking.js"), "utf8");
 const canonical = fs.readFileSync(path.join(root, "website/tct-funnel-events.js"), "utf8");
 assert.match(entrypoint, /Canonical public attribution entrypoint/);
+assert.match(entrypoint, /TCT_ATTRIBUTION_ENTRYPOINT_VERSION = "tct-tracking-entrypoint-v1"/);
 assert.match(entrypoint, /tct-funnel-events\.js/);
 assert.match(entrypoint, /__TCT_ATTRIBUTION_ENTRYPOINT_LOADED__/);
 assert.match(canonical, /api\/public\/buyer-event/);

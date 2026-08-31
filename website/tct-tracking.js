@@ -8,6 +8,7 @@
  */
 (function (root, document) {
   "use strict";
+  root.TCT_ATTRIBUTION_ENTRYPOINT_VERSION = "tct-tracking-entrypoint-v1";
   if (root.__TCT_ATTRIBUTION_ENTRYPOINT_LOADED__) return;
   root.__TCT_ATTRIBUTION_ENTRYPOINT_LOADED__ = true;
   root.TCTLeadCapture = { open: function () { return false; } };

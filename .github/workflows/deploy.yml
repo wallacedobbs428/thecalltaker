@@ -115,6 +115,25 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+      - name: Verify live canonical tracking asset
+        env:
+          EXPECTED_TRACKING_MARKER: TCT_ATTRIBUTION_ENTRYPOINT_VERSION = "tct-tracking-entrypoint-v1"
+        run: |
+          set -euo pipefail
+          asset_url="https://thecalltaker.com/tct-tracking.js?release=${GITHUB_SHA}"
+          for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            asset="$(curl --fail --silent --show-error --max-time 20 -H 'Cache-Control: no-cache' "$asset_url" || true)"
+            if printf '%s' "$asset" | grep -Fq "$EXPECTED_TRACKING_MARKER"; then
+              printf 'Canonical tracking asset verified on custom domain (attempt %s).\n' "$attempt"
+              exit 0
+            fi
+            if [ "$attempt" -lt 12 ]; then
+              sleep 10
+            fi
+          done
+          printf 'Custom domain did not serve the expected canonical tracking asset after Pages deploy.\n' >&2
+          exit 1
+
       - name: Notify ntfy on deploy
         if: ${{ false }}
         run: |

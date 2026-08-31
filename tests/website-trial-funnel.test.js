@@ -33,7 +33,7 @@ assert.ok(checkout.includes("result.setupContinuation") && checkout.includes("tc
 assert.equal(/payment_confirmed|payment_succeeded/.test(checkout), false, "browser cannot emit or infer provider payment truth");
 
 assert.ok(demo.includes('name="follow_up_consent"') && demo.includes("required"), "follow-up needs explicit consent");
-assert.ok(demo.includes("body.request_id") && demo.includes("body.correlation_id !== correlationId"), "success requires the durable correlated server receipt");
+assert.ok(demo.includes("body.id") && demo.includes("body.correlation_id !== correlationId") && !demo.includes("body.request_id"), "success requires the canonical durable correlated server receipt");
 assert.ok(demo.includes("session_id:sessionId"), "consented lead reuses the anonymous session correlation");
 assert.equal(demo.includes('data-tct-event="lead_form_submitted"'), false, "form interaction cannot pretend submission");
 assert.ok(demo.includes("<title>Build a Revenue Recovery Preview | The Call Taker</title>"), "recorded sample keeps a distinct preview title");
