@@ -8,7 +8,9 @@ const client = read("website/tct-funnel-events.js");
 const checkout = read("website/card-checkout.html");
 const demo = read("website/demo.html");
 for (const page of ["index.html","pricing.html","demo.html","meet-gideon.html","paid.html","card-checkout.html","setup.html","setup-confirmation.html","faq.html"]) {
-  assert.ok(read(`website/${page}`).includes("tct-funnel-events.js"), `${page} loads the canonical event client`);
+  const html = read(`website/${page}`);
+  assert.ok(html.includes("tct-tracking.js"), `${page} loads the canonical attribution entrypoint`);
+  assert.equal(html.includes("tct-funnel-events.js"), false, `${page} does not bypass the canonical entrypoint`);
 }
 for (const event of [
   "page_view", "cta_intent", "demo_preview_intent", "demo_preview_rendered_ui", "pricing_viewed",
