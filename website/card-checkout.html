@@ -5,82 +5,226 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://sandbox.web.squarecdn.com https://web.squarecdn.com; frame-src 'self' https://sandbox.web.squarecdn.com https://web.squarecdn.com; connect-src 'self' https://call-taker-square-sandbox.vercel.app https://call-taker-os.vercel.app https://sandbox.web.squarecdn.com https://web.squarecdn.com https://pci-connect.squareupsandbox.com https://pci-connect.squareup.com https://o160250.ingest.sentry.io; style-src 'self' 'unsafe-inline' https://sandbox.web.squarecdn.com https://web.squarecdn.com; font-src 'self' https://square-fonts-production-f.squarecdn.com https://cash-f.squarecdn.com https://d1g145x70srn7h.cloudfront.net; img-src 'self' data:; worker-src 'self' blob:; upgrade-insecure-requests">
   <meta name="robots" content="noindex,follow">
-  <title>Secure card checkout — The Call Taker</title>
+  <meta name="theme-color" content="#07110c">
+  <meta name="description" content="Start your 14-day The Call Taker trial through a secure Square card checkout with clear renewal terms and protected onboarding.">
+  <title>Secure Square checkout — The Call Taker</title>
   <style>
-    :root { --ink:#12211d; --pine:#163c31; --paper:#f6f3eb; --line:#d6dcd3; --muted:#62716a; --gold:#c7a760; --error:#a52620; }
+    :root {
+      color-scheme:dark;
+      --bg:#050806;
+      --surface:#0c120e;
+      --surface-2:#111a14;
+      --line:rgba(173,224,198,.14);
+      --line-strong:rgba(71,196,145,.34);
+      --ink:#f1faf5;
+      --muted:#9eb2a6;
+      --green:#2fc58a;
+      --green-2:#85e5b9;
+      --green-soft:rgba(47,197,138,.10);
+      --amber:#f2c879;
+      --error:#ff9d96;
+      --shadow:0 32px 90px rgba(0,0,0,.48);
+    }
     * { box-sizing:border-box; }
-    body { margin:0; min-height:100vh; color:var(--ink); background:var(--paper); font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
-    main { width:min(710px,calc(100% - 32px)); margin:44px auto; }
-    .brand { color:var(--pine); font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
-    .shell { margin-top:18px; overflow:hidden; border:1px solid var(--line); border-radius:20px; background:#fff; box-shadow:0 20px 54px #163c3118; }
-    .hero { padding:32px; color:#fff; background:linear-gradient(135deg,#112b24,#1d4b3e); }
-    .hero .brand { color:#ddc17f; }
-    .hero h1 { margin:10px 0; font:400 clamp(34px,6vw,52px)/1 Georgia,serif; letter-spacing:-.03em; }
-    .hero p { margin:0; color:#d7e5dc; line-height:1.55; }
-    .summary { display:flex; justify-content:space-between; gap:20px; padding:20px 32px; border-bottom:1px solid var(--line); background:#fcfbf7; }
-    .summary strong { font-size:17px; }
-    .summary span { color:var(--muted); font-size:14px; }
-    .due { text-align:right; }
-    .due b { color:var(--pine); font-size:21px; }
-    form { padding:30px 32px; }
-    .label { margin:0 0 13px; color:var(--pine); font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    [hidden] { display:none!important; }
+    html { background:var(--bg); }
+    body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(circle at 8% 0%,rgba(47,197,138,.13),transparent 32rem),radial-gradient(circle at 92% 30%,rgba(47,197,138,.07),transparent 28rem),var(--bg); font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; }
+    button,input,select { font:inherit; }
+    .topbar { width:min(1180px,calc(100% - 40px)); margin:0 auto; padding:24px 0; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .wordmark { font-size:17px; font-weight:850; letter-spacing:-.025em; text-decoration:none; }
+    .wordmark span { color:var(--green); }
+    .back { color:var(--muted); font-size:13px; font-weight:750; text-decoration:none; }
+    .back:hover { color:var(--ink); }
+    main { width:min(1180px,calc(100% - 40px)); margin:18px auto 64px; }
+    .checkout-grid { display:grid; grid-template-columns:minmax(0,.82fr) minmax(500px,1.18fr); gap:24px; align-items:start; }
+    .brand { color:var(--green-2); font-size:11px; font-weight:850; letter-spacing:.14em; text-transform:uppercase; }
+    .value-panel,.shell { border:1px solid var(--line); border-radius:24px; background:rgba(12,18,14,.94); box-shadow:var(--shadow); }
+    .value-panel { position:sticky; top:24px; overflow:hidden; }
+    .hero { padding:38px 38px 32px; background:linear-gradient(145deg,rgba(47,197,138,.12),transparent 55%); }
+    .hero h1 { margin:14px 0 16px; max-width:9ch; font:650 clamp(42px,5.6vw,66px)/.97 Inter,-apple-system,sans-serif; letter-spacing:-.065em; }
+    .hero p { margin:0; max-width:48ch; color:#bdd0c4; line-height:1.65; }
+    .plan-card { margin:0 38px 28px; padding:22px; border:1px solid var(--line-strong); border-radius:17px; background:linear-gradient(135deg,rgba(47,197,138,.12),rgba(47,197,138,.035)); }
+    .plan-top { display:flex; justify-content:space-between; gap:18px; align-items:start; }
+    .plan-name { font-size:16px; font-weight:850; }
+    .plan-detail { margin-top:5px; color:var(--muted); font-size:13px; line-height:1.45; }
+    .price { flex:none; text-align:right; }
+    .price strong { display:block; color:var(--green-2); font-size:24px; letter-spacing:-.04em; }
+    .price span { color:var(--muted); font-size:11px; }
+    .timeline { display:grid; grid-template-columns:1fr 1fr; gap:1px; margin-top:18px; overflow:hidden; border:1px solid var(--line); border-radius:12px; background:var(--line); }
+    .timeline div { padding:13px 14px; background:#0c1510; }
+    .timeline small { display:block; margin-bottom:4px; color:var(--muted); font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+    .timeline b { color:var(--ink); font-size:14px; }
+    .benefits { display:grid; gap:13px; margin:0; padding:0 38px 36px; list-style:none; }
+    .benefits li { display:grid; grid-template-columns:22px 1fr; gap:10px; color:#c8d7ce; font-size:14px; line-height:1.5; }
+    .check { display:grid; width:22px; height:22px; place-items:center; border-radius:50%; color:#06100b; background:var(--green); font-size:12px; font-weight:900; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:19px 22px; border-top:1px solid var(--line); background:rgba(0,0,0,.18); }
+    .step { color:var(--muted); font-size:11px; font-weight:750; line-height:1.35; }
+    .step b { display:block; margin-bottom:4px; color:var(--green-2); font-size:10px; letter-spacing:.08em; text-transform:uppercase; }
+    .shell { overflow:hidden; }
+    .form-head { padding:28px 32px 22px; border-bottom:1px solid var(--line); }
+    .secure-row { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .secure-pill { display:inline-flex; align-items:center; gap:7px; min-height:30px; padding:6px 10px; border:1px solid var(--line-strong); border-radius:999px; color:var(--green-2); background:var(--green-soft); font-size:11px; font-weight:850; }
+    .secure-pill svg { width:14px; height:14px; }
+    .form-head h2 { margin:16px 0 8px; font-size:26px; letter-spacing:-.04em; }
+    .form-head p { margin:0; color:var(--muted); font-size:14px; line-height:1.55; }
+    form { padding:28px 32px 30px; }
+    fieldset { min-width:0; margin:0; padding:0; border:0; }
+    fieldset + fieldset { margin-top:28px; padding-top:28px; border-top:1px solid var(--line); }
+    .label { display:flex; align-items:center; gap:9px; margin:0 0 16px; color:var(--ink); font-size:14px; font-weight:850; letter-spacing:-.01em; }
+    .number { display:grid; width:24px; height:24px; place-items:center; border:1px solid var(--line-strong); border-radius:8px; color:var(--green-2); background:var(--green-soft); font-size:11px; }
     .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-    label { display:grid; gap:7px; color:#405149; font-size:13px; font-weight:700; }
+    label { display:grid; gap:8px; color:#cad8d0; font-size:12px; font-weight:750; }
     .wide { grid-column:1/-1; }
-    input,select,#card { width:100%; min-height:48px; padding:12px; border:1px solid #c7d0c9; border-radius:9px; background:#fff; font:inherit; }
-    #card { min-height:88px; padding:14px; }
-    .consent { display:flex; gap:10px; align-items:flex-start; margin:22px 0; font-weight:400; line-height:1.5; }
-    .consent input { width:18px; min-height:18px; margin:1px 0 0; accent-color:var(--pine); }
-    button { width:100%; min-height:53px; border:0; border-radius:10px; color:#fff; background:var(--pine); font:800 16px inherit; cursor:pointer; }
-    button:disabled { opacity:.5; cursor:not-allowed; }
-    .msg { min-height:20px; margin:14px 0 0; color:var(--error); font-size:14px; }
-    .logos { color:#607069; font-size:12px; font-weight:700; letter-spacing:.06em; text-align:center; }
-    .fine { margin:16px 0 0; color:#748079; font-size:12px; line-height:1.55; text-align:center; }
-    .fine a { color:var(--pine); font-weight:700; }
-    .success { padding:42px 32px; text-align:center; }
-    .success h2 { margin:10px; font:400 36px Georgia,serif; }
-    .success p { color:var(--muted); line-height:1.6; }
-    .success a { display:inline-block; padding:14px 22px; border-radius:9px; color:#fff; background:var(--pine); font-weight:800; text-decoration:none; }
-    .pending { padding:42px 32px; text-align:center; }
-    .pending h2 { margin:10px; font:400 36px Georgia,serif; }
-    .pending p { color:var(--muted); line-height:1.6; }
-    @media(max-width:600px) { main { margin:18px auto; } .hero,.summary,form,.success { padding-right:20px; padding-left:20px; } .grid { grid-template-columns:1fr; } .wide { grid-column:auto; } }
+    input,select,#card { width:100%; min-height:50px; padding:13px 14px; border:1px solid rgba(187,215,199,.2); border-radius:11px; color:var(--ink); background:#080d0a; outline:none; transition:border-color .18s,box-shadow .18s,background .18s; }
+    input::placeholder { color:#596b61; }
+    input:hover,select:hover,#card:hover { border-color:rgba(187,215,199,.34); }
+    input:focus,select:focus { border-color:var(--green); box-shadow:0 0 0 3px rgba(47,197,138,.13); background:#0b130e; }
+    #card { min-height:92px; padding:14px; background:#fff; }
+    .card-loading { display:flex; min-height:92px; align-items:center; justify-content:center; border:1px solid rgba(187,215,199,.2); border-radius:11px; color:var(--muted); background:#080d0a; font-size:13px; }
+    .powered { margin-left:auto; color:var(--muted); font-size:11px; font-weight:750; letter-spacing:0; text-transform:none; }
+    .method-card { margin-bottom:14px; padding:14px; border:1px solid var(--line-strong); border-radius:13px; background:var(--green-soft); }
+    .method-title { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:13px; font-weight:850; }
+    .method-badges { display:flex; gap:5px; flex-wrap:wrap; }
+    .method-badges span { padding:4px 7px; border:1px solid var(--line); border-radius:6px; color:#c7d8ce; background:rgba(0,0,0,.2); font-size:9px; font-weight:850; letter-spacing:.04em; }
+    .method-copy { margin:7px 0 0; color:var(--muted); font-size:11px; line-height:1.5; }
+    .wallet-note { margin:14px 0 0; border:1px solid var(--line); border-radius:12px; background:rgba(0,0,0,.14); }
+    .wallet-note summary { padding:12px 14px; color:#cbd9d1; cursor:pointer; font-size:12px; font-weight:800; }
+    .wallet-note p { margin:0; padding:0 14px 14px; color:var(--muted); font-size:11px; line-height:1.55; }
+    .consent { display:flex; gap:11px; align-items:flex-start; margin:22px 0; color:#afc0b6; font-weight:450; line-height:1.55; }
+    .consent input { flex:none; width:18px; min-height:18px; margin:2px 0 0; accent-color:var(--green); }
+    button { width:100%; min-height:55px; border:0; border-radius:12px; color:#041009; background:linear-gradient(135deg,var(--green),#55d69f); box-shadow:0 12px 32px rgba(47,197,138,.16); font:850 15px inherit; cursor:pointer; transition:transform .18s,filter .18s,opacity .18s; }
+    button:not(:disabled):hover { transform:translateY(-1px); filter:brightness(1.06); }
+    button:focus-visible { outline:3px solid rgba(133,229,185,.45); outline-offset:3px; }
+    button:disabled { opacity:.44; cursor:not-allowed; box-shadow:none; }
+    .submit-meta { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:12px 0 0; color:var(--muted); font-size:10px; font-weight:750; }
+    .submit-meta span { display:inline-flex; align-items:center; gap:5px; }
+    .msg { min-height:20px; margin:14px 0 0; color:var(--error); font-size:13px; line-height:1.5; text-align:center; }
+    .fine { margin:16px 0 0; color:#73887c; font-size:10px; line-height:1.55; text-align:center; }
+    .fine a { color:#abc9b7; font-weight:750; }
+    .success,.pending { padding:46px 38px; text-align:center; }
+    .success h2,.pending h2 { margin:12px 0; font-size:34px; letter-spacing:-.045em; }
+    .success p,.pending p { color:var(--muted); line-height:1.65; }
+    .success a,.pending a { display:inline-flex; min-height:48px; align-items:center; justify-content:center; padding:12px 19px; border-radius:10px; color:#041009; background:var(--green); font-weight:850; text-decoration:none; }
+    .pending button { width:auto; margin:4px; padding:0 18px; }
+    .privacy-strip { width:min(820px,calc(100% - 40px)); margin:28px auto 0; color:#7f9387; font-size:11px; line-height:1.6; text-align:center; }
+    .privacy-strip strong { color:#b4c6bb; }
+    @media(max-width:920px) {
+      .checkout-grid { grid-template-columns:1fr; }
+      .value-panel { position:static; }
+      .hero h1 { max-width:13ch; }
+    }
+    @media(max-width:600px) {
+      .topbar,main { width:min(100% - 24px,1180px); }
+      .topbar { padding:17px 0; }
+      main { margin:8px auto 38px; }
+      .checkout-grid { gap:14px; }
+      .value-panel,.shell { border-radius:18px; }
+      .hero { padding:28px 22px 24px; }
+      .hero h1 { font-size:42px; }
+      .plan-card { margin:0 18px 20px; padding:17px; }
+      .benefits { padding:0 22px 26px; }
+      .steps { grid-template-columns:1fr; gap:12px; padding:18px 22px; }
+      .step { display:grid; grid-template-columns:62px 1fr; align-items:start; }
+      .form-head,form,.success,.pending { padding-right:20px; padding-left:20px; }
+      .grid { grid-template-columns:1fr; }
+      .wide { grid-column:auto; }
+      .method-title { align-items:flex-start; }
+      .method-title { flex-direction:column; }
+      .privacy-strip { width:min(100% - 28px,820px); }
+    }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
   </style>
 </head>
 <body data-tct-view="card_checkout_view" data-tct-page="card-checkout" data-tct-learning-tag="square_intent">
+  <header class="topbar">
+    <a class="wordmark" href="/">THE CALL <span>TAKER</span></a>
+    <a class="back" href="/pricing.html">← Back to plans</a>
+  </header>
   <main>
-    <div class="brand">The Call Taker · secure Square checkout</div>
-    <section class="shell" id="shell">
-      <header class="hero">
-        <div class="brand">Secure card authorization</div>
-        <h1>Secure your selected plan.</h1>
-        <p id="heroTerms">Square securely stores your card for the selected trial. An accepted checkout can open a human-reviewed setup handoff before billing confirmation; it does not confirm payment or activate service.</p>
-      </header>
-      <div class="summary">
-        <div><strong id="planName">Loading plan</strong><br><span id="planDetail">Secure call coverage</span></div>
-        <div class="due"><span>Due today</span><br><b>$0.00</b></div>
-      </div>
-      <form id="form" novalidate data-tct-plan="" data-tct-cta="Submit secure checkout" data-tct-destination="square_checkout_request">
-        <p class="label">Your details</p>
-        <div class="grid">
-          <label class="wide">Business name<input id="business" autocomplete="organization" required></label>
-          <label>First name<input id="first" autocomplete="given-name" required></label>
-          <label>Last name<input id="last" autocomplete="family-name" required></label>
-          <label class="wide">Business email<input id="email" type="email" autocomplete="email" required></label>
-          <label class="wide">Mobile phone<input id="phone" type="tel" autocomplete="tel" required></label>
-          <label class="wide">Preferred onboarding contact<select id="preferred" required><option value="email">Email</option><option value="phone">Phone</option></select></label>
-          <label class="wide">Name on card<input id="holder" autocomplete="cc-name" required></label>
+    <div class="checkout-grid">
+      <aside class="value-panel" aria-label="Selected plan summary">
+        <header class="hero">
+          <div class="brand">14-day free trial</div>
+          <h1>Never let a good call go cold.</h1>
+          <p id="heroTerms">Square securely stores your card for the selected trial. An accepted checkout can open a human-reviewed setup handoff before billing confirmation; it does not confirm payment or activate service.</p>
+        </header>
+        <section class="plan-card">
+          <div class="plan-top">
+            <div>
+              <div class="plan-name" id="planName">Loading plan</div>
+              <div class="plan-detail" id="planDetail">Secure call coverage</div>
+            </div>
+            <div class="price"><strong id="planPrice">—</strong><span>after trial</span></div>
+          </div>
+          <div class="timeline" aria-label="Billing timeline">
+            <div><small>Today</small><b>$0 due</b></div>
+            <div><small>Day 15</small><b id="renewalTimeline">Monthly billing</b></div>
+          </div>
+        </section>
+        <ul class="benefits">
+          <li><span class="check">✓</span><span>Your checkout is protected by Square. We never receive or store your full card number.</span></li>
+          <li><span class="check">✓</span><span>No long-term contract. Cancel before renewal and the first charge does not occur.</span></li>
+          <li><span class="check">✓</span><span>After checkout, a person reviews your setup before any call handling goes live.</span></li>
+        </ul>
+        <div class="steps" aria-label="What happens next">
+          <div class="step"><b>1 · Checkout</b><span>Secure your trial</span></div>
+          <div class="step"><b>2 · Setup</b><span>Review your call flow</span></div>
+          <div class="step"><b>3 · Go live</b><span>Test before launch</span></div>
         </div>
-        <p class="label" style="margin-top:26px">Card details</p>
-        <div id="card" aria-label="Secure card details"></div>
-        <label class="consent"><input id="consent" type="checkbox"><span>I authorize The Call Taker to securely store my card with Square and automatically charge <b id="renewalAmount"></b> after the 14-day trial unless I cancel before renewal.<span id="scopeTerms"></span> I also consent to a human from The Call Taker contacting me at the email or phone I provided to complete onboarding for this trial.</span></label>
-        <button id="submit" type="submit" disabled>Submit secure checkout</button>
-        <p class="msg" id="msg" role="alert"></p>
-        <p class="logos">SECURE PAYMENT BY SQUARE · VISA · MASTERCARD · AMERICAN EXPRESS · DISCOVER</p>
-        <p class="fine">Your card number is entered directly into Square’s protected payment fields. The Call Taker never sees your full card number. By starting your trial, you agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and acknowledge the <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
-      </form>
-    </section>
+      </aside>
+      <section class="shell" id="shell">
+        <header class="form-head">
+          <div class="secure-row">
+            <div class="brand">Secure checkout</div>
+            <span class="secure-pill" aria-label="Square secured payment">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17 8V6a5 5 0 0 0-10 0v2H5v13h14V8h-2Zm-8-2a3 3 0 1 1 6 0v2H9V6Zm8 13H7v-9h10v9Z"/></svg>
+              Secured by Square
+            </span>
+          </div>
+          <h2>Start your free trial</h2>
+          <p>Enter your business and card details. Nothing is charged today.</p>
+        </header>
+        <form id="form" novalidate data-tct-plan="" data-tct-cta="Start my 14-day free trial" data-tct-destination="square_checkout_request">
+          <fieldset>
+            <legend class="label"><span class="number">1</span> Business details</legend>
+            <div class="grid">
+              <label class="wide">Business name<input id="business" autocomplete="organization" placeholder="Your business" required></label>
+              <label>First name<input id="first" autocomplete="given-name" placeholder="First name" required></label>
+              <label>Last name<input id="last" autocomplete="family-name" placeholder="Last name" required></label>
+              <label class="wide">Business email<input id="email" type="email" inputmode="email" autocomplete="email" placeholder="you@company.com" required></label>
+              <label class="wide">Mobile phone<input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555" required></label>
+              <label class="wide">Preferred onboarding contact<select id="preferred" required><option value="email">Email</option><option value="phone">Phone</option></select></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="label"><span class="number">2</span> Payment method <span class="powered">Processed by Square</span></legend>
+            <div class="method-card">
+              <div class="method-title">
+                <span>Credit or debit card</span>
+                <span class="method-badges" aria-label="Accepted cards"><span>VISA</span><span>MC</span><span>AMEX</span><span>DISC</span></span>
+              </div>
+              <p class="method-copy">Required for the recurring trial so Square can securely keep the card on file for monthly renewal.</p>
+            </div>
+            <label style="margin-bottom:14px">Name on card<input id="holder" autocomplete="cc-name" placeholder="Name exactly as shown" required></label>
+            <div class="card-loading" id="cardLoading" aria-live="polite">Loading secure Square payment fields…</div>
+            <div id="card" aria-label="Secure Square card details" hidden></div>
+            <details class="wallet-note">
+              <summary>Looking for Apple Pay, Google Pay, Cash App, or Afterpay?</summary>
+              <p>Square supports those methods for eligible one-time purchases, but not for this recurring subscription trial because the payment method must be stored for renewal. Credit and debit cards are available here. We do not show payment buttons that cannot complete this plan.</p>
+            </details>
+          </fieldset>
+          <label class="consent"><input id="consent" type="checkbox"><span>I authorize The Call Taker to securely store my card with Square and automatically charge <b id="renewalAmount"></b> after the 14-day trial unless I cancel before renewal.<span id="scopeTerms"></span> I also consent to a human from The Call Taker contacting me at the email or phone I provided to complete onboarding for this trial.</span></label>
+          <button id="submit" type="submit" disabled>Start my 14-day free trial</button>
+          <div class="submit-meta" aria-label="Checkout assurances"><span>🔒 Encrypted</span><span>•</span><span>$0 today</span><span>•</span><span>Cancel before renewal</span></div>
+          <p class="msg" id="msg" role="alert" aria-live="polite"></p>
+          <p class="fine">Your card details go directly to Square’s protected payment fields. By starting your trial, you agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms</a> and acknowledge the <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+        </form>
+      </section>
+    </div>
+    <p class="privacy-strip"><strong>Clear billing, no surprises.</strong> This page creates a card-backed Square trial subscription. Checkout acceptance does not activate service; setup and launch are reviewed separately.</p>
   </main>
+  <noscript><p style="max-width:680px;margin:48px auto;color:#fff;text-align:center">Secure checkout requires JavaScript. Please enable it or return to <a href="/pricing.html">pricing</a>.</p></noscript>
   <script>
     (function () {
       var SANDBOX_CHECKOUT_HOST = 'call-taker-square-sandbox-checkout.vercel.app';
@@ -89,17 +233,19 @@
       var STATUS_API = API_ORIGIN + '/api/public/square-checkout-status';
       var SETUP_RECOVERY_API = API_ORIGIN + '/api/public/setup-continuation';
       var plans = {
-        afterhours: { name:'After-Hours Capture', detail:'After-hours call capture', amount:'$97/month' },
-        full247: { name:'Revenue Recovery System', detail:'Day, night & overflow call coverage', amount:'$497/month' },
-        custom: { name:'Operational Infrastructure', detail:'$997 base with separately quoted custom scope', amount:'$997 base/month', scope:'Any custom scope above the $997 base is quoted separately and is not authorized by this checkout.' }
+        afterhours: { name:'After-Hours Capture', detail:'After-hours call capture', price:'$97', amount:'$97/month' },
+        full247: { name:'Revenue Recovery System', detail:'Day, night & overflow call coverage', price:'$497', amount:'$497/month' },
+        custom: { name:'Operational Infrastructure', detail:'$997 base with separately quoted custom scope', price:'$997+', amount:'$997 base/month', scope:'Any custom scope above the $997 base is quoted separately and is not authorized by this checkout.' }
       };
       var key = new URLSearchParams(window.location.search).get('plan');
       if (!plans[key]) { window.location.replace('/pricing.html?checkout=select-plan#pricing-cards'); return; }
       var plan = plans[key];
       document.getElementById('form').setAttribute('data-tct-plan', key);
-      document.title = plan.name + ' — secure card checkout';
+      document.title = plan.name + ' — secure Square checkout';
       document.getElementById('planName').textContent = plan.name;
       document.getElementById('planDetail').textContent = plan.detail;
+      document.getElementById('planPrice').textContent = plan.price;
+      document.getElementById('renewalTimeline').textContent = plan.amount;
       document.getElementById('heroTerms').textContent = 'Square securely stores your card for the selected trial. ' + plan.amount + ' begins after the 14-day trial unless you cancel.' + (plan.scope ? ' ' + plan.scope : '') + ' An accepted checkout can open a human-reviewed setup handoff before billing confirmation; it does not confirm payment or activate service.';
       document.getElementById('renewalAmount').textContent = plan.amount;
       document.getElementById('scopeTerms').textContent = plan.scope ? ' ' + plan.scope : '';
@@ -335,14 +481,16 @@
           await new Promise(function (resolve, reject) { var script=document.createElement('script'); script.src=config.webPaymentsSdkUrl; script.onload=resolve; script.onerror=reject; document.head.appendChild(script); });
           if (!window.Square) throw new Error('unavailable');
           card = await window.Square.payments(config.applicationId, config.locationId).card();
+          document.getElementById('card').hidden = false;
           await card.attach('#card');
+          document.getElementById('cardLoading').hidden = true;
           refresh();
         } catch (error) { showHumanSetupFallback(); }
       }
       form.addEventListener('submit', async function (event) {
         event.preventDefault();
         if (!detailsReady() || !card) { refresh(); return; }
-        submit.disabled = true; submit.textContent = 'Submitting secure checkout…'; say('');
+        submit.disabled = true; submit.textContent = 'Securing your trial…'; say('');
         if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_intent_submitted', form);
         var requestSent = false;
         try {
@@ -366,7 +514,7 @@
           if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_error_ui', form);
           say(requestSent ? 'We could not verify the checkout response. Your next submission will reuse the same protected checkout request identity; no activation is assumed.' : (error.message || 'We could not submit secure checkout. Please try again.'));
         }
-        finally { if (document.getElementById('form')) { submit.textContent = 'Submit secure checkout'; refresh(); } }
+        finally { if (document.getElementById('form')) { submit.textContent = 'Start my 14-day free trial'; refresh(); } }
       });
       try {
         if (hasStoredSetupContinuation()) { window.location.assign('/onboarding/intake.html#setup'); return; }

@@ -1,0 +1,76 @@
+{
+  "schema_version": "tct.square_checkout_payment_method_verification.v1",
+  "observed_at": "2026-09-09T14:29:40Z",
+  "provider": "square",
+  "environment": "production",
+  "status": "RECURRING_CARD_PATH_VERIFIED_WALLETS_INCOMPATIBLE",
+  "offer_contract": {
+    "trial_days": 14,
+    "billing": "monthly_after_trial",
+    "requires_storable_payment_method": true
+  },
+  "official_contract_evidence": [
+    {
+      "url": "https://developer.squareup.com/docs/checkout-api/subscription-plan-checkout",
+      "finding": "Subscription checkout supports a free phase plus one paid phase; Cash App Pay and Afterpay are not supported for subscription payments."
+    },
+    {
+      "url": "https://developer.squareup.com/forums/t/apple-pay-not-showing-on-mobile-safari-on-checkout-with-payment-link/8988",
+      "finding": "Square confirms Apple Pay and Google Pay are suppressed for subscriptions because those wallet sources cannot be saved on file."
+    }
+  ],
+  "provider_readback": {
+    "correct_subscription_link_url_sha256": "f4de2e958db13d53d8709975150af951c8eab7774b0cc240447d025b1a57c8e7",
+    "correct_subscription_link": {
+      "subscription_plan_location": "checkout_options.subscription_plan_id",
+      "quick_pay_amount_cents": 9700,
+      "due_today_cents": 0,
+      "renewal_amount_cents": 9700,
+      "renewal_cadence": "monthly",
+      "card_control_visible": true,
+      "wallet_controls_visible": false
+    },
+    "zero_override_link_url_sha256": "721fa17bc4c035a5407f455b96a8f43791dead45037d9c6ad62691678a4ecf45",
+    "zero_override_link": {
+      "subscription_plan_location": "checkout_options.subscription_plan_id",
+      "quick_pay_amount_cents": 0,
+      "due_today_cents": 0,
+      "incorrect_renewal_amount_cents": 0,
+      "disposition": "NEVER_PUBLISH"
+    },
+    "misplaced_subscription_field": {
+      "location": "quick_pay.subscription_plan_id",
+      "provider_result": "ONE_TIME_ORDER_WITHOUT_SUBSCRIPTION_RESOURCE",
+      "disposition": "NEVER_PUBLISH"
+    }
+  },
+  "canonical_public_decision": {
+    "route": "/card-checkout.html?plan={afterhours|full247|custom}",
+    "method": "square_web_payments_card_on_file",
+    "eligible_payment_classes": [
+      "CREDIT_CARD",
+      "DEBIT_CARD"
+    ],
+    "ineligible_for_recurring_contract": [
+      "APPLE_PAY",
+      "GOOGLE_PAY",
+      "CASH_APP_PAY",
+      "AFTERPAY_CLEARPAY"
+    ],
+    "buyer_explanation_required": true,
+    "fake_or_incompatible_buttons_forbidden": true
+  },
+  "safety": {
+    "provider_write_operations_for_bounded_verification": 7,
+    "provider_objects_published_on_website": 0,
+    "payments_attempted": 0,
+    "charges_attempted": 0,
+    "refunds_attempted": 0,
+    "customers_created": 0,
+    "subscriptions_created": 0,
+    "money_moved": false,
+    "secrets_persisted_or_printed": false,
+    "unused_test_links": "UNLINKED_PROVIDER_OBJECTS_NOT_DELETED"
+  },
+  "learning": "Square's generic Payment Links method list is not the method list for a card-on-file recurring subscription. Preserve the commercial contract first; expose only payment methods that can complete it, and regression-test both subscription field placement and the paid-phase amount."
+}
