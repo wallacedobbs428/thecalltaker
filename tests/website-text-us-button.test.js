@@ -23,14 +23,15 @@ const checkoutRoutes = [
   "/card-checkout.html?plan=custom",
 ];
 
-// SMS remains off. The verified public demo number is intentionally homepage-only;
-// anonymous callers remain separate from consented human follow-up.
+// SMS remains off. Public demo invitations use the existing consented human
+// follow-up route until the caller experience has independent current proof.
 assert.doesNotMatch(combined, /href=["']sms:/i);
 assert.doesNotMatch(combined, /api\.sendblue|sendblue\.com/i);
 const nonHomepage = [publicPages.pricing, publicPages.faq, publicPages.setup, publicPages.confirmation].join("\n");
 assert.doesNotMatch(nonHomepage, /href=["']tel:/i);
-assert.match(publicPages.home, /href=["']tel:\+16292699697/i);
-assert.match(publicPages.home, /data-tct-destination="live_demo_phone"/);
+assert.doesNotMatch(publicPages.home, /href=["']tel:/i);
+assert.match(publicPages.home, /href="\/demo\.html\?source=homepage#consented-demo-lead"/);
+assert.match(publicPages.home, /data-tct-destination="consented_lead_queue"/);
 
 [publicPages.pricing, publicPages.faq].forEach((html) => {
   assert.match(html, /href="\/demo\.html\?source=[^"]+#consented-demo-lead"/);
@@ -43,7 +44,7 @@ assert.match(publicPages.pricing, /Request a human follow-up if you need a custo
 assert.match(publicPages.pricing, /data-tct-learning-tag="human_followup_intent"/);
 
 assert.doesNotMatch(publicPages.home, /data-gideon-demo-unverified="true"/);
-assert.match(publicPages.home, /Call the live demo/);
+assert.match(publicPages.home, /Request a human demo/);
 assert.match(publicPages.home, /data-text-channel-unverified="true"/);
 assert.doesNotMatch(publicPages.home, /Text messaging is not available from this site\./);
 

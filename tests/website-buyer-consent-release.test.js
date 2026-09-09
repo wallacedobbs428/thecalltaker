@@ -96,14 +96,15 @@ test("checkout remains correlated and pending until signed provider truth", () =
   assert.match(checkout, /custom scope above the \$997 base is quoted separately and is not authorized by this checkout/i);
 });
 
-test("only the homepage exposes the canonical live demo call CTA; recorded and consent surfaces remain separate", () => {
+test("homepage and other public surfaces keep demo requests consented while live-call proof is unobserved", () => {
   const homepage = read("website/index.html");
   const nonHomepageVoiceSurfaces = deployedVoiceSurfaces
     .filter((page) => page !== "index.html")
     .map((page) => read(`website/${page}`))
     .join("\n");
-  assert.match(homepage, /href=["']tel:\+16292699697/i);
-  assert.match(homepage, /data-tct-destination="live_demo_phone"/);
+  assert.doesNotMatch(homepage, /href=["'](?:tel:|sms:)/i);
+  assert.match(homepage, /href="\/demo\.html\?source=homepage#consented-demo-lead"/);
+  assert.match(homepage, /data-tct-destination="consented_lead_queue"/);
   assert.doesNotMatch(homepage, /data-gideon-demo-unverified/);
   assert.match(homepage, /data-text-channel-unverified="true"/);
   assert.doesNotMatch(nonHomepageVoiceSurfaces, /href=["']tel:\+16292699697/i);

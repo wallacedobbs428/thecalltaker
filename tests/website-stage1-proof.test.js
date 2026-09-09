@@ -102,8 +102,8 @@ assert.ok(multilingualSection, "homepage should keep the multilingual coverage s
   "Clean handoff",
   "Name, phone number, job need, urgency, preferred language, and next step captured in one clean summary.",
   'href="/pricing.html"',
-  'href="tel:+16292699697"',
-  'data-tct-destination="live_demo_phone"',
+  'href="/demo.html?source=homepage#consented-demo-lead"',
+  'data-tct-destination="consented_lead_queue"',
 ].forEach((marker) => {
   assert.ok(multilingualSection[0].includes(marker), `multilingual section should include trust marker: ${marker}`);
 });
@@ -189,8 +189,8 @@ Object.entries(pages).forEach(([page, html]) => {
 });
 
 assert.doesNotMatch(pages["website/index.html"], /href=["']sms:/i, "homepage must keep cold SMS disabled");
-assert.match(pages["website/index.html"], /href=["']tel:\+16292699697/i, "homepage must expose the verified live demo only");
-assert.match(pages["website/index.html"], /data-tct-destination="live_demo_phone"/, "homepage demo CTA must remain receipt-attributed");
+assert.doesNotMatch(pages["website/index.html"], /href=["']tel:/i, "homepage must not claim a live caller experience without current proof");
+assert.match(pages["website/index.html"], /data-tct-destination="consented_lead_queue"/, "homepage human demo CTA must remain receipt-attributed");
 Object.entries(pages)
   .filter(([page]) => page !== "website/index.html")
   .forEach(([page, html]) => {
@@ -198,9 +198,9 @@ Object.entries(pages)
   });
 
 assert.ok(
-  pages["website/index.html"].includes("Call the live demo") &&
+  pages["website/index.html"].includes("Request a human demo") &&
     pages["website/index.html"].includes('data-text-channel-unverified="true"'),
-  "homepage should expose the verified public demo while text remains guarded"
+  "homepage should offer consented human follow-up while text remains guarded"
 );
 assert.ok(
   pages["website/pricing.html"].includes("/demo.html?source=pricing#consented-demo-lead") &&
