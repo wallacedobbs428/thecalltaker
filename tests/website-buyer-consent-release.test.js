@@ -68,6 +68,35 @@ test("the optional Gideon follow-up is explicit, durable, and never anonymous ou
   assert.doesNotMatch(read("website/tct-tracking.js"), /^\s*initPopup\(\);/m);
 });
 
+test("the direct human-demo CTA reaches one visible intake without building a preview", () => {
+  const demo = read("website/demo.html");
+  const intake = demo.match(/<section class="human-demo-intake"[^>]*>([\s\S]*?)<\/section>/);
+  assert.ok(intake, "the intake has its own visible section, independent of the optional preview");
+  assert.match(intake[1], /<form id="consented-demo-lead"/);
+  assert.equal((demo.match(/<form id="consented-demo-lead"/g) || []).length, 1);
+  assert.doesNotMatch(intake[0], /<(?:section|div|form)\b[^>]*(?:\shidden\b|aria-hidden="true"|class="(?:demo-experience|bottom-cta))/);
+  const preview = demo.slice(demo.indexOf('<section class="demo-experience"'), demo.indexOf('<!-- ===== BOTTOM CTA'));
+  assert.doesNotMatch(preview, /<form id="consented-demo-lead"/);
+  assert.match(demo, /\.demo-experience\s*\{\s*display:\s*none/);
+  assert.match(demo, /\.human-demo-intake\s*\{[^}]*display:\s*block/);
+  assert.ok(/\.human-demo-intake\s*\{[^}]*--text-1:\s*#18181b;[^}]*color:\s*var\(--text-1\)/.test(demo),
+    "the white intake card has scoped readable text, not inherited white page text");
+  assert.match(demo, /#consented-demo-lead\s*\{[^}]*scroll-margin-top:\s*\d+px/);
+});
+
+test("the visible human-demo intake keeps the canonical identity, consent, and submission binding", () => {
+  const demo = read("website/demo.html");
+  const form = demo.match(/<form id="consented-demo-lead"[^>]*>[\s\S]*?<\/form>/)[0];
+  assert.match(form, /data-tct-form="consented-lead"/);
+  assert.match(form, /data-tct-destination="consented_lead_queue"/);
+  assert.deepEqual([...form.matchAll(/<(?:input|select)\b[^>]*\bname="([^"]+)"/g)].map((match) => match[1]),
+    ["company", "name", "email", "phone", "preferred_contact_method", "follow_up_consent", "website"]);
+  assert.match(form, /name="follow_up_consent" type="checkbox" required/);
+  assert.equal((demo.match(/getElementById\('consented-demo-lead'\)/g) || []).length, 1);
+  assert.equal((demo.match(/https:\/\/call-taker-os\.vercel\.app\/api\/public\/lead/g) || []).length, 1);
+  assert.match(demo, /body\.correlation_id !== correlationId/);
+});
+
 test("checkout remains correlated and pending until signed provider truth", () => {
   const checkout = read("website/card-checkout.html");
   assert.match(checkout, /status !== 'payment_pending'/);
