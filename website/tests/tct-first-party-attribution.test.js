@@ -16,9 +16,11 @@ const PUBLICATION_SEED_SHA256 = "8bcaf881d4598dce804da777dc76c6f336210cd3fc76d22
 const CORRELATION_ID = "32345678-1234-4123-8123-123456789012";
 const TEST_RUN_ID = "42345678-1234-4123-8123-123456789012";
 
-function environment(search, initialAttribution) {
+function environment(search, initialAttribution, config = {}) {
   const storage = new Map();
   const requests = [];
+  const scripts = [];
+  const gtagEvents = [];
   let uuidCounter = 0;
   if (initialAttribution) storage.set("tct_attribution", JSON.stringify(initialAttribution));
   const anchor = {
@@ -35,6 +37,8 @@ function environment(search, initialAttribution) {
     },
   };
   const document = {
+    head: { appendChild(script) { scripts.push(script.src); } },
+    createElement() { return {}; },
     readyState: "complete",
     body,
     addEventListener() {},
@@ -42,7 +46,8 @@ function environment(search, initialAttribution) {
     querySelectorAll(selector) { return selector === "a[data-tct-event],a[data-preserve]" ? [anchor] : []; },
   };
   const window = {
-    TCT_FUNNEL_CONFIG: {},
+    TCT_FUNNEL_CONFIG: config,
+    gtag(...args) { gtagEvents.push(args); },
     location: { search, pathname: "/", origin: "https://thecalltaker.com" },
     innerWidth: 1200,
     document,
@@ -65,8 +70,41 @@ function environment(search, initialAttribution) {
     },
   };
   const context = vm.createContext({ window, document, URL, URLSearchParams, Date, JSON, Object, Math, Uint8Array, CustomEvent: window.CustomEvent });
-  return { context, window, storage, requests, anchor };
+  return { context, window, storage, requests, anchor, scripts, gtagEvents };
 }
+
+test("controlled QA persists labelled CTOS evidence without initializing Meta or emitting gtag", () => {
+  const env = environment(`?tct_attribution_test=${TEST_RUN_ID}`, null, { allowGtag: true });
+  vm.runInContext(canonical, env.context);
+  env.window.TCTFunnelEvents.record("homepage_cta_click", env.anchor);
+  assert.equal(env.window.fbq, undefined);
+  assert.deepEqual(env.scripts, []);
+  assert.deepEqual(env.gtagEvents, []);
+  assert.equal(env.requests.length, 2);
+  assert.ok(env.requests.every(({ body }) => body.traffic_kind === "controlled_test" && body.test_run_id === TEST_RUN_ID));
+});
+
+test("dry-run mode emits no provider analytics or CTOS network traffic", () => {
+  const env = environment("", null, { dryRun: true, allowGtag: true });
+  vm.runInContext(canonical, env.context);
+  assert.equal(env.window.fbq, undefined);
+  assert.deepEqual(env.scripts, []);
+  assert.deepEqual(env.gtagEvents, []);
+  assert.deepEqual(env.requests, []);
+});
+
+test("ordinary visitors retain single Meta initialization and configured gtag", () => {
+  for (const search of ["", "?tct_attribution_test=not-a-uuid"]) {
+    const env = environment(search, null, { allowGtag: true });
+    vm.runInContext(canonical, env.context);
+    vm.runInContext(canonical, env.context);
+    assert.deepEqual(env.scripts, ["https://connect.facebook.net/en_US/fbevents.js"]);
+    assert.equal(env.window.fbq.queue.length, 2);
+    assert.equal(env.gtagEvents.length, 1);
+    assert.equal(env.requests.length, 1);
+    assert.equal(env.requests[0].body.traffic_kind, undefined);
+  }
+});
 
 test("one canonical producer is deployed", () => {
   assert.equal(workflow.includes("tct-first-party-attribution.js"), false, "competing event producer is excluded from Pages");
