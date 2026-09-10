@@ -510,6 +510,17 @@
       line-height: 1.55;
     }
 
+    /* Human follow-up is available without building the optional preview. */
+    .human-demo-intake {
+      --text-1: #18181b;
+      --text-2: #52525b;
+      color: var(--text-1);
+      display: block;
+      padding: 0 0 60px;
+    }
+
+    #consented-demo-lead { scroll-margin-top: 96px; }
+
     /* ===== DEMO EXPERIENCE (post-submit) ===== */
     .demo-experience {
       display: none;
@@ -1368,6 +1379,25 @@
   </div>
 </section>
 
+<!-- The direct CTA targets the unchanged consent form, not preview state. -->
+<section class="human-demo-intake" aria-label="Request a human demo">
+  <div class="wrap">
+    <form id="consented-demo-lead" style="max-width:680px;margin:28px auto 0;padding:24px;border:1px solid var(--border);border-radius:14px;background:#fff;display:grid;gap:12px;" data-tct-form="consented-lead" data-tct-page="demo" data-tct-cta="Request human setup follow-up" data-tct-destination="consented_lead_queue">
+      <h3 style="margin:0;color:var(--text-1);">Want us to set this up for your business?</h3>
+      <p style="margin:0;color:var(--text-2);line-height:1.55;">Optional. Choose how a person may follow up—nothing is sent until you explicitly consent.</p>
+      <label>Business name<input name="company" required autocomplete="organization" style="width:100%;padding:11px;margin-top:5px;"></label>
+      <label>Your name<input name="name" required autocomplete="name" style="width:100%;padding:11px;margin-top:5px;"></label>
+      <label>Email<input name="email" type="email" autocomplete="email" style="width:100%;padding:11px;margin-top:5px;"></label>
+      <label>Phone <span id="demo-phone-help" style="display:block;margin-top:3px;color:var(--text-3);font-size:12px;font-weight:400;line-height:1.45;">Required by the current human follow-up queue, even when email is your preferred contact method.</span><input name="phone" type="tel" autocomplete="tel" aria-describedby="demo-phone-help" required style="width:100%;padding:11px;margin-top:5px;"></label>
+      <label>Preferred contact method<select name="preferred_contact_method" required style="width:100%;padding:11px;margin-top:5px;"><option value="">Choose one</option><option value="phone">Phone</option><option value="email">Email</option></select></label>
+      <label style="display:flex;gap:9px;align-items:flex-start;"><input name="follow_up_consent" type="checkbox" required style="width:auto;margin-top:4px;"><span>I consent to The Call Taker contacting me about setup using my chosen method.</span></label>
+      <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+      <button type="submit" class="lead-capture-cta">Request a human setup follow-up</button>
+      <p id="consented-demo-lead-status" role="status" aria-live="polite" style="margin:0;color:var(--text-2);"></p>
+    </form>
+  </div>
+</section>
+
 <!-- ===== DEMO EXPERIENCE (revealed on submit) ===== -->
 <section class="demo-experience" id="demo-experience" aria-live="polite">
   <div class="wrap">
@@ -1415,19 +1445,6 @@
       </audio>
       <p id="gideon-browser-audio-status" class="browser-audio-status" role="status" aria-live="polite">The sample is anonymous. When connectivity is available, CTOS receives a privacy-safe browser interaction receipt without your business name or contact details.</p>
     </section>
-    <form id="consented-demo-lead" style="max-width:680px;margin:28px auto 0;padding:24px;border:1px solid var(--border);border-radius:14px;background:#fff;display:grid;gap:12px;" data-tct-form="consented-lead" data-tct-page="demo" data-tct-cta="Request human setup follow-up" data-tct-destination="consented_lead_queue">
-      <h3 style="margin:0;color:var(--text-1);">Want us to set this up for your business?</h3>
-      <p style="margin:0;color:var(--text-2);line-height:1.55;">Optional. Choose how a person may follow up—nothing is sent until you explicitly consent.</p>
-      <label>Business name<input name="company" required autocomplete="organization" style="width:100%;padding:11px;margin-top:5px;"></label>
-      <label>Your name<input name="name" required autocomplete="name" style="width:100%;padding:11px;margin-top:5px;"></label>
-      <label>Email<input name="email" type="email" autocomplete="email" style="width:100%;padding:11px;margin-top:5px;"></label>
-      <label>Phone <span id="demo-phone-help" style="display:block;margin-top:3px;color:var(--text-3);font-size:12px;font-weight:400;line-height:1.45;">Required by the current human follow-up queue, even when email is your preferred contact method.</span><input name="phone" type="tel" autocomplete="tel" aria-describedby="demo-phone-help" required style="width:100%;padding:11px;margin-top:5px;"></label>
-      <label>Preferred contact method<select name="preferred_contact_method" required style="width:100%;padding:11px;margin-top:5px;"><option value="">Choose one</option><option value="phone">Phone</option><option value="email">Email</option></select></label>
-      <label style="display:flex;gap:9px;align-items:flex-start;"><input name="follow_up_consent" type="checkbox" required style="width:auto;margin-top:4px;"><span>I consent to The Call Taker contacting me about setup using my chosen method.</span></label>
-      <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
-      <button type="submit" class="lead-capture-cta">Request a human setup follow-up</button>
-      <p id="consented-demo-lead-status" role="status" aria-live="polite" style="margin:0;color:var(--text-2);"></p>
-    </form>
 
     <!-- Transcript Preview -->
     <div class="transcript">
