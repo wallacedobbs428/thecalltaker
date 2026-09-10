@@ -30,11 +30,14 @@
     script.src = "https://connect.facebook.net/en_US/fbevents.js";
     (doc.head || doc.documentElement).appendChild(script);
   }
-  initMetaPixel();
   var counter = 0;
   var config = root.TCT_FUNNEL_CONFIG || {};
   var endpoint = config.endpoint || "https://call-taker-os.vercel.app/api/public/buyer-event";
   var dryRun = config.dryRun === true;
+  // Technical QA remains observable in CTOS but must not enter paid/organic
+  // provider analytics. Use the same validated marker as CTOS persistence.
+  var providerAnalyticsAllowed = !dryRun && !controlledTestRunId();
+  if (providerAnalyticsAllowed) initMetaPixel();
   var allowGtag = config.allowGtag === true;
   var debug = config.debug === true || /(?:^|[?&])tct_debug=1(?:&|$)/.test(root.location.search);
   var allowedEvents = {
@@ -290,7 +293,7 @@
     root.__tctFunnelEvents.push(payload);
     persist(payload);
 
-    if (allowGtag && typeof root.gtag === "function") {
+    if (providerAnalyticsAllowed && allowGtag && typeof root.gtag === "function") {
       root.gtag("event", payload.event_name, {
         event_category: "tct_funnel",
         event_label: payload.cta || payload.page,
