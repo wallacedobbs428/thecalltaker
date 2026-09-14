@@ -1,0 +1,34 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const path = require('node:path');
+const base = path.join(__dirname, '../website');
+const script = fs.readFileSync(path.join(base, 'hero-dimension.js'), 'utf8');
+test('dimensional hero is illustrative, local and progressively enhanced', () => {
+  const html = fs.readFileSync(path.join(base, 'index.html'), 'utf8');
+  const css = fs.readFileSync(path.join(base, 'hero-dimension.css'), 'utf8');
+  assert.match(html, /An illustration of a clearer call flow/);
+  assert.match(html, /hero-dimension.js" defer/);
+  assert.match(css, /prefers-reduced-motion:reduce/);
+  assert.doesNotMatch(script, /fetch\(|setInterval\(|WebGL|https:/);
+});
+test('scroll batches frames; pause, reduced motion and hidden page suspend motion', () => {
+  const handlers = {}, style = {}, classes = {};
+  let scheduled = 0, callback, click;
+  const pref = { matches:false, addEventListener:(name, fn)=>handlers.preference=fn };
+  const button = { addEventListener:(name, fn)=>click=fn, setAttribute:(key,val)=>button[key]=val };
+  const scene = { querySelector:()=>button, classList:{toggle:(key,val)=>classes[key]=val}, style:{setProperty:(key,val)=>style[key]=val}, getBoundingClientRect:()=>({top:100,height:400}) };
+  const document = { hidden:false, querySelector:()=>scene, addEventListener:(name,fn)=>handlers[name]=fn };
+  const window = { innerHeight:800, matchMedia:()=>pref, addEventListener:(name,fn)=>handlers[name]=fn, requestAnimationFrame:fn=>{scheduled++;callback=fn;return scheduled;},cancelAnimationFrame:()=>{} };
+  vm.runInNewContext(script, {window,document});
+  handlers.scroll(); handlers.scroll(); assert.equal(scheduled,1);
+  callback(); assert.equal(style['--scene-turn'],'8.13deg');
+  click(); assert.equal(classes['is-moving'],false); assert.equal(button['aria-pressed'],'true');
+  handlers.scroll(); assert.equal(scheduled,1);
+  click(); assert.equal(scheduled,2); callback();
+  pref.matches=true; handlers.preference(); assert.equal(button.hidden,true);
+  handlers.scroll(); assert.equal(scheduled,2);
+  pref.matches=false; document.hidden=true; handlers.visibilitychange();
+  assert.equal(classes['is-moving'],false);
+});
