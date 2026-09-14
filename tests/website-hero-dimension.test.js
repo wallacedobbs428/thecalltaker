@@ -11,6 +11,10 @@ test('dimensional hero is illustrative, local and progressively enhanced', () =>
   assert.match(html, /An illustration of a clearer call flow/);
   assert.match(html, /hero-dimension.js" defer/);
   assert.match(css, /prefers-reduced-motion:reduce/);
+  const workflow = fs.readFileSync(path.join(base, '../.github/workflows/deploy.yml'), 'utf8');
+  assert.match(workflow, /higgsfield-media\.js hero-dimension\.css hero-dimension\.js/);
+  assert.match(workflow, /test -f "\$CLEAN\/hero-dimension\.css"/);
+  assert.match(workflow, /test -f "\$CLEAN\/hero-dimension\.js"/);
   assert.doesNotMatch(script, /fetch\(|setInterval\(|WebGL|https:/);
 });
 test('scroll batches frames; pause, reduced motion and hidden page suspend motion', () => {
