@@ -10,20 +10,20 @@
   <title>Secure Square checkout — The Call Taker</title>
   <style>
     :root {
-      color-scheme:dark;
-      --bg:#050806;
-      --surface:#0c120e;
-      --surface-2:#111a14;
-      --line:rgba(173,224,198,.14);
-      --line-strong:rgba(71,196,145,.34);
-      --ink:#f1faf5;
-      --muted:#9eb2a6;
-      --green:#2fc58a;
-      --green-2:#85e5b9;
+      color-scheme:light;
+      --bg:#f7f6f2;
+      --surface:#ffffff;
+      --surface-2:#eef3ec;
+      --line:#d9ded8;
+      --line-strong:#b7d1bf;
+      --ink:#172b21;
+      --muted:#53675b;
+      --green:#287251;
+      --green-2:#236548;
       --green-soft:rgba(47,197,138,.10);
       --amber:#f2c879;
-      --error:#ff9d96;
-      --shadow:0 32px 90px rgba(0,0,0,.48);
+      --error:#ae3029;
+      --shadow:0 20px 60px rgba(23,43,33,.07);
     }
     * { box-sizing:border-box; }
     [hidden] { display:none!important; }
@@ -137,12 +137,40 @@
       .method-title { flex-direction:column; }
       .privacy-strip { width:min(100% - 28px,820px); }
     }
-    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
+    /* Brand continuity: the same warm ivory and emerald as the public website. */
+    body { background:radial-gradient(ellipse at 10% 0%,#dceade 0,transparent 40rem),var(--bg); }
+    .topbar { min-height:76px; border-bottom:1px solid var(--line); }
+    .wordmark { font-size:22px; font-weight:700; letter-spacing:-.035em; }
+    .back { display:inline-flex; align-items:center; min-height:44px; padding:8px 14px; border:1px solid var(--line); border-radius:999px; background:var(--surface); }
+    .value-panel,.shell { background:var(--surface); }
+    .hero { position:relative; isolation:isolate; background:linear-gradient(135deg,#e6f0e5,#fafbf7); }
+    .hero::before { content:""; position:absolute; z-index:-1; inset:0; background:radial-gradient(ellipse at 75% 20%,#b6d6bd80,transparent 65%); animation:checkout-light 8s ease-in-out infinite alternate; pointer-events:none; }
+    @keyframes checkout-light { from { opacity:.35; } to { opacity:1; } }
+    .hero p,.benefits li,label,.wallet-note summary,.consent,.privacy-strip strong { color:var(--ink); }
+    .timeline div,.steps,.wallet-note { background:var(--surface-2); }
+    .check { color:#fff; }
+    label { font-size:14px; font-weight:600; gap:9px; }
+    .grid { gap:20px; }
+    input,select,.card-loading { background:#fff; border-color:#b9c8bd; }
+    input,select { font-size:16px; min-height:54px; }
+    input::placeholder { color:#65796c; font-weight:400; }
+    input:hover,select:hover,#card:hover { border-color:var(--green); }
+    input:focus,select:focus { background:#fff; box-shadow:0 0 0 3px #28725120; }
+    .method-badges span { color:var(--muted); background:#fff; }
+    .fine,.privacy-strip { color:var(--muted); font-size:12px; }
+    .fine a { color:var(--green); }
+    button { color:#fff; background:linear-gradient(135deg,#287251,#1d6044); border-radius:999px; font-size:16px; font-weight:650; }
+    button:focus-visible,a:focus-visible,summary:focus-visible { outline:3px solid var(--green); outline-offset:4px; }
+    .success a,.pending a { color:#fff; }
+    .label { font-size:16px; font-weight:650; }
+    .number { width:28px; height:28px; }
+    .consent input { min-height:18px; }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
   </style>
 </head>
 <body data-tct-view="card_checkout_view" data-tct-page="card-checkout" data-tct-learning-tag="square_intent">
   <header class="topbar">
-    <a class="wordmark" href="/">THE CALL <span>TAKER</span></a>
+    <a class="wordmark" href="/">The Call<span>Taker</span></a>
     <a class="back" href="/pricing.html">← Back to plans</a>
   </header>
   <main>
@@ -227,7 +255,7 @@
     </div>
     <p class="privacy-strip"><strong>Clear billing, no surprises.</strong> This page creates a card-backed Square trial subscription. Checkout acceptance does not activate service; setup and launch are reviewed separately.</p>
   </main>
-  <noscript><p style="max-width:680px;margin:48px auto;color:#fff;text-align:center">Secure checkout requires JavaScript. Please enable it or return to <a href="/pricing.html">pricing</a>.</p></noscript>
+  <noscript><p style="max-width:680px;margin:48px auto;color:var(--ink);text-align:center">Secure checkout requires JavaScript. Please enable it or return to <a href="/pricing.html">pricing</a>.</p></noscript>
   <script>
     (function () {
       var SANDBOX_CHECKOUT_HOST = 'call-taker-square-sandbox-checkout.vercel.app';
