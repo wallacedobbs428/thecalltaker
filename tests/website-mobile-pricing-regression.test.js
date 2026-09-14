@@ -5,14 +5,14 @@ const path = require("path");
 const root = path.join(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const pricing = read("website/pricing.html");
-const sharedScript = read("website/script.js");
+const sharedScript = read("website/site-menu.js");
 const homepage = read("website/index.html");
 
-assert.ok(pricing.includes('aria-controls="pricingMobileNav"'), "pricing menu must identify its mobile navigation");
-assert.ok(pricing.includes('id="pricingMobileNav"'), "pricing mobile navigation must have a stable id");
+assert.ok(pricing.includes('<details id="tctSiteMenu">'), "pricing menu must use the shared native disclosure");
+assert.ok(pricing.includes('aria-label="Main navigation"'), "pricing navigation must have an accessible name");
 assert.strictEqual(pricing.includes("var menuToggle = document.querySelector('.pricing-page .menu-toggle')"), false, "pricing must not install a second menu click handler");
-assert.ok(sharedScript.includes("setMenuOpen(!mobileNav.classList.contains('open'))"), "shared menu must use one deterministic open/close controller");
-assert.ok(sharedScript.includes("aria-expanded"), "shared menu must expose expanded state");
+assert.ok(sharedScript.includes("menu.open = false"), "shared menu must close the native disclosure deterministically");
+assert.ok(pricing.includes('<summary aria-label="Menu">'), "native summary must expose its accessible disclosure state");
 assert.ok(sharedScript.includes("event.key === 'Escape'"), "shared menu must close with Escape");
 
 [
