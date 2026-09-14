@@ -16,7 +16,12 @@
       document.body.appendChild(dialog);
       dialog.querySelector('button').addEventListener('click', function () { dialog.close(); });
       dialog.addEventListener('click', function (e) { if(e.target === dialog) { var r=dialog.getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) dialog.close(); } });
-      dialog.addEventListener('close', function () { if(trigger) trigger.focus(); });
+      dialog.addEventListener('close', function () {
+        if (!trigger) return;
+        var menu = trigger.closest('details');
+        if (menu && !menu.open) menu.querySelector('summary').focus();
+        else trigger.focus();
+      });
     }
     dialog.showModal();
   }

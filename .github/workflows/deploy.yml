@@ -42,7 +42,7 @@ jobs:
 
           for f in \
             CNAME 404.html index.html pricing.html paid.html pay.html checkout.html card-checkout.html signup.html setup.html setup-confirmation.html start.html confirmation.html faq.html demo.html book.html meet-gideon.html after-hours-call-checklist.html privacy.html terms.html robots.txt sitemap.xml \
-            styles.css script.js text-us.css funnel-experience.css site.webmanifest tct-tracking.js tct-funnel-events.js higgsfield-media.css higgsfield-media.js hero-dimension.css hero-dimension.js call-demo.css call-demo.js \
+            styles.css script.js text-us.css funnel-experience.css site.webmanifest tct-tracking.js tct-funnel-events.js higgsfield-media.css higgsfield-media.js hero-dimension.css hero-dimension.js call-demo.css call-demo.js site-menu.css site-menu.js \
             favicon.svg favicon.ico favicon-16x16.png favicon-32x32.png favicon-48x48.png favicon-64x64.png favicon-96x96.png favicon-128x128.png favicon-180x180.png favicon-192x192.png favicon-512x512.png apple-touch-icon.png og-image.png og-image.svg gideon-hologram.png gideon-hologram.webp; do
             if [ -f "website/$f" ]; then
               mkdir -p "$CLEAN/$(dirname "$f")"
@@ -64,6 +64,8 @@ jobs:
           test -f "$CLEAN/hero-dimension.js"
           test -f "$CLEAN/call-demo.css"
           test -f "$CLEAN/call-demo.js"
+          test -f "$CLEAN/site-menu.css"
+          test -f "$CLEAN/site-menu.js"
           test -f "$CLEAN/assets/higgsfield/approved-assets.json"
 
           mkdir -p "$CLEAN/shared"

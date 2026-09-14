@@ -1,0 +1,21 @@
+/* One opaque, high-contrast public navigation across every marketing page. */
+body:has(#tctSiteHeader){padding-top:76px}
+#tctSiteHeader{box-sizing:border-box;position:fixed;inset:0 0 auto;z-index:1100;width:100%;max-width:none;height:76px;margin:0;padding:0 clamp(20px,4vw,52px);display:flex;align-items:center;justify-content:space-between;gap:20px;background:#f7f6f2;border:0;border-bottom:1px solid #d9ded8;font-family:Inter,system-ui,sans-serif;color:#172b21;transform:none}
+#tctSiteHeader .tct-site-brand{display:inline-flex;align-items:center;min-height:44px;padding:0;color:#172b21;font-size:22px;font-weight:700;letter-spacing:-.035em;text-decoration:none;white-space:nowrap}
+#tctSiteHeader .tct-site-brand span{color:#287251}
+#tctSiteMenu{position:static;margin:0;padding:0}
+#tctSiteMenu summary{box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:12px;list-style:none;cursor:pointer;border:1px solid #317957;border-radius:999px;background:#287251;color:#fff;font-size:16px;font-weight:700;padding:14px 22px;min-height:48px;user-select:none}
+#tctSiteMenu summary::-webkit-details-marker{display:none}
+#tctSiteMenu .tct-menu-icon{width:23px;height:16px;position:relative;border-top:2px solid currentColor;border-bottom:2px solid currentColor}
+#tctSiteMenu .tct-menu-icon::after{content:"";position:absolute;left:0;right:0;top:5px;height:2px;background:currentColor}
+#tctSiteMenu[open] .tct-menu-icon{border:0}
+#tctSiteMenu[open] .tct-menu-icon::before,#tctSiteMenu[open] .tct-menu-icon::after{content:"";position:absolute;left:0;right:0;top:7px;height:2px;background:currentColor;transform:rotate(45deg)}
+#tctSiteMenu[open] .tct-menu-icon::after{transform:rotate(-45deg)}
+#tctSiteMenu nav{box-sizing:border-box;position:absolute;top:calc(100% + 12px);right:clamp(16px,4vw,52px);left:auto;width:min(420px,calc(100vw - 32px));max-height:calc(100dvh - 104px);overflow-y:auto;display:flex;flex-direction:column;gap:0;padding:16px 24px 24px;margin:0;background:#f7f6f2;color:#172b21;border:1px solid #d9ded8;border-radius:24px;box-shadow:0 20px 50px #102c2526;backdrop-filter:none;opacity:1;visibility:visible;transform:none}
+#tctSiteMenu:not([open]) nav{display:none}
+#tctSiteMenu nav a{display:block;box-sizing:border-box;padding:19px 0;min-height:48px;margin:0;border:0;border-bottom:1px solid #d9ded8;border-radius:0;color:#172b21;background:transparent;font-size:19px;line-height:1.4;font-weight:600;text-decoration:none;letter-spacing:0;text-align:left;box-shadow:none}
+#tctSiteMenu nav a:hover,#tctSiteMenu nav a[aria-current="page"]{color:#287251}
+#tctSiteMenu nav .tct-menu-plan{margin-top:20px;padding:16px;border:0;border-radius:999px;text-align:center;background:#287251;color:#fff}
+#tctSiteMenu nav .tct-menu-plan:hover{background:#1b5b3f;color:#fff}
+#tctSiteHeader :focus-visible{outline:3px solid #276d50;outline-offset:5px}
+@media(max-width:480px){#tctSiteHeader .tct-site-brand{font-size:20px}#tctSiteMenu summary{padding:12px 18px}#tctSiteMenu nav a{padding-top:16px;padding-bottom:16px}}
