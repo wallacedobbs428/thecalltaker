@@ -56,6 +56,9 @@
     .timeline small { display:block; margin-bottom:4px; color:var(--muted); font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
     .timeline b { color:var(--ink); font-size:14px; }
     .benefits { display:grid; gap:13px; margin:0; padding:0 38px 36px; list-style:none; }
+    .setup-details { padding:0 22px 20px; color:var(--muted); font-size:13px; line-height:1.5; }
+    .setup-details summary { cursor:pointer; color:var(--ink); padding:8px 0; }
+    .setup-details .benefits { padding:12px 0 0; }
     .benefits li { display:grid; grid-template-columns:22px 1fr; gap:10px; color:#c8d7ce; font-size:14px; line-height:1.5; }
     .check { display:grid; width:22px; height:22px; place-items:center; border-radius:50%; color:#06100b; background:var(--green); font-size:12px; font-weight:900; }
     .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:19px 22px; border-top:1px solid var(--line); background:rgba(0,0,0,.18); }
@@ -120,9 +123,10 @@
       main { margin:8px auto 38px; }
       .checkout-grid { gap:14px; }
       .value-panel,.shell { border-radius:18px; }
-      .hero { padding:28px 22px 24px; }
-      .hero h1 { font-size:42px; }
-      .plan-card { margin:0 18px 20px; padding:17px; }
+      .hero { padding:20px 22px 16px; }
+      .hero h1 { font-size:32px; max-width:none; line-height:1.08; margin:10px 0; }
+      .hero p { font-size:14px; line-height:1.5; }
+      .plan-card { margin:0 18px 12px; padding:15px; }
       .benefits { padding:0 22px 26px; }
       .steps { grid-template-columns:1fr; gap:12px; padding:18px 22px; }
       .step { display:grid; grid-template-columns:62px 1fr; align-items:start; }
@@ -146,8 +150,8 @@
       <aside class="value-panel" aria-label="Selected plan summary">
         <header class="hero">
           <div class="brand">14-day free trial</div>
-          <h1>Never let a good call go cold.</h1>
-          <p id="heroTerms">Square securely stores your card for the selected trial. An accepted checkout can open a human-reviewed setup handoff before billing confirmation; it does not confirm payment or activate service.</p>
+          <h1>Get started with better call coverage.</h1>
+          <p id="heroTerms">$0 today. Review your selected plan and renewal price below.</p>
         </header>
         <section class="plan-card">
           <div class="plan-top">
@@ -162,16 +166,15 @@
             <div><small>Day 15</small><b id="renewalTimeline">Monthly billing</b></div>
           </div>
         </section>
+        <details class="setup-details">
+          <summary>Secure checkout. Guided setup.</summary>
         <ul class="benefits">
           <li><span class="check">✓</span><span>Your checkout is protected by Square. We never receive or store your full card number.</span></li>
           <li><span class="check">✓</span><span>No long-term contract. Cancel before renewal and the first charge does not occur.</span></li>
           <li><span class="check">✓</span><span>After checkout, a person reviews your setup before any call handling goes live.</span></li>
         </ul>
-        <div class="steps" aria-label="What happens next">
-          <div class="step"><b>1 · Checkout</b><span>Secure your trial</span></div>
-          <div class="step"><b>2 · Setup</b><span>Review your call flow</span></div>
-          <div class="step"><b>3 · Go live</b><span>Test before launch</span></div>
-        </div>
+          <p>Checkout opens a human-reviewed setup handoff. We review your call flow and test it before launch; submitting this form does not activate service.</p>
+        </details>
       </aside>
       <section class="shell" id="shell">
         <header class="form-head">
@@ -183,7 +186,7 @@
             </span>
           </div>
           <h2>Start your free trial</h2>
-          <p>Enter your business and card details. Nothing is charged today.</p>
+          <p>Nothing is charged today. After checkout, we’ll guide you through setup before service goes live.</p>
         </header>
         <form id="form" novalidate data-tct-plan="" data-tct-cta="Start my 14-day free trial" data-tct-destination="square_checkout_request">
           <fieldset>
@@ -246,7 +249,7 @@
       document.getElementById('planDetail').textContent = plan.detail;
       document.getElementById('planPrice').textContent = plan.price;
       document.getElementById('renewalTimeline').textContent = plan.amount;
-      document.getElementById('heroTerms').textContent = 'Square securely stores your card for the selected trial. ' + plan.amount + ' begins after the 14-day trial unless you cancel.' + (plan.scope ? ' ' + plan.scope : '') + ' An accepted checkout can open a human-reviewed setup handoff before billing confirmation; it does not confirm payment or activate service.';
+      document.getElementById('heroTerms').textContent = '$0 today. Then ' + plan.amount + ' after your 14-day trial. Cancel before renewal to avoid the charge.';
       document.getElementById('renewalAmount').textContent = plan.amount;
       document.getElementById('scopeTerms').textContent = plan.scope ? ' ' + plan.scope : '';
 

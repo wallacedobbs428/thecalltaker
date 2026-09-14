@@ -2097,6 +2097,31 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
 <!-- styles.css removed — was overriding inline light mode with hardcoded #000 backgrounds.
      All styles are now handled by inline <style> blocks with CSS variable theming. -->
 <link rel="stylesheet" href="/higgsfield-media.css">
+<style id="homepage-buyer-hero">
+/* A readable buyer introduction, independent of optional generated media. */
+.gideon-hero.service-selling { min-height:0!important; background:#f6f7f3!important; color:#122b23; }
+.gideon-hero.service-selling::before,.gideon-hero.service-selling::after { display:none!important; }
+.gideon-hero.service-selling .g-service-inner { min-height:0!important; padding:80px 40px!important; max-width:1120px; margin:auto; }
+.gideon-hero.service-selling .g-left { width:100%!important; max-width:780px!important; padding:0; margin:0!important; border:0; border-radius:0; background:transparent!important; box-shadow:none; backdrop-filter:none; text-align:left!important; }
+.gideon-hero.service-selling .g-offer-kicker { color:#23674e; font:600 12px/1.5 Inter,sans-serif; letter-spacing:.1em; margin-bottom:20px; }
+.gideon-hero.service-selling .gideon-name { color:#122b23!important; text-shadow:none!important; font:600 clamp(38px,5.6vw,68px)/1.06 Inter,sans-serif; letter-spacing:-.045em; max-width:16ch; margin:0; }
+.gideon-hero.service-selling .gideon-subtitle { color:#52635a!important; font:400 18px/1.6 Inter,sans-serif; max-width:48ch; margin:24px 0; }
+.gideon-hero.service-selling .g-divider,.gideon-hero.service-selling .g-status-bar,.gideon-hero.service-selling .speech-bubble { display:none; }
+.gideon-hero.service-selling .gideon-cta { opacity:1!important; transform:none!important; display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+.gideon-hero.service-selling .btn-gideon,.gideon-hero.service-selling .btn-gideon-ghost { min-height:52px; padding:15px 24px; font:600 16px/1.35 Inter,sans-serif; border-radius:10px; text-shadow:none; box-shadow:none; }
+.gideon-hero.service-selling .btn-gideon { background:#176b50!important; color:#fff!important; }
+.gideon-hero.service-selling .btn-gideon-ghost { background:#fff!important; border:1px solid #a6b6ab!important; color:#194b38!important; }
+.gideon-hero.service-selling a:focus-visible { outline:3px solid #176b50; outline-offset:4px; }
+@media(max-width:600px) {
+  .gideon-hero.service-selling .g-service-inner { padding:44px 24px 48px!important; }
+  .gideon-hero.service-selling .g-left { min-width:0!important; max-width:100%!important; padding:0!important; }
+  .gideon-hero.service-selling .gideon-name { font-size:40px!important; line-height:1.08!important; }
+  .gideon-hero.service-selling .gideon-subtitle { font-size:17px!important; line-height:1.6!important; margin:20px 0!important; }
+  .gideon-hero.service-selling .g-offer-kicker { font-size:11px!important; }
+  .gideon-hero.service-selling .gideon-cta { flex-direction:column; width:100%; }
+  .gideon-hero.service-selling .btn-gideon,.gideon-hero.service-selling .btn-gideon-ghost { width:100%; font-size:16px!important; }
+}
+</style>
 </head>
 <body data-tct-view="homepage_view" data-tct-page="homepage" data-tct-learning-tag="homepage_view">
 
@@ -2159,8 +2184,8 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <!-- LEFT — Name + Speech -->
     <div class="g-left" id="gLeft">
       <div class="g-offer-kicker">AI call answering for service businesses</div>
-      <h1 class="gideon-name" id="gideonName">Recover missed-call revenue before the job goes cold.</h1>
-      <div class="gideon-subtitle" id="gideonSubtitle">Gideon answers missed and after-hours calls, collects the caller's info, and sends you a clear summary so you can follow up fast.</div>
+      <h1 class="gideon-name" id="gideonName">Your next customer deserves an answer.</h1>
+      <div class="gideon-subtitle" id="gideonSubtitle">The Call Taker’s AI receptionist answers calls, captures the details, and helps your team follow up—even after hours.</div>
       <div class="g-divider" id="gDivider"></div>
 
       <div class="g-status-bar" id="gStatusBar">
@@ -2179,10 +2204,6 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <div class="gideon-cta" id="gideonCTA">
         <a href="/pricing.html" class="btn-gideon" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="See Plans & Setup Options" data-tct-destination="pricing" data-tct-learning-tag="homepage_intent">See Plans &amp; Setup Options →</a>
         <a href="/demo.html?source=homepage#consented-demo-lead" aria-label="Request a human demo" class="btn-gideon-ghost" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Request human demo" data-tct-destination="consented_lead_queue" data-tct-learning-tag="human_followup_intent">Request a human demo</a>
-        <a class="text-us-button text-us-button--hero text-us-button--support" href="#text-channel-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-verification" data-channel="status" data-destination="demo_status" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Text Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="verification_status">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-          <span>Text availability verification in progress</span>
-        </a>
       </div>
     </div>
 

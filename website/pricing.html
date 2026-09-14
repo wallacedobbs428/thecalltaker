@@ -742,15 +742,15 @@
     <button class="plan-switch-option" type="button" data-plan-visual="full247" aria-pressed="false">$497 <span>Revenue Recovery System</span></button>
     <button class="plan-switch-option" type="button" data-plan-visual="custom" aria-pressed="false">$997+ <span>Operational Infrastructure</span></button>
   </div>
-  <div class="plan-visual plan-visual-featured reveal" id="pricingPlanVisual" aria-live="polite">
+  <a class="plan-visual plan-visual-featured reveal" id="pricingPlanVisual" href="#plan-afterhours" aria-label="View After-Hours Capture plan and checkout" aria-live="polite" style="display:block;text-decoration:none;">
     <img class="plan-visual-media" id="pricingPlanImage" src="/assets/images/plan-visuals/after-hours-capture-v3.webp" alt="A business owner reaching for an incoming call beside the bed at 3:07 a.m." width="1400" height="788" decoding="async">
     <div class="plan-visual-content">
       <div class="plan-visual-tag" id="pricingPlanTag">$97 / After-Hours Capture</div>
       <h3 id="pricingPlanHeadline">Closed-hours calls stop dying in voicemail.</h3>
       <p id="pricingPlanCopy">Built for the owner who needs nights, weekends, and urgent calls captured while the team is offline.</p>
     </div>
-  </div>
-  <p class="higgsfield-note">Illustrative plan visuals, not dashboards or customer results. Select a plan above to see the kind of call operation it supports.</p>
+  </a>
+  <p class="higgsfield-note">Illustrative plan visuals, not dashboards or customer results. Tap a plan or its image to view that plan’s details and checkout.</p>
 </section>
 
 <!-- PRICING CARDS -->
@@ -758,7 +758,7 @@
   <div class="wrap">
     <div class="pricing-grid reveal" style="max-width: 1000px; margin: 0 auto;">
       <!-- After-Hours -->
-      <div class="pricing-card">
+      <div class="pricing-card" id="plan-afterhours" tabindex="-1" style="scroll-margin-top:120px;">
         <div class="pricing-badge">&nbsp;</div>
         <div class="pricing-name">After-Hours Capture</div>
         <div class="pricing-desc">Entry coverage when your team is closed</div>
@@ -778,7 +778,7 @@
       </div>
 
       <!-- Revenue Recovery System (Featured) -->
-      <div class="pricing-card featured">
+      <div class="pricing-card featured" id="plan-full247" tabindex="-1" style="scroll-margin-top:120px;">
         <div class="pricing-badge">Recommended</div>
         <div class="pricing-name">Revenue Recovery System</div>
         <div class="pricing-desc">Day, night, and overflow call answering</div>
@@ -798,7 +798,7 @@
       </div>
 
       <!-- Operational Infrastructure -->
-      <div class="pricing-card">
+      <div class="pricing-card" id="plan-custom" tabindex="-1" style="scroll-margin-top:120px;">
         <div class="pricing-badge">Best for Premium Industries</div>
         <div class="pricing-name">Operational Infrastructure</div>
         <div class="pricing-desc">We set it up around how your business works</div>
@@ -1040,12 +1040,29 @@
   var copy = document.getElementById('pricingPlanCopy');
   var image = document.getElementById('pricingPlanImage');
   var buttons = document.querySelectorAll('.plan-switch-option');
+  var visual = document.getElementById('pricingPlanVisual');
+
+  function scrollToPlan(key) {
+    if (!Object.prototype.hasOwnProperty.call(plans, key)) return;
+    var target = document.getElementById('plan-' + key);
+    if (!target) return;
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ behavior: reduceMotion ? 'instant' : 'smooth', block: 'start' });
+  }
+
+  if (visual) visual.addEventListener('click', function (event) {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    scrollToPlan(visual.getAttribute('href').replace('#plan-', ''));
+  });
 
   if (!tag || !headline || !copy || !image || !buttons.length) return;
 
   buttons.forEach(function (button) {
     button.addEventListener('click', function () {
-      var plan = plans[button.getAttribute('data-plan-visual')];
+      var key = button.getAttribute('data-plan-visual');
+      var plan = plans[key];
       if (!plan) return;
 
       buttons.forEach(function (other) {
@@ -1061,7 +1078,12 @@
       image.style.opacity = '0.2';
       image.src = plan.image;
       image.alt = plan.alt;
+      if (visual) {
+        visual.setAttribute('href', '#plan-' + key);
+        visual.setAttribute('aria-label', 'View ' + plan.tag + ' plan and checkout');
+      }
       window.setTimeout(function () { image.style.opacity = '0.82'; }, 80);
+      scrollToPlan(key);
     });
   });
 })();

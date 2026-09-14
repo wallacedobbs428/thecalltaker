@@ -14,7 +14,9 @@ assert.match(checkout, /Credit or debit card/, "eligible recurring payment metho
 assert.match(checkout, /not for this recurring subscription trial/, "wallet limitation is explained in buyer language");
 assert.match(checkout, /We do not show payment buttons that cannot complete this plan/, "page cannot fake an incompatible wallet path");
 assert.match(checkout, /Secured by Square/, "payment processor trust is visible at the decision point");
-assert.match(checkout, /1 · Checkout[\s\S]*2 · Setup[\s\S]*3 · Go live/, "post-checkout path is visible before payment details");
+assert.match(checkout, /Nothing is charged today\. After checkout, we’ll guide you through setup before service goes live\./, "compact setup and activation disclosure stays visible beside form");
+assert.match(checkout, /<details class="setup-details">[\s\S]*human-reviewed setup handoff[\s\S]*<\/details>/, "supporting setup explanation is available without overwhelming the form");
+assert.doesNotMatch(checkout, /id="heroTerms">[^<]*billing confirmation/, "hero avoids internal processing jargon");
 assert.match(checkout, /id="business"[^>]*autocomplete="organization"/, "business identity keeps autofill support");
 assert.match(checkout, /id="email"[^>]*inputmode="email"[^>]*autocomplete="email"/, "email field uses mobile keyboard and autofill hints");
 assert.match(checkout, /id="phone"[^>]*inputmode="tel"[^>]*autocomplete="tel"/, "phone field uses mobile keyboard and autofill hints");
