@@ -30,7 +30,8 @@ for (const forbiddenBrowserTruth of [
 }
 for (const event of ["checkout_intent_submitted", "checkout_request_accepted_ui", "checkout_request_error_ui", "checkout_waiting_ui_shown"]) assert.ok(checkout.includes(`record('${event}'`), `checkout records ${event}`);
 for (const forbiddenCall of ["checkout_started", "checkout_pending", "checkout_failed", "checkout_confirmed"]) assert.equal(checkout.includes(`record('${forbiddenCall}'`), false, `checkout does not record ${forbiddenCall}`);
-for (const event of ["demo_preview_rendered_ui", "follow_up_consent_selected_ui", "lead_request_submitted_ui", "lead_request_accepted_ui", "lead_request_error_ui"]) assert.ok(demo.includes(`'${event}'`), `demo records ${event}`);
+assert.match(demo, /data-tct-event="cta_intent"/);
+assert.doesNotMatch(demo, /lead_request_accepted_ui|demo_completed/);
 assert.equal(read("website/after-hours-call-checklist.html").includes("demo_call_tap"), false);
 assert.equal(read("website/shared/tct-intent.js").includes("demo_completed"), false);
 assert.equal(read("website/shared/tct-convert.js").includes("demo_completed"), false);

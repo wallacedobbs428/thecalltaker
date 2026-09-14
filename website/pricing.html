@@ -689,6 +689,8 @@
     color: var(--text-1); background: var(--surface); border-color: var(--border);
   }
 </style>
+<link rel="stylesheet" href="/call-demo.css">
+<script src="/call-demo.js" defer></script>
 </head>
 <body class="funnel-page pricing-page" style="overflow-x:hidden" data-tct-view="pricing_view" data-tct-page="pricing" data-tct-learning-tag="pricing_view">
 <header class="header">
@@ -707,11 +709,8 @@
   <a href="/ai-receptionist/">AI Receptionist</a>
   <a href="pricing.html">Pricing</a>
   <a href="/faq.html">FAQ</a>
-  <a href="/demo.html?source=pricing#consented-demo-lead" data-tct-event="lead_capture_open" data-tct-page="pricing" data-tct-cta="Request a Human Demo" data-tct-destination="consented_lead_queue" data-tct-learning-tag="demo_intent">Request a Human Demo</a>
-  <a class="text-us-button text-us-button--nav" href="/demo.html?source=pricing-support#consented-demo-lead" aria-label="Request human follow-up" data-cta="consented-lead" data-channel="follow-up" data-destination="consented_lead_queue" data-tct-event="lead_capture_open" data-tct-page="pricing" data-tct-cta="Request Human Follow-Up" data-tct-destination="consented_lead_queue" data-tct-learning-tag="human_followup_intent">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-    <span>Request Follow-Up</span>
-  </a>
+  <a href="/demo.html#call-demo" data-call-demo data-tct-event="cta_intent" data-tct-page="pricing" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
+  <a class="text-us-button text-us-button--nav" href="/demo.html#call-demo" data-call-demo aria-label="Call demo" data-tct-event="cta_intent" data-tct-page="pricing" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
   <a href="#pricing-cards" class="btn btn-primary btn-lg" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-cta="Choose Plan" data-tct-destination="pricing_cards" data-tct-learning-tag="pricing_intent">Choose Plan</a>
 </nav>
 
@@ -817,16 +816,13 @@
           <div class="pricing-feature"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Founder/operator review</div>
         </div>
         <a href="/card-checkout.html?plan=custom" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: auto;" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-plan="custom" data-tct-cta="Start Free Trial" data-tct-destination="card_checkout" data-tct-source="pricing" data-tct-learning-tag="plan_interest">Start Free Trial</a>
-        <a href="/demo.html?source=pricing-custom#consented-demo-lead" class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: 10px;" data-tct-event="lead_capture_open" data-tct-page="pricing" data-tct-plan="custom" data-tct-cta="Request a Custom Fit Review" data-tct-destination="consented_lead_queue" data-tct-learning-tag="demo_intent">Request a Custom Fit Review</a>
+        <a href="/demo.html#call-demo" data-call-demo class="btn btn-secondary btn-lg" style="width: 100%; justify-content: center; margin-top: 10px;" data-tct-event="cta_intent" data-tct-page="pricing" data-tct-plan="custom" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
         <div style="font-size: 12px; color: var(--text-3); text-align: center; margin-top: 8px;">Secure Square checkout remains pending until signed confirmation. Wallace reviews onboarding and any scope above the $997 base.</div>
       </div>
     </div>
     <div class="text-us-support reveal" aria-label="Questions before checkout">
-      <p class="text-us-inline-note">Questions before checkout? Request a human follow-up if you need a custom fit or help choosing the right plan.</p>
-      <a class="text-us-button text-us-button--small" href="/demo.html?source=pricing-support#consented-demo-lead" aria-label="Request human follow-up" data-cta="consented-lead" data-channel="follow-up" data-destination="consented_lead_queue" data-tct-event="lead_capture_open" data-tct-page="pricing" data-tct-cta="Request Human Follow-Up" data-tct-destination="consented_lead_queue" data-tct-learning-tag="human_followup_intent">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Request Follow-Up</span>
-      </a>
+      <p class="text-us-inline-note">Hear Gideon before choosing your coverage. Call the demo—no form required.</p>
+      <a class="text-us-button text-us-button--small" href="/demo.html#call-demo" data-call-demo aria-label="Call demo" data-tct-event="cta_intent" data-tct-page="pricing" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
     </div>
     <div class="setup-flow reveal" aria-label="What happens after checkout">
       <div class="setup-flow-step"><span class="setup-flow-kicker">1 / Square Checkout</span><p class="setup-flow-copy">Choose the plan and continue to secure Square checkout.</p></div>
@@ -928,7 +924,7 @@
       </div>
       <div class="faq-item reveal">
         <button class="faq-question">Does Gideon sound human?<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="faq-icon"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-        <div class="faq-answer"><div class="faq-answer-inner">Build the browser preview or request a consented human demo while the public voice line is being verified. A person reviews your business rules before any live calls.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner">Call the demo to talk with Gideon. Your business rules, greeting, and routing are reviewed before your service goes live.</div></div>
       </div>
     </div>
   </div>
@@ -941,7 +937,7 @@
     <p class="reveal" style="font-size: 16px; color: var(--text-2); margin-bottom: 24px;">Choose a plan and continue to secure Square checkout. Signed confirmation creates a human-owned onboarding review before activation.</p>
     <div class="reveal" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
       <a href="#pricing-cards" class="btn btn-green btn-lg" data-tct-event="pricing_plan_click" data-tct-page="pricing" data-tct-cta="Choose Plan" data-tct-destination="pricing_cards" data-tct-learning-tag="pricing_intent">Choose Plan</a>
-      <a href="/demo.html?source=pricing#consented-demo-lead" class="btn btn-secondary btn-lg" data-tct-event="lead_capture_open" data-tct-page="pricing" data-tct-cta="Request a Human Demo" data-tct-destination="consented_lead_queue" data-tct-learning-tag="demo_intent">Request a Human Demo</a>
+      <a href="/demo.html#call-demo" data-call-demo class="btn btn-secondary btn-lg" data-tct-event="cta_intent" data-tct-page="pricing" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
     </div>
   </div>
 </section>
@@ -965,11 +961,8 @@
         <a href="/pricing.html">Pricing</a>
         <a href="/faq.html">FAQ</a>
         <a href="/#how">How It Works</a>
-        <a href="/demo.html?source=pricing#consented-demo-lead" data-tct-event="lead_capture_open" data-tct-page="pricing" data-tct-cta="Request a Human Demo" data-tct-destination="consented_lead_queue" data-tct-learning-tag="demo_intent">Request a Human Demo</a>
-        <a class="text-us-button text-us-button--small" href="/demo.html?source=pricing-support#consented-demo-lead" aria-label="Request human follow-up" data-cta="consented-lead" data-channel="follow-up" data-destination="consented_lead_queue" data-tct-event="lead_capture_open" data-tct-page="pricing" data-tct-cta="Request Human Follow-Up" data-tct-destination="consented_lead_queue" data-tct-learning-tag="human_followup_intent">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-          <span>Request Follow-Up</span>
-        </a>
+        <a href="/demo.html#call-demo" data-call-demo data-tct-event="cta_intent" data-tct-page="pricing" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
+        <a class="text-us-button text-us-button--small" href="/demo.html#call-demo" data-call-demo aria-label="Call demo" data-tct-event="cta_intent" data-tct-page="pricing" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
         <a href="mailto:wallacemdobbs@icloud.com">Contact</a>
       </div>
     </div>

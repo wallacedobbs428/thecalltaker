@@ -499,6 +499,8 @@ html.light .theme-toggle .icon-moon { display: block; }
   }
 }
 </style>
+<link rel="stylesheet" href="/call-demo.css">
+<script src="/call-demo.js" defer></script>
 </head>
 <body data-tct-view="homepage_view" data-tct-page="faq" data-tct-learning-tag="faq_view">
 
@@ -515,18 +517,15 @@ html.light .theme-toggle .icon-moon { display: block; }
   <a href="/ai-receptionist/">AI Receptionist</a>
   <a href="/pricing.html">Pricing</a>
   <a href="/faq.html">FAQ</a>
-  <a href="/demo.html?source=faq#consented-demo-lead" data-tct-event="lead_capture_open" data-tct-page="faq" data-tct-cta="Request a Human Demo" data-tct-destination="consented_lead_queue" data-tct-learning-tag="demo_intent">Request a Human Demo</a>
-  <a class="text-us-button text-us-button--nav" href="/demo.html?source=faq-support#consented-demo-lead" aria-label="Request human follow-up" data-cta="consented-lead" data-channel="follow-up" data-destination="consented_lead_queue" data-tct-event="lead_capture_open" data-tct-page="faq" data-tct-cta="Request Human Follow-Up" data-tct-destination="consented_lead_queue" data-tct-learning-tag="sms_intent">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-    <span>Request Follow-Up</span>
-  </a>
+  <a href="/demo.html#call-demo" data-call-demo data-tct-event="cta_intent" data-tct-page="faq" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
+  <a class="text-us-button text-us-button--nav" href="/demo.html#call-demo" data-call-demo aria-label="Call demo" data-tct-event="cta_intent" data-tct-page="faq" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
   <a href="/pricing.html" class="mobile-nav-cta">See Plans</a>
 </nav>
 
 <!-- HERO -->
 <section class="page-hero">
   <h1>Frequently Asked Questions</h1>
-  <p>Everything you need to know about The Call Taker. If your question is not here, build the preview or request a consented human demo.</p>
+  <p>Answers about coverage, setup, and pricing. To hear Gideon for yourself, call the demo.</p>
 </section>
 
 <!-- FAQ CONTENT -->
@@ -639,7 +638,7 @@ html.light .theme-toggle .icon-moon { display: block; }
         <span class="faq-toggle">+</span>
       </div>
       <div class="faq-answer">
-        <p>Yes. <a href="/demo.html?source=faq#demo-form" style="color:var(--accent);text-decoration:none;" data-tct-event="homepage_cta_click" data-tct-page="faq" data-tct-cta="Build the Preview" data-tct-destination="demo">Build the browser preview</a> without signing up, or request a human demo with explicit follow-up consent while the voice line is being verified.</p>
+        <p>Yes. Use <a href="/demo.html#call-demo" data-call-demo>Call demo</a> to talk with Gideon. No form is required.</p>
       </div>
     </div>
   </div>
@@ -693,7 +692,7 @@ html.light .theme-toggle .icon-moon { display: block; }
         <span class="faq-toggle">+</span>
       </div>
       <div class="faq-answer">
-        <p>Gideon is designed to sound natural and ask the questions you approve. The public voice line is being verified; request a consented human demo for a guided walkthrough.</p>
+        <p>Gideon follows the greeting and questions approved for your business. Use Call demo to hear the AI receptionist in action.</p>
       </div>
     </div>
 
@@ -703,7 +702,7 @@ html.light .theme-toggle .icon-moon { display: block; }
         <span class="faq-toggle">+</span>
       </div>
       <div class="faq-answer">
-        <p>Gideon is designed to sound natural and stay inside the approved call flow. Build the preview now, or request a consented human demo while the public line is being verified.</p>
+        <p>Gideon follows your approved call flow. Call the demo to experience the conversation before choosing a plan.</p>
       </div>
     </div>
 
@@ -828,17 +827,11 @@ html.light .theme-toggle .icon-moon { display: block; }
 <div class="sec-divider"></div>
 <section class="faq-cta">
   <h2>Still have questions?</h2>
-  <p>Request a guided human demo, or choose a plan and submit secure Square checkout; signed confirmation creates a human review before activation.</p>
-  <a href="/demo.html?source=faq#consented-demo-lead" class="cta-phone" data-tct-event="lead_capture_open" data-tct-page="faq" data-tct-cta="Request a Human Demo" data-tct-destination="consented_lead_queue" data-tct-learning-tag="demo_intent">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.82.36 1.63.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.18.34 1.99.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    Request a Human Demo
-  </a>
+  <p>Call the demo or choose your coverage plan. Setup and launch are reviewed before service is activated.</p>
+  <a href="/demo.html#call-demo" data-call-demo class="cta-phone" data-tct-event="cta_intent" data-tct-page="faq" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
   <div class="text-us-support" aria-label="Text support">
-    <p class="text-us-inline-note">Prefer texting? Send us a quick message and we will help you figure out the right setup.</p>
-    <a class="text-us-button text-us-button--small" href="/demo.html?source=faq-support#consented-demo-lead" aria-label="Request human follow-up" data-cta="consented-lead" data-channel="follow-up" data-destination="consented_lead_queue" data-tct-event="lead_capture_open" data-tct-page="faq" data-tct-cta="Request Human Follow-Up" data-tct-destination="consented_lead_queue" data-tct-learning-tag="sms_intent">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-      <span>Request Follow-Up</span>
-    </a>
+    <p class="text-us-inline-note">Hear how Gideon handles a conversation before you choose a plan.</p>
+    <a class="text-us-button text-us-button--small" href="/demo.html#call-demo" data-call-demo aria-label="Call demo" data-tct-event="cta_intent" data-tct-page="faq" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
   </div>
   <br>
   <a href="/card-checkout.html?plan=full247" class="cta-pilot" data-tct-event="pricing_plan_click" data-tct-page="faq" data-tct-plan="full247" data-tct-cta="Start Free Trial" data-tct-destination="card_checkout" data-tct-source="faq" data-tct-learning-tag="plan_interest">Start Free Trial &rarr;</a>
@@ -864,7 +857,7 @@ html.light .theme-toggle .icon-moon { display: block; }
     </div>
     <div class="footer-col">
       <h4>RESOURCES</h4>
-      <a href="/demo.html?source=faq#consented-demo-lead" data-tct-event="lead_capture_open" data-tct-page="faq" data-tct-cta="Request a Human Demo" data-tct-destination="consented_lead_queue" data-tct-learning-tag="demo_intent">Request a Human Demo</a>
+      <a href="/demo.html#call-demo" data-call-demo data-tct-event="cta_intent" data-tct-page="faq" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
       <a href="/ai-receptionist/">AI Receptionist</a>
       <a href="/after-hours-answering-service/">After-Hours Answering</a>
       <a href="/pricing.html">Pricing</a>
@@ -872,11 +865,8 @@ html.light .theme-toggle .icon-moon { display: block; }
     </div>
     <div class="footer-col">
       <h4>CONTACT</h4>
-      <a href="/demo.html?source=faq#consented-demo-lead" data-tct-event="lead_capture_open" data-tct-page="faq" data-tct-cta="Request a Human Demo" data-tct-destination="consented_lead_queue" data-tct-learning-tag="demo_intent">Request a Human Demo</a>
-      <a class="text-us-button text-us-button--small" href="/demo.html?source=faq-support#consented-demo-lead" aria-label="Request human follow-up" data-cta="consented-lead" data-channel="follow-up" data-destination="consented_lead_queue" data-tct-event="lead_capture_open" data-tct-page="faq" data-tct-cta="Request Human Follow-Up" data-tct-destination="consented_lead_queue" data-tct-learning-tag="sms_intent">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Request Follow-Up</span>
-      </a>
+      <a href="/demo.html#call-demo" data-call-demo data-tct-event="cta_intent" data-tct-page="faq" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
+      <a class="text-us-button text-us-button--small" href="/demo.html#call-demo" data-call-demo aria-label="Call demo" data-tct-event="cta_intent" data-tct-page="faq" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
       <a href="mailto:thecalltakerservice@gmail.com">thecalltakerservice@gmail.com</a>
       <a href="/pricing.html">Plans</a>
       <a href="/faq.html">FAQ</a>

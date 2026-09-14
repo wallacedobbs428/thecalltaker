@@ -49,52 +49,24 @@ test("Meet Gideon and the legacy booking path keep only public attribution", () 
   assert.doesNotMatch(book, /set\('source', 'legacy-book-route'\)/);
 });
 
-test("the optional Gideon follow-up is explicit, durable, and never anonymous outreach", () => {
-  const demo = read("website/demo.html");
-  assert.match(demo, /data-tct-form="consented-lead"/);
-  assert.match(demo, /name="follow_up_consent"[^>]*required/);
-  assert.match(demo, /name="preferred_contact_method"/);
-  assert.match(demo, /name="phone"[^>]*required/);
-  assert.match(demo, /Required by the current human follow-up queue, even when email is your preferred contact method/);
-  assert.match(demo, /follow_up_consent:data\.get\('follow_up_consent'\) === 'on'/);
-  assert.match(demo, /body\.id/);
-  assert.doesNotMatch(demo, /body\.request_id/);
-  assert.match(demo, /body\.correlation_id !== correlationId/);
-  assert.match(demo, /session_id:sessionId/);
-  for (const key of ["content_key","source_asset_sha256","source_publication_seed_sha256"]) assert.match(demo, new RegExp(`${key}:`));
-  for (const event of ["follow_up_consent_selected_ui","lead_request_submitted_ui","lead_request_accepted_ui","lead_request_error_ui"]) assert.match(demo, new RegExp(event));
-  for (const normalizer of ["issuedUtmSource", "issuedUtmChannel", "issuedUtmSlug"]) assert.match(demo, new RegExp(normalizer));
-  assert.doesNotMatch(demo, /data-tct-event="lead_form_submitted"/);
-  assert.doesNotMatch(read("website/tct-tracking.js"), /^\s*initPopup\(\);/m);
+test("call-in demo collects no contact details or follow-up authority", () => {
+ const demo=read("website/demo.html");
+ assert.doesNotMatch(demo, /<form|<input|api\/public\/lead|lead_request_accepted_ui/);
+ assert.match(demo, /No form required/);
+ assert.ok(demo.includes('href="tel:+16292699697"'));
 });
 
-test("the direct human-demo CTA reaches one visible intake without building a preview", () => {
-  const demo = read("website/demo.html");
-  const intake = demo.match(/<section class="human-demo-intake"[^>]*>([\s\S]*?)<\/section>/);
-  assert.ok(intake, "the intake has its own visible section, independent of the optional preview");
-  assert.match(intake[1], /<form id="consented-demo-lead"/);
-  assert.equal((demo.match(/<form id="consented-demo-lead"/g) || []).length, 1);
-  assert.doesNotMatch(intake[0], /<(?:section|div|form)\b[^>]*(?:\shidden\b|aria-hidden="true"|class="(?:demo-experience|bottom-cta))/);
-  const preview = demo.slice(demo.indexOf('<section class="demo-experience"'), demo.indexOf('<!-- ===== BOTTOM CTA'));
-  assert.doesNotMatch(preview, /<form id="consented-demo-lead"/);
-  assert.match(demo, /\.demo-experience\s*\{\s*display:\s*none/);
-  assert.match(demo, /\.human-demo-intake\s*\{[^}]*display:\s*block/);
-  assert.ok(/\.human-demo-intake\s*\{[^}]*--text-1:\s*#18181b;[^}]*color:\s*var\(--text-1\)/.test(demo),
-    "the white intake card has scoped readable text, not inherited white page text");
-  assert.match(demo, /#consented-demo-lead\s*\{[^}]*scroll-margin-top:\s*\d+px/);
+test("demo number is usable without JavaScript or a preview", () => {
+ const demo=read("website/demo.html");
+ assert.ok(demo.includes('<main id="call-demo">'));
+ assert.ok(demo.includes('data-tct-destination="live_demo_phone"'));
+ assert.doesNotMatch(demo, /demo-experience|<form/);
 });
 
-test("the visible human-demo intake keeps the canonical identity, consent, and submission binding", () => {
-  const demo = read("website/demo.html");
-  const form = demo.match(/<form id="consented-demo-lead"[^>]*>[\s\S]*?<\/form>/)[0];
-  assert.match(form, /data-tct-form="consented-lead"/);
-  assert.match(form, /data-tct-destination="consented_lead_queue"/);
-  assert.deepEqual([...form.matchAll(/<(?:input|select)\b[^>]*\bname="([^"]+)"/g)].map((match) => match[1]),
-    ["company", "name", "email", "phone", "preferred_contact_method", "follow_up_consent", "website"]);
-  assert.match(form, /name="follow_up_consent" type="checkbox" required/);
-  assert.equal((demo.match(/getElementById\('consented-demo-lead'\)/g) || []).length, 1);
-  assert.equal((demo.match(/https:\/\/call-taker-os\.vercel\.app\/api\/public\/lead/g) || []).length, 1);
-  assert.match(demo, /body\.correlation_id !== correlationId/);
+test("demo dialog preserves native keyboard escape and focus return", () => {
+ const popup=read("website/call-demo.js");
+ for(const token of ["createElement('dialog')","showModal()","trigger.focus()","Close demo number"]) assert.ok(popup.includes(token));
+ assert.doesNotMatch(popup, /fetch\(/);
 });
 
 test("checkout remains correlated and pending until signed provider truth", () => {
@@ -125,22 +97,13 @@ test("checkout remains correlated and pending until signed provider truth", () =
   assert.match(checkout, /custom scope above the \$997 base is quoted separately and is not authorized by this checkout/i);
 });
 
-test("homepage and other public surfaces keep demo requests consented while live-call proof is unobserved", () => {
-  const homepage = read("website/index.html");
-  const nonHomepageVoiceSurfaces = deployedVoiceSurfaces
-    .filter((page) => page !== "index.html")
-    .map((page) => read(`website/${page}`))
-    .join("\n");
-  assert.doesNotMatch(homepage, /href=["'](?:tel:|sms:)/i);
-  assert.match(homepage, /href="\/demo\.html\?source=homepage#consented-demo-lead"/);
-  assert.match(homepage, /data-tct-destination="consented_lead_queue"/);
-  assert.doesNotMatch(homepage, /data-gideon-demo-unverified/);
-  assert.match(homepage, /data-text-channel-unverified="true"/);
-  assert.doesNotMatch(nonHomepageVoiceSurfaces, /href=["']tel:\+16292699697/i);
-  assert.match(read("website/demo.html"), /consented-demo-lead/);
-  assert.match(read("website/meet-gideon.html"), /Request a human demo/);
-  assert.match(read("website/meet-gideon.html"), /\/assets\/images\/gideon-service-homepage-hero\.png/);
-  assert.doesNotMatch(read("website/meet-gideon.html"), /gideon-service-homepage-hero\.webp/);
+test("public demo surfaces share the call-in entry without SMS authority", () => {
+ for(const f of ["index.html","pricing.html","faq.html","meet-gideon.html"]){
+ const html=read("website/"+f);
+ assert.ok(html.includes('href="/demo.html#call-demo" data-call-demo'));
+ assert.ok(html.includes("call-demo.js"));
+ assert.doesNotMatch(html, /href=["']sms:/);
+ }
 });
 
 test("the Pages build does not secretly rewrite the canonical booking route", () => {
@@ -165,7 +128,7 @@ test("plan CTAs map exactly and no legacy setup page can activate a buyer", () =
   assert.equal(read("website/setup.html").includes("<form"), false);
   assert.doesNotMatch(read("website/demo.html"), /60-second setup/i);
   assert.doesNotMatch(read("website/index.html"), /60-second setup/i);
-  assert.match(read("website/demo.html"), /Signed payment &rarr; human review/);
+  assert.doesNotMatch(read("website/demo.html"), /payment_confirmed|client_activated/);
   assert.match(read("website/index.html"), /SIGNED CONFIRMATION &middot; HUMAN REVIEW BEFORE LIVE CALLS/);
 });
 

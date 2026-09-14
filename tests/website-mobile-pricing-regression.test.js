@@ -26,7 +26,7 @@ assert.ok(pricing.includes("Start Free Trial"), "pricing plan CTAs must say Star
 assert.strictEqual(pricing.includes(">Continue to Checkout<"), false, "pricing must not retain stale checkout CTA copy");
 
 assert.ok(homepage.includes('/assets/images/gideon-service-homepage-hero.png'), "homepage must show the approved Gideon visual");
-assert.ok(homepage.includes('id="meetGideonTitle"'), "Gideon visual must have a labelled section");
+assert.ok(homepage.includes('aria-labelledby="callSculptureCaption"'), "Gideon visual must have a labelled figure");
 assert.ok(homepage.includes("text-align: center;\n    align-items: center;"), "mobile homepage hero card must be centered");
 
 console.log("website mobile pricing regression tests passed");
