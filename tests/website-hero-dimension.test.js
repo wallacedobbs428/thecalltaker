@@ -8,7 +8,8 @@ const script = fs.readFileSync(path.join(base, 'hero-dimension.js'), 'utf8');
 test('dimensional hero is illustrative, local and progressively enhanced', () => {
   const html = fs.readFileSync(path.join(base, 'index.html'), 'utf8');
   const css = fs.readFileSync(path.join(base, 'hero-dimension.css'), 'utf8');
-  assert.match(html, /An illustration of a clearer call flow/);
+  assert.match(html, /MEET GIDEON/);
+  assert.doesNotMatch(html, /sculpture-wave|THE ART OF ANSWERING/);
   assert.match(html, /hero-dimension.js" defer/);
   assert.match(css, /prefers-reduced-motion:reduce/);
   const workflow = fs.readFileSync(path.join(base, '../.github/workflows/deploy.yml'), 'utf8');

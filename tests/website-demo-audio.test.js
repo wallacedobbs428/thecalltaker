@@ -1,31 +1,6 @@
-"use strict";
-
-const assert = require("node:assert/strict");
-const fs = require("node:fs");
-const path = require("node:path");
-
-const root = path.resolve(__dirname, "..");
-const demo = fs.readFileSync(path.join(root, "website/demo.html"), "utf8");
-const eventClient = fs.readFileSync(path.join(root, "website/tct-funnel-events.js"), "utf8");
-const audio = path.join(root, "website/assets/demo/demo-call-15s.mp3");
-
-assert.match(demo, /id="gideon-browser-audio"/);
-assert.match(demo, /<source src="assets\/demo\/demo-call-15s\.mp3" type="audio\/mpeg">/);
-assert.match(demo, /controls preload="metadata"/);
-assert.match(demo, /record\('demo_preview_intent', submit\)/);
-assert.match(demo, /record\('demo_preview_rendered_ui', submit\)/);
-assert.match(demo, /record\('cta_intent', audioSample\)/);
-assert.match(demo, /data-tct-cta="listen_recorded_ai_sample"/);
-assert.match(demo, /recorded_ai_sample_played/);
-assert.match(demo, /recorded_ai_sample_completed/);
-assert.match(demo, /recorded_ai_sample_load_error/);
-assert.match(demo, /This is a recorded sample, not a live call\./);
-assert.doesNotMatch(demo, /voice (?:demo|line) is being verified/i);
-assert.doesNotMatch(demo, /href=["'](?:tel:|sms:)/i);
-assert.match(eventClient, /cta_intent: true/);
-// A ~1 second placeholder was previously large enough to pass a non-empty
-// assertion.  This floor preserves a real, multi-second browser sample while
-// keeping the test independent of a platform-specific audio decoder.
-assert.ok(fs.statSync(audio).size > 200_000, "the deployed audio asset is a real multi-second sample, not a placeholder");
-
-console.log("website demo audio contract passed");
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const demo=fs.readFileSync(path.join(__dirname,'../website/demo.html'),'utf8');
+assert.ok(demo.includes('href="tel:+16292699697"'));
+assert.ok(demo.includes('No form required'));
+assert.doesNotMatch(demo, /<audio|<form|demo_preview_rendered_ui/);
+assert.ok(fs.statSync(path.join(__dirname,'../website/assets/demo/demo-call-15s.mp3')).size>200000,'historical sample remains preserved, not presented as the call-in demo');

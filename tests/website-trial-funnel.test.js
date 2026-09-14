@@ -32,11 +32,11 @@ assert.equal(/setupToken|tct_setup_binding|\/setup\.html/.test(checkout), false,
 assert.ok(checkout.includes("result.setupContinuation") && checkout.includes("tct_setup_continuation_v1"), "checkout carries only the server-issued setup continuation into session storage");
 assert.equal(/payment_confirmed|payment_succeeded/.test(checkout), false, "browser cannot emit or infer provider payment truth");
 
-assert.ok(demo.includes('name="follow_up_consent"') && demo.includes("required"), "follow-up needs explicit consent");
-assert.ok(demo.includes("body.id") && demo.includes("body.correlation_id !== correlationId") && !demo.includes("body.request_id"), "success requires the canonical durable correlated server receipt");
-assert.ok(demo.includes("session_id:sessionId"), "consented lead reuses the anonymous session correlation");
+assert.equal(demo.includes('<form'), false, "call-in demo must not capture contact data or infer follow-up consent");
+assert.ok(demo.includes('data-tct-destination="live_demo_phone"'), "phone intent uses the existing evidence contract");
+assert.ok(demo.includes('tct-tracking.js'), "call-in demo retains anonymous attribution");
 assert.equal(demo.includes('data-tct-event="lead_form_submitted"'), false, "form interaction cannot pretend submission");
-assert.ok(demo.includes("<title>Build a Revenue Recovery Preview | The Call Taker</title>"), "recorded sample keeps a distinct preview title");
+assert.ok(demo.includes("<title>Call the Gideon Demo | The Call Taker</title>"), "page title reflects the actual call-in demo");
 assert.ok(demo.includes('<link rel="canonical" href="https://thecalltaker.com/demo.html">'), "demo canonical points to the deployed Pages route");
 assert.equal(/Call \(\d{3}\) \d{3}-\d{4}/.test(demo), false, "recorded sample does not blur into the separate live call demo");
 

@@ -30,21 +30,22 @@ assert.doesNotMatch(combined, /api\.sendblue|sendblue\.com/i);
 const nonHomepage = [publicPages.pricing, publicPages.faq, publicPages.setup, publicPages.confirmation].join("\n");
 assert.doesNotMatch(nonHomepage, /href=["']tel:/i);
 assert.doesNotMatch(publicPages.home, /href=["']tel:/i);
-assert.match(publicPages.home, /href="\/demo\.html\?source=homepage#consented-demo-lead"/);
-assert.match(publicPages.home, /data-tct-destination="consented_lead_queue"/);
+assert.match(publicPages.home, /href="\/demo\.html#call-demo"/);
+assert.match(publicPages.home, /data-tct-destination="demo_number_dialog"/);
 
 [publicPages.pricing, publicPages.faq].forEach((html) => {
-  assert.match(html, /href="\/demo\.html\?source=[^"]+#consented-demo-lead"/);
-  assert.match(html, /aria-label="Request human follow-up"/);
-  assert.match(html, /data-destination="consented_lead_queue"/);
+  assert.match(html, /href="\/demo\.html#call-demo"/);
+  assert.match(html, /aria-label="Call demo"/);
+  assert.match(html, /data-tct-destination="demo_number_dialog"/);
+  assert.doesNotMatch(html, /data-destination="consented_lead_queue"/);
 });
 assert.doesNotMatch(publicPages.pricing, /Text us if/i, "pricing must not promise an SMS route that the CTA does not open");
 assert.doesNotMatch(publicPages.pricing, /data-tct-learning-tag="sms_intent"/, "human follow-up must not be attributed as SMS intent");
-assert.match(publicPages.pricing, /Request a human follow-up if you need a custom fit or help choosing the right plan\./);
-assert.match(publicPages.pricing, /data-tct-learning-tag="human_followup_intent"/);
+assert.match(publicPages.pricing, /Hear Gideon before choosing your coverage\. Call the demo—no form required\./);
+assert.match(publicPages.pricing, /data-tct-learning-tag="demo_intent"/);
 
 assert.doesNotMatch(publicPages.home, /data-gideon-demo-unverified="true"/);
-assert.match(publicPages.home, /Request a human demo/);
+assert.match(publicPages.home, /Call demo/);
 assert.match(publicPages.home, /data-text-channel-unverified="true"/);
 assert.doesNotMatch(publicPages.home, /Text messaging is not available from this site\./);
 

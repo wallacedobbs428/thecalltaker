@@ -1,14 +1,4 @@
-"use strict";
-
-const assert = require("node:assert/strict");
-const fs = require("node:fs");
-const path = require("node:path");
-const test = require("node:test");
-
-const demo = fs.readFileSync(path.resolve(__dirname, "..", "demo.html"), "utf8");
-
-test("demo credits a lead only after the canonical CTOS receipt ID", () => {
-  assert.match(demo, /body\.ok !== true \|\| !body\.id/);
-  assert.doesNotMatch(demo, /!body\.request_id/);
-  assert.match(demo, /recordLeadUi\('lead_request_accepted_ui'\)/);
-});
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const demo=fs.readFileSync(path.join(__dirname,'../demo.html'),'utf8');
+assert.ok(demo.includes('data-tct-event="cta_intent"'));
+assert.doesNotMatch(demo, /lead_request_accepted_ui|payment_confirmed|demo_completed|<form/);
