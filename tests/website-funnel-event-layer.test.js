@@ -37,6 +37,23 @@ assert.equal(read("website/shared/tct-intent.js").includes("demo_completed"), fa
 assert.equal(read("website/shared/tct-convert.js").includes("demo_completed"), false);
 assert.equal(read("tests/fixtures/funnel-event-layer/simulation-events.json").includes("demo_call_tap"), false);
 assert.equal(read("tests/fixtures/funnel-event-layer/simulation-events.csv").includes("text_us_tap"), false);
+
+// Legacy entry routes remain published for saved links. Their real checkout
+// links must use the canonical attribution producer so a valid buyer intent
+// carries its source and correlation into card checkout. Browser intent still
+// must not be represented as a payment or an activated customer.
+function checkoutLink(page, plan) {
+  const html = read(`website/${page}`);
+  const match = html.match(new RegExp(`<a\\b[^>]*href="/card-checkout\\.html\\?plan=${plan}"[^>]*>`, "i"));
+  assert.ok(match, `${page} contains its ${plan} checkout entry link`);
+  return match[0];
+}
+for (const [plan, page] of [["afterhours", "pay.html"], ["afterhours", "checkout.html"], ["full247", "checkout.html"], ["custom", "checkout.html"]]) {
+  const link = checkoutLink(page, plan);
+  assert.match(link, /data-tct-event="pricing_plan_click"/, `${page} checkout entry emits only a canonical intent`);
+  assert.match(link, new RegExp(`data-tct-plan="${plan}"`), `${page} checkout entry keeps the selected plan`);
+  assert.match(link, /data-tct-destination="card_checkout"/, `${page} checkout entry preserves attribution through card checkout`);
+}
 assert.match(client, /fetch\(endpoint/);
 assert.match(client, /credentials:\s*"omit"/);
 assert.match(client, /keepalive:\s*true/);
