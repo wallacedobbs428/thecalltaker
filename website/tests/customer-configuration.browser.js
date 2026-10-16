@@ -22,8 +22,8 @@ const server=createServer(async(req,res)=>{
   events.push(b.action);
   if(b.action==='current'){res.end(JSON.stringify(current));return;}
   if(b.configId!==current.config_id){res.writeHead(409);res.end('{}');return;}
-  const field={consent:'consent_recorded',authorize_service:'service_authorized',confirm_forwarding:'forwarding_confirmed'}[b.action];
+  const field={consent:'consent_recorded',authorize_service:'service_authorized',revoke_service:'service_authorized',confirm_forwarding:'forwarding_confirmed'}[b.action];
   if(!field){res.writeHead(400);res.end('{}');return;}
-  current[field]=true;res.end(JSON.stringify({outcome:'RECORDED'}));
+  current[field]=b.action!=='revoke_service';res.end(JSON.stringify({outcome:'RECORDED'}));
 });
 server.listen(56789,'127.0.0.1',()=>console.log(JSON.stringify({isolatedUrl:'http://127.0.0.1:56789',realProviderRequests:0})));

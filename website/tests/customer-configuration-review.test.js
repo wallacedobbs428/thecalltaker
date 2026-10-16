@@ -6,7 +6,7 @@ const context = () => ({checkoutAttemptId:'10000000-0000-4000-8000-000000000001'
 const configId='10000000-0000-4000-8000-000000000004';
 test('configuration actions keep exact capability in POST body only, no cookies, redirect or provider mutation',async()=>{
   let count=0;
-  for(const action of ['current','consent','authorize_service','confirm_forwarding']) {
+  for(const action of ['current','consent','authorize_service','revoke_service','confirm_forwarding']) {
     const c=context();
     await api.request(c,action,configId,async(url,options)=>{
       count++;assert.equal(url,c.apiOrigin+'/api/public/provisioning-configuration');
@@ -18,7 +18,7 @@ test('configuration actions keep exact capability in POST body only, no cookies,
       assert.equal(b.owner_user_id,undefined);assert.equal(b.approved,undefined);
       return Response.json({state:'WAITING_CONFIGURATION'});
     });
-  } assert.equal(count,4);
+  } assert.equal(count,5);
 });
 test('expired, foreign-origin, wrong capability and unbound actions make no request',async()=>{
   let calls=0;const fetcher=async()=>{calls++;throw Error('denied');};

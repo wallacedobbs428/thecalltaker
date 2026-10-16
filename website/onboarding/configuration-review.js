@@ -17,7 +17,7 @@
   }
   async function request(context, action, configId, fetcher) {
     if (!valid(context, Date.now())) throw Error('protected_access_expired');
-    if (['current', 'consent', 'authorize_service', 'confirm_forwarding'].indexOf(action) < 0
+    if (['current', 'consent', 'authorize_service', 'revoke_service', 'confirm_forwarding'].indexOf(action) < 0
       || (action !== 'current' && !UUID.test(configId))) throw Error('exact_configuration_required');
     var body = { action: action, checkoutAttemptId: context.checkoutAttemptId,
       correlationId: context.correlationId, sessionId: context.sessionId, continuationToken: context.continuationToken };
@@ -94,18 +94,20 @@
       controls.append(label);
       var buttons = [];
       function actionButton(title, action, description) {
+        var requiresReview = action !== 'revoke_service';
         controls.append(element('p', description));
-        var button = element('button', title); button.type = 'button'; button.className = 'btn btn-primary'; button.disabled = !reviewed;
+        var button = element('button', title); button.type = 'button'; button.className = 'btn btn-primary'; button.disabled = requiresReview && !reviewed;
+        button.dataset.reviewRequired = requiresReview ? 'true' : 'false';
         button.addEventListener('click', async function () {
-          if (!reviewed || busy || !current) return;
+          if ((requiresReview && !reviewed) || busy || !current) return;
           busy = true; buttons.forEach(function (b) { b.disabled = true; }); refresh.disabled = true;
           var id = current.config_id, hash = current.configuration_sha256;
           try {
             await request(context, action, id, fetcher);
             var readback = await request(context, 'current', null, fetcher);
             if (readback.config_id !== id || readback.configuration_sha256 !== hash) throw Error('configuration_changed');
-            var field = action === 'consent' ? 'consent_recorded' : action === 'authorize_service' ? 'service_authorized' : 'forwarding_confirmed';
-            if (readback[field] !== true) throw Error('decision_readback_missing');
+            var field = action === 'consent' ? 'consent_recorded' : ['authorize_service', 'revoke_service'].indexOf(action) >= 0 ? 'service_authorized' : 'forwarding_confirmed';
+            if (readback[field] !== (action !== 'revoke_service')) throw Error('decision_readback_missing');
             current = readback; render();
             state.textContent = 'Your exact decision was recorded and independently read back. This does not prove provider work, call routing, delivery, or activation.';
           } catch (_) { current = null; reviewed = false; controls.replaceChildren(); state.textContent = 'The decision could not be independently verified. Check the current configuration before trying again; no activation is assumed.'; }
@@ -115,8 +117,9 @@
       }
       actionButton('Authorize this configuration', 'consent', 'Permit configuration, controlled testing and publication of these exact provider versions only. This does not change your forwarding or independently activate service.');
       actionButton('Authorize ongoing service', 'authorize_service', DECLARATION);
+      if (current.service_authorized === true) actionButton('Withdraw ongoing service permission', 'revoke_service', 'Stop future processing under this service permission. This cannot retract an accepted notification, undo a completed provider operation, or change your phone forwarding.');
       actionButton('Confirm my forwarding setup', 'confirm_forwarding', 'Confirm only after you have configured your own forwarding to ' + String(current.provider_number || 'the reviewed number') + '. The Call Taker still verifies the route and actual service evidence. This button does not change any phone setting.');
-      checkbox.addEventListener('change', function () { reviewed = checkbox.checked; buttons.forEach(function (b) { b.disabled = !reviewed || busy; }); });
+      checkbox.addEventListener('change', function () { reviewed = checkbox.checked; buttons.forEach(function (b) { b.disabled = busy || (!reviewed && b.dataset.reviewRequired !== 'false'); }); });
     }
     refresh.addEventListener('click', load);
     return { refresh: load };
