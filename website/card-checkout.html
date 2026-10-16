@@ -216,7 +216,7 @@
           <h2>Start your free trial</h2>
           <p>Nothing is charged today. After checkout, we’ll guide you through setup before service goes live.</p>
         </header>
-        <form id="form" novalidate data-tct-plan="" data-tct-cta="Start my 14-day free trial" data-tct-destination="square_checkout_request">
+        <form id="form" novalidate data-offer-version="ctos.standard-service-offer.v1" data-tct-plan="" data-tct-cta="Start my 14-day free trial" data-tct-destination="square_checkout_request">
           <fieldset>
             <legend class="label"><span class="number">1</span> Business details</legend>
             <div class="grid">
@@ -536,7 +536,7 @@
           var billingPostalCode = token.details && token.details.billing && token.details.billing.postalCode ? String(token.details.billing.postalCode).trim() : '';
           if (!/^\d{5}(?:-\d{4})?$/.test(billingPostalCode)) throw new Error('Please enter a valid billing ZIP code in the secure card form.');
           requestSent = true;
-          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, attribution:attribution(), businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), billingPostalCode:billingPostalCode, consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
+          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, acceptedOfferVersion:form.dataset.offerVersion, attribution:attribution(), businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), billingPostalCode:billingPostalCode, consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
           var result = await response.json();
           if (!response.ok || !result.ok || SETUP_ELIGIBLE_STATES.indexOf(result.status) < 0 || !result.checkoutAttemptId || result.correlationId !== requestIdentity.correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
           if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_accepted_ui', form);
