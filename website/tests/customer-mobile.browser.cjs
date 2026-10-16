@@ -47,6 +47,12 @@ const server = createServer((req,res) => {
     if (width===390 && process.env.CTOS_SCREENSHOT_DIR) await page.screenshot({path:join(process.env.CTOS_SCREENSHOT_DIR,'ctos-homepage-mobile.png')});
     await page.request.get(fixtureOrigin+'/fixture-reset');
     await page.goto(fixtureOrigin);
+    const stages={ENROLLMENT_RECEIVED:'Enrollment received',ENROLLMENT_VERIFIED:'Enrollment verified',SETUP_NEEDED:'Setup needed',CONFIGURATION_REVIEW:'Configuration review',CUSTOMER_DECISION:'Your service decisions',READY_FOR_TESTS:'Ready for controlled tests',READY_FOR_LAUNCH:'Ready for launch review',ACTIVE:'Service active',BILLING_EXCEPTION:'Billing needs review',HISTORICAL_ACTIVE:'Service status not verified',PAID:'Your service decisions'};
+    for(const [stage,title] of Object.entries(stages)){
+      await page.request.get(fixtureOrigin+'/fixture-stage?stage='+stage);
+      await page.getByRole('button',{name:'Check current configuration',exact:true}).click();
+      await page.getByRole('heading',{name:title,exact:true}).waitFor();
+    }
     await page.getByRole('button',{name:'Check current configuration',exact:true}).click();
     await page.getByRole('checkbox').check();
     for (const title of ['Authorize this configuration','Authorize ongoing service','Confirm my forwarding setup']) await page.getByRole('button',{name:title,exact:true}).click();
@@ -68,7 +74,7 @@ const server = createServer((req,res) => {
     const evidence = await (await page.request.get(fixtureOrigin+'/fixture-state')).json();
     assert.equal(evidence.providerActions,0);
     if (width===390 && process.env.CTOS_SCREENSHOT_DIR) await page.screenshot({path:join(process.env.CTOS_SCREENSHOT_DIR,'ctos-configuration-mobile.png'),fullPage:true});
-    results.push({width,overflow:false,termsLink:true,configurationInteractions:'PASS_SYNTHETIC_UI_ONLY',customerFollowthrough:'PASS_SYNTHETIC_UI_ONLY',deniedExternalRequests,providerActions:0});
+    results.push({width,overflow:false,termsLink:true,trialAndPaidStages:'PASS_SYNTHETIC_UI_ONLY',configurationInteractions:'PASS_SYNTHETIC_UI_ONLY',customerFollowthrough:'PASS_SYNTHETIC_UI_ONLY',deniedExternalRequests,providerActions:0});
     await context.close();
   }
   console.log(JSON.stringify({results,liveFormsSubmitted:0,databaseProof:false,ownerBrowserProfileUsed:false}));
