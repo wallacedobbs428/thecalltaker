@@ -14,6 +14,27 @@
       + '. Service permitted now: ' + (value.current_service_permitted === true ? 'yes' : 'not proven or held')
       + (typeof value.current_service_hold === 'string' ? '. Hold: ' + value.current_service_hold : '') + '.';
   }
+  function customerProgress(value) {
+    var stages = {
+      ENROLLMENT_RECEIVED: ['Enrollment received', 'Your enrollment request is retained. Verification is still pending; call handling is not active.'],
+      ENROLLMENT_VERIFIED: ['Enrollment verified', 'Your enrollment is verified. Setup, configuration review, permissions, and testing remain separate before launch.'],
+      SETUP_NEEDED: ['Setup needed', 'Complete the protected business questionnaire so the configuration owner can prepare your call flow.'],
+      CONFIGURATION_REVIEW: ['Configuration review', 'Your exact business configuration is being prepared or reviewed. Check the current version below before making a service decision.'],
+      CUSTOMER_DECISION: ['Your service decisions', 'Review the exact configuration and record each required permission separately. These controls do not change your phone forwarding.'],
+      READY_FOR_TESTS: ['Ready for controlled tests', 'The required preparation is ready for controlled testing. This is not permission to route live calls.'],
+      READY_FOR_LAUNCH: ['Ready for launch review', 'The launch owner must verify the required test and service authority. Readiness is not active call handling.'],
+      BILLING_EXCEPTION: ['Billing needs review', 'A billing condition is holding service eligibility. The billing owner must reconcile it; do not submit another payment or assume service is active.']
+    };
+    var stage = value.current_service_permitted === true
+      ? ['Service active', 'Current service permission is verified. Captured requests and actual notification outcomes remain separate below.']
+      : stages[value.customer_stage] || ['Service status not verified', 'Current call handling is not proven. Check the protected status again; historical activation alone does not establish current permission.'];
+    var basis = value.service_basis === 'verified_trial' ? 'Verified card-backed trial enrollment, not a payment receipt.'
+      : value.service_basis === 'paid' ? 'Verified paid service basis.' : 'Service basis is not verified.';
+    var end = typeof value.trial_end === 'string' ? Date.parse(value.trial_end) : NaN;
+    return { title: stage[0], detail: stage[1], basis: basis,
+      trial: Number.isFinite(end) ? 'Trial ends ' + new Date(end).toLocaleString(undefined,
+        { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) + '. Setup or activation does not restart this schedule.' : null };
+  }
   function valid(context, now) {
     return context && ORIGINS.indexOf(context.apiOrigin) >= 0
       && UUID.test(context.checkoutAttemptId) && UUID.test(context.correlationId) && UUID.test(context.sessionId)
@@ -171,13 +192,20 @@
     var heading = element('h2', 'Review your exact service configuration');
     var intro = element('p', 'Setup answers and payment do not authorize phone changes or go-live. Review the configuration below. Each decision is separate. No forwarding is changed by these controls.');
     var state = element('p', 'Use the button to check the current configuration.'); state.setAttribute('role', 'status');
-    var details = element('div'), controls = element('div'), cases = element('div');
+    var details = element('div'), controls = element('div'), cases = element('div'), progress = element('section');
+    progress.setAttribute('aria-label', 'Your service progress');
     var refresh = element('button', 'Check current configuration'); refresh.type = 'button'; refresh.className = 'btn btn-primary';
-    container.append(heading, intro, refresh, state, details, controls, cases);
+    container.append(heading, intro, refresh, state, progress, details, controls, cases);
+    function showProgress(value) {
+      var result = customerProgress(value);
+      progress.replaceChildren(element('h3', result.title), element('p', result.detail), element('p', result.basis));
+      if (result.trial) progress.append(element('p', result.trial));
+    }
     async function load() {
-      if (busy) return; busy = true; refresh.disabled = true; cases.replaceChildren();
+      if (busy) return; busy = true; refresh.disabled = true; cases.replaceChildren(); progress.replaceChildren();
       try {
         var next = await request(context, 'current', null, fetcher);
+        showProgress(next);
         if (!next.config_id || !UUID.test(next.config_id) || !/^[a-f0-9]{64}$/.test(next.configuration_sha256)) {
           current = null; details.replaceChildren(); controls.replaceChildren();
           state.textContent = next.state === 'WAITING_CONFIGURATION'
@@ -192,7 +220,7 @@
           + '. Ongoing service permission: ' + (next.service_authorized === true ? 'recorded' : 'not recorded')
           + '. Customer forwarding confirmation: ' + (next.forwarding_confirmed === true ? 'recorded' : 'not recorded')
           + '. ' + serviceStatus(next);
-      } catch (_) { current = null; controls.replaceChildren(); state.textContent = valid(context, Date.now())
+      } catch (_) { current = null; controls.replaceChildren(); progress.replaceChildren(); state.textContent = valid(context, Date.now())
         ? 'We could not verify the current configuration. No permission or activation is assumed. You may retry this read.'
         : 'Protected access expired. Return to the accepted checkout and use its protected setup-recovery control. No access window was extended here.'; }
       finally { busy = false; refresh.disabled = false; }
@@ -222,7 +250,7 @@
         button.dataset.reviewRequired = requiresReview ? 'true' : 'false';
         button.addEventListener('click', async function () {
           if ((requiresReview && !reviewed) || busy || !current) return;
-          busy = true; buttons.forEach(function (b) { b.disabled = true; }); refresh.disabled = true;
+          busy = true; buttons.forEach(function (b) { b.disabled = true; }); refresh.disabled = true; progress.replaceChildren();
           var id = current.config_id, hash = current.configuration_sha256;
           try {
             await request(context, action, id, fetcher);
@@ -231,8 +259,9 @@
             var field = action === 'consent' ? 'consent_recorded' : ['authorize_service', 'revoke_service'].indexOf(action) >= 0 ? 'service_authorized' : 'forwarding_confirmed';
             if (readback[field] !== (action !== 'revoke_service')) throw Error('decision_readback_missing');
             current = readback; render();
+            showProgress(readback);
             state.textContent = 'Your exact decision was recorded and independently read back. This does not prove new provider work, call routing or delivery. ' + serviceStatus(readback);
-          } catch (_) { current = null; reviewed = false; controls.replaceChildren(); state.textContent = 'The decision could not be independently verified. Check the current configuration before trying again; no activation is assumed.'; }
+          } catch (_) { current = null; reviewed = false; controls.replaceChildren(); progress.replaceChildren(); state.textContent = 'The decision could not be independently verified. Check the current configuration before trying again; no activation is assumed.'; }
           finally { busy = false; refresh.disabled = false; }
         });
         buttons.push(button); controls.append(button);
@@ -246,7 +275,7 @@
     refresh.addEventListener('click', load);
     return { refresh: load };
   }
-  var api = { storageKey: KEY, declaration: DECLARATION, serviceStatus: serviceStatus, valid: valid, stored: stored, recovery: recovery, remember: remember, request: request, mount: mount, caseRequest: caseRequest, mountCases: mountCases };
+  var api = { storageKey: KEY, declaration: DECLARATION, serviceStatus: serviceStatus, customerProgress: customerProgress, valid: valid, stored: stored, recovery: recovery, remember: remember, request: request, mount: mount, caseRequest: caseRequest, mountCases: mountCases };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.TCTCustomerConfigurationReview = api;
 })(typeof window !== 'undefined' ? window : globalThis);
