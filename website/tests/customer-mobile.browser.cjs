@@ -45,16 +45,30 @@ const server = createServer((req,res) => {
     await page.goto(origin + '/');
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'homepage overflow');
     if (width===390 && process.env.CTOS_SCREENSHOT_DIR) await page.screenshot({path:join(process.env.CTOS_SCREENSHOT_DIR,'ctos-homepage-mobile.png')});
+    await page.request.get(fixtureOrigin+'/fixture-reset');
     await page.goto(fixtureOrigin);
     await page.getByRole('button',{name:'Check current configuration',exact:true}).click();
     await page.getByRole('checkbox').check();
     for (const title of ['Authorize this configuration','Authorize ongoing service','Confirm my forwarding setup']) await page.getByRole('button',{name:title,exact:true}).click();
     assert.match(await page.locator('[role=status]').first().innerText(), /Service permitted now: not proven or held/);
+    await page.getByRole('button',{name:'Check customer requests',exact:true}).click();
+    await page.getByRole('heading',{name:/Request received/}).waitFor();
+    if(!(await page.getByText('Business disposition: information_only',{exact:true}).count())){
+      await page.getByRole('button',{name:'I have seen this request',exact:true}).click();
+      await page.getByRole('button',{name:'Acknowledge this request',exact:true}).click();
+      await page.getByLabel('Callback owner in your business').fill('Synthetic office team');
+      await page.getByRole('button',{name:'Assign callback owner',exact:true}).click();
+      await page.getByRole('button',{name:'I started the callback',exact:true}).click();
+      await page.getByRole('button',{name:'I completed the callback',exact:true}).click();
+      await page.getByLabel('Business disposition').selectOption('information_only');
+      await page.getByRole('button',{name:'Record disposition',exact:true}).click();
+    }
+    await page.getByText('Business disposition: information_only',{exact:true}).waitFor();
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'configuration overflow');
     const evidence = await (await page.request.get(fixtureOrigin+'/fixture-state')).json();
     assert.equal(evidence.providerActions,0);
     if (width===390 && process.env.CTOS_SCREENSHOT_DIR) await page.screenshot({path:join(process.env.CTOS_SCREENSHOT_DIR,'ctos-configuration-mobile.png'),fullPage:true});
-    results.push({width,overflow:false,termsLink:true,configurationInteractions:'PASS_SYNTHETIC_UI_ONLY',deniedExternalRequests,providerActions:0});
+    results.push({width,overflow:false,termsLink:true,configurationInteractions:'PASS_SYNTHETIC_UI_ONLY',customerFollowthrough:'PASS_SYNTHETIC_UI_ONLY',deniedExternalRequests,providerActions:0});
     await context.close();
   }
   console.log(JSON.stringify({results,liveFormsSubmitted:0,databaseProof:false,ownerBrowserProfileUsed:false}));
