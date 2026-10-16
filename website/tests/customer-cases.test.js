@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const api = require('../onboarding/configuration-review');
 const configId = '10000000-0000-4000-8000-000000000004', caseId = '10000000-0000-4000-8000-000000000005';
 const context = () => ({checkoutAttemptId:'10000000-0000-4000-8000-000000000001',correlationId:'10000000-0000-4000-8000-000000000002',sessionId:'10000000-0000-4000-8000-000000000003',apiOrigin:'https://call-taker-os.vercel.app',continuationToken:'l4sc1_'+'a'.repeat(43),expiresAt:new Date(Date.now()+3600000).toISOString()});
-const item = overrides => ({case_id:caseId,lifecycle_status:'provider_delivered',notification_status:'provider_delivered',receipt_status:'unconfirmed',acknowledgement_status:'not_acknowledged',follow_up_status:'not_started',next_action_owner:'ClientDelivery',next_action:'Business reviews request',...overrides});
+const item = overrides => ({case_id:caseId,request_captured_at:'2026-10-16T13:05:00Z',lifecycle_status:'provider_delivered',notification_status:'provider_delivered',receipt_status:'unconfirmed',acknowledgement_status:'not_acknowledged',follow_up_status:'not_started',next_action_owner:'ClientDelivery',next_action:'Business reviews request',...overrides});
 const inventory = cases => ({configuration_id:configId,cases,coverage:'BOUNDED_COMPLETE'});
 function dom() {
   const doc = {createElement:tag=>new Element(tag), createTextNode:text=>({textContent:text})};
@@ -61,7 +61,8 @@ test('customer sees captured request and explicit seen action performs write the
     return Response.json(body.action==='list'?inventory([current]):{...current,configuration_id:configId,external_actions:0});};
   api.mountCases(root,context(),configId,fetcher);
   assert.deepEqual(events,[]);await button(root,'Check customer requests').click();
-  assert.match(text(root),/Request 10000000/);assert.match(text(root),/Notification status: provider_delivered/);
+  assert.match(text(root),/Request received/);assert.match(text(root),/2026/);assert.match(text(root),/Request reference: 00000005/);
+  assert.ok(!text(root).includes(caseId));assert.match(text(root),/Notification status: provider_delivered/);
   assert.equal(button(root,'Acknowledge this request'),undefined);
   await button(root,'I have seen this request').click();
   assert.deepEqual(events,['list','receipt_seen','read','list']);
@@ -96,5 +97,12 @@ test('request controls appear only after an exact configuration is loaded, witho
 test('possibly-more inventory is labeled bounded and empty inventory does not prove no calls',async()=>{
   for(const [value,expected] of [[{...inventory([item()]),coverage:'POSSIBLY_MORE'},/older requests may exist/],[inventory([]),/not proof that no calls occurred/]]) {
     const root=dom();api.mountCases(root,context(),configId,async()=>Response.json(value));await button(root,'Check customer requests').click();assert.match(text(root),expected);
+  }
+});
+test('missing or invalid request time remains unproven rather than displaying an invented date or raw identifier',async()=>{
+  for(const request_captured_at of [null,'invalid']) {
+    const root=dom();api.mountCases(root,context(),configId,async()=>Response.json(inventory([item({request_captured_at})])));
+    await button(root,'Check customer requests').click();assert.match(text(root),/Captured request/);
+    assert.ok(!text(root).includes('Invalid Date'));assert.ok(!text(root).includes(caseId));
   }
 });

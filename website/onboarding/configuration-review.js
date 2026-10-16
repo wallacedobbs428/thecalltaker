@@ -96,7 +96,10 @@
     function render(items) {
       cards.replaceChildren();
       items.forEach(function (item) {
-        var card = element('section'); card.append(element('h4', 'Request ' + item.case_id));
+        var captured = typeof item.request_captured_at === 'string' ? Date.parse(item.request_captured_at) : NaN;
+        var title = Number.isFinite(captured) ? 'Request received ' + new Date(captured).toLocaleString(undefined,
+          { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }) : 'Captured request';
+        var card = element('section'); card.append(element('h4', title), element('p', 'Request reference: ' + item.case_id.slice(-8)));
         [['Request status', item.lifecycle_status], ['Notification status', item.notification_status], ['Seen receipt', item.receipt_status],
           ['Acknowledgement', item.acknowledgement_status], ['Callback status', item.follow_up_status],
           ['Business disposition', item.business_outcome_status], ['Owner', item.next_action_owner], ['Next action', item.next_action]]
