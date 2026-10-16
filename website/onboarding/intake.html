@@ -1018,6 +1018,7 @@ textarea.error {
 <!-- ===== JAVASCRIPT ===== -->
 <!-- Paid conversion tracking disabled pending Lane 4 release evidence. -->
 
+<script src="/onboarding/configuration-review.js"></script>
 <script>
   // BEGIN checkout-bound setup questionnaire
   (function () {
@@ -1172,6 +1173,13 @@ textarea.error {
         sessionStorage.setItem(STORAGE_KEY, JSON.stringify(context));
         submissionIdempotencyKey = issueIdempotencyKey(context.checkoutAttemptId);
         if (!validContext(context) || !submissionIdempotencyKey) throw new Error('setup_context_not_persisted');
+        if (binding.resumeConfiguration && window.TCTCustomerConfigurationReview) {
+          if (!window.TCTCustomerConfigurationReview.remember(sessionStorage, context)) throw new Error('configuration_context_not_persisted');
+          sessionStorage.removeItem(STORAGE_KEY);
+          gate.style.display = 'none';
+          window.TCTCustomerConfigurationReview.mount(form, context);
+          return;
+        }
         gate.classList.remove('blocked');
         gate.innerHTML = '<strong>Checkout handoff refreshed.</strong><br>Your answers will attach to pending human review. This does not claim payment or activate service.';
         submit.disabled = false;
@@ -1200,6 +1208,17 @@ textarea.error {
       });
     }
     function initialize() {
+      var review = window.TCTCustomerConfigurationReview;
+      var savedReview = null;
+      try { savedReview = review && review.stored(sessionStorage); } catch (_) {}
+      if (savedReview) {
+        gate.style.display = 'none';
+        review.mount(form, savedReview);
+        return;
+      }
+      var reviewRecovery = null;
+      try { reviewRecovery = review && review.recovery(sessionStorage); } catch (_) {}
+      if (reviewRecovery) { recoverExpiredContext(reviewRecovery); return; }
       initToggles('emergencyToggle', 'emergencyOnCall', 'emergencyFields');
       initToggles('pricingToggle', 'givePricing', 'pricingFields');
       initCheckboxes();
@@ -1244,11 +1263,17 @@ textarea.error {
           throw new Error('setup_receipt_unavailable');
         }
         try {
+          if (window.TCTCustomerConfigurationReview) window.TCTCustomerConfigurationReview.remember(sessionStorage, context);
           sessionStorage.removeItem(STORAGE_KEY);
           sessionStorage.removeItem(idempotencyStorageKey(context.checkoutAttemptId));
         } catch (_) {}
         form.innerHTML = '<div class="setup-gate"><strong>Setup questionnaire received.</strong><br>Your answers are attached to the pending human-review record. Payment and live activation are not implied. Wallace will review the provider and launch evidence before anything goes live.</div><p><a class="btn btn-primary" href="/onboarding/next-steps.html">See next steps</a></p>';
         gate.style.display = 'none';
+        if (window.TCTCustomerConfigurationReview) {
+          var reviewContainer = document.createElement('section');
+          form.appendChild(reviewContainer);
+          window.TCTCustomerConfigurationReview.mount(reviewContainer, context);
+        }
       } catch (_) {
         errorBanner.textContent = 'We could not verify a durable setup receipt. Your answers remain in this page; retrying uses the same protected submission identity.';
         errorBanner.classList.add('show');
