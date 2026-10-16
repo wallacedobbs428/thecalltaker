@@ -219,7 +219,8 @@ assert.strictEqual(fs.existsSync(path.join(root, "website/pre-checkout.html")), 
 
 [
   "Secure Square checkout remains pending until signed confirmation",
-  "Only Square's validated signed event creates the internal payment and client records.",
+  "Wait for verified signed Square confirmation.",
+  "A checkout submission or redirect alone does not confirm enrollment or activate call handling.",
   "setup questions",
   "forwarding/testing",
 ].forEach((marker) => {
