@@ -82,6 +82,7 @@ test('callback and disposition controls follow actual reported stages; terminal 
     [item({acknowledgement_status:'acknowledged',follow_up_status:'pending',next_action_owner:'customer_reported:Office'}),'I started the callback','Record disposition'],
     [item({acknowledgement_status:'acknowledged',follow_up_status:'in_progress'}),'I completed the callback','Assign callback owner'],
     [item({acknowledgement_status:'acknowledged',follow_up_status:'completed'}),'Record disposition','Assign callback owner'],
+    [item({acknowledgement_status:'acknowledged',follow_up_status:'blocked',lifecycle_status:'blocked',next_action_owner:'ClientDelivery'}),'Report an unresolved request','Assign callback owner'],
     [item({lifecycle_status:'resolved'}),null,'Report an unresolved request']]) {
     const root=dom();api.mountCases(root,context(),configId,async()=>Response.json(inventory([state])));await button(root,'Check customer requests').click();
     if(present)assert.ok(button(root,present));assert.equal(button(root,absent),undefined);

@@ -135,7 +135,7 @@
           if (['provider_accepted', 'provider_delivered', 'blocked'].indexOf(item.lifecycle_status) >= 0 && item.receipt_status !== 'confirmed_seen') button('I have seen this request', 'receipt_seen', function () { return {}; });
           if (item.receipt_status === 'confirmed_seen' && item.acknowledgement_status !== 'acknowledged') button('Acknowledge this request', 'acknowledge', function () { return {}; });
           if (item.acknowledgement_status === 'acknowledged') {
-            if (item.follow_up_status !== 'in_progress' && item.follow_up_status !== 'completed') {
+            if (item.follow_up_status === 'pending') {
               var ownerLabel = element('label', 'Callback owner in your business'), owner = element('input'); owner.type = 'text'; owner.maxLength = 80; ownerLabel.append(owner); card.append(ownerLabel);
               button('Assign callback owner', 'assign_callback', function () { return { assignedTo: owner.value.trim() }; });
             }
