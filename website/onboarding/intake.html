@@ -1208,24 +1208,28 @@ textarea.error {
       });
     }
     function initialize() {
+      // A newly accepted checkout owns this intake, even if an older customer
+      // configuration review is still stored in this browser tab.
+      var freshContext = readContext();
+      var freshRecovery = freshContext ? null : readRecoveryBinding();
       var review = window.TCTCustomerConfigurationReview;
       var savedReview = null;
       try { savedReview = review && review.stored(sessionStorage); } catch (_) {}
-      if (savedReview) {
+      if (savedReview && !freshContext && !freshRecovery) {
         gate.style.display = 'none';
         review.mount(form, savedReview);
         return;
       }
       var reviewRecovery = null;
       try { reviewRecovery = review && review.recovery(sessionStorage); } catch (_) {}
-      if (reviewRecovery) { recoverExpiredContext(reviewRecovery); return; }
+      if (reviewRecovery && !freshContext && !freshRecovery) { recoverExpiredContext(reviewRecovery); return; }
       initToggles('emergencyToggle', 'emergencyOnCall', 'emergencyFields');
       initToggles('pricingToggle', 'givePricing', 'pricingFields');
       initCheckboxes();
-      context = readContext();
+      context = freshContext;
       submissionIdempotencyKey = context ? issueIdempotencyKey(context.checkoutAttemptId) : '';
       if (!context || !submissionIdempotencyKey) {
-        var recoveryBinding = readRecoveryBinding();
+        var recoveryBinding = freshRecovery;
         if (recoveryBinding) { recoverExpiredContext(recoveryBinding); return; }
         showBlocked('Open this questionnaire from the accepted secure checkout in the same browser tab. No setup was submitted.');
         return;

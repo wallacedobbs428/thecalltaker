@@ -48,3 +48,10 @@ test('canonical release artifact includes the exact customer review script',()=>
   assert.ok(workflow.includes('cp -p website/onboarding/configuration-review.js "$CLEAN/onboarding/configuration-review.js"'));
   assert.ok(workflow.includes('test -f "$CLEAN/onboarding/configuration-review.js"'));
 });
+test('newly accepted checkout or its legitimate recovery takes priority over an older saved review',()=>{
+  const html=readFileSync(require.resolve('../onboarding/intake.html'),'utf8');
+  assert.match(html,/if \(savedReview && !freshContext && !freshRecovery\)/);
+  assert.match(html,/if \(reviewRecovery && !freshContext && !freshRecovery\)/);
+  assert.match(html,/context = freshContext;/);
+  assert.match(html,/var recoveryBinding = freshRecovery;/);
+});
