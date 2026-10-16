@@ -20,6 +20,8 @@ test('public offer keeps the existing card, trial, renewal, and separate custom 
   for (const price of [97, 497]) assert.ok(pricing.includes(`$0 today for 14 days; then $${price}/month`));
   assert.ok(pricing.includes('$0 today for 14 days; then $997 base/month; custom scope quoted separately'));
   assert.match(pricing, /canceled before renewal/);
+  assert.match(pricing, /Your trial follows the Square enrollment schedule\. Setup and launch do not restart it/);
+  assert.match(pricing, /call handling begins only after setup, forwarding, and tests are approved/);
   assert.match(page('terms.html'), /No unlisted overage or custom-scope charge is added without disclosure and agreement/);
 });
 
