@@ -1266,11 +1266,15 @@ textarea.error {
             || result.requiresHumanReview !== true || result.providerActionPerformed !== false || !uuid(result.questionnaireReceiptId)) {
           throw new Error('setup_receipt_unavailable');
         }
+        // BEGIN durable setup-review storage transition
         try {
-          if (window.TCTCustomerConfigurationReview) window.TCTCustomerConfigurationReview.remember(sessionStorage, context);
-          sessionStorage.removeItem(STORAGE_KEY);
-          sessionStorage.removeItem(idempotencyStorageKey(context.checkoutAttemptId));
+          if (window.TCTCustomerConfigurationReview
+              && window.TCTCustomerConfigurationReview.remember(sessionStorage, context) === true) {
+            sessionStorage.removeItem(STORAGE_KEY);
+            sessionStorage.removeItem(idempotencyStorageKey(context.checkoutAttemptId));
+          }
         } catch (_) {}
+        // END durable setup-review storage transition
         form.innerHTML = '<div class="setup-gate"><strong>Setup questionnaire received.</strong><br>Your answers are attached to the pending human-review record. Payment and live activation are not implied. Wallace will review the provider and launch evidence before anything goes live.</div><p><a class="btn btn-primary" href="/onboarding/next-steps.html">See next steps</a></p>';
         gate.style.display = 'none';
         if (window.TCTCustomerConfigurationReview) {

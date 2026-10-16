@@ -1,6 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {readFileSync} = require('node:fs');
+const {runInNewContext} = require('node:vm');
 const api = require('../onboarding/configuration-review');
 const context = () => ({checkoutAttemptId:'10000000-0000-4000-8000-000000000001',correlationId:'10000000-0000-4000-8000-000000000002',sessionId:'10000000-0000-4000-8000-000000000003',apiOrigin:'https://call-taker-os.vercel.app',continuationToken:'l4sc1_'+'a'.repeat(43),expiresAt:new Date(Date.now()+3600000).toISOString()});
 const configId='10000000-0000-4000-8000-000000000004';
@@ -43,6 +44,19 @@ test('retained access never extends expiry; expired context exposes only recover
   assert.equal(api.stored(storage),null);assert.equal(api.remember(storage,c),false);
   const recovery=api.recovery(storage);assert.equal(recovery.sessionId,c.sessionId);assert.equal(recovery.resumeConfiguration,true);
   assert.equal(recovery.continuationToken,undefined);assert.equal(recovery.expiresAt,undefined);
+});
+test('actual intake transition preserves recovery and submission identity until review storage is verified',()=>{
+  const html=readFileSync(require.resolve('../onboarding/intake.html'),'utf8');
+  const transition=html.split('// BEGIN durable setup-review storage transition')[1].split('// END durable setup-review storage transition')[0];
+  for(const mode of ['saved','quota','expired','script_unavailable']) {
+    const c=context(),setupKey='tct_setup_continuation_v1',submissionKey='submission:'+c.checkoutAttemptId;
+    if(mode==='expired')c.expiresAt=new Date(Date.now()-1).toISOString();
+    const data=new Map([[setupKey,JSON.stringify(c)],[submissionKey,'retained-idempotency-key']]);
+    const storage={getItem:k=>data.get(k)||null,setItem:(k,v)=>{if(mode==='quota')throw Error('quota');data.set(k,v);},removeItem:k=>data.delete(k)};
+    runInNewContext(transition,{window:{TCTCustomerConfigurationReview:mode==='script_unavailable'?undefined:api},sessionStorage:storage,context:c,STORAGE_KEY:setupKey,idempotencyStorageKey:()=>submissionKey});
+    assert.equal(data.has(setupKey),mode!=='saved');assert.equal(data.has(submissionKey),mode!=='saved');
+    if(mode==='saved')assert.equal(api.stored(storage).continuationToken,c.continuationToken);
+  }
 });
 test('current setup surface mounts consent review only after durable questionnaire receipt',()=>{
   const html=readFileSync(require.resolve('../onboarding/intake.html'),'utf8');
