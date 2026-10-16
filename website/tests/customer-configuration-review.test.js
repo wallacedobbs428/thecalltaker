@@ -43,3 +43,8 @@ test('current setup surface mounts consent review only after durable questionnai
   assert.ok(html.indexOf("result.providerActionPerformed !== false")<html.indexOf('.remember(sessionStorage, context)',html.indexOf("result.providerActionPerformed !== false")));
   assert.match(html,/resumeConfiguration/);assert.match(html,/review\.mount\(form, savedReview\)/);
 });
+test('canonical release artifact includes the exact customer review script',()=>{
+  const workflow=readFileSync(require.resolve('../../.github/workflows/deploy.yml'),'utf8');
+  assert.ok(workflow.includes('cp -p website/onboarding/configuration-review.js "$CLEAN/onboarding/configuration-review.js"'));
+  assert.ok(workflow.includes('test -f "$CLEAN/onboarding/configuration-review.js"'));
+});
