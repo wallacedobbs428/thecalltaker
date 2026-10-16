@@ -9,6 +9,11 @@
     if (value && typeof value === 'object') return Object.keys(value).map(function (key) { return key + ': ' + display(value[key]); }).join('; ');
     return typeof value === 'string' || typeof value === 'number' ? String(value) : 'Not recorded';
   }
+  function serviceStatus(value) {
+    return 'Historical activation: ' + (typeof value.activation_state === 'string' ? value.activation_state : 'not proven')
+      + '. Service permitted now: ' + (value.current_service_permitted === true ? 'yes' : 'not proven or held')
+      + (typeof value.current_service_hold === 'string' ? '. Hold: ' + value.current_service_hold : '') + '.';
+  }
   function valid(context, now) {
     return context && ORIGINS.indexOf(context.apiOrigin) >= 0
       && UUID.test(context.checkoutAttemptId) && UUID.test(context.correlationId) && UUID.test(context.sessionId)
@@ -69,7 +74,7 @@
         state.textContent = 'Current revision ' + next.version + '. Configuration permission: ' + (next.consent_recorded === true ? 'recorded' : 'not recorded')
           + '. Ongoing service permission: ' + (next.service_authorized === true ? 'recorded' : 'not recorded')
           + '. Customer forwarding confirmation: ' + (next.forwarding_confirmed === true ? 'recorded' : 'not recorded')
-          + '. Activation: ' + (typeof next.activation_state === 'string' ? next.activation_state : 'not proven') + '.';
+          + '. ' + serviceStatus(next);
       } catch (_) { current = null; controls.replaceChildren(); state.textContent = valid(context, Date.now())
         ? 'We could not verify the current configuration. No permission or activation is assumed. You may retry this read.'
         : 'Protected access expired. Return to the accepted checkout and use its protected setup-recovery control. No access window was extended here.'; }
@@ -109,7 +114,7 @@
             var field = action === 'consent' ? 'consent_recorded' : ['authorize_service', 'revoke_service'].indexOf(action) >= 0 ? 'service_authorized' : 'forwarding_confirmed';
             if (readback[field] !== (action !== 'revoke_service')) throw Error('decision_readback_missing');
             current = readback; render();
-            state.textContent = 'Your exact decision was recorded and independently read back. This does not prove provider work, call routing, delivery, or activation.';
+            state.textContent = 'Your exact decision was recorded and independently read back. This does not prove new provider work, call routing or delivery. ' + serviceStatus(readback);
           } catch (_) { current = null; reviewed = false; controls.replaceChildren(); state.textContent = 'The decision could not be independently verified. Check the current configuration before trying again; no activation is assumed.'; }
           finally { busy = false; refresh.disabled = false; }
         });
@@ -124,7 +129,7 @@
     refresh.addEventListener('click', load);
     return { refresh: load };
   }
-  var api = { storageKey: KEY, declaration: DECLARATION, valid: valid, stored: stored, recovery: recovery, remember: remember, request: request, mount: mount };
+  var api = { storageKey: KEY, declaration: DECLARATION, serviceStatus: serviceStatus, valid: valid, stored: stored, recovery: recovery, remember: remember, request: request, mount: mount };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.TCTCustomerConfigurationReview = api;
 })(typeof window !== 'undefined' ? window : globalThis);

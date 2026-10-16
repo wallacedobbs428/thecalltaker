@@ -4,6 +4,13 @@ const {readFileSync} = require('node:fs');
 const api = require('../onboarding/configuration-review');
 const context = () => ({checkoutAttemptId:'10000000-0000-4000-8000-000000000001',correlationId:'10000000-0000-4000-8000-000000000002',sessionId:'10000000-0000-4000-8000-000000000003',apiOrigin:'https://call-taker-os.vercel.app',continuationToken:'l4sc1_'+'a'.repeat(43),expiresAt:new Date(Date.now()+3600000).toISOString()});
 const configId='10000000-0000-4000-8000-000000000004';
+test('historical activation never implies current service permission after withdrawal or revocation',()=>{
+  const status=api.serviceStatus({activation_state:'ACTIVATED',current_service_permitted:false,current_service_hold:'SERVICE_NOT_CURRENT_OR_AUTHORIZED'});
+  assert.match(status,/Historical activation: ACTIVATED/);assert.match(status,/Service permitted now: not proven or held/);
+  assert.match(status,/Hold: SERVICE_NOT_CURRENT_OR_AUTHORIZED/);
+  assert.match(api.serviceStatus({activation_state:'ACTIVATED'}),/Service permitted now: not proven or held/);
+  assert.match(api.serviceStatus({activation_state:'ACTIVATED',current_service_permitted:true}),/Service permitted now: yes/);
+});
 test('configuration actions keep exact capability in POST body only, no cookies, redirect or provider mutation',async()=>{
   let count=0;
   for(const action of ['current','consent','authorize_service','revoke_service','confirm_forwarding']) {
