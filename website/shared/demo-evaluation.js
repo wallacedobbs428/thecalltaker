@@ -18,7 +18,7 @@
    panel.querySelector('[data-scope]').textContent='One approved session, maximum '+Math.round(Number(value.duration_ms)/1000)+' seconds. The provider force-ends at the limit. Access expires '+new Date(value.expires_at).toLocaleString()+'. Ending access does not retract an already-issued provider token or stop an active session.';
    if(value.intake){['name','callback','reason','business_decision'].forEach(function(key){var p=document.createElement('p');p.textContent=key.replaceAll('_',' ')+': '+(typeof value.intake[key]==='string'?value.intake[key]:'Not captured or not yet verified');result.appendChild(p);});}
    else result.textContent='No analyzed intake is available. An ended session alone is not a useful conversation.';
-   next.disabled=!value.analyzed_at;start.disabled=!!value.session_id&&value.state!=='PRE_REQUEST_FAILED';
+   next.disabled=!value.analyzed_at;start.disabled=!!value.session_id&&!['PRE_REQUEST_FAILED','RESERVED'].includes(value.state);
    say(value.state?'Recorded session state: '+value.state+'.':'Access verified. No session has started.');
   }
   async function once(work){if(busy)return;busy=true;try{await work();}catch(error){say(error.message||'Evaluation unavailable.');}finally{busy=false;}}
