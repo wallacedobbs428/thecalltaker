@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'website/**'
+      - 'tools/demo-evaluation-sdk/**'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
@@ -30,6 +31,9 @@ jobs:
       - name: Verify buyer and consent funnel contract
         run: node --test tests/website*.test.js website/tests/*.test.js
 
+      - name: Build pinned evaluation client
+        run: npm ci --ignore-scripts --prefix tools/demo-evaluation-sdk && npm run build --prefix tools/demo-evaluation-sdk
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -41,7 +45,7 @@ jobs:
           mkdir -p "$CLEAN"
 
           for f in \
-            CNAME 404.html index.html pricing.html paid.html pay.html checkout.html card-checkout.html signup.html setup.html setup-confirmation.html start.html confirmation.html faq.html demo.html book.html meet-gideon.html after-hours-call-checklist.html privacy.html terms.html robots.txt sitemap.xml \
+            CNAME 404.html index.html pricing.html paid.html pay.html checkout.html card-checkout.html signup.html setup.html setup-confirmation.html start.html confirmation.html faq.html demo.html demo-evaluation.html book.html meet-gideon.html after-hours-call-checklist.html privacy.html terms.html robots.txt sitemap.xml \
             styles.css script.js text-us.css funnel-experience.css site.webmanifest tct-tracking.js tct-funnel-events.js higgsfield-media.css higgsfield-media.js hero-dimension.css hero-dimension.js call-demo.css call-demo.js site-menu.css site-menu.js \
             favicon.svg favicon.ico favicon-16x16.png favicon-32x32.png favicon-48x48.png favicon-64x64.png favicon-96x96.png favicon-128x128.png favicon-180x180.png favicon-192x192.png favicon-512x512.png apple-touch-icon.png og-image.png og-image.svg gideon-hologram.png gideon-hologram.webp; do
             if [ -f "website/$f" ]; then
@@ -69,7 +73,7 @@ jobs:
           test -f "$CLEAN/assets/higgsfield/approved-assets.json"
 
           mkdir -p "$CLEAN/shared"
-          for f in ui-dark.css ui-dark.js ui.css ui.js mobile-guard.css demo-console.css demo-console.js tct-intent.js tct-convert.js share-demo.js; do
+          for f in ui-dark.css ui-dark.js ui.css ui.js mobile-guard.css demo-console.css demo-console.js tct-intent.js tct-convert.js share-demo.js demo-evaluation.js demo-voice-sdk.mjs demo-voice-sdk.mjs.LEGAL.txt; do
             if [ -f "website/shared/$f" ]; then
               cp -p "website/shared/$f" "$CLEAN/shared/$f"
             fi
