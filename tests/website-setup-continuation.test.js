@@ -40,6 +40,9 @@ assert.doesNotMatch(intake, /getItem\('tct_setup_submission_idempotency_v1'\)/, 
 assert.match(intake, /if \(!\/\^\[A-Za-z_\+\-\]\+\(\?:\\\/\[A-Za-z0-9_\+\-\]\+\)\+\$\/.test\(timezone\)\) timezone = 'America\/Chicago'/, "browser timezone falls back to an accepted multi-segment IANA zone");
 assert.match(intake, /timezone === 'UTC' \|\| timezone === 'GMT'\) timezone = 'Etc\/UTC'/, "UTC browsers retain their truthful timezone");
 assert.match(intake, /setup_received_pending_human_review/, "browser requires the durable pending-human-review receipt");
+assert.match(intake, /href="#configuration-review">Review your configuration<\//, "receipt keeps the customer in the protected review document");
+assert.doesNotMatch(intake, /href="\/onboarding\/next-steps\.html">See next steps/, "receipt must not leave protected review for static next steps");
+assert.match(intake, /reviewContainer\.id = 'configuration-review'/, "same-document review has a stable return target");
 assert.match(intake, /result\.billingConfirmed !== false/, "browser fails closed on a billing claim");
 assert.match(intake, /result\.moneyMoved !== false/, "browser fails closed on a money-movement claim");
 assert.match(intake, /result\.clientActive !== false/, "browser fails closed on an activation claim");
@@ -53,4 +56,6 @@ assert.doesNotMatch(setupScript[1], /ownerEmail|ownerPhone|paymentMethod|sourceI
 assert.match(deploy, /onboarding\/intake\.html/, "Pages artifact explicitly includes the setup questionnaire");
 assert.doesNotMatch(nextSteps, /(?:Payment|Setup questionnaire) received/i, "a directly opened next-steps URL makes no durable receipt claim");
 assert.match(nextSteps, /This page alone does not prove submission, payment, provider routing, or activation/, "next steps is explicitly non-evidentiary");
+assert.match(nextSteps, /href="\/onboarding\/intake\.html#configuration-review">Return to protected configuration review<\//, "static next steps can return to protected review without a token URL");
+assert.doesNotMatch(nextSteps, /sms:\+16292699697|Text \(629\) 269-9697/, "static next steps does not claim text-support availability");
 console.log("website setup continuation tests passed");
