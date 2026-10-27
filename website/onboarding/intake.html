@@ -1275,10 +1275,12 @@ textarea.error {
           }
         } catch (_) {}
         // END durable setup-review storage transition
-        form.innerHTML = '<div class="setup-gate"><strong>Setup questionnaire received.</strong><br>Your answers are attached to the pending human-review record. Payment and live activation are not implied. Wallace will review the provider and launch evidence before anything goes live.</div><p><a class="btn btn-primary" href="/onboarding/next-steps.html">See next steps</a></p>';
+        form.innerHTML = '<div class="setup-gate"><strong>Setup questionnaire received.</strong><br>Your answers are attached to the pending human-review record. Payment and live activation are not implied. Wallace will review the provider and launch evidence before anything goes live.</div><p><a class="btn btn-primary" href="#configuration-review">Review your configuration</a></p>';
         gate.style.display = 'none';
         if (window.TCTCustomerConfigurationReview) {
           var reviewContainer = document.createElement('section');
+          reviewContainer.id = 'configuration-review';
+          reviewContainer.tabIndex = -1;
           form.appendChild(reviewContainer);
           window.TCTCustomerConfigurationReview.mount(reviewContainer, context);
         }

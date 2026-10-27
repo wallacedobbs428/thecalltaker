@@ -60,12 +60,14 @@ function fakeElement(id, value = "") {
     innerHTML: "",
     required: false,
     style: {},
+    children: [],
     _listeners: listeners,
     addEventListener(type, listener) {
       const current = listeners.get(type) || [];
       current.push(listener);
       listeners.set(type, current);
     },
+    appendChild(child) { this.children.push(child); return child; },
     setAttribute(name, nextValue) { attributes.set(name, String(nextValue)); },
     getAttribute(name) { return attributes.has(name) ? attributes.get(name) : null; },
     checkValidity() { return true; },
@@ -189,7 +191,7 @@ function checkoutHarness(recoveredContinuation) {
   return { assigned, calls, elements, local, replaced, session };
 }
 
-function intakeHarness(recoveredContinuation) {
+function intakeHarness(recoveredContinuation, options = {}) {
   const intake = read("website/onboarding/intake.html");
   const script = inlineScript(intake, "BEGIN checkout-bound setup questionnaire");
   const expired = {
@@ -203,7 +205,7 @@ function intakeHarness(recoveredContinuation) {
     apiOrigin: API_ORIGIN,
     state: "setup_continuation_issued",
   };
-  const session = storageHarness({ tct_setup_continuation_v1: JSON.stringify(expired) });
+  const session = storageHarness(options.session || { tct_setup_continuation_v1: JSON.stringify(expired) });
   const local = storageHarness();
   const values = {
     businessName: "Example HVAC",
@@ -264,6 +266,7 @@ function intakeHarness(recoveredContinuation) {
       if (!elements.has(id)) elements.set(id, fakeElement(id));
       return elements.get(id);
     },
+    createElement() { return fakeElement(""); },
   };
   const window = {
     crypto: { randomUUID() { return SUBMISSION_UUID; } },
@@ -271,6 +274,7 @@ function intakeHarness(recoveredContinuation) {
       assign(value) { assigned.push(value); },
       replace(value) { replaced.push(value); },
     },
+    TCTCustomerConfigurationReview: options.review,
   };
   const context = vm.createContext({
     document,
@@ -331,6 +335,74 @@ for (const scenario of [
     assert.match(harness.elements.get("pending-status").textContent, /could not verify a protected setup handoff/i);
   });
 }
+
+function intakeContext() {
+  return {
+    ...continuation(),
+    sessionId: SESSION_ID,
+    apiOrigin: API_ORIGIN,
+    state: "setup_continuation_issued",
+  };
+}
+
+test("receipt keeps review in the protected document across refresh and Back", async () => {
+  const mounted = [];
+  const review = {
+    stored(storage) {
+      try { return JSON.parse(storage.getItem("tct_configuration_continuation_v1") || "null"); } catch (_) { return null; }
+    },
+    recovery() { return null; },
+    remember(storage, context) {
+      storage.setItem("tct_configuration_continuation_v1", JSON.stringify(context));
+      return true;
+    },
+    mount(container, context) { mounted.push({ container, context }); },
+  };
+  const initial = intakeContext();
+  const harness = intakeHarness(continuation(), {
+    session: { tct_setup_continuation_v1: JSON.stringify(initial) },
+    review,
+  });
+  const submit = harness.form._listeners.get("submit")[0];
+  await submit({ preventDefault() {} });
+
+  assert.match(harness.form.innerHTML, /href="#configuration-review"/);
+  assert.doesNotMatch(harness.form.innerHTML, /next-steps\.html/);
+  assert.equal(mounted.length, 1, "receipt mounts the exact protected review");
+  assert.equal(mounted[0].container.id, "configuration-review");
+  assert.equal(mounted[0].container.tabIndex, -1);
+  assert.deepEqual(harness.assigned, [], "same-document review does not navigate away");
+  assert.deepEqual(harness.replaced, []);
+
+  const refreshed = intakeHarness(continuation(), {
+    session: Object.fromEntries(harness.session.values),
+    review,
+  });
+  assert.equal(mounted.length, 2, "refresh mounts the retained protected review");
+  assert.equal(mounted[1].container, refreshed.form);
+  assert.equal(refreshed.calls.length, 0, "refresh does not replay setup or billing activity");
+});
+
+test("interrupted review storage keeps the protected setup continuation and never redirects", async () => {
+  const mounted = [];
+  const review = {
+    stored() { return null; },
+    recovery() { return null; },
+    remember() { return false; },
+    mount(container, context) { mounted.push({ container, context }); },
+  };
+  const initial = intakeContext();
+  const harness = intakeHarness(continuation(), {
+    session: { tct_setup_continuation_v1: JSON.stringify(initial) },
+    review,
+  });
+  await harness.form._listeners.get("submit")[0]({ preventDefault() {} });
+
+  assert.equal(harness.session.values.has("tct_setup_continuation_v1"), true, "storage failure preserves recovery context");
+  assert.equal(mounted.length, 1, "current protected review still mounts without a redirect");
+  assert.deepEqual(harness.assigned, []);
+  assert.deepEqual(harness.replaced, []);
+});
 
 test("intake refreshes an expired context and submits with a checkout-scoped identity", async () => {
   const harness = intakeHarness(continuation());
