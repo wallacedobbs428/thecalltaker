@@ -90,7 +90,7 @@ def run_static():
     h1_match = re.search(r'<h1\b[^>]*>(.*?)</h1>', src, re.DOTALL)
     if h1_match:
         h1_text = re.sub(r'<[^>]+>', '', h1_match.group(1)).strip()
-        if h1_text == "AI call answering.Built for your business.":
+        if h1_text == "AI call answering.For service businesses.":
             ok(f'H1 text intact: "{h1_text[:60]}"')
         else:
             fail(f'H1 text changed: "{h1_text[:80]}"')

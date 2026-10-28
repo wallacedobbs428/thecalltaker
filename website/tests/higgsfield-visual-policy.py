@@ -34,7 +34,7 @@ BANNED_PUBLIC_ASSETS = (
     "og-default.png",
 )
 MEDIA_REFERENCE = re.compile(
-    r'''(?:src|srcset|poster|content|href)\s*=\s*["']([^"']+\.(?:png|jpe?g|webp|gif|svg|mp4|webm)(?:\?[^"']*)?)["']''',
+    r'''(?:src|poster|content|href)\s*=\s*["']([^"']+\.(?:png|jpe?g|webp|gif|svg|mp4|webm)(?:\?[^"']*)?)["']''',
     re.I,
 )
 ASSET_REFERENCE = re.compile(
@@ -82,11 +82,14 @@ def main() -> int:
 
     public_html = tuple(WEBSITE.rglob("*.html"))
     non_higgsfield_media = []
+    srcsets = re.compile(r'srcset\s*=\s*["\']([^"\']+)["\']', re.I)
     for path in public_html:
         text = path.read_text(encoding="utf-8")
         for asset in BANNED_PUBLIC_ASSETS:
             assert asset not in text, f"public HTML still references non-Higgsfield visual: {path}: {asset}"
-        for media_url in MEDIA_REFERENCE.findall(text):
+        candidates = MEDIA_REFERENCE.findall(text)
+        candidates += [entry.strip().split()[0] for value in srcsets.findall(text) for entry in value.split(",") if entry.strip()]
+        for media_url in candidates:
             basename = media_url.split("?", 1)[0].rsplit("/", 1)[-1]
             is_brand_icon = basename.startswith("favicon") or basename == "apple-touch-icon.png"
             media_path = urlparse(media_url).path
