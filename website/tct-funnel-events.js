@@ -41,6 +41,7 @@
   var allowGtag = config.allowGtag === true;
   var debug = config.debug === true || /(?:^|[?&])tct_debug=1(?:&|$)/.test(root.location.search);
   var allowedEvents = {
+    page_view: true,
     cta_intent: true,
     homepage_view: true,
     homepage_cta_click: true,
@@ -109,7 +110,7 @@
 
   function optionalIssuedSource(value) {
     var candidate = (value || "").toString().trim().toLowerCase();
-    var aliases = { "meet-gideon":"website", meet_gideon:"website", homepage:"website", home:"website", demo:"website", pricing:"website", meta:"facebook", fb:"facebook", ig:"instagram", li:"linkedin", newsletter:"email", googleads:"google", google_ads:"google" };
+    var aliases = { "meet-gideon":"website", meet_gideon:"website", homepage:"website", home:"website", demo:"website", pricing:"website", meta:"facebook", fb:"facebook", ig:"instagram", li:"linkedin", newsletter:"email", "chatgpt.com":"referral", chatgpt:"referral", "perplexity.ai":"referral", perplexity:"referral", "gemini.google.com":"referral", gemini:"referral", "copilot.microsoft.com":"referral", copilot:"referral", googleads:"google", google_ads:"google" };
     candidate = aliases[candidate] || candidate;
     return ["bing","content","direct","email","facebook","gideon_demo","google","instagram","linkedin","organic","paid_search","paid_social","partner","referral","social","website","youtube"].indexOf(candidate) >= 0 ? candidate : "";
   }

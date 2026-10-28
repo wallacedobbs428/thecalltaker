@@ -63,8 +63,8 @@ assert.ok(
 );
 
 [
-  "The Call Taker - AI Call Answering For Missed Calls",
-  "Gideon answers calls, collects caller details, and sends clean summaries after your setup questions are in.",
+  "AI Receptionist for Service Businesses | The Call Taker",
+  "AI receptionist for missed, after-hours and overflow calls. Gideon captures caller details for your team. Compare coverage from $97/month.",
   "summary_large_image",
   "site.webmanifest",
 ].forEach((marker) => {

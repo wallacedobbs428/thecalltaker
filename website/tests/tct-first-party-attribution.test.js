@@ -215,3 +215,17 @@ test("durable CTA details are bounded public slugs, not free-form page text", ()
   assert.match(canonical, /cta: detailSlug\(payload\.cta\)/);
   assert.match(canonical, /destination: detailSlug\(payload\.destination_type\)/);
 });
+
+test('AI search sources retain safe referral attribution without leaking conversation URLs', () => {
+  for (const source of ['chatgpt.com','perplexity.ai','gemini.google.com','copilot.microsoft.com']) {
+    const env = environment('?utm_source='+encodeURIComponent(source));
+    env.context.document.referrer = 'https://'+source+'/private-conversation?email=private@example.test#sensitive';
+    vm.runInContext(canonical, env.context);
+    assert.equal(env.requests[0].body.source, 'referral');
+    assert.equal(env.requests[0].body.referrer_host, source);
+    assert.ok(!JSON.stringify(env.requests).includes('private-conversation'));
+    assert.ok(!JSON.stringify(env.requests).includes('private@example.test'));
+    env.window.TCTFunnelEvents.record('page_view', env.context.document.body);
+    assert.equal(env.requests[1].body.event_type, 'page_view');
+  }
+});
