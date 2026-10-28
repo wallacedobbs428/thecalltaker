@@ -38,7 +38,7 @@ Reports count observations rather than unique visitors, recommendations, calls, 
 
 ## Remaining external prerequisites
 
-- Google and Bing properties need ownership verification for the owner's business account. No verification tag is added until the owner approves that account-access step.
+- The owner approved Google and Bing verification for thecalltakerservice@gmail.com on October 28, 2026. The corresponding public verification tags are included; verification and sitemap results must be independently read back after publication.
 - Authenticated search reports are unavailable before verification. Rankings, indexing, AI citations and subsequent change in traffic are not yet established.
 - Publication clearance and a defined cohort are required before publishing real customer results or recordings. The new written example is explicitly fictional.
 - Earned editorial coverage, customer reviews and backlinks require real independent participation. No coverage or recommendation is promised or represented as secured.
