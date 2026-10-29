@@ -17,6 +17,8 @@ const publicPages = {
 };
 
 const combined = Object.values(publicPages).join("\n");
+const services = read("website/services.html");
+assert.doesNotMatch(services, /href=["']sms:|data-destination=["']sendblue|17073208712/i, "retired Sendblue must not remain on the services page");
 const checkoutRoutes = [
   "/card-checkout.html?plan=afterhours",
   "/card-checkout.html?plan=full247",
