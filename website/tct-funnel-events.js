@@ -155,6 +155,15 @@
   function captureAttribution() {
     var stored = {};
     try { stored = JSON.parse(root.sessionStorage.getItem("tct_attribution") || "{}"); } catch (_) {}
+    if (!stored || typeof stored !== "object" || Array.isArray(stored)) stored = {};
+    var incomingCorrelation = getParam("correlation_id");
+    if (validUuid(incomingCorrelation)) {
+      var previousCorrelation = "";
+      try { previousCorrelation = root.sessionStorage.getItem("tct_correlation_id_v1") || ""; } catch (_) {}
+      // A separately issued company link starts a separate attribution touch.
+      // Preserve the buyer session and any immutable pending checkout record.
+      if (incomingCorrelation.toLowerCase() !== previousCorrelation.toLowerCase()) stored = {};
+    }
     var normalizers = { utm_source: optionalIssuedSource, utm_medium: issuedChannel, utm_campaign: issuedSlug, utm_content: issuedSlug, utm_term: issuedSlug };
     Object.keys(normalizers).forEach(function (key) {
       var raw = getParam(key) || stored[key] || "";
@@ -173,7 +182,6 @@
     if (stored.tct_item_id) stored.content_key = stored.tct_item_id;
     else delete stored.content_key;
     try { root.sessionStorage.setItem("tct_attribution", JSON.stringify(stored)); } catch (_) {}
-    var incomingCorrelation = getParam("correlation_id");
     if (validUuid(incomingCorrelation)) {
       try { root.sessionStorage.setItem("tct_correlation_id_v1", incomingCorrelation); } catch (_) {}
     }

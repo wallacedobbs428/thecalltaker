@@ -299,9 +299,32 @@
       }
       function readCheckoutIdentity() {
         try {
-          var pending = JSON.parse(sessionStorage.getItem(PENDING_CHECKOUT_KEY) || 'null');
-          return pending && pending.plan === key ? pending : null;
-        } catch (_) { return null; }
+          var raw = sessionStorage.getItem(PENDING_CHECKOUT_KEY);
+          if (raw === null) return null;
+          var pending = JSON.parse(raw);
+          if (!pending || typeof pending !== 'object' || Array.isArray(pending)) throw new Error('invalid_saved_checkout');
+          return pending;
+        } catch (_) { throw new Error('Your saved checkout could not be read. Keep this tab and contact us to recover it before starting another trial.'); }
+      }
+      function incomingCheckoutCorrelation() {
+        var values = new URLSearchParams(window.location.search).getAll('correlation_id');
+        if (values.length === 0) return '';
+        if (values.length !== 1 || !validCheckoutUuid(values[0])) throw new Error('This checkout link is incomplete. Return to the original pricing link before continuing.');
+        return values[0].toLowerCase();
+      }
+      function validCheckoutAttribution(value) {
+        if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+        var validators = {
+          source: issuedSource, channel: issuedChannel, campaign: issuedSlug,
+          utm_source: issuedSource, utm_medium: issuedChannel, utm_campaign: issuedSlug,
+          utm_content: issuedSlug, utm_term: issuedSlug,
+          content_key: function (v) { return validContentAttribution('tct_item_id', v); },
+          source_asset_sha256: function (v) { return validContentAttribution('tct_asset_sha256', v); },
+          source_publication_seed_sha256: function (v) { return validContentAttribution('tct_publication_seed_sha256', v); }
+        };
+        return Object.keys(value).length === Object.keys(validators).length && Object.keys(validators).every(function (name) {
+          return Object.prototype.hasOwnProperty.call(value, name) && typeof value[name] === 'string' && validators[name](value[name]) === value[name];
+        });
       }
       function freshCheckoutUuid() {
         if (!window.crypto || typeof window.crypto.randomUUID !== 'function') throw new Error('Secure checkout requires a current browser with secure random IDs.');
@@ -309,21 +332,31 @@
       }
       function checkoutRequestIdentity() {
         var pending = readCheckoutIdentity();
-        if (pending && validCheckoutIdempotency(pending.idempotencyKey) && validCheckoutUuid(pending.correlationId) && validCheckoutUuid(pending.sessionId)) return pending;
-        var correlationId = '';
+        var incoming = incomingCheckoutCorrelation();
+        if (pending) {
+          if (pending.plan !== key) throw new Error('A checkout for another plan is already in progress in this tab. Return to that plan to recover its status before starting another trial.');
+          if (incoming && incoming !== String(pending.correlationId).toLowerCase()) throw new Error('Another checkout is already in progress in this tab. Return to the original checkout link to recover its status.');
+          if (pending.version !== 2 || !validCheckoutIdempotency(pending.idempotencyKey) || !validCheckoutUuid(pending.correlationId)
+              || !validCheckoutUuid(pending.sessionId) || !validCheckoutAttribution(pending.attribution)) {
+            throw new Error('Your earlier checkout needs recovery before another submission. Keep this tab and contact us to check its status.');
+          }
+          return pending;
+        }
+        var correlationId = incoming;
         var sessionId = '';
         try {
-          correlationId = sessionStorage.getItem('tct_correlation_id_v1') || '';
+          if (!correlationId) correlationId = sessionStorage.getItem('tct_correlation_id_v1') || '';
           sessionId = sessionStorage.getItem('tct_buyer_session_v1') || '';
         } catch (_) {}
         if (!validCheckoutUuid(correlationId)) correlationId = freshCheckoutUuid();
         if (!validCheckoutUuid(sessionId)) sessionId = freshCheckoutUuid();
         var identity = {
-          version: 1,
+          version: 2,
           plan: key,
           idempotencyKey: freshCheckoutUuid(),
           correlationId: correlationId,
           sessionId: sessionId,
+          attribution: attribution(),
           state: 'checkout_request_pending'
         };
         try {
@@ -331,7 +364,7 @@
           sessionStorage.setItem('tct_buyer_session_v1', sessionId);
           sessionStorage.setItem(PENDING_CHECKOUT_KEY, JSON.stringify(identity));
           var stored = JSON.parse(sessionStorage.getItem(PENDING_CHECKOUT_KEY) || 'null');
-          if (!stored || stored.idempotencyKey !== identity.idempotencyKey) throw new Error('identity_not_persisted');
+          if (JSON.stringify(stored) !== JSON.stringify(identity)) throw new Error('identity_not_persisted');
         } catch (_) {
           throw new Error('Secure checkout requires session storage so a lost response can be retried safely.');
         }
@@ -407,7 +440,11 @@
       function attribution() {
         var params = new URLSearchParams(window.location.search);
         var stored = {};
-        try { stored = JSON.parse(sessionStorage.getItem('tct_attribution') || '{}'); } catch (_) {}
+        // Explicit company links must not inherit a prior visit's campaign.
+        if (!params.has('correlation_id')) {
+          try { stored = JSON.parse(sessionStorage.getItem('tct_attribution') || '{}'); } catch (_) {}
+          if (!stored || typeof stored !== 'object' || Array.isArray(stored)) stored = {};
+        }
         var itemId = validContentAttribution('tct_item_id', params.get('tct_item_id')) || validContentAttribution('tct_item_id', stored.tct_item_id || stored.content_key);
         var assetSha256 = validContentAttribution('tct_asset_sha256', params.get('tct_asset_sha256')) || validContentAttribution('tct_asset_sha256', stored.tct_asset_sha256);
         var publicationSeedSha256 = validContentAttribution('tct_publication_seed_sha256', params.get('tct_publication_seed_sha256')) || validContentAttribution('tct_publication_seed_sha256', stored.tct_publication_seed_sha256);
@@ -423,7 +460,7 @@
       function showPending(result) {
         var prior = readCheckoutIdentity() || {};
         var acceptedIdentity = {
-          version: 1,
+          version: prior.version === 2 && validCheckoutAttribution(prior.attribution) ? 2 : 1,
           plan: key,
           idempotencyKey: prior.idempotencyKey || result.idempotencyKey || '',
           correlationId: result.correlationId,
@@ -431,6 +468,7 @@
           checkoutAttemptId: result.checkoutAttemptId,
           state: SETUP_ELIGIBLE_STATES.indexOf(result.status) >= 0 ? result.status : 'payment_pending'
         };
+        if (acceptedIdentity.version === 2) acceptedIdentity.attribution = prior.attribution;
         try { sessionStorage.setItem(PENDING_CHECKOUT_KEY, JSON.stringify(acceptedIdentity)); } catch (_) {}
         if (storeSetupContinuation(result, prior)) return;
         var shell = document.getElementById('shell');
@@ -536,7 +574,7 @@
           var billingPostalCode = token.details && token.details.billing && token.details.billing.postalCode ? String(token.details.billing.postalCode).trim() : '';
           if (!/^\d{5}(?:-\d{4})?$/.test(billingPostalCode)) throw new Error('Please enter a valid billing ZIP code in the secure card form.');
           requestSent = true;
-          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, acceptedOfferVersion:form.dataset.offerVersion, attribution:attribution(), businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), billingPostalCode:billingPostalCode, consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
+          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, acceptedOfferVersion:form.dataset.offerVersion, attribution:requestIdentity.attribution, businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), billingPostalCode:billingPostalCode, consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
           var result = await response.json();
           if (!response.ok || !result.ok || SETUP_ELIGIBLE_STATES.indexOf(result.status) < 0 || !result.checkoutAttemptId || result.correlationId !== requestIdentity.correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
           if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_accepted_ui', form);
@@ -550,7 +588,7 @@
       try {
         if (hasStoredSetupContinuation()) { window.location.assign('/onboarding/intake.html#setup'); return; }
         var pending = readCheckoutIdentity();
-        if (pending && validCheckoutUuid(pending.checkoutAttemptId) && validCheckoutUuid(pending.correlationId)) { showPending(pending); return; }
+        if (pending && pending.plan === key && validCheckoutUuid(pending.checkoutAttemptId) && validCheckoutUuid(pending.correlationId)) { showPending(pending); return; }
       } catch (_) {}
       init();
     })();
