@@ -985,6 +985,33 @@
   <svg class="icon-sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
 </button>
 
+<script>
+// BEGIN issued email checkout navigation
+(function () {
+  // Navigation only: the canonical producer still owns every browser event.
+  // A slow or unavailable tracker must not drop an issued email company link.
+  var params = new URLSearchParams(window.location.search);
+  var correlations = params.getAll('correlation_id');
+  if (correlations.length !== 1 || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(correlations[0])
+      || params.get('utm_source') !== 'email' || params.get('utm_medium') !== 'email') return;
+  var correlation = correlations[0].toLowerCase();
+  var campaign = params.get('utm_campaign') || '';
+  if (campaign.length > 120 || (campaign.match(/[0-9]/g) || []).length > 6 || !/^[a-z][a-z0-9]*(?:[_-][a-z0-9]+)*$/.test(campaign)) campaign = '';
+  document.querySelectorAll('a[data-tct-destination="card_checkout"]').forEach(function (link) {
+    var target;
+    try { target = new URL(link.href, window.location.origin); } catch (_) { return; }
+    if (target.origin !== window.location.origin || ['/card-checkout.html', '/card-checkout'].indexOf(target.pathname) < 0
+        || ['afterhours', 'full247', 'custom'].indexOf(target.searchParams.get('plan')) < 0
+        || target.searchParams.has('correlation_id')) return;
+    target.searchParams.set('correlation_id', correlation);
+    target.searchParams.set('utm_source', 'email');
+    target.searchParams.set('utm_medium', 'email');
+    if (campaign) target.searchParams.set('utm_campaign', campaign);
+    link.href = target.pathname + target.search + target.hash;
+  });
+})();
+// END issued email checkout navigation
+</script>
 <script src="script.js"></script>
 <script src="/tct-tracking.js" defer></script>
 <script>

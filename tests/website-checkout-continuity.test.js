@@ -45,14 +45,16 @@ const issued = [
 let issuedCount = 0;
 const context = vm.createContext({
   PENDING_CHECKOUT_KEY: "tct_pending_checkout_v1",
+  URLSearchParams,
   key: "full247",
   sessionStorage: {
     getItem(name) { return storage.has(name) ? storage.get(name) : null; },
     setItem(name, value) { storage.set(name, String(value)); },
   },
-  window: { crypto: { randomUUID() { return issued[issuedCount++]; } } },
+  window: { location: { search: "?plan=full247" }, crypto: { randomUUID() { return issued[issuedCount++]; } } },
 });
-vm.runInContext(identityBlock[1], context);
+const attributionHelpers = card.slice(card.indexOf("      function validContentAttribution("), card.indexOf("      function showPending("));
+vm.runInContext(identityBlock[1] + attributionHelpers, context);
 const firstAttempt = vm.runInContext("checkoutRequestIdentity()", context);
 const persistedBeforeResponse = JSON.parse(storage.get("tct_pending_checkout_v1"));
 assert.equal(persistedBeforeResponse.idempotencyKey, firstAttempt.idempotencyKey);

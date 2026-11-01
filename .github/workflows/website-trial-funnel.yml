@@ -20,6 +20,8 @@ on:
       - 'website/pilot/**'
       - 'website/onboarding/**'
       - 'tests/website-trial-funnel.test.js'
+      - 'tests/website*.test.js'
+      - 'website/tests/*.test.js'
       - 'tests/website-buyer-consent-release.test.js'
       - 'tests/website-demo-audio.test.js'
       - 'tests/website-live-demo-number.test.js'
@@ -44,6 +46,8 @@ on:
       - 'website/pilot/**'
       - 'website/onboarding/**'
       - 'tests/website-trial-funnel.test.js'
+      - 'tests/website*.test.js'
+      - 'website/tests/*.test.js'
       - 'tests/website-buyer-consent-release.test.js'
       - 'tests/website-demo-audio.test.js'
       - 'tests/website-live-demo-number.test.js'
@@ -57,4 +61,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run trial funnel regression
-        run: node --test tests/website-buyer-consent-release.test.js tests/website-trial-funnel.test.js tests/website-demo-audio.test.js tests/website-live-demo-number.test.js
+        run: node --test tests/website*.test.js website/tests/*.test.js
