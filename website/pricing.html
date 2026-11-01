@@ -1000,7 +1000,7 @@
   document.querySelectorAll('a[data-tct-destination="card_checkout"]').forEach(function (link) {
     var target;
     try { target = new URL(link.href, window.location.origin); } catch (_) { return; }
-    if (target.origin !== window.location.origin || target.pathname !== '/card-checkout.html'
+    if (target.origin !== window.location.origin || ['/card-checkout.html', '/card-checkout'].indexOf(target.pathname) < 0
         || ['afterhours', 'full247', 'custom'].indexOf(target.searchParams.get('plan')) < 0
         || target.searchParams.has('correlation_id')) return;
     target.searchParams.set('correlation_id', correlation);

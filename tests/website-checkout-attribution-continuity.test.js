@@ -162,8 +162,8 @@ test('pricing inline email handoff works before/without tracking, then a late pr
   const pricing = fs.readFileSync(path.join(__dirname, '../website/pricing.html'), 'utf8');
   const navigation = pricing.split('// BEGIN issued email checkout navigation')[1].split('// END issued email checkout navigation')[0];
   const producer = fs.readFileSync(path.join(__dirname, '../website/tct-funnel-events.js'), 'utf8');
-  for (const lateTracker of [false, true]) {
-    const anchors = Array.from(pricing.matchAll(/href="(\/card-checkout\.html\?plan=[^"]+)"/g), m => ({ href: 'https://thecalltaker.com' + m[1] }));
+  for (const prettyUrls of [false, true]) for (const lateTracker of [false, true]) {
+    const anchors = Array.from(pricing.matchAll(/href="(\/card-checkout\.html\?plan=[^"]+)"/g), m => ({ href: 'https://thecalltaker.com' + (prettyUrls ? m[1].replace('/card-checkout.html?', '/card-checkout?') : m[1]) }));
     assert.equal(anchors.length, 4);
     const foreign = { href: 'https://other.invalid/card-checkout.html?plan=full247' };
     const bound = { href: 'https://thecalltaker.com/card-checkout.html?plan=full247&correlation_id=' + B };
