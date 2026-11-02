@@ -206,3 +206,18 @@ test('canonical producer retains same-company continuation metadata and pending 
     assert.equal(shared.getItem(PENDING), JSON.stringify(original)); assert.equal(shared.getItem('tct_buyer_session_v1'), SESSION);
   }
 });
+
+
+test('offer acceptance stays bound to the original request across reloads and retries', () => {
+  const first = harness().request();
+  assert.equal(first.acceptedOfferVersion, 'ctos.standard-service-offer.self-service.v2');
+  for (const version of ['ctos.standard-service-offer.v1', undefined]) {
+    const original = { ...first, acceptedOfferVersion: version };
+    const h = harness(query, { [PENDING]: JSON.stringify(original) });
+    assert.deepEqual(h.request(), plain(original));
+    assert.equal(h.issued, 0);
+  }
+  const invalid = { ...first, acceptedOfferVersion: 'unsupported' };
+  assert.throws(() => harness(query, { [PENDING]: JSON.stringify(invalid) }).request(), /recovery/);
+  assert.equal(harness('?plan=custom').request().acceptedOfferVersion, 'ctos.standard-service-offer.v1');
+});
