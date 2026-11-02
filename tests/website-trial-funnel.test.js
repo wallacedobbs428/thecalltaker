@@ -21,7 +21,7 @@ assert.ok(checkout.includes("result.correlationId !== requestIdentity.correlatio
 assert.ok(checkout.includes("correlation_id="), "status read is scoped by correlation");
 assert.ok(checkout.includes("tct_pending_checkout_v1"), "pending continuation survives refresh");
 assert.ok(checkout.includes("sessionId:requestIdentity.sessionId"), "persisted anonymous session is propagated outside attribution");
-assert.ok(checkout.includes("businessName:fields[0]") && checkout.includes("preferredContactMethod:fields[5]"), "checkout creates an actionable business contact receipt");
+assert.ok(checkout.includes("businessName:fields[0]") && checkout.includes("preferredContactMethod:requestIdentity.consentToAutomatedEmail === true ? 'email' : fields[5].value"), "checkout creates an actionable business contact receipt");
 assert.ok(checkout.includes("consentToFollowUp:true"), "checkout requires explicit human-onboarding follow-up consent");
 assert.ok(checkout.includes("subscription_scheduled_pending_human_review"), "signed scheduled-subscription evidence remains pending human review");
 assert.ok(checkout.includes("intent:'STORE'") && checkout.includes("customerInitiated:true") && checkout.includes("sellerKeyedIn:false"), "Square tokenization explicitly requests card-on-file verification");
