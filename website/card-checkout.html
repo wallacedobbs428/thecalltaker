@@ -246,7 +246,7 @@
             </details>
           </fieldset>
           <label class="consent"><input id="consent" type="checkbox"><span>I authorize The Call Taker to securely store my card with Square and automatically charge <b id="renewalAmount"></b> after the 14-day trial unless I cancel before renewal.<span id="scopeTerms"></span> I also consent to a human from The Call Taker contacting me at the email or phone I provided to complete onboarding for this trial.</span></label>
-          <label class="consent"><input id="automated-email-consent" type="checkbox"><span>I agree to receive automated setup and service-status emails from The Call Taker, including up to two reminders if my setup details are missing. I can ask for a person or stop these emails by replying. <small>Optional; available when email is your preferred contact method. Your choice stays with this checkout on retries.</small></span></label>
+          <label class="consent"><input id="automated-email-consent" type="checkbox"><span>I agree to receive automated setup and service-status emails from The Call Taker, including AI replies to my setup questions and up to two reminders if my setup details are missing. I can request a person or stop these emails at any time. <small>Optional; available when email is your preferred contact method. Your choice stays with this checkout on retries.</small></span></label>
           <button id="submit" type="submit" disabled>Start my 14-day free trial</button>
           <div class="submit-meta" aria-label="Checkout assurances"><span>🔒 Encrypted</span><span>•</span><span>$0 today</span><span>•</span><span>Cancel before renewal</span></div>
           <p class="msg" id="msg" role="alert" aria-live="polite"></p>
@@ -299,7 +299,7 @@
       }
       function correspondenceSelection() {
         return fields[5].value === 'email' && document.getElementById('automated-email-consent').checked
-          ? { acceptedCorrespondenceVersion: 'ctos.onboarding-correspondence.v1', consentToAutomatedEmail: true } : undefined;
+          ? { acceptedCorrespondenceVersion: 'ctos.onboarding-correspondence.v2', consentToAutomatedEmail: true } : undefined;
       }
       function say(text) { msg.textContent = text || ''; }
       // BEGIN checkout request identity
@@ -312,7 +312,7 @@
       }
       function validCheckoutCorrespondence(value) {
         return (value.acceptedCorrespondenceVersion === undefined && value.consentToAutomatedEmail === undefined)
-          || (value.acceptedCorrespondenceVersion === 'ctos.onboarding-correspondence.v1' && value.consentToAutomatedEmail === true);
+          || (['ctos.onboarding-correspondence.v1', 'ctos.onboarding-correspondence.v2'].indexOf(value.acceptedCorrespondenceVersion) !== -1 && value.consentToAutomatedEmail === true);
       }
       function validCheckoutUuid(value) {
         return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test((value || '').toString());
