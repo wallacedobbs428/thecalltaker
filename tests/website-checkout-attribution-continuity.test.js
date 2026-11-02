@@ -228,7 +228,7 @@ test('automated onboarding email is a separate opt-in that survives accepted and
   h.elements.get('preferred').value = 'email';
   h.elements.get('automated-email-consent').checked = true;
   await h.submit();
-  assert.equal(h.posts[0].acceptedCorrespondenceVersion, 'ctos.onboarding-correspondence.v1');
+  assert.equal(h.posts[0].acceptedCorrespondenceVersion, 'ctos.onboarding-correspondence.v2');
   assert.equal(h.posts[0].consentToAutomatedEmail, true);
   h.elements.get('automated-email-consent').checked = false;
   h.elements.get('preferred').value = 'phone';
@@ -241,7 +241,7 @@ test('automated onboarding email is a separate opt-in that survives accepted and
   accepted.elements.get('automated-email-consent').checked = true;
   await accepted.submit();
   const retained = JSON.parse(accepted.store.values.get(PENDING));
-  assert.equal(retained.acceptedCorrespondenceVersion, 'ctos.onboarding-correspondence.v1');
+  assert.equal(retained.acceptedCorrespondenceVersion, 'ctos.onboarding-correspondence.v2');
   assert.equal(retained.consentToAutomatedEmail, true);
 });
 
@@ -258,4 +258,12 @@ test('a legacy or declined checkout cannot gain automated-email consent on retry
   pending.acceptedCorrespondenceVersion = 'ctos.onboarding-correspondence.v1';
   const malformed = harness(query, { [PENDING]: JSON.stringify(pending) });
   assert.throws(() => malformed.request(), /recovery/);
+});
+
+// A current checkbox must never rewrite an earlier accepted declaration.
+test('original v1 automated-email consent remains v1 after the AI-reply release', () => {
+  const original = {...harness(query).request(), acceptedCorrespondenceVersion:'ctos.onboarding-correspondence.v1', consentToAutomatedEmail:true};
+  const h=harness(query,{[PENDING]:JSON.stringify(original)});
+  assert.equal(h.request().acceptedCorrespondenceVersion,'ctos.onboarding-correspondence.v1');
+  assert.equal(h.issued,0);
 });
