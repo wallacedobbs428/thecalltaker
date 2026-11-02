@@ -221,3 +221,41 @@ test('offer acceptance stays bound to the original request across reloads and re
   assert.throws(() => harness(query, { [PENDING]: JSON.stringify(invalid) }).request(), /recovery/);
   assert.equal(harness('?plan=custom').request().acceptedOfferVersion, 'ctos.standard-service-offer.v1');
 });
+
+
+test('automated onboarding email is a separate opt-in that survives accepted and uncertain checkout retries', async () => {
+  const h = await formHarness({ dropResponse: true });
+  h.elements.get('preferred').value = 'email';
+  h.elements.get('automated-email-consent').checked = true;
+  await h.submit();
+  assert.equal(h.posts[0].acceptedCorrespondenceVersion, 'ctos.onboarding-correspondence.v1');
+  assert.equal(h.posts[0].consentToAutomatedEmail, true);
+  h.elements.get('automated-email-consent').checked = false;
+  h.elements.get('preferred').value = 'phone';
+  await h.submit();
+  assert.equal(h.posts[1].acceptedCorrespondenceVersion, h.posts[0].acceptedCorrespondenceVersion);
+  assert.equal(h.posts[1].consentToAutomatedEmail, true);
+  assert.equal(h.posts[1].preferredContactMethod, 'email');
+  const accepted = await formHarness();
+  accepted.elements.get('preferred').value = 'email';
+  accepted.elements.get('automated-email-consent').checked = true;
+  await accepted.submit();
+  const retained = JSON.parse(accepted.store.values.get(PENDING));
+  assert.equal(retained.acceptedCorrespondenceVersion, 'ctos.onboarding-correspondence.v1');
+  assert.equal(retained.consentToAutomatedEmail, true);
+});
+
+test('a legacy or declined checkout cannot gain automated-email consent on retry', async () => {
+  const old = await formHarness({ dropResponse: true });
+  old.elements.get('preferred').value = 'email';
+  old.elements.get('automated-email-consent').checked = false;
+  await old.submit();
+  old.elements.get('automated-email-consent').checked = true;
+  await old.submit();
+  assert.equal(old.posts[0].acceptedCorrespondenceVersion, undefined);
+  assert.equal(old.posts[1].acceptedCorrespondenceVersion, undefined);
+  const pending = JSON.parse(old.store.values.get(PENDING));
+  pending.acceptedCorrespondenceVersion = 'ctos.onboarding-correspondence.v1';
+  const malformed = harness(query, { [PENDING]: JSON.stringify(pending) });
+  assert.throws(() => malformed.request(), /recovery/);
+});
