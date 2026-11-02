@@ -201,7 +201,7 @@
           <li><span class="check">✓</span><span>No long-term contract. Cancel before renewal and the first charge does not occur.</span></li>
           <li><span class="check">✓</span><span>After checkout, a person reviews your setup before any call handling goes live.</span></li>
         </ul>
-          <p>Checkout opens a human-reviewed setup handoff. We review your call flow and test it before launch; submitting this form does not activate service.</p>
+          <p id="setupPreparation">Checkout opens a human-reviewed setup handoff. We review your call flow and test it before launch; submitting this form does not activate service.</p>
         </details>
       </aside>
       <section class="shell" id="shell">
@@ -291,6 +291,13 @@
       function refresh() { submit.disabled = !card || !detailsReady(); }
       function say(text) { msg.textContent = text || ''; }
       // BEGIN checkout request identity
+      function offeredCheckoutVersion(planKey) {
+        return planKey === 'custom' ? 'ctos.standard-service-offer.v1' : 'ctos.standard-service-offer.self-service.v2';
+      }
+      function validCheckoutOffer(version, planKey) {
+        return version === undefined || version === 'ctos.standard-service-offer.v1'
+          || (version === 'ctos.standard-service-offer.self-service.v2' && (planKey === 'afterhours' || planKey === 'full247'));
+      }
       function validCheckoutUuid(value) {
         return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test((value || '').toString());
       }
@@ -337,7 +344,8 @@
           if (pending.plan !== key) throw new Error('A checkout for another plan is already in progress in this tab. Return to that plan to recover its status before starting another trial.');
           if (incoming && incoming !== String(pending.correlationId).toLowerCase()) throw new Error('Another checkout is already in progress in this tab. Return to the original checkout link to recover its status.');
           if (pending.version !== 2 || !validCheckoutIdempotency(pending.idempotencyKey) || !validCheckoutUuid(pending.correlationId)
-              || !validCheckoutUuid(pending.sessionId) || !validCheckoutAttribution(pending.attribution)) {
+              || !validCheckoutUuid(pending.sessionId) || !validCheckoutAttribution(pending.attribution)
+              || !validCheckoutOffer(pending.acceptedOfferVersion, key)) {
             throw new Error('Your earlier checkout needs recovery before another submission. Keep this tab and contact us to check its status.');
           }
           return pending;
@@ -357,6 +365,7 @@
           correlationId: correlationId,
           sessionId: sessionId,
           attribution: attribution(),
+          acceptedOfferVersion: offeredCheckoutVersion(key),
           state: 'checkout_request_pending'
         };
         try {
@@ -469,6 +478,7 @@
           state: SETUP_ELIGIBLE_STATES.indexOf(result.status) >= 0 ? result.status : 'payment_pending'
         };
         if (acceptedIdentity.version === 2) acceptedIdentity.attribution = prior.attribution;
+        if (prior.acceptedOfferVersion !== undefined) acceptedIdentity.acceptedOfferVersion = prior.acceptedOfferVersion;
         try { sessionStorage.setItem(PENDING_CHECKOUT_KEY, JSON.stringify(acceptedIdentity)); } catch (_) {}
         if (storeSetupContinuation(result, prior)) return;
         var shell = document.getElementById('shell');
@@ -574,7 +584,7 @@
           var billingPostalCode = token.details && token.details.billing && token.details.billing.postalCode ? String(token.details.billing.postalCode).trim() : '';
           if (!/^\d{5}(?:-\d{4})?$/.test(billingPostalCode)) throw new Error('Please enter a valid billing ZIP code in the secure card form.');
           requestSent = true;
-          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, acceptedOfferVersion:form.dataset.offerVersion, attribution:requestIdentity.attribution, businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), billingPostalCode:billingPostalCode, consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
+          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, acceptedOfferVersion:requestIdentity.acceptedOfferVersion, attribution:requestIdentity.attribution, businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), billingPostalCode:billingPostalCode, consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
           var result = await response.json();
           if (!response.ok || !result.ok || SETUP_ELIGIBLE_STATES.indexOf(result.status) < 0 || !result.checkoutAttemptId || result.correlationId !== requestIdentity.correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
           if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_accepted_ui', form);
@@ -590,6 +600,15 @@
         var pending = readCheckoutIdentity();
         if (pending && pending.plan === key && validCheckoutUuid(pending.checkoutAttemptId) && validCheckoutUuid(pending.correlationId)) { showPending(pending); return; }
       } catch (_) {}
+      try {
+        var retainedOffer = readCheckoutIdentity();
+        var displayedOffer = retainedOffer ? retainedOffer.acceptedOfferVersion : offeredCheckoutVersion(key);
+        if (!validCheckoutOffer(displayedOffer, key)) throw new Error('Your earlier checkout needs recovery before another submission.');
+        form.dataset.offerVersion = displayedOffer || 'ctos.standard-service-offer.v1';
+        if (displayedOffer === 'ctos.standard-service-offer.self-service.v2') {
+          document.getElementById('setupPreparation').textContent = 'Standard setup may be prepared automatically from your details. You review the configuration before testing and launch approval. Custom or incomplete requests go to our team. Checkout does not activate service.';
+        }
+      } catch (error) { say(error.message); return; }
       init();
     })();
   </script>
