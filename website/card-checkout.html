@@ -246,6 +246,7 @@
             </details>
           </fieldset>
           <label class="consent"><input id="consent" type="checkbox"><span>I authorize The Call Taker to securely store my card with Square and automatically charge <b id="renewalAmount"></b> after the 14-day trial unless I cancel before renewal.<span id="scopeTerms"></span> I also consent to a human from The Call Taker contacting me at the email or phone I provided to complete onboarding for this trial.</span></label>
+          <label class="consent"><input id="automated-email-consent" type="checkbox"><span>I agree to receive automated setup and service-status emails from The Call Taker, including up to two reminders if my setup details are missing. I can ask for a person or stop these emails by replying. <small>Optional; available when email is your preferred contact method. Your choice stays with this checkout on retries.</small></span></label>
           <button id="submit" type="submit" disabled>Start my 14-day free trial</button>
           <div class="submit-meta" aria-label="Checkout assurances"><span>🔒 Encrypted</span><span>•</span><span>$0 today</span><span>•</span><span>Cancel before renewal</span></div>
           <p class="msg" id="msg" role="alert" aria-live="polite"></p>
@@ -288,7 +289,18 @@
       var SETUP_CONTINUATION_KEY = 'tct_setup_continuation_v1';
       var SETUP_ELIGIBLE_STATES = ['payment_pending', 'subscription_scheduled_pending_human_review', 'trial_active_pending_human_review'];
       function detailsReady() { return fields.every(function (field) { return field.checkValidity() && field.value.trim(); }) && document.getElementById('consent').checked; }
-      function refresh() { submit.disabled = !card || !detailsReady(); }
+      function refresh() {
+        submit.disabled = !card || !detailsReady();
+        var automated = document.getElementById('automated-email-consent');
+        var retained = readCheckoutIdentity();
+        automated.disabled = !!retained || fields[5].value !== 'email';
+        if (retained) automated.checked = retained.consentToAutomatedEmail === true;
+        else if (fields[5].value !== 'email') automated.checked = false;
+      }
+      function correspondenceSelection() {
+        return fields[5].value === 'email' && document.getElementById('automated-email-consent').checked
+          ? { acceptedCorrespondenceVersion: 'ctos.onboarding-correspondence.v1', consentToAutomatedEmail: true } : undefined;
+      }
       function say(text) { msg.textContent = text || ''; }
       // BEGIN checkout request identity
       function offeredCheckoutVersion(planKey) {
@@ -297,6 +309,10 @@
       function validCheckoutOffer(version, planKey) {
         return version === undefined || version === 'ctos.standard-service-offer.v1'
           || (version === 'ctos.standard-service-offer.self-service.v2' && (planKey === 'afterhours' || planKey === 'full247'));
+      }
+      function validCheckoutCorrespondence(value) {
+        return (value.acceptedCorrespondenceVersion === undefined && value.consentToAutomatedEmail === undefined)
+          || (value.acceptedCorrespondenceVersion === 'ctos.onboarding-correspondence.v1' && value.consentToAutomatedEmail === true);
       }
       function validCheckoutUuid(value) {
         return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test((value || '').toString());
@@ -337,7 +353,7 @@
         if (!window.crypto || typeof window.crypto.randomUUID !== 'function') throw new Error('Secure checkout requires a current browser with secure random IDs.');
         return window.crypto.randomUUID();
       }
-      function checkoutRequestIdentity() {
+      function checkoutRequestIdentity(correspondence) {
         var pending = readCheckoutIdentity();
         var incoming = incomingCheckoutCorrelation();
         if (pending) {
@@ -345,7 +361,7 @@
           if (incoming && incoming !== String(pending.correlationId).toLowerCase()) throw new Error('Another checkout is already in progress in this tab. Return to the original checkout link to recover its status.');
           if (pending.version !== 2 || !validCheckoutIdempotency(pending.idempotencyKey) || !validCheckoutUuid(pending.correlationId)
               || !validCheckoutUuid(pending.sessionId) || !validCheckoutAttribution(pending.attribution)
-              || !validCheckoutOffer(pending.acceptedOfferVersion, key)) {
+              || !validCheckoutOffer(pending.acceptedOfferVersion, key) || !validCheckoutCorrespondence(pending)) {
             throw new Error('Your earlier checkout needs recovery before another submission. Keep this tab and contact us to check its status.');
           }
           return pending;
@@ -368,6 +384,13 @@
           acceptedOfferVersion: offeredCheckoutVersion(key),
           state: 'checkout_request_pending'
         };
+        if (correspondence !== undefined) {
+          if (!validCheckoutCorrespondence(correspondence)) throw new Error('Please review your automated email choice before continuing.');
+          if (correspondence.acceptedCorrespondenceVersion !== undefined) {
+            identity.acceptedCorrespondenceVersion = correspondence.acceptedCorrespondenceVersion;
+            identity.consentToAutomatedEmail = true;
+          }
+        }
         try {
           sessionStorage.setItem('tct_correlation_id_v1', correlationId);
           sessionStorage.setItem('tct_buyer_session_v1', sessionId);
@@ -479,6 +502,10 @@
         };
         if (acceptedIdentity.version === 2) acceptedIdentity.attribution = prior.attribution;
         if (prior.acceptedOfferVersion !== undefined) acceptedIdentity.acceptedOfferVersion = prior.acceptedOfferVersion;
+        if (prior.acceptedCorrespondenceVersion !== undefined) {
+          acceptedIdentity.acceptedCorrespondenceVersion = prior.acceptedCorrespondenceVersion;
+          acceptedIdentity.consentToAutomatedEmail = prior.consentToAutomatedEmail;
+        }
         try { sessionStorage.setItem(PENDING_CHECKOUT_KEY, JSON.stringify(acceptedIdentity)); } catch (_) {}
         if (storeSetupContinuation(result, prior)) return;
         var shell = document.getElementById('shell');
@@ -573,7 +600,7 @@
         if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_intent_submitted', form);
         var requestSent = false;
         try {
-          var requestIdentity = checkoutRequestIdentity();
+          var requestIdentity = checkoutRequestIdentity(correspondenceSelection());
           var token = await card.tokenize({
             intent:'STORE',
             billingContact:{ givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), countryCode:'US' },
@@ -584,7 +611,7 @@
           var billingPostalCode = token.details && token.details.billing && token.details.billing.postalCode ? String(token.details.billing.postalCode).trim() : '';
           if (!/^\d{5}(?:-\d{4})?$/.test(billingPostalCode)) throw new Error('Please enter a valid billing ZIP code in the secure card form.');
           requestSent = true;
-          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, acceptedOfferVersion:requestIdentity.acceptedOfferVersion, attribution:requestIdentity.attribution, businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:fields[5].value, cardholderName:fields[6].value.trim(), billingPostalCode:billingPostalCode, consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
+          var response = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ plan:key, sourceId:token.token, idempotencyKey:requestIdentity.idempotencyKey, correlationId:requestIdentity.correlationId, sessionId:requestIdentity.sessionId, acceptedOfferVersion:requestIdentity.acceptedOfferVersion, acceptedCorrespondenceVersion:requestIdentity.acceptedCorrespondenceVersion, consentToAutomatedEmail:requestIdentity.consentToAutomatedEmail, attribution:requestIdentity.attribution, businessName:fields[0].value.trim(), givenName:fields[1].value.trim(), familyName:fields[2].value.trim(), email:fields[3].value.trim(), phone:fields[4].value.trim(), preferredContactMethod:requestIdentity.consentToAutomatedEmail === true ? 'email' : fields[5].value, cardholderName:fields[6].value.trim(), billingPostalCode:billingPostalCode, consentToStoreCard:true, consentToFollowUp:true, website:'' }) });
           var result = await response.json();
           if (!response.ok || !result.ok || SETUP_ELIGIBLE_STATES.indexOf(result.status) < 0 || !result.checkoutAttemptId || result.correlationId !== requestIdentity.correlationId) throw new Error(result.error || 'Unable to submit secure checkout.');
           if (window.TCTFunnelEvents) window.TCTFunnelEvents.record('checkout_request_accepted_ui', form);

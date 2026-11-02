@@ -66,7 +66,7 @@ assert.equal(retryAfterDroppedResponse.idempotencyKey, firstAttempt.idempotencyK
 assert.equal(retryAfterDroppedResponse.correlationId, firstAttempt.correlationId);
 assert.equal(retryAfterDroppedResponse.sessionId, firstAttempt.sessionId);
 assert.equal(issuedCount, 3, "retry does not mint another checkout identity");
-const persistenceIndex = card.indexOf("var requestIdentity = checkoutRequestIdentity();");
+const persistenceIndex = card.indexOf("var requestIdentity = checkoutRequestIdentity(correspondenceSelection());");
 const postIndex = card.indexOf("var response = await fetch(API, { method:'POST'");
 assert.ok(persistenceIndex >= 0 && postIndex > persistenceIndex, "pending identity is persisted before the checkout POST");
 assert.match(card, /idempotencyKey:requestIdentity\.idempotencyKey/);
