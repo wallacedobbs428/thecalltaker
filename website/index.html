@@ -17,16 +17,6 @@
     }
   })();
 </script>
-<script>
-  // Keep text messaging disabled until that channel has its own verified release.
-  // Human-demo links use the existing consented form; no call is started here.
-  document.addEventListener("click", function (event) {
-    var link = event.target && event.target.closest && event.target.closest('a[data-text-channel-unverified="true"]');
-    if (!link) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  }, true);
-</script>
 <meta name="description" content="AI receptionist for missed, after-hours and overflow calls. Gideon captures caller details for your team. Compare coverage from $97/month.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="AI Receptionist for Service Businesses | The Call Taker">
@@ -49,8 +39,6 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="prefetch" href="/pricing.html" as="document">
 	<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="text-us.css">
 
 <noscript><style>.reveal,.reveal-left,.reveal-right,.reveal-scale,.reveal-stagger>*{opacity:1!important;transform:none!important;}</style></noscript>
 <!-- Schema.org -->
@@ -2459,7 +2447,7 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
       <p style="font-size:14px;color:var(--t40);line-height:1.6;max-width:240px;margin:0 auto;">A clear summary with name, number, what they need, and any appointment request captured.</p>
       <div style="margin-top:16px;background:var(--surface);border:1px solid var(--t06);border-radius:8px;padding:12px 16px;max-width:240px;margin-left:auto;margin-right:auto;">
         <div style="font-family:var(--mono);font-size:9px;color:var(--t20);letter-spacing:0.1em;margin-bottom:6px;">DELIVERED VIA</div>
-        <div style="font-size:12px;color:var(--t40);line-height:1.5;">SMS, email, or connected business tools when approved</div>
+        <div style="font-size:12px;color:var(--t40);line-height:1.5;">Email or connected business tools when approved</div>
       </div>
     </div>
   </div>
@@ -2971,15 +2959,6 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
   </div>
 </section>
 
-<!-- Text-channel status — linked from the footer; do not imply text availability until verified. -->
-<section id="text-channel-status" tabindex="-1" aria-labelledby="text-channel-status-title" style="padding:48px 40px;background:var(--surface);border-top:1px solid var(--t06);">
-  <div style="max-width:760px;margin:0 auto;text-align:center;">
-    <p style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.12em;margin:0 0 12px;">CONTACT STATUS</p>
-    <h2 id="text-channel-status-title" style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:400;color:var(--t100);margin:0 0 14px;">Text availability is still being verified.</h2>
-    <p style="color:var(--t40);font-size:15px;line-height:1.7;margin:0 auto;max-width:620px;">Text messaging is not available from this website right now. Use the call demo or the email contact in the footer for the current ways to reach The Call Taker.</p>
-  </div>
-</section>
-
 <!-- ═══ FOOTER ═══ -->
 <footer style="padding:64px 40px 32px;max-width:1100px;margin:0 auto;">
   <div class="footer-grid">
@@ -3011,10 +2990,6 @@ button#navMenuToggle.homepage-menu-button.open .menu-lines > span:nth-child(3) {
     <div class="footer-col">
       <h4>CONTACT</h4>
       <a href="/demo.html#call-demo" data-call-demo aria-label="Call demo" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Call demo" data-tct-destination="demo_number_dialog" data-tct-learning-tag="demo_intent">Call demo</a>
-      <a class="text-us-button text-us-button--small" href="#text-channel-status" data-text-channel-unverified="true" aria-label="Text-channel verification in progress" data-cta="text-verification" data-channel="status" data-destination="demo_status" data-tct-event="homepage_cta_click" data-tct-page="homepage" data-tct-cta="Text Verification Status" data-tct-destination="demo_status" data-tct-learning-tag="verification_status">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span>Text availability verification in progress</span>
-      </a>
       <a href="mailto:thecalltakerservice@gmail.com">thecalltakerservice@gmail.com</a>
       <a href="/pricing.html">Plans</a>
       <a href="/faq.html">Questions</a>
