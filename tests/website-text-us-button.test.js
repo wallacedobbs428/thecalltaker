@@ -48,8 +48,8 @@ assert.match(publicPages.pricing, /data-tct-learning-tag="demo_intent"/);
 
 assert.doesNotMatch(publicPages.home, /data-gideon-demo-unverified="true"/);
 assert.match(publicPages.home, /Call demo/);
-assert.match(publicPages.home, /data-text-channel-unverified="true"/);
-assert.doesNotMatch(publicPages.home, /Text messaging is not available from this site\./);
+assert.doesNotMatch(publicPages.home, /data-text-channel-unverified|text-channel-status|text-us-button/);
+assert.doesNotMatch(combined, /text-us-button|text-us-support|text-us\.css/);
 
 checkoutRoutes.forEach((route) => {
   assert.ok(publicPages.home.includes(route), `homepage should preserve ${route}`);
@@ -73,4 +73,4 @@ assert.doesNotMatch(combined, /setupToken|tct_setup_binding|trial=started|receip
   assert.equal(combined.toLowerCase().includes(claim.toLowerCase()), false, `unsafe claim remains: ${claim}`);
 });
 
-console.log("website consented support CTA tests passed");
+console.log("website public contact CTA tests passed");

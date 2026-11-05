@@ -199,8 +199,13 @@ Object.entries(pages)
 
 assert.ok(
   pages["website/index.html"].includes("Call demo") &&
-    pages["website/index.html"].includes('data-text-channel-unverified="true"'),
-  "homepage should offer consented human follow-up while text remains guarded"
+    pages["website/index.html"].includes("thecalltakerservice@gmail.com"),
+  "homepage should offer clear call-demo and email contact paths"
+);
+assert.doesNotMatch(
+  pages["website/index.html"],
+  /data-text-channel-unverified|text-channel-status|text-us-button/,
+  "homepage must not expose the retired text channel"
 );
 assert.ok(
   pages["website/pricing.html"].includes("/demo.html#call-demo") &&
